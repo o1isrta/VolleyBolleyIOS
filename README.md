@@ -1,8 +1,6 @@
 # VolleyBolleyIOS
 
-# Дизайн
-
-https://www.figma.com/design/kUzSCCWxdcfhQY4W1afEw1/Volleybolley?node-id=1-30113&p=f&t=S6NJ24EMynBq0IND-0
+[Дизайн](https://www.figma.com/design/kUzSCCWxdcfhQY4W1afEw1/Volleybolley?node-id=1-30113&p=f&t=S6NJ24EMynBq0IND-0)
 
 # Стек
 
