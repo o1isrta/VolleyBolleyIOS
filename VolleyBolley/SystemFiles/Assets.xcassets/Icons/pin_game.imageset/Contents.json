@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "pin_game.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

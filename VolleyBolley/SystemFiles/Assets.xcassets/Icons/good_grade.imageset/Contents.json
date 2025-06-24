@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "good_grade.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
