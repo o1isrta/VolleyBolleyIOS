@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "bad_grade.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
