@@ -19,7 +19,7 @@
 		3CB112192E0B1FF000EF5EC4 /* Exceptions for "VolleyBolley" folder in "VolleyBolley" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				SystemFiles/Info.plist,
+				App/Info.plist,
 			);
 			target = 3CB112062E0B1FEF00EF5EC4 /* VolleyBolley */;
 		};
@@ -163,7 +163,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3T4L6EX6TF;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = VolleyBolley/SystemFiles/Info.plist;
+				INFOPLIST_FILE = VolleyBolley/App/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = VolleyBolley;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -197,7 +197,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3T4L6EX6TF;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = VolleyBolley/SystemFiles/Info.plist;
+				INFOPLIST_FILE = VolleyBolley/App/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = VolleyBolley;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
