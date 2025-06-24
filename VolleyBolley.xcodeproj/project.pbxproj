@@ -7,39 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DD640E782E07F00D00F413FF /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = DD640E772E07F00D00F413FF /* Kingfisher */; };
-		DD640E862E07F52C00F413FF /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = DD640E852E07F52C00F413FF /* Swinject */; };
-		DD640E882E07F52C00F413FF /* Swinject-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = DD640E872E07F52C00F413FF /* Swinject-Dynamic */; };
-		DD640E8B2E07F68400F413FF /* CombineMoya in Frameworks */ = {isa = PBXBuildFile; productRef = DD640E8A2E07F68400F413FF /* CombineMoya */; };
-		DD640E8D2E07F68400F413FF /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = DD640E8C2E07F68400F413FF /* Moya */; };
-		DD640E8F2E07F68400F413FF /* ReactiveMoya in Frameworks */ = {isa = PBXBuildFile; productRef = DD640E8E2E07F68400F413FF /* ReactiveMoya */; };
-		DD640E912E07F68400F413FF /* RxMoya in Frameworks */ = {isa = PBXBuildFile; productRef = DD640E902E07F68400F413FF /* RxMoya */; };
-		DD640E942E081A9700F413FF /* SwiftLintFramework in Frameworks */ = {isa = PBXBuildFile; productRef = DD640E932E081A9700F413FF /* SwiftLintFramework */; };
-		DD640E962E081A9700F413FF /* swiftlint in Frameworks */ = {isa = PBXBuildFile; productRef = DD640E952E081A9700F413FF /* swiftlint */; };
-		DD640EA02E08264500F413FF /* PackageDescription in Frameworks */ = {isa = PBXBuildFile; productRef = DD640E9F2E08264500F413FF /* PackageDescription */; };
-		DD640EA22E08264500F413FF /* SwiftPM in Frameworks */ = {isa = PBXBuildFile; productRef = DD640EA12E08264500F413FF /* SwiftPM */; };
-		DD640EA42E08264500F413FF /* SwiftPM-auto in Frameworks */ = {isa = PBXBuildFile; productRef = DD640EA32E08264500F413FF /* SwiftPM-auto */; settings = {ATTRIBUTES = (Required, ); }; };
+		3CB112362E0B224800EF5EC4 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 3CB112352E0B224800EF5EC4 /* Kingfisher */; };
+		3CB1123A2E0B24BB00EF5EC4 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 3CB112392E0B24BB00EF5EC4 /* Swinject */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		DD640E5E2E07EE2900F413FF /* VolleyBolley.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VolleyBolley.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3CB112072E0B1FEF00EF5EC4 /* VolleyBolley.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VolleyBolley.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		DD640E702E07EE2B00F413FF /* Exceptions for "VolleyBolley" folder in "VolleyBolley" target */ = {
+		3CB112192E0B1FF000EF5EC4 /* Exceptions for "VolleyBolley" folder in "VolleyBolley" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Info.plist,
+				SystemFiles/Info.plist,
 			);
-			target = DD640E5D2E07EE2900F413FF /* VolleyBolley */;
+			target = 3CB112062E0B1FEF00EF5EC4 /* VolleyBolley */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		DD640E602E07EE2900F413FF /* VolleyBolley */ = {
+		3CB112092E0B1FEF00EF5EC4 /* VolleyBolley */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				DD640E702E07EE2B00F413FF /* Exceptions for "VolleyBolley" folder in "VolleyBolley" target */,
+				3CB112192E0B1FF000EF5EC4 /* Exceptions for "VolleyBolley" folder in "VolleyBolley" target */,
 			);
 			path = VolleyBolley;
 			sourceTree = "<group>";
@@ -47,40 +37,30 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		DD640E5B2E07EE2900F413FF /* Frameworks */ = {
+		3CB112042E0B1FEF00EF5EC4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DD640EA42E08264500F413FF /* SwiftPM-auto in Frameworks */,
-				DD640E882E07F52C00F413FF /* Swinject-Dynamic in Frameworks */,
-				DD640E962E081A9700F413FF /* swiftlint in Frameworks */,
-				DD640E782E07F00D00F413FF /* Kingfisher in Frameworks */,
-				DD640E8B2E07F68400F413FF /* CombineMoya in Frameworks */,
-				DD640EA02E08264500F413FF /* PackageDescription in Frameworks */,
-				DD640EA22E08264500F413FF /* SwiftPM in Frameworks */,
-				DD640E8D2E07F68400F413FF /* Moya in Frameworks */,
-				DD640E942E081A9700F413FF /* SwiftLintFramework in Frameworks */,
-				DD640E912E07F68400F413FF /* RxMoya in Frameworks */,
-				DD640E862E07F52C00F413FF /* Swinject in Frameworks */,
-				DD640E8F2E07F68400F413FF /* ReactiveMoya in Frameworks */,
+				3CB112362E0B224800EF5EC4 /* Kingfisher in Frameworks */,
+				3CB1123A2E0B24BB00EF5EC4 /* Swinject in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		DD640E552E07EE2900F413FF = {
+		3CB111FE2E0B1FEF00EF5EC4 = {
 			isa = PBXGroup;
 			children = (
-				DD640E602E07EE2900F413FF /* VolleyBolley */,
-				DD640E5F2E07EE2900F413FF /* Products */,
+				3CB112092E0B1FEF00EF5EC4 /* VolleyBolley */,
+				3CB112082E0B1FEF00EF5EC4 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		DD640E5F2E07EE2900F413FF /* Products */ = {
+		3CB112082E0B1FEF00EF5EC4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				DD640E5E2E07EE2900F413FF /* VolleyBolley.app */,
+				3CB112072E0B1FEF00EF5EC4 /* VolleyBolley.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -88,83 +68,73 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		DD640E5D2E07EE2900F413FF /* VolleyBolley */ = {
+		3CB112062E0B1FEF00EF5EC4 /* VolleyBolley */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DD640E712E07EE2B00F413FF /* Build configuration list for PBXNativeTarget "VolleyBolley" */;
+			buildConfigurationList = 3CB1121A2E0B1FF000EF5EC4 /* Build configuration list for PBXNativeTarget "VolleyBolley" */;
 			buildPhases = (
-				DD640E5A2E07EE2900F413FF /* Sources */,
-				DD640E5B2E07EE2900F413FF /* Frameworks */,
-				DD640E5C2E07EE2900F413FF /* Resources */,
+				3CB112032E0B1FEF00EF5EC4 /* Sources */,
+				3CB112042E0B1FEF00EF5EC4 /* Frameworks */,
+				3CB112052E0B1FEF00EF5EC4 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				DD640E602E07EE2900F413FF /* VolleyBolley */,
+				3CB112092E0B1FEF00EF5EC4 /* VolleyBolley */,
 			);
 			name = VolleyBolley;
 			packageProductDependencies = (
-				DD640E772E07F00D00F413FF /* Kingfisher */,
-				DD640E852E07F52C00F413FF /* Swinject */,
-				DD640E872E07F52C00F413FF /* Swinject-Dynamic */,
-				DD640E8A2E07F68400F413FF /* CombineMoya */,
-				DD640E8C2E07F68400F413FF /* Moya */,
-				DD640E8E2E07F68400F413FF /* ReactiveMoya */,
-				DD640E902E07F68400F413FF /* RxMoya */,
-				DD640E932E081A9700F413FF /* SwiftLintFramework */,
-				DD640E952E081A9700F413FF /* swiftlint */,
-				DD640E9F2E08264500F413FF /* PackageDescription */,
-				DD640EA12E08264500F413FF /* SwiftPM */,
-				DD640EA32E08264500F413FF /* SwiftPM-auto */,
+				3CB112352E0B224800EF5EC4 /* Kingfisher */,
+				3CB112392E0B24BB00EF5EC4 /* Swinject */,
+				3CB1123B2E0B24BB00EF5EC4 /* Swinject-Dynamic */,
 			);
 			productName = VolleyBolley;
-			productReference = DD640E5E2E07EE2900F413FF /* VolleyBolley.app */;
+			productReference = 3CB112072E0B1FEF00EF5EC4 /* VolleyBolley.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		DD640E562E07EE2900F413FF /* Project object */ = {
+		3CB111FF2E0B1FEF00EF5EC4 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1640;
-				LastUpgradeCheck = 1640;
+				LastSwiftUpdateCheck = 1610;
+				LastUpgradeCheck = 1610;
 				TargetAttributes = {
-					DD640E5D2E07EE2900F413FF = {
-						CreatedOnToolsVersion = 16.4;
+					3CB112062E0B1FEF00EF5EC4 = {
+						CreatedOnToolsVersion = 16.1;
 					};
 				};
 			};
-			buildConfigurationList = DD640E592E07EE2900F413FF /* Build configuration list for PBXProject "VolleyBolley" */;
+			buildConfigurationList = 3CB112022E0B1FEF00EF5EC4 /* Build configuration list for PBXProject "VolleyBolley" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 			);
-			mainGroup = DD640E552E07EE2900F413FF;
+			mainGroup = 3CB111FE2E0B1FEF00EF5EC4;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				DD640E762E07F00D00F413FF /* XCRemoteSwiftPackageReference "Kingfisher" */,
-				DD640E842E07F52C00F413FF /* XCRemoteSwiftPackageReference "Swinject" */,
-				DD640E892E07F68400F413FF /* XCRemoteSwiftPackageReference "Moya" */,
-				DD640E922E081A9700F413FF /* XCRemoteSwiftPackageReference "SwiftLint" */,
-				DD640E9E2E08264500F413FF /* XCRemoteSwiftPackageReference "swift-package-manager" */,
+				3CB1122E2E0B21EB00EF5EC4 /* XCRemoteSwiftPackageReference "Moya" */,
+				3CB112342E0B224800EF5EC4 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				3CB112372E0B22A600EF5EC4 /* XCRemoteSwiftPackageReference "SwiftLint" */,
+				3CB112382E0B24BB00EF5EC4 /* XCRemoteSwiftPackageReference "Swinject" */,
 			);
 			preferredProjectObjectVersion = 77;
-			productRefGroup = DD640E5F2E07EE2900F413FF /* Products */;
+			productRefGroup = 3CB112082E0B1FEF00EF5EC4 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				DD640E5D2E07EE2900F413FF /* VolleyBolley */,
+				3CB112062E0B1FEF00EF5EC4 /* VolleyBolley */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		DD640E5C2E07EE2900F413FF /* Resources */ = {
+		3CB112052E0B1FEF00EF5EC4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -174,7 +144,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		DD640E5A2E07EE2900F413FF /* Sources */ = {
+		3CB112032E0B1FEF00EF5EC4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -184,31 +154,33 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		DD640E722E07EE2B00F413FF /* Debug */ = {
+		3CB1121B2E0B1FF000EF5EC4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 3T4L6EX6TF;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = VolleyBolley/Info.plist;
+				INFOPLIST_FILE = VolleyBolley/SystemFiles/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = VolleyBolley;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIStatusBarStyle = "";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.github.VolleyBolley;
+				PRODUCT_BUNDLE_IDENTIFIER = VB.VolleyBolley;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -216,31 +188,33 @@
 			};
 			name = Debug;
 		};
-		DD640E732E07EE2B00F413FF /* Release */ = {
+		3CB1121C2E0B1FF000EF5EC4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 3T4L6EX6TF;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = VolleyBolley/Info.plist;
+				INFOPLIST_FILE = VolleyBolley/SystemFiles/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = VolleyBolley;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIStatusBarStyle = "";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.github.VolleyBolley;
+				PRODUCT_BUNDLE_IDENTIFIER = VB.VolleyBolley;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -248,7 +222,7 @@
 			};
 			name = Release;
 		};
-		DD640E742E07EE2B00F413FF /* Debug */ = {
+		3CB1121D2E0B1FF000EF5EC4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -300,7 +274,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -311,7 +285,7 @@
 			};
 			name = Debug;
 		};
-		DD640E752E07EE2B00F413FF /* Release */ = {
+		3CB1121E2E0B1FF000EF5EC4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -357,7 +331,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -370,20 +344,20 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		DD640E592E07EE2900F413FF /* Build configuration list for PBXProject "VolleyBolley" */ = {
+		3CB112022E0B1FEF00EF5EC4 /* Build configuration list for PBXProject "VolleyBolley" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				DD640E742E07EE2B00F413FF /* Debug */,
-				DD640E752E07EE2B00F413FF /* Release */,
+				3CB1121D2E0B1FF000EF5EC4 /* Debug */,
+				3CB1121E2E0B1FF000EF5EC4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DD640E712E07EE2B00F413FF /* Build configuration list for PBXNativeTarget "VolleyBolley" */ = {
+		3CB1121A2E0B1FF000EF5EC4 /* Build configuration list for PBXNativeTarget "VolleyBolley" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				DD640E722E07EE2B00F413FF /* Debug */,
-				DD640E732E07EE2B00F413FF /* Release */,
+				3CB1121B2E0B1FF000EF5EC4 /* Debug */,
+				3CB1121C2E0B1FF000EF5EC4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -391,110 +365,57 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		DD640E762E07F00D00F413FF /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/onevcat/Kingfisher";
-			requirement = {
-				kind = exactVersion;
-				version = 8.3.3;
-			};
-		};
-		DD640E842E07F52C00F413FF /* XCRemoteSwiftPackageReference "Swinject" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Swinject/Swinject";
-			requirement = {
-				kind = exactVersion;
-				version = 2.9.1;
-			};
-		};
-		DD640E892E07F68400F413FF /* XCRemoteSwiftPackageReference "Moya" */ = {
+		3CB1122E2E0B21EB00EF5EC4 /* XCRemoteSwiftPackageReference "Moya" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Moya/Moya";
 			requirement = {
-				kind = exactVersion;
-				version = 15.0.3;
+				kind = upToNextMajorVersion;
+				minimumVersion = 15.0.3;
 			};
 		};
-		DD640E922E081A9700F413FF /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
+		3CB112342E0B224800EF5EC4 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.3.3;
+			};
+		};
+		3CB112372E0B22A600EF5EC4 /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/SwiftLint";
 			requirement = {
-				kind = exactVersion;
-				version = 0.59.1;
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.59.1;
 			};
 		};
-		DD640E9E2E08264500F413FF /* XCRemoteSwiftPackageReference "swift-package-manager" */ = {
+		3CB112382E0B24BB00EF5EC4 /* XCRemoteSwiftPackageReference "Swinject" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/swiftlang/swift-package-manager";
+			repositoryURL = "https://github.com/Swinject/Swinject";
 			requirement = {
-				kind = exactVersion;
-				version = 0.6.0;
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.9.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		DD640E772E07F00D00F413FF /* Kingfisher */ = {
+		3CB112352E0B224800EF5EC4 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = DD640E762E07F00D00F413FF /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			package = 3CB112342E0B224800EF5EC4 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
 		};
-		DD640E852E07F52C00F413FF /* Swinject */ = {
+		3CB112392E0B24BB00EF5EC4 /* Swinject */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = DD640E842E07F52C00F413FF /* XCRemoteSwiftPackageReference "Swinject" */;
+			package = 3CB112382E0B24BB00EF5EC4 /* XCRemoteSwiftPackageReference "Swinject" */;
 			productName = Swinject;
 		};
-		DD640E872E07F52C00F413FF /* Swinject-Dynamic */ = {
+		3CB1123B2E0B24BB00EF5EC4 /* Swinject-Dynamic */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = DD640E842E07F52C00F413FF /* XCRemoteSwiftPackageReference "Swinject" */;
+			package = 3CB112382E0B24BB00EF5EC4 /* XCRemoteSwiftPackageReference "Swinject" */;
 			productName = "Swinject-Dynamic";
-		};
-		DD640E8A2E07F68400F413FF /* CombineMoya */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = DD640E892E07F68400F413FF /* XCRemoteSwiftPackageReference "Moya" */;
-			productName = CombineMoya;
-		};
-		DD640E8C2E07F68400F413FF /* Moya */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = DD640E892E07F68400F413FF /* XCRemoteSwiftPackageReference "Moya" */;
-			productName = Moya;
-		};
-		DD640E8E2E07F68400F413FF /* ReactiveMoya */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = DD640E892E07F68400F413FF /* XCRemoteSwiftPackageReference "Moya" */;
-			productName = ReactiveMoya;
-		};
-		DD640E902E07F68400F413FF /* RxMoya */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = DD640E892E07F68400F413FF /* XCRemoteSwiftPackageReference "Moya" */;
-			productName = RxMoya;
-		};
-		DD640E932E081A9700F413FF /* SwiftLintFramework */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = DD640E922E081A9700F413FF /* XCRemoteSwiftPackageReference "SwiftLint" */;
-			productName = SwiftLintFramework;
-		};
-		DD640E952E081A9700F413FF /* swiftlint */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = DD640E922E081A9700F413FF /* XCRemoteSwiftPackageReference "SwiftLint" */;
-			productName = swiftlint;
-		};
-		DD640E9F2E08264500F413FF /* PackageDescription */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = DD640E9E2E08264500F413FF /* XCRemoteSwiftPackageReference "swift-package-manager" */;
-			productName = PackageDescription;
-		};
-		DD640EA12E08264500F413FF /* SwiftPM */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = DD640E9E2E08264500F413FF /* XCRemoteSwiftPackageReference "swift-package-manager" */;
-			productName = SwiftPM;
-		};
-		DD640EA32E08264500F413FF /* SwiftPM-auto */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = DD640E9E2E08264500F413FF /* XCRemoteSwiftPackageReference "swift-package-manager" */;
-			productName = "SwiftPM-auto";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
-	rootObject = DD640E562E07EE2900F413FF /* Project object */;
+	rootObject = 3CB111FF2E0B1FEF00EF5EC4 /* Project object */;
 }

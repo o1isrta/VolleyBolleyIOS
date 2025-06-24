@@ -1,5 +1,5 @@
 {
-  "originHash" : "da70ed26baef27a025ab462bd6611e65746a95118b533f82448161641c5882ba",
+  "originHash" : "f89423d74d967fa0be808ded03273f197012761c73206bdf7387bb758e961eb7",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -83,39 +83,12 @@
       }
     },
     {
-      "identity" : "swift-llbuild",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-llbuild.git",
-      "state" : {
-        "revision" : "fb7ebf0b06c0d7c45ca8e18b3371424503a38b5c",
-        "version" : "0.3.0"
-      }
-    },
-    {
-      "identity" : "swift-package-manager",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/swiftlang/swift-package-manager",
-      "state" : {
-        "revision" : "f5ea3972d7d6c574e8bb16a19b2a7bca98ea131b",
-        "version" : "0.6.0"
-      }
-    },
-    {
       "identity" : "swift-syntax",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/swiftlang/swift-syntax.git",
       "state" : {
         "revision" : "1103c45ece4f7fe160b8f75b4ea1ee2e5fac1841",
         "version" : "601.0.0"
-      }
-    },
-    {
-      "identity" : "swift-tools-support-core",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-tools-support-core.git",
-      "state" : {
-        "revision" : "98a5916a811fcaaed770f1ed812e9405be762945",
-        "version" : "0.1.0"
       }
     },
     {
