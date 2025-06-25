@@ -11,7 +11,7 @@ extension UIImage {
     
     // MARK: - gradientImage
     
-    static func gradientImage(with colors: [UIColor], size: CGSize) -> UIImage? {
+    static func gradientImage(size: CGSize, with colors: [UIColor] = UIColor.gradientColors) -> UIImage? {
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = CGRect(origin: .zero, size: size)
         gradientLayer.colors = colors.map { $0.cgColor }
