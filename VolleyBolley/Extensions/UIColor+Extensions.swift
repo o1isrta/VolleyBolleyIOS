@@ -9,6 +9,15 @@ import UIKit
 
 extension UIColor {
     
+    // MARK: - Properties
+    
+    static let gradientColors = [
+        UIColor(hexString: "#F4E998"),
+        UIColor(hexString: "#5CF08D")
+    ]
+    
+    // MARK: - init
+    
     convenience init(hexString: String) {
         let hex = hexString.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
         var int = UInt64()
