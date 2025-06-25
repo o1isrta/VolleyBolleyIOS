@@ -11,6 +11,7 @@ extension UIColor {
     
     // MARK: - Properties
     
+    // TODO: - colors
     static let gradientColors = [
         UIColor(hexString: "#F4E998"),
         UIColor(hexString: "#5CF08D")
