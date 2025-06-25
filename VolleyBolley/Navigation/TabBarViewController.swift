@@ -58,7 +58,7 @@ private extension TabBarViewController {
     
     private func setupUITabBarItemAppearance() {
         let gradientSize = CGSize(width: 1, height: 50)
-        let gradientImage = UIImage.gradientImage(with: UIColor.gradientColors, size: gradientSize)
+        let gradientImage = UIImage.gradientImage(size: gradientSize)
         let activeAttributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor(patternImage: gradientImage!),
             .font: UIFont.systemFont(ofSize: 12, weight: .semibold)
