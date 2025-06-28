@@ -87,7 +87,6 @@
 			packageProductDependencies = (
 				3CB112352E0B224800EF5EC4 /* Kingfisher */,
 				3CB112392E0B24BB00EF5EC4 /* Swinject */,
-				3CB1123B2E0B24BB00EF5EC4 /* Swinject-Dynamic */,
 			);
 			productName = VolleyBolley;
 			productReference = 3CB112072E0B1FEF00EF5EC4 /* VolleyBolley.app */;
@@ -409,11 +408,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3CB112382E0B24BB00EF5EC4 /* XCRemoteSwiftPackageReference "Swinject" */;
 			productName = Swinject;
-		};
-		3CB1123B2E0B24BB00EF5EC4 /* Swinject-Dynamic */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3CB112382E0B24BB00EF5EC4 /* XCRemoteSwiftPackageReference "Swinject" */;
-			productName = "Swinject-Dynamic";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
