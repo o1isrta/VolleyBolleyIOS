@@ -19,5 +19,13 @@
 			</array>
 		</dict>
 	</dict>
+    <key>UIAppFonts</key>
+    <array>
+        <string>Fonts/ActayWide-Bold.otf</string>
+        <string>Fonts/Hero-Bold.ttf</string>
+        <string>Fonts/Hero-Light.ttf</string>
+        <string>Fonts/Hero-Regular.ttf</string>
+        <string>Fonts/Quantex-Regular.otf</string>
+    </array>
 </dict>
 </plist>
