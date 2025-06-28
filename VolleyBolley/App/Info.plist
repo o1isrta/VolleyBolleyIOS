@@ -2,6 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>ActayWide-Bold.otf</string>
+		<string>Hero-Bold.ttf</string>
+		<string>Hero-Light.ttf</string>
+		<string>Hero-Regular.ttf</string>
+		<string>Quantex-Regular.ttf</string>
+	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -19,13 +27,5 @@
 			</array>
 		</dict>
 	</dict>
-    <key>UIAppFonts</key>
-    <array>
-        <string>Fonts/ActayWide-Bold.otf</string>
-        <string>Fonts/Hero-Bold.ttf</string>
-        <string>Fonts/Hero-Light.ttf</string>
-        <string>Fonts/Hero-Regular.ttf</string>
-        <string>Fonts/Quantex-Regular.otf</string>
-    </array>
 </dict>
 </plist>
