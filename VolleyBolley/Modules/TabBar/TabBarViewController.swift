@@ -33,18 +33,18 @@ private extension TabBarViewController {
     private func setupControllers() {
         homeVC.tabBarItem = UITabBarItem(
             title: "Home",
-            image: UIImage(named: "home")?.withRenderingMode(.alwaysOriginal),
-            selectedImage: UIImage(named: "home_active")?.withRenderingMode(.alwaysOriginal)
+            image: .home,
+            selectedImage: .homeActive
         )
         gamesVC.tabBarItem = UITabBarItem(
             title: "My games",
-            image: UIImage(named: "my_games")?.withRenderingMode(.alwaysOriginal),
-            selectedImage: UIImage(named: "my_games_active")?.withRenderingMode(.alwaysOriginal)
+            image: .myGames,
+            selectedImage: .myGamesActive
         )
         profileVC.tabBarItem = UITabBarItem(
             title: "Profile",
-            image: UIImage(named: "profile")?.withRenderingMode(.alwaysOriginal),
-            selectedImage: UIImage(named: "profile_active")?.withRenderingMode(.alwaysOriginal)
+            image: .profile,
+            selectedImage: .profileActive
         )
 
         let homeNav = UINavigationController(rootViewController: homeVC)
