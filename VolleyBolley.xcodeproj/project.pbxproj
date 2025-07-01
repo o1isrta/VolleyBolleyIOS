@@ -19,7 +19,7 @@
 		3CB112192E0B1FF000EF5EC4 /* Exceptions for "VolleyBolley" folder in "VolleyBolley" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				SystemFiles/Info.plist,
+				App/Info.plist,
 			);
 			target = 3CB112062E0B1FEF00EF5EC4 /* VolleyBolley */;
 		};
@@ -79,6 +79,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				91F7CA392E1099A500E1EA41 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				3CB112092E0B1FEF00EF5EC4 /* VolleyBolley */,
@@ -87,7 +88,6 @@
 			packageProductDependencies = (
 				3CB112352E0B224800EF5EC4 /* Kingfisher */,
 				3CB112392E0B24BB00EF5EC4 /* Swinject */,
-				3CB1123B2E0B24BB00EF5EC4 /* Swinject-Dynamic */,
 			);
 			productName = VolleyBolley;
 			productReference = 3CB112072E0B1FEF00EF5EC4 /* VolleyBolley.app */;
@@ -120,8 +120,8 @@
 			packageReferences = (
 				3CB1122E2E0B21EB00EF5EC4 /* XCRemoteSwiftPackageReference "Moya" */,
 				3CB112342E0B224800EF5EC4 /* XCRemoteSwiftPackageReference "Kingfisher" */,
-				3CB112372E0B22A600EF5EC4 /* XCRemoteSwiftPackageReference "SwiftLint" */,
 				3CB112382E0B24BB00EF5EC4 /* XCRemoteSwiftPackageReference "Swinject" */,
+				91F7CA372E10998000E1EA41 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 3CB112082E0B1FEF00EF5EC4 /* Products */;
@@ -153,6 +153,13 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		91F7CA392E1099A500E1EA41 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 91F7CA382E1099A500E1EA41 /* SwiftLintBuildToolPlugin */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
 		3CB1121B2E0B1FF000EF5EC4 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -163,7 +170,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3T4L6EX6TF;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = VolleyBolley/SystemFiles/Info.plist;
+				INFOPLIST_FILE = VolleyBolley/App/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = VolleyBolley;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -197,7 +204,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3T4L6EX6TF;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = VolleyBolley/SystemFiles/Info.plist;
+				INFOPLIST_FILE = VolleyBolley/App/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = VolleyBolley;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -381,20 +388,20 @@
 				minimumVersion = 8.3.3;
 			};
 		};
-		3CB112372E0B22A600EF5EC4 /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/realm/SwiftLint";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.59.1;
-			};
-		};
 		3CB112382E0B24BB00EF5EC4 /* XCRemoteSwiftPackageReference "Swinject" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Swinject/Swinject";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 2.9.1;
+			};
+		};
+		91F7CA372E10998000E1EA41 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SimplyDanny/SwiftLintPlugins";
+			requirement = {
+				kind = exactVersion;
+				version = 0.59.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -410,10 +417,10 @@
 			package = 3CB112382E0B24BB00EF5EC4 /* XCRemoteSwiftPackageReference "Swinject" */;
 			productName = Swinject;
 		};
-		3CB1123B2E0B24BB00EF5EC4 /* Swinject-Dynamic */ = {
+		91F7CA382E1099A500E1EA41 /* SwiftLintBuildToolPlugin */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 3CB112382E0B24BB00EF5EC4 /* XCRemoteSwiftPackageReference "Swinject" */;
-			productName = "Swinject-Dynamic";
+			package = 91F7CA372E10998000E1EA41 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */;
+			productName = "plugin:SwiftLintBuildToolPlugin";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
