@@ -19,7 +19,12 @@ extension UIImage {
         gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
         
         UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
-        gradientLayer.render(in: UIGraphicsGetCurrentContext()!)
+        
+        guard let context = UIGraphicsGetCurrentContext() else {
+            return nil
+        }
+        
+        gradientLayer.render(in: context)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return image
