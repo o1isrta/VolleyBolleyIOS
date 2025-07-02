@@ -16,7 +16,7 @@ final class OnboardingRouter: OnboardingRouterProtocol {
 
     func start() -> UIViewController {
         let viewController = OnboardingViewController()
-        
+
         viewController.onContinue = { [weak self] in
             self?.onFinish?()
         }

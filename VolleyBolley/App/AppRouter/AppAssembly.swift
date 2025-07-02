@@ -13,6 +13,5 @@ class AppAssembly: Assembly {
             }
             return DefaultUserSessionService(storage: storage)
         }.inObjectScope(.container)
-        
     }
 }
