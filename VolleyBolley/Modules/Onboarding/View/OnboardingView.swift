@@ -1,6 +1,8 @@
 import UIKit
 
 class OnboardingViewController: UIViewController {
+    var presenter: OnboardingPresenterProtocol!
+    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Welcome!"
@@ -37,21 +39,62 @@ class OnboardingViewController: UIViewController {
         return label
     }()
         
-        private let getStartedButton: UIButton = {
-            let button = UIButton(type: .system)
-            button.setTitle("GET STARTED", for: .normal)
-            button.backgroundColor = UIColor(red: 1, green: 0.84, blue: 0, alpha: 1) // желтый
-            button.setTitleColor(.black, for: .normal)
-            button.layer.cornerRadius = 8
-            button.translatesAutoresizingMaskIntoConstraints = false
-            return button
-        }()
-
-        private let backgroundImageView: UIImageView = {
-            let imageView = UIImageView(image: .launchScreen)
-            imageView.contentMode = .scaleAspectFill
-            imageView.translatesAutoresizingMaskIntoConstraints = false
-            return imageView
-        }()
+    private let getStartedButton: UIButton = OrangeButton(title: "GET STARTED")
+    
+    private let backgroundImageView: UIImageView = {
+        let imageView = UIImageView(image: .launchScreen)
+        imageView.contentMode = .scaleAspectFill
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupUI()
+        getStartedButton.addTarget(self, action: #selector(getStartedTapped), for: .touchUpInside)
+    }
+    
+    private func setupUI() {
+           view.addSubview(backgroundImageView)
+           view.addSubview(titleLabel)
+           view.addSubview(descriptionLabel)
+           view.addSubview(logoImageView)
+           view.addSubview(appNameLabel)
+           view.addSubview(getStartedButton)
+           
+           NSLayoutConstraint.activate([
+               backgroundImageView.topAnchor.constraint(equalTo: view.topAnchor),
+               backgroundImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+               backgroundImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+               backgroundImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+               
+               titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40),
+               titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+               
+               descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16),
+               descriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+               descriptionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+               
+               logoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+               logoImageView.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 40),
+               logoImageView.widthAnchor.constraint(equalToConstant: 160),
+               logoImageView.heightAnchor.constraint(equalToConstant: 160),
+               
+               appNameLabel.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 16),
+               appNameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+               
+               getStartedButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -40),
+               getStartedButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
+               getStartedButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
+               getStartedButton.heightAnchor.constraint(equalToConstant: 50)
+           ])
+       }
+       
+    @objc private func getStartedTapped() {
+        presenter.getStartedButtonTapped()
+    }
 }
 
+extension OnboardingViewController: OnboardingViewProtocol {
+    
+}
