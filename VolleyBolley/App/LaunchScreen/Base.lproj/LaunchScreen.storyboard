@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="ActayWide-Bold.otf">
+            <string>ActayWide-Bold</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--View Controller-->
         <scene sceneID="EHf-IW-A2E">
@@ -17,16 +22,33 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchImage" translatesAutoresizingMaskIntoConstraints="NO" id="Ve0-jJ-Csc">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchScreen" translatesAutoresizingMaskIntoConstraints="NO" id="Ve0-jJ-Csc">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="VBLogo" translatesAutoresizingMaskIntoConstraints="NO" id="qdI-9q-fkt">
+                                <rect key="frame" x="107" y="278" width="200" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="JKb-xi-a4r"/>
+                                    <constraint firstAttribute="width" constant="200" id="Og6-gn-99U"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="VOLLEYBOLLEY" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D5C-Nm-0XH">
+                                <rect key="frame" x="47.666666666666657" y="502" width="319" height="37"/>
+                                <fontDescription key="fontDescription" name="ActayWide-Bold" family="Actay Wide" pointSize="36"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemGreenColor"/>
+                        <color key="backgroundColor" name="LaunchScreenBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="Ve0-jJ-Csc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="H17-ON-nUk"/>
+                            <constraint firstItem="D5C-Nm-0XH" firstAttribute="top" secondItem="qdI-9q-fkt" secondAttribute="bottom" constant="24" id="89u-gb-U3e"/>
+                            <constraint firstItem="Ve0-jJ-Csc" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="H17-ON-nUk"/>
+                            <constraint firstItem="D5C-Nm-0XH" firstAttribute="centerX" secondItem="Ve0-jJ-Csc" secondAttribute="centerX" id="Wg4-zD-wMo"/>
+                            <constraint firstItem="qdI-9q-fkt" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" constant="278" id="fvG-Ka-II1"/>
                             <constraint firstAttribute="bottom" secondItem="Ve0-jJ-Csc" secondAttribute="bottom" id="hWN-90-8eY"/>
-                            <constraint firstItem="Ve0-jJ-Csc" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="p8j-nJ-XTO"/>
+                            <constraint firstItem="qdI-9q-fkt" firstAttribute="centerX" secondItem="Ve0-jJ-Csc" secondAttribute="centerX" id="ndY-sk-8cM"/>
+                            <constraint firstItem="Ve0-jJ-Csc" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailing" id="p8j-nJ-XTO"/>
                             <constraint firstItem="Ve0-jJ-Csc" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="wmE-TM-3da"/>
                         </constraints>
                     </view>
@@ -37,9 +59,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="LaunchImage" width="444" height="589"/>
-        <systemColor name="systemGreenColor">
-            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
+        <image name="LaunchScreen" width="375" height="812"/>
+        <image name="VBLogo" width="200" height="200"/>
+        <namedColor name="LaunchScreenBackgroundColor">
+            <color red="0.19607843137254902" green="0.44313725490196076" blue="0.41960784313725491" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>
