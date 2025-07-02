@@ -4,6 +4,6 @@ protocol HomeInteractorProtocol: AnyObject {
 
 final class HomeInteractor: HomeInteractorProtocol {
     func fetchGreeting() -> String {
-        return "Hello, World!"
+        return "Home Module"
     }
 }
