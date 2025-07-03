@@ -54,7 +54,7 @@ private extension TabBarViewController {
         setViewControllers([homeNav, gamesNav, profileNav], animated: false)
     }
     
-    private func setupUITabBarItemAppearance() {
+    func setupUITabBarItemAppearance() {
         let gradientSize = CGSize(width: 1, height: 50)
         let gradientImage = UIImage.gradientImage(size: gradientSize)
         let activeAttributes: [NSAttributedString.Key: Any] = [
