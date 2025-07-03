@@ -14,7 +14,7 @@ class CustomTabBar: UITabBar {
     private let shapeLayer = CAShapeLayer()
     private let customHeight: CGFloat = 53
     
-    // MARK: - intrinsicContentSize
+    // MARK: - Internal Methods
     
     override var intrinsicContentSize: CGSize {
         var size = super.intrinsicContentSize
@@ -22,7 +22,7 @@ class CustomTabBar: UITabBar {
         return size
     }
     
-    // MARK: - layoutSubviews
+    // MARK: - Public Properties
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -30,19 +30,17 @@ class CustomTabBar: UITabBar {
         adjustItemPositions()
     }
     
-    // MARK: - hitTest
-    
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         let defaultHitTest = super.hitTest(point, with: event)
         return defaultHitTest == nil ? nil : defaultHitTest
     }
 }
 
+// MARK: - Private Methods
+
 private extension CustomTabBar {
     
-    // MARK: - setupRoundedCorners
-    
-    private func setupRoundedCorners() {
+    func setupRoundedCorners() {
         let radius: CGFloat = 32.0
         let path = UIBezierPath(
             roundedRect: bounds,
@@ -56,9 +54,7 @@ private extension CustomTabBar {
         layer.insertSublayer(shapeLayer, at: 0)
     }
     
-    // MARK: - adjustItemPositions
-    
-    private func adjustItemPositions() {
+    func adjustItemPositions() {
         guard let items = items else { return }
         
         let tabBarItemSize = CGSize(

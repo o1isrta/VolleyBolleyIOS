@@ -9,13 +9,13 @@ import UIKit
 
 final class TabBarViewController: UITabBarController {
     
-    // MARK: - Properties
+    // MARK: - Private Properties
     
     private let homeVC = HomeAssembly.assemble()
     private let gamesVC = MyGamesViewController()
     private let profileVC = ProfileViewController()
     
-    // MARK: - viewDidLoad
+    // MARK: - Public Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,11 +26,11 @@ final class TabBarViewController: UITabBarController {
     }
 }
 
+// MARK: - Private Methods
+
 private extension TabBarViewController {
     
-    // MARK: - setupControllers
-    
-    private func setupControllers() {
+    func setupControllers() {
         homeVC.tabBarItem = UITabBarItem(
             title: "Home",
             image: .home,
@@ -53,8 +53,6 @@ private extension TabBarViewController {
 
         setViewControllers([homeNav, gamesNav, profileNav], animated: false)
     }
-    
-    // MARK: - setupUITabBarItemAppearance
     
     private func setupUITabBarItemAppearance() {
         let gradientSize = CGSize(width: 1, height: 50)
