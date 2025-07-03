@@ -1,48 +1,51 @@
 import UIKit
 
-class OnboardingViewController: UIViewController {
-    var presenter: OnboardingPresenterProtocol!
-    
-    private lazy var titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Welcome!"
-        label.font = AppFont.ActayWide.bold(size: 36)
-        label.textColor = AppColor.Text.primary
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+class AuthorizationView: UIViewController, AuthViewProtocol {
+    var presenter: AuthPresenterProtocol!
     
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
-        label.text = "This app helps you find beach volleyball games and match with players at your skill level."
-        label.font = AppFont.Hero.regular(size: 20)
-        label.textColor = AppColor.Text.primary
-        label.numberOfLines = 0
-        label.textAlignment = .center
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-        
-    private lazy var logoImageView: UIImageView = {
-        let imageView = UIImageView(image: UIImage.vbLogo)
-        imageView.contentMode = .scaleAspectFit
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
-        
-    private lazy var appNameLabel: UILabel = {
-        let label = UILabel()
-        label.text = "VOLLEYBOLLEY"
+        label.text = "Sign up with a social media"
         label.font = AppFont.ActayWide.bold(size: 36)
         label.textColor = AppColor.Text.primary
+        label.numberOfLines = 4
+        label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-        
-    private lazy var getStartedButton: UIButton = OrangeButton(title: "GET STARTED")
     
-    private lazy var backgroundImageView: UIImageView = {
-        let imageView = UIImageView(image: .launchScreen)
+    private let phoneAuthButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Continue with phone number", for: .normal)
+        button.titleLabel?.font = AppFont.Hero.regular(size: 18)
+        button.setTitleColor(AppColor.Text.inverted, for: .normal)
+        button.backgroundColor = AppColor.Background.largeActionButtonDefault
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    private let googleAuthButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Continue with Google", for: .normal)
+        button.titleLabel?.font = AppFont.Hero.regular(size: 18)
+        button.setTitleColor(AppColor.Text.inverted, for: .normal)
+        button.backgroundColor = .white
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    private let facebookAuthButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Continue with Facebook", for: .normal)
+        button.titleLabel?.font = AppFont.Hero.regular(size: 18)
+        button.setTitleColor(AppColor.Text.primary, for: .normal)
+        button.backgroundColor = .blue
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    private let backgroundImageView: UIImageView = {
+        let imageView = UIImageView(image: .launch)
         imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -50,26 +53,22 @@ class OnboardingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
-        getStartedButton.addTarget(self, action: #selector(getStartedTapped), for: .touchUpInside)
+//        setupUI()
+//        getStartedButton.addTarget(self, action: #selector(getStartedTapped), for: .touchUpInside)
     }
     
     private func setupUI() {
-           view.addSubview(backgroundImageView)
-           view.addSubview(titleLabel)
            view.addSubview(descriptionLabel)
-           view.addSubview(logoImageView)
-           view.addSubview(appNameLabel)
-           view.addSubview(getStartedButton)
+           view.addSubview(phoneAuthButton)
+           view.addSubview(googleAuthButton)
+           view.addSubview(facebookAuthButton)
+           view.addSubview(backgroundImageView)
            
            NSLayoutConstraint.activate([
                backgroundImageView.topAnchor.constraint(equalTo: view.topAnchor),
                backgroundImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
                backgroundImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
                backgroundImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-               
-               titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40),
-               titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
                
                descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16),
                descriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
@@ -89,13 +88,6 @@ class OnboardingViewController: UIViewController {
                getStartedButton.heightAnchor.constraint(equalToConstant: 50)
            ])
        }
-       
-    @objc private func getStartedTapped() {
-        presenter.getStartedButtonTapped()
-    }
-}
-
-extension OnboardingViewController: OnboardingViewProtocol {
     
 }
 
