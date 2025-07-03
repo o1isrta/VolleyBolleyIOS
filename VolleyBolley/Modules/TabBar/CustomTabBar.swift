@@ -9,7 +9,7 @@ import UIKit
 
 class CustomTabBar: UITabBar {
     
-    // MARK: - Properties
+    // MARK: - Private Properties
     
     private let shapeLayer = CAShapeLayer()
     private let customHeight: CGFloat = 53
