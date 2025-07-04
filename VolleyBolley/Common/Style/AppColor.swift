@@ -16,6 +16,7 @@ enum AppColor {
         static let actionButtonDisabled = mistGrey
         static let largeActionButtonDefault = yellow
         static let mapButton = orange
+        static let fbButton = fbblue
 
         // badges
         static let badgeDefault = steelBlue
@@ -58,6 +59,7 @@ private extension AppColor {
     static let darkTeal = UIColor(hex: "#32716B")
     static let teal = UIColor(hex: "#53A8A1")
     static let blue = UIColor(hex: "#53A4E6")
+    static let fbblue = UIColor(hex: "#1877F2")
     static let green = UIColor(hex: "#2DB69A")
     static let orange = UIColor(hex: "#E6AC53")
     static let yellow = UIColor(hex: "#E6C953")

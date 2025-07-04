@@ -20,8 +20,7 @@ class OnboardingRouter: OnboardingRouterProtocol {
     }
     
     func navigateToAuthorizationScreen() {
-        // Example navigation:
-        // let nextVC = NextViewController()
-        // viewController?.navigationController?.pushViewController(nextVC, animated: true)
+        let authVC = AuthorizationView()
+         viewController?.navigationController?.pushViewController(authVC, animated: true)
     }
 }
