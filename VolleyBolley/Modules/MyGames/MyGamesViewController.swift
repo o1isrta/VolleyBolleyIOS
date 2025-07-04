@@ -4,7 +4,7 @@ protocol MyGamesViewProtocol: AnyObject {
     func showGreeting(_ message: String)
 }
 
-final class MyGamesViewController: UIViewController, MyGamesViewProtocol {
+final class MyGamesViewController: BaseViewController, MyGamesViewProtocol {
     private let presenter: MyGamesPresenterProtocol
 
     init(presenter: MyGamesPresenterProtocol) {
@@ -18,7 +18,6 @@ final class MyGamesViewController: UIViewController, MyGamesViewProtocol {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
         presenter.viewDidLoad()
     }
 

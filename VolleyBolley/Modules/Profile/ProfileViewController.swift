@@ -4,7 +4,7 @@ protocol ProfileViewProtocol: AnyObject {
     func showGreeting(_ message: String)
 }
 
-final class ProfileViewController: UIViewController, ProfileViewProtocol {
+final class ProfileViewController: BaseViewController, ProfileViewProtocol {
     private let presenter: ProfilePresenterProtocol
 
     init(presenter: ProfilePresenterProtocol) {
@@ -18,7 +18,6 @@ final class ProfileViewController: UIViewController, ProfileViewProtocol {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
         presenter.viewDidLoad()
     }
 
