@@ -4,7 +4,7 @@ protocol HomeViewProtocol: AnyObject {
     func showGreeting(_ message: String)
 }
 
-final class HomeViewController: UIViewController, HomeViewProtocol {
+final class HomeViewController: BaseViewController, HomeViewProtocol {
     private let presenter: HomePresenterProtocol
 
     init(presenter: HomePresenterProtocol) {
@@ -18,7 +18,6 @@ final class HomeViewController: UIViewController, HomeViewProtocol {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
         presenter.viewDidLoad()
     }
 

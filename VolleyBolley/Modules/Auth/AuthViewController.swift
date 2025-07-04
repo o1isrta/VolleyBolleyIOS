@@ -1,6 +1,6 @@
 import UIKit
 
-final class AuthViewController: UIViewController {
+final class AuthViewController: BaseViewController {
     var onLogin: (() -> Void)?
 
     private let loginField = UITextField()
@@ -10,7 +10,6 @@ final class AuthViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
         title = "Login"
 
         loginField.placeholder = "Login"
