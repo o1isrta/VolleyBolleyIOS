@@ -4,12 +4,20 @@ protocol HomeViewProtocol: AnyObject {
     func showGreeting(_ message: String)
 }
 
-final class HomeViewController: UIViewController, HomeViewProtocol {
-    var presenter: HomePresenterProtocol!
+final class HomeViewController: BaseViewController, HomeViewProtocol {
+    private let presenter: HomePresenterProtocol
+
+    init(presenter: HomePresenterProtocol) {
+        self.presenter = presenter
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
         presenter.viewDidLoad()
     }
 
