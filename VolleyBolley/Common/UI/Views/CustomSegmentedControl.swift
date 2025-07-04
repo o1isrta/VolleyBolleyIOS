@@ -42,20 +42,18 @@ public class CustomSegmentedControl: UIView {
     // MARK: - Private Properties
     
     // Array to hold segment buttons
-    private var buttons: [UIButton] = []
+    private lazy var buttons: [UIButton] = []
     // Selector view to highlight the selected segment
-    private var selectorView: UIView!
+    private lazy var selectorView = UIView()
     
     // MARK: - Initializers
     
-    // Initializer to create the control with given segments
     public init(items: [String]) {
         self.segments = items
         super.init(frame: .zero)
         setupView()
     }
     
-    // Required initializer (not used here)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -71,16 +69,13 @@ public class CustomSegmentedControl: UIView {
         
         updateSegmentedControl()
     }
-    
 }
     
 // MARK: - Private Methods
 
 private extension CustomSegmentedControl {
     
-    // Sets up the view's UI elements and layout
     func setupView() {
-        // Set background color and corner radius
         backgroundColor = AppColor.Text.primary
         
         let gradientLayer = CALayer.getGradientLayer()
@@ -96,19 +91,17 @@ private extension CustomSegmentedControl {
         buttons = segments.map { createButton(withTitle: $0) }
 
         // Initialize the selector view
-        selectorView = UIView()
         selectorView.backgroundColor = AppColor.Text.primary
         selectorView.layer.cornerRadius = 16
         addSubviews(selectorView)
 
         // Create a stack view to arrange buttons horizontally
         let stackView = UIStackView(arrangedSubviews: buttons)
-        stackView.axis = .horizontal // Arrange buttons horizontally
-        stackView.alignment = .fill // Fill alignment
-        stackView.distribution = .fillEqually // Equal button distribution
+        stackView.axis = .horizontal
+        stackView.alignment = .fill
+        stackView.distribution = .fillEqually
         addSubviews(stackView)
         
-        // Enable Auto Layout for stack view
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: self.topAnchor),
             stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
@@ -120,9 +113,9 @@ private extension CustomSegmentedControl {
     // Creates a button for a given segment title
     func createButton(withTitle title: String) -> UIButton {
         let button = UIButton(type: .system)
-        button.setTitle(title, for: .normal) // Set button title
-        button.setTitleColor(AppColor.Text.inverted, for: .normal) // Set default text color
-        button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside) // Add tap action
+        button.setTitle(title, for: .normal)
+        button.setTitleColor(AppColor.Text.inverted, for: .normal)
+        button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
         return button
     }
 
@@ -138,7 +131,6 @@ private extension CustomSegmentedControl {
         UIView.animate(withDuration: 0.3) {
             self.selectorView.frame = CGRect(x: selectorX, y: selectorY, width: selectorWidth, height: selectorHeight)
         }
-
     }
 
     // Handles button tap and updates the selected index
