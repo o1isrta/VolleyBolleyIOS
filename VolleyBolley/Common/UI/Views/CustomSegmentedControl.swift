@@ -81,7 +81,7 @@ private extension CustomSegmentedControl {
     // Sets up the view's UI elements and layout
     func setupView() {
         // Set background color and corner radius
-        backgroundColor = .white
+        backgroundColor = AppColor.Text.primary
         
         let gradientLayer = CALayer.getGradientLayer()
         gradientLayer.frame = bounds
@@ -97,7 +97,7 @@ private extension CustomSegmentedControl {
 
         // Initialize the selector view
         selectorView = UIView()
-        selectorView.backgroundColor = .white
+        selectorView.backgroundColor = AppColor.Text.primary
         selectorView.layer.cornerRadius = 16
         addSubviews(selectorView)
 
@@ -121,7 +121,7 @@ private extension CustomSegmentedControl {
     func createButton(withTitle title: String) -> UIButton {
         let button = UIButton(type: .system)
         button.setTitle(title, for: .normal) // Set button title
-        button.setTitleColor(.black, for: .normal) // Set default text color
+        button.setTitleColor(AppColor.Text.inverted, for: .normal) // Set default text color
         button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside) // Add tap action
         return button
     }
