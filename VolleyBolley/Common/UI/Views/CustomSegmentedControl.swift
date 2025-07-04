@@ -44,7 +44,12 @@ public class CustomSegmentedControl: UIView {
     // Array to hold segment buttons
     private lazy var buttons: [UIButton] = []
     // Selector view to highlight the selected segment
-    private lazy var selectorView = UIView()
+    private lazy var selectorView: UIView = {
+        let view = UIView()
+        view.backgroundColor = AppColor.Text.primary
+        view.layer.cornerRadius = 16
+        return view
+    }()
     
     // MARK: - Initializers
     
@@ -90,9 +95,6 @@ private extension CustomSegmentedControl {
         // Create buttons for segments
         buttons = segments.map { createButton(withTitle: $0) }
 
-        // Initialize the selector view
-        selectorView.backgroundColor = AppColor.Text.primary
-        selectorView.layer.cornerRadius = 16
         addSubviews(selectorView)
 
         // Create a stack view to arrange buttons horizontally
