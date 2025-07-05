@@ -8,15 +8,18 @@ protocol AuthRouterProtocol {
 
 final class AuthRouter: AuthRouterProtocol {
     var onLoginSuccess: (() -> Void)?
-    private let container: Container
+    private let resolver: Resolver
 
-    init(container: Container) {
-        self.container = container
+    init(resolver: Resolver) {
+        self.resolver = resolver
     }
 
     func start() -> UIViewController {
-        let viewController = AuthViewController()
+        guard let viewController = resolver.resolve(AuthViewController.self) else {
+            fatalError("❌ Failed to resolve AuthViewController")
+        }
 
+        // Можно внедрить presenter через resolver при необходимости
         viewController.onLogin = { [weak self] in
             self?.onLoginSuccess?()
         }

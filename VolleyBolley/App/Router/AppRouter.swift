@@ -2,22 +2,22 @@ import Swinject
 import UIKit
 
 final class AppRouter {
+    
     private let window: UIWindow
-    private let assembler: Assembler
     private let userSessionService: UserSessionServiceProtocol
+    private let resolver: Resolver
+
     private var onboardingRouter: OnboardingRouterProtocol?
     private var authRouter: AuthRouterProtocol?
 
-    init(window: UIWindow, assembler: Assembler) {
+    init(
+        window: UIWindow,
+        userSessionService: UserSessionServiceProtocol,
+        resolver: Resolver
+    ) {
         self.window = window
-        self.assembler = assembler
-        guard
-            let sessionService = assembler.resolver.resolve(UserSessionServiceProtocol.self)
-        else {
-            fatalError("Error: Failed to resolve UserSessionServiceProtocol")
-        }
-
-        self.userSessionService = sessionService
+        self.userSessionService = userSessionService
+        self.resolver = resolver
     }
 
     func start() {
@@ -31,15 +31,13 @@ final class AppRouter {
     }
 
     private func showOnboarding() {
-        guard
-            var router = assembler.resolver.resolve(OnboardingRouterProtocol.self)
-        else {
-            print("Error: Failed to resolve OnboardingRouterProtocol")
+        guard var router = resolver.resolve(OnboardingRouterProtocol.self) else {
+            print("❌ Failed to resolve OnboardingRouterProtocol")
             return
         }
 
         router.onFinish = { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
 
             self.userSessionService.markOnboardingAsShown()
             self.start()
@@ -50,15 +48,13 @@ final class AppRouter {
     }
 
     private func showAuth() {
-        guard
-            var router = assembler.resolver.resolve(AuthRouterProtocol.self)
-        else {
-            print("Error: Failed to resolve AuthRouterProtocol")
+        guard var router = resolver.resolve(AuthRouterProtocol.self) else {
+            print("❌ Failed to resolve AuthRouterProtocol")
             return
         }
 
         router.onLoginSuccess = { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
 
             self.userSessionService.markUserAuthorized()
             self.start()
@@ -69,10 +65,8 @@ final class AppRouter {
     }
 
     private func showMainApp() {
-        guard
-            let router = assembler.resolver.resolve(MainAppRouterProtocol.self)
-        else {
-            print("Error: Failed to resolve MainAppRouterProtocol")
+        guard let router = resolver.resolve(MainAppRouterProtocol.self) else {
+            print("❌ Failed to resolve MainAppRouterProtocol")
             return
         }
 

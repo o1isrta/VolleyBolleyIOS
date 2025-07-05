@@ -11,6 +11,7 @@ import UIKit
 ///
 /// - SeeAlso: `UIViewController`
 class BaseViewController: UIViewController {
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureBaseUI()
