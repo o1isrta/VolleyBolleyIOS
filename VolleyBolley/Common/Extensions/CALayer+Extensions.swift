@@ -8,6 +8,7 @@
 import UIKit
 
 extension CALayer {
+    
     static func getGradientLayer(with colors: [UIColor] = AppGradient.greenLight) -> CAGradientLayer {
         let gradientLayer = CAGradientLayer()
         gradientLayer.colors = colors.map { $0.cgColor }
