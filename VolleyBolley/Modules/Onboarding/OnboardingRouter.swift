@@ -8,14 +8,16 @@ protocol OnboardingRouterProtocol {
 
 final class OnboardingRouter: OnboardingRouterProtocol {
     var onFinish: (() -> Void)?
-    private let container: Container
+    private let resolver: Resolver
 
-    init(container: Container) {
-        self.container = container
+    init(resolver: Resolver) {
+        self.resolver = resolver
     }
 
     func start() -> UIViewController {
-        let viewController = OnboardingViewController()
+        guard let viewController = resolver.resolve(OnboardingViewController.self) else {
+            fatalError("❌ Failed to resolve AuthViewController")
+        }
 
         viewController.onContinue = { [weak self] in
             self?.onFinish?()

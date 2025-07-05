@@ -14,22 +14,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
         let window = UIWindow(windowScene: windowScene)
-        self.window = window
+        DIContainer.initialize(window: window)
 
-        let container = Container()
-        let assembler = Assembler([
-            AppAssembly(),
-            AuthAssembly(),
-            OnboardingAssembly()
-        ], container: container)
-
-        let router = AppRouter(window: window, assembler: assembler)
-        self.appRouter = router
-
-        let mainAssembly = MainAssembly(appRouter: router)
-        assembler.apply(assembly: mainAssembly)
-
-        router.start()
+        guard let appRouter = DIContainer.shared.resolver.resolve(AppRouter.self) else {
+            assertionFailure("Failed to resolve AppRouter from DIContainer")
+            return
+        }
+        appRouter.start()
 
         window.makeKeyAndVisible()
     }

@@ -55,7 +55,7 @@ final class CustomTabBar: UITabBar {
     }
 
     func adjustItemPositions() {
-        guard let items = items else { return }
+        guard let items else { return }
 
         let tabBarItemSize = CGSize(
             width: bounds.width / CGFloat(items.count),

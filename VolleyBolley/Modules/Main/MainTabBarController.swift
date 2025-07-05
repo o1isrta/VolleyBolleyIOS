@@ -9,39 +9,34 @@ import UIKit
 
 final class MainTabBarController: UITabBarController {
 
+    private struct TabIcon {
+        let title: String
+        let image: UIImage?
+        let selected: UIImage?
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setValue(CustomTabBar(), forKey: "tabBar")
-        setupTabs()
         configureAppearance()
     }
 
-    private func setupTabs() {
-        let home = UINavigationController(rootViewController: HomeAssembly.assemble())
-        home.tabBarItem = UITabBarItem(
-            title: "Home",
-            image: .home,
-            selectedImage: .homeActive
-        )
-        home.tabBarItem.tag = 0
+    func configureTabBarItems() {
+        guard let items = tabBar.items else { return }
 
-        let games = UINavigationController(rootViewController: MyGamesAssembly.assemble())
-        games.tabBarItem = UITabBarItem(
-            title: "My Games",
-            image: .myGames,
-            selectedImage: .myGamesActive
-        )
-        games.tabBarItem.tag = 1
+        let icons: [TabIcon] = [
+            TabIcon(title: "Home", image: .home, selected: .homeActive),
+            TabIcon(title: "My Games", image: .myGames, selected: .myGamesActive),
+            TabIcon(title: "Profile", image: .profile, selected: .profileActive)
+        ]
 
-        let profile = UINavigationController(rootViewController: ProfileAssembly.assemble())
-        profile.tabBarItem = UITabBarItem(
-            title: "Profile",
-            image: .profile,
-            selectedImage: .profileActive
-        )
-        profile.tabBarItem.tag = 2
-
-        viewControllers = [home, games, profile]
+        for (index, item) in items.enumerated() {
+            let data = icons[index]
+            item.title = data.title
+            item.image = data.image
+            item.selectedImage = data.selected
+            item.tag = index
+        }
     }
 
     private func configureAppearance() {
