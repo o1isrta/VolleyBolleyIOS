@@ -2,7 +2,7 @@ import Swinject
 import UIKit
 
 final class AppRouter {
-    
+
     private let window: UIWindow
     private let userSessionService: UserSessionServiceProtocol
     private let resolver: Resolver
