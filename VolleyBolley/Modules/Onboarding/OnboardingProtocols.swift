@@ -1,4 +1,4 @@
-import UIKit
+import Foundation
 
 protocol OnboardingViewProtocol: AnyObject {
     
@@ -9,7 +9,7 @@ protocol OnboardingPresenterProtocol: AnyObject {
 }
 
 protocol OnboardingInteractorProtocol: AnyObject {
-    
+    func markOnboardingAsCompleted()
 }
 
 protocol OnboardingRouterProtocol: AnyObject {

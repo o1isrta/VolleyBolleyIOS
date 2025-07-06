@@ -8,6 +8,7 @@ class OnboardingViewController: UIViewController {
         label.text = "Welcome!"
         label.font = AppFont.ActayWide.bold(size: 36)
         label.textColor = AppColor.Text.primary
+        label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -18,7 +19,7 @@ class OnboardingViewController: UIViewController {
         label.font = AppFont.Hero.regular(size: 20)
         label.textColor = AppColor.Text.primary
         label.numberOfLines = 0
-        label.textAlignment = .center
+        label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -44,6 +45,7 @@ class OnboardingViewController: UIViewController {
     private lazy var backgroundImageView: UIImageView = {
         let imageView = UIImageView(image: .launchScreen)
         imageView.contentMode = .scaleAspectFill
+        imageView.backgroundColor = .launchScreenBackground
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -69,7 +71,7 @@ class OnboardingViewController: UIViewController {
                backgroundImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
                
                titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40),
-               titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+               titleLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 26),
                
                descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16),
                descriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
@@ -91,6 +93,7 @@ class OnboardingViewController: UIViewController {
        }
        
     @objc private func getStartedTapped() {
+        UserDefaults.standard.set(true, forKey: "onboardingShown")
         presenter.getStartedButtonTapped()
     }
 }
@@ -98,4 +101,3 @@ class OnboardingViewController: UIViewController {
 extension OnboardingViewController: OnboardingViewProtocol {
     
 }
-

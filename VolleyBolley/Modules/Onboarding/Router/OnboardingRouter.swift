@@ -1,10 +1,11 @@
 import UIKit
 
 class OnboardingRouter: OnboardingRouterProtocol {
-
-    weak var viewController: UIViewController?
     
-    static func assembleModule() -> UIViewController {
+    weak var viewController: UIViewController?
+    weak var coordinator: AppCoordinator?
+    
+    static func assembleModule(coordinator: AppCoordinator) -> UIViewController {
         let view = OnboardingViewController()
         let presenter = OnboardingPresenter()
         let interactor = OnboardingInteractor()
@@ -15,12 +16,12 @@ class OnboardingRouter: OnboardingRouterProtocol {
         presenter.interactor = interactor
         presenter.router = router
         router.viewController = view
+        router.coordinator = coordinator
         
         return view
     }
     
     func navigateToAuthorizationScreen() {
-        let authVC = AuthorizationView()
-         viewController?.navigationController?.pushViewController(authVC, animated: true)
+        coordinator?.showAuthorization()
     }
 }

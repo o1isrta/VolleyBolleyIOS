@@ -17,4 +17,3 @@ class AuthorizationPresenter: AuthPresenterProtocol {
         interactor?.authWithFacebook()
     }
 }
-

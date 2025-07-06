@@ -5,17 +5,35 @@ class AuthorizationView: UIViewController, AuthViewProtocol {
     
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
-        label.text = "Sign up \nwith\na social\nmedia"
-        label.font = AppFont.ActayWide.bold(size: 36)
-        label.textColor = AppColor.Text.primary
+        let text = "Sign up\nwith\na social\nmedia"
+        let attributedString = NSMutableAttributedString(string: text)
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 18
+        paragraphStyle.lineHeightMultiple = 1.1
+        paragraphStyle.alignment = .left
+        
+        attributedString.addAttributes([
+            .font: AppFont.ActayWide.bold(size: 36),
+            .foregroundColor: AppColor.Text.primary,
+            .paragraphStyle: paragraphStyle
+        ], range: NSRange(location: 0, length: text.count))
+        
+        label.attributedText = attributedString
         label.numberOfLines = 4
-        let style = NSMutableParagraphStyle()
-        style.lineSpacing = 18
-        label.textAlignment = .left
+        
+//        label.text = "Sign up \nwith\na social\nmedia"
+//        label.font = AppFont.ActayWide.bold(size: 36)
+//        label.textColor = AppColor.Text.primary
+//        label.numberOfLines = 4
+//        let style = NSMutableParagraphStyle()
+//        style.lineSpacing = 18
+//        style.lineHeightMultiple = 1.2
+//        label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
+      
     private lazy var phoneAuthButton: UIButton = {
         let button = UIButton()
         button.setTitle("Continue with phone number", for: .normal)
@@ -87,7 +105,6 @@ class AuthorizationView: UIViewController, AuthViewProtocol {
         return imageView
     }()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -111,8 +128,8 @@ class AuthorizationView: UIViewController, AuthViewProtocol {
             backgroundImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             backgroundImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             
-            descriptionLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40),
-            descriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
+            descriptionLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            descriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 22),
             
             bottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             bottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -144,4 +161,3 @@ class AuthorizationView: UIViewController, AuthViewProtocol {
         }
     
 }
-
