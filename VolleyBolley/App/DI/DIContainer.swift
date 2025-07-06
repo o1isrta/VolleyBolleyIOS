@@ -1,6 +1,27 @@
 import Swinject
 import UIKit
 
+/// `DIContainer` is a singleton responsible for setting up and providing access to the application's dependency injection container using Swinject.
+/// 
+/// - Initialization:
+///   Call `DIContainer.initialize(window:)` early in the app lifecycle to configure the global container. 
+///   This method is safe to call only once per launch; subsequent calls will trigger a precondition failure.
+///   Access the shared instance through the `DIContainer.shared` property. Accessing before initialization will cause a runtime fatal error.
+/// 
+/// - Usage:
+///   Use the `resolver` property to resolve registered dependencies throughout the app.
+///   The container is configured with a set of assemblies that register services, coordinators, and view models for each app module.
+/// 
+/// - Properties:
+///   - `assembler`: The Swinject `Assembler` used to assemble the application's dependency graph.
+///   - `resolver`: A convenience property to access the root `Resolver`.
+///
+/// - Example:
+///   ```swift
+///   DIContainer.initialize(window: window)
+///   let container = DIContainer.shared
+///   let someService = container.resolver.resolve(SomeServiceType.self)
+///   ```
 final class DIContainer {
 
     private static var _shared: DIContainer?
