@@ -1,5 +1,25 @@
 import Swinject
 
+/// An assembly for registering shared application services with the Swinject dependency injection container.
+/// 
+/// `SharedServicesAssembly` centralizes the registration of singleton services that are shared across the app.
+/// The assembly is intended to be used in applications that rely on Swinject for dependency injection.
+/// 
+/// ## Registered Services
+/// - `SettingsStorageProtocol`: Registers a `UserDefaultsStorage` instance as a singleton.
+/// - `UserSessionServiceProtocol`: Registers a `DefaultUserSessionService`, injected with the shared `SettingsStorageProtocol` instance, as a singleton.
+/// 
+/// Registration is performed with `.inObjectScope(.container)` to ensure each service is a shared singleton.
+/// 
+/// - Warning: If resolving `SettingsStorageProtocol` fails when registering `UserSessionServiceProtocol`, a runtime
+///   `fatalError` is triggered.
+/// 
+/// Usage:
+/// ```swift
+/// let container = Container()
+/// let assembly = SharedServicesAssembly()
+/// assembly.assemble(container: container)
+/// ```
 final class SharedServicesAssembly: Assembly {
 
     func assemble(container: Container) {
