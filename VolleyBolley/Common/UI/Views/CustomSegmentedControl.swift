@@ -63,6 +63,13 @@ public class CustomSegmentedControl: UIView {
         return view
     }()
     
+    private lazy var gradientLayer: CAGradientLayer = {
+        let view = CALayer.getGradientLayer()
+        view.frame = bounds
+        view.cornerRadius = 16
+        return view
+    }()
+    
     // MARK: - Initializers
     
     init(type: SegmentedControlType) {
@@ -95,11 +102,7 @@ private extension CustomSegmentedControl {
     func setupView() {
         backgroundColor = AppColor.Text.primary
         
-        let gradientLayer = CALayer.getGradientLayer()
-        gradientLayer.frame = bounds
-        gradientLayer.cornerRadius = 16
         layer.insertSublayer(gradientLayer, at: 0)
-        
         // Save a link to the gradient layer for subsequent updating during resizing
         self.layer.sublayers?.first { $0 is CAGradientLayer }?.removeFromSuperlayer()
         layer.insertSublayer(gradientLayer, at: 0)
