@@ -6,11 +6,23 @@
 //
 
 import UIKit
+
+enum SegmentedControlType: CaseIterable {
+    case players, games, map
+    
+    var segments: [String] {
+        switch self {
+        case .players: return ["All players", "Favorites"]
+        case .games: return ["My games", "Archive"]
+        case .map: return ["Map", "List"]
+        }
+    }
+}
 /// Custom Segmented Control, replacement of UISegmentedControl
 ///
 /// - Usage example:
 /// ```swift
-/// private let segmentedControl = CustomSegmentedControl(items: ["Map", "List"])
+/// private let segmentedControl = CustomSegmentedControl(type: .map)
 ///
 /// override func viewDidLoad() {
 ///     super.viewDidLoad()
@@ -53,8 +65,8 @@ public class CustomSegmentedControl: UIView {
     
     // MARK: - Initializers
     
-    public init(items: [String]) {
-        self.segments = items
+    init(type: SegmentedControlType) {
+        self.segments = type.segments
         super.init(frame: .zero)
         setupView()
     }
@@ -142,7 +154,29 @@ private extension CustomSegmentedControl {
     }
 }
 
+// MARK: - Preview
+#if DEBUG
+import SwiftUI
+
+private struct CustomSegmentedControlPreview: UIViewRepresentable {
+    let type: SegmentedControlType
+
+    func makeUIView(context: Context) -> CustomSegmentedControl {
+        return CustomSegmentedControl(type: type)
+    }
+
+    func updateUIView(_ uiView: CustomSegmentedControl, context: Context) {}
+}
+
 @available(iOS 17.0, *)
 #Preview {
-    CustomSegmentedControl(items: ["Map", "List"])
+    CustomSegmentedControlPreview(type: .map)
+        .frame(width: 204, height: 36)
+    
+    CustomSegmentedControlPreview(type: .players)
+        .frame(width: 319, height: 36)
+
+    CustomSegmentedControlPreview(type: .games)
+        .frame(width: 319, height: 36)
 }
+#endif
