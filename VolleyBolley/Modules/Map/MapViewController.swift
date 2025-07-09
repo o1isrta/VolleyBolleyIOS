@@ -19,7 +19,7 @@ class MapViewController: UIViewController, MapViewProtocol {
     // MARK: - Private Properties
     
     private let mapView = MKMapView()
-    private let segmentedControl = CustomSegmentedControl(items: ["Map", "List"]) // TODO
+    private let segmentedControl = CustomSegmentedControl(type: .map)
     private let bottomView = CourtBottomView()
     private let popupView = CourtDetailsPopupView()
     private var popupBottomConstraint: NSLayoutConstraint?
