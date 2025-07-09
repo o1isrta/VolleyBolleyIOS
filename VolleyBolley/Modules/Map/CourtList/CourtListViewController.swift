@@ -5,8 +5,8 @@
 //  Created by Roman Romanov on 08.07.2025.
 //
 
-import UIKit
 import CoreLocation
+import UIKit
 
 class CourtListViewController: UIViewController {
     

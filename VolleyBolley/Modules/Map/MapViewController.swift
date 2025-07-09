@@ -5,9 +5,9 @@
 //  Created by Roman Romanov on 08.07.2025.
 //
 
-import UIKit
-import MapKit
 import CoreLocation
+import MapKit
+import UIKit
 
 class MapViewController: UIViewController, MapViewProtocol {
     

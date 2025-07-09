@@ -5,8 +5,8 @@
 //  Created by Roman Romanov on 08.07.2025.
 //
 
-import Foundation
 import CoreLocation
+import Foundation
 
 protocol CourtListInteractorProtocol: AnyObject {
     func fetchCourtsWithDistance(userLocation: CLLocation?, completion: @escaping ([(court: CourtModel, distance: Double)]) -> Void)

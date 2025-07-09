@@ -5,8 +5,8 @@
 //  Created by Roman Romanov on 08.07.2025.
 //
 
-import Foundation
 import CoreLocation
+import Foundation
 
 protocol CourtListPresenterProtocol: AnyObject {
     func viewDidLoad(userLocation: CLLocation?)
