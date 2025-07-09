@@ -1,11 +1,11 @@
+#if DEBUG
 import UIKit
 
-protocol HomeRouterProtocol: AnyObject {}
-
-final class HomeRouter: HomeRouterProtocol {
+final class MockHomeRouter: HomeRouterProtocol {
     weak var viewController: UIViewController?
 
     init(viewController: UIViewController? = nil) {
         self.viewController = viewController
     }
 }
+#endif

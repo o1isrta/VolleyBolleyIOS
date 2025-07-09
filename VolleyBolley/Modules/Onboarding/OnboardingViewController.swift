@@ -1,10 +1,12 @@
 import UIKit
 
-final class OnboardingViewController: BaseViewController {
+final class OnboardingViewController: UIViewController {
     var onContinue: (() -> Void)?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        view.backgroundColor = AppColor.Background.screen
 
         let button = UIButton(type: .system)
         button.setTitle("Continue", for: .normal)

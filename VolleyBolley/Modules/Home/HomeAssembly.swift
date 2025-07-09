@@ -3,7 +3,7 @@ import UIKit
 final class HomeAssembly {
     static func assemble() -> UIViewController {
         let interactor = HomeInteractor()
-        let router = HomeRouter(viewController: nil)
+        let router = HomeRouter()
         let presenter = HomePresenter(interactor: interactor, router: router)
         let view = HomeViewController(presenter: presenter)
         presenter.view = view
