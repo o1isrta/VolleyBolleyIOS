@@ -7,16 +7,15 @@
 
 import UIKit
 
-final class OnboardingViewController: BaseViewController {
-
-    // MARK: - Public Properties
-
+final class OnboardingViewController: UIViewController {
     var onContinue: (() -> Void)?
 
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        view.backgroundColor = AppColor.Background.screen
 
         let button = UIButton(type: .system)
         button.setTitle("Continue", for: .normal)

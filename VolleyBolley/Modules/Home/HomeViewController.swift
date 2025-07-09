@@ -17,8 +17,16 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
 
     private let presenter: HomePresenterProtocol
 
-    // MARK: - Initializers
+    // MARK: - UI
+    private lazy var label: UILabel = {
+        let view = UILabel()
+        view.textAlignment = .center
+        view.font = AppFont.Quantex.regular(size: 16)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
 
+    // MARK: - Init
     init(presenter: HomePresenterProtocol) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -32,22 +40,41 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        setupView()
         presenter.viewDidLoad()
     }
 
     // MARK: - Public Methods
 
     func showGreeting(_ message: String) {
-        let label = UILabel()
         label.text = message
-        label.textAlignment = .center
-        label.font = AppFont.Quantex.regular(size: 16)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(label)
+    }
 
+    // MARK: - Layout
+    private func setupView() {
+        view.addSubview(label)
+        setupLabelConstraints()
+    }
+
+    // MARK: - Constraints
+    private func setupLabelConstraints() {
         NSLayoutConstraint.activate([
             label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
 }
+
+// MARK: - Preview
+#if DEBUG
+import SwiftUI
+
+@available(iOS 17.0, *)
+#Preview {
+    UIViewControllerPreview {
+        HomeModulePreviewBuilder.build()
+    }
+    .edgesIgnoringSafeArea(.all)
+}
+#endif

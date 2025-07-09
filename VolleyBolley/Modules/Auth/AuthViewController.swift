@@ -7,10 +7,7 @@
 
 import UIKit
 
-final class AuthViewController: BaseViewController {
-
-    // MARK: - Public Properties
-
+final class AuthViewController: UIViewController {
     var onLogin: (() -> Void)?
 
     // MARK: - Private Properties
@@ -23,9 +20,8 @@ final class AuthViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Login"
-        setupView()
-    }
+
+        view.backgroundColor = AppColor.Background.screen
 
     private func setupView() {
         loginField.placeholder = "Login"
@@ -48,7 +44,6 @@ final class AuthViewController: BaseViewController {
 
     // MARK: - Actions
     @objc private func loginTapped() {
-        print("AuthViewController.loginTapped")
         onLogin?()
     }
 }
