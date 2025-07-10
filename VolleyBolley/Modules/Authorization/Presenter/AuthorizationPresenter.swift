@@ -17,3 +17,14 @@ class AuthorizationPresenter: AuthPresenterProtocol {
         interactor?.authWithFacebook()
     }
 }
+
+
+extension AuthorizationPresenter: AuthInteractorOutputProtocol {
+    func didAuthWithGoogleSuccess() {
+        router?.showUserRegScreen()
+    }
+    
+    func didAuthWithFacebookSuccess() {
+        router?.showUserRegScreen()
+    }
+}

@@ -6,7 +6,7 @@ class PhoneRegView: UIViewController {
     
     private let containerView: UIView = {
         let view = UIView()
-        view.backgroundColor = .green
+        view.backgroundColor = .gray
         view.layer.cornerRadius = 32
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -46,8 +46,10 @@ class PhoneRegView: UIViewController {
         textField.borderStyle = .roundedRect
         
         textField.layer.cornerRadius = 16
-           textField.layer.borderWidth = 1
-//        textField.layer.borderColor = AppColor.Border.primary
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = AppColor.Border.primary.cgColor
+        textField.backgroundColor = .systemBackground
+        textField.textColor = .label
         
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField

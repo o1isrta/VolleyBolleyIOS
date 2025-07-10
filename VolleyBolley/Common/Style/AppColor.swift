@@ -34,6 +34,7 @@ enum AppColor {
     enum Text {
         static let primary = white
         static let inverted = ashBrown
+        static let placeholder = placeholderText
     }
 
     enum Icon {
@@ -47,6 +48,7 @@ enum AppColor {
         static let actionButton = yellow
         static let primary = white
         static let inverted = ashBrown
+        static let separator = separatorGray
     }
 }
 
@@ -64,6 +66,8 @@ private extension AppColor {
     static let orange = UIColor(hex: "#E6AC53")
     static let yellow = UIColor(hex: "#E6C953")
     static let mistGrey = UIColor(hex: "#8CA5A3")
+    static let separatorGray = UIColor(hex: "#C3C3C3")
+    static let placeholderText = UIColor(hex: "#7C7C7C")
     static let steelBlue = UIColor(hex: "#516372")
     static let mutedTeal = UIColor(hex: "#578D83")
     static let red = UIColor(hex: "#BA0000")

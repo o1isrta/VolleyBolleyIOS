@@ -8,6 +8,8 @@ protocol AuthPresenterProtocol: AnyObject {
     func phoneButtonTapped()
     func googleButtonTapped()
     func facebookButtonTapped()
+    func didAuthWithGoogleSuccess()
+    func didAuthWithFacebookSuccess()
 }
 
 protocol AuthInteractorProtocol: AnyObject {
@@ -15,6 +17,12 @@ protocol AuthInteractorProtocol: AnyObject {
     func authWithFacebook()
 }
 
+protocol AuthInteractorOutputProtocol: AnyObject {
+    func didAuthWithGoogleSuccess()
+    func didAuthWithFacebookSuccess()
+}
+
 protocol AuthRouterProtocol: AnyObject {
     func showPhoneAuth()
+    func showUserRegScreen()
 }
