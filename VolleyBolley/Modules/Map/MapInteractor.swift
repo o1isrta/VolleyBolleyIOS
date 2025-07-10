@@ -47,7 +47,7 @@ final class MapInteractor: MapInteractorProtocol {
                 imageUrl: nil,
                 price: "$25/hour",
                 phone: "+1 212-555-9012"
-            ),
+            )
             // for CourtTableViewCell ui tests
 //            CourtModel(
 //                id: UUID(),

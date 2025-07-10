@@ -102,7 +102,7 @@ private extension CourtTableViewCell {
         // description
         [
             titleLabel,
-            descriptionLabel,
+            descriptionLabel
         ].forEach {
             descriptionStackView.addArrangedSubview($0)
         }
@@ -116,8 +116,7 @@ private extension CourtTableViewCell {
             mainStackView.addArrangedSubview($0)
         }
 
-        mainStackView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(mainStackView)
+        contentView.addSubviews(mainStackView)
         
         NSLayoutConstraint.activate([
             // Main stack
@@ -133,7 +132,7 @@ private extension CourtTableViewCell {
             distanceLabel.leadingAnchor.constraint(equalTo: distanceContainer.leadingAnchor, constant: 8),
             distanceLabel.trailingAnchor.constraint(equalTo: distanceContainer.trailingAnchor, constant: -8),
             distanceLabel.bottomAnchor.constraint(equalTo: distanceContainer.bottomAnchor, constant: -4),
-            distanceLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 50),
+            distanceLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 50)
         ])
     }
 }

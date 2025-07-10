@@ -92,7 +92,7 @@ class CourtDetailsPopupView: UIView {
 private extension CourtDetailsPopupView {
     
     private func setupUI() {
-        backgroundColor = .white// TODO
+        backgroundColor = .systemGray2// TODO
         layer.cornerRadius = 24
         layer.masksToBounds = true
         
@@ -108,8 +108,7 @@ private extension CourtDetailsPopupView {
             mainStack.addArrangedSubview($0)
         }
         
-        mainStack.translatesAutoresizingMaskIntoConstraints = false// TODO
-        addSubview(mainStack)
+        addSubviews(mainStack)
         
         NSLayoutConstraint.activate([
             imageView.heightAnchor.constraint(equalToConstant: 160),
