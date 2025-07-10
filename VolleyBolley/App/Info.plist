@@ -27,5 +27,7 @@
 			</array>
 		</dict>
 	</dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Для отображения ближайших спортивных площадок на карте</string>
 </dict>
 </plist>
