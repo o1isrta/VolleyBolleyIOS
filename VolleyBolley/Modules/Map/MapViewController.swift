@@ -118,8 +118,7 @@ extension MapViewController: MKMapViewDelegate {
         if
             let nearest = nearestCourt,
             annotation.coordinate.latitude == nearest.coordinate.latitude
-            && annotation.coordinate.longitude == nearest.coordinate.longitude
-        {
+            && annotation.coordinate.longitude == nearest.coordinate.longitude {
             annotationView?.markerTintColor = .systemGreen
             annotationView?.glyphText = "★"
         } else {
@@ -159,7 +158,7 @@ private extension MapViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideDetailsPopup))
         popupView.addGestureRecognizer(tapGesture)
         
-        segmentedControl.segmentChanged = { [weak self] selectedIndex in
+        segmentedControl.segmentChanged = { [weak self] _ in
             self?.segmentChanged()
         }
     }
