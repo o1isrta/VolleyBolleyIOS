@@ -8,5 +8,8 @@
 import UIKit
 
 final class MyGamesViewController: UIViewController {
-    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = AppColor.Background.screen
+    }
 }
