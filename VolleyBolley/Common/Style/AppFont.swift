@@ -14,9 +14,13 @@ enum AppFont {
         static func regular(size: CGFloat) -> UIFont {
             font(named: "Hero-Regular", size: size)
         }
+
+        /// font-weight: 700
         static func bold(size: CGFloat) -> UIFont {
             font(named: "Hero-Bold", size: size)
         }
+
+        /// font-weight: 200
         static func light(size: CGFloat) -> UIFont {
             font(named: "Hero-Light", size: size)
         }
