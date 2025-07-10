@@ -80,9 +80,7 @@ extension CourtListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let realIndex = isRealIndex(row: indexPath.row)
-        expandedIndex = expandedIndex == realIndex
-            ? nil
-            : realIndex
+        expandedIndex = expandedIndex == realIndex ? nil : realIndex
         tableView.reloadData()
     }
     
