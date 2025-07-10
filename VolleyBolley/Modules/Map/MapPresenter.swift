@@ -27,9 +27,23 @@ final class MapPresenter: MapPresenterProtocol {
     
     func viewDidLoad(userLocation: CLLocation?) {
         interactor?.fetchCourts { [weak self] courts in
-            var nearest: CourtModel? = nil
+            var nearest: CourtModel?
             if let userLocation = userLocation {
-                nearest = courts.min(by: { userLocation.distance(from: CLLocation(latitude: $0.coordinate.latitude, longitude: $0.coordinate.longitude)) < userLocation.distance(from: CLLocation(latitude: $1.coordinate.latitude, longitude: $1.coordinate.longitude)) })
+                nearest = courts
+                    .min(
+                        by: {
+                            userLocation.distance(
+                                from: CLLocation(
+                                    latitude: $0.coordinate.latitude,
+                                    longitude: $0.coordinate.longitude
+                                )
+                            ) < userLocation.distance(
+                                from: CLLocation(
+                                    latitude: $1.coordinate.latitude,
+                                    longitude: $1.coordinate.longitude
+                                )
+                            )
+                        })
             }
             self?.view?.showCourts(courts, nearest: nearest)
         }

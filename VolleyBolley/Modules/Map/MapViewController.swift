@@ -66,7 +66,7 @@ class MapViewController: UIViewController, MapViewProtocol {
                 newListVC.view.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 8),
                 newListVC.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
                 newListVC.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-                newListVC.view.bottomAnchor.constraint(equalTo: bottomView.topAnchor, constant: -8)
+                newListVC.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
             ])
             newListVC.didMove(toParent: self)
             newListVC.view.isHidden = true
@@ -131,7 +131,11 @@ extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         guard let annotation = view.annotation else { return }
 
-        if let court = courts.first(where: { $0.coordinate.latitude == annotation.coordinate.latitude && $0.coordinate.longitude == annotation.coordinate.longitude }) {
+        if let court = courts.first(
+            where: {
+                $0.coordinate.latitude == annotation.coordinate.latitude
+                && $0.coordinate.longitude == annotation.coordinate.longitude
+            }) {
             selectedCourt = court
             bottomView.configure(with: court, isNearest: isNearestCourt(court))
         }
@@ -165,13 +169,7 @@ private extension MapViewController {
     
     func setupUI() {
         view.backgroundColor = .white// TODO
-        mapView.translatesAutoresizingMaskIntoConstraints = false// TODO
-        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
-        bottomView.translatesAutoresizingMaskIntoConstraints = false
-        
-        view.addSubview(mapView)
-        view.addSubview(segmentedControl)
-        view.addSubview(bottomView)
+        view.addSubviews(mapView, segmentedControl, bottomView)
         
         NSLayoutConstraint.activate([
             segmentedControl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
@@ -190,21 +188,17 @@ private extension MapViewController {
             bottomView.heightAnchor.constraint(equalToConstant: 160)
         ])
         
-        // Добавляем popupView
-        popupView.translatesAutoresizingMaskIntoConstraints = false// TODO
-        view.addSubview(popupView)
+        view.addSubviews(popupView)
+        popupView.isHidden = true
         popupBottomConstraint = popupView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8)
-        
         if let popupBottomConstraint {
             NSLayoutConstraint.activate([popupBottomConstraint])
         }
-        
         NSLayoutConstraint.activate([
             popupView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             popupView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             popupView.heightAnchor.constraint(equalToConstant: 400)
         ])
-        popupView.isHidden = true// TODO
         
         // Добавляем listVC.view, но скрываем по умолчанию
         if listVC == nil {
@@ -212,8 +206,7 @@ private extension MapViewController {
         }
         if let listVC = listVC {
             addChild(listVC)
-            listVC.view.translatesAutoresizingMaskIntoConstraints = false// TODO
-            view.addSubview(listVC.view)
+            view.addSubviews(listVC.view)
             NSLayoutConstraint.activate([
                 listVC.view.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 8),
                 listVC.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),

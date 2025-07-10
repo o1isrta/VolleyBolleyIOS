@@ -20,6 +20,7 @@ class CourtListViewController: UIViewController {
     
     private var selectedCourt: CourtModel?
     private var initialCourts: [CourtModel] = []
+    private var expandedIndex: Int?
     
     private let tableView: UITableView = {
         let tableView = UITableView()
@@ -78,12 +79,23 @@ extension CourtListViewController: CourtListViewProtocol {
 extension CourtListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let item = courts[indexPath.row]
-        handleCourtSelection(item.court)
+        let realIndex = isRealIndex(row: indexPath.row)
+        expandedIndex = expandedIndex == realIndex
+            ? nil
+            : realIndex
+        tableView.reloadData()
     }
     
     private func handleCourtSelection(_ selectedCourt: CourtModel) {
         print("handleCourtSelection: \(selectedCourt)")
+    }
+    
+    func isRealIndex(row: Int) -> Int {
+        let realIndex = expandedIndex != nil && row > expandedIndex ?? 0
+            ? row - 1
+            : row
+        
+        return realIndex
     }
 }
 
@@ -92,12 +104,21 @@ extension CourtListViewController: UITableViewDelegate {
 extension CourtListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        courts.count
+        return courts.count + (expandedIndex != nil ? 1 : 0)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if let expanded = expandedIndex, indexPath.row == expanded + 1 {
+            if let cell = tableView.dequeueReusableCell(withIdentifier: "CourtDetailsCell", for: indexPath) as? CourtDetailsCell {
+                let court = courts[expanded].court
+                cell.configure(with: court)
+                return cell
+            }
+        }
+        
         if let cell = tableView.dequeueReusableCell(withIdentifier: "CourtCell", for: indexPath) as? CourtTableViewCell {
-            let item = courts[indexPath.row]
+            let realIndex = isRealIndex(row: indexPath.row)
+            let item = courts[realIndex]
             cell.configure(with: item.court, distance: item.distance)
             return cell
         }
@@ -106,7 +127,10 @@ extension CourtListViewController: UITableViewDataSource {
     }
 }
 
+// MARK: - CLLocationManagerDelegate
+
 extension CourtListViewController: CLLocationManagerDelegate {
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         print("📍 LocationManager: Got location update")
         if let location = locations.first {
@@ -169,6 +193,7 @@ private extension CourtListViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(CourtTableViewCell.self, forCellReuseIdentifier: "CourtCell")
+        tableView.register(CourtDetailsCell.self, forCellReuseIdentifier: "CourtDetailsCell")
     }
     
     func setupUI() {
