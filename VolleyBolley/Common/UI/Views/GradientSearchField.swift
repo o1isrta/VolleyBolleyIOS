@@ -51,7 +51,7 @@ class GradientSearchField: UISearchTextField {
         return maskLayer
     }()
     
-    // MARK: - Initialization
+    // MARK: - Initializers
     
     init(type: GradientSearchFieldType) {
         typePlaceholder = type
