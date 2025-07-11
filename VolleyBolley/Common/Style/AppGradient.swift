@@ -44,6 +44,6 @@ extension AppGradient {
         let renderedImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
 
-        return renderedImage?.withRenderingMode(.alwaysOriginal)
+        return renderedImage
     }
 }
