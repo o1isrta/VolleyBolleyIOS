@@ -1,12 +1,18 @@
-import UIKit
+import Swinject
 
-final class HomeAssembly {
-    static func assemble() -> UIViewController {
-        let view = HomeViewController()
-        let interactor = HomeInteractor()
-        let router = HomeRouter(viewController: view)
-        let presenter = HomePresenter(view: view, interactor: interactor, router: router)
-        view.presenter = presenter
-        return view
+final class HomeAssembly: Assembly {
+
+    func assemble(container: Container) {
+        container.register(HomeViewController.self) { _ in
+            let interactor = HomeInteractor()
+            let router = HomeRouter(viewController: nil)
+            let presenter = HomePresenter(interactor: interactor, router: router)
+            let view = HomeViewController(presenter: presenter)
+
+            presenter.view = view
+            router.viewController = view
+
+            return view
+        }
     }
 }

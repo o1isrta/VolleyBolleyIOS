@@ -7,10 +7,7 @@ final class HomePresenter: HomePresenterProtocol {
     let interactor: HomeInteractorProtocol
     let router: HomeRouterProtocol
 
-    init(view: HomeViewProtocol,
-         interactor: HomeInteractorProtocol,
-         router: HomeRouterProtocol) {
-        self.view = view
+    init(interactor: HomeInteractorProtocol, router: HomeRouterProtocol) {
         self.interactor = interactor
         self.router = router
     }
