@@ -46,17 +46,17 @@ final class TabBarViewController: UITabBarController {
     private func setupCustomTabBarItems() {
         let homeTabItem = CustomTabBarView.TabItem(
             title: String(localized: "tab_home"),
-            image: .home
+            image: .Icon.home
         )
 
         let gameTabItem = CustomTabBarView.TabItem(
             title: String(localized: "tab_my_games"),
-            image: .volleyBall
+            image: .Icon.volleyball
         )
 
         let profileTabItem = CustomTabBarView.TabItem(
             title: String(localized: "tab_profile"),
-            image: .person
+            image: .Icon.person
         )
 
         let customTabBar = CustomTabBarView(items: [homeTabItem, gameTabItem, profileTabItem])
