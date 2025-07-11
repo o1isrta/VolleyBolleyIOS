@@ -156,30 +156,3 @@ private extension CustomSegmentedControl {
         selectedSegmentIndex = index
     }
 }
-
-// MARK: - Preview
-#if DEBUG
-import SwiftUI
-
-private struct CustomSegmentedControlPreview: UIViewRepresentable {
-    let type: SegmentedControlType
-
-    func makeUIView(context: Context) -> CustomSegmentedControl {
-        return CustomSegmentedControl(type: type)
-    }
-
-    func updateUIView(_ uiView: CustomSegmentedControl, context: Context) {}
-}
-
-@available(iOS 17.0, *)
-#Preview {
-    CustomSegmentedControlPreview(type: .map)
-        .frame(width: 204, height: 36)
-
-    CustomSegmentedControlPreview(type: .players)
-        .frame(width: 319, height: 36)
-
-    CustomSegmentedControlPreview(type: .games)
-        .frame(width: 319, height: 36)
-}
-#endif
