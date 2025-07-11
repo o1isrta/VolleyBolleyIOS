@@ -2,6 +2,7 @@ import UIKit
 
 final class CustomTabBarView: UIView {
 
+    // MARK: - Public Properties
     struct TabItem {
         let title: String
         let image: UIImage?
@@ -9,6 +10,7 @@ final class CustomTabBarView: UIView {
 
     var onSelectItem: ((Int) -> Void)?
 
+    // MARK: - Private Properties
     private var buttons: [UIButton] = []
     private var items: [TabItem] = []
 
@@ -21,7 +23,7 @@ final class CustomTabBarView: UIView {
         return view
     }()
 
-    // MARK: - Init
+    // MARK: - Initializers
     init(items: [TabItem]) {
         super.init(frame: .zero)
         self.items = items
@@ -35,6 +37,42 @@ final class CustomTabBarView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Public Methods
+    func updateSelection(index: Int) {
+        for (buttonIndex, button) in buttons.enumerated() {
+            guard let stack = button.subviews.first(where: { $0 is UIStackView }) as? UIStackView,
+                  let label = stack.arrangedSubviews.compactMap({ $0 as? UILabel }).first,
+                  let imageView = stack.arrangedSubviews.compactMap({ $0 as? UIImageView }).first else { continue }
+
+            label.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
+            imageView.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
+
+            let title = items[buttonIndex].title
+            label.text = title
+            imageView.image = items[buttonIndex].image
+
+            if buttonIndex == index {
+                label.textColor = .clear
+
+                DispatchQueue.main.async {
+                    let textGradient = CALayer.makeGradientTextMask(for: label)
+                    label.layer.addSublayer(textGradient)
+
+                    let size = imageView.bounds.size == .zero ? CGSize(width: 24, height: 24) : imageView.bounds.size
+                    let iconGradient = CALayer.makeGradientIconMask(
+                        image: self.items[buttonIndex].image,
+                        size: size
+                    )
+                    imageView.image = nil
+                    imageView.layer.addSublayer(iconGradient)
+                }
+            } else {
+                label.textColor = AppColor.Text.primary
+            }
+        }
+    }
+
+    // MARK: - Private Methods
     private func setupView() {
         backgroundColor = AppColor.Background.tabBar
         layer.cornerRadius = 32
@@ -54,7 +92,6 @@ final class CustomTabBarView: UIView {
         }
     }
 
-    // MARK: - Create
     private func createTabButton(
         title: String,
         image: UIImage?,
@@ -62,6 +99,9 @@ final class CustomTabBarView: UIView {
     ) -> UIButton {
         let button = UIButton(type: .custom)
         button.tag = index
+
+        button.imageView?.transform = .identity
+        button.imageView?.contentMode = .center
 
         let imageView = UIImageView(image: image)
         imageView.tintColor = AppColor.Text.primary
@@ -95,64 +135,6 @@ final class CustomTabBarView: UIView {
         }, for: .touchUpInside)
 
         return button
-    }
-
-    // MARK: - Update
-    func updateSelection(index: Int) {
-        for (buttonIndex, button) in buttons.enumerated() {
-            guard let stack = button.subviews.first(where: { $0 is UIStackView }) as? UIStackView,
-                  let label = stack.arrangedSubviews.compactMap({ $0 as? UILabel }).first,
-                  let imageView = stack.arrangedSubviews.compactMap({ $0 as? UIImageView }).first else { continue }
-
-            label.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
-            imageView.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
-
-            label.text = items[buttonIndex].title
-            imageView.image = items[buttonIndex].image
-
-            if buttonIndex == index {
-                label.textColor = .clear
-
-                DispatchQueue.main.async {
-                    // Градиентный текст
-                    let labelGradient = CAGradientLayer()
-                    labelGradient.frame = label.bounds
-                    labelGradient.colors = AppGradient.greenLight.map { $0.cgColor }
-                    labelGradient.startPoint = CGPoint(x: 0.5, y: 0)
-                    labelGradient.endPoint = CGPoint(x: 0.5, y: 1)
-
-                    let textLayer = CATextLayer()
-                    textLayer.string = NSAttributedString(string: self.items[buttonIndex].title, attributes: [
-                        .font: AppFont.Hero.regular(size: 10)
-                    ])
-                    textLayer.frame = label.bounds
-                    textLayer.contentsScale = UIScreen.main.scale
-                    textLayer.alignmentMode = .center
-
-                    labelGradient.mask = textLayer
-                    label.layer.addSublayer(labelGradient)
-
-                    // Градиентная иконка
-                    let size = imageView.bounds.size == .zero ? CGSize(width: 24, height: 24) : imageView.bounds.size
-                    let iconGradient = CAGradientLayer()
-                    iconGradient.frame = CGRect(origin: .zero, size: size)
-                    iconGradient.colors = AppGradient.greenLight.map { $0.cgColor }
-                    iconGradient.startPoint = CGPoint(x: 0.5, y: 0)
-                    iconGradient.endPoint = CGPoint(x: 0.5, y: 1)
-
-                    let maskLayer = CALayer()
-                    maskLayer.contents = self.items[buttonIndex].image?.cgImage
-                    maskLayer.frame = iconGradient.bounds
-                    maskLayer.contentsGravity = .resizeAspect
-                    iconGradient.mask = maskLayer
-
-                    imageView.image = nil
-                    imageView.layer.addSublayer(iconGradient)
-                }
-            } else {
-                label.textColor = AppColor.Text.primary
-            }
-        }
     }
 
     // MARK: - Constraints
