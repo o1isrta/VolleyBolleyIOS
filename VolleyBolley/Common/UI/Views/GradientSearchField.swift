@@ -166,7 +166,7 @@ private extension GradientSearchField {
         clearButtonMode = .whileEditing
         if let clearButton = value(forKey: "_clearButton") as? UIButton {
             clearButton.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
-            clearButton.tintColor = .lightGray
+            clearButton.tintColor = AppColor.Icon.searField
         }
     }
 }
