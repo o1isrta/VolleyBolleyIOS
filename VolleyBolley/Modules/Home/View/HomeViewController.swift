@@ -9,7 +9,7 @@ final class HomeViewController: UIViewController, HomeViewProtocol {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = AppColor.Background.screen
         presenter.viewDidLoad()
     }
 
