@@ -8,11 +8,9 @@ final class CustomTabBarView: UIView {
     }
 
     var onSelectItem: ((Int) -> Void)?
-    private(set) var selectedIndex: Int = 0
 
     private var buttons: [UIButton] = []
     private var items: [TabItem] = []
-    private var didApplyInitialSelection = false
 
     private lazy var tabBarStackView: UIStackView = {
         let view = UIStackView()
@@ -30,22 +28,11 @@ final class CustomTabBarView: UIView {
         setupView()
         setupButtons()
 
-        DispatchQueue.main.async { [weak self] in
-            self?.updateSelection(index: 0)
-        }
+        updateSelection(index: 0)
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-
-        if !didApplyInitialSelection {
-            updateSelection(index: selectedIndex)
-            didApplyInitialSelection = true
-        }
     }
 
     private func setupView() {
@@ -79,14 +66,12 @@ final class CustomTabBarView: UIView {
         let imageView = UIImageView(image: image)
         imageView.tintColor = AppColor.Text.primary
         imageView.contentMode = .scaleAspectFit
-        imageView.translatesAutoresizingMaskIntoConstraints = false
 
         let label = UILabel()
         label.text = title
         label.font = AppFont.Hero.regular(size: 10)
         label.textAlignment = .center
         label.textColor = AppColor.Text.primary
-        label.translatesAutoresizingMaskIntoConstraints = false
 
         let stack = UIStackView(arrangedSubviews: [imageView, label])
         stack.axis = .vertical
@@ -114,8 +99,6 @@ final class CustomTabBarView: UIView {
 
     // MARK: - Update
     func updateSelection(index: Int) {
-        selectedIndex = index
-
         for (buttonIndex, button) in buttons.enumerated() {
             guard let stack = button.subviews.first(where: { $0 is UIStackView }) as? UIStackView,
                   let label = stack.arrangedSubviews.compactMap({ $0 as? UILabel }).first,
