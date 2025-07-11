@@ -25,6 +25,17 @@
         }
       }
     },
+    "All players" : {
+      "comment" : "Segment Control",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Все игроки"
+          }
+        }
+      }
+    },
     "all_players_label" : {
       "comment" : "Game",
       "extractionState" : "manual",
@@ -57,6 +68,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "VOLLEYBOLLEY"
+          }
+        }
+      }
+    },
+    "Archive" : {
+      "comment" : "Segment Control",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Архив"
           }
         }
       }
@@ -105,18 +127,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Choose your location"
-          }
-        }
-      }
-    },
-    "choose_this_court_button" : {
-      "comment" : "Map",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "CHOOSE THIS COURT"
           }
         }
       }
@@ -289,30 +299,6 @@
         }
       }
     },
-    "details_title" : {
-      "comment" : "Map",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "DETAILS"
-          }
-        }
-      }
-    },
-    "distance_km" : {
-      "comment" : "List",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "km"
-          }
-        }
-      }
-    },
     "donate_button" : {
       "comment" : "Game",
       "extractionState" : "manual",
@@ -385,14 +371,13 @@
         }
       }
     },
-    "favorites_label" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
+    "Favorites" : {
+      "comment" : "Segment Control",
       "localizations" : {
-        "en" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Favorites"
+            "value" : "Избранное"
           }
         }
       }
@@ -613,6 +598,17 @@
         }
       }
     },
+    "List" : {
+      "comment" : "Segment Control",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Список"
+          }
+        }
+      }
+    },
     "manage_players_button" : {
       "comment" : "Game",
       "extractionState" : "manual",
@@ -625,6 +621,17 @@
         }
       }
     },
+    "Map" : {
+      "comment" : "Segment Control",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Карта"
+          }
+        }
+      }
+    },
     "max_players_label" : {
       "comment" : "Game",
       "extractionState" : "manual",
@@ -633,6 +640,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Maximum players"
+          }
+        }
+      }
+    },
+    "My games" : {
+      "comment" : "Segment Control",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Мои игры"
           }
         }
       }
@@ -1057,26 +1075,24 @@
         }
       }
     },
-    "search_placeholder" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
+    "Search" : {
+      "comment" : "Search placeholder on court list",
       "localizations" : {
-        "en" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Search"
+            "value" : "Поиск"
           }
         }
       }
     },
-    "search_teams_or_players_placeholder" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
+    "Search teams or players" : {
+      "comment" : "Search placeholder on find game/invite users screen",
       "localizations" : {
-        "en" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Search teams or players"
+            "value" : "Поиск команды или игрока"
           }
         }
       }
@@ -1257,30 +1273,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "VERIFY"
-          }
-        }
-      }
-    },
-    "view_mode_list" : {
-      "comment" : "List",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "List"
-          }
-        }
-      }
-    },
-    "view_mode_map" : {
-      "comment" : "Map",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Map"
           }
         }
       }
