@@ -3,6 +3,9 @@ import UIKit
 protocol UserRegViewProtocol: AnyObject {}
 
 protocol UserRegPresenterProtocol: AnyObject {
+    var countries: [String] { get }
+    var cities: [String] { get }
+    
     func didTapGetStarted(name: String, surname: String, gender: String)
 }
 

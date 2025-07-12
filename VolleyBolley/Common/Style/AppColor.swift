@@ -49,6 +49,8 @@ enum AppColor {
         static let primary = white
         static let inverted = ashBrown
         static let separator = separatorGray
+        static let gradYellow = grYellow
+        static let gradGreen = grGreen
     }
 }
 
@@ -71,4 +73,6 @@ private extension AppColor {
     static let steelBlue = UIColor(hex: "#516372")
     static let mutedTeal = UIColor(hex: "#578D83")
     static let red = UIColor(hex: "#BA0000")
+    static let grYellow = UIColor(hex: "#F4E998")
+    static let grGreen = UIColor(hex: "#5CF08D")
 }

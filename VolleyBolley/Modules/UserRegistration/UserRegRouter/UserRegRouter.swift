@@ -6,7 +6,7 @@ class UserRegRouter: UserRegRouterProtocol {
     
     static func assembleModule() -> UIViewController {
         let view = UserRegViewController()
-        let presenter = UserRegPresenter()
+        let presenter = UserRegPresenter(view: view)
         let interactor = UserRegInteractor()
         let router = UserRegRouter()
         

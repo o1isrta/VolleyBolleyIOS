@@ -56,23 +56,35 @@ class UserRegViewController: UIViewController {
     private lazy var lightLevelButton = PickButton(title: "Light", isSelected: true)
     private lazy var mediumLevelButton = PickButton(title: "Medium", isSelected: false)
     private lazy var hardLevelButton = PickButton(title: "Hard", isSelected: false)
-    private lazy var proLevelButton = PickButton(title: "pro", isSelected: false)
+    private lazy var proLevelButton = PickButton(title: "Pro", isSelected: false)
     private lazy var levelSeparator = CustomSeparator()
     
     private lazy var countryLabel = CustomLabel(text: "Your country", isBold: true)
+    private var countryList: LocationPickerView?
+    private lazy var countrySeparator = CustomSeparator()
     
-    
+    private lazy var cityLabel = CustomLabel(text: "Your city", isBold: true)
+    private var cityList: LocationPickerView?
     
     private lazy var getStartedButton = NextStepButton(title: "GET STARTED", initialState: .active)
     
     private var selectedGender: String? = "Male"
     private var selectedLevel: String? = "Light"
+    private var selectedCountry: String?
+    private var selectedCity: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = AppColor.Background.screen
+        
+        let countries = presenter?.countries ?? []
+        countryList = LocationPickerView(items: countries)
+        let cities = presenter?.cities ?? []
+        cityList = LocationPickerView(items: cities)
+        
         setupScrollView()
-        setupUI()
+        setupSubviews()
+        setupConstraints()
         setupActions()
     }
     
@@ -97,120 +109,136 @@ class UserRegViewController: UIViewController {
         ])
     }
     
-    private func setupUI() {
+    private func setupSubviews() {
         let subviews = [
             titleLabel, nameLabel, nameTextField,
             surnameLabel, surnameTextField, surnameSeparator,
             genderLabel, maleButton, femaleButton, genderSeparator,
             birthdayLabel, birthdayTextField, birthdaySeparator,
             levelLabel, lightLevelButton, mediumLevelButton, hardLevelButton,
-            proLevelButton, levelSeparator, countryLabel, getStartedButton
+            proLevelButton, levelSeparator, countryLabel, countryList,
+            countrySeparator, cityLabel, cityList, getStartedButton
         ]
         
-        subviews.forEach {
+        subviews.compactMap { $0 }.forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             contentView.addSubview($0)
         }
+    }
+    
+    private func setupConstraints() {
+        guard let countryList = countryList else { return }
+        guard let cityList = cityList else { return }
         
         NSLayoutConstraint.activate([
-            // titleLabel
             titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             
-            // nameLabel
             nameLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16),
             nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             
-            // nameTextField
             nameTextField.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8),
             nameTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             nameTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             nameTextField.heightAnchor.constraint(equalToConstant: 51),
             
-            // surnameLabel
             surnameLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 16),
             surnameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             
-            // surnameTextField
             surnameTextField.topAnchor.constraint(equalTo: surnameLabel.bottomAnchor, constant: 8),
             surnameTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             surnameTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             surnameTextField.heightAnchor.constraint(equalToConstant: 51),
             
-            // surnameSeparator
             surnameSeparator.topAnchor.constraint(equalTo: surnameTextField.bottomAnchor, constant: 16),
             surnameSeparator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             surnameSeparator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             surnameSeparator.heightAnchor.constraint(equalToConstant: 1),
             
-            // genderLabel
             genderLabel.topAnchor.constraint(equalTo: surnameSeparator.bottomAnchor, constant: 16),
             genderLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             
-            // maleButton
             maleButton.topAnchor.constraint(equalTo: genderLabel.bottomAnchor, constant: 8),
             maleButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
 //            maleButton.widthAnchor.constraint(equalToConstant: 100),
             maleButton.heightAnchor.constraint(equalToConstant: 39),
             
-            // femaleButton
             femaleButton.centerYAnchor.constraint(equalTo: maleButton.centerYAnchor),
             femaleButton.leadingAnchor.constraint(equalTo: maleButton.trailingAnchor, constant: 16),
 //            femaleButton.widthAnchor.constraint(equalToConstant: 100),
             femaleButton.heightAnchor.constraint(equalToConstant: 39),
             
-            // genderSeparator
             genderSeparator.topAnchor.constraint(equalTo: maleButton.bottomAnchor, constant: 16),
             genderSeparator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             genderSeparator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             
-            // birthdayLabel
             birthdayLabel.topAnchor.constraint(equalTo: genderSeparator.bottomAnchor, constant: 16),
             birthdayLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             
-            // birthdayTextField
             birthdayTextField.topAnchor.constraint(equalTo: birthdayLabel.bottomAnchor, constant: 8),
             birthdayTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             birthdayTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -219),
             birthdayTextField.heightAnchor.constraint(equalToConstant: 51),
             
+            birthdaySeparator.topAnchor.constraint(equalTo: birthdayTextField.bottomAnchor, constant: 16),
+            birthdaySeparator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            birthdaySeparator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            birthdaySeparator.heightAnchor.constraint(equalToConstant: 1),
             
-            // levelLabel
-            levelLabel.topAnchor.constraint(equalTo: birthdayTextField.bottomAnchor, constant: 16),
+            levelLabel.topAnchor.constraint(equalTo: birthdaySeparator.bottomAnchor, constant: 16),
             levelLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             
-            // lightLevelButton
             lightLevelButton.topAnchor.constraint(equalTo: levelLabel.bottomAnchor, constant: 12),
             lightLevelButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
 //            lightLevelButton.widthAnchor.constraint(equalToConstant: 100),
             lightLevelButton.heightAnchor.constraint(equalToConstant: 39),
             
-            // mediumLevelButton
             mediumLevelButton.centerYAnchor.constraint(equalTo: lightLevelButton.centerYAnchor),
             mediumLevelButton.leadingAnchor.constraint(equalTo: lightLevelButton.trailingAnchor, constant: 8),
 //            mediumLevelButton.widthAnchor.constraint(equalToConstant: 100),
             mediumLevelButton.heightAnchor.constraint(equalToConstant: 39),
             
-            // hardLevelButton
             hardLevelButton.centerYAnchor.constraint(equalTo: mediumLevelButton.centerYAnchor),
             hardLevelButton.leadingAnchor.constraint(equalTo: mediumLevelButton.trailingAnchor, constant: 8),
 //            hardLevelButton.widthAnchor.constraint(equalToConstant: 100),
             hardLevelButton.heightAnchor.constraint(equalToConstant: 39),
             
-            // proLevelButton
             proLevelButton.centerYAnchor.constraint(equalTo: hardLevelButton.centerYAnchor),
             proLevelButton.leadingAnchor.constraint(equalTo: hardLevelButton.trailingAnchor, constant: 8),
 //            proLevelButton.widthAnchor.constraint(equalToConstant: 100),
             proLevelButton.heightAnchor.constraint(equalToConstant: 39),
             
-            // levelSeparator
+            levelSeparator.topAnchor.constraint(equalTo: lightLevelButton.bottomAnchor, constant: 16),
+            levelSeparator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            levelSeparator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            levelSeparator.heightAnchor.constraint(equalToConstant: 1),
             
-            // getStartedButton
-            getStartedButton.topAnchor.constraint(equalTo: birthdayTextField.bottomAnchor, constant: 32),
+            countryLabel.topAnchor.constraint(equalTo: levelSeparator.bottomAnchor, constant: 16),
+            countryLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            
+            countryList.topAnchor.constraint(equalTo: countryLabel.bottomAnchor, constant: 12),
+            countryList.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            countryList.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            countryList.heightAnchor.constraint(equalToConstant: 51),
+            
+            countrySeparator.topAnchor.constraint(equalTo: countryList.bottomAnchor, constant: 16),
+            countrySeparator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            countrySeparator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            countrySeparator.heightAnchor.constraint(equalToConstant: 1),
+            
+            cityLabel.topAnchor.constraint(equalTo: countrySeparator.bottomAnchor, constant: 16),
+            cityLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            
+            cityList.topAnchor.constraint(equalTo: cityLabel.bottomAnchor, constant: 8),
+            cityList.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            cityList.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            cityList.heightAnchor.constraint(equalToConstant: 51),
+            
+            getStartedButton.topAnchor.constraint(equalTo: cityList.bottomAnchor, constant: 16),
             getStartedButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             getStartedButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             getStartedButton.heightAnchor.constraint(equalToConstant: 50),
-            getStartedButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -32)
+            getStartedButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
         ])
     }
     
