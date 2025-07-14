@@ -1,5 +1,5 @@
 //
-//  TabBarViewController.swift
+//  MainTabBarController.swift
 //  VolleyBolley
 //
 //  Created by Roman Romanov on 24.06.2025.
@@ -7,26 +7,22 @@
 
 import UIKit
 
-final class TabBarViewController: UIViewController {
+final class MainTabBarController: UIViewController {
 
     // MARK: - Private Properties
-    
+
     private var currentTab: TabBarItem = .home
 
     // MARK: - UI Components
 
-    private let viewControllers: [TabBarItem: UIViewController] = [
-        .home: HomeAssembly.assemble(),
-        .games: MyGamesViewController(),
-        .profile: ProfileViewController()
-    ]
+    private var viewControllers: [TabBarItem: UIViewController] = [:]
 
     private lazy var containerView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
+
     private lazy var tabBar: CustomTabBarView = {
         let view = CustomTabBarView(items: TabBarItem.allCases)
         view.delegate = self
@@ -42,6 +38,15 @@ final class TabBarViewController: UIViewController {
         setupView()
         setupLayout()
         setupChildViewControllers()
+    }
+
+    func setViewControllers(_ viewControllers: [TabBarItem: UIViewController]) {
+        for child in children {
+            child.willMove(toParent: nil)
+            child.view.removeFromSuperview()
+            child.removeFromParent()
+        }
+        self.viewControllers = viewControllers
     }
 
     // MARK: - Setup
@@ -114,7 +119,7 @@ final class TabBarViewController: UIViewController {
 
 // MARK: - CustomTabBarViewDelegate
 
-extension TabBarViewController: CustomTabBarViewDelegate {
+extension MainTabBarController: CustomTabBarViewDelegate {
     func customTabBarView(_ tabBarView: CustomTabBarView, didSelectItemAt index: Int) {
         guard let item = TabBarItem(rawValue: index) else { return }
         switchToViewController(at: item)

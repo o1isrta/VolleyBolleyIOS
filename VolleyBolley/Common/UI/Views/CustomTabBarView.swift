@@ -15,7 +15,7 @@ protocol CustomTabBarViewDelegate: AnyObject {
 final class CustomTabBarView: UIView {
 
     // MARK: - Public Properties
-    
+
     /// Delegate to notify about tab selection changes.
     weak var delegate: CustomTabBarViewDelegate?
 
