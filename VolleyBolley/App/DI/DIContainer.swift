@@ -1,3 +1,10 @@
+//
+//  DIContainer.swift
+//  VolleyBolley
+//
+//  Created by Nikolai Eremenko
+//
+
 import Swinject
 import UIKit
 
@@ -24,12 +31,10 @@ import UIKit
 ///   ```
 final class DIContainer {
 
-    private static var _shared: DIContainer?
+    // MARK: - Public Properties
 
-    static func initialize(window: UIWindow) {
-        precondition(_shared == nil, "DIContainer already initialized")
-        _shared = DIContainer(window: window)
-    }
+    let assembler: Assembler
+    var resolver: Resolver { assembler.resolver }
 
     static var shared: DIContainer {
         guard let instance = _shared else {
@@ -38,8 +43,11 @@ final class DIContainer {
         return instance
     }
 
-    let assembler: Assembler
-    var resolver: Resolver { assembler.resolver }
+    // MARK: - Private Properties
+
+    private static var _shared: DIContainer?
+
+    // MARK: - Initializers
 
     init(window: UIWindow) {
         assembler = Assembler(
@@ -54,5 +62,12 @@ final class DIContainer {
                 ProfileAssembly()
             ]
         )
+    }
+
+    // MARK: - Public Methods
+
+    static func initialize(window: UIWindow) {
+        precondition(_shared == nil, "DIContainer already initialized")
+        _shared = DIContainer(window: window)
     }
 }

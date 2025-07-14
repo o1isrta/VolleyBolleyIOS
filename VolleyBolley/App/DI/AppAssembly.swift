@@ -1,3 +1,10 @@
+//
+//  AppAssembly.swift
+//  VolleyBolley
+//
+//  Created by Nikolai Eremenko
+//
+
 import Swinject
 import UIKit
 
@@ -12,16 +19,23 @@ import UIKit
 /// - Warning: If `UserSessionServiceProtocol` cannot be resolved, the app will terminate
 ///            with a fatal error indicating the missing dependency.
 final class AppAssembly: Assembly {
+
+    // MARK: - Private Properties
+
     private let window: UIWindow
+
+    // MARK: - Initializers
 
     init(window: UIWindow) {
         self.window = window
     }
 
+    // MARK: - Public Methods
+
     func assemble(container: Container) {
         container.register(AppRouter.self) { resolver in
             guard let userSessionService = resolver.resolve(UserSessionServiceProtocol.self) else {
-                fatalError("❌ Failed to resolve UserSessionServiceProtocol")
+                fatalError("Error: Failed to resolve UserSessionServiceProtocol")
             }
 
             return AppRouter(

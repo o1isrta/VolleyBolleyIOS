@@ -1,3 +1,10 @@
+//
+//  OnboardingRouter.swift
+//  VolleyBolley
+//
+//  Created by Nikolai Eremenko
+//
+
 import Swinject
 import UIKit
 
@@ -7,16 +14,26 @@ protocol OnboardingRouterProtocol {
 }
 
 final class OnboardingRouter: OnboardingRouterProtocol {
+
+    // MARK: - Public Properties
+
     var onFinish: (() -> Void)?
+
+    // MARK: - Private Properties
+
     private let resolver: Resolver
+
+    // MARK: - Initializers
 
     init(resolver: Resolver) {
         self.resolver = resolver
     }
 
+    // MARK: - Public Methods
+
     func start() -> UIViewController {
         guard let viewController = resolver.resolve(OnboardingViewController.self) else {
-            fatalError("❌ Failed to resolve AuthViewController")
+            fatalError("Error: Failed to resolve AuthViewController")
         }
 
         viewController.onContinue = { [weak self] in

@@ -1,7 +1,19 @@
+//
+//  OnboardingViewController.swift
+//  VolleyBolley
+//
+//  Created by Nikolai Eremenko
+//
+
 import UIKit
 
 final class OnboardingViewController: BaseViewController {
+
+    // MARK: - Public Properties
+
     var onContinue: (() -> Void)?
+
+    // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,6 +30,7 @@ final class OnboardingViewController: BaseViewController {
         ])
     }
 
+    // MARK: - Actions
     @objc private func continueTapped() {
         onContinue?()
     }

@@ -1,3 +1,10 @@
+//
+//  ProfileViewController.swift
+//  VolleyBolley
+//
+//  Created by Nikolai Eremenko
+//
+
 import UIKit
 
 protocol ProfileViewProtocol: AnyObject {
@@ -5,7 +12,12 @@ protocol ProfileViewProtocol: AnyObject {
 }
 
 final class ProfileViewController: BaseViewController, ProfileViewProtocol {
+
+    // MARK: - Private Properties
+
     private let presenter: ProfilePresenterProtocol
+
+    // MARK: - Initializers
 
     init(presenter: ProfilePresenterProtocol) {
         self.presenter = presenter
@@ -16,10 +28,14 @@ final class ProfileViewController: BaseViewController, ProfileViewProtocol {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.viewDidLoad()
     }
+
+    // MARK: - Public Methods
 
     func showGreeting(_ message: String) {
         let label = UILabel()

@@ -1,3 +1,10 @@
+//
+//  AuthRouter.swift
+//  VolleyBolley
+//
+//  Created by Nikolai Eremenko
+//
+
 import Swinject
 import UIKit
 
@@ -7,19 +14,27 @@ protocol AuthRouterProtocol {
 }
 
 final class AuthRouter: AuthRouterProtocol {
+
+    // MARK: - Public Properties
+
     var onLoginSuccess: (() -> Void)?
+
+    // MARK: - Private Properties
+
     private let resolver: Resolver
 
+    // MARK: - Initializers
     init(resolver: Resolver) {
         self.resolver = resolver
     }
 
+    // MARK: - Public Methods
+
     func start() -> UIViewController {
         guard let viewController = resolver.resolve(AuthViewController.self) else {
-            fatalError("❌ Failed to resolve AuthViewController")
+            fatalError("Error: Failed to resolve AuthViewController")
         }
 
-        // Можно внедрить presenter через resolver при необходимости
         viewController.onLogin = { [weak self] in
             self?.onLoginSuccess?()
         }

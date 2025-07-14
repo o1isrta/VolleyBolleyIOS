@@ -1,3 +1,10 @@
+//
+//  HomeViewController.swift
+//  VolleyBolley
+//
+//  Created by Nikolai Eremenko
+//
+
 import UIKit
 
 protocol HomeViewProtocol: AnyObject {
@@ -5,7 +12,12 @@ protocol HomeViewProtocol: AnyObject {
 }
 
 final class HomeViewController: BaseViewController, HomeViewProtocol {
+
+    // MARK: - Private Properties
+
     private let presenter: HomePresenterProtocol
+
+    // MARK: - Initializers
 
     init(presenter: HomePresenterProtocol) {
         self.presenter = presenter
@@ -16,10 +28,14 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.viewDidLoad()
     }
+
+    // MARK: - Public Methods
 
     func showGreeting(_ message: String) {
         let label = UILabel()

@@ -1,3 +1,10 @@
+//
+//  DefaultUserSessionService.swift
+//  VolleyBolley
+//
+//  Created by Nikolai Eremenko
+//
+
 import Foundation
 
 protocol UserSessionServiceProtocol {

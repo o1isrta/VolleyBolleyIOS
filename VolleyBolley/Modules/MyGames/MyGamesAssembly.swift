@@ -1,6 +1,15 @@
+//
+//  MyGamesAssembly.swift
+//  VolleyBolley
+//
+//  Created by Nikolai Eremenko
+//
+
 import Swinject
 
 final class MyGamesAssembly: Assembly {
+
+    // MARK: - Public Methods
 
     func assemble(container: Container) {
         container.register(MyGamesViewController.self) { _ in

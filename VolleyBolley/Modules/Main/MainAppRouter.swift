@@ -1,3 +1,10 @@
+//
+//  MainAppRouter.swift
+//  VolleyBolley
+//
+//  Created by Nikolai Eremenko
+//
+
 import Swinject
 import UIKit
 
@@ -7,11 +14,17 @@ protocol MainAppRouterProtocol {
 
 final class MainAppRouter: MainAppRouterProtocol {
 
+    // MARK: - Private Properties
+
     private let resolver: Resolver
+
+    // MARK: - Initializers
 
     init(resolver: Resolver) {
         self.resolver = resolver
     }
+
+    // MARK: - Public Methods
 
     func start() -> UIViewController {
         let tabBarController = MainTabBarController()
