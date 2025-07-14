@@ -1,3 +1,10 @@
+//
+//  UIColor+Extensions.swift
+//  VolleyBolley
+//
+//  Created by Nikolai Eremenko
+//
+
 import UIKit
 
 extension UIColor {
