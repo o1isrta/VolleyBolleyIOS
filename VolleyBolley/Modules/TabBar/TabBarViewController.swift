@@ -1,125 +1,122 @@
+//
+//  TabBarViewController.swift
+//  VolleyBolley
+//
+//  Created by Roman Romanov on 24.06.2025.
+//
+
 import UIKit
 
-final class TabBarViewController: UITabBarController {
+final class TabBarViewController: UIViewController {
 
-    private var customTabBar: CustomTabBarView?
+    // MARK: - Private Properties
+    
+    private var currentTab: TabBarItem = .home
 
-    private let homeVC = HomeAssembly.assemble()
-    private let gamesVC = MyGamesViewController()
-    private let profileVC = ProfileViewController()
+    // MARK: - UI Components
+
+    private let viewControllers: [TabBarItem: UIViewController] = [
+        .home: HomeAssembly.assemble(),
+        .games: MyGamesViewController(),
+        .profile: ProfileViewController()
+    ]
+
+    private lazy var containerView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var tabBar: CustomTabBarView = {
+        let view = CustomTabBarView(items: TabBarItem.allCases)
+        view.delegate = self
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
 
     // MARK: - Lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.delegate = self
-
-        if #unavailable(iOS 26.0) {
-            setupCustomTabBarItems()
-        } else {
-            setupTabBarItems()
-        }
-
-        setViewControllers([homeVC, gamesVC, profileVC], animated: false)
-        configureTabBarAppearance()
+        setupView()
+        setupLayout()
+        setupChildViewControllers()
     }
 
     // MARK: - Setup
-    private func setupTabBarItems() {
-        homeVC.tabBarItem = UITabBarItem(
-            title: String(localized: "tab_home"),
-            image: .playHouseFill,
-            tag: 0
-        )
-        gamesVC.tabBarItem = UITabBarItem(
-            title: String(localized: "tab_my_games"),
-            image: .volleyBallFill,
-            tag: 1
-        )
-        profileVC.tabBarItem = UITabBarItem(
-            title: String(localized: "tab_profile"),
-            image: .personFill,
-            tag: 2
-        )
+
+    private func setupView() {
+        view.addSubview(containerView)
+        view.addSubview(tabBar)
     }
 
-    private func setupCustomTabBarItems() {
-        let homeTabItem = CustomTabBarView.TabItem(
-            title: String(localized: "tab_home"),
-            image: .Icon.home
-        )
-
-        let gameTabItem = CustomTabBarView.TabItem(
-            title: String(localized: "tab_my_games"),
-            image: .Icon.volleyball
-        )
-
-        let profileTabItem = CustomTabBarView.TabItem(
-            title: String(localized: "tab_profile"),
-            image: .Icon.person
-        )
-
-        let customTabBar = CustomTabBarView(items: [homeTabItem, gameTabItem, profileTabItem])
-        customTabBar.onSelectItem = { [weak self] index in
-            self?.selectedIndex = index
+    private func setupChildViewControllers() {
+        for (tab, viewController) in viewControllers {
+            addChild(viewController)
+            containerView.addSubview(viewController.view)
+            viewController.view.translatesAutoresizingMaskIntoConstraints = false
+            setupConstraintsForChild(viewController)
+            viewController.didMove(toParent: self)
+            viewController.view.isHidden = (tab != currentTab)
         }
+    }
 
-        tabBar.addSubview(customTabBar)
-        customTabBar.translatesAutoresizingMaskIntoConstraints = false
+    // MARK: - Navigation
+
+    private func switchToViewController(at tab: TabBarItem) {
+        guard let selectedVC = viewControllers[tab] else { return }
+        let previousVC = viewControllers[currentTab]
+
+        previousVC?.view.isHidden = true
+        selectedVC.view.isHidden = false
+
+        currentTab = tab
+        tabBar.updateSelection(index: tab.rawValue)
+    }
+
+    // MARK: - Layout setup
+
+    private func setupLayout() {
+        setupConstraintsContainerView()
+        setupConstraintsTabBar()
+    }
+
+    // MARK: - Constraints
+
+    private func setupConstraintsTabBar() {
         NSLayoutConstraint.activate([
-            customTabBar.leadingAnchor.constraint(equalTo: tabBar.leadingAnchor),
-            customTabBar.trailingAnchor.constraint(equalTo: tabBar.trailingAnchor),
-            customTabBar.topAnchor.constraint(equalTo: tabBar.topAnchor),
-            customTabBar.bottomAnchor.constraint(equalTo: tabBar.bottomAnchor)
+            tabBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tabBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tabBar.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            tabBar.heightAnchor.constraint(equalToConstant: 81)
         ])
-
-        self.customTabBar = customTabBar
     }
 
-    // MARK: - Appearance
-    private func configureTabBarAppearance() {
-        let font = AppFont.Quantex.regular(size: 10)
+    private func setupConstraintsContainerView() {
+        NSLayoutConstraint.activate([
+            containerView.topAnchor.constraint(equalTo: view.topAnchor),
+            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+    }
 
-        if #available(iOS 26.0, *) {
-            let appearance = UITabBarAppearance()
-            let normalColor = AppColor.Text.inverted
-            let selectedColor = AppColor.Background.tabBar
-
-            let layouts = [
-                appearance.stackedLayoutAppearance,
-                appearance.inlineLayoutAppearance,
-                appearance.compactInlineLayoutAppearance
-            ]
-
-            for layout in layouts {
-                layout.selected.iconColor = selectedColor
-                layout.normal.titleTextAttributes = [.font: font, .foregroundColor: normalColor]
-                layout.selected.titleTextAttributes = [.font: font, .foregroundColor: selectedColor]
-            }
-
-            tabBar.standardAppearance = appearance
-            tabBar.scrollEdgeAppearance = appearance
-
-            tabBar.tintColor = selectedColor
-        } else {
-            let appearance = UITabBarAppearance()
-            appearance.configureWithOpaqueBackground()
-            appearance.shadowImage = nil
-            appearance.shadowColor = nil
-            appearance.backgroundImage = nil
-            appearance.backgroundColor = .clear
-
-            tabBar.standardAppearance = appearance
-            if #available(iOS 15.0, *) {
-                tabBar.scrollEdgeAppearance = appearance
-            }
-        }
+    private func setupConstraintsForChild(_ selectedVC: UIViewController) {
+        NSLayoutConstraint.activate([
+            selectedVC.view.topAnchor.constraint(equalTo: containerView.topAnchor),
+            selectedVC.view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            selectedVC.view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            selectedVC.view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+        ])
     }
 }
 
-// MARK: - UITabBarControllerDelegate
-extension TabBarViewController: UITabBarControllerDelegate {
-    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        customTabBar?.updateSelection(index: selectedIndex)
+// MARK: - CustomTabBarViewDelegate
+
+extension TabBarViewController: CustomTabBarViewDelegate {
+    func customTabBarView(_ tabBarView: CustomTabBarView, didSelectItemAt index: Int) {
+        guard let item = TabBarItem(rawValue: index) else { return }
+        switchToViewController(at: item)
     }
 }
