@@ -24,19 +24,19 @@ final class AuthViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Login"
+        setupView()
+    }
 
+    private func setupView() {
         loginField.placeholder = "Login"
         passwordField.placeholder = "Password"
         passwordField.isSecureTextEntry = true
-
         loginButton.setTitle("Login", for: .normal)
         loginButton.addTarget(self, action: #selector(loginTapped), for: .touchUpInside)
-
         let stack = UIStackView(arrangedSubviews: [loginField, passwordField, loginButton])
         stack.axis = .vertical
         stack.spacing = 16
         stack.translatesAutoresizingMaskIntoConstraints = false
-
         view.addSubview(stack)
         NSLayoutConstraint.activate([
             stack.centerXAnchor.constraint(equalTo: view.centerXAnchor),

@@ -15,9 +15,9 @@ final class HomeRouter: HomeRouterProtocol {
 
     weak var viewController: UIViewController?
 
-    // MARK: - Initializers
+    // MARK: - Public Properties
 
-    init(viewController: UIViewController?) {
+    func attachViewController(_ viewController: UIViewController) {
         self.viewController = viewController
     }
 }

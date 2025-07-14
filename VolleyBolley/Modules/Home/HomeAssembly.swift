@@ -14,12 +14,12 @@ final class HomeAssembly: Assembly {
     func assemble(container: Container) {
         container.register(HomeViewController.self) { _ in
             let interactor = HomeInteractor()
-            let router = HomeRouter(viewController: nil)
+            let router = HomeRouter()
             let presenter = HomePresenter(interactor: interactor, router: router)
             let view = HomeViewController(presenter: presenter)
 
+            router.attachViewController(view)
             presenter.view = view
-            router.viewController = view
 
             return view
         }

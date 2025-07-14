@@ -75,7 +75,7 @@ final class AppRouter {
             self.start()
         }
 
-        self.authRouter = router
+        authRouter = router
         window.rootViewController = router.start()
     }
 
@@ -87,8 +87,8 @@ final class AppRouter {
 
         let root = router.start()
 
-        self.authRouter = nil
-        self.onboardingRouter = nil
+        authRouter = nil
+        onboardingRouter = nil
 
         window.rootViewController = root
         window.makeKeyAndVisible()
