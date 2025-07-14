@@ -1,11 +1,20 @@
+//
+//  AuthAssembly.swift
+//  VolleyBolley
+//
+//  Created by Nikolai Eremenko
+//
+
 import Swinject
 
 final class AuthAssembly: Assembly {
 
+    // MARK: - Public Methods
+
     func assemble(container: Container) {
         container.register(AuthViewController.self) { _ in
             let viewController = AuthViewController()
-            // здесь можно будет позже добавить presenter/interactor
+
             return viewController
         }
 

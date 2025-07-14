@@ -1,13 +1,26 @@
+//
+//  AuthViewController.swift
+//  VolleyBolley
+//
+//  Created by Nikolai Eremenko
+//
+
 import UIKit
 
 final class AuthViewController: BaseViewController {
+
+    // MARK: - Public Properties
+
     var onLogin: (() -> Void)?
+
+    // MARK: - Private Properties
 
     private let loginField = UITextField()
     private let passwordField = UITextField()
     private let loginButton = UIButton(type: .system)
 
     // MARK: - Lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Login"

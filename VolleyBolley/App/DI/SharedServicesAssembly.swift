@@ -1,3 +1,10 @@
+//
+//  SharedServicesAssembly.swift
+//  VolleyBolley
+//
+//  Created by Nikolai Eremenko
+//
+
 import Swinject
 
 /// An assembly for registering shared application services with the Swinject dependency injection container.
@@ -22,6 +29,8 @@ import Swinject
 /// ```
 final class SharedServicesAssembly: Assembly {
 
+    // MARK: - Public Methods
+
     func assemble(container: Container) {
 
         container.register(SettingsStorageProtocol.self) { _ in
@@ -31,7 +40,7 @@ final class SharedServicesAssembly: Assembly {
 
         container.register(UserSessionServiceProtocol.self) { resolver in
             guard let storage = resolver.resolve(SettingsStorageProtocol.self) else {
-                fatalError("❌ Failed to resolve SettingsStorageProtocol")
+                fatalError("Error: Failed to resolve SettingsStorageProtocol")
             }
             return DefaultUserSessionService(storage: storage)
         }

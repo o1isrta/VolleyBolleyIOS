@@ -1,6 +1,15 @@
+//
+//  HomeAssembly.swift
+//  VolleyBolley
+//
+//  Created by Nikolai Eremenko
+//
+
 import Swinject
 
 final class HomeAssembly: Assembly {
+
+    // MARK: - Public Methods
 
     func assemble(container: Container) {
         container.register(HomeViewController.self) { _ in

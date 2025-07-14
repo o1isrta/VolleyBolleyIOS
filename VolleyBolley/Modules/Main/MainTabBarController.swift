@@ -9,17 +9,23 @@ import UIKit
 
 final class MainTabBarController: UITabBarController {
 
+    // MARK: - Private Properties
+
     private struct TabIcon {
         let title: String
         let image: UIImage?
         let selected: UIImage?
     }
 
+    // MARK: - Lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setValue(CustomTabBar(), forKey: "tabBar")
         configureAppearance()
     }
+
+    // MARK: - Public Methods
 
     func configureTabBarItems() {
         guard let items = tabBar.items else { return }
@@ -38,6 +44,8 @@ final class MainTabBarController: UITabBarController {
             item.tag = index
         }
     }
+
+    // MARK: - Public Methods
 
     private func configureAppearance() {
         let gradientSize = CGSize(width: 1, height: 50)

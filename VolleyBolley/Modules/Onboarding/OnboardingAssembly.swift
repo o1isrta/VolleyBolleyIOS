@@ -1,6 +1,15 @@
+//
+//  OnboardingAssembly.swift
+//  VolleyBolley
+//
+//  Created by Nikolai Eremenko
+//
+
 import Swinject
 
 class OnboardingAssembly: Assembly {
+
+    // MARK: - Public Methods
 
     func assemble(container: Container) {
         container.register(OnboardingViewController.self) { _ in

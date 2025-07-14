@@ -1,6 +1,15 @@
+//
+//  ProfileAssembly.swift
+//  VolleyBolley
+//
+//  Created by Nikolai Eremenko
+//
+
 import Swinject
 
 final class ProfileAssembly: Assembly {
+
+    // MARK: - Public Methods
 
     func assemble(container: Container) {
         container.register(ProfileViewController.self) { _ in

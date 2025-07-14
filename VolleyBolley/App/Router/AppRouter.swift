@@ -1,7 +1,16 @@
+//
+//  AppRouter.swift
+//  VolleyBolley
+//
+//  Created by Nikolai Eremenko
+//
+
 import Swinject
 import UIKit
 
 final class AppRouter {
+
+    // MARK: - Private Properties
 
     private let window: UIWindow
     private let userSessionService: UserSessionServiceProtocol
@@ -9,6 +18,8 @@ final class AppRouter {
 
     private var onboardingRouter: OnboardingRouterProtocol?
     private var authRouter: AuthRouterProtocol?
+
+    // MARK: - Initializers
 
     init(
         window: UIWindow,
@@ -20,6 +31,8 @@ final class AppRouter {
         self.resolver = resolver
     }
 
+    // MARK: - Public Methods
+
     func start() {
         if !userSessionService.isOnboardingShown {
             showOnboarding()
@@ -30,9 +43,11 @@ final class AppRouter {
         }
     }
 
+    // MARK: - Private Methods
+
     private func showOnboarding() {
         guard var router = resolver.resolve(OnboardingRouterProtocol.self) else {
-            print("❌ Failed to resolve OnboardingRouterProtocol")
+            print("Error: Failed to resolve OnboardingRouterProtocol")
             return
         }
 
@@ -49,7 +64,7 @@ final class AppRouter {
 
     private func showAuth() {
         guard var router = resolver.resolve(AuthRouterProtocol.self) else {
-            print("❌ Failed to resolve AuthRouterProtocol")
+            print("Error: Failed to resolve AuthRouterProtocol")
             return
         }
 
@@ -66,7 +81,7 @@ final class AppRouter {
 
     private func showMainApp() {
         guard let router = resolver.resolve(MainAppRouterProtocol.self) else {
-            print("❌ Failed to resolve MainAppRouterProtocol")
+            print("Error: Failed to resolve MainAppRouterProtocol")
             return
         }
 

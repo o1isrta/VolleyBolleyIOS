@@ -1,3 +1,10 @@
+//
+//  AppGradient.swift
+//  VolleyBolley
+//
+//  Created by Nikolai Eremenko
+//
+
 import UIKit
 
 /// Градиенты для фона кнопок, иконок и т.п

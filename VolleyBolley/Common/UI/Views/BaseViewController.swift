@@ -1,3 +1,10 @@
+//
+//  BaseViewController.swift
+//  VolleyBolley
+//
+//  Created by Nikolai Eremenko
+//
+
 import UIKit
 
 /// A base view controller providing common UI setup for all inheriting view controllers.

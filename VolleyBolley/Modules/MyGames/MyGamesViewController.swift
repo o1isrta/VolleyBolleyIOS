@@ -1,3 +1,10 @@
+//
+//  MyGamesViewController.swift
+//  VolleyBolley
+//
+//  Created by Roman Romanov on 24.06.2025.
+//
+
 import UIKit
 
 protocol MyGamesViewProtocol: AnyObject {
@@ -6,6 +13,8 @@ protocol MyGamesViewProtocol: AnyObject {
 
 final class MyGamesViewController: BaseViewController, MyGamesViewProtocol {
     private let presenter: MyGamesPresenterProtocol
+
+    // MARK: - Initializers
 
     init(presenter: MyGamesPresenterProtocol) {
         self.presenter = presenter
@@ -16,10 +25,14 @@ final class MyGamesViewController: BaseViewController, MyGamesViewProtocol {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.viewDidLoad()
     }
+
+    // MARK: - Public Methods
 
     func showGreeting(_ message: String) {
         let label = UILabel()
