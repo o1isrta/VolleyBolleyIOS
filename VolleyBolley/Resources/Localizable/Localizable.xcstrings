@@ -517,6 +517,9 @@
         }
       }
     },
+    "Home" : {
+      "comment" : "Tab bar item title"
+    },
     "invite_players_button" : {
       "comment" : "Game",
       "extractionState" : "manual",
@@ -636,6 +639,9 @@
           }
         }
       }
+    },
+    "My games" : {
+      "comment" : "Tab bar item title"
     },
     "name_field" : {
       "comment" : "Registration",
@@ -937,6 +943,9 @@
         }
       }
     },
+    "Profile" : {
+      "comment" : "Tab bar item title"
+    },
     "rate_level_confirm_button" : {
       "comment" : "Player rating",
       "extractionState" : "manual",
@@ -1161,42 +1170,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Surname"
-          }
-        }
-      }
-    },
-    "tab_home" : {
-      "comment" : "TabBar",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Home"
-          }
-        }
-      }
-    },
-    "tab_my_games" : {
-      "comment" : "TabBar",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "My games"
-          }
-        }
-      }
-    },
-    "tab_profile" : {
-      "comment" : "TabBar",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Profile"
           }
         }
       }
