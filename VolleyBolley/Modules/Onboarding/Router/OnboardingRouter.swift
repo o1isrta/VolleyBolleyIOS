@@ -5,30 +5,31 @@
 //  Created by Олег Козырев on 12.07.2025.
 //
 
+import Swinject
 import UIKit
 
+protocol OnboardingRouterProtocol {
+    var onFinish: (() -> Void)? { get set }
+    func start() -> UIViewController
+}
+
 class OnboardingRouter: OnboardingRouterProtocol {
-    
-    weak var viewController: UIViewController?
-    weak var coordinator: AppCoordinator?
-    
-    static func assembleModule(coordinator: AppCoordinator?) -> UIViewController {
-        let view = OnboardingViewController()
-        let presenter = OnboardingPresenter()
-        let interactor = OnboardingInteractor()
-        let router = OnboardingRouter()
-        
-        view.presenter = presenter
-        presenter.view = view
-        presenter.interactor = interactor
-        presenter.router = router
-        router.viewController = view
-        router.coordinator = coordinator
-        
-        return view
+    var onFinish: (() -> Void)?
+
+    private let resolver: Resolver
+    private weak var viewController: UIViewController?
+
+    init(resolver: Resolver) {
+        self.resolver = resolver
     }
-    
-    func navigateToAuthorizationScreen() {
-//        coordinator?.showAuthorization()
+
+    func start() -> UIViewController {
+        guard let view = resolver.resolve(OnboardingViewController.self) else {
+            fatalError("Failed to resolve OnboardingViewController")
+        }
+
+        viewController = view
+
+        return view
     }
 }

@@ -1,3 +1,10 @@
+//
+//  AppColor.swift
+//  VolleyBolley
+//
+//  Created by Nikolai Eremenko
+//
+
 import UIKit
 
 /// Инкапсуляция уникальных цветов проекта: фирменные акценты, состояния и фоны

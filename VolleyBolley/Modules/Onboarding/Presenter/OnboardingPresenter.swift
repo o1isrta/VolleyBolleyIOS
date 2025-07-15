@@ -7,13 +7,32 @@
 
 import Foundation
 
+protocol OnboardingPresenterProtocol: AnyObject {
+    func viewDidLoad()
+    func didTapContinue()
+}
+
 class OnboardingPresenter: OnboardingPresenterProtocol {
     weak var view: OnboardingViewProtocol?
-    var interactor: OnboardingInteractorProtocol?
-    var router: OnboardingRouterProtocol?
-    
-    func getStartedButtonTapped() {
-        interactor?.markOnboardingAsCompleted()
-        router?.navigateToAuthorizationScreen()
+    let interactor: OnboardingInteractorProtocol
+    let router: OnboardingRouterProtocol
+
+    // MARK: - Initializers
+
+    init(interactor: OnboardingInteractorProtocol, router: OnboardingRouterProtocol) {
+        self.interactor = interactor
+        self.router = router
+    }
+
+    // MARK: - Public Methods
+
+    func viewDidLoad() {
+        let item = interactor.getWelcomeItem()
+        view?.configureView(with: item)
+    }
+
+    func didTapContinue() {
+        interactor.markOnboardingShown()
+        router.onFinish?()
     }
 }

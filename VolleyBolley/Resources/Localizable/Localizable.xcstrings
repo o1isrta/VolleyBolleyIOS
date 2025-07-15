@@ -1201,6 +1201,9 @@
         }
       }
     },
+    "This app helps you find beach volleyball games and match with players at your skill level.!" : {
+      "comment" : "Onboarding item message"
+    },
     "time_from_label" : {
       "comment" : "Game",
       "extractionState" : "manual",
@@ -1308,6 +1311,9 @@
           }
         }
       }
+    },
+    "Welcome!" : {
+      "comment" : "Onboarding item title"
     },
     "your_message_placeholder" : {
       "comment" : "Game",

@@ -7,9 +7,25 @@
 
 import Foundation
 
+protocol OnboardingInteractorProtocol: AnyObject {
+    func markOnboardingShown()
+    func getWelcomeItem() -> OnboardingItem
+}
+
 class OnboardingInteractor: OnboardingInteractorProtocol {
-    
-    func markOnboardingAsCompleted() {
-        UserDefaults.standard.isOnboardingShown = true
+    private let userSessionService: UserSessionServiceProtocol
+
+    init(userSessionService: UserSessionServiceProtocol) {
+        self.userSessionService = userSessionService
+    }
+
+    // MARK: - Public Methods
+
+    func markOnboardingShown() {
+        userSessionService.markOnboardingAsShown()
+    }
+
+    func getWelcomeItem() -> OnboardingItem {
+        return OnboardingItem.welcome
     }
 }
