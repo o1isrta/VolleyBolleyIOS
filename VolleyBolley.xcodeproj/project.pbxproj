@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3CB112362E0B224800EF5EC4 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 3CB112352E0B224800EF5EC4 /* Kingfisher */; };
 		3CB1123A2E0B24BB00EF5EC4 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 3CB112392E0B24BB00EF5EC4 /* Swinject */; };
+		910884042E27A010001078FF /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 910884032E27A010001078FF /* Moya */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +44,7 @@
 			files = (
 				3CB112362E0B224800EF5EC4 /* Kingfisher in Frameworks */,
 				3CB1123A2E0B24BB00EF5EC4 /* Swinject in Frameworks */,
+				910884042E27A010001078FF /* Moya in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,6 +55,7 @@
 			isa = PBXGroup;
 			children = (
 				3CB112092E0B1FEF00EF5EC4 /* VolleyBolley */,
+				910884022E27A010001078FF /* Frameworks */,
 				3CB112082E0B1FEF00EF5EC4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -63,6 +66,13 @@
 				3CB112072E0B1FEF00EF5EC4 /* VolleyBolley.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		910884022E27A010001078FF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -88,6 +98,7 @@
 			packageProductDependencies = (
 				3CB112352E0B224800EF5EC4 /* Kingfisher */,
 				3CB112392E0B24BB00EF5EC4 /* Swinject */,
+				910884032E27A010001078FF /* Moya */,
 			);
 			productName = VolleyBolley;
 			productReference = 3CB112072E0B1FEF00EF5EC4 /* VolleyBolley.app */;
@@ -420,6 +431,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3CB112382E0B24BB00EF5EC4 /* XCRemoteSwiftPackageReference "Swinject" */;
 			productName = Swinject;
+		};
+		910884032E27A010001078FF /* Moya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3CB1122E2E0B21EB00EF5EC4 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = Moya;
 		};
 		91F7CA382E1099A500E1EA41 /* SwiftLintBuildToolPlugin */ = {
 			isa = XCSwiftPackageProductDependency;

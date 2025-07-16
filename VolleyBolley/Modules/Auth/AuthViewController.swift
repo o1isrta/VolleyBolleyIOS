@@ -21,9 +21,13 @@ final class AuthViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = AppColor.Background.screen
+        setupView()
+    }
+
+    // MARK: - Private Methods
 
     private func setupView() {
+        view.backgroundColor = AppColor.Background.screen
         loginField.placeholder = "Login"
         passwordField.placeholder = "Password"
         passwordField.isSecureTextEntry = true
@@ -43,6 +47,7 @@ final class AuthViewController: UIViewController {
     }
 
     // MARK: - Actions
+
     @objc private func loginTapped() {
         onLogin?()
     }
