@@ -1,15 +1,19 @@
 import Foundation
 
 class UserRegPresenter: UserRegPresenterProtocol {
-    let countries = ["Cyprus", "Thailand"]
-    let cities = ["Nicosia", "Bangkok"]
+    var countries = ["Cyprus", "Thailand"]
+    let cities = ["Koh Phangan", "Koh Samui"]
     
     weak var view: UserRegViewProtocol?
     var interactor: UserRegInteractorProtocol!
     var router: UserRegRouterProtocol!
     
-    init(view: UserRegViewProtocol) {
-        self.view = view
+    func viewDidLoad() {
+        interactor.fetchCountries()
+    }
+    
+    func didTapLevelInfo() {
+        router?.showLevelInfoScreen()
     }
     
     func didTapGetStarted(name: String, surname: String, gender: String) {
@@ -18,11 +22,16 @@ class UserRegPresenter: UserRegPresenterProtocol {
 }
 
 extension UserRegPresenter: UserRegInteractorOutputProtocol {
+    func didFetchCountries(_ countries: [String]) {
+        self.countries = countries
+        view?.updateCountries(countries)
+    }
+    
     func registrationDidSucceed() {
         router.navigateToNextScreen()
     }
     
     func registrationDidFail(error: Error) {
-        // handle error, show alert
+        
     }
 }

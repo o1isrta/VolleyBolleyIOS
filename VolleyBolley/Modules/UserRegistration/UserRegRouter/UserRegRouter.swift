@@ -6,7 +6,7 @@ class UserRegRouter: UserRegRouterProtocol {
     
     static func assembleModule() -> UIViewController {
         let view = UserRegViewController()
-        let presenter = UserRegPresenter(view: view)
+        let presenter = UserRegPresenter()
         let interactor = UserRegInteractor()
         let router = UserRegRouter()
         
@@ -24,6 +24,11 @@ class UserRegRouter: UserRegRouterProtocol {
         // Пример перехода
         // let nextVC = NextViewController()
         // viewController?.navigationController?.pushViewController(nextVC, animated: true)
+    }
+    
+    func showLevelInfoScreen() {
+        let vc = LevelInfoViewController()
+        viewController?.navigationController?.pushViewController(vc, animated: true)
     }
 }
 

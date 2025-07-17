@@ -28,7 +28,7 @@ class AuthorizationRouter: AuthRouterProtocol {
     }
     
     func showUserRegScreen() {
-        let userRegVC = UserRegViewController()
+        let userRegVC = UserRegRouter.assembleModule()
         viewController?.navigationController?.pushViewController(userRegVC, animated: true)
     }
 }

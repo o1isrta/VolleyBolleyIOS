@@ -10,6 +10,7 @@ enum AppColor {
         static let navBar = teal
         static let tabBar = midnightTeal
         static let modal = teal
+        static let blur = blurColor
 
         // buttons
         static let actionButtonDefault = yellow
@@ -75,4 +76,5 @@ private extension AppColor {
     static let red = UIColor(hex: "#BA0000")
     static let grYellow = UIColor(hex: "#F4E998")
     static let grGreen = UIColor(hex: "#5CF08D")
+    static let blurColor = UIColor(hex: "#AAC8E0", alpha: 0.19)
 }
