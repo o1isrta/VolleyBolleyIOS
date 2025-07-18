@@ -2,10 +2,11 @@
 import UIKit
 
 final class MockHomeRouter: HomeRouterProtocol {
+
     weak var viewController: UIViewController?
 
-    init(viewController: UIViewController? = nil) {
-        self.viewController = viewController
+    func attachViewController(_ view: UIViewController) {
+        viewController = view
     }
 }
 #endif

@@ -13,18 +13,36 @@ final class NetworkAssembly: Assembly {
 
         container.register(MoyaProvider<UsersAPI>.self) { _ in
             let logger = NetworkLoggerPlugin(configuration: .init(logOptions: .verbose))
-            return MoyaProvider<UsersAPI>(plugins: [logger])
+
+            let stubClosure: (UsersAPI) -> StubBehavior = NetworkEnvironment.current.useStubbedProvider
+                ? { _ in .immediate }
+                : MoyaProvider.neverStub
+
+            return MoyaProvider<UsersAPI>(
+                stubClosure: stubClosure,
+                plugins: [logger]
+            )
         }
         .inObjectScope(.container)
 
-        container.register(UsersService.self) { resolver in
-            let provider = resolver.resolve(MoyaProvider<UsersAPI>.self)!
+        container.register(UsersServiceProtocol.self) { resolver in
+            guard
+                let provider = resolver.resolve(MoyaProvider<UsersAPI>.self)
+            else {
+                fatalError("Error: Failed to resolve MoyaProvider<UsersAPI>")
+            }
+
             return UsersService(provider: provider)
         }
+        .inObjectScope(.container)
 
-        container.register(UsersRepository.self) { resolver in
-            let service = resolver.resolve(UsersService.self)!
-            return UsersRepository(service: service)
+        container.register(UsersRepositoryProtocol.self) { resolver in
+            guard let userService = resolver.resolve(UsersServiceProtocol.self) else {
+                fatalError("Error: Failed to resolve UsersService>")
+            }
+
+            return UsersRepository(service: userService)
         }
+        .inObjectScope(.container)
     }
 }

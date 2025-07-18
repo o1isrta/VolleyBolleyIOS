@@ -8,13 +8,17 @@
 import Foundation
 import Moya
 
+struct NetworkEnvironment {
+    static var current: AppEnvironment = .production
+}
+
 enum UsersAPI {
     case getCurrentUser
 }
 
 extension UsersAPI: TargetType {
     var baseURL: URL {
-        return URL(string: "https://e398050f-d75c-48f1-bb6c-28db405375f2.mock.pstmn.io")!
+        return NetworkEnvironment.current.baseURL
     }
 
     var path: String {
@@ -49,14 +53,17 @@ extension UsersAPI: TargetType {
     var sampleData: Data {
         switch self {
         case .getCurrentUser:
-            return """
-            {
-                "id": 1,
-                "name": "Mock User",
-                "date_of_birth": "1990-01-01",
-                "avatar_url": "https://example.com/avatar.png"
+            guard
+                let url = Bundle.main.url(
+                    forResource: "get_current_user_sample",
+                    withExtension: "json"
+                ),
+                let data = try? Data(contentsOf: url)
+            else {
+                return Data()
             }
-            """.data(using: .utf8)!
+
+            return data
         }
     }
 }

@@ -19,7 +19,7 @@ extension UserDTO {
             paymentID: paymentId,
             paymentAccount: paymentAccount,
             dateOfBirth: parsedDate,
-            level: level,
+            level: UserLevel(rawValue: self.level),
             countryID: countryId,
             cityID: cityId,
             avatarURL: parsedURL

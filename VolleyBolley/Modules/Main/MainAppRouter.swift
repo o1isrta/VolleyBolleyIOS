@@ -32,9 +32,11 @@ final class MainAppRouter: MainAppRouterProtocol {
         guard let home = resolver.resolve(HomeViewController.self) else {
             fatalError("HomeViewController dependency could not be resolved.")
         }
+
         guard let games = resolver.resolve(MyGamesViewController.self) else {
             fatalError("MyGamesViewController dependency could not be resolved.")
         }
+
         guard let profile = resolver.resolve(ProfileViewController.self) else {
             fatalError("ProfileViewController dependency could not be resolved.")
         }

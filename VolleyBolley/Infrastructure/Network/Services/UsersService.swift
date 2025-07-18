@@ -24,7 +24,9 @@ final class UsersService: UsersServiceProtocol {
             switch result {
             case .success(let response):
                 do {
-                    let dto = try JSONDecoder().decode(UserDTO.self, from: response.data)
+                    let decoder = JSONDecoder()
+                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+                    let dto = try decoder.decode(UserDTO.self, from: response.data)
                     completion(.success(dto))
                 } catch {
                     completion(.failure(error))

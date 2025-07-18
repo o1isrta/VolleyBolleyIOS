@@ -7,7 +7,7 @@
 
 import Swinject
 
-class MainAssembly: Assembly {
+final class MainAssembly: Assembly {
 
     // MARK: - Public Methods
 
@@ -15,5 +15,6 @@ class MainAssembly: Assembly {
         container.register(MainAppRouterProtocol.self) { resolver in
             MainAppRouter(resolver: resolver)
         }
+        .inObjectScope(.container)
     }
 }
