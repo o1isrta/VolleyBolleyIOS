@@ -25,6 +25,17 @@
         }
       }
     },
+    "All players" : {
+      "comment" : "Segment Control",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Все игроки"
+          }
+        }
+      }
+    },
     "all_players_label" : {
       "comment" : "Game",
       "extractionState" : "manual",
@@ -57,6 +68,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "VOLLEYBOLLEY"
+          }
+        }
+      }
+    },
+    "Archive" : {
+      "comment" : "Segment Control",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Архив"
           }
         }
       }
@@ -105,18 +127,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Choose your location"
-          }
-        }
-      }
-    },
-    "choose_this_court_button" : {
-      "comment" : "Map",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "CHOOSE THIS COURT"
           }
         }
       }
@@ -289,30 +299,6 @@
         }
       }
     },
-    "details_title" : {
-      "comment" : "Map",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "DETAILS"
-          }
-        }
-      }
-    },
-    "distance_km" : {
-      "comment" : "List",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "km"
-          }
-        }
-      }
-    },
     "donate_button" : {
       "comment" : "Game",
       "extractionState" : "manual",
@@ -385,14 +371,13 @@
         }
       }
     },
-    "favorites_label" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
+    "Favorites" : {
+      "comment" : "Segment Control",
       "localizations" : {
-        "en" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Favorites"
+            "value" : "Избранное"
           }
         }
       }
@@ -452,7 +437,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The game on October 6 has ended. Would you like to rate the players?"
+            "value" : "The game on October 6 has ended. Would you like to rate the players?"
           }
         }
       }
@@ -527,7 +512,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Invite players"
+            "value" : "Invite players"
           }
         }
       }
@@ -551,7 +536,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Invites have been successfully sent to players!"
+            "value" : "Invites have been successfully sent to players!"
           }
         }
       }
@@ -616,6 +601,17 @@
         }
       }
     },
+    "List" : {
+      "comment" : "Segment Control",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Список"
+          }
+        }
+      }
+    },
     "manage_players_button" : {
       "comment" : "Game",
       "extractionState" : "manual",
@@ -624,6 +620,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Manage players"
+          }
+        }
+      }
+    },
+    "Map" : {
+      "comment" : "Segment Control",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Карта"
           }
         }
       }
@@ -1049,7 +1056,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Save game"
+            "value" : "Save game"
           }
         }
       }
@@ -1066,26 +1073,24 @@
         }
       }
     },
-    "search_placeholder" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
+    "Search" : {
+      "comment" : "Search placeholder on court list",
       "localizations" : {
-        "en" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Search"
+            "value" : "Поиск"
           }
         }
       }
     },
-    "search_teams_or_players_placeholder" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
+    "Search teams or players" : {
+      "comment" : "Search placeholder on find game/invite users screen",
       "localizations" : {
-        "en" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Search teams or players"
+            "value" : "Поиск команды или игрока"
           }
         }
       }
@@ -1121,7 +1126,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Send  invites"
+            "value" : "Send  invites"
           }
         }
       }
@@ -1145,7 +1150,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sign up with a social media"
+            "value" : "Sign up with a social media"
           }
         }
       }
@@ -1230,30 +1235,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "VERIFY"
-          }
-        }
-      }
-    },
-    "view_mode_list" : {
-      "comment" : "List",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "List"
-          }
-        }
-      }
-    },
-    "view_mode_map" : {
-      "comment" : "Map",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Map"
           }
         }
       }
