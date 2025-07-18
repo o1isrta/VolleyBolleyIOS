@@ -6,7 +6,7 @@ class PhoneRegView: UIViewController {
     
     private let containerView: UIView = {
         let view = UIView()
-        view.backgroundColor = .gray
+        view.backgroundColor = AppColor.Background.blur
         view.layer.cornerRadius = 32
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -20,30 +20,16 @@ class PhoneRegView: UIViewController {
         return button
     }()
     
-    private lazy var titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Registration"
-        label.font = AppFont.ActayWide.bold(size: 24)
-        label.textColor = AppColor.Text.primary
-        label.textAlignment = .center
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+    private lazy var titleLabel = CustomTitle(text: "Registration", isLarge: true)
     
-    private lazy var phoneNumberLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Your phone number"
-        label.font = AppFont.Hero.regular(size: 16)
-        label.textAlignment = .center
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+    private lazy var phoneNumberLabel = CustomLabel(text: "Your phone number", isBold: true)
     
     private lazy var phoneTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "+ With the country code"
         textField.keyboardType = .phonePad
-        textField.borderStyle = .roundedRect
+//        textField.borderStyle = .roundedRect
+        textField.borderStyle = .none
         
         textField.layer.cornerRadius = 16
         textField.layer.borderWidth = 1
@@ -51,17 +37,10 @@ class PhoneRegView: UIViewController {
         textField.backgroundColor = .systemBackground
         textField.textColor = .label
         
+        textField.setLeftPaddingPoints(16)
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
-    
-//    private lazy var nextButton: UIButton = {
-//        let button = UIButton(type: .system)
-//        button.setTitle("NEXT STEP", for: .normal)
-//        button.titleLabel?.font = AppFont.ActayWide.bold(size: 16)
-//        button.translatesAutoresizingMaskIntoConstraints = false
-//        return button
-//    }()
     
     private let nextButton = NextStepButton(title: "NEXT STEP", initialState: .inactive)
     
@@ -81,31 +60,30 @@ class PhoneRegView: UIViewController {
         containerView.addSubview(nextButton)
         
         NSLayoutConstraint.activate([
-            containerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
-            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            containerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
+            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
+            containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
             
-            backButton.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 16),
-            backButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
-            backButton.widthAnchor.constraint(equalToConstant: 24),
+            backButton.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 22.5),
+            backButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
+            backButton.widthAnchor.constraint(equalToConstant: 18),
             backButton.heightAnchor.constraint(equalToConstant: 24),
             
-            titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 16),
+            titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 20),
             titleLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             
-            phoneNumberLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 24),
-            phoneNumberLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            phoneNumberLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16),
+            phoneNumberLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
             
             phoneTextField.topAnchor.constraint(equalTo: phoneNumberLabel.bottomAnchor, constant: 8),
-            phoneTextField.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
-            phoneTextField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
-            phoneTextField.heightAnchor.constraint(equalToConstant: 50),
+            phoneTextField.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
+            phoneTextField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
+            phoneTextField.heightAnchor.constraint(equalToConstant: 51),
             
-            nextButton.topAnchor.constraint(equalTo: phoneTextField.bottomAnchor, constant: 16),
-            nextButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
-            nextButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
-            nextButton.heightAnchor.constraint(equalToConstant: 50),
-            nextButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -24)
+            nextButton.topAnchor.constraint(equalTo: phoneTextField.bottomAnchor, constant: 20),
+            nextButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
+            nextButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
+            nextButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -20)
         ])
     }
     
@@ -126,4 +104,9 @@ class PhoneRegView: UIViewController {
 
 extension PhoneRegView: PhoneRegViewProtocol {
     
+}
+
+@available(iOS 17.0, *)
+#Preview {
+    PhoneRegView()
 }

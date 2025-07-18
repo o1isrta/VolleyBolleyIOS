@@ -9,7 +9,7 @@ import UIKit
 
 class LevelInfoViewController: UIViewController {
     
-    private let contentView: UIView = {
+    private lazy var contentView: UIView = {
         let container = UIView()
         container.translatesAutoresizingMaskIntoConstraints = false
         container.backgroundColor = AppColor.Background.blur
@@ -17,17 +17,24 @@ class LevelInfoViewController: UIViewController {
         return container
     }()
     
-    private let backButton: UIButton = {
+    private lazy var backButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(systemName: "chevron.left"), for: .normal)
         button.tintColor = .white
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(LevelInfoViewController.self, action: #selector(didTapBack), for: .touchUpInside)
+        button.addTarget(self, action: #selector(didTapBack), for: .touchUpInside)
         return button
     }()
     
     private lazy var titleLabel = CustomTitle(text: "About levels", isLarge: true)
     
+    private lazy var labelDescription: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.attributedText = makeLevelsDescription()
+        return label
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +47,7 @@ class LevelInfoViewController: UIViewController {
         view.addSubview(contentView)
         contentView.addSubview(backButton)
         contentView.addSubview(titleLabel)
+        contentView.addSubview(labelDescription)
         
         let safeArea = view.safeAreaLayoutGuide
         
@@ -53,13 +61,43 @@ class LevelInfoViewController: UIViewController {
             backButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             
             titleLabel.centerYAnchor.constraint(equalTo: backButton.centerYAnchor),
-            titleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
+            titleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            
+            labelDescription.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16),
+            labelDescription.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            labelDescription.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            labelDescription.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -20)
         ])
         
     }
     
+    private func makeLevelsDescription() -> NSAttributedString {
+        let text = """
+            Light: New to the game
+            
+            Medium: Know rules, still learning
+            
+            Hard: Skilled, play often, tournaments experience
+            
+            Pro: Elite level, official championships experience
+            """
+        let attributed = NSMutableAttributedString(string: text)
+        
+        attributed.addAttribute(.font, value: AppFont.Hero.regular(size: 16), range: NSRange(location: 0, length: attributed.length))
+        attributed.addAttribute(.foregroundColor, value: UIColor.white, range: NSRange(location: 0, length: attributed.length))
+        
+        let levels = ["Light", "Medium", "Hard", "Pro"]
+        for level in levels {
+            if let range = attributed.string.range(of: "\(level):") {
+                let nsRange = NSRange(range, in: attributed.string)
+                attributed.addAttribute(.font, value: AppFont.Hero.bold(size: 16), range: nsRange)
+            }
+        }
+        
+        return attributed
+    }
+    
     @objc private func didTapBack() {
-//        self.dismiss(animated: true, completion: nil)
+        navigationController?.popViewController(animated: true)
     }
 }
-
