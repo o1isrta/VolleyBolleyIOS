@@ -36,7 +36,7 @@ enum AppColor {
         // pin
         static let pinDefault = mutedTeal
         static let pinSelected = orange
-        
+
         static let searField = white
     }
 
