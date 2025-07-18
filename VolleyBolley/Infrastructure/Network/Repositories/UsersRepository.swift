@@ -12,11 +12,15 @@ protocol UsersRepositoryProtocol {
 }
 
 final class UsersRepository: UsersRepositoryProtocol {
-    private let service: UsersService
+    private let service: UsersServiceProtocol
 
-    init(service: UsersService) {
+    // MARK: - Initializers
+
+    init(service: UsersServiceProtocol) {
         self.service = service
     }
+
+    // MARK: - Public Methods
 
     func getCurrentUser(completion: @escaping (Result<User, Error>) -> Void) {
         service.fetchCurrentUser { result in

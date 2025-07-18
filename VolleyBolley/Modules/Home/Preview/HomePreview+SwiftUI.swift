@@ -2,13 +2,11 @@
 import SwiftUI
 
 @available(iOS 17.0, *)
-#Preview("Home success") {
+#Preview("Home") {
     UIViewControllerPreview {
         HomeModulePreviewBuilder.build()
     }
     .edgesIgnoringSafeArea(.all)
 }
-
-// Можно добавить доп сценарии
 
 #endif

@@ -1,0 +1,12 @@
+{
+    "first_name": "ArtemMock",
+    "last_name": "Petrov",
+    "gender": 0,
+    "payment_id": 0,
+    "payment_account": "1234?",
+    "date_of_birth": "1970-02-20",
+    "level": 0,
+    "country_id": 1,
+    "city_id": 1,
+    "avatar_url": "https://github.com/xcode73/myapp-mocks/blob/main/VolleyBolley/Images/Profile/profile1.jpg?raw=true"
+}

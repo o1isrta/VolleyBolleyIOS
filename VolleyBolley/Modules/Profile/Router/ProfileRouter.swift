@@ -7,17 +7,15 @@
 
 import UIKit
 
-protocol ProfileRouterProtocol: AnyObject {}
+protocol ProfileRouterProtocol: AnyObject {
+    func attachViewController(_ view: UIViewController)
+}
 
 final class ProfileRouter: ProfileRouterProtocol {
 
-    // MARK: - Public Properties
-
     weak var viewController: UIViewController?
 
-    // MARK: - Initializers
-
-    init(viewController: UIViewController?) {
-        self.viewController = viewController
+    func attachViewController(_ view: UIViewController) {
+        viewController = view
     }
 }

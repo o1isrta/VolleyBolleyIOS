@@ -30,8 +30,6 @@ import Swinject
 /// ```
 final class SharedServicesAssembly: Assembly {
 
-    // MARK: - Public Methods
-
     func assemble(container: Container) {
 
         container.register(SettingsStorageProtocol.self) { _ in

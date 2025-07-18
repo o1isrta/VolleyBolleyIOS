@@ -14,7 +14,7 @@ struct User {
     let paymentID: Int
     let paymentAccount: String
     let dateOfBirth: Date?
-    let level: Int
+    let level: UserLevel
     let countryID: Int
     let cityID: Int
     let avatarURL: URL?
