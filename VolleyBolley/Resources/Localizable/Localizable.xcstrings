@@ -437,7 +437,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The game on October 6 has ended. Would you like to rate the players?"
+            "value" : "The game on October 6 has ended. Would you like to rate the players?"
           }
         }
       }
@@ -502,6 +502,9 @@
         }
       }
     },
+    "Home" : {
+      "comment" : "Tab bar item title"
+    },
     "invite_players_button" : {
       "comment" : "Game",
       "extractionState" : "manual",
@@ -509,7 +512,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Invite players"
+            "value" : "Invite players"
           }
         }
       }
@@ -533,7 +536,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Invites have been successfully sent to players!"
+            "value" : "Invites have been successfully sent to players!"
           }
         }
       }
@@ -645,15 +648,7 @@
       }
     },
     "My games" : {
-      "comment" : "Segment Control",
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Мои игры"
-          }
-        }
-      }
+      "comment" : "Tab bar item title"
     },
     "name_field" : {
       "comment" : "Registration",
@@ -955,6 +950,9 @@
         }
       }
     },
+    "Profile" : {
+      "comment" : "Tab bar item title"
+    },
     "rate_level_confirm_button" : {
       "comment" : "Player rating",
       "extractionState" : "manual",
@@ -1058,7 +1056,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Save game"
+            "value" : "Save game"
           }
         }
       }
@@ -1128,7 +1126,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Send  invites"
+            "value" : "Send  invites"
           }
         }
       }
@@ -1152,7 +1150,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sign up with a social media"
+            "value" : "Sign up with a social media"
           }
         }
       }
@@ -1177,42 +1175,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Surname"
-          }
-        }
-      }
-    },
-    "tab_home" : {
-      "comment" : "TabBar",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Home"
-          }
-        }
-      }
-    },
-    "tab_my_games" : {
-      "comment" : "TabBar",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "My games"
-          }
-        }
-      }
-    },
-    "tab_profile" : {
-      "comment" : "TabBar",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Profile"
           }
         }
       }
