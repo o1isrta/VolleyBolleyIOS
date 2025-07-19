@@ -8,9 +8,9 @@
 import UIKit
 
 class CourtDetailsPopupView: UIView {
-    
+
     // MARK: - Private Properties
-    
+
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -19,34 +19,34 @@ class CourtDetailsPopupView: UIView {
         imageView.backgroundColor = .systemGray5// TODO
         return imageView
     }()
-    
+
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 22)// TODO
         return label
     }()
-    
+
     private lazy var priceLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18)// TODO
         label.textColor = .systemBlue// TODO
         return label
     }()
-    
+
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 15)// TODO
         label.numberOfLines = 0
         return label
     }()
-    
+
     private lazy var phoneLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 15)// TODO
         label.textColor = .systemGray// TODO
         return label
     }()
-    
+
     private lazy var chooseButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Choose this court", for: .normal)
@@ -55,26 +55,26 @@ class CourtDetailsPopupView: UIView {
         button.layer.cornerRadius = 12// TODO
         return button
     }()
-    
+
     private lazy var mainStack: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.spacing = 12
         return stackView
     }()
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
     }
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupUI()
     }
-    
+
     // MARK: - Public Methods
-    
+
     func configure(with court: CourtModel) {
         nameLabel.text = court.name
         priceLabel.text = court.price
@@ -90,7 +90,7 @@ class CourtDetailsPopupView: UIView {
 }
 
 private extension CourtDetailsPopupView {
-    
+
     private func setupUI() {
         backgroundColor = .systemGray2// TODO
         layer.cornerRadius = 24
@@ -107,9 +107,9 @@ private extension CourtDetailsPopupView {
         ].forEach {
             mainStack.addArrangedSubview($0)
         }
-        
+
         addSubviews(mainStack)
-        
+
         NSLayoutConstraint.activate([
             imageView.heightAnchor.constraint(equalToConstant: 160),
             chooseButton.heightAnchor.constraint(equalToConstant: 44),
