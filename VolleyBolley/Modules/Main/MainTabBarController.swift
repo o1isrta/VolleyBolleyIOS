@@ -7,70 +7,121 @@
 
 import UIKit
 
-final class MainTabBarController: UITabBarController {
+final class MainTabBarController: UIViewController {
 
     // MARK: - Private Properties
 
-    private struct TabIcon {
-        let title: String
-        let image: UIImage?
-        let selected: UIImage?
-    }
+    private var currentTab: TabBarItem = .home
+
+    // MARK: - UI Components
+
+    private var viewControllers: [TabBarItem: UIViewController] = [:]
+
+    private lazy var containerView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
+    private lazy var tabBar: CustomTabBarView = {
+        let view = CustomTabBarView(items: TabBarItem.allCases)
+        view.delegate = self
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
 
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setValue(CustomTabBar(), forKey: "tabBar")
-        configureAppearance()
+
+        setupView()
+        setupLayout()
+        setupChildViewControllers()
     }
 
-    // MARK: - Public Methods
+    func setViewControllers(_ viewControllers: [TabBarItem: UIViewController]) {
+        for child in children {
+            child.willMove(toParent: nil)
+            child.view.removeFromSuperview()
+            child.removeFromParent()
+        }
+        self.viewControllers = viewControllers
+    }
 
-    func configureTabBarItems() {
-        guard let items = tabBar.items else { return }
+    // MARK: - Setup
 
-        let icons: [TabIcon] = [
-            TabIcon(title: "Home", image: .home, selected: .homeActive),
-            TabIcon(title: "My Games", image: .myGames, selected: .myGamesActive),
-            TabIcon(title: "Profile", image: .profile, selected: .profileActive)
-        ]
+    private func setupView() {
+        view.addSubview(containerView)
+        view.addSubview(tabBar)
+    }
 
-        for (index, item) in items.enumerated() {
-            let data = icons[index]
-            item.title = data.title
-            item.image = data.image
-            item.selectedImage = data.selected
-            item.tag = index
+    private func setupChildViewControllers() {
+        for (tab, viewController) in viewControllers {
+            addChild(viewController)
+            containerView.addSubview(viewController.view)
+            viewController.view.translatesAutoresizingMaskIntoConstraints = false
+            setupConstraintsForChild(viewController)
+            viewController.didMove(toParent: self)
+            viewController.view.isHidden = (tab != currentTab)
         }
     }
 
-    // MARK: - Public Methods
+    // MARK: - Navigation
 
-    private func configureAppearance() {
-        let gradientSize = CGSize(width: 1, height: 50)
-        let gradientImage = UIImage.gradientImage(size: gradientSize)
-        
-        guard let gradientImage else { return }
-        
-        let activeAttributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor(patternImage: gradientImage),
-            .font: UIFont.systemFont(ofSize: 12, weight: .semibold)
-        ]
-        let inactiveAttributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.white,
-            .font: UIFont.systemFont(ofSize: 12, weight: .regular)
-        ]
+    private func switchToViewController(at tab: TabBarItem) {
+        guard let selectedVC = viewControllers[tab] else { return }
+        let previousVC = viewControllers[currentTab]
 
-        let appearance = UITabBarAppearance()
-        appearance.stackedLayoutAppearance.selected.titleTextAttributes = activeAttributes
-        appearance.stackedLayoutAppearance.normal.titleTextAttributes = inactiveAttributes
-        tabBar.standardAppearance = appearance
+        previousVC?.view.isHidden = true
+        selectedVC.view.isHidden = false
 
-        let inset: CGFloat = 4
+        currentTab = tab
+        tabBar.updateSelection(index: tab.rawValue)
+    }
 
-        for item in self.tabBar.items ?? [] {
-            item.imageInsets = UIEdgeInsets(top: inset, left: 0, bottom: -inset, right: 0)
-        }
+    // MARK: - Layout setup
+
+    private func setupLayout() {
+        setupConstraintsContainerView()
+        setupConstraintsTabBar()
+    }
+
+    // MARK: - Constraints
+
+    private func setupConstraintsTabBar() {
+        NSLayoutConstraint.activate([
+            tabBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tabBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tabBar.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            tabBar.heightAnchor.constraint(equalToConstant: 81)
+        ])
+    }
+
+    private func setupConstraintsContainerView() {
+        NSLayoutConstraint.activate([
+            containerView.topAnchor.constraint(equalTo: view.topAnchor),
+            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+    }
+
+    private func setupConstraintsForChild(_ selectedVC: UIViewController) {
+        NSLayoutConstraint.activate([
+            selectedVC.view.topAnchor.constraint(equalTo: containerView.topAnchor),
+            selectedVC.view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            selectedVC.view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            selectedVC.view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+        ])
+    }
+}
+
+// MARK: - CustomTabBarViewDelegate
+
+extension MainTabBarController: CustomTabBarViewDelegate {
+    func customTabBarView(_ tabBarView: CustomTabBarView, didSelectItemAt index: Int) {
+        guard let item = TabBarItem(rawValue: index) else { return }
+        switchToViewController(at: item)
     }
 }
