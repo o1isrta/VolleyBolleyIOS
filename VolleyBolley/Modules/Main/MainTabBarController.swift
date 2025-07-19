@@ -1,5 +1,5 @@
 //
-//  TabBarViewController.swift
+//  MainTabBarController.swift
 //  VolleyBolley
 //
 //  Created by Roman Romanov on 24.06.2025.
@@ -7,54 +7,47 @@
 
 import UIKit
 
-final class TabBarViewController: UITabBarController {
-    
+final class MainTabBarController: UITabBarController {
+
     // MARK: - Private Properties
-    
-    private let homeVC = HomeAssembly.assemble()
-    private let gamesVC = MyGamesViewController()
-    private let profileVC = ProfileViewController()
-    
-    // MARK: - Public Methods
-    
+
+    private struct TabIcon {
+        let title: String
+        let image: UIImage?
+        let selected: UIImage?
+    }
+
+    // MARK: - Lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setValue(CustomTabBar(), forKey: "tabBar")
-        setupControllers()
-        setupUITabBarItemAppearance()
+        configureAppearance()
     }
-}
 
-// MARK: - Private Methods
+    // MARK: - Public Methods
 
-private extension TabBarViewController {
-    
-    func setupControllers() {
-        homeVC.tabBarItem = UITabBarItem(
-            title: "Home",
-            image: .home,
-            selectedImage: .homeActive
-        )
-        gamesVC.tabBarItem = UITabBarItem(
-            title: "My games",
-            image: .myGames,
-            selectedImage: .myGamesActive
-        )
-        profileVC.tabBarItem = UITabBarItem(
-            title: "Profile",
-            image: .profile,
-            selectedImage: .profileActive
-        )
+    func configureTabBarItems() {
+        guard let items = tabBar.items else { return }
 
-        let homeNav = UINavigationController(rootViewController: homeVC)
-        let gamesNav = UINavigationController(rootViewController: gamesVC)
-        let profileNav = UINavigationController(rootViewController: profileVC)
+        let icons: [TabIcon] = [
+            TabIcon(title: "Home", image: .home, selected: .homeActive),
+            TabIcon(title: "My Games", image: .myGames, selected: .myGamesActive),
+            TabIcon(title: "Profile", image: .profile, selected: .profileActive)
+        ]
 
-        setViewControllers([homeNav, gamesNav, profileNav], animated: false)
+        for (index, item) in items.enumerated() {
+            let data = icons[index]
+            item.title = data.title
+            item.image = data.image
+            item.selectedImage = data.selected
+            item.tag = index
+        }
     }
-    
-    func setupUITabBarItemAppearance() {
+
+    // MARK: - Public Methods
+
+    private func configureAppearance() {
         let gradientSize = CGSize(width: 1, height: 50)
         let gradientImage = UIImage.gradientImage(size: gradientSize)
         
@@ -68,14 +61,14 @@ private extension TabBarViewController {
             .foregroundColor: UIColor.white,
             .font: UIFont.systemFont(ofSize: 12, weight: .regular)
         ]
-        
+
         let appearance = UITabBarAppearance()
         appearance.stackedLayoutAppearance.selected.titleTextAttributes = activeAttributes
         appearance.stackedLayoutAppearance.normal.titleTextAttributes = inactiveAttributes
         tabBar.standardAppearance = appearance
-        
+
         let inset: CGFloat = 4
-        
+
         for item in self.tabBar.items ?? [] {
             item.imageInsets = UIEdgeInsets(top: inset, left: 0, bottom: -inset, right: 0)
         }

@@ -9,12 +9,12 @@ import UIKit
 
 enum SegmentedControlType: CaseIterable {
     case players, games, map
-    
+
     var segments: [String] {
         switch self {
-        case .players: return ["All players", "Favorites"]
-        case .games: return ["My games", "Archive"]
-        case .map: return ["Map", "List"]
+        case .players: return [String(localized: "All players"), String(localized: "Favorites")]
+        case .games: return [String(localized: "My games"), String(localized: "Archive")]
+        case .map: return [String(localized: "Map"), String(localized: "List")]
         }
     }
 }
@@ -34,9 +34,9 @@ enum SegmentedControlType: CaseIterable {
 ///
 /// ```
 public class CustomSegmentedControl: UIView {
-    
+
     // MARK: - Public Properties
-    
+
     // Array of segment titles
     public var segments: [String]
     // Currently selected segment index
@@ -50,9 +50,9 @@ public class CustomSegmentedControl: UIView {
     }
     // Callback for segment change
     public var segmentChanged: ((Int) -> Void)?
-    
+
     // MARK: - Private Properties
-    
+
     // Array to hold segment buttons
     private lazy var buttons: [UIButton] = []
     // Selector view to highlight the selected segment
@@ -62,46 +62,46 @@ public class CustomSegmentedControl: UIView {
         view.layer.cornerRadius = 16
         return view
     }()
-    
+
     private lazy var gradientLayer: CAGradientLayer = {
         let view = CALayer.getGradientLayer()
         view.frame = bounds
         view.cornerRadius = 16
         return view
     }()
-    
+
     // MARK: - Initializers
-    
+
     init(type: SegmentedControlType) {
         self.segments = type.segments
         super.init(frame: .zero)
         setupView()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - Public Methods
-    
+
     override public func layoutSubviews() {
         super.layoutSubviews()
         // Update gradient layer when resizing
         if let gradientLayer = layer.sublayers?.first(where: { $0 is CAGradientLayer }) {
             gradientLayer.frame = bounds
         }
-        
+
         updateSegmentedControl()
     }
 }
-    
+
 // MARK: - Private Methods
 
 private extension CustomSegmentedControl {
-    
+
     func setupView() {
         backgroundColor = AppColor.Text.primary
-        
+
         layer.insertSublayer(gradientLayer, at: 0)
         // Save a link to the gradient layer for subsequent updating during resizing
         self.layer.sublayers?.first { $0 is CAGradientLayer }?.removeFromSuperlayer()
@@ -118,7 +118,7 @@ private extension CustomSegmentedControl {
         stackView.alignment = .fill
         stackView.distribution = .fillEqually
         addSubviews(stackView)
-        
+
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: self.topAnchor),
             stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
