@@ -8,9 +8,9 @@
 import UIKit
 
 final class CourtBottomView: UIView {
-    
+
     // MARK: - Public Properties
-    
+
     lazy var chooseButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Choose this court", for: .normal)
@@ -19,7 +19,7 @@ final class CourtBottomView: UIView {
         button.layer.cornerRadius = 10
         return button
     }()
-    
+
     lazy var detailsButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Details", for: .normal)
@@ -28,9 +28,9 @@ final class CourtBottomView: UIView {
         button.layer.cornerRadius = 10
         return button
     }()
-    
+
     // MARK: - Private Properties
-    
+
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 20)
@@ -38,7 +38,7 @@ final class CourtBottomView: UIView {
         label.textAlignment = .left
         return label
     }()
-    
+
     private lazy var shortDescriptionLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 15)
@@ -46,7 +46,7 @@ final class CourtBottomView: UIView {
         label.textAlignment = .left
         return label
     }()
-    
+
     private lazy var nearestLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 13)
