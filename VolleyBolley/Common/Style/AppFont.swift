@@ -1,7 +1,14 @@
+//
+//  AppFont.swift
+//  VolleyBolley
+//
+//  Created by Nikolai Eremenko
+//
+
 import UIKit
 
 enum AppFont {
-    
+
     // MARK: - Hero
     enum Hero {
         static func regular(size: CGFloat) -> UIFont {
@@ -14,21 +21,21 @@ enum AppFont {
             font(named: "Hero-Light", size: size)
         }
     }
-    
+
     // MARK: - Actay Wide
     enum ActayWide {
         static func bold(size: CGFloat) -> UIFont {
             font(named: "ActayWide-Bold", size: size)
         }
     }
-    
+
     // MARK: - Quantex
     enum Quantex {
         static func regular(size: CGFloat) -> UIFont {
             font(named: "Quantex-Regular", size: size)
         }
     }
-    
+
     // MARK: - Private helper
     private static func font(named name: String, size: CGFloat) -> UIFont {
         guard let font = UIFont(name: name, size: size) else {
