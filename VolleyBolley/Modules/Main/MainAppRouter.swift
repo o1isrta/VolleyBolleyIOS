@@ -42,12 +42,10 @@ final class MainAppRouter: MainAppRouterProtocol {
         }
 
         tabBarController.setViewControllers([
-            UINavigationController(rootViewController: home),
-            UINavigationController(rootViewController: games),
-            UINavigationController(rootViewController: profile)
-        ], animated: false)
-
-        tabBarController.configureTabBarItems()
+            .home: UINavigationController(rootViewController: home),
+            .games: UINavigationController(rootViewController: games),
+            .profile: UINavigationController(rootViewController: profile)
+        ])
 
         return tabBarController
     }
