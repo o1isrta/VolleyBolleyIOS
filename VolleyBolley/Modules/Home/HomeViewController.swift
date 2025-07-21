@@ -17,6 +17,8 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
 
     private let presenter: HomePresenterProtocol
 
+    let button = AppButtonView(config: AppButtonPrimary.save)
+
     // MARK: - Initializers
 
     init(presenter: HomePresenterProtocol) {
@@ -33,21 +35,38 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.viewDidLoad()
+
+        setupUI()
+
     }
 
     // MARK: - Public Methods
 
     func showGreeting(_ message: String) {
-        let label = UILabel()
-        label.text = message
-        label.textAlignment = .center
-        label.font = AppFont.Quantex.regular(size: 16)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(label)
+//        let label = UILabel()
+//        label.text = message
+//        label.textAlignment = .center
+//        label.font = AppFont.Quantex.regular(size: 16)
+//        label.translatesAutoresizingMaskIntoConstraints = false
+//        view.addSubview(label)
 
+//        NSLayoutConstraint.activate([
+//            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+//            label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+//        ])
+    }
+
+    // MARK: - Private Methods
+
+    private func setupUI() {
+        view.addSubview(button)
+        button.setVisualState(.selected)
+        button.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            button.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            button.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            button.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            button.heightAnchor.constraint(equalToConstant: 44)
         ])
     }
 }
