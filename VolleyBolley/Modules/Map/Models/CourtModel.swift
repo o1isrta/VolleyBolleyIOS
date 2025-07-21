@@ -17,7 +17,7 @@ struct CourtModel: Equatable {
     let imageUrl: URL?
     let price: String
     let phone: String
-    
+
     static func == (lhs: CourtModel, rhs: CourtModel) -> Bool {
         lhs.coordinate.latitude == rhs.coordinate.latitude
         && lhs.coordinate.longitude == rhs.coordinate.longitude

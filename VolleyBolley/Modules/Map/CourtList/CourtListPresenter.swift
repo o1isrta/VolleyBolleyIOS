@@ -18,20 +18,20 @@ protocol CourtListViewProtocol: AnyObject {
 }
 
 class CourtListPresenter: CourtListPresenterProtocol {
-    
+
     // MARK: - Public Methods
-    
+
     weak var view: CourtListViewProtocol?
     var interactor: CourtListInteractorProtocol?
-    
+
     // MARK: - Private Methods
-    
+
     func viewDidLoad(userLocation: CLLocation?) {
         interactor?.fetchCourtsWithDistance(userLocation: userLocation) { [weak self] courtsWithDistance in
             self?.view?.showCourts(courtsWithDistance)
         }
     }
-    
+
     func updateDistancesForCourts(_ courts: [CourtModel], userLocation: CLLocation?) {
         interactor?.calculateDistancesForCourts(courts, userLocation: userLocation) { [weak self] courtsWithDistance in
             self?.view?.showCourts(courtsWithDistance)

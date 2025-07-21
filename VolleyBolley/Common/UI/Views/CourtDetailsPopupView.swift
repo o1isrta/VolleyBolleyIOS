@@ -95,7 +95,7 @@ private extension CourtDetailsPopupView {
         backgroundColor = .systemGray2// TODO
         layer.cornerRadius = 24
         layer.masksToBounds = true
-        
+
         [
             imageView,
             nameLabel,
@@ -113,7 +113,7 @@ private extension CourtDetailsPopupView {
         NSLayoutConstraint.activate([
             imageView.heightAnchor.constraint(equalToConstant: 160),
             chooseButton.heightAnchor.constraint(equalToConstant: 44),
-            
+
             mainStack.topAnchor.constraint(equalTo: topAnchor, constant: 20),
             mainStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             mainStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
