@@ -60,6 +60,11 @@ enum AppColor {
         static let primary = white
         static let inverted = ashBrown
     }
+
+    enum Gradient {
+        static let greenLightStart = butterYellow
+        static let greenLightEnd = mint
+    }
 }
 
 /// Цвета по названиям
@@ -81,4 +86,6 @@ private extension AppColor {
     static let steelBlue = UIColor(hex: "#516372")
     static let mutedTeal = UIColor(hex: "#578D83")
     static let red = UIColor(hex: "#BA0000")
+    static let butterYellow = UIColor(hex: "#F4E998")
+    static let mint = UIColor(hex: "#5CF08D")
 }
