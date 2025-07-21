@@ -19,15 +19,18 @@ enum AppColor {
         static let modal = teal
         static let primary = white
 
-        // buttons
-        static let actionButtonDefault = yellow
-        static let actionButtonDisabled = mistGrey
-        static let largeActionButtonDefault = yellow
-        static let mapButton = orange
+        static let buttonPrimaryNormal = clear
+        static let buttonPrimarySelected = yellow
+        static let buttonPrimaryDisabled = mistGrey
+        static let buttonAuthGoogle = white
+        static let buttonAuthFacebook = facebookBlue
+        static let buttonMap = orange
 
         // badges
         static let badgeDefault = steelBlue
         static let badgeSelected = mutedTeal
+
+        // level
         static let levelBadgeLight = blue
         static let levelBadgeMedium = green
         static let levelBadgeHard = orange
@@ -56,7 +59,7 @@ enum AppColor {
     }
 
     enum Border {
-        static let actionButton = yellow
+        static let buttonAction = yellow
         static let primary = white
         static let inverted = ashBrown
     }
@@ -70,6 +73,7 @@ enum AppColor {
 /// Цвета по названиям
 /// Только для переиспользования в AppColor
 private extension AppColor {
+    static let clear = UIColor.clear
     static let white = UIColor.white
     static let ashBrown = UIColor(hex: "#423F39")
     static let midnightTeal = UIColor(hex: "#295E6D")
@@ -88,4 +92,5 @@ private extension AppColor {
     static let red = UIColor(hex: "#BA0000")
     static let butterYellow = UIColor(hex: "#F4E998")
     static let mint = UIColor(hex: "#5CF08D")
+    static let facebookBlue = UIColor(hex: "#1877F2")
 }
