@@ -8,24 +8,24 @@
 import UIKit
 
 class CourtDetailsCell: UITableViewCell {
-    
+
     // MARK: - Private Properties
-    
+
     private let detailsView = CourtDetailsPopupView()
-    
+
     // MARK: - Initializers
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - Public Methods
-    
+
     func configure(with court: CourtModel) {
         detailsView.configure(with: court)
     }
@@ -34,7 +34,7 @@ class CourtDetailsCell: UITableViewCell {
 // MARK: - Private Methods
 
 private extension CourtDetailsCell {
-    
+
     func setupUI() {
         selectionStyle = .none
         contentView.addSubviews(detailsView)

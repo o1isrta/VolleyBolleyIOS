@@ -55,7 +55,7 @@ final class CourtBottomView: UIView {
         label.isHidden = true
         return label
     }()
-    
+
     private lazy var buttonStack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
@@ -63,30 +63,29 @@ final class CourtBottomView: UIView {
         stack.distribution = .fillEqually
         return stack
     }()
-    
+
     private lazy var mainStack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
         stack.spacing = 8
-        stack.translatesAutoresizingMaskIntoConstraints = false// TODO
         addSubview(stack)
         return stack
     }()
-    
+
     // MARK: - Initializers
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
     }
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupUI()
     }
-    
+
     // MARK: - Public Methods
-    
+
     func configure(with court: CourtModel, isNearest: Bool) {
         nameLabel.text = court.name
         shortDescriptionLabel.text = court.shortDescription
@@ -97,7 +96,7 @@ final class CourtBottomView: UIView {
 // MARK: - Private Methods
 
 private extension CourtBottomView {
-    
+
     func setupUI() {
         backgroundColor = .white// TODO
         layer.cornerRadius = 20
@@ -119,8 +118,8 @@ private extension CourtBottomView {
             mainStack.addArrangedSubview($0)
         }
 
-        addSubview(mainStack)
-        
+        addSubviews(mainStack)
+
         NSLayoutConstraint.activate([
             mainStack.topAnchor.constraint(equalTo: topAnchor, constant: 16),
             mainStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
