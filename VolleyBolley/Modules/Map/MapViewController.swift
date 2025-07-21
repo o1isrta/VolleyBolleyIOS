@@ -60,8 +60,7 @@ class MapViewController: UIViewController, MapViewProtocol {
 
             // Re-add to view hierarchy
             addChild(newListVC)
-            newListVC.view.translatesAutoresizingMaskIntoConstraints = false// TODO
-            view.addSubview(newListVC.view)
+            view.addSubviews(newListVC.view)
             NSLayoutConstraint.activate([
                 newListVC.view.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 8),
                 newListVC.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -109,22 +108,26 @@ extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard !(annotation is MKUserLocation) else { return nil }
         let identifier = "CourtAnnotation"
-        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? CustomMarkerAnnotationView
         if annotationView == nil {
-            annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+			annotationView = CustomMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+			annotationView?.canShowCallout = false
         } else {
             annotationView?.annotation = annotation
         }
-        if
-            let nearest = nearestCourt,
-            annotation.coordinate.latitude == nearest.coordinate.latitude
-            && annotation.coordinate.longitude == nearest.coordinate.longitude {
-            annotationView?.markerTintColor = .systemGreen
-            annotationView?.glyphText = "★"
-        } else {
-            annotationView?.markerTintColor = .systemBlue
-            annotationView?.glyphText = nil
-        }
+
+		// TODO: remove it
+//        if
+//            let nearest = nearestCourt,
+//            annotation.coordinate.latitude == nearest.coordinate.latitude
+//            && annotation.coordinate.longitude == nearest.coordinate.longitude {
+//            annotationView?.markerTintColor = .systemGreen
+//            annotationView?.glyphText = "★"
+//        } else {
+//            annotationView?.markerTintColor = .systemBlue
+//            annotationView?.glyphText = nil
+//        }
+
         return annotationView
     }
 
