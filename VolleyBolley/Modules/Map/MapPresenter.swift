@@ -17,14 +17,14 @@ protocol MapViewProtocol: AnyObject {
 }
 
 final class MapPresenter: MapPresenterProtocol {
-    
+
     // MARK: - Public Properties
-    
+
     weak var view: MapViewProtocol?
     var interactor: MapInteractorProtocol?
-    
+
     // MARK: - Public Methods
-    
+
     func viewDidLoad(userLocation: CLLocation?) {
         interactor?.fetchCourts { [weak self] courts in
             var nearest: CourtModel?

@@ -12,13 +12,13 @@ protocol MapRouterProtocol: AnyObject {
 }
 
 final class MapRouter: MapRouterProtocol {
-    
+
     // MARK: - Private Properties
-    
+
     private weak var listVC: CourtListViewController?
-    
+
     // MARK: - Private Methods
-    
+
     func showList(from view: MapViewController, courts: [CourtModel], selected: CourtModel?) {
         let listVC = CourtListViewController(courts: courts, selected: selected)
         view.addChild(listVC)

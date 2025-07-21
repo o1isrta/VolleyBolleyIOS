@@ -13,9 +13,9 @@ protocol MapInteractorProtocol: AnyObject {
 }
 
 final class MapInteractor: MapInteractorProtocol {
-    
+
     // MARK: - Public Methods
-    
+
     func fetchCourts(completion: @escaping ([CourtModel]) -> Void) {
         let courts = [
             CourtModel(
