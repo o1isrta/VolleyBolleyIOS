@@ -9,7 +9,7 @@ import Foundation
 
 extension UserDTO {
     func toDomain() -> User {
-        let parsedDate = AppDateFormatters.isoDateOnly.date(from: dateOfBirth)
+        let parsedDate = dateOfBirth.asServerDate
         let parsedURL = URL(string: avatarUrl)
 
         return User(

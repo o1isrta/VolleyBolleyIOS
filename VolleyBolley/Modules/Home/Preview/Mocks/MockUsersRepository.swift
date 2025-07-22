@@ -15,7 +15,7 @@ final class MockUsersRepository: UsersRepositoryProtocol {
             gender: 0,
             paymentID: 0,
             paymentAccount: "1234?",
-            dateOfBirth: AppDateFormatters.isoDateOnly.date(from: "1970-02-20"),
+            dateOfBirth: "1970-02-20".asServerDate,
             level: .light,
             countryID: 1,
             cityID: 1,
