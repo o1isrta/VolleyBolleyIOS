@@ -10,10 +10,10 @@ import Foundation
 extension Date {
 
     var toServerDateString: String {
-        DateFormatters.serverDateOnly.string(from: self)
+        AppDateFormatters.serverDateOnly.string(from: self)
     }
 
     var toUIDateString: String {
-        DateFormatters.uiDateOnly.string(from: self)
+        AppDateFormatters.uiDateOnly.string(from: self)
     }
 }

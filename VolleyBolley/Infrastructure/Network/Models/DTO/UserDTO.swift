@@ -13,7 +13,7 @@ struct UserDTO: Decodable {
     let gender: Int
     let paymentId: Int
     let paymentAccount: String
-    let dateOfBirth: String
+    let dateOfBirth: Date
     let level: Int
     let countryId: Int
     let cityId: Int

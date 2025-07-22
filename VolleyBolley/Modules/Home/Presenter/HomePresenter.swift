@@ -44,6 +44,10 @@ final class HomePresenter: HomePresenterProtocol {
                 let viewModel = NavBarViewModel(user: user, avatarImage: avatarImage)
                 self.view?.displayNavBar(viewModel: viewModel)
 
+                if let dateOfBirth = user.dateOfBirth?.toUIDateString {
+                    print(dateOfBirth)
+                }
+
             case .failure(let error):
                 self.view?.displayError(message: error.localizedDescription)
             }
