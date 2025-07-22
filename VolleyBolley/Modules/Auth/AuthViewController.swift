@@ -48,7 +48,6 @@ final class AuthViewController: BaseViewController {
 
     // MARK: - Actions
     @objc private func loginTapped() {
-        print("AuthViewController.loginTapped")
         onLogin?()
     }
 }
