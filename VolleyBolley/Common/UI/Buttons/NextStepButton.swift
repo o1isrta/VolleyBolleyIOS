@@ -55,7 +55,7 @@ final class NextStepButton: UIButton {
                 self.setTitleColor(AppColor.Text.inverted, for: .normal)
                 self.isEnabled = true
             case .inactive:
-                self.backgroundColor = AppColor.Background.actionButtonDefault
+                self.backgroundColor = AppColor.Background.actionButtonDisabled
                 self.setTitleColor(AppColor.Text.primary, for: .normal)
                 self.isEnabled = false
             }

@@ -1,6 +1,6 @@
 import UIKit
 
-class PhoneRegView: UIViewController {
+final class PhoneRegView: UIViewController {
     
     var presenter: PhoneRegPresenterProtocol?
     
@@ -28,17 +28,18 @@ class PhoneRegView: UIViewController {
         let textField = UITextField()
         textField.placeholder = "+ With the country code"
         textField.keyboardType = .phonePad
-//        textField.borderStyle = .roundedRect
         textField.borderStyle = .none
         
         textField.layer.cornerRadius = 16
         textField.layer.borderWidth = 1
         textField.layer.borderColor = AppColor.Border.primary.cgColor
         textField.backgroundColor = .systemBackground
-        textField.textColor = .label
+//        textField.textColor = .label
+        textField.textColor = AppColor.Text.placeholder
         
         textField.setLeftPaddingPoints(16)
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.addTarget(self, action: #selector(phoneNumberDidChange), for: .editingChanged)
         return textField
     }()
     
@@ -49,6 +50,9 @@ class PhoneRegView: UIViewController {
         view.backgroundColor = AppColor.Background.screen
         setupUI()
         setupActions()
+        
+        nextButton.setTitle("NEXT STEP", for: .normal)
+            nextButton.setState(.inactive)
     }
     
     private func setupUI() {
@@ -92,6 +96,11 @@ class PhoneRegView: UIViewController {
         nextButton.addTarget(self, action: #selector(nextStepTapped), for: .touchUpInside)
     }
     
+    @objc private func phoneNumberDidChange() {
+        let phoneNumber = phoneTextField.text ?? ""
+        presenter?.phoneNumberDidChange(phoneNumber)
+    }
+    
     @objc private func backTapped() {
         presenter?.didTapBack()
     }
@@ -103,7 +112,25 @@ class PhoneRegView: UIViewController {
 }
 
 extension PhoneRegView: PhoneRegViewProtocol {
+    func setNextButtonActive(_ isActive: Bool) {
+        nextButton.setState(isActive ? .active : .inactive)
+    }
     
+    func updateNextButtonTitle(_ title: String) {
+        UIView.transition(with: nextButton, duration: 0.3, options: .transitionCrossDissolve) {
+            self.nextButton.setTitle(title, for: .normal)
+        }
+    }
+    
+    func autoFillCountryCode(_ code: String) {
+            if phoneTextField.text?.isEmpty ?? true {
+                phoneTextField.text = code
+            }
+        }
+    
+    func enableNextButton(_ isEnabled: Bool) {
+        nextButton.setState(isEnabled ? .active : .inactive)
+    }
 }
 
 @available(iOS 17.0, *)
