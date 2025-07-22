@@ -9,7 +9,6 @@ import Foundation
 
 extension UserDTO {
     func toDomain() -> User {
-        let parsedDate = dateOfBirth.asServerDate
         let parsedURL = URL(string: avatarUrl)
 
         return User(
@@ -18,7 +17,7 @@ extension UserDTO {
             gender: gender,
             paymentID: paymentId,
             paymentAccount: paymentAccount,
-            dateOfBirth: parsedDate,
+            dateOfBirth: dateOfBirth,
             level: UserLevel(rawValue: self.level),
             countryID: countryId,
             cityID: cityId,

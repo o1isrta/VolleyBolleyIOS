@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum DateFormatters {
+enum AppDateFormatters {
     /// Для работы с сервером (парсинг и сериализация)
     static let serverDateOnly: DateFormatter = {
         let formatter = DateFormatter()
