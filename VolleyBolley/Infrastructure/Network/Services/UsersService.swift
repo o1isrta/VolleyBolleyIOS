@@ -28,22 +28,19 @@ final class UsersService: UsersServiceProtocol {
 
     func fetchCurrentUser(completion: @escaping (Result<UserDTO, Error>) -> Void) {
         provider.request(.getCurrentUser) { result in
-            switch result {
-            case .success(let response):
-                guard
-                    (200..<300).contains(response.statusCode)
-                else {
-                    completion(.failure(MoyaError.statusCode(response)))
-                    return
+            do {
+                let response = try result.get()
+
+                guard (200..<300).contains(response.statusCode) else {
+                    throw MoyaError.statusCode(response)
                 }
 
-                do {
-                    let dto = try AppJSONDecoders.server.decode(UserDTO.self, from: response.data)
-                    completion(.success(dto))
-                } catch {
-                    completion(.failure(error))
-                }
-            case .failure(let error):
+                let dto = try AppJSONDecoders.server.decode(UserDTO.self, from: response.data)
+                completion(.success(dto))
+            } catch {
+#if DEBUG
+                print("UsersService.fetchCurrentUser failed: \(error)")
+#endif
                 completion(.failure(error))
             }
         }

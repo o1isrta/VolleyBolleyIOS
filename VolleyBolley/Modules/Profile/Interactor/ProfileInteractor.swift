@@ -37,7 +37,7 @@ final class ProfileInteractor: ProfileInteractorProtocol {
 
     func loadUserData(completion: @escaping (Result<(User, UIImage?), Error>) -> Void) {
         usersRepository.getCurrentUser { [weak self] result in
-            guard let self = self else { return }
+            guard let self else { return }
 
             switch result {
             case .success(let user):

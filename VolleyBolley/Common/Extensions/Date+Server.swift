@@ -1,5 +1,5 @@
 //
-//  Date+Format.swift
+//  Date+Server.swift
 //  VolleyBolley
 //
 //  Created by Nikolai Eremenko on 22.07.2025.
@@ -11,9 +11,5 @@ extension Date {
 
     var toServerDateString: String {
         AppDateFormatters.serverDateOnly.string(from: self)
-    }
-
-    var toUIDateString: String {
-        AppDateFormatters.uiDateOnly.string(from: self)
     }
 }

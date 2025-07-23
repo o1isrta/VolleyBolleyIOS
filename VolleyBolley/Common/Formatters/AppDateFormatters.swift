@@ -17,12 +17,12 @@ enum AppDateFormatters {
         return formatter
     }()
 
-    /// Для отображения пользователю — формат из макета (Figma)
-    static let uiDateOnly: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd / MM / yyyy" // IMPORTANT: формат из макета
+    static let localizedInterval: DateIntervalFormatter = {
+        let formatter = DateIntervalFormatter()
         formatter.locale = Locale.current
         formatter.timeZone = .current
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .short
         return formatter
     }()
 }
