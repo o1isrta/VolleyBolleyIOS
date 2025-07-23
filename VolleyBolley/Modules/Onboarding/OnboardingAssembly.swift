@@ -9,18 +9,21 @@ import Swinject
 
 class OnboardingAssembly: Assembly {
 
-    // MARK: - Public Methods
-
     func assemble(container: Container) {
-        container.register(OnboardingViewController.self) { _ in
-            let viewController = OnboardingViewController()
-            // здесь можно будет позже добавить presenter/interactor
-            return viewController
+        container.register(OnboardingViewController.self) { resolver in
+            let vc = OnboardingViewController()
+
+            let interactor = resolver.resolve(OnboardingInteractorProtocol.self)!
+            let appRouter = resolver.resolve(AppRouter.self)! // resolve вместо self.coordinator
+            let router = OnboardingRouter(viewController: vc, coordinator: appRouter)
+            let presenter = OnboardingPresenter(view: vc, interactor: interactor, router: router)
+
+            vc.presenter = presenter
+            return vc
         }
 
-        container.register(OnboardingRouterProtocol.self) { resolver in
-            OnboardingRouter(resolver: resolver)
+        container.register(OnboardingInteractorProtocol.self) { _ in
+            OnboardingInteractor()
         }
-        .inObjectScope(.transient)
     }
 }
