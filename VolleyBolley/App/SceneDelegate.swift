@@ -1,22 +1,34 @@
+//
+//  SceneDelegate.swift
+//  VolleyBolley
+//
+//  Created by Roman Romanov on 24.06.2025.
+//
+
+import Swinject
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
-    private var appCoordinator: AppCoordinator?
-    
+    var appRouter: AppRouter?
+
     func scene(
         _ scene: UIScene,
         willConnectTo session: UISceneSession,
         options connectionOptions: UIScene.ConnectionOptions
     ) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        
-        window = UIWindow(windowScene: windowScene)
-        appCoordinator = AppCoordinator()
-        window?.rootViewController = appCoordinator?.navigationController
-        window?.makeKeyAndVisible()
-        
-        appCoordinator?.appStart()
+
+        let window = UIWindow(windowScene: windowScene)
+        DIContainer.initialize(window: window)
+
+        guard let appRouter = DIContainer.shared.resolver.resolve(AppRouter.self) else {
+            assertionFailure("Failed to resolve AppRouter from DIContainer")
+            return
+        }
+        appRouter.start()
+
+        window.makeKeyAndVisible()
     }
 }

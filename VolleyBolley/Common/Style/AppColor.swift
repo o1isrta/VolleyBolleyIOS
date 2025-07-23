@@ -64,6 +64,11 @@ enum AppColor {
         static let greenLightStart = butterYellow
         static let greenLightEnd = mint
     }
+
+    enum Gradient {
+        static let greenLightStart = butterYellow
+        static let greenLightEnd = mint
+    }
 }
 
 /// Цвета по названиям
