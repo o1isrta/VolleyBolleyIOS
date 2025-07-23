@@ -10,20 +10,17 @@ import UIKit
 /// Инкапсуляция уникальных цветов проекта: фирменные акценты, состояния и фоны
 /// Только для однородных цветов (solid colors)
 enum AppColor {
-    
     enum Background {
         // main
         static let screen = darkTeal
         static let navBar = teal
         static let tabBar = midnightTeal
         static let modal = teal
-        
         // buttons
         static let actionButtonDefault = yellow
         static let actionButtonDisabled = mistGrey
         static let largeActionButtonDefault = yellow
         static let mapButton = orange
-        
         // badges
         static let badgeDefault = steelBlue
         static let badgeSelected = mutedTeal
@@ -31,11 +28,9 @@ enum AppColor {
         static let levelBadgeMedium = green
         static let levelBadgeHard = orange
         static let levelBadgePro = yellow
-        
         // pin
         static let pinDefault = mutedTeal
         static let pinSelected = orange
-        
         static let searField = white
     }
     
@@ -60,11 +55,6 @@ enum AppColor {
         static let separator = separatorGray
     }
     
-    enum Gradient {
-        static let greenLightStart = butterYellow
-        static let greenLightEnd = mint
-    }
-
     enum Gradient {
         static let greenLightStart = butterYellow
         static let greenLightEnd = mint

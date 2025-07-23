@@ -7,23 +7,24 @@
 
 import UIKit
 
+/// Создание кнопки перехода к следующему окну:
+/// title - заголовок;
+/// isActive - состояние кнопки
 final class NextStepButton: UIButton {
     
     private var isActive: Bool = false {
         didSet { updateAppearance() }
     }
     
-    init(title: String = "NEXT STEP", isActive: Bool = false) {
+    init(title: String = String(localized: "NEXT STEP"), isActive: Bool = false) {
         super.init(frame: .zero)
         setup(title: title)
         setActive(isActive)
     }
     
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setup(title: "NEXT STEP")
-        setActive(false)
-    }
+            fatalError("init(coder:) has not been implemented")
+        }
     
     func setActive(_ active: Bool) {
         isActive = active
@@ -55,4 +56,9 @@ final class NextStepButton: UIButton {
             }
         }
     }
+}
+
+@available(iOS 17.0, *)
+#Preview {
+    NextStepButton(title: "Test1234567", isActive: true)
 }

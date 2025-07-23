@@ -1,12 +1,9 @@
 import UIKit
 
+///Создание типового лейбла:
+/// text - текст лейбла,
+/// isBold - выбор толщины лейбла (16 или 14 шрифт)
 class CustomLabel: UILabel {
-    
-    /*
-     Создание типового лейбла:
-     - text - текст лейбла
-     - isBold - выбор толщины лейбла (16 или 14 шрифт)
-     */
     
     init(text: String, isBold: Bool = false) {
         super.init(frame: .zero)
