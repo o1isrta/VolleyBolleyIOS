@@ -1,5 +1,5 @@
 //
-//  UIColor+Extensions.swift
+//  UIColor+Hex.swift
 //  VolleyBolley
 //
 //  Created by Nikolai Eremenko

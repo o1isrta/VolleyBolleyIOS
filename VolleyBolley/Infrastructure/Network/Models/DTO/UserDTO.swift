@@ -7,6 +7,7 @@
 
 import Foundation
 
+// TODO(API): Temporary implementation — waiting for backend spec
 struct UserDTO: Decodable {
     let firstName: String
     let lastName: String

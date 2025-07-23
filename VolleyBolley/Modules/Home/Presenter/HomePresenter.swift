@@ -5,6 +5,8 @@
 //  Created by Nikolai Eremenko
 //
 
+import Foundation
+
 protocol HomePresenterProtocol: AnyObject {
     func viewDidLoad()
 }
@@ -37,16 +39,12 @@ final class HomePresenter: HomePresenterProtocol {
         view?.showGreeting(message)
 
         interactor.loadUserData { [weak self] result in
-            guard let self = self else { return }
+            guard let self else { return }
 
             switch result {
             case .success(let (user, avatarImage)):
                 let viewModel = NavBarViewModel(user: user, avatarImage: avatarImage)
                 self.view?.displayNavBar(viewModel: viewModel)
-
-                if let dateOfBirth = user.dateOfBirth?.toUIDateString {
-                    print(dateOfBirth)
-                }
 
             case .failure(let error):
                 self.view?.displayError(message: error.localizedDescription)

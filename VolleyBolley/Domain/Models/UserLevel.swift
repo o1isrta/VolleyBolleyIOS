@@ -7,6 +7,7 @@
 
 import UIKit
 
+// TODO(API): Temporary implementation — waiting for backend spec
 enum UserLevel {
     case light
     case medium
