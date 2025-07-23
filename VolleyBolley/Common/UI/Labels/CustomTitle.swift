@@ -1,12 +1,9 @@
 import UIKit
 
+///  Создание типового заголовка:
+/// text - текст заголовка,
+/// isLarge - выбор величины заголовка (24 или 20 шрифт)
 class CustomTitle: UILabel {
-    
-    /*
-     Создание типового заголовка:
-     - text - текст заголовка
-     - isLarge - выбор величины заголовка (24 или 20 шрифт)
-     */
     
     init(text: String, isLarge: Bool = false) {
         super.init(frame: .zero)

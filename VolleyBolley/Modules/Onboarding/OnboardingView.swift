@@ -8,11 +8,11 @@
 import UIKit
 
 class OnboardingViewController: UIViewController {
-    var presenter: OnboardingPresenterProtocol!
+    var presenter: OnboardingPresenterProtocol?
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Welcome!"
+        label.text = String(localized: "Welcome!")
         label.font = AppFont.ActayWide.bold(size: 36)
         label.textColor = AppColor.Text.primary
         label.textAlignment = .left
@@ -22,7 +22,7 @@ class OnboardingViewController: UIViewController {
     
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
-        label.text = "This app helps you find beach volleyball games and match with players at your skill level."
+        label.text = String(localized: "This app helps you find beach volleyball games and match with players at your skill level.")
         label.font = AppFont.Hero.regular(size: 20)
         label.textColor = AppColor.Text.primary
         label.numberOfLines = 0
@@ -40,14 +40,14 @@ class OnboardingViewController: UIViewController {
         
     private lazy var appNameLabel: UILabel = {
         let label = UILabel()
-        label.text = "VOLLEYBOLLEY"
+        label.text = String(localized: "VOLLEYBOLLEY")
         label.font = AppFont.ActayWide.bold(size: 36)
         label.textColor = AppColor.Text.primary
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
         
-    private lazy var getStartedButton: UIButton = NextStepButton(title: "GET STARTED", isActive: true)
+    private lazy var getStartedButton: UIButton = NextStepButton(title: String(localized: "GET STARTED"), isActive: true)
     
     private lazy var backgroundImageView: UIImageView = {
         let imageView = UIImageView(image: .launch)
@@ -100,8 +100,7 @@ class OnboardingViewController: UIViewController {
        }
        
     @objc private func getStartedTapped() {
-        UserDefaults.standard.set(true, forKey: "onboardingShown")
-        presenter.getStartedButtonTapped()
+        presenter?.getStartedButtonTapped()
     }
 }
 

@@ -1,12 +1,9 @@
 import UIKit
 
+/// Создание кнопки с градиентной заливкой от желтого к зеленому:
+/// title - заголовок кнопки,
+/// isSelected - состояние нажата/не нажата
 class PickButton: UIButton {
-    
-    /*
-     Создание кнопки с градиентной заливкой от желтого к зеленому:
-     title - заголовок кнопки
-     isSelected - состояние нажата/не нажата
-     */
     
     private var gradientLayer: CAGradientLayer?
     private var borderGradientLayer: CAGradientLayer?
@@ -128,4 +125,9 @@ class PickButton: UIButton {
         let labelSize = titleLabel?.intrinsicContentSize ?? CGSize(width: 50, height: 39)
         return CGSize(width: labelSize.width + 20, height: 39)
     }
+}
+
+@available(iOS 17.0, *)
+#Preview {
+    PickButton(title: "Pick", isSelected: true)
 }
