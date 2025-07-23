@@ -1,22 +1,29 @@
+//
+//  AppColor.swift
+//  VolleyBolley
+//
+//  Created by Nikolai Eremenko
+//
+
 import UIKit
 
 /// Инкапсуляция уникальных цветов проекта: фирменные акценты, состояния и фоны
 /// Только для однородных цветов (solid colors)
 enum AppColor {
-
+    
     enum Background {
         // main
         static let screen = darkTeal
         static let navBar = teal
         static let tabBar = midnightTeal
         static let modal = teal
-
+        
         // buttons
         static let actionButtonDefault = yellow
         static let actionButtonDisabled = mistGrey
         static let largeActionButtonDefault = yellow
         static let mapButton = orange
-
+        
         // badges
         static let badgeDefault = steelBlue
         static let badgeSelected = mutedTeal
@@ -24,29 +31,38 @@ enum AppColor {
         static let levelBadgeMedium = green
         static let levelBadgeHard = orange
         static let levelBadgePro = yellow
-
+        
         // pin
         static let pinDefault = mutedTeal
         static let pinSelected = orange
+        
+        static let searField = white
     }
-
+    
     enum Text {
         static let primary = white
         static let inverted = ashBrown
+        static let placeHolder = grey
     }
-
+    
     enum Icon {
         static let primary = white
         static let inverted = ashBrown
         static let location = orange
         static let star = orange
+        static let searField = darkGray
     }
-
+    
     enum Border {
         static let actionButton = yellow
         static let primary = white
         static let inverted = ashBrown
         static let separator = separatorGray
+    }
+    
+    enum Gradient {
+        static let greenLightStart = butterYellow
+        static let greenLightEnd = mint
     }
 }
 
@@ -64,7 +80,11 @@ private extension AppColor {
     static let yellow = UIColor(hex: "#E6C953")
     static let mistGrey = UIColor(hex: "#8CA5A3")
     static let separatorGray = UIColor(hex: "#C3C3C3")
+    static let darkGray = UIColor(hex: "#484848")
+    static let grey = UIColor(hex: "#7C7C7C")
     static let steelBlue = UIColor(hex: "#516372")
     static let mutedTeal = UIColor(hex: "#578D83")
     static let red = UIColor(hex: "#BA0000")
+    static let butterYellow = UIColor(hex: "#F4E998")
+    static let mint = UIColor(hex: "#5CF08D")
 }
