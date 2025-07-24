@@ -1,6 +1,19 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "%@ %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ %2$@"
+          }
+        }
+      }
+    },
+    "%lld" : {
+
+    },
     "add_payment_button" : {
       "comment" : "Game",
       "extractionState" : "manual",
@@ -69,6 +82,12 @@
             "state" : "translated",
             "value" : "VOLLEYBOLLEY"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VOLLEYBOLLEY"
+          }
         }
       }
     },
@@ -91,6 +110,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Date of bith"
+          }
+        }
+      }
+    },
+    "Cancel" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отмена"
           }
         }
       }
@@ -307,6 +336,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Donate"
+          }
+        }
+      }
+    },
+    "Done" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Готово"
           }
         }
       }
@@ -1091,6 +1130,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Поиск команды или игрока"
+          }
+        }
+      }
+    },
+    "Select Year" : {
+      "comment" : "Select year for Calendar view title",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выберите год"
           }
         }
       }
