@@ -37,6 +37,8 @@ enum AppColor {
         static let pinSelected = orange
 
         static let searField = white
+
+        static let calendar = white
     }
 
     enum Text {
@@ -59,6 +61,12 @@ enum AppColor {
         static let inverted = ashBrown
     }
 
+	enum Calendar {
+		static let primary = darkCharcoal
+		static let secondary = lightGrey
+		static let disabled = mistGrey
+	}
+
     enum Gradient {
         static let greenLightStart = butterYellow
         static let greenLightEnd = mint
@@ -77,9 +85,11 @@ private extension AppColor {
     static let green = UIColor(hex: "#2DB69A")
     static let orange = UIColor(hex: "#E6AC53")
     static let yellow = UIColor(hex: "#E6C953")
+	static let grey = UIColor(hex: "#7C7C7C")
     static let mistGrey = UIColor(hex: "#8CA5A3")
     static let darkGray = UIColor(hex: "#484848")
-    static let grey = UIColor(hex: "#7C7C7C")
+	static let darkCharcoal = UIColor(hex: "#333333")
+	static let lightGrey = UIColor(hex: "#E0E0E0")
     static let steelBlue = UIColor(hex: "#516372")
     static let mutedTeal = UIColor(hex: "#578D83")
     static let red = UIColor(hex: "#BA0000")
