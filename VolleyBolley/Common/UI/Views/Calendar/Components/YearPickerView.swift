@@ -9,22 +9,22 @@ import SwiftUI
 
 /// Year Selection Component
 struct YearPickerView: View {
-
+	
 	// MARK: - Public Properties
-
+	
 	@Binding var selectedYear: Int
 	@Binding var currentDate: Date
-
+	
 	// MARK: - Private Properties
-
+	
 	@Environment(\.dismiss) private var dismiss
-
+	
 	private let calendar = Calendar(identifier: .gregorian)
 	private let currentYear = Calendar.current.component(.year, from: Date())
 	private let yearsRange: [Int]
-
+	
 	// MARK: - Initializers
-
+	
 	init(selectedYear: Binding<Int>, currentDate: Binding<Date>) {
 		self._selectedYear = selectedYear
 		self._currentDate = currentDate
@@ -32,7 +32,7 @@ struct YearPickerView: View {
 		let currentYear = Calendar.current.component(.year, from: Date())
 		self.yearsRange = Array(currentYear...(currentYear + 3))
 	}
-
+	
 	var body: some View {
 		NavigationView {
 			VStack {
@@ -52,7 +52,7 @@ struct YearPickerView: View {
 					}
 					.font(Font(AppFont.Hero.bold(size: 16) as CTFont))
 				}
-
+				
 				ToolbarItem(placement: .confirmationAction) {
 					Button("Done") {
 						updateCurrentDate()
@@ -67,7 +67,7 @@ struct YearPickerView: View {
 // MARK: - Private Methods
 
 private extension YearPickerView {
-
+	
 	func updateCurrentDate() {
 		// Update currentDate with new year
 		var components = calendar.dateComponents([.year, .month, .day], from: currentDate)
@@ -86,7 +86,7 @@ private extension YearPickerView {
 #Preview {
 	@Previewable @State var currentDate = Date()
 	@Previewable @State var selectedYear: Int = 0
-
+	
 	ZStack {
 		Color(AppColor.Background.screen).ignoresSafeArea()
 		YearPickerView(selectedYear: $selectedYear, currentDate: $currentDate)
