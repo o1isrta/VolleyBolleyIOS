@@ -8,13 +8,13 @@
 import SwiftUI
 
 final class CalendarViewModel: ObservableObject {
-
+	
 	// MARK: - Public Properties
-
+	
 	@Published var selectedDate: Date = Date()
-
+	
 	// MARK: - Public Methods
-
+	
 	func updateSelectedDate(_ date: Date) {
 		selectedDate = date
 	}
