@@ -153,6 +153,7 @@ struct CustomCalendarView: View {
 						.font(Font(AppFont.Hero.regular(size: 16) as CTFont))
 						.foregroundColor(.primary)
 				}
+				.disabled(isPastDate)
 
 				Spacer()
 
@@ -208,6 +209,10 @@ struct CustomCalendarView: View {
 	}
 
 	// MARK: - Private Properties
+
+	private var isPastDate: Bool {
+		calendar.isDate(Date(), equalTo: monthAnchor, toGranularity: .month)
+	}
 
 	private var monthAnchor: Date {
 		calendar.date(from: calendar.dateComponents([.year, .month], from: currentDate)) ?? currentDate
@@ -272,6 +277,10 @@ struct CustomCalendarView: View {
 
 	// MARK: - Private Methods
 
+	private func isPastDate(_ date: Date) -> Bool {
+		date <= Calendar.current.startOfDay(for: Date())
+	}
+
 	private func showYearPicker() {
 		showingYearPicker = true
 		selectedYear = calendar.component(.year, from: currentDate)
@@ -288,7 +297,8 @@ struct CustomCalendarView: View {
 	private func dateButton(for date: Date) -> some View {
 		let isCurrentMonth = calendar.isDate(date, equalTo: monthAnchor, toGranularity: .month)
 		let isSelected = isSameDay(selectedDate, date)
-		let isPastDate = date < Calendar.current.startOfDay(for: Date())
+		let isPastDate = isPastDate(date)
+		let isToday = calendar.isDateInToday(date)
 
 		// swiftlint:disable multiple_closures_with_trailing_closure
 		return Button(action: {
@@ -307,26 +317,41 @@ struct CustomCalendarView: View {
 				)
 				.frame(width: 32, height: 32)
 				.background(
-					Group {
-						if isSelected {
-							RoundedRectangle(cornerRadius: 16)
-								.fill(
-									LinearGradient(
-										gradient: Gradient(colors: AppGradient.greenLight.map {Color($0)}),
-										startPoint: .topLeading,
-										endPoint: .bottomTrailing
-									)
-								)
-								.frame(width: 42, height: 32)
-						} else if !calendar.isDateInToday(date) && calendar.isDate(date, inSameDayAs: Date()) {
-							RoundedRectangle(cornerRadius: 16)
-								.stroke(Color(AppColor.Calendar.primary), lineWidth: 1)
-						}
-					}
+					backgroundView(
+						isSelected: isSelected,
+						isToday: isToday,
+						isCurrentMonth: isCurrentMonth,
+						isPastDate: isPastDate
+					)
 				)
 		}
 		.disabled(isPastDate)
 		// swiftlint:enable multiple_closures_with_trailing_closure
+	}
+
+	private func backgroundView(
+		isSelected: Bool,
+		isToday: Bool,
+		isCurrentMonth: Bool,
+		isPastDate: Bool
+	) -> some View {
+		Group {
+			if isSelected {
+				RoundedRectangle(cornerRadius: 16)
+					.fill(
+						LinearGradient(
+							gradient: Gradient(colors: AppGradient.greenLight.map {Color($0)}),
+							startPoint: .topLeading,
+							endPoint: .bottomTrailing
+						)
+					)
+					.frame(width: 42, height: 32)
+			} else if isToday && isCurrentMonth && !isPastDate {
+				RoundedRectangle(cornerRadius: 16)
+					.stroke(Color(AppColor.Calendar.primary), lineWidth: 1)
+					.frame(width: 42, height: 32)
+			}
+		}
 	}
 
 	private func getDayForegroundColor(
@@ -338,13 +363,11 @@ struct CustomCalendarView: View {
 			return Color(AppColor.Calendar.disabled)
 		}
 
-		return isSelected
-			? Color(AppColor.Calendar.primary)
-			: (
-				isCurrentMonth
-				? Color(AppColor.Calendar.primary)
-				: Color(AppColor.Calendar.secondary)
-			)
+		if isSelected || isCurrentMonth {
+			return Color(AppColor.Calendar.primary)
+		}
+
+		return Color(AppColor.Calendar.secondary)
 	}
 
 	private func isSameDay(_ date1: Date, _ date2: Date) -> Bool {
@@ -352,11 +375,15 @@ struct CustomCalendarView: View {
 	}
 
 	private func previousMonth() {
-		currentDate = calendar.date(byAdding: .month, value: -1, to: currentDate) ?? currentDate
+		withAnimation {
+			currentDate = calendar.date(byAdding: .month, value: -1, to: currentDate) ?? currentDate
+		}
 	}
 
 	private func nextMonth() {
-		currentDate = calendar.date(byAdding: .month, value: 1, to: currentDate) ?? currentDate
+		withAnimation {
+			currentDate = calendar.date(byAdding: .month, value: 1, to: currentDate) ?? currentDate
+		}
 	}
 }
 
