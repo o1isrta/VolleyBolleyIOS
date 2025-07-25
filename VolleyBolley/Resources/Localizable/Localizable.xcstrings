@@ -502,6 +502,9 @@
         }
       }
     },
+    "HARD" : {
+      "comment" : "User level hard"
+    },
     "Home" : {
       "comment" : "Tab bar item title"
     },
@@ -601,6 +604,9 @@
         }
       }
     },
+    "LIGHT" : {
+      "comment" : "User level light"
+    },
     "List" : {
       "comment" : "Segment Control",
       "localizations" : {
@@ -647,8 +653,19 @@
         }
       }
     },
+    "MEDIUM" : {
+      "comment" : "User level medium"
+    },
     "My games" : {
-      "comment" : "Tab bar item title"
+      "comment" : "Tab bar item title",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Мои игры"
+          }
+        }
+      }
     },
     "name_field" : {
       "comment" : "Registration",
@@ -950,6 +967,9 @@
         }
       }
     },
+    "PRO" : {
+      "comment" : "User level pro"
+    },
     "Profile" : {
       "comment" : "Tab bar item title"
     },
@@ -1126,7 +1146,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Send  invites"
+            "value" : "Send invites"
           }
         }
       }
