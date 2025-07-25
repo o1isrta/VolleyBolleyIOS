@@ -120,7 +120,7 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
 			calendarVC.view.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
 			calendarVC.view.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
 			calendarVC.view.widthAnchor.constraint(equalToConstant: 319),
-			calendarVC.view.heightAnchor.constraint(equalToConstant: 330)
+			calendarVC.view.heightAnchor.constraint(equalToConstant: 350)
 		])
 	}
 
