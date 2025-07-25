@@ -1,0 +1,11 @@
+//
+//  Debug-Staging.xcconfig
+//  VolleyBolley
+//
+//  Created by Nikolai Eremenko on 17.07.2025.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://developer.apple.com/documentation/xcode/adding-a-build-configuration-file-to-your-project
+
+APP_ENV = staging
