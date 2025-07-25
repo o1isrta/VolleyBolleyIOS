@@ -233,7 +233,12 @@ struct CustomCalendarView: View {
 		formatter.locale = Locale(identifier: "en_US")
 		formatter.setLocalizedDateFormatFromTemplate("EEE")
 		// We get the beginning of the week from Monday
-		let startOfWeek = weekdayCalendar.date(from: weekdayCalendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: Date())) ?? Date()
+		let startOfWeek = weekdayCalendar.date(
+			from: weekdayCalendar.dateComponents(
+				[.yearForWeekOfYear, .weekOfYear],
+				from: Date()
+			)
+		) ?? Date()
 
 		return (0..<7).map { index in
 			guard
