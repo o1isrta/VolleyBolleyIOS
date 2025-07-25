@@ -17,6 +17,7 @@ enum AppColor {
         static let navBar = teal
         static let tabBar = midnightTeal
         static let modal = teal
+        static let primary = white
 
         // buttons
         static let actionButtonDefault = yellow
@@ -53,6 +54,7 @@ enum AppColor {
         static let location = orange
         static let star = orange
         static let searField = darkGray
+        static let avatar = tealBlue
     }
 
     enum Border {
@@ -81,6 +83,7 @@ private extension AppColor {
     static let midnightTeal = UIColor(hex: "#295E6D")
     static let darkTeal = UIColor(hex: "#32716B")
     static let teal = UIColor(hex: "#53A8A1")
+    static let tealBlue = UIColor(hex: "#438b97")
     static let blue = UIColor(hex: "#53A4E6")
     static let green = UIColor(hex: "#2DB69A")
     static let orange = UIColor(hex: "#E6AC53")
