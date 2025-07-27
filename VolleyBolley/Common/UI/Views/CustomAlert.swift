@@ -180,23 +180,3 @@ private extension CustomAlertView {
         ])
     }
 }
-
-#if DEBUG
-import SwiftUI
-
-struct CustomUIViewPreview: UIViewRepresentable {
-    func makeUIView(context: Context) -> UIView {
-        return CustomAlertView()
-    }
-
-    func updateUIView(_ uiView: UIView, context: Context) {}
-}
-
-struct CustomUIViewPreview_Previews: PreviewProvider {
-    static var previews: some View {
-        CustomUIViewPreview()
-            .previewLayout(.sizeThatFits)
-            .padding()
-    }
-}
-#endif
