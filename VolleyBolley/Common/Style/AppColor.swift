@@ -36,8 +36,10 @@ enum AppColor {
         // pin
         static let pinDefault = mutedTeal
         static let pinSelected = orange
-
         static let searField = white
+
+        //alert
+        static let alertBackground = grey
     }
 
     enum Text {
@@ -88,4 +90,5 @@ private extension AppColor {
     static let red = UIColor(hex: "#BA0000")
     static let butterYellow = UIColor(hex: "#F4E998")
     static let mint = UIColor(hex: "#5CF08D")
+    static let gray = UIColor(hex: "#555252")
 }

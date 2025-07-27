@@ -16,5 +16,5 @@ enum AppEffect {
 }
 
 private extension AppEffect {
-    static let semiTransparentGray = UIColor(hex: "#555252", alpha: 0.3)
+    static let semiTransparentGray = AppColor.Background.alertBackground.withAlphaComponent(0.3)
 }
