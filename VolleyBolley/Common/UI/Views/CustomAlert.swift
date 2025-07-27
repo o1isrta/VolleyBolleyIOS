@@ -9,8 +9,8 @@ import UIKit
 
 struct CustomAlertModel {
     let title: String?
-    let yesAction: (() -> Void)?
-    let noAction: (() -> Void)?
+    let doneAction: (() -> Void)?
+    let cancelAction: (() -> Void)?
     let alertType: AlertType
 }
 
@@ -23,8 +23,8 @@ final class CustomAlertView: UIView {
 
     // MARK: - Private Properties
 
-    private var yesButtonAction: (() -> Void)?
-    private var noButtonAction: (() -> Void)?
+    private var doneActionButton: (() -> Void)?
+    private var cancelActionButton: (() -> Void)?
 
     private lazy var backgroundView: UIView = {
         let view = UIView()
@@ -32,24 +32,23 @@ final class CustomAlertView: UIView {
         return view
     }()
 
-    private lazy var customView: UIView = {
+    private lazy var customViewAlert: UIView = {
         let view = UIView()
         view.backgroundColor = AppColor.Background.modal
         view.layer.cornerRadius = 32
         return view
     }()
 
-    private lazy var titleLabel: UILabel = {
+    private lazy var messageLabel: UILabel = {
         let label = UILabel()
         label.font = AppFont.ActayWide.bold(size: 16)
         label.textColor = AppColor.Text.primary
         label.textAlignment = .center
         label.numberOfLines = 0
-        label.heightAnchor.constraint(equalToConstant: 38).isActive = true
         return label
     }()
 
-    private lazy var yesButton: UIButton = {
+    private lazy var doneButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitleColor(AppColor.Background.actionButtonDefault, for: .normal)
         button.backgroundColor = .clear
@@ -62,7 +61,7 @@ final class CustomAlertView: UIView {
         return button
     }()
 
-    private lazy var noButton: UIButton = {
+    private lazy var cancelButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitleColor(AppColor.Text.inverted, for: .normal)
         button.backgroundColor = AppColor.Background.actionButtonDefault
@@ -73,7 +72,7 @@ final class CustomAlertView: UIView {
     }()
 
     private lazy var buttonStack: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [yesButton, noButton])
+        let stack = UIStackView(arrangedSubviews: [doneButton, cancelButton])
         stack.axis = .horizontal
         stack.distribution = .fillEqually
         stack.spacing = 12
@@ -94,19 +93,20 @@ final class CustomAlertView: UIView {
     // MARK: - Public Methods
 
     func configure(with model: CustomAlertModel) {
-        self.yesButtonAction = model.yesAction
-        self.noButtonAction = model.noAction
-        titleLabel.text = model.title
+        messageLabel.text = model.title
 
         switch model.alertType {
         case .twoButtons:
-            yesButton.isHidden = false
-            noButton.isHidden = false
+            doneButton.isHidden = false
+            cancelButton.isHidden = false
+            doneActionButton = model.doneAction
+            cancelActionButton = model.cancelAction
             styleYesButtonAsSecondary()
 
         case .oneButton:
-            yesButton.isHidden = false
-            noButton.isHidden = true
+            doneButton.isHidden = false
+            cancelButton.isHidden = true
+            doneActionButton = model.doneAction
             styleYesButtonAsPrimary()
         }
     }
@@ -114,26 +114,26 @@ final class CustomAlertView: UIView {
     // MARK: - Private Method
 
     private func styleYesButtonAsPrimary() {
-        yesButton.setTitleColor(AppColor.Text.inverted, for: .normal)
-        yesButton.backgroundColor = AppColor.Background.actionButtonDefault
-        yesButton.layer.borderWidth = 0
+        doneButton.setTitleColor(AppColor.Text.inverted, for: .normal)
+        doneButton.backgroundColor = AppColor.Background.actionButtonDefault
+        doneButton.layer.borderWidth = 0
     }
 
     private func styleYesButtonAsSecondary() {
-        yesButton.setTitleColor(AppColor.Background.actionButtonDefault, for: .normal)
-        yesButton.backgroundColor = .clear
-        yesButton.layer.borderWidth = 1.0
-        yesButton.layer.borderColor = AppColor.Background.actionButtonDefault.cgColor
+        doneButton.setTitleColor(AppColor.Background.actionButtonDefault, for: .normal)
+        doneButton.backgroundColor = .clear
+        doneButton.layer.borderWidth = 1.0
+        doneButton.layer.borderColor = AppColor.Background.actionButtonDefault.cgColor
     }
 
     // MARK: - Actions
 
     @objc private func yesButtonTapped() {
-        yesButtonAction?()
+        doneActionButton?()
     }
 
     @objc private func noButtonTapped() {
-        noButtonAction?()
+        cancelActionButton?()
     }
 }
 
@@ -142,15 +142,15 @@ final class CustomAlertView: UIView {
 private extension CustomAlertView {
     
     func setupUI() {
-        [backgroundView, customView].forEach {
-            addSubview($0)
-            $0.translatesAutoresizingMaskIntoConstraints = false
-        }
+        addSubviews(
+            backgroundView,
+            customViewAlert
+        )
 
-        [titleLabel, buttonStack].forEach {
-            customView.addSubview($0)
-            $0.translatesAutoresizingMaskIntoConstraints = false
-        }
+        customViewAlert.addSubviews(
+            messageLabel,
+            buttonStack
+        )
     }
 
     func setupView() {
@@ -162,20 +162,41 @@ private extension CustomAlertView {
             backgroundView.topAnchor.constraint(equalTo: topAnchor),
             backgroundView.bottomAnchor.constraint(equalTo: bottomAnchor),
 
-            customView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            customView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            customView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-            customView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
+            customViewAlert.centerXAnchor.constraint(equalTo: centerXAnchor),
+            customViewAlert.centerYAnchor.constraint(equalTo: centerYAnchor),
+            customViewAlert.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
+            customViewAlert.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
 
-            titleLabel.topAnchor.constraint(equalTo: customView.topAnchor, constant: 20),
-            titleLabel.leadingAnchor.constraint(equalTo: customView.leadingAnchor, constant: 20),
-            titleLabel.trailingAnchor.constraint(equalTo: customView.trailingAnchor, constant: -20),
+            messageLabel.topAnchor.constraint(equalTo: customViewAlert.topAnchor, constant: 20),
+            messageLabel.leadingAnchor.constraint(equalTo: customViewAlert.leadingAnchor, constant: 20),
+            messageLabel.trailingAnchor.constraint(equalTo: customViewAlert.trailingAnchor, constant: -20),
+            messageLabel.heightAnchor.constraint(equalToConstant: 38),
 
-            buttonStack.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 12),
-            buttonStack.leadingAnchor.constraint(equalTo: customView.leadingAnchor, constant: 20),
-            buttonStack.trailingAnchor.constraint(equalTo: customView.trailingAnchor, constant: -20),
-            buttonStack.bottomAnchor.constraint(equalTo: customView.bottomAnchor, constant: -20),
+            buttonStack.topAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 12),
+            buttonStack.leadingAnchor.constraint(equalTo: customViewAlert.leadingAnchor, constant: 20),
+            buttonStack.trailingAnchor.constraint(equalTo: customViewAlert.trailingAnchor, constant: -20),
+            buttonStack.bottomAnchor.constraint(equalTo: customViewAlert.bottomAnchor, constant: -20),
             buttonStack.heightAnchor.constraint(equalToConstant: 44)
         ])
     }
 }
+
+#if DEBUG
+import SwiftUI
+
+struct CustomUIViewPreview: UIViewRepresentable {
+    func makeUIView(context: Context) -> UIView {
+        return CustomAlertView()
+    }
+
+    func updateUIView(_ uiView: UIView, context: Context) {}
+}
+
+struct CustomUIViewPreview_Previews: PreviewProvider {
+    static var previews: some View {
+        CustomUIViewPreview()
+            .previewLayout(.sizeThatFits)
+            .padding()
+    }
+}
+#endif
