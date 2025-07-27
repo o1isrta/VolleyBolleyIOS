@@ -10,7 +10,7 @@ import SwiftUI
 
 /// Protocol for receiving date selection events from CalendarComponent
 protocol CalendarComponentDelegate: AnyObject {
-	
+
 	/// Called when the user selects a new date in the calendar
 	/// - Parameter date: The newly selected date
 	///
@@ -44,18 +44,18 @@ protocol CalendarComponentDelegate: AnyObject {
 /// }
 /// ```
 protocol CalendarComponentProtocol: AnyObject {
-	
+
 	/// The delegate that receives date selection events
 	var delegate: CalendarComponentDelegate? { get set }
-	
+
 	/// Creates a view controller containing the calendar view
 	/// - Returns: A UIViewController that can be added to your view hierarchy
 	func createCalendarViewController() -> UIViewController
-	
+
 	/// Sets the currently selected date in the calendar
 	/// - Parameter date: The date to select
 	func setSelectedDate(_ date: Date)
-	
+
 	/// Gets the currently selected date from the calendar
 	/// - Returns: The currently selected date
 	func getSelectedDate() -> Date
@@ -102,29 +102,29 @@ protocol CalendarComponentProtocol: AnyObject {
 /// let currentDate = calendarComponent.getSelectedDate()
 /// ```
 final class CalendarComponent: CalendarComponentProtocol {
-	
+
 	// MARK: - Public Properties
-	
+
 	/// The delegate that receives date selection events
 	weak var delegate: CalendarComponentDelegate?
-	
+
 	// MARK: - Private Properties
-	
+
 	private let viewModel = CalendarViewModel()
 	private var hostingController: UIHostingController<CustomCalendarView>?
 	private var cancellables = Set<AnyCancellable>()
-	
+
 	// MARK: - Initializers
-	
+
 	/// Initializes a new calendar component
 	/// - Parameter delegate: The object that will receive date selection events
 	init(delegate: CalendarComponentDelegate) {
 		self.delegate = delegate
 		setupBindings()
 	}
-	
+
 	// MARK: - Public Methods
-	
+
 	/// Creates a view controller containing the calendar view
 	/// - Returns: A UIViewController that can be added to your view hierarchy
 	///
@@ -140,25 +140,25 @@ final class CalendarComponent: CalendarComponentProtocol {
 		let calendarView = CustomCalendarView(viewModel: viewModel)
 		let hostingController = UIHostingController(rootView: calendarView)
 		self.hostingController = hostingController
-		
+
 		configureAppearance(for: hostingController.view)
 		return hostingController
 	}
-	
+
 	/// Sets the currently selected date in the calendar
 	/// - Parameter date: The date to select
 	func setSelectedDate(_ date: Date) {
 		viewModel.updateSelectedDate(date)
 	}
-	
+
 	/// Gets the currently selected date from the calendar
 	/// - Returns: The currently selected date
 	func getSelectedDate() -> Date {
 		return viewModel.selectedDate
 	}
-	
+
 	// MARK: - Private Methods
-	
+
 	private func setupBindings() {
 		viewModel.$selectedDate
 			.sink { [weak self] date in
@@ -166,7 +166,7 @@ final class CalendarComponent: CalendarComponentProtocol {
 			}
 			.store(in: &cancellables)
 	}
-	
+
 	private func configureAppearance(for view: UIView) {
 		view.layer.cornerRadius = 32
 		view.clipsToBounds = true
