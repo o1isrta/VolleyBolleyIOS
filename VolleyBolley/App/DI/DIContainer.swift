@@ -33,12 +33,12 @@ import UIKit
 ///   let someService = container.resolver.resolve(SomeServiceType.self)
 ///   ```
 final class DIContainer {
-    
+
     // MARK: - Public Properties
-    
+
     let assembler: Assembler
     var resolver: Resolver { assembler.resolver }
-    
+
     static var shared: DIContainer {
         guard let instance = _shared else {
             fatalError(
@@ -47,13 +47,13 @@ final class DIContainer {
         }
         return instance
     }
-    
+
     // MARK: - Private Properties
-    
+
     private static var _shared: DIContainer?
-    
+
     // MARK: - Initializers
-    
+
     init(window: UIWindow) {
         assembler = Assembler(
             [
@@ -71,7 +71,7 @@ final class DIContainer {
             ]
         )
     }
-    
+
     // MARK: - Public Methods
     
     static func initialize(window: UIWindow) {

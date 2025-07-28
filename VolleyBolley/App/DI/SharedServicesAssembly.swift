@@ -30,9 +30,7 @@ import UIKit
 /// assembly.assemble(container: container)
 /// ```
 final class SharedServicesAssembly: Assembly {
-
     func assemble(container: Container) {
-
         container.register(SettingsStorageProtocol.self) { _ in
             UserDefaultsStorage()
         }
@@ -43,17 +41,6 @@ final class SharedServicesAssembly: Assembly {
                 fatalError("Error: Failed to resolve SettingsStorageProtocol")
             }
             return DefaultUserSessionService(storage: storage)
-        }
-        .inObjectScope(.container)
-        
-        container.register(AppRouter.self) { resolver in
-            guard let window = resolver.resolve(UIWindow.self) else {
-                fatalError("Error: Failed to resolve UIWindow")
-            }
-            guard let userSessionService = resolver.resolve(UserSessionServiceProtocol.self) else {
-                fatalError("Error: Failed to resolve UserSessionServiceProtocol")
-            }
-            return AppRouter(window: window, userSessionService: userSessionService, resolver: resolver)
         }
         .inObjectScope(.container)
     }

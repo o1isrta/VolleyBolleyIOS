@@ -23,7 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let window = UIWindow(windowScene: windowScene)
         self.window = window
-        
+
         DIContainer.initialize(window: window)
 
         guard let appRouter = DIContainer.shared.resolver.resolve(AppRouter.self) else {

@@ -17,13 +17,13 @@ enum AppColor {
         static let tabBar = midnightTeal
         static let modal = teal
         static let primary = white
-        
+
         // buttons
         static let actionButtonDefault = yellow
         static let actionButtonDisabled = mistGrey
         static let largeActionButtonDefault = yellow
         static let mapButton = orange
-        
+
         // badges
         static let badgeDefault = steelBlue
         static let badgeSelected = mutedTeal
@@ -31,19 +31,19 @@ enum AppColor {
         static let levelBadgeMedium = green
         static let levelBadgeHard = orange
         static let levelBadgePro = yellow
-        
+
         // pin
         static let pinDefault = mutedTeal
         static let pinSelected = orange
         static let searField = white
     }
-    
+
     enum Text {
         static let primary = white
         static let inverted = ashBrown
         static let placeHolder = grey
     }
-    
+
     enum Icon {
         static let primary = white
         static let inverted = ashBrown
@@ -52,7 +52,7 @@ enum AppColor {
         static let searField = darkGray
         static let avatar = tealBlue
     }
-    
+
     enum Border {
         static let actionButton = yellow
         static let primary = white

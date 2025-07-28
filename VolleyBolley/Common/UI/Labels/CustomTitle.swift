@@ -4,10 +4,10 @@ import UIKit
 /// text - текст заголовка,
 /// isLarge - выбор величины заголовка (24 или 20 шрифт)
 class CustomTitle: UILabel {
-    
+
     init(text: String, isLarge: Bool = false) {
         super.init(frame: .zero)
-        
+
         let fontSize: CGFloat = isLarge ? 24 : 20
         self.text = text
         self.font = AppFont.ActayWide.bold(size: fontSize)

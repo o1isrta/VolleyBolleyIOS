@@ -11,7 +11,7 @@ class OnboardingPresenter: OnboardingPresenterProtocol {
     weak var view: OnboardingViewProtocol?
     private let interactor: OnboardingInteractorProtocol
     private let router: OnboardingRouterProtocol
-    
+
     init(view: OnboardingViewProtocol,
          interactor: OnboardingInteractorProtocol,
          router: OnboardingRouterProtocol) {
