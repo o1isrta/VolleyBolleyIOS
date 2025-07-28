@@ -15,8 +15,9 @@ import UIKit
 /// 
 /// ## Registered Services
 /// - `SettingsStorageProtocol`: Registers a `UserDefaultsStorage` instance as a singleton.
-/// - `UserSessionServiceProtocol`: Registers a `DefaultUserSessionService`, injected with the shared `SettingsStorageProtocol` instance, as a singleton.
-/// 
+/// - `UserSessionServiceProtocol`: Registers a `DefaultUserSessionService`,
+/// injected with the shared `SettingsStorageProtocol` instance, as a singleton.
+///
 /// Registration is performed with `.inObjectScope(.container)` to ensure each service is a shared singleton.
 /// 
 /// - Warning: If resolving `SettingsStorageProtocol` fails when registering `UserSessionServiceProtocol`, a runtime
@@ -29,8 +30,6 @@ import UIKit
 /// assembly.assemble(container: container)
 /// ```
 final class SharedServicesAssembly: Assembly {
-
-    // MARK: - Public Methods
 
     func assemble(container: Container) {
 
