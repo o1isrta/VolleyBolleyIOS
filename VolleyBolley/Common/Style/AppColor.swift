@@ -53,7 +53,7 @@ enum AppColor {
 		static let inverted = ashBrown
 		static let location = orange
 		static let star = orange
-		static let searField = darkGray
+		static let searField = darkGrey
 		static let avatar = tealBlue
 	}
 
@@ -90,7 +90,7 @@ private extension AppColor {
 	static let yellow = UIColor(hex: "#E6C953")
 	static let grey = UIColor(hex: "#7C7C7C")
 	static let mistGrey = UIColor(hex: "#8CA5A3")
-	static let darkGray = UIColor(hex: "#484848")
+	static let darkGrey = UIColor(hex: "#484848")
 	static let darkCharcoal = UIColor(hex: "#333333")
 	static let lightGrey = UIColor(hex: "#E0E0E0")
 	static let steelBlue = UIColor(hex: "#516372")
