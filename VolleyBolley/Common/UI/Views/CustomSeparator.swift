@@ -3,7 +3,7 @@ import UIKit
 /// Разделитель для случаев когда нет смысла
 /// использовать коллекции
 class CustomSeparator: UIView {
-    
+
     init() {
         super.init(frame: .zero)
         self.backgroundColor = AppColor.Border.separator

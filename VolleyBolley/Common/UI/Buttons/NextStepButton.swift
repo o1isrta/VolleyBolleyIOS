@@ -11,32 +11,32 @@ import UIKit
 /// title - заголовок;
 /// isActive - состояние кнопки
 final class NextStepButton: UIButton {
-    
+
     private var isActive: Bool = false {
         didSet { updateAppearance() }
     }
-    
+
     init(title: String = String(localized: "NEXT STEP"), isActive: Bool = false) {
         super.init(frame: .zero)
         setup(title: title)
         setActive(isActive)
     }
-    
+
     required init?(coder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
         }
-    
+
     func setActive(_ active: Bool) {
         isActive = active
     }
-    
+
     private func setup(title: String) {
         setTitle(title, for: .normal)
         titleLabel?.font = AppFont.ActayWide.bold(size: 16)
         layer.cornerRadius = 16
         clipsToBounds = true
         translatesAutoresizingMaskIntoConstraints = false
-        
+
         NSLayoutConstraint.activate([
             heightAnchor.constraint(equalToConstant: 44)
         ])
