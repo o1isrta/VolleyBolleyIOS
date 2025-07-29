@@ -19,18 +19,38 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
 
     private let presenter: HomePresenterProtocol
 
-    private lazy var navigationBarView = CustomNavBarView()
+    private lazy var navigationBarView: CustomNavBarView = {
+        let view = CustomNavBarView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
 
-//    private lazy var label: UILabel = {
-//        let view = UILabel()
-//        view.textAlignment = .center
-//        view.font = AppFont.Quantex.regular(size: 16)
-//        return view
-//    }()
+    private lazy var scrollView: UIScrollView = {
+        let view = UIScrollView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
 
-    private let scrollView = UIScrollView()
-    private let vStackView = UIStackView()
-    private let hStackView = UIStackView()
+    private lazy var vStackView: UIStackView = {
+        let view = UIStackView()
+        view.axis = .vertical
+        view.spacing = 16
+        view.alignment = .fill
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
+    private lazy var hStackView: UIStackView = {
+        let view = UIStackView()
+        view.axis = .horizontal
+        view.spacing = 10
+        view.alignment = .fill
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
+//    private let hStackView = UIStackView()
+
 
     private let primaryButton = AppButtonPrimaryView(.nextStep)
 
@@ -74,23 +94,21 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
 
     private func setupView() {
         view.addSubview(navigationBarView)
-//        view.addSubview(label)
+        view.addSubview(scrollView)
+        scrollView.addSubview(vStackView)
         setupLayout()
     }
 
     private func setupLayout() {
         setupConstraintsNavBar()
-//        setupConstraintsLabel()
         setupScrollView()
-        setupStackView()
-        addButtons()
+        setupVStackView()
+        addPrimaryButtons()
     }
 
     // MARK: - Constraints
 
     private func setupConstraintsNavBar() {
-        navigationBarView.translatesAutoresizingMaskIntoConstraints = false
-
         NSLayoutConstraint.activate([
             navigationBarView.topAnchor.constraint(equalTo: view.topAnchor),
             navigationBarView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -99,19 +117,7 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
         ])
     }
 
-//    private func setupConstraintsLabel() {
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//
-//        NSLayoutConstraint.activate([
-//            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//            label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-//        ])
-//    }
-
     private func setupScrollView() {
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(scrollView)
-
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: navigationBarView.bottomAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
@@ -120,14 +126,7 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
         ])
     }
 
-    private func setupStackView() {
-        vStackView.axis = .vertical
-        vStackView.spacing = 16
-        vStackView.alignment = .fill
-        vStackView.translatesAutoresizingMaskIntoConstraints = false
-
-        scrollView.addSubview(vStackView)
-
+    private func setupVStackView() {
         NSLayoutConstraint.activate([
             vStackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 16),
             vStackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
@@ -137,9 +136,7 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
         ])
     }
 
-    private func addButtons() {
-        // Примеры разных кнопок:
-
+    private func addPrimaryButtons() {
         let primaryNormal = AppButtonPrimaryView(.done, initialState: .normal)
         let primarySelected = AppButtonPrimaryView(.done, initialState: .selected)
         let primaryDisabled = AppButtonPrimaryView(.done, initialState: .disabled)
@@ -149,11 +146,25 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
 //        let icon = AppButtonIconView(.back)
 
         [primaryNormal, primarySelected, primaryDisabled].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
+//            $0.translatesAutoresizingMaskIntoConstraints = false
             $0.heightAnchor.constraint(equalToConstant: 44).isActive = true
             vStackView.addArrangedSubview($0)
         }
     }
+
+    private func addSecondaryButtons() {
+        let light = AppButtonSecondaryView(.levelLight, initialState: .selected)
+
+
+        [light].forEach {
+//            $0.translatesAutoresizingMaskIntoConstraints = false
+            $0.heightAnchor.constraint(equalToConstant: 44).isActive = true
+            hStackView.addArrangedSubview($0)
+        }
+    }
+
+    //        let action = AppButtonActionView(.invitePlayers)
+    //        let icon = AppButtonIconView(.back)
 }
 
 // MARK: - Preview

@@ -31,17 +31,12 @@ extension AppButtonAction: AppButtonConfig {
 
     var title: String? {
         switch self {
-        case .createTourney: return "Create a Tourney"
-        case .invitePlayers:
-            return "Invite Players"
-        case .sendInvites:
-            return "Send Invites"
-        case .saveGame:
-            return "Save Game"
-        case .donate:
-            return "Donate"
-        case .shareLink:
-            return "Share Link"
+        case .createTourney: return String(localized: "common.createTourney")
+        case .invitePlayers: return String(localized: "common.invitePlayers")
+        case .sendInvites: return String(localized: "common.sendInvites")
+        case .saveGame: return String(localized: "common.saveGame")
+        case .donate: return String(localized: "common.donate")
+        case .shareLink: return String(localized: "common.shareLink")
         }
     }
 
