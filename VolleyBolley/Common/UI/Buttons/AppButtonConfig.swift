@@ -9,7 +9,8 @@ import UIKit
 
 protocol AppButtonConfig {
     var supportedStates: [AppButtonVisualState] { get }
+    var defaultStyle: AppButtonStyle { get }
     var title: String? { get }
     var image: UIImage? { get }
-    func style(for state: AppButtonVisualState) -> AppButtonStyle
+    func style(for state: AppButtonVisualState) -> AppButtonStyle?
 }

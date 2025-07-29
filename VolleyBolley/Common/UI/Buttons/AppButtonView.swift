@@ -7,19 +7,34 @@
 
 import UIKit
 
+typealias AppButtonPrimaryView = AppButtonView<AppButtonPrimary>
+typealias AppButtonSecondaryView = AppButtonView<AppButtonSecondary>
+typealias AppButtonTertiaryView = AppButtonView<AppButtonTertiary>
+typealias AppButtonActionView = AppButtonView<AppButtonAction>
+typealias AppButtonIconView = AppButtonView<AppButtonIcon>
+
 final class AppButtonView<T: AppButtonConfig>: UIButton {
+
+    // MARK: - Private Properties
+
     private let config: T
-    private var visualState: AppButtonVisualState = .normal {
+
+    private var visualState: AppButtonVisualState {
         didSet {
             applyStyle()
         }
     }
 
-    init(config: T) {
+    // MARK: - Initializers
+
+    init(_ config: T, initialState: AppButtonVisualState = .normal) {
         self.config = config
+        self.visualState = initialState
         super.init(frame: .zero)
         setTitle(config.title, for: .normal)
+        setImage(config.image, for: .normal)
         applyStyle()
+        isEnabled = (visualState != .disabled)
     }
 
     @available(*, unavailable)
@@ -27,13 +42,17 @@ final class AppButtonView<T: AppButtonConfig>: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Public Methods
+
     func setVisualState(_ state: AppButtonVisualState) {
         self.visualState = state
         isEnabled = (state != .disabled)
     }
 
+    // MARK: - Private Methods
+
     private func applyStyle() {
-        let style = config.style(for: visualState)
+        let style = config.style(for: visualState) ?? config.defaultStyle
 
         if let cornerRadius = style.cornerRadius {
             layer.cornerRadius = cornerRadius

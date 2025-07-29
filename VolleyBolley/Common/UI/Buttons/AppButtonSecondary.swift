@@ -22,6 +22,9 @@ enum AppButtonSecondary {
 // MARK: - AppButtonConfig
 
 extension AppButtonSecondary: AppButtonConfig {
+    var defaultStyle: AppButtonStyle {
+        .secondaryNormal
+    }
 
     var supportedStates: [AppButtonVisualState] {
         return [.normal, .selected]
@@ -43,11 +46,7 @@ extension AppButtonSecondary: AppButtonConfig {
         nil
     }
 
-    func style(for state: AppButtonVisualState) -> AppButtonStyle {
-        guard supportedStates.contains(state) else {
-            assertionFailure("Warning: Unsupported state: \(state)")
-            return .secondaryNormal
-        }
+    func style(for state: AppButtonVisualState) -> AppButtonStyle? {
 
         switch state {
         case .normal:
@@ -55,7 +54,7 @@ extension AppButtonSecondary: AppButtonConfig {
         case .selected:
             return .secondarySelected
         default:
-            return .secondaryNormal
+            return nil
         }
     }
 }
