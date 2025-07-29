@@ -21,6 +21,10 @@ enum AppButtonAction {
 // MARK: - AppButtonConfig
 
 extension AppButtonAction: AppButtonConfig {
+    var defaultStyle: AppButtonStyle {
+        .actionNormal
+    }
+
     var supportedStates: [AppButtonVisualState] {
         return [.normal, .selected]
     }
@@ -52,19 +56,14 @@ extension AppButtonAction: AppButtonConfig {
         }
     }
 
-    func style(for state: AppButtonVisualState) -> AppButtonStyle {
-        guard supportedStates.contains(state) else {
-            assertionFailure("Warning: Unsupported state: \(state)")
-            return .actionNormal
-        }
-
+    func style(for state: AppButtonVisualState) -> AppButtonStyle? {
         switch state {
         case .normal:
             return .actionNormal
         case .selected:
             return .actionSelected
         default:
-            return .actionNormal
+            return nil
         }
     }
 }

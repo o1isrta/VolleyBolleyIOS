@@ -43,6 +43,9 @@ enum AppButtonPrimary {
 // MARK: - AppButtonConfig
 
 extension AppButtonPrimary: AppButtonConfig {
+    var defaultStyle: AppButtonStyle {
+        .primaryNormal
+    }
 
     var supportedStates: [AppButtonVisualState] {
         return [.normal, .selected, .disabled]
@@ -84,7 +87,7 @@ extension AppButtonPrimary: AppButtonConfig {
         nil
     }
 
-    func style(for state: AppButtonVisualState) -> AppButtonStyle {
+    func style(for state: AppButtonVisualState) -> AppButtonStyle? {
         switch state {
         case .normal:
             return .primaryNormal

@@ -58,6 +58,15 @@ struct AppButtonStyle {
         cornerRadius: 16
     )
 
+    // MARK: - Tertiary
+
+    static let tertiaryNormal = AppButtonStyle(
+        backgroundColor: AppColor.Background.buttonMap,
+        titleColor: AppColor.Text.inverted,
+        font: AppFont.Hero.regular(size: 16),
+        cornerRadius: 10
+    )
+
     // MARK: - Action Primary
 
     static let actionNormal = AppButtonStyle(
@@ -73,5 +82,11 @@ struct AppButtonStyle {
         titleColor: AppColor.Text.inverted,
         font: AppFont.ActayWide.bold(size: 16),
         cornerRadius: 16
+    )
+
+    // MARK: - Icon
+
+    static let iconNormal = AppButtonStyle(
+        tintColor: AppColor.Icon.primary
     )
 }

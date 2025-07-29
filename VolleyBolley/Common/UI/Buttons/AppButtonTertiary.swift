@@ -10,39 +10,33 @@ import UIKit
 /// оранжевый фон и черный текст/
 enum AppButtonTertiary {
     case map
-
-    private var style: AppButtonStyle {
-        AppButtonStyle(
-            backgroundColor: AppColor.Background.buttonMap,
-            titleColor: AppColor.Text.inverted,
-            font: AppFont.Hero.regular(size: 16),
-            cornerRadius: 10
-        )
-    }
 }
 
 // MARK: - AppButtonConfig
 
 extension AppButtonTertiary: AppButtonConfig {
+    var defaultStyle: AppButtonStyle {
+        .tertiaryNormal
+    }
 
     var supportedStates: [AppButtonVisualState] {
         return [.selected]
     }
 
     var title: String? {
-        return "Map"
+        return String(localized: "common.map")
     }
 
     var image: UIImage? {
         nil
     }
 
-    func style(for state: AppButtonVisualState) -> AppButtonStyle {
-        guard supportedStates.contains(state) else {
-             assertionFailure("Warning: State \(state) not supported by \(self)")
-             return style
-         }
-
-        return style
+    func style(for state: AppButtonVisualState) -> AppButtonStyle? {
+        switch state {
+        case .normal:
+            return .tertiaryNormal
+        default:
+            return nil
+        }
     }
 }

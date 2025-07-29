@@ -21,12 +21,18 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
 
     private lazy var navigationBarView = CustomNavBarView()
 
-    private lazy var label: UILabel = {
-        let view = UILabel()
-        view.textAlignment = .center
-        view.font = AppFont.Quantex.regular(size: 16)
-        return view
-    }()
+//    private lazy var label: UILabel = {
+//        let view = UILabel()
+//        view.textAlignment = .center
+//        view.font = AppFont.Quantex.regular(size: 16)
+//        return view
+//    }()
+
+    private let scrollView = UIScrollView()
+    private let vStackView = UIStackView()
+    private let hStackView = UIStackView()
+
+    private let primaryButton = AppButtonPrimaryView(.nextStep)
 
     // MARK: - Initializers
 
@@ -52,7 +58,8 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
     // MARK: - Public Methods
 
     func showGreeting(_ message: String) {
-        label.text = message
+//        label.text = message
+        print(message)
     }
 
     func displayNavBar(viewModel: NavBarViewModel) {
@@ -67,13 +74,16 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
 
     private func setupView() {
         view.addSubview(navigationBarView)
-        view.addSubview(label)
+//        view.addSubview(label)
         setupLayout()
     }
 
     private func setupLayout() {
         setupConstraintsNavBar()
-        setupConstraintsLabel()
+//        setupConstraintsLabel()
+        setupScrollView()
+        setupStackView()
+        addButtons()
     }
 
     // MARK: - Constraints
@@ -89,13 +99,60 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
         ])
     }
 
-    private func setupConstraintsLabel() {
-        label.translatesAutoresizingMaskIntoConstraints = false
+//    private func setupConstraintsLabel() {
+//        label.translatesAutoresizingMaskIntoConstraints = false
+//
+//        NSLayoutConstraint.activate([
+//            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+//            label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+//        ])
+//    }
+
+    private func setupScrollView() {
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(scrollView)
 
         NSLayoutConstraint.activate([
-            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            scrollView.topAnchor.constraint(equalTo: navigationBarView.bottomAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+    }
+
+    private func setupStackView() {
+        vStackView.axis = .vertical
+        vStackView.spacing = 16
+        vStackView.alignment = .fill
+        vStackView.translatesAutoresizingMaskIntoConstraints = false
+
+        scrollView.addSubview(vStackView)
+
+        NSLayoutConstraint.activate([
+            vStackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 16),
+            vStackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            vStackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            vStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            vStackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
+        ])
+    }
+
+    private func addButtons() {
+        // Примеры разных кнопок:
+
+        let primaryNormal = AppButtonPrimaryView(.done, initialState: .normal)
+        let primarySelected = AppButtonPrimaryView(.done, initialState: .selected)
+        let primaryDisabled = AppButtonPrimaryView(.done, initialState: .disabled)
+
+//        let secondary = AppButtonSecondaryView(.selectDate)
+//        let action = AppButtonActionView(.invitePlayers)
+//        let icon = AppButtonIconView(.back)
+
+        [primaryNormal, primarySelected, primaryDisabled].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            $0.heightAnchor.constraint(equalToConstant: 44).isActive = true
+            vStackView.addArrangedSubview($0)
+        }
     }
 }
 
