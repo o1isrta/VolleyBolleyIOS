@@ -5,8 +5,8 @@ enum GradientSearchFieldType: CaseIterable {
 
     var description: String {
         switch self {
-        case .search: return String(localized: "Search")
-        case .searchTeams: return String(localized: "Search teams or players")
+        case .search: return String(localized: "common.search")
+        case .searchTeams: return String(localized: "common.searchTeamsOrPlayers")
         }
     }
 }

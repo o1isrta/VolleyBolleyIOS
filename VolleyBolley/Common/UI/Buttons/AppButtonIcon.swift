@@ -18,7 +18,7 @@ enum AppButtonIcon {
 
 extension AppButtonIcon: AppButtonConfig {
     var supportedStates: [AppButtonVisualState] {
-        [.normal]
+        [.normal, .selected]
     }
 
     var defaultStyle: AppButtonStyle {
@@ -39,10 +39,9 @@ extension AppButtonIcon: AppButtonConfig {
 
     func style(for state: AppButtonVisualState) -> AppButtonStyle? {
         switch state {
-        case .normal:
-            return .iconNormal
-        default:
-            return nil
+        case .normal: return .iconNormal
+        case .selected: return .iconSelected
+        default: return nil
         }
     }
 }

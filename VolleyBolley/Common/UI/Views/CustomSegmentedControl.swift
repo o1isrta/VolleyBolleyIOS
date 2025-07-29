@@ -12,9 +12,9 @@ enum SegmentedControlType: CaseIterable {
 
     var segments: [String] {
         switch self {
-        case .players: return [String(localized: "All players"), String(localized: "Favorites")]
-        case .games: return [String(localized: "My games"), String(localized: "Archive")]
-        case .map: return [String(localized: "Map"), String(localized: "List")]
+        case .players: return [String(localized: "common.allPlayers"), String(localized: "common.favorites")]
+        case .games: return [String(localized: "common.myGames"), String(localized: "common.archive")]
+        case .map: return [String(localized: "common.map"), String(localized: "common.list")]
         }
     }
 }

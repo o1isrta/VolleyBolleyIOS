@@ -89,4 +89,8 @@ struct AppButtonStyle {
     static let iconNormal = AppButtonStyle(
         tintColor: AppColor.Icon.primary
     )
+
+    static let iconSelected = AppButtonStyle(
+        tintColor: AppColor.Icon.inverted
+    )
 }
