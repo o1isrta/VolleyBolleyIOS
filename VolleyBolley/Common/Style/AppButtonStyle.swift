@@ -15,6 +15,8 @@ struct AppButtonStyle {
     var borderWidth: CGFloat?
     var borderColor: UIColor?
     var tintColor: UIColor?
+    var gradientBackgroundColors: [UIColor]?
+    var gradientBorderColors: [UIColor]?
 
     // MARK: - Primary
 
@@ -42,20 +44,20 @@ struct AppButtonStyle {
 
     // MARK: - Secondary
 
-    // TODO: - setup style gradient
     static let secondaryNormal = AppButtonStyle(
         titleColor: AppColor.Text.primary,
         font: AppFont.Hero.regular(size: 16),
         cornerRadius: 16,
-        borderWidth: 1,
-        borderColor: AppColor.Border.buttonAction
+        borderWidth: 2,
+        borderColor: .clear,
+        gradientBorderColors: AppGradient.greenLight
     )
 
     static let secondarySelected = AppButtonStyle(
-        backgroundColor: AppColor.Background.buttonPrimarySelected,
         titleColor: AppColor.Text.inverted,
         font: AppFont.Hero.regular(size: 16),
-        cornerRadius: 16
+        cornerRadius: 16,
+        gradientBackgroundColors: AppGradient.greenLight
     )
 
     // MARK: - Tertiary
@@ -71,17 +73,17 @@ struct AppButtonStyle {
 
     static let actionNormal = AppButtonStyle(
         titleColor: AppColor.Text.primary,
-        font: AppFont.ActayWide.bold(size: 16),
-        cornerRadius: 16,
-        borderWidth: 1,
-        borderColor: AppColor.Border.buttonAction
+        font: AppFont.ActayWide.bold(size: 24),
+        cornerRadius: 32,
+        tintColor: AppColor.Icon.primary
     )
 
     static let actionSelected = AppButtonStyle(
         backgroundColor: AppColor.Background.buttonPrimarySelected,
         titleColor: AppColor.Text.inverted,
-        font: AppFont.ActayWide.bold(size: 16),
-        cornerRadius: 16
+        font: AppFont.ActayWide.bold(size: 24),
+        cornerRadius: 32,
+        tintColor: AppColor.Icon.primary
     )
 
     // MARK: - Icon
