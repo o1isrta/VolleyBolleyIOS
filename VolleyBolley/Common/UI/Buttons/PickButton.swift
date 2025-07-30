@@ -11,14 +11,14 @@ class PickButton: UIButton {
     private let cornerRadius: CGFloat = 16
     private let borderWidth: CGFloat = 1
 
-    init(title: String, isSelected: Bool = false) {
+    init(title: String, isSelected: Bool = false, target: Any, action: Selector) {
         super.init(frame: .zero)
         setup(title: title, isSelected: isSelected)
+        addTarget(target, action: action, for: .touchUpInside)
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        setup(title: "", isSelected: false)
     }
 
     private func setup(title: String, isSelected: Bool) {
@@ -127,7 +127,20 @@ class PickButton: UIButton {
     }
 }
 
+#if DEBUG
+final class PBPreviewTarget {
+    static let shared = PBPreviewTarget()
+    private init() {}
+
+    @objc func emptyAction() {}
+}
+
 @available(iOS 17.0, *)
 #Preview {
-    PickButton(title: "Pick", isSelected: true)
+    PickButton(title: "Pick",
+             isSelected: true,
+             target: PBPreviewTarget.shared,
+             action: #selector(PBPreviewTarget.shared.emptyAction)
+    )
 }
+#endif

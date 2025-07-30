@@ -8,18 +8,25 @@
 import UIKit
 
 /// Создание кнопки перехода к следующему окну:
+/// Parameters:
 /// title - заголовок;
 /// isActive - состояние кнопки
+/// target: Объект, на котором вызывается метод
+/// action: Метод, вызываемый при нажатии
 final class NextStepButton: UIButton {
 
     private var isActive: Bool = false {
         didSet { updateAppearance() }
     }
 
-    init(title: String = String(localized: "NEXT STEP"), isActive: Bool = false) {
+    init(title: String = String(localized: "NEXT STEP"),
+         isActive: Bool = false,
+         target: Any,
+         action: Selector) {
         super.init(frame: .zero)
         setup(title: title)
         setActive(isActive)
+        addTarget(target, action: action, for: .touchUpInside)
     }
 
     required init?(coder: NSCoder) {
@@ -41,7 +48,7 @@ final class NextStepButton: UIButton {
             heightAnchor.constraint(equalToConstant: 44)
         ])
     }
-    
+
     private func updateAppearance() {
         UIView.animate(withDuration: 0.2) { [weak self] in
             guard let self = self else { return }
@@ -58,7 +65,20 @@ final class NextStepButton: UIButton {
     }
 }
 
+#if DEBUG
+final class NSBPreviewTarget {
+    static let shared = NSBPreviewTarget()
+    private init() {}
+
+    @objc func emptyAction() {}
+}
+
 @available(iOS 17.0, *)
 #Preview {
-    NextStepButton(title: "Test1234567", isActive: true)
+    NextStepButton(title: "Test1234567",
+                 isActive: true,
+                 target: NSBPreviewTarget.shared,
+                 action: #selector(NSBPreviewTarget.shared.emptyAction)
+    )
 }
+#endif

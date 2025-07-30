@@ -34,6 +34,7 @@ final class AppRouter {
     // MARK: - Public Methods
 
     func start() {
+        // TODO: Переписать через userSessionService
         if UserDefaults.standard.isOnboardingShown {
             showAuthorization()
         } else {
