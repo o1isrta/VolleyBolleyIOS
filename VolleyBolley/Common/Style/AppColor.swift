@@ -10,7 +10,6 @@ import UIKit
 /// Инкапсуляция уникальных цветов проекта: фирменные акценты, состояния и фоны
 /// Только для однородных цветов (solid colors)
 enum AppColor {
-
     enum Background {
         // main
         static let screen = darkTeal
@@ -36,7 +35,6 @@ enum AppColor {
         // pin
         static let pinDefault = mutedTeal
         static let pinSelected = orange
-
         static let searField = white
     }
 
@@ -59,8 +57,9 @@ enum AppColor {
         static let actionButton = yellow
         static let primary = white
         static let inverted = ashBrown
+        static let separator = separatorGray
     }
-
+    
     enum Gradient {
         static let greenLightStart = butterYellow
         static let greenLightEnd = mint
@@ -81,6 +80,7 @@ private extension AppColor {
     static let orange = UIColor(hex: "#E6AC53")
     static let yellow = UIColor(hex: "#E6C953")
     static let mistGrey = UIColor(hex: "#8CA5A3")
+    static let separatorGray = UIColor(hex: "#C3C3C3")
     static let darkGray = UIColor(hex: "#484848")
     static let grey = UIColor(hex: "#7C7C7C")
     static let steelBlue = UIColor(hex: "#516372")

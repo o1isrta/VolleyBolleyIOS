@@ -34,49 +34,27 @@ final class AppRouter {
     // MARK: - Public Methods
 
     func start() {
-        if !userSessionService.isOnboardingShown {
-            showOnboarding()
-        } else if !userSessionService.isAuthorized {
-            showAuth()
+        // TODO: Переписать через userSessionService
+        if UserDefaults.standard.isOnboardingShown {
+            showAuthorization()
         } else {
-            showMainApp()
+            showOnboarding()
         }
     }
 
     // MARK: - Private Methods
 
     private func showOnboarding() {
-        guard var router = resolver.resolve(OnboardingRouterProtocol.self) else {
-            print("Error: Failed to resolve OnboardingRouterProtocol")
-            return
+        guard let onboardingVC = resolver.resolve(OnboardingViewController.self) else {
+            fatalError("OnboardingViewController не зарегистрирован")
         }
-
-        router.onFinish = { [weak self] in
-            guard let self else { return }
-
-            self.userSessionService.markOnboardingAsShown()
-            self.start()
-        }
-
-        onboardingRouter = router
-        window.rootViewController = router.start()
+        let nav = UINavigationController(rootViewController: onboardingVC)
+        window.rootViewController = nav
+        window.makeKeyAndVisible()
     }
 
-    private func showAuth() {
-        guard var router = resolver.resolve(AuthRouterProtocol.self) else {
-            print("Error: Failed to resolve AuthRouterProtocol")
-            return
-        }
-
-        router.onLoginSuccess = { [weak self] in
-            guard let self else { return }
-
-            self.userSessionService.markUserAuthorized()
-            self.start()
-        }
-
-        authRouter = router
-        window.rootViewController = router.start()
+    private func showAuthorization() {
+        // TODO: Добавить переход к авторизации
     }
 
     private func showMainApp() {
