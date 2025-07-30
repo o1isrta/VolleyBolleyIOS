@@ -19,7 +19,7 @@ final class MockUsersRepository: UsersRepositoryProtocol {
             level: .light,
             countryID: 1,
             cityID: 1,
-            avatarURL: URL(string: "")
+            avatarURL: URL(string: "https://github.com/xcode73/myapp-mocks")
         )
         completion(.success(user))
     }

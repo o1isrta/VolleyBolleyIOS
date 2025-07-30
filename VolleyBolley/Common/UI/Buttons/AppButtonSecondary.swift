@@ -7,8 +7,6 @@
 
 import UIKit
 
-/// градиентный фон selected
-/// градиентный бордер для unselected
 enum AppButtonSecondary {
     case change
     case dateToday
@@ -67,14 +65,10 @@ extension AppButtonSecondary: AppButtonConfig {
     }
 
     func style(for state: AppButtonVisualState) -> AppButtonStyle? {
-
         switch state {
-        case .normal:
-            return .secondaryNormal
-        case .selected:
-            return .secondarySelected
-        default:
-            return nil
+        case .normal: return .secondaryNormal
+        case .selected: return .secondarySelected
+        default: return nil
         }
     }
 }

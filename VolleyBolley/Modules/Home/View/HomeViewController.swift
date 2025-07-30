@@ -35,24 +35,54 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
         let view = UIStackView()
         view.axis = .vertical
         view.spacing = 16
-        view.alignment = .fill
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
-    private lazy var hStackView: UIStackView = {
+    private lazy var iconButtonsStackView: UIStackView = {
         let view = UIStackView()
         view.axis = .horizontal
-        view.spacing = 10
+        view.spacing = 8
+        view.distribution = .fillEqually
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
+    private lazy var primaryButtonsStackView: UIStackView = {
+        let view = UIStackView()
+        view.axis = .vertical
+        view.spacing = 16
         view.alignment = .fill
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
-//    private let hStackView = UIStackView()
+    private lazy var secondaryButtonsStackView: UIStackView = {
+        let view = UIStackView()
+        view.axis = .horizontal
+        view.spacing = 8
+        view.distribution = .fillEqually
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
 
+    private lazy var tertiaryButtonsStackView: UIStackView = {
+        let view = UIStackView()
+        view.axis = .vertical
+        view.spacing = 8
+        view.alignment = .leading
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
 
-    private let primaryButton = AppButtonPrimaryView(.nextStep)
+    private lazy var actionButtonsStackView: UIStackView = {
+        let view = UIStackView()
+        view.axis = .horizontal
+        view.spacing = 8
+        view.distribution = .fillEqually
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
 
     // MARK: - Initializers
 
@@ -78,7 +108,6 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
     // MARK: - Public Methods
 
     func showGreeting(_ message: String) {
-//        label.text = message
         print(message)
     }
 
@@ -95,15 +124,83 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
     private func setupView() {
         view.addSubview(navigationBarView)
         view.addSubview(scrollView)
+
         scrollView.addSubview(vStackView)
+
+        vStackView.addArrangedSubview(iconButtonsStackView)
+        vStackView.addArrangedSubview(primaryButtonsStackView)
+        vStackView.addArrangedSubview(secondaryButtonsStackView)
+        vStackView.addArrangedSubview(tertiaryButtonsStackView)
+        vStackView.addArrangedSubview(actionButtonsStackView)
+
+//        addIconButtons()
+//        addPrimaryButtons()
+        addSecondaryButtons()
+//        addTertiaryButtons()
+//        addActionButtons()
+
         setupLayout()
     }
 
     private func setupLayout() {
         setupConstraintsNavBar()
         setupScrollView()
-        setupVStackView()
-        addPrimaryButtons()
+        setupConstraintsVStackView()
+    }
+
+    // MARK: - Buttons
+
+    private func addPrimaryButtons() {
+        let primaryNormal = AppButtonPrimaryView(.done, initialState: .normal)
+        let primarySelected = AppButtonPrimaryView(.done, initialState: .selected)
+        let primaryDisabled = AppButtonPrimaryView(.done, initialState: .disabled)
+
+        [primaryNormal, primarySelected, primaryDisabled].forEach {
+            $0.heightAnchor.constraint(equalToConstant: 44).isActive = true
+            primaryButtonsStackView.addArrangedSubview($0)
+        }
+    }
+
+    private func addSecondaryButtons() {
+        let lightButton = AppButtonSecondaryView(.levelLight, initialState: .selected)
+        let mediumButton = AppButtonSecondaryView(.levelMedium, initialState: .selected)
+        let hardButton = AppButtonSecondaryView(.levelHard, initialState: .selected)
+        let proButton = AppButtonSecondaryView(.levelPro)
+
+        [lightButton, mediumButton, hardButton, proButton].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            $0.heightAnchor.constraint(equalToConstant: 44).isActive = true
+            secondaryButtonsStackView.addArrangedSubview($0)
+        }
+    }
+
+    private func addTertiaryButtons() {
+        let tertiaryButton = AppButtonTertiaryView(.map)
+
+        tertiaryButton.heightAnchor.constraint(equalToConstant: 44).isActive = true
+        tertiaryButton.widthAnchor.constraint(equalToConstant: 65).isActive = true
+        tertiaryButtonsStackView.addArrangedSubview(tertiaryButton)
+    }
+
+    private func addActionButtons() {
+        let tourneyButton = AppButtonActionView(.createTourney, initialState: .selected)
+        let donateButton = AppButtonActionView(.donate)
+
+        [tourneyButton, donateButton].forEach {
+            $0.heightAnchor.constraint(equalToConstant: 180).isActive = true
+            actionButtonsStackView.addArrangedSubview($0)
+        }
+    }
+
+    private func addIconButtons() {
+        let backButton = AppButtonIconView(.back)
+        let minusButton = AppButtonIconView(.minus)
+        let plusButton = AppButtonIconView(.plus)
+
+        [backButton, minusButton, plusButton].forEach {
+            $0.heightAnchor.constraint(equalToConstant: 44).isActive = true
+            iconButtonsStackView.addArrangedSubview($0)
+        }
     }
 
     // MARK: - Constraints
@@ -126,7 +223,7 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
         ])
     }
 
-    private func setupVStackView() {
+    private func setupConstraintsVStackView() {
         NSLayoutConstraint.activate([
             vStackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 16),
             vStackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
@@ -135,36 +232,6 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
             vStackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
         ])
     }
-
-    private func addPrimaryButtons() {
-        let primaryNormal = AppButtonPrimaryView(.done, initialState: .normal)
-        let primarySelected = AppButtonPrimaryView(.done, initialState: .selected)
-        let primaryDisabled = AppButtonPrimaryView(.done, initialState: .disabled)
-
-//        let secondary = AppButtonSecondaryView(.selectDate)
-//        let action = AppButtonActionView(.invitePlayers)
-//        let icon = AppButtonIconView(.back)
-
-        [primaryNormal, primarySelected, primaryDisabled].forEach {
-//            $0.translatesAutoresizingMaskIntoConstraints = false
-            $0.heightAnchor.constraint(equalToConstant: 44).isActive = true
-            vStackView.addArrangedSubview($0)
-        }
-    }
-
-    private func addSecondaryButtons() {
-        let light = AppButtonSecondaryView(.levelLight, initialState: .selected)
-
-
-        [light].forEach {
-//            $0.translatesAutoresizingMaskIntoConstraints = false
-            $0.heightAnchor.constraint(equalToConstant: 44).isActive = true
-            hStackView.addArrangedSubview($0)
-        }
-    }
-
-    //        let action = AppButtonActionView(.invitePlayers)
-    //        let icon = AppButtonIconView(.back)
 }
 
 // MARK: - Preview
