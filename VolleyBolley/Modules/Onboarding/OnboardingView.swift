@@ -16,7 +16,6 @@ class OnboardingViewController: UIViewController {
         label.font = AppFont.ActayWide.bold(size: 36)
         label.textColor = AppColor.Text.primary
         label.textAlignment = .left
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
@@ -27,14 +26,12 @@ class OnboardingViewController: UIViewController {
         label.textColor = AppColor.Text.primary
         label.numberOfLines = 0
         label.textAlignment = .left
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
     private lazy var logoImageView: UIImageView = {
         let imageView = UIImageView(image: .vbLogo)
         imageView.contentMode = .scaleAspectFit
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
 
@@ -43,7 +40,6 @@ class OnboardingViewController: UIViewController {
         label.text = String(localized: "VOLLEYBOLLEY")
         label.font = AppFont.ActayWide.bold(size: 36)
         label.textColor = AppColor.Text.primary
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
@@ -53,7 +49,6 @@ class OnboardingViewController: UIViewController {
         let imageView = UIImageView(image: .launch)
         imageView.contentMode = .scaleAspectFill
         imageView.backgroundColor = .launchScreen
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
 
@@ -75,13 +70,6 @@ class OnboardingViewController: UIViewController {
     }
 
     private func setupConstraints() {
-           view.addSubview(backgroundImageView)
-           view.addSubview(titleLabel)
-           view.addSubview(descriptionLabel)
-           view.addSubview(logoImageView)
-           view.addSubview(appNameLabel)
-           view.addSubview(getStartedButton)
-
            NSLayoutConstraint.activate([
                backgroundImageView.topAnchor.constraint(equalTo: view.topAnchor),
                backgroundImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
