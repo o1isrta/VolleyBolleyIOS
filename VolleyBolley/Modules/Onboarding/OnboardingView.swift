@@ -47,7 +47,7 @@ class OnboardingViewController: UIViewController {
         return label
     }()
 
-    private lazy var getStartedButton: UIButton = NextStepButton(title: String(localized: "GET STARTED"), isActive: true)
+    private lazy var getStartedButton: UIButton = NextStepButton(title: String(localized: "GET STARTED"), isActive: true, target: self, action: #selector(getStartedTapped))
 
     private lazy var backgroundImageView: UIImageView = {
         let imageView = UIImageView(image: .launch)
@@ -60,10 +60,21 @@ class OnboardingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        getStartedButton.addTarget(self, action: #selector(getStartedTapped), for: .touchUpInside)
+        setupConstraints()
     }
 
     private func setupUI() {
+        [backgroundImageView,
+         titleLabel,
+         descriptionLabel,
+         logoImageView,
+         appNameLabel,
+         getStartedButton].forEach {
+            view.addSubviews($0)
+        }
+    }
+
+    private func setupConstraints() {
            view.addSubview(backgroundImageView)
            view.addSubview(titleLabel)
            view.addSubview(descriptionLabel)
@@ -101,6 +112,7 @@ class OnboardingViewController: UIViewController {
 
     @objc private func getStartedTapped() {
         presenter?.getStartedButtonTapped()
+        print("Кнопка нажата")
     }
 }
 
