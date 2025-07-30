@@ -87,7 +87,7 @@ private extension CustomCalendarView {
 	var weekView: some View {
 		LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7)) {
 			ForEach(weekdays, id: \.self) { day in
-				Text(day)
+				Text(day.capitalized)
 					.font(Font(AppFont.Hero.regular(size: 16) as CTFont))
 					.foregroundColor(Color(AppColor.Calendar.primary))
 					.frame(height: 28)
