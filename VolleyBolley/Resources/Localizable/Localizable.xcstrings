@@ -529,6 +529,9 @@
         }
       }
     },
+    "GET STARTED" : {
+
+    },
     "get_started_button" : {
       "comment" : "Onboarding",
       "extractionState" : "manual",
@@ -729,6 +732,9 @@
           }
         }
       }
+    },
+    "NEXT STEP" : {
+
     },
     "next_step_button" : {
       "comment" : "Registration",
@@ -1249,6 +1255,9 @@
         }
       }
     },
+    "This app helps you find beach volleyball games and match with players at your skill level." : {
+
+    },
     "time_from_label" : {
       "comment" : "Game",
       "extractionState" : "manual",
@@ -1309,6 +1318,9 @@
         }
       }
     },
+    "VOLLEYBOLLEY" : {
+
+    },
     "welcome_description" : {
       "comment" : "Onboarding",
       "extractionState" : "manual",
@@ -1328,10 +1340,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Welcome"
+            "value" : "Welcome!"
           }
         }
       }
+    },
+    "Welcome!" : {
+
     },
     "your_message_placeholder" : {
       "comment" : "Game",
