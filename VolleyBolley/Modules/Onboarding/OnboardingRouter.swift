@@ -16,7 +16,7 @@ class OnboardingRouter: OnboardingRouterProtocol {
         self.viewController = viewController
         self.coordinator = coordinator
     }
-    
+
     func navigateToAuthorizationScreen() {
         // TODO: Добавить метод перехода к авторизации
     }

@@ -19,7 +19,7 @@ class OnboardingPresenter: OnboardingPresenterProtocol {
         self.interactor = interactor
         self.router = router
     }
-    
+
     func getStartedButtonTapped() {
         interactor.markOnboardingAsCompleted()
         router.navigateToAuthorizationScreen()

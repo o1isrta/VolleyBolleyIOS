@@ -8,7 +8,7 @@
 import Foundation
 
 protocol OnboardingViewProtocol: AnyObject {
-    
+
 }
 
 protocol OnboardingPresenterProtocol: AnyObject {

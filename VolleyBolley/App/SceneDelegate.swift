@@ -31,7 +31,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             return
         }
         self.appRouter = appRouter
-        
+
         appRouter.start()
 
         window.makeKeyAndVisible()
