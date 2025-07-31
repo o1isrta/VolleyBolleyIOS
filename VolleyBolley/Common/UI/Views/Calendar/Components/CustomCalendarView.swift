@@ -252,10 +252,6 @@ private extension CustomCalendarView {
 						)
 					)
 					.frame(width: 42, height: 32)
-			} else if isToday && isCurrentMonth && !isPastDate {
-				RoundedRectangle(cornerRadius: 16)
-					.stroke(Color(AppColor.Calendar.primary), lineWidth: 1)
-					.frame(width: 42, height: 32)
 			}
 		}
 	}
