@@ -63,7 +63,7 @@ final class DIContainer {
                 AppAssembly(window: window),
                 SharedServicesAssembly(),
                 OnboardingAssembly(),
-                AuthAssembly(),
+//                AuthAssembly(),
                 MainAssembly(),
                 HomeAssembly(),
                 MyGamesAssembly(),

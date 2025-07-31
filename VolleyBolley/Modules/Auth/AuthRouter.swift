@@ -2,43 +2,41 @@
 //  AuthRouter.swift
 //  VolleyBolley
 //
-//  Created by Nikolai Eremenko
+//  Created by Олег Козырев
 //
 
-import Swinject
 import UIKit
 
-protocol AuthRouterProtocol {
-    var onLoginSuccess: (() -> Void)? { get set }
-    func start() -> UIViewController
-}
 
 final class AuthRouter: AuthRouterProtocol {
 
-    // MARK: - Public Properties
+    weak var viewController: UIViewController?
 
-    var onLoginSuccess: (() -> Void)?
+        static func assembleModule() -> UIViewController {
+            let view = AuthViewController()
+            let presenter = AuthorizationPresenter()
+            let interactor = AuthorizationInteractor()
+            let router = AuthRouter()
 
-    // MARK: - Private Properties
+            view.presenter = presenter
 
-    private let resolver: Resolver
+            presenter.view = view
+            presenter.interactor = interactor
+            presenter.router = router
 
-    // MARK: - Initializers
-    init(resolver: Resolver) {
-        self.resolver = resolver
-    }
+            interactor.presenter = presenter
+            router.viewController = view
 
-    // MARK: - Public Methods
-
-    func start() -> UIViewController {
-        guard let viewController = resolver.resolve(AuthViewController.self) else {
-            fatalError("Error: Failed to resolve AuthViewController")
+            return view
         }
 
-        viewController.onLogin = { [weak self] in
-            self?.onLoginSuccess?()
+        func showPhoneAuth() {
+//            let phoneAuthVC = PhoneRegRouter.assembleModule()
+//            viewController?.navigationController?.pushViewController(phoneAuthVC, animated: true)
         }
 
-        return UINavigationController(rootViewController: viewController)
-    }
+        func showUserRegScreen() {
+//            let userRegVC = UserRegRouter.assembleModule()
+//            viewController?.navigationController?.pushViewController(userRegVC, animated: true)
+        }
 }
