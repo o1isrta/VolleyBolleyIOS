@@ -73,7 +73,7 @@ final class DIContainer {
     }
 
     // MARK: - Public Methods
-    
+
     static func initialize(window: UIWindow) {
         precondition(_shared == nil, "DIContainer already initialized")
         _shared = DIContainer(window: window)

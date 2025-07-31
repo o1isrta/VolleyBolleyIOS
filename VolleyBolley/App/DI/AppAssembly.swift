@@ -41,7 +41,7 @@ final class AppAssembly: Assembly {
             guard let userSessionService = resolver.resolve(UserSessionServiceProtocol.self) else {
                 fatalError("Error: Failed to resolve UserSessionServiceProtocol")
             }
-            
+
             return AppRouter(
                 window: self.window,
                 userSessionService: userSessionService,

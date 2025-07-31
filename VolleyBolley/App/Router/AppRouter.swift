@@ -54,7 +54,7 @@ final class AppRouter {
     }
 
     private func showAuthorization() {
-        // TODO: Добавить переход к авторизации
+		// TODO: Добавить переход к авторизации
     }
 
     private func showMainApp() {

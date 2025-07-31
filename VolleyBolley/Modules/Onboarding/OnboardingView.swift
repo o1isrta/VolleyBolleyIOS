@@ -21,7 +21,9 @@ class OnboardingViewController: UIViewController {
 
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
-        label.text = String(localized: "This app helps you find beach volleyball games and match with players at your skill level.")
+		label.text = String(
+			localized: "This app helps you find beach volleyball games and match with players at your skill level."
+		)
         label.font = AppFont.Hero.regular(size: 20)
         label.textColor = AppColor.Text.primary
         label.numberOfLines = 0
@@ -43,7 +45,12 @@ class OnboardingViewController: UIViewController {
         return label
     }()
 
-    private lazy var getStartedButton: UIButton = NextStepButton(title: String(localized: "GET STARTED"), isActive: true, target: self, action: #selector(getStartedTapped))
+	private lazy var getStartedButton: UIButton = NextStepButton(
+		title: String(localized: "GET STARTED"),
+		isActive: true,
+		target: self,
+		action: #selector(getStartedTapped)
+	)
 
     private lazy var backgroundImageView: UIImageView = {
         let imageView = UIImageView(image: .launch)
@@ -105,5 +112,5 @@ class OnboardingViewController: UIViewController {
 }
 
 extension OnboardingViewController: OnboardingViewProtocol {
-    
+
 }
