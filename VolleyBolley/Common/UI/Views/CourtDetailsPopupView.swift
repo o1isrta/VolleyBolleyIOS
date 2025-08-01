@@ -33,7 +33,7 @@ class CourtDetailsPopupView: UIView {
         return label
     }()
 
-    private lazy var descriptionLabel: UILabel = {
+    private lazy var locationLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 15)// TODO
         label.numberOfLines = 0
@@ -76,10 +76,10 @@ class CourtDetailsPopupView: UIView {
     // MARK: - Public Methods
 
     func configure(with court: CourtModel) {
-        nameLabel.text = court.name
+		nameLabel.text = court.location.courtName
         priceLabel.text = court.price
-        descriptionLabel.text = court.fullDescription
-        phoneLabel.text = court.phone
+		locationLabel.text = court.location.locationName
+		phoneLabel.text = court.contacts?[0].value
         if let url = court.imageUrl {
             // Здесь можно добавить асинхронную загрузку изображения
             imageView.backgroundColor = .systemGray4
@@ -101,7 +101,7 @@ private extension CourtDetailsPopupView {
             nameLabel,
             priceLabel,
             priceLabel,
-            descriptionLabel,
+			locationLabel,
             phoneLabel,
             chooseButton
         ].forEach {
