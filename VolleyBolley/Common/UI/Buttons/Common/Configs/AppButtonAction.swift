@@ -7,8 +7,6 @@
 
 import UIKit
 
-/// желтый фон черный текст белая иконка для selected
-/// прозрачный фон для unselected
 enum AppButtonAction {
     case createTourney
     case invitePlayers
@@ -21,15 +19,11 @@ enum AppButtonAction {
 // MARK: - AppButtonConfig
 
 extension AppButtonAction: AppButtonConfig {
-    var defaultStyle: AppButtonStyle {
-        .actionNormal
-    }
 
-    var supportedStates: [AppButtonVisualState] {
-        return [.normal, .selected]
-    }
+    var title: String? { nil }
+    var image: UIImage? { nil }
 
-    var title: String? {
+    var actionTitle: String? {
         switch self {
         case .createTourney: return String(localized: "common.createTourney")
         case .invitePlayers: return String(localized: "common.invitePlayers")
@@ -40,7 +34,7 @@ extension AppButtonAction: AppButtonConfig {
         }
     }
 
-    var image: UIImage? {
+    var actionImage: UIImage? {
         switch self {
         case .createTourney: return UIImage.Icon.createTourney
         case .invitePlayers: return UIImage.Icon.invitePlayers
@@ -51,14 +45,18 @@ extension AppButtonAction: AppButtonConfig {
         }
     }
 
-    func style(for state: AppButtonVisualState) -> AppButtonStyle? {
+    func style(for state: UIControl.State) -> AppButtonStyle? {
         switch state {
         case .normal:
             return .actionNormal
         case .selected:
             return .actionSelected
+        case [.selected, .highlighted]:
+            return .actionHighlightedSelected
+        case [.normal, .highlighted]:
+            return .actionHighlightedNormal
         default:
-            return nil
+            return .secondaryNormal
         }
     }
 }

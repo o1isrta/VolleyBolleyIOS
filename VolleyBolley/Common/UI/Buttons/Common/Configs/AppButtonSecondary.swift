@@ -30,13 +30,10 @@ enum AppButtonSecondary {
 // MARK: - AppButtonConfig
 
 extension AppButtonSecondary: AppButtonConfig {
-    var defaultStyle: AppButtonStyle {
-        .secondaryNormal
-    }
-
-    var supportedStates: [AppButtonVisualState] {
-        return [.normal, .selected]
-    }
+    
+    var actionImage: UIImage? { nil }
+    var actionTitle: String? { nil }
+    var image: UIImage? { nil }
 
     var title: String? {
         switch self {
@@ -60,15 +57,18 @@ extension AppButtonSecondary: AppButtonConfig {
         }
     }
 
-    var image: UIImage? {
-        nil
-    }
-
-    func style(for state: AppButtonVisualState) -> AppButtonStyle? {
+    func style(for state: UIControl.State) -> AppButtonStyle? {
         switch state {
-        case .normal: return .secondaryNormal
-        case .selected: return .secondarySelected
-        default: return nil
+        case .normal:
+            return .secondaryNormal
+        case .selected:
+            return .secondarySelected
+        case [.selected, .highlighted]:
+            return .secondaryHighlightedSelected
+        case [.normal, .highlighted]:
+            return .secondaryHighlightedNormal
+        default:
+            return .secondaryNormal
         }
     }
 }
