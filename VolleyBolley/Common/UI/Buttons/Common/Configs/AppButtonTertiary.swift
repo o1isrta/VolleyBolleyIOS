@@ -15,28 +15,23 @@ enum AppButtonTertiary {
 // MARK: - AppButtonConfig
 
 extension AppButtonTertiary: AppButtonConfig {
-    var defaultStyle: AppButtonStyle {
-        .tertiaryNormal
-    }
 
-    var supportedStates: [AppButtonVisualState] {
-        return [.selected]
-    }
+    var actionImage: UIImage? { nil }
+    var actionTitle: String? { nil }
+    var image: UIImage? { nil }
 
     var title: String? {
         return String(localized: "common.map")
     }
 
-    var image: UIImage? {
-        nil
-    }
-
-    func style(for state: AppButtonVisualState) -> AppButtonStyle? {
+    func style(for state: UIControl.State) -> AppButtonStyle? {
         switch state {
         case .normal:
             return .tertiaryNormal
+        case .highlighted:
+            return .tertiaryHighlighted
         default:
-            return nil
+            return .tertiaryNormal
         }
     }
 }

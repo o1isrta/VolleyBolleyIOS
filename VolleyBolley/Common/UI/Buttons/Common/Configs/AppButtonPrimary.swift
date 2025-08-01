@@ -7,9 +7,6 @@
 
 import UIKit
 
-/// желтый фон черный текст для selected
-/// желтый бордер белый текст unseleted
-/// серый фон белый текст для неактивного состояния
 enum AppButtonPrimary {
     case nextStep
     case save
@@ -45,23 +42,16 @@ enum AppButtonPrimary {
 // MARK: - AppButtonConfig
 
 extension AppButtonPrimary: AppButtonConfig {
-    var defaultStyle: AppButtonStyle {
-        .primaryNormal
-    }
 
-    var supportedStates: [AppButtonVisualState] {
-        return [.normal, .selected, .disabled]
-    }
+    var actionImage: UIImage? { nil }
+    var actionTitle: String? { nil }
+    var image: UIImage? { nil }
 
     var title: String? {
         String(localized: String.LocalizationValue(localizationKey)).uppercased()
     }
 
-    var image: UIImage? {
-        nil
-    }
-
-    func style(for state: AppButtonVisualState) -> AppButtonStyle? {
+    func style(for state: UIControl.State) -> AppButtonStyle? {
         switch state {
         case .normal:
             return .primaryNormal
@@ -69,6 +59,12 @@ extension AppButtonPrimary: AppButtonConfig {
             return .primarySelected
         case .disabled:
             return .primaryDisabled
+        case [.selected, .highlighted]:
+            return .primaryHighlightedSelected
+        case [.normal, .highlighted]:
+            return .primaryHighlightedNormal
+        default:
+            return .primaryNormal
         }
     }
 }
