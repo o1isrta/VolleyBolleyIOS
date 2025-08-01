@@ -84,7 +84,7 @@ class MapViewController: UIViewController, MapViewProtocol {
 				longitudinalMeters: 2000
 			)
 			mapView.setRegion(region, animated: true)
-			bottomView.configure(with: nearest, isNearest: true)
+			bottomView.configure(with: nearest, distance: String(localized: "Nearest"))
 		} else if let first = courts.first {
 			nearestCourt = first
 			selectedCourt = first
@@ -97,7 +97,7 @@ class MapViewController: UIViewController, MapViewProtocol {
 				longitudinalMeters: 2000
 			)
 			mapView.setRegion(region, animated: true)
-			bottomView.configure(with: first, isNearest: false)
+			bottomView.configure(with: first, distance: "")
 		}
 	}
 }
@@ -153,7 +153,8 @@ extension MapViewController: MKMapViewDelegate {
 				&& $0.location.longitude == annotation.coordinate.longitude
 			}) {
 			selectedCourt = court
-			bottomView.configure(with: court, isNearest: isNearestCourt(court))
+			let distanceMessage = isNearestCourt(court) ? String(localized: "Nearest") : ""
+			bottomView.configure(with: court, distance: distanceMessage)
 		}
 	}
 }

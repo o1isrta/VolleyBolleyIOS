@@ -11,7 +11,7 @@ class CourtDetailsCell: UITableViewCell {
 
     // MARK: - Private Properties
 
-    private let detailsView = CourtDetailsPopupView()
+    private let detailsView = CourtDetailsPopupView()// TODO
 
     // MARK: - Initializers
 
@@ -20,9 +20,10 @@ class CourtDetailsCell: UITableViewCell {
         setupUI()
     }
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+	@available(*, unavailable)
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
 
     // MARK: - Public Methods
 
