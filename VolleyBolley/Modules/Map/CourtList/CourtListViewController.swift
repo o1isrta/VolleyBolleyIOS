@@ -49,7 +49,7 @@ class CourtListViewController: UIViewController {
 
         print("🏀 ListViewController: Initialized with \(courts.count) courts") // TODO
         for (index, court) in courts.enumerated() {
-            print("🏀 Court \(index + 1): '\(court.name)' at \(court.coordinate.latitude), \(court.coordinate.longitude)")
+			print("🏀 Court \(index + 1): '\(court.location.courtName)' at \(court.location.latitude), \(court.location.longitude)")
         }
     }
 
@@ -75,7 +75,7 @@ extension CourtListViewController: CourtListViewProtocol {
     func showCourts(_ courts: [(court: CourtModel, distance: Double)]) {
         print("📱 ListViewController: Updating courts with distances")
         for (index, court) in courtList.enumerated() {
-            print("📱 Court \(index + 1): '\(court.court.name)' - \(court.distance) km")
+			print("📱 Court \(index + 1): '\(court.court.location.courtName)' - \(court.distance) km")
         }
         courtList = courts
         tableView.reloadData()
@@ -255,7 +255,7 @@ private extension CourtListViewController {
 	func updateFilteredCourts() {
 		let filterText = (searchField.text ?? "").lowercased()
 		filteredCourts = courtList.filter { court in
-			return filterText.isEmpty || court.court.name.localizedCaseInsensitiveContains(filterText)
+			return filterText.isEmpty || court.court.location.courtName.localizedCaseInsensitiveContains(filterText)
 		}
 		tableView.reloadData()
 	}

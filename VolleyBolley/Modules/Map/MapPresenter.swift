@@ -34,13 +34,13 @@ final class MapPresenter: MapPresenterProtocol {
                         by: {
                             userLocation.distance(
                                 from: CLLocation(
-                                    latitude: $0.coordinate.latitude,
-                                    longitude: $0.coordinate.longitude
+									latitude: $0.location.latitude,
+									longitude: $0.location.longitude
                                 )
                             ) < userLocation.distance(
                                 from: CLLocation(
-                                    latitude: $1.coordinate.latitude,
-                                    longitude: $1.coordinate.longitude
+									latitude: $1.location.latitude,
+									longitude: $1.location.longitude
                                 )
                             )
                         })
