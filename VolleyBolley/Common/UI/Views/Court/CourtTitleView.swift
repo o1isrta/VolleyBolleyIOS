@@ -20,7 +20,7 @@ final class CourtTitleView: UIView {
 		return label
 	}()
 
-	private lazy var shortDescriptionLabel: UILabel = {
+	private lazy var locationLabel: UILabel = {
 		let label = UILabel()
 		label.font = AppFont.Hero.light(size: 14)
 		label.textColor = AppColor.Text.primary
@@ -80,8 +80,8 @@ final class CourtTitleView: UIView {
 	// MARK: - Public Methods
 
 	func configure(with court: CourtModel, isNearest: Bool) {
-		titleLabel.text = court.name
-		shortDescriptionLabel.text = court.shortDescription
+		titleLabel.text = court.location.courtName
+		locationLabel.text = court.location.locationName
 		nearestLabel.isHidden = !isNearest
 	}
 }
@@ -94,7 +94,7 @@ private extension CourtTitleView {
 		// court description
 		[
 			titleLabel,
-			shortDescriptionLabel
+			locationLabel
 		].forEach {
 			titleStackView.addArrangedSubview($0)
 		}
@@ -120,7 +120,7 @@ private extension CourtTitleView {
 			mainStackView.heightAnchor.constraint(equalToConstant: 36),
 			mainStackView.topAnchor.constraint(equalTo: topAnchor),
 			mainStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-			mainStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+			mainStackView.trailingAnchor.constraint(equalTo: trailingAnchor)
 		])
 	}
 }
