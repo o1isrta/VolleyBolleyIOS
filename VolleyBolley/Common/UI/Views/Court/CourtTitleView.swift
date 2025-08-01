@@ -80,8 +80,8 @@ final class CourtTitleView: UIView {
 	// MARK: - Public Methods
 
 	func configure(with court: CourtModel, isNearest: Bool) {
-		titleLabel.text = court.name
-		shortDescriptionLabel.text = court.shortDescription
+		titleLabel.text = court.location.courtName
+		shortDescriptionLabel.text = court.location.locationName
 		nearestLabel.isHidden = !isNearest
 	}
 }
@@ -120,7 +120,7 @@ private extension CourtTitleView {
 			mainStackView.heightAnchor.constraint(equalToConstant: 36),
 			mainStackView.topAnchor.constraint(equalTo: topAnchor),
 			mainStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-			mainStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+			mainStackView.trailingAnchor.constraint(equalTo: trailingAnchor)
 		])
 	}
 }
