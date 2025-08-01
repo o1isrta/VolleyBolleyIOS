@@ -35,7 +35,7 @@ class CourtTableViewCell: UITableViewCell {
         return label
     }()
 
-    private lazy var descriptionLabel: UILabel = {
+    private lazy var locationLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14, weight: .light) // TODO
         label.textColor = .secondaryLabel // TODO
@@ -74,8 +74,8 @@ class CourtTableViewCell: UITableViewCell {
     // MARK: - Public Methods
 
     func configure(with court: CourtModel, distance: Double) {
-        titleLabel.text = court.name
-        descriptionLabel.text = court.shortDescription
+		titleLabel.text = court.location.courtName
+		locationLabel.text = court.location.locationName
 
         let distanceText: String
         if distance >= 0 {
@@ -100,7 +100,7 @@ private extension CourtTableViewCell {
         // description
         [
             titleLabel,
-            descriptionLabel
+            locationLabel
         ].forEach {
             descriptionStackView.addArrangedSubview($0)
         }
