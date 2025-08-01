@@ -117,7 +117,7 @@ extension CourtListViewController: UITableViewDataSource {
         if let expanded = expandedIndex, indexPath.row == expanded + 1 {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "CourtDetailsCell", for: indexPath) as? CourtDetailsCell {
                 let court = filteredCourts[expanded].court
-                cell.configure(with: court)
+                cell.configure(with: court)// TODO
                 return cell
             }
         }
