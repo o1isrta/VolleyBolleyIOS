@@ -7,6 +7,18 @@
 
 import UIKit
 
+enum CourtTitleViewType: CaseIterable {
+	case icon
+	case none
+
+	var value: Bool {
+		switch self {
+		case .icon: return true
+		case .none: return false
+		}
+	}
+}
+
 final class CourtTitleView: UIView {
 
 	// MARK: - Private Properties
@@ -44,7 +56,7 @@ final class CourtTitleView: UIView {
 		return imageView
 	}()
 
-	private lazy var nearestLabel: UILabel = {
+	private lazy var distanceLabel: UILabel = {
 		let label = UILabel()
 		label.font = AppFont.Hero.regular(size: 16)
 		label.textColor = AppColor.Text.primary
@@ -53,7 +65,6 @@ final class CourtTitleView: UIView {
 		label.layer.masksToBounds = true
 		label.textAlignment = .center
 		label.sizeToFit()
-		label.text = String(localized: "Nearest")
 		label.isHidden = true
 		return label
 	}()
@@ -67,8 +78,10 @@ final class CourtTitleView: UIView {
 
 	// MARK: - Initializers
 
-	override init(frame: CGRect) {
-		super.init(frame: frame)
+	init(type: CourtTitleViewType) {
+		super.init(frame: .zero)
+		iconImageView.isHidden = type.value
+		
 		setupUI()
 	}
 
@@ -79,10 +92,11 @@ final class CourtTitleView: UIView {
 
 	// MARK: - Public Methods
 
-	func configure(with court: CourtModel, isNearest: Bool) {
+	func configure(with court: CourtModel, distance: String) {
 		titleLabel.text = court.location.courtName
 		locationLabel.text = court.location.locationName
-		nearestLabel.isHidden = !isNearest
+		distanceLabel.text = distance
+		distanceLabel.isHidden = distance.isEmpty
 	}
 }
 // MARK: - Private Methods
@@ -102,7 +116,7 @@ private extension CourtTitleView {
 		[
 			iconImageView,
 			titleStackView,
-			nearestLabel
+			distanceLabel
 		].forEach {
 			mainStackView.addArrangedSubview($0)
 		}
@@ -113,9 +127,9 @@ private extension CourtTitleView {
 			iconImageView.heightAnchor.constraint(equalToConstant: 15),
 			iconImageView.widthAnchor.constraint(equalToConstant: 15),
 
-			nearestLabel.heightAnchor.constraint(equalToConstant: 23),
-			nearestLabel.widthAnchor.constraint(equalToConstant: 81),
-			nearestLabel.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor),
+			distanceLabel.heightAnchor.constraint(equalToConstant: 23),
+			distanceLabel.widthAnchor.constraint(equalToConstant: 81),
+			distanceLabel.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor),
 
 			mainStackView.heightAnchor.constraint(equalToConstant: 36),
 			mainStackView.topAnchor.constraint(equalTo: topAnchor),
