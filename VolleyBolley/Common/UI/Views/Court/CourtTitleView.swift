@@ -20,7 +20,7 @@ final class CourtTitleView: UIView {
 		return label
 	}()
 
-	private lazy var shortDescriptionLabel: UILabel = {
+	private lazy var locationLabel: UILabel = {
 		let label = UILabel()
 		label.font = AppFont.Hero.light(size: 14)
 		label.textColor = AppColor.Text.primary
@@ -81,7 +81,7 @@ final class CourtTitleView: UIView {
 
 	func configure(with court: CourtModel, isNearest: Bool) {
 		titleLabel.text = court.location.courtName
-		shortDescriptionLabel.text = court.location.locationName
+		locationLabel.text = court.location.locationName
 		nearestLabel.isHidden = !isNearest
 	}
 }
@@ -94,7 +94,7 @@ private extension CourtTitleView {
 		// court description
 		[
 			titleLabel,
-			shortDescriptionLabel
+			locationLabel
 		].forEach {
 			titleStackView.addArrangedSubview($0)
 		}
