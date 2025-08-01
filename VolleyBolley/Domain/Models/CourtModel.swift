@@ -5,22 +5,54 @@
 //  Created by Roman Romanov on 01.08.2025.
 //
 
-import CoreLocation
 import Foundation
 
 struct CourtModel: Equatable {
-	let id: UUID
-	let name: String
-	let shortDescription: String
-	let fullDescription: String
-	let coordinate: CLLocationCoordinate2D
+	let id: Int
+	let price: String?
+	let description: String?
+	let contacts: [ContactModel]?
 	let imageUrl: URL?
-	let price: String
-	let phone: String
+	let tagList: [String]
+	let location: CourtLocationModel
 
 	static func == (lhs: CourtModel, rhs: CourtModel) -> Bool {
-		lhs.coordinate.latitude == rhs.coordinate.latitude
-		&& lhs.coordinate.longitude == rhs.coordinate.longitude
-		&& lhs.name == rhs.name
+		lhs.location.latitude == rhs.location.latitude
+		&& lhs.location.longitude == rhs.location.longitude
+		&& lhs.location.courtName == rhs.location.courtName
+	}
+
+	private enum CodingKeys: String, CodingKey {
+		case id = "court_id"
+		case price = "price_description"
+		case description
+		case contacts = "contact_list"
+		case imageUrl = "photo_url"
+		case tagList = "tag_list"
+		case location = "court_location"
+	}
+}
+
+struct CourtLocationModel {
+	let latitude: Double
+	let longitude: Double
+	let courtName: String
+	let locationName: String
+
+	private enum CodingKeys: String, CodingKey {
+		case latitude
+		case longitude
+		case courtName = "court_name"
+		case locationName = "location_name"
+	}
+}
+
+struct ContactModel {
+	let type: String
+	let value: String
+
+	private enum CodingKeys: String, CodingKey {
+		case type = "contact_type"
+		case value = "contact"
 	}
 }
