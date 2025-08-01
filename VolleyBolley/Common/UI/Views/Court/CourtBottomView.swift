@@ -16,7 +16,7 @@ final class CourtBottomView: UIView {
 
 	// MARK: - Private Properties
 
-	private lazy var courtTitleView: CourtTitleView = CourtTitleView()
+	private lazy var courtTitleView: CourtTitleView = CourtTitleView(type: .icon)
 
 	private lazy var buttonStackView: UIStackView = {
 		let stack = UIStackView()
@@ -66,8 +66,8 @@ final class CourtBottomView: UIView {
 
 	// MARK: - Public Methods
 
-	func configure(with court: CourtModel, isNearest: Bool) {
-		courtTitleView.configure(with: court, isNearest: isNearest)
+	func configure(with court: CourtModel, distance: String) {
+		courtTitleView.configure(with: court, distance: distance)
 	}
 }
 
