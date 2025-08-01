@@ -136,6 +136,16 @@
         }
       }
     },
+    "Choose this court" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выбрать этот корт"
+          }
+        }
+      }
+    },
     "choose_city_placeholder" : {
       "comment" : "Registration",
       "extractionState" : "manual",
@@ -324,6 +334,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Date"
+          }
+        }
+      }
+    },
+    "Details" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Детали"
           }
         }
       }
@@ -718,6 +738,12 @@
             "state" : "translated",
             "value" : "Name"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Имя"
+          }
         }
       }
     },
@@ -729,6 +755,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Near you"
+          }
+        }
+      }
+    },
+    "Nearest" : {
+      "comment" : "CourtView title",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ближайший"
           }
         }
       }

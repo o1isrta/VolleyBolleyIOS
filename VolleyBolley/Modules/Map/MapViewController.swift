@@ -160,13 +160,21 @@ private extension MapViewController {
     }
 
     func setupActions() {
-        bottomView.detailsButton.addTarget(self, action: #selector(showDetailsPopup), for: .touchUpInside)
+		bottomView.detailsButtonCallback = { [weak self] in
+			guard let self else { return }
+			showDetailsAction()
+		}
+		bottomView.chooseButtonCallback = { [weak self] in
+			guard let self else { return }
+			chooseCourtAction()
+		}
 
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideDetailsPopup))
         popupView.addGestureRecognizer(tapGesture)
 
         segmentedControl.segmentChanged = { [weak self] _ in
-            self?.segmentChanged()
+			guard let self else { return }
+            self.segmentChanged()
         }
     }
 
@@ -249,7 +257,11 @@ private extension MapViewController {
         court == nearestCourt
     }
 
-    @objc func showDetailsPopup() {
+	private func chooseCourtAction() {
+		print("Choose this Court")
+	}
+
+    private func showDetailsAction() {
         guard let court = selectedCourt else { return }
         popupView.configure(with: court)
         popupView.isHidden = false
