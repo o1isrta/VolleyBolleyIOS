@@ -136,12 +136,14 @@
         }
       }
     },
+            "value" : "Выбрать этот корт"
     "Choose this court" : {
+      "comment" : "\"Choose this court\" button",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Выбрать этот корт"
+            "value" : "Выбрать корт"
           }
         }
       }
@@ -207,7 +209,15 @@
       }
     },
     "Contacts: " : {
-
+      "comment" : "Court Details",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Контакты: "
+          }
+        }
+      }
     },
     "continue_with_facebook_button" : {
       "comment" : "Registration",
@@ -282,7 +292,15 @@
       }
     },
     "Court pricing: " : {
-
+      "comment" : "Court Details",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Стоимость корта: "
+          }
+        }
+      }
     },
     "create_game_label" : {
       "comment" : "Game",
@@ -345,11 +363,12 @@
       }
     },
     "Details" : {
+      "comment" : "\"Details\" button",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Детали"
+            "value" : "Подробнее"
           }
         }
       }
