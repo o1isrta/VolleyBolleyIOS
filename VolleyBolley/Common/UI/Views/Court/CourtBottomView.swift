@@ -106,7 +106,6 @@ private extension CourtBottomView {
 			courtTitleView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
 			courtTitleView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
 
-			courtTitleView.heightAnchor.constraint(equalToConstant: 44),
 			buttonStackView.topAnchor.constraint(equalTo: courtTitleView.bottomAnchor, constant: 16),
 			buttonStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
 			buttonStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
