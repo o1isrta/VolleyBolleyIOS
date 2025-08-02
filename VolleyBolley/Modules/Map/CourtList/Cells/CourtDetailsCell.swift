@@ -28,7 +28,7 @@ class CourtDetailsCell: UITableViewCell {
     // MARK: - Public Methods
 
     func configure(with court: CourtModel) {
-		courtView.configure(with: court)
+		courtView.configure(with: court, isSmallDoneButton: true)
     }
 }
 
@@ -38,6 +38,7 @@ private extension CourtDetailsCell {
 
     func setupUI() {
         selectionStyle = .none
+		backgroundColor = .clear
         contentView.addSubviews(courtView)
         NSLayoutConstraint.activate([
 			courtView.topAnchor.constraint(equalTo: contentView.topAnchor),
