@@ -98,6 +98,7 @@ final class CourtTitleView: UIView {
 		distanceLabel.isHidden = distance.isEmpty
 	}
 }
+
 // MARK: - Private Methods
 
 private extension CourtTitleView {
