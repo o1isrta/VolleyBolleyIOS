@@ -136,6 +136,17 @@
         }
       }
     },
+    "Choose this court" : {
+      "comment" : "\"Choose this court\" button",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выбрать корт"
+          }
+        }
+      }
+    },
     "choose_city_placeholder" : {
       "comment" : "Registration",
       "extractionState" : "manual",
@@ -192,6 +203,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Your city"
+          }
+        }
+      }
+    },
+    "Contacts: " : {
+      "comment" : "Court Details",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Контакты: "
           }
         }
       }
@@ -268,6 +290,17 @@
         }
       }
     },
+    "Court pricing: " : {
+      "comment" : "Court Details",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Стоимость корта: "
+          }
+        }
+      }
+    },
     "create_game_label" : {
       "comment" : "Game",
       "extractionState" : "manual",
@@ -324,6 +357,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Date"
+          }
+        }
+      }
+    },
+    "Details" : {
+      "comment" : "\"Details\" button",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подробнее"
           }
         }
       }
