@@ -202,10 +202,11 @@ private extension CourtListViewController {
         tableView.delegate = self
         tableView.register(CourtTableViewCell.self, forCellReuseIdentifier: "CourtCell")
         tableView.register(CourtDetailsCell.self, forCellReuseIdentifier: "CourtDetailsCell")
+        tableView.backgroundColor = .clear
     }
 
     func setupUI() {
-        view.backgroundColor = .systemBackground  // TODO
+		view.backgroundColor = .clear  // TODO
 		view.addSubviews(searchField, tableView)
 
 		let mainIndent: CGFloat = 20

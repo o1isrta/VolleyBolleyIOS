@@ -198,8 +198,12 @@ private extension MapViewController {
 	}
 
 	func setupUI() {
-		view.backgroundColor = .white// TODO
-		view.addSubviews(mapView, segmentedControl, bottomView)
+		view.backgroundColor = AppColor.Background.screen// TODO: need replace to glass effect
+		view.addSubviews(
+				mapView,
+				segmentedControl,
+				bottomView
+			)
 
 		NSLayoutConstraint.activate([
 			segmentedControl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
@@ -227,7 +231,7 @@ private extension MapViewController {
 		NSLayoutConstraint.activate([
 			popupView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
 			popupView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-			popupView.heightAnchor.constraint(equalToConstant: 400)
+			popupView.heightAnchor.constraint(equalToConstant: 472)
 		])
 
 		// Добавляем listVC.view, но скрываем по умолчанию
