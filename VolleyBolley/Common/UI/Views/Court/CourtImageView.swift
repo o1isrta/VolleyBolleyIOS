@@ -20,26 +20,12 @@ final class CourtImageView: UIView {
 		return imageView
 	}()
 
-	private lazy var tagLabel: UILabel = {
-		let label = UILabel()
-		label.font = AppFont.Hero.regular(size: 14)
-		label.textColor = AppColor.Text.primary
-		label.backgroundColor = AppColor.Background.badgeSelected
-		label.layer.cornerRadius = 6
-		label.layer.masksToBounds = true
-		label.textAlignment = .center
-		label.sizeToFit()
-		label.isHidden = true
-		return label
-	}()
-
 	private lazy var tagStackView: UIStackView = {
 		let stackView = UIStackView()
 		stackView.axis = .horizontal
 		stackView.spacing = 4
 		stackView.alignment = .leading
-//		stackView.distribution = .fillEqually
-//		stackView.alignment = .center
+		stackView.distribution = .equalSpacing
 		return stackView
 	}()
 
@@ -64,14 +50,28 @@ final class CourtImageView: UIView {
 //		}
 		courtImageView.image = UIImage(named: "court")
 
-		print(court)
-		tagLabel.text = ""
-
+		tagStackView.arrangedSubviews.forEach {
+			$0.removeFromSuperview()
+		}
 		court.tagList.forEach {
-			let tag = tagLabel
-			tag.text = $0
-			print($0)
-			tagStackView.addArrangedSubview(tag)
+			let tagLabel = UILabel()
+			tagLabel.font = AppFont.Hero.regular(size: 16)
+			tagLabel.textColor = AppColor.Text.primary
+			tagLabel.textAlignment = .center
+			tagLabel.text = $0
+
+			let container = UIView()
+			container.backgroundColor = AppColor.Background.badgeSelected
+			container.layer.cornerRadius = 6
+
+			container.addSubviews(tagLabel)
+			NSLayoutConstraint.activate([
+				tagLabel.topAnchor.constraint(equalTo: container.topAnchor, constant: 2),
+				tagLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 4),
+				tagLabel.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -4),
+				tagLabel.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -2)
+			])
+			tagStackView.addArrangedSubview(container)
 		}
 	}
 
@@ -79,8 +79,8 @@ final class CourtImageView: UIView {
 
 	private func setupUI() {
 		addSubviews(
-			courtImageView
-//			tagStackView
+			courtImageView,
+			tagStackView
 		)
 
 		courtImageView.addSubviews(tagStackView)
@@ -93,7 +93,6 @@ final class CourtImageView: UIView {
 
 			tagStackView.topAnchor.constraint(equalTo: topAnchor, constant: 16),
 			tagStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-			tagStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
 			tagStackView.heightAnchor.constraint(equalToConstant: 23)
 		])
 	}
