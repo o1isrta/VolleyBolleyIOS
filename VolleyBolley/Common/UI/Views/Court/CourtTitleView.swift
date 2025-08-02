@@ -11,10 +11,10 @@ enum CourtTitleViewType: CaseIterable {
 	case icon
 	case none
 
-	var value: Bool {
+	var isIconHidden: Bool {
 		switch self {
-		case .icon: return true
-		case .none: return false
+		case .icon: return false
+		case .none: return true
 		}
 	}
 }
@@ -80,8 +80,7 @@ final class CourtTitleView: UIView {
 
 	init(type: CourtTitleViewType) {
 		super.init(frame: .zero)
-		iconImageView.isHidden = type.value
-		
+		iconImageView.isHidden = type.isIconHidden
 		setupUI()
 	}
 
