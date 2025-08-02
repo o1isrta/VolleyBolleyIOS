@@ -53,20 +53,22 @@ public class CustomSegmentedControl: UIView {
 
     // MARK: - Private Properties
 
+	private let cornerRadius: CGFloat = 16
+
     // Array to hold segment buttons
     private lazy var buttons: [UIButton] = []
     // Selector view to highlight the selected segment
     private lazy var selectorView: UIView = {
         let view = UIView()
         view.backgroundColor = AppColor.Text.primary
-        view.layer.cornerRadius = 16
+        view.layer.cornerRadius = cornerRadius
         return view
     }()
 
     private lazy var gradientLayer: CAGradientLayer = {
         let view = CALayer.getGradientLayer()
         view.frame = bounds
-        view.cornerRadius = 16
+        view.cornerRadius = cornerRadius
         return view
     }()
 
@@ -100,7 +102,9 @@ public class CustomSegmentedControl: UIView {
 private extension CustomSegmentedControl {
 
     func setupView() {
-        backgroundColor = AppColor.Text.primary
+		backgroundColor = AppColor.Background.primary
+		layer.cornerRadius = cornerRadius
+		layer.masksToBounds = true
 
         layer.insertSublayer(gradientLayer, at: 0)
         // Save a link to the gradient layer for subsequent updating during resizing
