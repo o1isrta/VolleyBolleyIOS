@@ -100,7 +100,9 @@ public class CustomSegmentedControl: UIView {
 private extension CustomSegmentedControl {
 
     func setupView() {
-        backgroundColor = AppColor.Text.primary
+		backgroundColor = .clear
+		layer.cornerRadius = 16
+		layer.masksToBounds = true
 
         layer.insertSublayer(gradientLayer, at: 0)
         // Save a link to the gradient layer for subsequent updating during resizing
