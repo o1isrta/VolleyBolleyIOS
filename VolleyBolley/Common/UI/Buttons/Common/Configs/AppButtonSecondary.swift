@@ -30,7 +30,7 @@ enum AppButtonSecondary {
 // MARK: - AppButtonConfig
 
 extension AppButtonSecondary: AppButtonConfig {
-    
+
     var actionImage: UIImage? { nil }
     var actionTitle: String? { nil }
     var image: UIImage? { nil }

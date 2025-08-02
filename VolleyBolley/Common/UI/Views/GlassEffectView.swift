@@ -8,6 +8,8 @@
 import UIKit
 
 // TODO: - Temp view. Refactor or delete
+
+/// View with blur effect
 final class GlassEffectView: UIView {
 
     var cornerRadius: CGFloat {

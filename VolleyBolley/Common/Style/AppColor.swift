@@ -57,9 +57,7 @@ enum AppColor {
 	}
 
     enum Border {
-        // TODO: объединить action button
         static let buttonAction = yellow
-//        static let actionButton = yellow
         static let primary = white
         static let inverted = ashBrown
         static let separator = separatorGray
