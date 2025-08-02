@@ -153,8 +153,9 @@ extension MapViewController: MKMapViewDelegate {
 				&& $0.location.longitude == annotation.coordinate.longitude
 			}) {
 			selectedCourt = court
-			let distanceMessage = isNearestCourt(court) ? String(localized: "Nearest") : ""
-			bottomView.configure(with: court, distance: distanceMessage)
+			let distanceMessage = getDistanceMessage(court: court)
+			self.bottomView.configure(with: court, distance: distanceMessage)
+			self.popupView.configure(with: court, distance: distanceMessage)
 		}
 	}
 }
@@ -162,6 +163,10 @@ extension MapViewController: MKMapViewDelegate {
 // MARK: - Private Methods
 
 private extension MapViewController {
+
+	func getDistanceMessage(court: CourtModel) -> String {
+		isNearestCourt(court) ? String(localized: "Nearest") : ""
+	}
 
 	func setupMap() {
 		mapView.delegate = self
@@ -280,7 +285,8 @@ private extension MapViewController {
 
 	private func showDetailsAction() {
 		guard let court = selectedCourt else { return }
-		popupView.configure(with: court)
+		let distanceMessage = getDistanceMessage(court: court)
+		popupView.configure(with: court, distance: distanceMessage)
 		popupView.isHidden = false
 		print("show Details")
 //        UIView.animate(withDuration: 0.3) {

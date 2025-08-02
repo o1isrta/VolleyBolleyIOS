@@ -11,7 +11,7 @@ class CourtDetailsCell: UITableViewCell {
 
     // MARK: - Private Properties
 
-    private let detailsView = CourtDetailsPopupView()// TODO
+	private let detailsView = CourtView()
 
     // MARK: - Initializers
 
@@ -28,7 +28,7 @@ class CourtDetailsCell: UITableViewCell {
     // MARK: - Public Methods
 
     func configure(with court: CourtModel) {
-        detailsView.configure(with: court)
+		detailsView.configure(with: court)
     }
 }
 
