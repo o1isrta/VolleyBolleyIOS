@@ -214,7 +214,9 @@ struct UIViewPreview<View: UIView>: UIViewRepresentable {
 		view.configure(with: model)
 		return view
 	}
+	.padding()
 	.frame(width: .infinity, height: 472)
+	.background(Color(cgColor: AppColor.Background.screen.cgColor))
 	.padding()
 }
 #endif
