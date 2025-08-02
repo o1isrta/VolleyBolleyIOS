@@ -24,6 +24,7 @@ class AppButtonView<Config: AppButtonConfig>: UIButton {
     private var currentBorderColors: [UIColor] = []
     private var currentCornerRadius: CGFloat = 0
     private var currentBorderWidth: CGFloat = 0
+    private var hasSetupActionLayout = false
 
     private struct VisualState {
         let backgroundColor: UIColor
@@ -165,18 +166,21 @@ class AppButtonView<Config: AppButtonConfig>: UIButton {
             needsGradientBorder = false
         }
 
-        if let actionButtonTitle = styleConfig.actionTitle,
-           let actionButtonImage = styleConfig.actionImage {
-            actionTitleLabel.text = actionButtonTitle
-            actionTitleLabel.font = visualState.font
-            actionTitleLabel.textColor = visualState.textColor
+        actionTitleLabel.text = styleConfig.actionTitle
+        actionTitleLabel.font = visualState.font
+        actionTitleLabel.textColor = visualState.textColor
 
-            actionImageView.image = actionButtonImage
-            actionImageView.tintColor = visualState.tintColor
+        actionImageView.image = styleConfig.actionImage
+        actionImageView.tintColor = visualState.tintColor
 
-            currentCornerRadius = visualState.cornerRadius
+        currentCornerRadius = visualState.cornerRadius
+
+        if styleConfig.actionTitle != nil,
+           styleConfig.actionImage != nil,
+           !hasSetupActionLayout {
 
             setupActionLayout()
+            hasSetupActionLayout = true
         }
 
         self.tintColor = visualState.tintColor
