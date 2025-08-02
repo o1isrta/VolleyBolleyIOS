@@ -104,7 +104,9 @@ final class MapInteractor: MapInteractorProtocol {
 //					"4 courts",
 //					"Outdoor",
 //					"Seasonal",
-//					"Lights"
+//					"Lights",
+//					"Spa",
+//					"Alchohol"
 //				],
 //				location: CourtLocationModel(
 //					latitude: 40.650000,
