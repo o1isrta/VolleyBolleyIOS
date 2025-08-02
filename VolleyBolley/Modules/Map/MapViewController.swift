@@ -21,7 +21,7 @@ class MapViewController: UIViewController, MapViewProtocol {
 	private let mapView = MKMapView()
 	private let segmentedControl = CustomSegmentedControl(type: .map)
 	private let bottomView = CourtBottomView()
-	private let popupView = CourtDetailsPopupView()
+	private let popupView = CourtDetailsView()
 	private var popupBottomConstraint: NSLayoutConstraint?
 
 	private let presenter = MapPresenter()
