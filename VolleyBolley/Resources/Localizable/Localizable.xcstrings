@@ -136,14 +136,13 @@
         }
       }
     },
-            "value" : "Выбрать этот корт"
     "Choose this court" : {
       "comment" : "\"Choose this court\" button",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Выбрать корт"
+            "value" : "Выбрать этот корт"
           }
         }
       }
