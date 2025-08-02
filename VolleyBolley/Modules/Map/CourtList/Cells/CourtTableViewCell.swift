@@ -29,34 +29,30 @@ class CourtTableViewCell: UITableViewCell {
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16, weight: .bold) // TODO
-        label.textColor = .label // TODO
-        label.translatesAutoresizingMaskIntoConstraints = false // TODO
+		label.font = AppFont.Hero.bold(size: 16)
+		label.textColor = AppColor.Text.primary
         return label
     }()
 
     private lazy var locationLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14, weight: .light) // TODO
-        label.textColor = .secondaryLabel // TODO
-        label.translatesAutoresizingMaskIntoConstraints = false // TODO
+		label.font = AppFont.Hero.light(size: 14)
+		label.textColor = AppColor.Text.primary
         return label
     }()
 
     private lazy var distanceContainer: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(hex: "#516372") // TODO
+		view.backgroundColor = AppColor.Background.badgeDefault
         view.layer.cornerRadius = 10
-        view.translatesAutoresizingMaskIntoConstraints = false // TODO
         return view
     }()
 
     private lazy var distanceLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16, weight: .regular) // TODO
-        label.textColor = .white  // TODO
+		label.font = AppFont.Hero.regular(size: 16)
+        label.textColor = AppColor.Text.primary
         label.textAlignment = .center
-        label.translatesAutoresizingMaskIntoConstraints = false // TODO
         return label
     }()
 
@@ -97,7 +93,7 @@ private extension CourtTableViewCell {
 
     func setupUI() {
         selectionStyle = .none
-        backgroundColor = .systemBackground // TODO
+		backgroundColor = .clear
         // description
         [
             titleLabel,
@@ -106,7 +102,7 @@ private extension CourtTableViewCell {
             descriptionStackView.addArrangedSubview($0)
         }
         // distance
-        distanceContainer.addSubview(distanceLabel)
+        distanceContainer.addSubviews(distanceLabel)
         // main elements
         [
             descriptionStackView,

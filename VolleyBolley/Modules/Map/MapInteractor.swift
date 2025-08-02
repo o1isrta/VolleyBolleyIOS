@@ -26,7 +26,7 @@ final class MapInteractor: MapInteractorProtocol {
 				contacts: [
 					ContactModel(
 						type: "PHONE",
-						value: "+1 212-555-1234"
+						value: "+1 321-000-1234"
 					)
 				],
 				imageUrl: nil,
@@ -48,7 +48,7 @@ final class MapInteractor: MapInteractorProtocol {
 				contacts: [
 					ContactModel(
 						type: "PHONE",
-						value: "+1 212-555-5678"
+						value: "+1 111-555-5678"
 					)
 				],
 				imageUrl: nil,
