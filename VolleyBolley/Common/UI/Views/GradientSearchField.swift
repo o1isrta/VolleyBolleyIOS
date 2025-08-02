@@ -27,6 +27,19 @@ class GradientSearchField: UISearchTextField {
         return gradientLayer
     }()
 
+	private lazy var backgroundLayer: CALayer = {
+		let layer = CALayer()
+		layer.backgroundColor = AppColor.Background.primary.cgColor
+		layer.cornerRadius = cornerRadius
+		return layer
+	}()
+
+	private lazy var backgroundMaskLayer: CAShapeLayer = {
+		let maskLayer = CAShapeLayer()
+		maskLayer.fillColor = AppColor.Background.primary.cgColor
+		return maskLayer
+	}()
+
     private lazy var searchIconView: UIImageView = {
         let image = UIImage(systemName: "magnifyingglass")
         let imageView = UIImageView(image: image)
@@ -74,6 +87,7 @@ class GradientSearchField: UISearchTextField {
     override func layoutSubviews() {
         super.layoutSubviews()
         updateGradientBorder()
+		updateBackgroundLayer()
     }
 
     override func textRect(forBounds bounds: CGRect) -> CGRect {
@@ -121,16 +135,26 @@ private extension GradientSearchField {
         configureSearchIcon()
         configureClearButton()
         setupGradientBorder()
+		setupBackgroundLayer()
     }
 
     func configureAppearance() {
-        font = AppFont.Hero.light(size: 14)
+		font = AppFont.Hero.regular(size: 14)
         placeholder = typePlaceholder.description
-        textColor = AppColor.Text.placeHolder
+		textColor = AppColor.Text.inverted
         borderStyle = .none
         backgroundColor = .clear
         autocorrectionType = .no
         clipsToBounds = false
+
+		let placeholderAttributes: [NSAttributedString.Key: Any] = [
+			.foregroundColor: AppColor.Text.placeHolder,
+			.font: AppFont.Hero.light(size: 14)
+		]
+		attributedPlaceholder = NSAttributedString(
+			string: typePlaceholder.description,
+			attributes: placeholderAttributes
+		)
     }
 
     func configureSearchIcon() {
@@ -162,6 +186,30 @@ private extension GradientSearchField {
         layer.insertSublayer(gradientBorderLayer, at: 0)
     }
 
+	private func setupBackgroundLayer() {
+		// Place between gradientBorderLayer and content
+		layer.insertSublayer(backgroundLayer, at: 0)
+	}
+
+	private func updateBackgroundLayer() {
+		let backgroundBounds = CGRect(
+			x: 0,
+			y: 0,
+			width: bounds.width + 1,
+			height: bounds.height + 2
+		)
+		backgroundLayer.frame = backgroundBounds
+		// Create path for border
+		let borderPath = UIBezierPath(
+			roundedRect: backgroundBounds.insetBy(dx: borderWidth/2, dy: borderWidth/2),
+			byRoundingCorners: .allCorners,
+			cornerRadii: CGSize(width: cornerRadius, height: cornerRadius)
+		)
+		// Create mask for gradient
+		backgroundMaskLayer.path = borderPath.cgPath
+		backgroundLayer.mask = backgroundMaskLayer
+	}
+
     func configureClearButton() {
         clearButtonMode = .whileEditing
         if let clearButton = value(forKey: "_clearButton") as? UIButton {
@@ -180,7 +228,7 @@ private extension GradientSearchField {
     field.translatesAutoresizingMaskIntoConstraints = false
 
     let container = UIView()
-    container.backgroundColor = .systemBackground
+	container.backgroundColor = .lightGray
     container.addSubview(field)
 
     NSLayoutConstraint.activate([
