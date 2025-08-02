@@ -11,6 +11,8 @@ class CourtDetailsPopupView: UIView {
 
     // MARK: - Private Properties
 
+	private lazy var courtTitleView: CourtTitleView = CourtTitleView(type: .icon)
+
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -75,7 +77,8 @@ class CourtDetailsPopupView: UIView {
 
     // MARK: - Public Methods
 
-    func configure(with court: CourtModel) {
+	func configure(with court: CourtModel, distance: String) {
+		courtTitleView.configure(with: court, distance: distance)
 		nameLabel.text = court.location.courtName
         priceLabel.text = court.price
 		locationLabel.text = court.location.locationName
@@ -108,9 +111,18 @@ private extension CourtDetailsPopupView {
             mainStack.addArrangedSubview($0)
         }
 
-        addSubviews(mainStack)
+        addSubviews(
+			courtTitleView,
+			mainStack
+		)
 
         NSLayoutConstraint.activate([
+			courtTitleView.heightAnchor.constraint(equalToConstant: 36),
+			courtTitleView.topAnchor.constraint(equalTo: topAnchor, constant: 20),
+			courtTitleView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+			courtTitleView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+
+			imageView.topAnchor.constraint(equalTo: courtTitleView.bottomAnchor, constant: 16),
             imageView.heightAnchor.constraint(equalToConstant: 160),
             chooseButton.heightAnchor.constraint(equalToConstant: 44),
 
