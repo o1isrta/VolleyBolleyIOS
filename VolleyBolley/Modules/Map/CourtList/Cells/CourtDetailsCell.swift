@@ -28,7 +28,7 @@ class CourtDetailsCell: UITableViewCell {
     // MARK: - Public Methods
 
     func configure(with court: CourtModel) {
-		courtView.configure(with: court, isSmallDoneButton: true)
+		courtView.configure(with: court, courtViewType: .oneSmallButton)
     }
 }
 
