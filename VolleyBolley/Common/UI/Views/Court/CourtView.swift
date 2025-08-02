@@ -7,20 +7,17 @@
 
 import UIKit
 
+enum CourtViewType: CaseIterable {
+	case oneSmallButton
+	case oneBigButton
+	case twoButton
+}
+
 final class CourtView: UIView {
 
 	// MARK: - Private Properties
 
-	private let courtImageView = CourtImageView()
-
-	private lazy var imageView: UIImageView = {
-		let imageView = UIImageView()
-		imageView.contentMode = .scaleAspectFill
-		imageView.clipsToBounds = true
-		imageView.layer.cornerRadius = 16// TODO
-		imageView.backgroundColor = .systemGray5// TODO
-		return imageView
-	}()
+	private lazy var courtImageView = CourtImageView()
 
 	private lazy var priceLabel: UILabel = {
 		let label = UILabel()
@@ -44,6 +41,14 @@ final class CourtView: UIView {
 		return label
 	}()
 
+	private lazy var descriptionStackView: UIStackView = {
+		let stackView = UIStackView()
+		stackView.axis = .vertical
+		stackView.distribution = .equalSpacing
+		stackView.spacing = 8
+		return stackView
+	}()
+
 	private lazy var chooseButton: UIButton = {
 		let button = UIButton(type: .system)
 		button.setTitle("Choose this court", for: .normal)
@@ -53,11 +58,24 @@ final class CourtView: UIView {
 		return button
 	}()
 
-	private lazy var descriptionStack: UIStackView = {
+	private lazy var detailsButton: UIButton = {
+		let button = UIButton(type: .system)
+		button.setTitle("Details", for: .normal)
+		button.backgroundColor = .gray// TODO
+		button.setTitleColor(.white, for: .normal)// TODO
+		button.layer.cornerRadius = 12// TODO
+		button.isHidden = true
+		return button
+	}()
+
+	private lazy var buttonStackView: UIStackView = {
 		let stackView = UIStackView()
-		stackView.axis = .vertical
-		stackView.distribution = .equalSpacing
+		stackView.axis = .horizontal
 		stackView.spacing = 8
+		stackView.alignment = .leading
+		stackView.distribution = .fill
+		stackView.addArrangedSubview(chooseButton)
+		stackView.addArrangedSubview(detailsButton)
 		return stackView
 	}()
 
@@ -75,14 +93,8 @@ final class CourtView: UIView {
 
 	// MARK: - Public Methods
 
-	func configure(with court: CourtModel, isSmallDoneButton: Bool = false) {
-		if isSmallDoneButton {
-			chooseButton.widthAnchor.constraint(equalToConstant: 215).isActive = true
-			chooseButton.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = false
-		} else {
-			chooseButton.widthAnchor.constraint(equalToConstant: 215).isActive = false
-			chooseButton.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-		}
+	func configure(with court: CourtModel, courtViewType: CourtViewType = .oneBigButton) {
+		setupCourtView(type: courtViewType)
 
 		priceLabel.setTextWithDifferentStyles([
 			(String(localized: "Court pricing: "), AppFont.ActayWide.bold(size: 16)),
@@ -93,16 +105,29 @@ final class CourtView: UIView {
 			(String(localized: "Contacts: "), AppFont.ActayWide.bold(size: 16)),
 			(court.contacts?[0].value ?? "-", AppFont.Hero.regular(size: 16))
 		])
-		if let url = court.imageUrl {
-			// Здесь можно добавить асинхронную загрузку изображения
-			imageView.backgroundColor = .systemGray4
-		} else {
-			imageView.backgroundColor = .systemGray4
-		}
+
+		courtImageView.configure(with: court)
 	}
 }
 
 private extension CourtView {
+
+	private func setupCourtView(type courtViewType: CourtViewType) {
+		switch courtViewType {
+		case .oneBigButton:
+			buttonStackView.widthAnchor.constraint(equalToConstant: 215).isActive = false
+			buttonStackView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+			detailsButton.isHidden = true
+		case .oneSmallButton:
+			buttonStackView.widthAnchor.constraint(equalToConstant: 215).isActive = true
+			buttonStackView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = false
+			detailsButton.isHidden = true
+		case .twoButton:
+			chooseButton.widthAnchor.constraint(equalToConstant: 205).isActive = true
+			detailsButton.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+			detailsButton.isHidden = false
+		}
+	}
 
 	private func setupUI() {
 		[
@@ -111,25 +136,27 @@ private extension CourtView {
 			descriptionLabel,
 			contactLabel
 		].forEach {
-			descriptionStack.addArrangedSubview($0)
+			descriptionStackView.addArrangedSubview($0)
 		}
 
 		addSubviews(
-			descriptionStack,
-			chooseButton
+			descriptionStackView,
+			buttonStackView
 		)
 
 		NSLayoutConstraint.activate([
 			courtImageView.heightAnchor.constraint(equalToConstant: 193),
 
-			descriptionStack.topAnchor.constraint(equalTo: topAnchor),
-			descriptionStack.leadingAnchor.constraint(equalTo: leadingAnchor),
-			descriptionStack.trailingAnchor.constraint(equalTo: trailingAnchor),
+			descriptionStackView.topAnchor.constraint(equalTo: topAnchor),
+			descriptionStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
+			descriptionStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
 
-			chooseButton.topAnchor.constraint(equalTo: descriptionStack.bottomAnchor, constant: 16),
-			chooseButton.leadingAnchor.constraint(equalTo: leadingAnchor),
 			chooseButton.heightAnchor.constraint(equalToConstant: 44),
-			chooseButton.bottomAnchor.constraint(equalTo: bottomAnchor)
+			detailsButton.heightAnchor.constraint(equalToConstant: 44),
+
+			buttonStackView.topAnchor.constraint(equalTo: descriptionStackView.bottomAnchor, constant: 16),
+			buttonStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
+			buttonStackView.bottomAnchor.constraint(equalTo: bottomAnchor)
 		])
 	}
 }
