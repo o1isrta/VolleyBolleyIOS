@@ -20,7 +20,7 @@ enum AppButtonIcon {
 // MARK: - AppButtonConfig
 
 extension AppButtonIcon: AppButtonConfig {
-    
+
     var actionImage: UIImage? { nil }
     var actionTitle: String? { nil }
     var title: String? { nil }
