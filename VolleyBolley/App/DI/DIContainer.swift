@@ -12,7 +12,7 @@ import UIKit
 /// to the application's dependency injection container using Swinject.
 ///
 /// - Initialization:
-///   Call `DIContainer.initialize(window:)` early in the app lifecycle to configure the global container. 
+///   Call `DIContainer.initialize(window:)` early in the app lifecycle to configure the global container.
 ///   This method is safe to call only once per launch; subsequent calls will trigger a precondition failure.
 ///   Access the shared instance through the `DIContainer.shared` property.
 ///   Accessing before initialization will cause a runtime fatal error.
@@ -61,6 +61,7 @@ final class DIContainer {
                 NetworkAssembly(),
                 MediaServicesAssembly(),
                 AppAssembly(window: window),
+                SharedServicesAssembly(),
                 OnboardingAssembly(),
                 AuthAssembly(),
                 MainAssembly(),
