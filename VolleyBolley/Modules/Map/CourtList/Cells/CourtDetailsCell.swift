@@ -11,7 +11,7 @@ class CourtDetailsCell: UITableViewCell {
 
     // MARK: - Private Properties
 
-	private let detailsView = CourtView()
+	private let courtView = CourtView()
 
     // MARK: - Initializers
 
@@ -28,7 +28,7 @@ class CourtDetailsCell: UITableViewCell {
     // MARK: - Public Methods
 
     func configure(with court: CourtModel) {
-		detailsView.configure(with: court)
+		courtView.configure(with: court)
     }
 }
 
@@ -38,12 +38,12 @@ private extension CourtDetailsCell {
 
     func setupUI() {
         selectionStyle = .none
-        contentView.addSubviews(detailsView)
+        contentView.addSubviews(courtView)
         NSLayoutConstraint.activate([
-            detailsView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            detailsView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            detailsView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            detailsView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+			courtView.topAnchor.constraint(equalTo: contentView.topAnchor),
+			courtView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+			courtView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+			courtView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
 }

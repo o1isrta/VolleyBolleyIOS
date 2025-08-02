@@ -18,6 +18,7 @@ final class MapInteractor: MapInteractorProtocol {
 
 	func fetchCourts(completion: @escaping ([CourtModel]) -> Void) {
 		let courts = [
+			// swiftlint:disable line_length
 			CourtModel(
 				id: 1,
 				price: "$20/hour",
@@ -78,7 +79,7 @@ final class MapInteractor: MapInteractorProtocol {
 				tagList: [
 					"4 courts",
 					"Outdoor",
-					"Seasonal",
+					"Seasonal"
 				],
 				location: CourtLocationModel(
 					latitude: 40.780000,
@@ -112,6 +113,7 @@ final class MapInteractor: MapInteractorProtocol {
 //					locationName: "USA, New Arc"
 //				)
 //			)
+			// swiftlint:enable line_length
 		]
 		completion(courts)
 	}
