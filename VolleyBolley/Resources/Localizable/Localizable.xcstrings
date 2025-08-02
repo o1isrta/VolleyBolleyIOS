@@ -206,6 +206,9 @@
         }
       }
     },
+    "Contacts: " : {
+
+    },
     "continue_with_facebook_button" : {
       "comment" : "Registration",
       "extractionState" : "manual",
@@ -277,6 +280,9 @@
           }
         }
       }
+    },
+    "Court pricing: " : {
+
     },
     "create_game_label" : {
       "comment" : "Game",
