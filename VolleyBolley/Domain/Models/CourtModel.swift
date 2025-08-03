@@ -31,6 +31,31 @@ struct CourtModel: Decodable, Equatable {
 		case tagList = "tag_list"
 		case location = "court_location"
 	}
+
+	// swiftlint:disable line_length
+	static var mockData = CourtModel(
+		id: 1,
+		price: "$20/hour",
+		description: "A beautiful court in the heart of Central Park. Recently renovated, with night lighting and locker rooms.",
+		contacts: [
+			ContactModel(
+				type: "PHONE",
+				value: "+1 212-555-1234"
+			)
+		],
+		imageUrl: nil,
+		tagList: [
+			"4 courts",
+			"Outdoor"
+		],
+		location: LocationModel(
+			latitude: 40.785091,
+			longitude: -73.968285,
+			courtName: "Central Park Court",
+			locationName: "USA, New York"
+		)
+	)
+	// swiftlint:enable line_length
 }
 
 struct ContactModel: Decodable {
