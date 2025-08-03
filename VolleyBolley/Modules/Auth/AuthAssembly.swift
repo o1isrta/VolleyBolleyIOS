@@ -7,20 +7,23 @@
 
 import Swinject
 
-final class AuthAssembly {
+final class AuthAssembly: Assembly {
 
-    // MARK: - Public Methods
+    func assemble(container: Container) {
+        container.register(AuthViewController.self) { resolver in
+            let authVC = AuthViewController()
 
-//    func assemble(container: Container) {
-//        container.register(AuthViewController.self) { _ in
-//            let viewController = AuthViewController()
-//
-//            return viewController
-//        }
-//
-//        container.register(AuthRouterProtocol.self) { resolver in
-//            AuthRouter(resolver: resolver)
-//        }
-//        .inObjectScope(.transient)
-//    }
+            let interactor = resolver.resolve(AuthInteractorProtocol.self)!
+            let appRouter = resolver.resolve(AppRouter.self)! // resolve вместо self.coordinator
+            let router = AuthRouter(viewController: authVC, coordinator: appRouter)
+            let presenter = AuthorizationPresenter(view: authVC, interactor: interactor, router: router)
+
+            authVC.presenter = presenter
+            return authVC
+        }
+
+        container.register(AuthInteractorProtocol.self) { _ in
+            AuthorizationInteractor()
+        }
+    }
 }

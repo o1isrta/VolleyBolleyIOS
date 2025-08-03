@@ -1,0 +1,39 @@
+//
+//  UserRegRouter.swift
+//  VolleyBolley
+//
+//  Created by Олег Кор on 03.08.2025.
+//
+import UIKit
+
+class UserRegRouter: UserRegRouterProtocol {
+
+    weak var viewController: UIViewController?
+
+    static func assembleModule() -> UIViewController {
+        let view = UserRegViewController()
+        let presenter = UserRegPresenter()
+        let interactor = UserRegInteractor()
+        let router = UserRegRouter()
+
+        view.presenter = presenter
+        presenter.view = view
+        presenter.interactor = interactor
+        presenter.router = router
+        interactor.presenter = presenter
+        router.viewController = view
+
+        return view
+    }
+
+    func navigateToNextScreen() {
+        // Пример перехода
+        // let nextVC = NextViewController()
+        // viewController?.navigationController?.pushViewController(nextVC, animated: true)
+    }
+
+    func showLevelInfoScreen() {
+//        let vc = LevelInfoViewController()
+//        viewController?.navigationController?.pushViewController(vc, animated: true)
+    }
+}

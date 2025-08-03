@@ -7,28 +7,15 @@
 
 import UIKit
 
-
 final class AuthRouter: AuthRouterProtocol {
 
     weak var viewController: UIViewController?
+    weak var coordinator: AppRouter?
 
-        static func assembleModule() -> UIViewController {
-            let view = AuthViewController()
-            let presenter = AuthorizationPresenter()
-            let interactor = AuthorizationInteractor()
-            let router = AuthRouter()
-
-            view.presenter = presenter
-
-            presenter.view = view
-            presenter.interactor = interactor
-            presenter.router = router
-
-            interactor.presenter = presenter
-            router.viewController = view
-
-            return view
-        }
+    init(viewController: UIViewController, coordinator: AppRouter?) {
+        self.viewController = viewController
+        self.coordinator = coordinator
+    }
 
         func showPhoneAuth() {
 //            let phoneAuthVC = PhoneRegRouter.assembleModule()

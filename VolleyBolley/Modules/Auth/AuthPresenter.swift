@@ -8,8 +8,17 @@ import Foundation
 
 class AuthorizationPresenter: AuthPresenterProtocol {
     weak var view: AuthViewProtocol?
-    var interactor: AuthInteractorProtocol?
-    var router: AuthRouterProtocol?
+    private let interactor: AuthInteractorProtocol?
+    private let router: AuthRouterProtocol?
+
+    init(view: AuthViewProtocol,
+         interactor: AuthInteractorProtocol,
+         router: AuthRouterProtocol) {
+        self.view = view
+        self.interactor = interactor
+        self.router = router
+    }
+
 
     func phoneButtonTapped() {
         router?.showPhoneAuth()

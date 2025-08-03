@@ -18,6 +18,6 @@ class OnboardingRouter: OnboardingRouterProtocol {
     }
 
     func navigateToAuthorizationScreen() {
-        // TODO: Добавить метод перехода к авторизации
+        coordinator?.showAuthorization()
     }
 }
