@@ -18,36 +18,7 @@ final class CourtView: UIView {
 	// MARK: - Private Properties
 
 	private lazy var courtImageView = CourtImageView()
-
-	private lazy var priceLabel: UILabel = {
-		let label = UILabel()
-		label.font = AppFont.Hero.regular(size: 16)
-		label.textColor = AppColor.Text.primary
-		return label
-	}()
-
-	private lazy var descriptionLabel: UILabel = {
-		let label = UILabel()
-		label.font = AppFont.Hero.regular(size: 16)
-		label.textColor = AppColor.Text.primary
-		label.numberOfLines = 3
-		return label
-	}()
-
-	private lazy var contactLabel: UILabel = {
-		let label = UILabel()
-		label.font = AppFont.Hero.regular(size: 16)
-		label.textColor = AppColor.Text.primary
-		return label
-	}()
-
-	private lazy var descriptionStackView: UIStackView = {
-		let stackView = UIStackView()
-		stackView.axis = .vertical
-		stackView.distribution = .equalSpacing
-		stackView.spacing = 8
-		return stackView
-	}()
+	private lazy var courtDescriptionView = CourtDescriptionView()
 
 	private lazy var chooseButton: UIButton = {
 		let button = UIButton(type: .system)
@@ -95,24 +66,16 @@ final class CourtView: UIView {
 
 	func configure(with court: CourtModel, courtViewType: CourtViewType = .oneBigButton) {
 		setupCourtView(type: courtViewType)
-
-		priceLabel.setTextWithDifferentStyles([
-			(String(localized: "Court pricing: "), AppFont.ActayWide.bold(size: 16)),
-			(court.price ?? "-", AppFont.Hero.regular(size: 16))
-		])
-		descriptionLabel.text = court.description
-		contactLabel.setTextWithDifferentStyles([
-			(String(localized: "Contacts: "), AppFont.ActayWide.bold(size: 16)),
-			(court.contacts?[0].value ?? "-", AppFont.Hero.regular(size: 16))
-		])
-
 		courtImageView.configure(with: court)
+		courtDescriptionView.configure(with: court)
 	}
 }
 
+// MARK: - Private Methods
+
 private extension CourtView {
 
-	private func setupCourtView(type courtViewType: CourtViewType) {
+	func setupCourtView(type courtViewType: CourtViewType) {
 		switch courtViewType {
 		case .oneBigButton:
 			buttonStackView.widthAnchor.constraint(equalToConstant: 215).isActive = false
@@ -129,32 +92,27 @@ private extension CourtView {
 		}
 	}
 
-	private func setupUI() {
-		[
-			courtImageView,
-			priceLabel,
-			descriptionLabel,
-			contactLabel
-		].forEach {
-			descriptionStackView.addArrangedSubview($0)
-		}
-
+	func setupUI() {
 		addSubviews(
-			descriptionStackView,
+			courtImageView,
+			courtDescriptionView,
 			buttonStackView
 		)
 
 		NSLayoutConstraint.activate([
+			courtImageView.topAnchor.constraint(equalTo: topAnchor),
 			courtImageView.heightAnchor.constraint(equalToConstant: 193),
+			courtImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
+			courtImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
 
-			descriptionStackView.topAnchor.constraint(equalTo: topAnchor),
-			descriptionStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-			descriptionStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+			courtDescriptionView.topAnchor.constraint(equalTo: courtImageView.bottomAnchor, constant: 16),
+			courtDescriptionView.leadingAnchor.constraint(equalTo: leadingAnchor),
+			courtDescriptionView.trailingAnchor.constraint(equalTo: trailingAnchor),
 
 			chooseButton.heightAnchor.constraint(equalToConstant: 44),
 			detailsButton.heightAnchor.constraint(equalToConstant: 44),
 
-			buttonStackView.topAnchor.constraint(equalTo: descriptionStackView.bottomAnchor, constant: 16),
+			buttonStackView.topAnchor.constraint(equalTo: courtDescriptionView.bottomAnchor, constant: 16),
 			buttonStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
 			buttonStackView.bottomAnchor.constraint(equalTo: bottomAnchor)
 		])

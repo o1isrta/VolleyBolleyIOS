@@ -1,0 +1,93 @@
+//
+//  CourtDescriptionView.swift
+//  VolleyBolley
+//
+//  Created by Roman Romanov on 03.08.2025.
+//
+
+import UIKit
+
+final class CourtDescriptionView: UIView {
+
+	// MARK: - Private Properties
+
+	private lazy var priceLabel: UILabel = {
+		let label = UILabel()
+		label.font = AppFont.Hero.regular(size: 16)
+		label.textColor = AppColor.Text.primary
+		return label
+	}()
+
+	private lazy var descriptionLabel: UILabel = {
+		let label = UILabel()
+		label.font = AppFont.Hero.regular(size: 16)
+		label.textColor = AppColor.Text.primary
+		label.numberOfLines = 3
+		return label
+	}()
+
+	private lazy var contactLabel: UILabel = {
+		let label = UILabel()
+		label.font = AppFont.Hero.regular(size: 16)
+		label.textColor = AppColor.Text.primary
+		return label
+	}()
+
+	private lazy var descriptionStackView: UIStackView = {
+		let stackView = UIStackView()
+		stackView.axis = .vertical
+		stackView.distribution = .equalSpacing
+		stackView.spacing = 8
+		return stackView
+	}()
+
+	// MARK: - Initializers
+
+	override init(frame: CGRect) {
+		super.init(frame: frame)
+		setupUI()
+	}
+
+	@available(*, unavailable)
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+
+	// MARK: - Public Methods
+
+	func configure(with court: CourtModel) {
+		priceLabel.setTextWithDifferentStyles([
+			(String(localized: "Court pricing: "), AppFont.ActayWide.bold(size: 16)),
+			(court.price ?? "-", AppFont.Hero.regular(size: 16))
+		])
+		descriptionLabel.text = court.description
+		contactLabel.setTextWithDifferentStyles([
+			(String(localized: "Contacts: "), AppFont.ActayWide.bold(size: 16)),
+			(court.contacts?[0].value ?? "-", AppFont.Hero.regular(size: 16))
+		])
+	}
+}
+
+// MARK: - Private Methods
+
+private extension CourtDescriptionView {
+
+	func setupUI() {
+		[
+			priceLabel,
+			descriptionLabel,
+			contactLabel
+		].forEach {
+			descriptionStackView.addArrangedSubview($0)
+		}
+
+		addSubviews(descriptionStackView)
+
+		NSLayoutConstraint.activate([
+			descriptionStackView.topAnchor.constraint(equalTo: topAnchor),
+			descriptionStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
+			descriptionStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+			descriptionStackView.bottomAnchor.constraint(equalTo: bottomAnchor)
+		])
+	}
+}
