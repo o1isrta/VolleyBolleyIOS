@@ -90,7 +90,7 @@ private extension CourtBottomView {
 #if DEBUG
 import SwiftUI
 @available(iOS 17.0, *)
-#Preview("Game") {
+#Preview {
 	VStack {
 		UIViewPreview {
 			let view = CourtBottomView()
