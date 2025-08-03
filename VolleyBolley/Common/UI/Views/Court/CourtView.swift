@@ -161,7 +161,7 @@ struct UIViewPreview<View: UIView>: UIViewRepresentable {
 				"4 courts",
 				"Outdoor"
 			],
-			location: CourtLocationModel(
+			location: LocationModel(
 				latitude: 40.785091,
 				longitude: -73.968285,
 				courtName: "Central Park Court",
