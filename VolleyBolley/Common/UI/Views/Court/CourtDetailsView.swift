@@ -7,6 +7,9 @@
 
 import UIKit
 
+/// Custom View to show information with location title for two variants
+/// - with court details
+/// - with game details (host, game details)
 class CourtDetailsView: UIView {
 
 	// MARK: - Private Properties
@@ -35,9 +38,24 @@ class CourtDetailsView: UIView {
 
 	// MARK: - Public Methods
 
-	func configure(with court: CourtModel, distance: String) {
+	func configure(
+		with court: CourtModel,
+		distance: String,
+		courtViewType: CourtViewType
+	) {
 		courtTitleView.configure(with: court, distance: distance)
-		courtView.configure(with: court)
+		courtView.configure(with: court, courtViewType: courtViewType)
+	}
+
+	func configure(
+		with court: CourtModel,
+		distance: String,
+		game: GameModel,
+		hostType: HostType,
+		courtViewType: CourtViewType
+	) {
+		courtTitleView.configure(with: court, distance: distance)
+		courtView.configure(with: court, for: game, hostType: hostType, courtViewType: courtViewType)
 	}
 }
 
@@ -67,3 +85,42 @@ private extension CourtDetailsView {
 		])
 	}
 }
+
+#if DEBUG
+import SwiftUI
+@available(iOS 17.0, *)
+#Preview("Game") {
+	UIViewPreview {
+		let view = CourtDetailsView()
+		let court = CourtModel.mockData
+		let game = GameModel.mockData
+		view.configure(
+			with: court,
+			distance: "",
+			game: game,
+			hostType: .game,
+			courtViewType: .oneBigButton
+		)
+		return view
+	}
+	.frame(width: .infinity, height: 509)
+	.background(Color(cgColor: AppColor.Background.screen.cgColor))
+	.padding()
+}
+
+#Preview("Court") {
+	UIViewPreview {
+		let view = CourtDetailsView()
+		let court = CourtModel.mockData
+		view.configure(
+			with: court,
+			distance: "Nearest",
+			courtViewType: .oneBigButton
+		)
+		return view
+	}
+	.frame(width: .infinity, height: 472)
+	.background(Color(cgColor: AppColor.Background.screen.cgColor))
+	.padding()
+}
+#endif
