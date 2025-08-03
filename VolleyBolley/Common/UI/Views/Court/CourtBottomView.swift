@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// Custom bottom view to display information with location name and custom number of buttons
 final class CourtBottomView: UIView {
 
 	// MARK: - Public Properties
@@ -25,6 +26,8 @@ final class CourtBottomView: UIView {
 		stack.distribution = .fillEqually
 		return stack
 	}()
+
+	// TODO buttons: one buttons / two buttons
 
 	private lazy var chooseButton: UIButton = {
 		let button = UIButton(type: .system)
@@ -113,3 +116,31 @@ private extension CourtBottomView {
 		])
 	}
 }
+
+#if DEBUG
+import SwiftUI
+@available(iOS 17.0, *)
+#Preview("Game") {
+	VStack {
+		UIViewPreview {
+			let view = CourtBottomView()
+			let court = CourtModel.mockData
+			view.configure(with: court, distance: "Nearest")
+			return view
+		}
+		.frame(width: .infinity, height: 136)
+		.background(Color(cgColor: AppColor.Background.screen.cgColor))
+		.padding()
+
+		UIViewPreview {
+			let view = CourtBottomView()
+			let court = CourtModel.mockData
+			view.configure(with: court, distance: "")
+			return view
+		}
+		.frame(width: .infinity, height: 136)
+		.background(Color(cgColor: AppColor.Background.screen.cgColor))
+		.padding()
+	}
+}
+#endif

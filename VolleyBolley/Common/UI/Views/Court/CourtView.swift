@@ -13,6 +13,9 @@ enum CourtViewType: CaseIterable {
 	case twoButton
 }
 
+/// Custom View to show information for two variants
+/// - with court details
+/// - with game details (host, game details)
 final class CourtView: UIView {
 
 	// MARK: - Private Properties
@@ -70,7 +73,10 @@ final class CourtView: UIView {
 
 	// MARK: - Public Methods
 
-	func configure(with court: CourtModel, courtViewType: CourtViewType = .oneBigButton) {
+	func configure(
+		with court: CourtModel,
+		courtViewType: CourtViewType = .oneBigButton
+	) {
 		descriptionView.addArrangedSubview(courtDescriptionView)
 		setupCourtView(type: courtViewType)
 		courtImageView.configure(with: court)
