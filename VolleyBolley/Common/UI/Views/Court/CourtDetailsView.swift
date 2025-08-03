@@ -41,10 +41,17 @@ class CourtDetailsView: UIView {
 	func configure(
 		with court: CourtModel,
 		distance: String,
-		courtViewType: CourtViewType
+		doneButtonData: CourtButtonData,
+		courtButtonsViewType: CourtButtonsViewType = .oneBigButton,
+		detailsButtonData: CourtButtonData? = nil
 	) {
 		courtTitleView.configure(with: court, distance: distance)
-		courtView.configure(with: court, courtViewType: courtViewType)
+		courtView.configure(
+				with: court,
+				doneButtonData: doneButtonData,
+				courtButtonsViewType: courtButtonsViewType,
+				detailsButtonData: detailsButtonData
+			)
 	}
 
 	func configure(
@@ -52,10 +59,19 @@ class CourtDetailsView: UIView {
 		distance: String,
 		game: GameModel,
 		hostType: HostType,
-		courtViewType: CourtViewType
+		doneButtonData: CourtButtonData,
+		courtButtonsViewType: CourtButtonsViewType = .oneBigButton,
+		detailsButtonData: CourtButtonData? = nil
 	) {
 		courtTitleView.configure(with: court, distance: distance)
-		courtView.configure(with: court, for: game, hostType: hostType, courtViewType: courtViewType)
+		courtView.configure(
+				with: court,
+				for: game,
+				hostType: hostType,
+				doneButtonData: doneButtonData,
+				courtButtonsViewType: courtButtonsViewType,
+				detailsButtonData: detailsButtonData
+			)
 	}
 }
 
@@ -99,7 +115,15 @@ import SwiftUI
 			distance: "",
 			game: game,
 			hostType: .game,
-			courtViewType: .oneBigButton
+			doneButtonData: CourtButtonData(
+				title: "CHOOSE THIS GAME",
+				action: { print("aaaaaaa")}
+				),
+			courtButtonsViewType: .oneBigButton,
+			detailsButtonData: CourtButtonData(
+				title: "Details",
+				action: { print("bbbbbbb")}
+			)
 		)
 		return view
 	}
@@ -115,7 +139,15 @@ import SwiftUI
 		view.configure(
 			with: court,
 			distance: "Nearest",
-			courtViewType: .oneBigButton
+			doneButtonData: CourtButtonData(
+				title: "CHOOSE THIS GAME",
+				action: { print("aaaaaaa")}
+				),
+			courtButtonsViewType: .oneBigButton,
+			detailsButtonData: CourtButtonData(
+				title: "Details",
+				action: { print("bbbbbbb")}
+			)
 		)
 		return view
 	}

@@ -15,16 +15,14 @@ extension Date {
 
 	static func formatDateRange(startString: String, endString: String) -> String? {
 		let inputFormatter = AppDateFormatters.apiDateOnly
-		print("startDate", startString)
-		print("endDate", endString)
+		
 		guard
 			let startDate = inputFormatter.date(from: startString),
 			let endDate = inputFormatter.date(from: endString)
 		else {
 			return nil
 		}
-		print("startDate", startDate)
-		print("endDate", endDate)
+
 		let startDateFormatter = AppDateFormatters.dateWithTime
 		let endTimeFormatter = AppDateFormatters.time
 

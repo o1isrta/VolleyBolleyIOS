@@ -7,12 +7,6 @@
 
 import UIKit
 
-enum CourtViewType: CaseIterable {
-	case oneSmallButton
-	case oneBigButton
-	case twoButton
-}
-
 /// Custom View to show information for two variants
 /// - with court details
 /// - with game details (host, game details)
@@ -23,36 +17,7 @@ final class CourtView: UIView {
 	private lazy var courtImageView = CourtImageView()
 	private lazy var courtDescriptionView = CourtDescriptionView()
 	private lazy var gameDescriptionView = GameDescriptionView()
-
-	private lazy var chooseButton: UIButton = {
-		let button = UIButton(type: .system)
-		button.setTitle("Choose this court", for: .normal)
-		button.backgroundColor = .systemBlue// TODO
-		button.setTitleColor(.white, for: .normal)// TODO
-		button.layer.cornerRadius = 12// TODO
-		return button
-	}()
-
-	private lazy var detailsButton: UIButton = {
-		let button = UIButton(type: .system)
-		button.setTitle("Details", for: .normal)
-		button.backgroundColor = .gray// TODO
-		button.setTitleColor(.white, for: .normal)// TODO
-		button.layer.cornerRadius = 12// TODO
-		button.isHidden = true
-		return button
-	}()
-
-	private lazy var buttonStackView: UIStackView = {
-		let stackView = UIStackView()
-		stackView.axis = .horizontal
-		stackView.spacing = 8
-		stackView.alignment = .leading
-		stackView.distribution = .fill
-		stackView.addArrangedSubview(chooseButton)
-		stackView.addArrangedSubview(detailsButton)
-		return stackView
-	}()
+	private lazy var courtButtonsView = CourtButtonsView()
 
 	private lazy var descriptionView: UIStackView = {
 		let stackView = UIStackView()
@@ -75,24 +40,40 @@ final class CourtView: UIView {
 
 	func configure(
 		with court: CourtModel,
-		courtViewType: CourtViewType = .oneBigButton
+		doneButtonData: CourtButtonData,
+		courtButtonsViewType: CourtButtonsViewType = .oneBigButton,
+		detailsButtonData: CourtButtonData? = nil
 	) {
 		descriptionView.addArrangedSubview(courtDescriptionView)
-		setupCourtView(type: courtViewType)
 		courtImageView.configure(with: court)
 		courtDescriptionView.configure(with: court)
+
+		courtButtonsView.configure(
+				type: courtButtonsViewType,
+				doneButtonData: doneButtonData,
+				detailsButtonData: detailsButtonData
+			)
+		setupButtonsUI(courtButtonsViewType: courtButtonsViewType)
 	}
 
 	func configure(
 		with court: CourtModel,
 		for game: GameModel,
 		hostType: HostType,
-		courtViewType: CourtViewType = .oneBigButton
+		doneButtonData: CourtButtonData,
+		courtButtonsViewType: CourtButtonsViewType = .oneBigButton,
+		detailsButtonData: CourtButtonData? = nil
 	) {
 		descriptionView.addArrangedSubview(gameDescriptionView)
-		setupCourtView(type: courtViewType)
 		courtImageView.configure(with: court)
 		gameDescriptionView.configure(with: game, hostType: hostType)
+
+		courtButtonsView.configure(
+				type: courtButtonsViewType,
+				doneButtonData: doneButtonData,
+				detailsButtonData: detailsButtonData
+			)
+		setupButtonsUI(courtButtonsViewType: courtButtonsViewType)
 	}
 }
 
@@ -100,20 +81,17 @@ final class CourtView: UIView {
 
 private extension CourtView {
 
-	func setupCourtView(type courtViewType: CourtViewType) {
-		switch courtViewType {
+	func setupButtonsUI(courtButtonsViewType: CourtButtonsViewType) {
+		switch courtButtonsViewType {
 		case .oneBigButton:
-			buttonStackView.widthAnchor.constraint(equalToConstant: 215).isActive = false
-			buttonStackView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-			detailsButton.isHidden = true
+			courtButtonsView.widthAnchor.constraint(equalToConstant: 215).isActive = false
+			courtButtonsView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
 		case .oneSmallButton:
-			buttonStackView.widthAnchor.constraint(equalToConstant: 215).isActive = true
-			buttonStackView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = false
-			detailsButton.isHidden = true
-		case .twoButton:
-			chooseButton.widthAnchor.constraint(equalToConstant: 205).isActive = true
-			detailsButton.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-			detailsButton.isHidden = false
+			courtButtonsView.widthAnchor.constraint(equalToConstant: 215).isActive = true
+			courtButtonsView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = false
+		case .twoButtons:
+			courtButtonsView.widthAnchor.constraint(equalToConstant: 205).isActive = true
+			courtButtonsView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
 		}
 	}
 
@@ -121,7 +99,7 @@ private extension CourtView {
 		addSubviews(
 			courtImageView,
 			descriptionView,
-			buttonStackView
+			courtButtonsView
 		)
 
 		NSLayoutConstraint.activate([
@@ -134,12 +112,11 @@ private extension CourtView {
 			descriptionView.leadingAnchor.constraint(equalTo: leadingAnchor),
 			descriptionView.trailingAnchor.constraint(equalTo: trailingAnchor),
 
-			chooseButton.heightAnchor.constraint(equalToConstant: 44),
-			detailsButton.heightAnchor.constraint(equalToConstant: 44),
+			courtButtonsView.heightAnchor.constraint(equalToConstant: 44),
 
-			buttonStackView.topAnchor.constraint(equalTo: descriptionView.bottomAnchor, constant: 16),
-			buttonStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-			buttonStackView.bottomAnchor.constraint(equalTo: bottomAnchor)
+			courtButtonsView.topAnchor.constraint(equalTo: descriptionView.bottomAnchor, constant: 16),
+			courtButtonsView.leadingAnchor.constraint(equalTo: leadingAnchor),
+			courtButtonsView.bottomAnchor.constraint(equalTo: bottomAnchor)
 		])
 	}
 }
@@ -153,12 +130,19 @@ import SwiftUI
 		let view = CourtView()
 		let court = CourtModel.mockData
 		let game = GameModel.mockData
-		view
-			.configure(
+		view.configure(
 				with: court,
 				for: game,
 				hostType: .game,
-				courtViewType: .oneBigButton
+				doneButtonData: CourtButtonData(
+					title: "CHOOSE THIS GAME",
+					action: { print("aaaaaaa")}
+					),
+				courtButtonsViewType: .oneBigButton,
+				detailsButtonData: CourtButtonData(
+					title: "Details",
+					action: { print("bbbbbbb")}
+				)
 			)
 		return view
 	}
@@ -172,7 +156,13 @@ import SwiftUI
 	UIViewPreview {
 		let view = CourtView()
 		let court = CourtModel.mockData
-		view.configure(with: court)
+		view.configure(
+				with: court,
+				doneButtonData: CourtButtonData(
+					title: "Choose this court",
+					action: { print("aaaaaaa")}
+				)
+			)
 		return view
 	}
 	.padding()

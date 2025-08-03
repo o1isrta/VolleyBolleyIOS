@@ -10,50 +10,10 @@ import UIKit
 /// Custom bottom view to display information with location name and custom number of buttons
 final class CourtBottomView: UIView {
 
-	// MARK: - Public Properties
-
-	var chooseButtonCallback: (() -> Void)?
-	var detailsButtonCallback: (() -> Void)?
-
 	// MARK: - Private Properties
 
 	private lazy var courtTitleView: CourtTitleView = CourtTitleView(type: .icon)
-
-	private lazy var buttonStackView: UIStackView = {
-		let stack = UIStackView()
-		stack.axis = .horizontal
-		stack.spacing = 8
-		stack.distribution = .fillEqually
-		return stack
-	}()
-
-	// TODO buttons: one buttons / two buttons
-
-	private lazy var chooseButton: UIButton = {
-		let button = UIButton(type: .system)
-		button.setTitle(
-			String(localized: "Choose this court"),
-			for: .normal
-		)
-		button.backgroundColor = .systemBlue
-		button.setTitleColor(.white, for: .normal)
-		button.layer.cornerRadius = 16
-		button.addTarget(self, action: #selector(didTapChooseButton), for: .touchUpInside)
-		return button
-	}()
-
-	private lazy var detailsButton: UIButton = {
-		let button = UIButton(type: .system)
-		button.setTitle(
-			String(localized: "Details"),
-			for: .normal
-		)
-		button.backgroundColor = .systemGray5
-		button.setTitleColor(.systemBlue, for: .normal)
-		button.layer.cornerRadius = 16
-		button.addTarget(self, action: #selector(didTapDetailsButton), for: .touchUpInside)
-		return button
-	}()
+	private lazy var courtButtonsView = CourtButtonsView()
 
 	// MARK: - Initializers
 
@@ -69,8 +29,20 @@ final class CourtBottomView: UIView {
 
 	// MARK: - Public Methods
 
-	func configure(with court: CourtModel, distance: String) {
+	func configure(
+		with court: CourtModel,
+		distance: String,
+		doneButtonData: CourtButtonData,
+		courtButtonsViewType: CourtButtonsViewType = .oneBigButton,
+		detailsButtonData: CourtButtonData? = nil
+	) {
 		courtTitleView.configure(with: court, distance: distance)
+		courtButtonsView.configure(
+				type: courtButtonsViewType,
+				doneButtonData: doneButtonData,
+				detailsButtonData: detailsButtonData
+			)
+		setupButtonsUI(courtButtonsViewType: courtButtonsViewType)
 	}
 }
 
@@ -78,29 +50,28 @@ final class CourtBottomView: UIView {
 
 private extension CourtBottomView {
 
-	@objc func didTapChooseButton() {
-		chooseButtonCallback?()
-	}
-
-	@objc func didTapDetailsButton() {
-		detailsButtonCallback?()
+	func setupButtonsUI(courtButtonsViewType: CourtButtonsViewType) {
+		switch courtButtonsViewType {
+		case .oneBigButton:
+			courtButtonsView.widthAnchor.constraint(equalToConstant: 215).isActive = false
+			courtButtonsView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20).isActive = true
+		case .oneSmallButton:
+			courtButtonsView.widthAnchor.constraint(equalToConstant: 215).isActive = true
+			courtButtonsView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20).isActive = false
+		case .twoButtons:
+			courtButtonsView.widthAnchor.constraint(equalToConstant: 205).isActive = true
+			courtButtonsView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20).isActive = true
+		}
 	}
 
 	func setupUI() {
 		backgroundColor = AppColor.Background.screen// TODO: need replace to glass effect
 		layer.cornerRadius = 32
 		layer.masksToBounds = true
-		// button stack
-		[
-			chooseButton,
-			detailsButton
-		].forEach {
-			buttonStackView.addArrangedSubview($0)
-		}
 
 		addSubviews(
 			courtTitleView,
-			buttonStackView
+			courtButtonsView
 		)
 
 		NSLayoutConstraint.activate([
@@ -109,10 +80,9 @@ private extension CourtBottomView {
 			courtTitleView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
 			courtTitleView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
 
-			buttonStackView.topAnchor.constraint(equalTo: courtTitleView.bottomAnchor, constant: 16),
-			buttonStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-			buttonStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-			buttonStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20)
+			courtButtonsView.topAnchor.constraint(equalTo: courtTitleView.bottomAnchor, constant: 16),
+			courtButtonsView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+			courtButtonsView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20)
 		])
 	}
 }
@@ -125,7 +95,19 @@ import SwiftUI
 		UIViewPreview {
 			let view = CourtBottomView()
 			let court = CourtModel.mockData
-			view.configure(with: court, distance: "Nearest")
+			view.configure(
+					with: court,
+					distance: "Nearest",
+					doneButtonData: CourtButtonData(
+						title: "CHOOSE THIS GAME",
+						action: { print("aaaaaaa")}
+						),
+					courtButtonsViewType: .oneBigButton,
+					detailsButtonData: CourtButtonData(
+						title: "Details",
+						action: { print("bbbbbbb")}
+					)
+				)
 			return view
 		}
 		.frame(width: .infinity, height: 136)
@@ -135,7 +117,41 @@ import SwiftUI
 		UIViewPreview {
 			let view = CourtBottomView()
 			let court = CourtModel.mockData
-			view.configure(with: court, distance: "")
+			view.configure(
+					with: court,
+					distance: "",
+					doneButtonData: CourtButtonData(
+						title: "CHOOSE THIS GAME",
+						action: { print("aaaaaaa")}
+						),
+					courtButtonsViewType: .oneSmallButton,
+					detailsButtonData: CourtButtonData(
+						title: "Details",
+						action: { print("bbbbbbb")}
+					)
+				)
+			return view
+		}
+		.frame(width: .infinity, height: 136)
+		.background(Color(cgColor: AppColor.Background.screen.cgColor))
+		.padding()
+
+		UIViewPreview {
+			let view = CourtBottomView()
+			let court = CourtModel.mockData
+			view.configure(
+					with: court,
+					distance: "",
+					doneButtonData: CourtButtonData(
+						title: "CHOOSE THIS GAME",
+						action: { print("aaaaaaa")}
+						),
+					courtButtonsViewType: .twoButtons,
+					detailsButtonData: CourtButtonData(
+						title: "Details",
+						action: { print("bbbbbbb")}
+					)
+				)
 			return view
 		}
 		.frame(width: .infinity, height: 136)
