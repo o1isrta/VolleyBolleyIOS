@@ -84,7 +84,7 @@ class MapViewController: UIViewController, MapViewProtocol {
 				longitudinalMeters: 2000
 			)
 			mapView.setRegion(region, animated: true)
-			bottomView.configure(with: nearest, distance: String(localized: "Nearest"))
+			setupBottomView(with: nearest, distance: String(localized: "Nearest"))
 		} else if let first = courts.first {
 			nearestCourt = first
 			selectedCourt = first
@@ -97,7 +97,7 @@ class MapViewController: UIViewController, MapViewProtocol {
 				longitudinalMeters: 2000
 			)
 			mapView.setRegion(region, animated: true)
-			bottomView.configure(with: first, distance: "")
+			setupBottomView(with: first, distance: "")
 		}
 	}
 }
@@ -131,16 +131,16 @@ extension MapViewController: MKMapViewDelegate {
 		}
 
 		// TODO: remove it
-//        if
-//            let nearest = nearestCourt,
-//            annotation.coordinate.latitude == nearest.coordinate.latitude
-//            && annotation.coordinate.longitude == nearest.coordinate.longitude {
-//            annotationView?.markerTintColor = .systemGreen
-//            annotationView?.glyphText = "★"
-//        } else {
-//            annotationView?.markerTintColor = .systemBlue
-//            annotationView?.glyphText = nil
-//        }
+		//        if
+		//            let nearest = nearestCourt,
+		//            annotation.coordinate.latitude == nearest.coordinate.latitude
+		//            && annotation.coordinate.longitude == nearest.coordinate.longitude {
+		//            annotationView?.markerTintColor = .systemGreen
+		//            annotationView?.glyphText = "★"
+		//        } else {
+		//            annotationView?.markerTintColor = .systemBlue
+		//            annotationView?.glyphText = nil
+		//        }
 
 		return annotationView
 	}
@@ -149,13 +149,13 @@ extension MapViewController: MKMapViewDelegate {
 		guard let annotation = view.annotation else { return }
 
 		if let court = courts.first(where: {
-				$0.location.latitude == annotation.coordinate.latitude
-				&& $0.location.longitude == annotation.coordinate.longitude
-			}) {
+			$0.location.latitude == annotation.coordinate.latitude
+			&& $0.location.longitude == annotation.coordinate.longitude
+		}) {
 			selectedCourt = court
 			let distanceMessage = getDistanceMessage(court: court)
-			self.bottomView.configure(with: court, distance: distanceMessage)
-			self.popupView.configure(with: court, distance: distanceMessage)
+			self.setupBottomView(with: court, distance: distanceMessage)
+			self.setupPopupView(with: court, distance: distanceMessage)
 		}
 	}
 }
@@ -163,6 +163,33 @@ extension MapViewController: MKMapViewDelegate {
 // MARK: - Private Methods
 
 private extension MapViewController {
+
+	func setupBottomView(with court: CourtModel, distance: String) {
+		bottomView.configure(
+			with: court,
+			distance: distance,
+			doneButtonData: CourtButtonData(
+				title: String(localized: "CHOOSE THIS COURT"),
+				action: chooseCourtAction
+			),
+			courtButtonsViewType: .twoButtons,
+			detailsButtonData: CourtButtonData(
+				title: String(localized: "DETAILS"),
+				action: showDetailsAction
+			)
+		)
+	}
+
+	func setupPopupView(with court: CourtModel, distance: String) {
+		popupView.configure(
+			with: court,
+			distance: distance,
+			doneButtonData: CourtButtonData(
+				title: String(localized: "CHOOSE THIS COURT"),
+				action: chooseCourtAction
+			)
+		)
+	}
 
 	func getDistanceMessage(court: CourtModel) -> String {
 		isNearestCourt(court) ? String(localized: "Nearest") : ""
@@ -179,15 +206,6 @@ private extension MapViewController {
 	}
 
 	func setupActions() {
-		bottomView.detailsButtonCallback = { [weak self] in
-			guard let self else { return }
-			showDetailsAction()
-		}
-		bottomView.chooseButtonCallback = { [weak self] in
-			guard let self else { return }
-			chooseCourtAction()
-		}
-
 		let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideDetailsPopup))
 		popupView.addGestureRecognizer(tapGesture)
 
@@ -200,10 +218,10 @@ private extension MapViewController {
 	func setupUI() {
 		view.backgroundColor = AppColor.Background.screen// TODO: need replace to glass effect
 		view.addSubviews(
-				mapView,
-				segmentedControl,
-				bottomView
-			)
+			mapView,
+			segmentedControl,
+			bottomView
+		)
 
 		NSLayoutConstraint.activate([
 			segmentedControl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
@@ -248,7 +266,7 @@ private extension MapViewController {
 				listVC.view.bottomAnchor.constraint(equalTo: bottomView.topAnchor, constant: -8)
 			])
 			listVC.didMove(toParent: self)
-			listVC.view.isHidden = true // TODO
+			listVC.view.isHidden = true
 			listView = listVC.view
 		}
 	}
@@ -290,13 +308,13 @@ private extension MapViewController {
 	private func showDetailsAction() {
 		guard let court = selectedCourt else { return }
 		let distanceMessage = getDistanceMessage(court: court)
-		popupView.configure(with: court, distance: distanceMessage)
+		setupPopupView(with: court, distance: distanceMessage)
 		popupView.isHidden = false
 		print("show Details")
-//        UIView.animate(withDuration: 0.3) {
-//            self.popupBottomConstraint?.constant = -8
-//            self.view.layoutIfNeeded()
-//        }
+		//        UIView.animate(withDuration: 0.3) {
+		//            self.popupBottomConstraint?.constant = -8
+		//            self.view.layoutIfNeeded()
+		//        }
 
 		self.popupView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7) // начальное состояние
 		UIView.animate(withDuration: 1.0, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: []) {
@@ -309,22 +327,22 @@ private extension MapViewController {
 	@objc func hideDetailsPopup() {
 		print("close Details")
 
-//        UIView.animate(withDuration: 0.5, delay: 0.2, options: .curveEaseIn) {
-//            self.popupView.transform = CGAffineTransform(scaleX: 0.3, y: 0.3)
-//            self.popupView.alpha = 0
-//        } completion: { _ in
-//            self.popupView.isHidden = true
-//        }
+		//        UIView.animate(withDuration: 0.5, delay: 0.2, options: .curveEaseIn) {
+		//            self.popupView.transform = CGAffineTransform(scaleX: 0.3, y: 0.3)
+		//            self.popupView.alpha = 0
+		//        } completion: { _ in
+		//            self.popupView.isHidden = true
+		//        }
 
-//        UIView.animate(withDuration: 0.5, animations: {
-//            self.popupView.transform = CGAffineTransform(translationX: 0, y: 20)
-////                .scaledBy(x: 0.01, y: 0.01)
-//            self.popupView.alpha = 0
-//        }) { _ in
-//            self.popupView.isHidden = true
-//            self.popupView.transform = .identity
-//            self.popupView.alpha = 1
-//        }
+		//        UIView.animate(withDuration: 0.5, animations: {
+		//            self.popupView.transform = CGAffineTransform(translationX: 0, y: 20)
+		////                .scaledBy(x: 0.01, y: 0.01)
+		//            self.popupView.alpha = 0
+		//        }) { _ in
+		//            self.popupView.isHidden = true
+		//            self.popupView.transform = .identity
+		//            self.popupView.alpha = 1
+		//        }
 
 		let originalCenter = popupView.center
 
@@ -340,12 +358,12 @@ private extension MapViewController {
 			self.popupView.alpha = 1
 		}
 
-//        UIView.animate(withDuration: 0.5, animations: {
-//            self.popupBottomConstraint?.constant = -8
-//            self.view.layoutIfNeeded()
-//        }) { _ in
-//            self.popupView.isHidden = true
-////            self.bottomView.isHidden = false
-//        }
+		//        UIView.animate(withDuration: 0.5, animations: {
+		//            self.popupBottomConstraint?.constant = -8
+		//            self.view.layoutIfNeeded()
+		//        }) { _ in
+		//            self.popupView.isHidden = true
+		////            self.bottomView.isHidden = false
+		//        }
 	}
 }
