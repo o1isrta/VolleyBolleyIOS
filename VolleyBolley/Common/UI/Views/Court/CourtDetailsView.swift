@@ -7,6 +7,9 @@
 
 import UIKit
 
+/// Custom View to show information with location title for two variants
+/// - with court details
+/// - with game details (host, game details)
 class CourtDetailsView: UIView {
 
 	// MARK: - Private Properties
@@ -35,9 +38,40 @@ class CourtDetailsView: UIView {
 
 	// MARK: - Public Methods
 
-	func configure(with court: CourtModel, distance: String) {
+	func configure(
+		with court: CourtModel,
+		distance: String,
+		doneButtonData: CourtButtonData,
+		courtButtonsViewType: CourtButtonsViewType = .oneBigButton,
+		detailsButtonData: CourtButtonData? = nil
+	) {
 		courtTitleView.configure(with: court, distance: distance)
-		courtView.configure(with: court)
+		courtView.configure(
+				with: court,
+				doneButtonData: doneButtonData,
+				courtButtonsViewType: courtButtonsViewType,
+				detailsButtonData: detailsButtonData
+			)
+	}
+
+	func configure(
+		with court: CourtModel,
+		distance: String,
+		game: GameModel,
+		hostType: HostType,
+		doneButtonData: CourtButtonData,
+		courtButtonsViewType: CourtButtonsViewType = .oneBigButton,
+		detailsButtonData: CourtButtonData? = nil
+	) {
+		courtTitleView.configure(with: court, distance: distance)
+		courtView.configure(
+				with: court,
+				for: game,
+				hostType: hostType,
+				doneButtonData: doneButtonData,
+				courtButtonsViewType: courtButtonsViewType,
+				detailsButtonData: detailsButtonData
+			)
 	}
 }
 
@@ -67,3 +101,58 @@ private extension CourtDetailsView {
 		])
 	}
 }
+
+#if DEBUG
+import SwiftUI
+@available(iOS 17.0, *)
+#Preview("Game") {
+	UIViewPreview {
+		let view = CourtDetailsView()
+		let court = CourtModel.mockData
+		let game = GameModel.mockData
+		view.configure(
+			with: court,
+			distance: "",
+			game: game,
+			hostType: .game,
+			doneButtonData: CourtButtonData(
+				title: "CHOOSE THIS GAME",
+				action: { print("aaaaaaa")}
+				),
+			courtButtonsViewType: .oneBigButton,
+			detailsButtonData: CourtButtonData(
+				title: "Details",
+				action: { print("bbbbbbb")}
+			)
+		)
+		return view
+	}
+	.frame(width: .infinity, height: 509)
+	.background(Color(cgColor: AppColor.Background.screen.cgColor))
+	.padding()
+}
+
+#Preview("Court") {
+	UIViewPreview {
+		let view = CourtDetailsView()
+		let court = CourtModel.mockData
+		view.configure(
+			with: court,
+			distance: "Nearest",
+			doneButtonData: CourtButtonData(
+				title: "CHOOSE THIS GAME",
+				action: { print("aaaaaaa")}
+				),
+			courtButtonsViewType: .oneBigButton,
+			detailsButtonData: CourtButtonData(
+				title: "Details",
+				action: { print("bbbbbbb")}
+			)
+		)
+		return view
+	}
+	.frame(width: .infinity, height: 472)
+	.background(Color(cgColor: AppColor.Background.screen.cgColor))
+	.padding()
+}
+#endif
