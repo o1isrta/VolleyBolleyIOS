@@ -34,7 +34,7 @@ final class MapInteractor: MapInteractorProtocol {
 					"4 courts",
 					"Outdoor"
 				],
-				location: CourtLocationModel(
+				location: LocationModel(
 					latitude: 40.785091,
 					longitude: -73.968285,
 					courtName: "Central Park Court",
@@ -58,7 +58,7 @@ final class MapInteractor: MapInteractorProtocol {
 					"Seasonal",
 					"Lights"
 				],
-				location: CourtLocationModel(
+				location: LocationModel(
 					latitude: 40.800000,
 					longitude: -73.970000,
 					courtName: "Riverside Court",
@@ -81,7 +81,7 @@ final class MapInteractor: MapInteractorProtocol {
 					"Outdoor",
 					"Seasonal"
 				],
-				location: CourtLocationModel(
+				location: LocationModel(
 					latitude: 40.780000,
 					longitude: -73.955000,
 					courtName: "East Side Court",
