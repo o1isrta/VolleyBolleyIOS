@@ -76,14 +76,14 @@ class LocationPickerView: UIView, UITableViewDelegate, UITableViewDataSource {
 
         // Title Label (без своей рамки)
         titleLabel.text = placeholder
-        titleLabel.textColor = AppColor.Text.placeholder
+        titleLabel.textColor = AppColor.Text.placeHolder
         titleLabel.textAlignment = .left
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         //        titleLabel.backgroundColor = .white
 
         // Arrow
         arrowImageView.image = UIImage(systemName: "chevron.down")
-        arrowImageView.tintColor = AppColor.Text.placeholder
+        arrowImageView.tintColor = AppColor.Text.placeHolder
         arrowImageView.translatesAutoresizingMaskIntoConstraints = false
 
         titleContainer.addSubview(titleLabel)
@@ -245,7 +245,7 @@ class LocationPickerView: UIView, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
         cell.textLabel?.text = items[indexPath.row]
-        cell.textLabel?.textColor = AppColor.Text.placeholder
+        cell.textLabel?.textColor = AppColor.Text.placeHolder
         cell.backgroundColor = .white
         return cell
     }

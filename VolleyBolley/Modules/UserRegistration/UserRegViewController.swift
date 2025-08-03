@@ -9,7 +9,7 @@ import UIKit
 
 class UserRegViewController: UIViewController, UITextFieldDelegate {
 
-    var presenter: UserRegPresenterProtocol!
+    var presenter: UserRegPresenterProtocol?
 
     private let scrollView = UIScrollView()
     private let contentView = UIView()
@@ -22,7 +22,7 @@ class UserRegViewController: UIViewController, UITextFieldDelegate {
         textField.placeholder = "Anton"
         textField.backgroundColor = AppColor.Border.primary
         textField.layer.cornerRadius = 16
-        textField.textColor = AppColor.Text.placeholder
+        textField.textColor = AppColor.Text.placeHolder
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.setLeftPaddingPoints(16)
         return textField
@@ -34,7 +34,7 @@ class UserRegViewController: UIViewController, UITextFieldDelegate {
         textField.placeholder = "Ivanov"
         textField.backgroundColor = AppColor.Border.primary
         textField.layer.cornerRadius = 16
-        textField.textColor = AppColor.Text.placeholder
+        textField.textColor = AppColor.Text.placeHolder
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.setLeftPaddingPoints(16)
         return textField
@@ -42,8 +42,18 @@ class UserRegViewController: UIViewController, UITextFieldDelegate {
     private lazy var surnameSeparator = CustomSeparator()
 
     private lazy var genderLabel = CustomLabel(text: "Gender", isBold: true)
-    private lazy var maleButton = PickButton(title: "Male", isSelected: true, target: self, action: #selector(genderButtonTapped(_:)))
-    private lazy var femaleButton = PickButton(title: "Female", isSelected: false, target: self, action: #selector(genderButtonTapped(_:)))
+    private lazy var maleButton = PickButton(
+        title: "Male",
+        isSelected: true,
+        target: self,
+        action: #selector(genderButtonTapped(_:))
+    )
+    private lazy var femaleButton = PickButton(
+        title: "Female",
+        isSelected: false,
+        target: self,
+        action: #selector(genderButtonTapped(_:))
+    )
     private lazy var genderSeparator = CustomSeparator()
 
     private lazy var birthdayLabel = CustomLabel(text: "Date of birth", isBold: true)
@@ -55,7 +65,7 @@ class UserRegViewController: UIViewController, UITextFieldDelegate {
         textField.layer.cornerRadius = 16
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.keyboardType = .numberPad
-        textField.textColor = AppColor.Text.placeholder
+        textField.textColor = AppColor.Text.placeHolder
         textField.font = AppFont.Hero.regular(size: 16)
         textField.delegate = self
         return textField
@@ -76,10 +86,30 @@ class UserRegViewController: UIViewController, UITextFieldDelegate {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    private lazy var lightLevelButton = PickButton(title: "Light", isSelected: true, target: self, action: #selector(levelButtonTapped(_:)))
-    private lazy var mediumLevelButton = PickButton(title: "Medium", isSelected: false, target: self, action: #selector(levelButtonTapped(_:)))
-    private lazy var hardLevelButton = PickButton(title: "Hard", isSelected: false, target: self, action: #selector(levelButtonTapped(_:)))
-    private lazy var proLevelButton = PickButton(title: "Pro", isSelected: false, target: self, action: #selector(levelButtonTapped(_:)))
+    private lazy var lightLevelButton = PickButton(
+        title: "Light",
+        isSelected: true,
+        target: self,
+        action: #selector(levelButtonTapped(_:))
+    )
+    private lazy var mediumLevelButton = PickButton(
+        title: "Medium",
+        isSelected: false,
+        target: self,
+        action: #selector(levelButtonTapped(_:))
+    )
+    private lazy var hardLevelButton = PickButton(
+        title: "Hard",
+        isSelected: false,
+        target: self,
+        action: #selector(levelButtonTapped(_:))
+    )
+    private lazy var proLevelButton = PickButton(
+        title: "Pro",
+        isSelected: false,
+        target: self,
+        action: #selector(levelButtonTapped(_:))
+    )
     private lazy var levelSeparator = CustomSeparator()
 
     private lazy var countryLabel = CustomLabel(text: "Your country", isBold: true)
@@ -89,7 +119,12 @@ class UserRegViewController: UIViewController, UITextFieldDelegate {
     private lazy var cityLabel = CustomLabel(text: "Your city", isBold: true)
     private var cityList: LocationPickerView?
 
-    private lazy var getStartedButton = NextStepButton(title: "GET STARTED", initialState: .active, target: self, Action: #selector(getStartedTapped))
+    private lazy var getStartedButton = NextStepButton(
+        title: "GET STARTED",
+        isActive: true,
+        target: self,
+        action: #selector(getStartedTapped)
+    )
 
     private var selectedGender: String? = "Male"
     private var selectedLevel: String? = "Light"
@@ -112,7 +147,7 @@ class UserRegViewController: UIViewController, UITextFieldDelegate {
         setupConstraints()
         setupActions()
 
-        presenter.viewDidLoad()
+        presenter?.viewDidLoad()
 
         view.layoutIfNeeded()
     }
@@ -275,7 +310,7 @@ class UserRegViewController: UIViewController, UITextFieldDelegate {
     }
 
     @objc private func levelInfoButtonTapped() {
-        presenter.didTapLevelInfo()
+        presenter?.didTapLevelInfo()
     }
 
     @objc private func levelButtonTapped(_ sender: PickButton) {
@@ -285,7 +320,7 @@ class UserRegViewController: UIViewController, UITextFieldDelegate {
          proLevelButton].forEach {
             $0.updateSelectionState(false)
         }
-        
+
         sender.updateSelectionState(true)
         selectedLevel = sender.title(for: .normal)
     }
@@ -294,7 +329,7 @@ class UserRegViewController: UIViewController, UITextFieldDelegate {
         let name = nameTextField.text ?? ""
         let surname = surnameTextField.text ?? ""
         let gender = selectedGender ?? ""
-        presenter.didTapGetStarted(name: name, surname: surname, gender: gender)
+        presenter?.didTapGetStarted(name: name, surname: surname, gender: gender)
     }
 
     //    private func createTextField(placeholder: String) -> UITextField {
@@ -307,7 +342,11 @@ class UserRegViewController: UIViewController, UITextFieldDelegate {
     //        return textField
     //    }
 
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    func textField(
+        _ textField: UITextField,
+        shouldChangeCharactersIn range: NSRange,
+        replacementString string: String
+    ) -> Bool {
         guard textField == birthdayTextField else { return true }
 
         // Текущий текст с изменениями
@@ -396,7 +435,9 @@ extension UserRegViewController: LocationPickerViewDelegate {
     }
 }
 
+#if DEBUG
 @available(iOS 17.0, *)
 #Preview {
     UserRegViewController()
 }
+#endif

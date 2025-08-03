@@ -53,8 +53,13 @@ final class AppRouter {
         window.makeKeyAndVisible()
     }
 
-    private func showAuthorization() {
-		// TODO: Добавить переход к авторизации
+    func showAuthorization() {
+        guard let authVC = resolver.resolve(AuthViewController.self) else {
+            fatalError("AuthViewController не зарегистрирован")
+        }
+        let nav = UINavigationController(rootViewController: authVC)
+        window.rootViewController = nav
+        window.makeKeyAndVisible()
     }
 
     private func showMainApp() {
