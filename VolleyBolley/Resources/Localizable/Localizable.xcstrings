@@ -136,13 +136,13 @@
         }
       }
     },
-    "Choose this court" : {
+    "CHOOSE THIS COURT" : {
       "comment" : "\"Choose this court\" button",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Выбрать этот корт"
+            "value" : "ВЫБРАТЬ ЭТОТ КОРТ"
           }
         }
       }
@@ -361,13 +361,13 @@
         }
       }
     },
-    "Details" : {
+    "DETAILS" : {
       "comment" : "\"Details\" button",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Подробнее"
+            "value" : "ПОДРОБНЕЕ"
           }
         }
       }
@@ -477,6 +477,17 @@
         }
       }
     },
+    "Game host" : {
+      "comment" : "Header of game info popup",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ведущий игры"
+          }
+        }
+      }
+    },
     "game_completed_title" : {
       "comment" : "Player rating",
       "extractionState" : "manual",
@@ -569,6 +580,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Male"
+          }
+        }
+      }
+    },
+    "Gender: " : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пол: "
           }
         }
       }
@@ -686,6 +707,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pro"
+          }
+        }
+      }
+    },
+    "Level: " : {
+      "comment" : "Gsme level",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Уровень: "
           }
         }
       }
@@ -1367,6 +1399,17 @@
         }
       }
     },
+    "Tournament host" : {
+      "comment" : "Header of game info popup",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Хозяин турнира"
+          }
+        }
+      }
+    },
     "verify_button" : {
       "comment" : "Registration",
       "extractionState" : "manual",
@@ -1408,6 +1451,17 @@
     },
     "Welcome!" : {
 
+    },
+    "When: " : {
+      "comment" : "Date of game header",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Когда: "
+          }
+        }
+      }
     },
     "your_message_placeholder" : {
       "comment" : "Game",
