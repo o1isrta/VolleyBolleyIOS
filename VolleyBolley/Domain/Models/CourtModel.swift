@@ -7,14 +7,14 @@
 
 import Foundation
 
-struct CourtModel: Equatable {
+struct CourtModel: Decodable, Equatable {
 	let id: Int
 	let price: String?
 	let description: String?
 	let contacts: [ContactModel]?
 	let imageUrl: URL?
 	let tagList: [String]
-	let location: CourtLocationModel
+	let location: LocationModel
 
 	static func == (lhs: CourtModel, rhs: CourtModel) -> Bool {
 		lhs.location.latitude == rhs.location.latitude
@@ -33,21 +33,7 @@ struct CourtModel: Equatable {
 	}
 }
 
-struct CourtLocationModel {
-	let latitude: Double
-	let longitude: Double
-	let courtName: String
-	let locationName: String
-
-	private enum CodingKeys: String, CodingKey {
-		case latitude
-		case longitude
-		case courtName = "court_name"
-		case locationName = "location_name"
-	}
-}
-
-struct ContactModel {
+struct ContactModel: Decodable {
 	let type: String
 	let value: String
 
