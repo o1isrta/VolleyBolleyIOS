@@ -19,6 +19,7 @@ final class CourtView: UIView {
 
 	private lazy var courtImageView = CourtImageView()
 	private lazy var courtDescriptionView = CourtDescriptionView()
+	private lazy var gameDescriptionView = GameDescriptionView()
 
 	private lazy var chooseButton: UIButton = {
 		let button = UIButton(type: .system)
@@ -50,6 +51,11 @@ final class CourtView: UIView {
 		return stackView
 	}()
 
+	private lazy var descriptionView: UIStackView = {
+		let stackView = UIStackView()
+		return stackView
+	}()
+
 	// MARK: - Initializers
 
 	override init(frame: CGRect) {
@@ -65,9 +71,22 @@ final class CourtView: UIView {
 	// MARK: - Public Methods
 
 	func configure(with court: CourtModel, courtViewType: CourtViewType = .oneBigButton) {
+		descriptionView.addArrangedSubview(courtDescriptionView)
 		setupCourtView(type: courtViewType)
 		courtImageView.configure(with: court)
 		courtDescriptionView.configure(with: court)
+	}
+
+	func configure(
+		with court: CourtModel,
+		for game: GameModel,
+		hostType: HostType,
+		courtViewType: CourtViewType = .oneBigButton
+	) {
+		descriptionView.addArrangedSubview(gameDescriptionView)
+		setupCourtView(type: courtViewType)
+		courtImageView.configure(with: court)
+		gameDescriptionView.configure(with: game, hostType: hostType)
 	}
 }
 
@@ -95,7 +114,7 @@ private extension CourtView {
 	func setupUI() {
 		addSubviews(
 			courtImageView,
-			courtDescriptionView,
+			descriptionView,
 			buttonStackView
 		)
 
@@ -105,14 +124,14 @@ private extension CourtView {
 			courtImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
 			courtImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
 
-			courtDescriptionView.topAnchor.constraint(equalTo: courtImageView.bottomAnchor, constant: 16),
-			courtDescriptionView.leadingAnchor.constraint(equalTo: leadingAnchor),
-			courtDescriptionView.trailingAnchor.constraint(equalTo: trailingAnchor),
+			descriptionView.topAnchor.constraint(equalTo: courtImageView.bottomAnchor, constant: 16),
+			descriptionView.leadingAnchor.constraint(equalTo: leadingAnchor),
+			descriptionView.trailingAnchor.constraint(equalTo: trailingAnchor),
 
 			chooseButton.heightAnchor.constraint(equalToConstant: 44),
 			detailsButton.heightAnchor.constraint(equalToConstant: 44),
 
-			buttonStackView.topAnchor.constraint(equalTo: courtDescriptionView.bottomAnchor, constant: 16),
+			buttonStackView.topAnchor.constraint(equalTo: descriptionView.bottomAnchor, constant: 16),
 			buttonStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
 			buttonStackView.bottomAnchor.constraint(equalTo: bottomAnchor)
 		])
@@ -121,55 +140,33 @@ private extension CourtView {
 
 #if DEBUG
 import SwiftUI
-import UIKit
-// Обертка для UIView
-struct UIViewPreview<View: UIView>: UIViewRepresentable {
-	let view: View
-
-	init(_ builder: @escaping () -> View) {
-		view = builder()
-	}
-
-	// MARK: - UIViewRepresentable
-	func makeUIView(context: Context) -> View {
-		return view
-	}
-
-	func updateUIView(_ uiView: View, context: Context) {
-		uiView.setContentHuggingPriority(.defaultLow, for: .horizontal)
-		uiView.setContentHuggingPriority(.defaultLow, for: .vertical)
-	}
-}
-
 @available(iOS 17.0, *)
-#Preview {
+
+#Preview("Game") {
 	UIViewPreview {
 		let view = CourtView()
-		// swiftlint:disable line_length
-		let model = CourtModel(
-			id: 1,
-			price: "$20/hour",
-			description: "A beautiful court in the heart of Central Park. Recently renovated, with night lighting and locker rooms.",
-			contacts: [
-				ContactModel(
-					type: "PHONE",
-					value: "+1 212-555-1234"
-				)
-			],
-			imageUrl: nil,
-			tagList: [
-				"4 courts",
-				"Outdoor"
-			],
-			location: LocationModel(
-				latitude: 40.785091,
-				longitude: -73.968285,
-				courtName: "Central Park Court",
-				locationName: "USA, New York"
+		let court = CourtModel.mockData
+		let game = GameModel.mockData
+		view
+			.configure(
+				with: court,
+				for: game,
+				hostType: .game,
+				courtViewType: .oneBigButton
 			)
-		)
-		// swiftlint:enable line_length
-		view.configure(with: model)
+		return view
+	}
+	.padding()
+	.frame(width: .infinity, height: 473)
+	.background(Color(cgColor: AppColor.Background.screen.cgColor))
+	.padding()
+}
+
+#Preview("Court") {
+	UIViewPreview {
+		let view = CourtView()
+		let court = CourtModel.mockData
+		view.configure(with: court)
 		return view
 	}
 	.padding()
