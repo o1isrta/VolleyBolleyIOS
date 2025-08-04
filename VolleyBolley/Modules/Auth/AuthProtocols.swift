@@ -15,8 +15,6 @@ protocol AuthPresenterProtocol: AnyObject {
     func phoneButtonTapped()
     func googleButtonTapped()
     func facebookButtonTapped()
-    func didAuthWithGoogleSuccess()
-    func didAuthWithFacebookSuccess()
 }
 
 protocol AuthInteractorProtocol: AnyObject {
@@ -33,4 +31,3 @@ protocol AuthRouterProtocol: AnyObject {
     func showPhoneAuth()
     func showUserRegScreen()
 }
-

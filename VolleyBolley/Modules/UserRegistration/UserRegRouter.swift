@@ -9,31 +9,18 @@ import UIKit
 class UserRegRouter: UserRegRouterProtocol {
 
     weak var viewController: UIViewController?
+    weak var coordinator: AppRouter?
 
-    static func assembleModule() -> UIViewController {
-        let view = UserRegViewController()
-        let presenter = UserRegPresenter()
-        let interactor = UserRegInteractor()
-        let router = UserRegRouter()
-
-        view.presenter = presenter
-        presenter.view = view
-        presenter.interactor = interactor
-        presenter.router = router
-        interactor.presenter = presenter
-        router.viewController = view
-
-        return view
+    init(viewController: UIViewController, coordinator: AppRouter?) {
+        self.viewController = viewController
+        self.coordinator = coordinator
     }
 
     func navigateToNextScreen() {
-        // Пример перехода
-        // let nextVC = NextViewController()
-        // viewController?.navigationController?.pushViewController(nextVC, animated: true)
+        // TODO: Сделать переход на следующий экран
     }
 
     func showLevelInfoScreen() {
-//        let vc = LevelInfoViewController()
-//        viewController?.navigationController?.pushViewController(vc, animated: true)
+        // Сделать переход на экран описания уровней
     }
 }

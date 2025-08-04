@@ -33,7 +33,6 @@ protocol UserRegInteractorOutputProtocol: AnyObject {
 }
 
 protocol UserRegRouterProtocol: AnyObject {
-    static func assembleModule() -> UIViewController
     func showLevelInfoScreen()
     func navigateToNextScreen()
 }

@@ -8,8 +8,8 @@ import Foundation
 
 class AuthorizationPresenter: AuthPresenterProtocol {
     weak var view: AuthViewProtocol?
-    private let interactor: AuthInteractorProtocol?
-    private let router: AuthRouterProtocol?
+    private let interactor: AuthInteractorProtocol
+    private let router: AuthRouterProtocol
 
     init(view: AuthViewProtocol,
          interactor: AuthInteractorProtocol,
@@ -19,27 +19,25 @@ class AuthorizationPresenter: AuthPresenterProtocol {
         self.router = router
     }
 
-
     func phoneButtonTapped() {
-        router?.showPhoneAuth()
+        router.showPhoneAuth()
     }
 
     func googleButtonTapped() {
-        interactor?.authWithGoogle()
+        interactor.authWithGoogle()
     }
 
     func facebookButtonTapped() {
-        interactor?.authWithFacebook()
+        interactor.authWithFacebook()
     }
 }
 
-
 extension AuthorizationPresenter: AuthInteractorOutputProtocol {
     func didAuthWithGoogleSuccess() {
-        router?.showUserRegScreen()
+        router.showUserRegScreen()
     }
 
     func didAuthWithFacebookSuccess() {
-        router?.showUserRegScreen()
+        router.showUserRegScreen()
     }
 }
