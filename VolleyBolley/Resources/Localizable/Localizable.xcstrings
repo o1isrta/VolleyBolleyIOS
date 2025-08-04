@@ -136,17 +136,6 @@
         }
       }
     },
-    "Choose this court" : {
-      "comment" : "\"Choose this court\" button",
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Выбрать корт"
-          }
-        }
-      }
-    },
     "choose_city_placeholder" : {
       "comment" : "Registration",
       "extractionState" : "manual",
@@ -361,17 +350,6 @@
         }
       }
     },
-    "Details" : {
-      "comment" : "\"Details\" button",
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Подробнее"
-          }
-        }
-      }
-    },
     "donate_button" : {
       "comment" : "Game",
       "extractionState" : "manual",
@@ -477,6 +455,9 @@
         }
       }
     },
+    "Game host" : {
+
+    },
     "game_completed_title" : {
       "comment" : "Player rating",
       "extractionState" : "manual",
@@ -572,6 +553,9 @@
           }
         }
       }
+    },
+    "Gender: " : {
+
     },
     "GET STARTED" : {
 
@@ -689,6 +673,9 @@
           }
         }
       }
+    },
+    "Level: " : {
+
     },
     "LIGHT" : {
       "comment" : "User level light"
@@ -1350,6 +1337,9 @@
         }
       }
     },
+    "Tournament host" : {
+
+    },
     "verify_button" : {
       "comment" : "Registration",
       "extractionState" : "manual",
@@ -1390,6 +1380,9 @@
       }
     },
     "Welcome!" : {
+
+    },
+    "When: " : {
 
     },
     "your_message_placeholder" : {

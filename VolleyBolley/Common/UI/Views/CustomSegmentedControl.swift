@@ -9,7 +9,7 @@ import UIKit
 
 enum SegmentedControlType: CaseIterable {
 	case players, games, map
-	
+
 	var segments: [String] {
 		switch self {
 		case .players: return [String(localized: "All players"), String(localized: "Favorites")]
@@ -34,9 +34,9 @@ enum SegmentedControlType: CaseIterable {
 ///
 /// ```
 public class CustomSegmentedControl: UIView {
-	
+
 	// MARK: - Public Properties
-	
+
 	// Array of segment titles
 	public var segments: [String]
 	// Currently selected segment index
@@ -50,11 +50,11 @@ public class CustomSegmentedControl: UIView {
 	}
 	// Callback for segment change
 	public var segmentChanged: ((Int) -> Void)?
-	
+
 	// MARK: - Private Properties
-	
+
 	private let cornerRadius: CGFloat = 16
-	
+
 	// Array to hold segment buttons
 	private lazy var buttons: [UIButton] = []
 	// Selector view to highlight the selected segment
@@ -64,35 +64,35 @@ public class CustomSegmentedControl: UIView {
 		view.layer.cornerRadius = cornerRadius
 		return view
 	}()
-	
+
 	private lazy var gradientLayer: CAGradientLayer = {
 		let view = CALayer.getGradientLayer()
 		view.frame = bounds
 		view.cornerRadius = cornerRadius
 		return view
 	}()
-	
+
 	// MARK: - Initializers
-	
+
 	init(type: SegmentedControlType) {
 		self.segments = type.segments
 		super.init(frame: .zero)
 		setupView()
 	}
-	
+
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
-	
+
 	// MARK: - Public Methods
-	
+
 	override public func layoutSubviews() {
 		super.layoutSubviews()
 		// Update gradient layer when resizing
 		if let gradientLayer = layer.sublayers?.first(where: { $0 is CAGradientLayer }) {
 			gradientLayer.frame = bounds
 		}
-		
+
 		updateSegmentedControl()
 	}
 }
@@ -100,29 +100,29 @@ public class CustomSegmentedControl: UIView {
 // MARK: - Private Methods
 
 private extension CustomSegmentedControl {
-	
+
 	func setupView() {
 		backgroundColor = AppColor.Background.primary
 		layer.cornerRadius = cornerRadius
 		layer.masksToBounds = true
-		
+
 		layer.insertSublayer(gradientLayer, at: 0)
 		// Save a link to the gradient layer for subsequent updating during resizing
 		self.layer.sublayers?.first { $0 is CAGradientLayer }?.removeFromSuperlayer()
 		layer.insertSublayer(gradientLayer, at: 0)
-		
+
 		// Create buttons for segments
 		buttons = segments.map { createButton(withTitle: $0) }
-		
+
 		addSubviews(selectorView)
-		
+
 		// Create a stack view to arrange buttons horizontally
 		let stackView = UIStackView(arrangedSubviews: buttons)
 		stackView.axis = .horizontal
 		stackView.alignment = .fill
 		stackView.distribution = .fillEqually
 		addSubviews(stackView)
-		
+
 		NSLayoutConstraint.activate([
 			stackView.topAnchor.constraint(equalTo: self.topAnchor),
 			stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
@@ -130,7 +130,7 @@ private extension CustomSegmentedControl {
 			stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
 		])
 	}
-	
+
 	// Creates a button for a given segment title
 	func createButton(withTitle title: String) -> UIButton {
 		let button = UIButton(type: .system)
@@ -139,7 +139,7 @@ private extension CustomSegmentedControl {
 		button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
 		return button
 	}
-	
+
 	// Updates the segmented control's UI based on the selected index
 	func updateSegmentedControl() {
 		let buttonWidth = frame.width / CGFloat(buttons.count) // Calculate button width
@@ -147,13 +147,13 @@ private extension CustomSegmentedControl {
 		let selectorHeight: CGFloat = 30 // Selector height
 		let selectorX = buttonWidth * CGFloat(selectedSegmentIndex) + 2 // Calculate selector X position
 		let selectorY = (frame.height - selectorHeight) / 2 // Center selector vertically
-		
+
 		// Animate the selector's movement
 		UIView.animate(withDuration: 0.3) {
 			self.selectorView.frame = CGRect(x: selectorX, y: selectorY, width: selectorWidth, height: selectorHeight)
 		}
 	}
-	
+
 	// Handles button tap and updates the selected index
 	@objc func buttonTapped(_ sender: UIButton) {
 		guard let index = buttons.firstIndex(of: sender) else { return }
