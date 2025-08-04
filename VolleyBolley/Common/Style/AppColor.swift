@@ -7,8 +7,8 @@
 
 import UIKit
 
-/// Инкапсуляция уникальных цветов проекта: фирменные акценты, состояния и фоны
-/// Только для однородных цветов (solid colors)
+/// Encapsulates project-specific solid colors: brand accents, states, and backgrounds
+/// Use for solid colors only
 enum AppColor {
 
 	enum Background {
@@ -84,8 +84,7 @@ enum AppColor {
 	}
 }
 
-/// Цвета по названиям
-/// Только для переиспользования в AppColor
+/// Internal use only via AppColor
 private extension AppColor {
 
     static let clear = UIColor.clear
