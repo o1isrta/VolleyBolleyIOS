@@ -131,11 +131,17 @@ class UserRegViewController: UIViewController, UITextFieldDelegate {
     private var selectedCountry: String?
     private var selectedCity: String?
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = AppColor.Background.screen
 
-        countryList = LocationPickerView(items: [], placeholder: "Choose your country")
+        let countries = presenter?.countries ?? []
+        countryList = LocationPickerView(items: countries, placeholder: "Choose your country")
         countryList?.delegate = self
 
         let cities = presenter?.cities ?? []
@@ -152,6 +158,8 @@ class UserRegViewController: UIViewController, UITextFieldDelegate {
         view.layoutIfNeeded()
     }
 
+
+
     private func setupScrollView() {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.showsVerticalScrollIndicator = false
@@ -161,15 +169,15 @@ class UserRegViewController: UIViewController, UITextFieldDelegate {
         scrollView.addSubview(contentView)
 
         scrollView.backgroundColor = AppColor.Background.blur
-        scrollView.layer.cornerRadius = 16
+        scrollView.layer.cornerRadius = 32
         scrollView.layer.masksToBounds = true
 
         let safeArea = view.safeAreaLayoutGuide
 
         NSLayoutConstraint.activate([
             scrollView.frameLayoutGuide.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 8),
-            scrollView.frameLayoutGuide.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
-            scrollView.frameLayoutGuide.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
+            scrollView.frameLayoutGuide.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 8),
+            scrollView.frameLayoutGuide.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -8),
             scrollView.frameLayoutGuide.bottomAnchor.constraint(equalTo: view.bottomAnchor),
 
             contentView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),

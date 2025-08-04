@@ -14,6 +14,14 @@ class UserRegPresenter: UserRegPresenterProtocol {
     var interactor: UserRegInteractorProtocol!
     var router: UserRegRouterProtocol!
 
+    init(view: UserRegViewProtocol,
+         interactor: UserRegInteractorProtocol,
+         router: UserRegRouterProtocol) {
+        self.view = view
+        self.interactor = interactor
+        self.router = router
+    }
+
     func viewDidLoad() {
         interactor.fetchCountries()
     }

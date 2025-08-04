@@ -17,13 +17,11 @@ final class AuthRouter: AuthRouterProtocol {
         self.coordinator = coordinator
     }
 
-        func showPhoneAuth() {
-//            let phoneAuthVC = PhoneRegRouter.assembleModule()
-//            viewController?.navigationController?.pushViewController(phoneAuthVC, animated: true)
-        }
+    func showPhoneAuth() {
+        // TODO: Сделать переход к окну авторизации через телефон
+    }
 
-        func showUserRegScreen() {
-//            let userRegVC = UserRegRouter.assembleModule()
-//            viewController?.navigationController?.pushViewController(userRegVC, animated: true)
-        }
+    func showUserRegScreen() {
+        coordinator?.showUserReg()
+    }
 }

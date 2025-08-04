@@ -7,7 +7,7 @@
 import Foundation
 
 class AuthorizationInteractor: AuthInteractorProtocol {
-    weak var presenter: AuthPresenterProtocol?
+    weak var presenter: AuthInteractorOutputProtocol?
 
     func authWithGoogle() {
         presenter?.didAuthWithGoogleSuccess()

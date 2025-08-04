@@ -18,6 +18,6 @@ class OnboardingRouter: OnboardingRouterProtocol {
     }
 
     func navigateToAuthorizationScreen() {
-        coordinator?.showAuthorization()
+        coordinator?.start()
     }
 }

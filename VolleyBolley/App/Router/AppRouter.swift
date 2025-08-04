@@ -53,12 +53,29 @@ final class AppRouter {
         window.makeKeyAndVisible()
     }
 
-    func showAuthorization() {
+    private func showAuthorization() {
         guard let authVC = resolver.resolve(AuthViewController.self) else {
             fatalError("AuthViewController не зарегистрирован")
         }
         let nav = UINavigationController(rootViewController: authVC)
-        window.rootViewController = nav
+
+        UIView.transition(with: window, duration: 0.4, options: .transitionCrossDissolve) {
+            self.window.rootViewController = nav
+        }
+
+        window.makeKeyAndVisible()
+    }
+
+    func showUserReg() {
+        guard let userRegVC = resolver.resolve(UserRegViewController.self) else {
+            fatalError("UserRegViewController не зарегистрирован")
+        }
+        let nav = UINavigationController(rootViewController: userRegVC)
+
+        UIView.transition(with: window, duration: 0.4, options: .transitionCrossDissolve) {
+            self.window.rootViewController = nav
+        }
+        
         window.makeKeyAndVisible()
     }
 
