@@ -6,7 +6,6 @@
 //
 
 import Swinject
-import UIKit
 
 /// An assembly for registering shared application services with the Swinject dependency injection container.
 /// 
@@ -30,7 +29,9 @@ import UIKit
 /// assembly.assemble(container: container)
 /// ```
 final class SharedServicesAssembly: Assembly {
+
     func assemble(container: Container) {
+
         container.register(SettingsStorageProtocol.self) { _ in
             UserDefaultsStorage()
         }

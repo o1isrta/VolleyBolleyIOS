@@ -1,19 +1,6 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "%@ %@" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$@ %2$@"
-          }
-        }
-      }
-    },
-    "%lld" : {
-
-    },
     "add_payment_button" : {
       "comment" : "Game",
       "extractionState" : "manual",
@@ -82,12 +69,6 @@
             "state" : "translated",
             "value" : "VOLLEYBOLLEY"
           }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "VOLLEYBOLLEY"
-          }
         }
       }
     },
@@ -110,16 +91,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Date of bith"
-          }
-        }
-      }
-    },
-    "Cancel" : {
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Отмена"
           }
         }
       }
@@ -340,16 +311,6 @@
         }
       }
     },
-    "Done" : {
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Готово"
-          }
-        }
-      }
-    },
     "enter_code_placeholder" : {
       "comment" : "Registration",
       "extractionState" : "manual",
@@ -528,9 +489,6 @@
           }
         }
       }
-    },
-    "GET STARTED" : {
-
     },
     "get_started_button" : {
       "comment" : "Onboarding",
@@ -732,9 +690,6 @@
           }
         }
       }
-    },
-    "NEXT STEP" : {
-
     },
     "next_step_button" : {
       "comment" : "Registration",
@@ -1160,17 +1115,6 @@
         }
       }
     },
-    "Select Year" : {
-      "comment" : "Select year for Calendar view title",
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Выберите год"
-          }
-        }
-      }
-    },
     "send_code_button" : {
       "comment" : "Registration",
       "extractionState" : "manual",
@@ -1255,9 +1199,6 @@
         }
       }
     },
-    "This app helps you find beach volleyball games and match with players at your skill level." : {
-
-    },
     "time_from_label" : {
       "comment" : "Game",
       "extractionState" : "manual",
@@ -1318,9 +1259,6 @@
         }
       }
     },
-    "VOLLEYBOLLEY" : {
-
-    },
     "welcome_description" : {
       "comment" : "Onboarding",
       "extractionState" : "manual",
@@ -1340,13 +1278,10 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Welcome!"
+            "value" : "Welcome"
           }
         }
       }
-    },
-    "Welcome!" : {
-
     },
     "your_message_placeholder" : {
       "comment" : "Game",
