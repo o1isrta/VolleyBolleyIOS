@@ -37,7 +37,7 @@ class GlassmorphismView: UIView {
     }
     
     /// Цвет границы (рекомендуется использовать полупрозрачный белый)
-    public var borderColor: UIColor = UIColor.white.withAlphaComponent(0.15) {
+    public var borderColor: UIColor = AppColor.Glassmorphism.border.withAlphaComponent(0.15) {
         didSet { updateAppearance() }
     }
     
@@ -49,7 +49,7 @@ class GlassmorphismView: UIView {
     // MARK: - Public Properties - Blur & Background
     
     /// Полупрозрачный цвет фона поверх размытия для дополнительного тонирования
-    public var tintedBackgroundColor: UIColor = UIColor.white.withAlphaComponent(0.07) {
+    public var tintedBackgroundColor: UIColor = AppColor.Glassmorphism.tintColor.withAlphaComponent(0.07) {
         didSet { updateAppearance() }
     }
     
@@ -98,7 +98,7 @@ class GlassmorphismView: UIView {
     // MARK: - Public Properties - Inner Shadow
     
     /// Цвет внутренней тени (обычно светлый для эффекта подсветки)
-    public var innerShadowColor: UIColor = .white {
+    public var innerShadowColor: UIColor = AppColor.Glassmorphism.innerShadowColor {
         didSet { updateInnerShadow() }
     }
     
@@ -212,7 +212,7 @@ class GlassmorphismView: UIView {
         animator.fractionComplete = animatorFractionComplete
         
         // Автоматически подстраиваем цвета под тему
-        borderColor = UIColor.white.withAlphaComponent(theme == .light ? 0.15 : 0.1)
+        borderColor = AppColor.Glassmorphism.border.withAlphaComponent(theme == .light ? 0.15 : 0.1)
         layer.shadowOpacity = theme == .light ? 0.15 : 0.25
     }
     
