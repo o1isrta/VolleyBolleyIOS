@@ -45,7 +45,12 @@ final class CourtView: UIView {
 		detailsButtonData: CourtButtonData? = nil
 	) {
 		descriptionView.addArrangedSubview(courtDescriptionView)
-		courtImageView.configure(with: court)
+
+		let courtImageViewModel = CourtImageViewModel(
+			imageURL: court.imageUrl,
+			tags: court.tagList
+		)
+		courtImageView.configure(with: courtImageViewModel)
 
 		let courtDescriptionModel = CourtDescriptionViewModel(
 			price: court.price,
@@ -71,7 +76,13 @@ final class CourtView: UIView {
 		detailsButtonData: CourtButtonData? = nil
 	) {
 		descriptionView.addArrangedSubview(gameDescriptionView)
-		courtImageView.configure(with: court)
+
+		let courtImageViewModel = CourtImageViewModel(
+			imageURL: court.imageUrl,
+			tags: court.tagList
+		)
+		courtImageView.configure(with: courtImageViewModel)
+
 		gameDescriptionView.configure(with: game, hostType: hostType)
 
 		courtButtonsView.configure(
