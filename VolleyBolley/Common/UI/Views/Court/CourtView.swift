@@ -46,7 +46,13 @@ final class CourtView: UIView {
 	) {
 		descriptionView.addArrangedSubview(courtDescriptionView)
 		courtImageView.configure(with: court)
-		courtDescriptionView.configure(with: court)
+
+		let courtDescriptionModel = CourtDescriptionViewModel(
+			price: court.price,
+			description: court.description,
+			contact: court.contacts?[0].value
+		)
+		courtDescriptionView.configure(with: courtDescriptionModel)
 
 		courtButtonsView.configure(
 				type: courtButtonsViewType,
