@@ -2,25 +2,29 @@
 //  AuthAssembly.swift
 //  VolleyBolley
 //
-//  Created by Nikolai Eremenko
+//  Created by Олег Козырев
 //
 
 import Swinject
 
 final class AuthAssembly: Assembly {
 
-    // MARK: - Public Methods
-
     func assemble(container: Container) {
-        container.register(AuthViewController.self) { _ in
-            let viewController = AuthViewController()
+        container.register(AuthViewController.self) { resolver in
+            let authVC = AuthViewController()
 
-            return viewController
+            let interactor = AuthorizationInteractor()
+            let appRouter = resolver.resolve(AppRouter.self)
+            let router = AuthRouter(viewController: authVC, coordinator: appRouter)
+            let presenter = AuthorizationPresenter(view: authVC, interactor: interactor, router: router)
+
+            interactor.presenter = presenter
+            authVC.presenter = presenter
+            return authVC
         }
 
-        container.register(AuthRouterProtocol.self) { resolver in
-            AuthRouter(resolver: resolver)
+        container.register(AuthInteractorProtocol.self) { _ in
+            AuthorizationInteractor()
         }
-        .inObjectScope(.transient)
     }
 }

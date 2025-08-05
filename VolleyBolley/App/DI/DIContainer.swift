@@ -64,6 +64,7 @@ final class DIContainer {
                 SharedServicesAssembly(),
                 OnboardingAssembly(),
                 AuthAssembly(),
+                UserRegAssembly(),
                 MainAssembly(),
                 HomeAssembly(),
                 MyGamesAssembly(),

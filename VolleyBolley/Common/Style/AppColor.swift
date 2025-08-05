@@ -18,14 +18,16 @@ enum AppColor {
 		static let tabBar = midnightTeal
 		static let modal = teal
 		static let primary = white
+        static let blur = blurColor
 
 		// buttons
 		static let actionButtonDefault = yellow
 		static let actionButtonDisabled = mistGrey
 		static let largeActionButtonDefault = yellow
 		static let mapButton = orange
+        static let fbButton = fbblue
 
-		// badges
+        // badges
 		static let badgeDefault = steelBlue
 		static let badgeSelected = mutedTeal
 		static let levelBadgeLight = blue
@@ -33,11 +35,11 @@ enum AppColor {
 		static let levelBadgeHard = orange
 		static let levelBadgePro = yellow
 
-        // pin
-        static let pinDefault = mutedTeal
-        static let pinSelected = orange
-        static let searField = white
-        static let calendar = white
+		// pin
+		static let pinDefault = mutedTeal
+		static let pinSelected = orange
+		static let searField = white
+		static let calendar = white
 
         //alert
         static let alert = grey
@@ -87,12 +89,13 @@ private extension AppColor {
 	static let teal = UIColor(hex: "#53A8A1")
 	static let tealBlue = UIColor(hex: "#438b97")
 	static let blue = UIColor(hex: "#53A4E6")
+    static let fbblue = UIColor(hex: "#1877F2")
 	static let green = UIColor(hex: "#2DB69A")
 	static let orange = UIColor(hex: "#E6AC53")
 	static let yellow = UIColor(hex: "#E6C953")
-    static let mistGrey = UIColor(hex: "#8CA5A3")
-    static let darkGrey = UIColor(hex: "#484848")
 	static let grey = UIColor(hex: "#7C7C7C")
+	static let mistGrey = UIColor(hex: "#8CA5A3")
+	static let darkGrey = UIColor(hex: "#484848")
     static let separatorGray = UIColor(hex: "#C3C3C3")
 	static let darkCharcoal = UIColor(hex: "#333333")
 	static let lightGrey = UIColor(hex: "#E0E0E0")
@@ -101,5 +104,6 @@ private extension AppColor {
 	static let red = UIColor(hex: "#BA0000")
 	static let butterYellow = UIColor(hex: "#F4E998")
 	static let mint = UIColor(hex: "#5CF08D")
+    static let blurColor = UIColor(hex: "#AAC8E0", alpha: 0.19)
     static let greyBackground = UIColor(hex: "#555252")
 }
