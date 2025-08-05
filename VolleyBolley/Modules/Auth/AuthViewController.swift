@@ -7,12 +7,13 @@
 
 import UIKit
 
+/// Экран авторизации через телефон, google, facebook
 final class AuthViewController: UIViewController, AuthViewProtocol {
     var presenter: AuthPresenterProtocol?
 
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
-        let text = "Sign up\nwith\na social\nmedia"
+        let text = String(localized: "Sign up\nwith\na social\nmedia")
         let attributedString = NSMutableAttributedString(string: text)
 
         let paragraphStyle = NSMutableParagraphStyle()
@@ -34,7 +35,7 @@ final class AuthViewController: UIViewController, AuthViewProtocol {
 
     private lazy var phoneAuthButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Continue with phone number", for: .normal)
+        button.setTitle(String(localized: "Continue with phone number"), for: .normal)
         button.titleLabel?.font = AppFont.Hero.bold(size: 18)
         button.setTitleColor(AppColor.Text.inverted, for: .normal)
         button.backgroundColor = AppColor.Background.largeActionButtonDefault
@@ -47,7 +48,7 @@ final class AuthViewController: UIViewController, AuthViewProtocol {
 
     private lazy var googleAuthButton: UIButton = {
         let button = UIButton()
-        button.setTitle("  Continue with Google", for: .normal)
+        button.setTitle(String(localized: "  Continue with Google"), for: .normal)
         button.titleLabel?.font = AppFont.Hero.bold(size: 18)
         button.setTitleColor(AppColor.Text.inverted, for: .normal)
         button.backgroundColor = .white
@@ -65,7 +66,7 @@ final class AuthViewController: UIViewController, AuthViewProtocol {
 
     private lazy var facebookAuthButton: UIButton = {
         let button = UIButton()
-        button.setTitle("  Continue with Facebook", for: .normal)
+        button.setTitle(String(localized: "  Continue with Facebook"), for: .normal)
         button.titleLabel?.font = AppFont.Hero.bold(size: 18)
         button.setTitleColor(AppColor.Text.primary, for: .normal)
         button.backgroundColor = AppColor.Background.fbButton
@@ -150,17 +151,14 @@ final class AuthViewController: UIViewController, AuthViewProtocol {
 
     @objc private func phoneTapped() {
         presenter?.phoneButtonTapped()
-        print("Кнопка телефона нажата")
     }
 
     @objc private func googleTapped() {
         presenter?.googleButtonTapped()
-        print("Кнопка гугл нажата")
     }
 
     @objc private func facebookTapped() {
         presenter?.facebookButtonTapped()
-        print("Кнопка фейсбук нажата")
     }
 
 }

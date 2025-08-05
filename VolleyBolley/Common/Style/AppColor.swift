@@ -27,7 +27,6 @@ enum AppColor {
 		static let mapButton = orange
         static let fbButton = fbblue
 
-
 		// badges
 		static let badgeDefault = steelBlue
 		static let badgeSelected = mutedTeal

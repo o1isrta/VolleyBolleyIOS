@@ -20,8 +20,8 @@ extension UIView {
         var nextResponder: UIResponder? = self
         while nextResponder != nil {
             nextResponder = nextResponder?.next
-            if let vc = nextResponder as? UIViewController {
-                return vc
+            if let newVC = nextResponder as? UIViewController {
+                return newVC
             }
         }
         return nil

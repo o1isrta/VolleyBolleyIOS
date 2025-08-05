@@ -11,19 +11,66 @@ protocol LocationPickerViewDelegate: AnyObject {
     func locationPickerView(_ pickerView: LocationPickerView, didSelectItem item: String)
 }
 
+/// Переиспользуемый кастомный раскрывающийся список
 class LocationPickerView: UIView, UITableViewDelegate, UITableViewDataSource {
 
     weak var delegate: LocationPickerViewDelegate?
 
-    private let titleContainer = UIView()
-    private let titleLabel = UILabel()
-    private let arrowImageView = UIImageView()
-    private let tableContainer = UIView()
-    private let tableView = UITableView()
+    private let titleContainer: UIView = {
+        let titleContainer = UIView()
+        titleContainer.backgroundColor = .white
+        titleContainer.layer.cornerRadius = 16
+        titleContainer.layer.borderWidth = 1
+        titleContainer.layer.borderColor = .init(gray: 0.8, alpha: 1)
+        titleContainer.clipsToBounds = true
+        titleContainer.isUserInteractionEnabled = true
+        titleContainer.translatesAutoresizingMaskIntoConstraints = false
+        return titleContainer
+    }()
+
+    private let titleLabel: UILabel = {
+        let titleLabel = UILabel()
+        titleLabel.textColor = AppColor.Text.placeHolder
+        titleLabel.font = AppFont.Hero.regular(size: 16)
+        titleLabel.textAlignment = .left
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        return titleLabel
+    }()
+
+    private let arrowImageView: UIImageView = {
+        let arrowImageView = UIImageView(image: UIImage(systemName: "chevron.down"))
+        arrowImageView.tintColor = AppColor.Icon.inverted
+        arrowImageView.translatesAutoresizingMaskIntoConstraints = false
+        return arrowImageView
+    }()
+
+    private let tableContainer: UIView = {
+        let tableContainer = UIView()
+        tableContainer.translatesAutoresizingMaskIntoConstraints = false
+        tableContainer.backgroundColor = .white
+        tableContainer.layer.cornerRadius = 16
+        tableContainer.layer.borderWidth = 1
+        tableContainer.layer.borderColor = AppColor.Border.primary.cgColor
+        tableContainer.clipsToBounds = true
+        tableContainer.isHidden = true
+        tableContainer.alpha = 0
+        return tableContainer
+    }()
+
+    private let tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.isScrollEnabled = true
+
+        tableView.backgroundColor = .white
+        tableView.separatorInset = .zero
+        return tableView
+    }()
+
     private let cellIdentifier = "LocationCell"
 
-    private var heightConstraint: NSLayoutConstraint!
-    private var tableHeightConstraint: NSLayoutConstraint!
+    private var heightConstraint: NSLayoutConstraint?
+    private var tableHeightConstraint: NSLayoutConstraint?
     private var isOpen = false
     private let rowHeight: CGFloat = 51
     private let closedHeight: CGFloat = 51
@@ -49,6 +96,7 @@ class LocationPickerView: UIView, UITableViewDelegate, UITableViewDataSource {
         self.items = items
         self.placeholder = placeholder
         super.init(frame: .zero)
+
         setup()
     }
 
@@ -59,35 +107,15 @@ class LocationPickerView: UIView, UITableViewDelegate, UITableViewDataSource {
     private func setup() {
         translatesAutoresizingMaskIntoConstraints = false
 
-        // MARK: - Title Container (общая рамка вокруг UILabel и стрелки)
-
-        titleContainer.translatesAutoresizingMaskIntoConstraints = false
-        titleContainer.backgroundColor = .white
-        titleContainer.layer.cornerRadius = 16
-        titleContainer.layer.borderWidth = 1
-        titleContainer.layer.borderColor = .init(gray: 0.8, alpha: 1)
-        titleContainer.clipsToBounds = true
-        titleContainer.isUserInteractionEnabled = true
-
         let tap = UITapGestureRecognizer(target: self, action: #selector(toggleTableView))
         titleContainer.addGestureRecognizer(tap)
 
         addSubview(titleContainer)
-
-        // Title Label (без своей рамки)
-        titleLabel.text = placeholder
-        titleLabel.textColor = AppColor.Text.placeHolder
-        titleLabel.textAlignment = .left
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        //        titleLabel.backgroundColor = .white
-
-        // Arrow
-        arrowImageView.image = UIImage(systemName: "chevron.down")
-        arrowImageView.tintColor = AppColor.Text.placeHolder
-        arrowImageView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(tableContainer)
 
         titleContainer.addSubview(titleLabel)
         titleContainer.addSubview(arrowImageView)
+        tableContainer.addSubview(tableView)
 
         NSLayoutConstraint.activate([
             titleContainer.topAnchor.constraint(equalTo: topAnchor),
@@ -102,75 +130,42 @@ class LocationPickerView: UIView, UITableViewDelegate, UITableViewDataSource {
 
             arrowImageView.centerYAnchor.constraint(equalTo: titleContainer.centerYAnchor),
             arrowImageView.trailingAnchor.constraint(equalTo: titleContainer.trailingAnchor, constant: -12),
-            arrowImageView.widthAnchor.constraint(equalToConstant: 16),
-            arrowImageView.heightAnchor.constraint(equalToConstant: 16)
-        ])
+            arrowImageView.widthAnchor.constraint(equalToConstant: 14),
+            arrowImageView.heightAnchor.constraint(equalToConstant: 7),
 
-        // MARK: - Table Container (с рамкой и радиусом)
-
-        tableContainer.translatesAutoresizingMaskIntoConstraints = false
-        tableContainer.backgroundColor = .white
-        tableContainer.layer.cornerRadius = 16
-        tableContainer.layer.borderWidth = 1
-        tableContainer.layer.borderColor = AppColor.Border.primary.cgColor
-        tableContainer.clipsToBounds = true
-        tableContainer.isHidden = true
-        tableContainer.alpha = 0
-
-        addSubview(tableContainer)
-
-        NSLayoutConstraint.activate([
             tableContainer.topAnchor.constraint(equalTo: titleContainer.bottomAnchor, constant: 6),
             tableContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
-            tableContainer.trailingAnchor.constraint(equalTo: trailingAnchor)
-        ])
+            tableContainer.trailingAnchor.constraint(equalTo: trailingAnchor),
 
-        // MARK: - Table View
-
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.isScrollEnabled = true
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
-        tableView.backgroundColor = .white
-        tableView.separatorInset = .zero
-
-        tableContainer.addSubview(tableView)
-
-        tableHeightConstraint = tableContainer.heightAnchor.constraint(equalToConstant: 0)
-        tableHeightConstraint.isActive = true
-
-        NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: tableContainer.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: tableContainer.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: tableContainer.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: tableContainer.bottomAnchor)
         ])
 
-        // MARK: - Overall height constraint
+        titleLabel.text = placeholder
+
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
+
+        tableHeightConstraint = tableContainer.heightAnchor.constraint(equalToConstant: 0)
+        tableHeightConstraint?.isActive = true
 
         heightConstraint = heightAnchor.constraint(equalToConstant: closedHeight)
-        heightConstraint.isActive = true
+        heightConstraint?.isActive = true
     }
 
     @objc func toggleTableView() {
-        print("toggleTableView called. isOpen before toggle: \(isOpen)")
-        print("items count: \(items.count)")
-
         isOpen.toggle()
-
-        print("isOpen after toggle: \(isOpen)")
-
         tableContainer.isHidden = false
 
         let tableContentHeight = CGFloat(items.count) * rowHeight
         let adjustedTableHeight = min(tableContentHeight, maxTableHeight)
         let totalHeight = isOpen ? closedHeight + adjustedTableHeight : closedHeight
 
-        tableHeightConstraint.constant = isOpen ? adjustedTableHeight : 0
-        heightConstraint.constant = totalHeight
-
-        print("tableHeightConstraint: \(tableHeightConstraint.constant), heightConstraint: \(heightConstraint.constant)")
+        tableHeightConstraint?.constant = isOpen ? adjustedTableHeight : 0
+        heightConstraint?.constant = totalHeight
 
         if isOpen {
             tableContainer.alpha = 0
@@ -203,17 +198,13 @@ class LocationPickerView: UIView, UITableViewDelegate, UITableViewDataSource {
         if let scrollView = self.findSuperview(ofType: UIScrollView.self) {
             scrollView.setNeedsLayout()
             scrollView.layoutIfNeeded()
-            print("scrollView layout updated")
         }
 
-        if let vc = self.findViewController() {
-            vc.view.setNeedsLayout()
-            vc.view.layoutIfNeeded()
-            print("viewController layout updated")
+        if let listVC = self.findViewController() {
+            listVC.view.setNeedsLayout()
+            listVC.view.layoutIfNeeded()
         }
     }
-
-    // MARK: - Public Methods
 
     func updateItems(_ newItems: [String]) {
         items = newItems
@@ -221,18 +212,16 @@ class LocationPickerView: UIView, UITableViewDelegate, UITableViewDataSource {
 
         let tableContentHeight = CGFloat(items.count) * rowHeight
         let adjustedTableHeight = min(tableContentHeight, maxTableHeight)
-        tableHeightConstraint.constant = isOpen ? adjustedTableHeight : 0
+        tableHeightConstraint?.constant = isOpen ? adjustedTableHeight : 0
 
         if isOpen {
-            heightConstraint.constant = closedHeight + adjustedTableHeight
+            heightConstraint?.constant = closedHeight + adjustedTableHeight
         }
     }
 
     func clearSelection() {
         selectedItem = nil
     }
-
-    // MARK: UITableViewDataSource / Delegate
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items.count

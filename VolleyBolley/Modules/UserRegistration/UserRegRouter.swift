@@ -21,6 +21,6 @@ class UserRegRouter: UserRegRouterProtocol {
     }
 
     func showLevelInfoScreen() {
-        // Сделать переход на экран описания уровней
+        // TODO: Сделать переход на экран описания уровней
     }
 }

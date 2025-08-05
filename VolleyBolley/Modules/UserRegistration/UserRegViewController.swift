@@ -11,15 +11,28 @@ class UserRegViewController: UIViewController, UITextFieldDelegate {
 
     var presenter: UserRegPresenterProtocol?
 
-    private let scrollView = UIScrollView()
-    private let contentView = UIView()
+    private lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.backgroundColor = AppColor.Background.blur
+        scrollView.layer.cornerRadius = 32
+        scrollView.layer.masksToBounds = true
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.showsVerticalScrollIndicator = false
+        return scrollView
+    }()
 
-    private lazy var titleLabel = CustomTitle(text: "Registration", isLarge: true)
+    private lazy var contentView: UIView = {
+        let contentView = UIView()
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        return contentView
+    }()
 
-    private lazy var nameLabel = CustomLabel(text: "Name", isBold: true)
+    private lazy var titleLabel = CustomTitle(text: String(localized: "Registration"), isLarge: true)
+
+    private lazy var nameLabel = CustomLabel(text: String(localized: "Name"), isBold: true)
     private lazy var nameTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "Anton"
+        textField.placeholder = String(localized: "Anton")
         textField.backgroundColor = AppColor.Border.primary
         textField.layer.cornerRadius = 16
         textField.textColor = AppColor.Text.placeHolder
@@ -28,10 +41,10 @@ class UserRegViewController: UIViewController, UITextFieldDelegate {
         return textField
     }()
 
-    private lazy var surnameLabel = CustomLabel(text: "Surname", isBold: true)
+    private lazy var surnameLabel = CustomLabel(text: String(localized: "Surname"), isBold: true)
     private lazy var surnameTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "Ivanov"
+        textField.placeholder = String(localized: "Ivanov")
         textField.backgroundColor = AppColor.Border.primary
         textField.layer.cornerRadius = 16
         textField.textColor = AppColor.Text.placeHolder
@@ -41,22 +54,22 @@ class UserRegViewController: UIViewController, UITextFieldDelegate {
     }()
     private lazy var surnameSeparator = CustomSeparator()
 
-    private lazy var genderLabel = CustomLabel(text: "Gender", isBold: true)
+    private lazy var genderLabel = CustomLabel(text: String(localized: "Gender"), isBold: true)
     private lazy var maleButton = PickButton(
-        title: "Male",
+        title: String(localized: "Male"),
         isSelected: true,
         target: self,
         action: #selector(genderButtonTapped(_:))
     )
     private lazy var femaleButton = PickButton(
-        title: "Female",
+        title: String(localized: "Female"),
         isSelected: false,
         target: self,
         action: #selector(genderButtonTapped(_:))
     )
     private lazy var genderSeparator = CustomSeparator()
 
-    private lazy var birthdayLabel = CustomLabel(text: "Date of birth", isBold: true)
+    private lazy var birthdayLabel = CustomLabel(text: String(localized: "Date of birth"), isBold: true)
     private lazy var birthdayTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "__ / __ / ____"
@@ -72,7 +85,7 @@ class UserRegViewController: UIViewController, UITextFieldDelegate {
     }()
     private let birthdaySeparator = CustomSeparator()
 
-    private lazy var levelLabel = CustomLabel(text: "Level", isBold: true)
+    private lazy var levelLabel = CustomLabel(text: String(localized: "Level"), isBold: true)
     private lazy var levelInfoButton: UIButton = {
         var config = UIButton.Configuration.plain()
         config.image = UIImage(systemName: "questionmark.circle")
@@ -87,47 +100,47 @@ class UserRegViewController: UIViewController, UITextFieldDelegate {
         return button
     }()
     private lazy var lightLevelButton = PickButton(
-        title: "Light",
+        title: String(localized: "Light"),
         isSelected: true,
         target: self,
         action: #selector(levelButtonTapped(_:))
     )
     private lazy var mediumLevelButton = PickButton(
-        title: "Medium",
+        title: String(localized: "Medium"),
         isSelected: false,
         target: self,
         action: #selector(levelButtonTapped(_:))
     )
     private lazy var hardLevelButton = PickButton(
-        title: "Hard",
+        title: String(localized: "Hard"),
         isSelected: false,
         target: self,
         action: #selector(levelButtonTapped(_:))
     )
     private lazy var proLevelButton = PickButton(
-        title: "Pro",
+        title: String(localized: "Pro"),
         isSelected: false,
         target: self,
         action: #selector(levelButtonTapped(_:))
     )
     private lazy var levelSeparator = CustomSeparator()
 
-    private lazy var countryLabel = CustomLabel(text: "Your country", isBold: true)
+    private lazy var countryLabel = CustomLabel(text: String(localized: "Your country"), isBold: true)
     private var countryList: LocationPickerView?
     private lazy var countrySeparator = CustomSeparator()
 
-    private lazy var cityLabel = CustomLabel(text: "Your city", isBold: true)
+    private lazy var cityLabel = CustomLabel(text: String(localized: "Your city"), isBold: true)
     private var cityList: LocationPickerView?
 
     private lazy var getStartedButton = NextStepButton(
-        title: "GET STARTED",
+        title: String(localized: "GET STARTED"),
         isActive: true,
         target: self,
         action: #selector(getStartedTapped)
     )
 
-    private var selectedGender: String? = "Male"
-    private var selectedLevel: String? = "Light"
+    private var selectedGender: String? = String(localized: "Male")
+    private var selectedLevel: String? = String(localized: "Light")
     private var selectedCountry: String?
     private var selectedCity: String?
 
@@ -141,11 +154,11 @@ class UserRegViewController: UIViewController, UITextFieldDelegate {
         view.backgroundColor = AppColor.Background.screen
 
         let countries = presenter?.countries ?? []
-        countryList = LocationPickerView(items: countries, placeholder: "Choose your country")
+        countryList = LocationPickerView(items: countries, placeholder: String(localized: "Choose your country"))
         countryList?.delegate = self
 
         let cities = presenter?.cities ?? []
-        cityList = LocationPickerView(items: cities, placeholder: "Choose your city")
+        cityList = LocationPickerView(items: cities, placeholder: String(localized: "Choose your city"))
         cityList?.delegate = self
 
         setupScrollView()
@@ -158,19 +171,9 @@ class UserRegViewController: UIViewController, UITextFieldDelegate {
         view.layoutIfNeeded()
     }
 
-
-
     private func setupScrollView() {
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.showsVerticalScrollIndicator = false
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
-
-        scrollView.backgroundColor = AppColor.Background.blur
-        scrollView.layer.cornerRadius = 32
-        scrollView.layer.masksToBounds = true
 
         let safeArea = view.safeAreaLayoutGuide
 
@@ -340,16 +343,6 @@ class UserRegViewController: UIViewController, UITextFieldDelegate {
         presenter?.didTapGetStarted(name: name, surname: surname, gender: gender)
     }
 
-    //    private func createTextField(placeholder: String) -> UITextField {
-    //        let textField = UITextField()
-    //        textField.placeholder = placeholder
-    //        textField.backgroundColor = AppColor.Border.primary
-    //        textField.layer.cornerRadius = 16
-    //        textField.textColor = AppColor.Text.placeholder
-    //        textField.setLeftPaddingPoints(16)
-    //        return textField
-    //    }
-
     func textField(
         _ textField: UITextField,
         shouldChangeCharactersIn range: NSRange,
@@ -357,20 +350,16 @@ class UserRegViewController: UIViewController, UITextFieldDelegate {
     ) -> Bool {
         guard textField == birthdayTextField else { return true }
 
-        // Текущий текст с изменениями
         let currentText = textField.text ?? ""
         guard let stringRange = Range(range, in: currentText) else { return false }
-        var updatedText = currentText.replacingCharacters(in: stringRange, with: string)
+        let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
 
-        // Удаляем все символы кроме цифр
         let digitsOnly = updatedText.replacingOccurrences(of: "[^0-9]", with: "", options: .regularExpression)
 
-        // Ограничиваем максимум 8 цифр (ддммгггг)
         if digitsOnly.count > 8 {
             return false
         }
 
-        // Форматируем с разделителями
         var formattedText = ""
         let dayEnd = min(2, digitsOnly.count)
         if dayEnd > 0 {
@@ -400,7 +389,6 @@ class UserRegViewController: UIViewController, UITextFieldDelegate {
             formattedText += year
         }
 
-        // Валидация по частям, если ввели достаточно символов:
         if digitsOnly.count >= 2 {
             if let dayInt = Int(digitsOnly.prefix(2)), dayInt < 1 || dayInt > 31 {
                 return false
@@ -423,7 +411,7 @@ class UserRegViewController: UIViewController, UITextFieldDelegate {
         }
 
         textField.text = formattedText
-        return false // Мы сами обновляем текст, чтобы контролировать ввод
+        return false
     }
 }
 
