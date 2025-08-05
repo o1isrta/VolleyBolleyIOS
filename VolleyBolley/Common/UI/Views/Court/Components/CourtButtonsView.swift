@@ -10,8 +10,7 @@ import UIKit
 typealias CourtButtonData = (title: String, action: () -> Void)
 
 enum CourtButtonsViewType: CaseIterable {
-	case oneSmallButton
-	case oneBigButton
+	case oneButton
 	case twoButtons
 }
 
@@ -96,13 +95,9 @@ private extension CourtButtonsView {
 
 	func setupButtonsUI(courtButtonsViewType: CourtButtonsViewType) {
 		switch courtButtonsViewType {
-		case .oneBigButton:
+		case .oneButton:
 			buttonStackView.widthAnchor.constraint(equalToConstant: 215).isActive = false
 			buttonStackView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-			detailsButton.isHidden = true
-		case .oneSmallButton:
-			buttonStackView.widthAnchor.constraint(equalToConstant: 215).isActive = true
-			buttonStackView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = false
 			detailsButton.isHidden = true
 		case .twoButtons:
 			doneButton.widthAnchor.constraint(equalToConstant: 205).isActive = true

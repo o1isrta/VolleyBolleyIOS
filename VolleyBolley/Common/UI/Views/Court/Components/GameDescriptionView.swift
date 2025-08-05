@@ -123,6 +123,7 @@ final class GameDescriptionView: UIView {
 			(game.gender, AppFont.Hero.regular(size: 16))
 		])
 
+		// TODO
 		userAvatarView.configure(with: UIImage(named: "img-person"))
 		userNameLabel.text = "\(game.host.firstName) \(game.host.lastName)"
 		userLevelLabel.text = String(game.host.levelType.prefix(1).uppercased())
