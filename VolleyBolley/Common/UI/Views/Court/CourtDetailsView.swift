@@ -119,7 +119,7 @@ import SwiftUI
 				title: "CHOOSE THIS GAME",
 				action: { print("aaaaaaa")}
 				),
-			courtButtonsViewType: .oneButton,
+			courtButtonsViewType: .twoButtons,
 			detailsButtonData: CourtButtonData(
 				title: "Details",
 				action: { print("bbbbbbb")}
