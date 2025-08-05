@@ -41,7 +41,7 @@ final class CourtView: UIView {
 	func configure(
 		with court: CourtModel,
 		doneButtonData: CourtButtonData,
-		courtButtonsViewType: CourtButtonsViewType = .oneBigButton,
+		courtButtonsViewType: CourtButtonsViewType = .oneButton,
 		detailsButtonData: CourtButtonData? = nil
 	) {
 		descriptionView.addArrangedSubview(courtDescriptionView)
@@ -61,7 +61,7 @@ final class CourtView: UIView {
 		for game: GameModel,
 		hostType: HostType,
 		doneButtonData: CourtButtonData,
-		courtButtonsViewType: CourtButtonsViewType = .oneBigButton,
+		courtButtonsViewType: CourtButtonsViewType = .oneButton,
 		detailsButtonData: CourtButtonData? = nil
 	) {
 		descriptionView.addArrangedSubview(gameDescriptionView)
@@ -83,12 +83,9 @@ private extension CourtView {
 
 	func setupButtonsUI(courtButtonsViewType: CourtButtonsViewType) {
 		switch courtButtonsViewType {
-		case .oneBigButton:
+		case .oneButton:
 			courtButtonsView.widthAnchor.constraint(equalToConstant: 215).isActive = false
 			courtButtonsView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-		case .oneSmallButton:
-			courtButtonsView.widthAnchor.constraint(equalToConstant: 215).isActive = true
-			courtButtonsView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = false
 		case .twoButtons:
 			courtButtonsView.widthAnchor.constraint(equalToConstant: 205).isActive = true
 			courtButtonsView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
@@ -138,7 +135,7 @@ import SwiftUI
 					title: "CHOOSE THIS GAME",
 					action: { print("aaaaaaa")}
 					),
-				courtButtonsViewType: .oneBigButton,
+				courtButtonsViewType: .oneButton,
 				detailsButtonData: CourtButtonData(
 					title: "Details",
 					action: { print("bbbbbbb")}

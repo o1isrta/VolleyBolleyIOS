@@ -33,7 +33,7 @@ final class CourtBottomView: UIView {
 		with court: CourtModel,
 		distance: String,
 		doneButtonData: CourtButtonData,
-		courtButtonsViewType: CourtButtonsViewType = .oneBigButton,
+		courtButtonsViewType: CourtButtonsViewType = .oneButton,
 		detailsButtonData: CourtButtonData? = nil
 	) {
 		courtTitleView.configure(with: court, distance: distance)
@@ -52,12 +52,9 @@ private extension CourtBottomView {
 
 	func setupButtonsUI(courtButtonsViewType: CourtButtonsViewType) {
 		switch courtButtonsViewType {
-		case .oneBigButton:
+		case .oneButton:
 			courtButtonsView.widthAnchor.constraint(equalToConstant: 215).isActive = false
 			courtButtonsView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20).isActive = true
-		case .oneSmallButton:
-			courtButtonsView.widthAnchor.constraint(equalToConstant: 215).isActive = true
-			courtButtonsView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20).isActive = false
 		case .twoButtons:
 			courtButtonsView.widthAnchor.constraint(equalToConstant: 205).isActive = true
 			courtButtonsView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20).isActive = true
@@ -102,7 +99,7 @@ import SwiftUI
 						title: "CHOOSE THIS GAME",
 						action: { print("aaaaaaa")}
 						),
-					courtButtonsViewType: .oneBigButton,
+					courtButtonsViewType: .oneButton,
 					detailsButtonData: CourtButtonData(
 						title: "Details",
 						action: { print("bbbbbbb")}
@@ -124,7 +121,7 @@ import SwiftUI
 						title: "CHOOSE THIS GAME",
 						action: { print("aaaaaaa")}
 						),
-					courtButtonsViewType: .oneSmallButton,
+					courtButtonsViewType: .oneButton,
 					detailsButtonData: CourtButtonData(
 						title: "Details",
 						action: { print("bbbbbbb")}
