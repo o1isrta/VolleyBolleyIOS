@@ -151,7 +151,7 @@ class GlassmorphismView: UIView {
         // Сначала убираем эффект, затем добавляем его через animator
         blurView.effect = nil
         animator.addAnimations { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             let style: UIBlurEffect.Style = (self.theme == .dark) ? .dark : .light
             self.blurView.effect = UIBlurEffect(style: style)
         }
@@ -204,7 +204,7 @@ class GlassmorphismView: UIView {
         
         // Создаем новый animator с соответствующим стилем blur
         animator.addAnimations { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             let style: UIBlurEffect.Style = (theme == .dark) ? .dark : .light
             self.blurView.effect = UIBlurEffect(style: style)
         }
