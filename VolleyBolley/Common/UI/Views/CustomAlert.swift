@@ -61,13 +61,13 @@ final class CustomAlertView: UIView {
         return button
     }()
 
-    private lazy var cancelButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitleColor(AppColor.Text.inverted, for: .normal)
-        button.backgroundColor = AppColor.Background.actionButtonDefault
-        button.titleLabel?.font = AppFont.ActayWide.bold(size: 16)
-        button.layer.cornerRadius = 16
-        button.addTarget(self, action: #selector(noButtonTapped), for: .touchUpInside)
+    private lazy var cancelButton: NextStepButton = {
+        let button = NextStepButton(
+            title: String(localized: ""),
+            isActive: true,
+            target: self,
+            action: #selector(yesButtonTapped)
+        )
         return button
     }()
 
@@ -180,3 +180,23 @@ private extension CustomAlertView {
         ])
     }
 }
+
+#if DEBUG
+import SwiftUI
+
+struct CustomUIViewPreview: UIViewRepresentable {
+    func makeUIView(context: Context) -> UIView {
+        return CustomAlertView()
+    }
+
+    func updateUIView(_ uiView: UIView, context: Context) {}
+}
+
+struct CustomUIViewPreview_Previews: PreviewProvider {
+    static var previews: some View {
+        CustomUIViewPreview()
+            .previewLayout(.sizeThatFits)
+            .padding()
+    }
+}
+#endif
