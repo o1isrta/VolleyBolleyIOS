@@ -13,7 +13,7 @@ final class UserRegAssembly: Assembly {
             let userRegVC = UserRegViewController()
 
             let interactor = resolver.resolve(UserRegInteractorProtocol.self)!
-            let appRouter = resolver.resolve(AppRouter.self)! // resolve вместо self.coordinator
+            let appRouter = resolver.resolve(AppRouter.self)
             let router = UserRegRouter(viewController: userRegVC, coordinator: appRouter)
             let presenter = UserRegPresenter(view: userRegVC, interactor: interactor, router: router)
 
