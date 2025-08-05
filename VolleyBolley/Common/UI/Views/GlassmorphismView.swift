@@ -124,9 +124,9 @@ class GlassmorphismView: UIView {
         initialize()
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        initialize()
+        fatalError("init(coder:) has not been implemented")
     }
     
     /// Выполняет первоначальную настройку всех компонентов glassmorphism эффекта
