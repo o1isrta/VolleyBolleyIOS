@@ -19,6 +19,14 @@ enum CourtTitleViewType: CaseIterable {
 	}
 }
 
+// MARK: - CourtTitleViewModel
+
+struct CourtTitleViewModel {
+	let title: String
+	let location: String
+	let distance: String
+}
+
 final class CourtTitleView: UIView {
 
 	// MARK: - Private Properties
@@ -60,15 +68,15 @@ final class CourtTitleView: UIView {
 
 	// MARK: - Public Methods
 
-	func configure(with court: CourtModel, distance: String) {
+	func configure(with model: CourtTitleViewModel) {
 		locationTitleView.configure(
 			with: LocationTitleViewModel(
-				title: court.location.courtName,
-				location: court.location.locationName
+				title: model.title,
+				location: model.location
 			)
 		)
-		distanceLabel.text = distance
-		distanceLabel.isHidden = distance.isEmpty
+		distanceLabel.text = model.distance
+		distanceLabel.isHidden = model.distance.isEmpty
 	}
 }
 
@@ -112,7 +120,12 @@ import SwiftUI
 			UIViewPreview {
 				let view = CourtTitleView(type: .icon)
 				let court = CourtModel.mockData
-				view.configure(with: court, distance: "Nearest")
+				let model = CourtTitleViewModel(
+					title: court.location.courtName,
+					location: court.location.locationName,
+					distance: "Nearest"
+				)
+				view.configure(with: model)
 				return view
 			}
 			.frame(width: .infinity, height: 36)
@@ -124,7 +137,12 @@ import SwiftUI
 			UIViewPreview {
 				let view = CourtTitleView(type: .icon)
 				let court = CourtModel.mockData
-				view.configure(with: court, distance: "2 km")
+				let model = CourtTitleViewModel(
+					title: court.location.courtName,
+					location: court.location.locationName,
+					distance: "2 km"
+				)
+				view.configure(with: model)
 				return view
 			}
 			.frame(width: .infinity, height: 36)
@@ -136,7 +154,12 @@ import SwiftUI
 			UIViewPreview {
 				let view = CourtTitleView(type: .none)
 				let court = CourtModel.mockData
-				view.configure(with: court, distance: "")
+				let model = CourtTitleViewModel(
+					title: court.location.courtName,
+					location: court.location.locationName,
+					distance: ""
+				)
+				view.configure(with: model)
 				return view
 			}
 			.frame(width: .infinity, height: 36)
@@ -148,7 +171,12 @@ import SwiftUI
 			UIViewPreview {
 				let view = CourtTitleView(type: .none)
 				let court = CourtModel.mockData
-				view.configure(with: court, distance: "Nearest")
+				let model = CourtTitleViewModel(
+					title: court.location.courtName,
+					location: court.location.locationName,
+					distance: "Nearest"
+				)
+				view.configure(with: model)
 				return view
 			}
 			.frame(width: .infinity, height: 36)
