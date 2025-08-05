@@ -2,44 +2,22 @@
 //  OnboardingRouter.swift
 //  VolleyBolley
 //
-//  Created by Nikolai Eremenko
+//  Created by Олег Козырев on 12.07.2025.
 //
 
-import Swinject
 import UIKit
 
-protocol OnboardingRouterProtocol {
-    var onFinish: (() -> Void)? { get set }
-    func start() -> UIViewController
-}
+class OnboardingRouter: OnboardingRouterProtocol {
 
-final class OnboardingRouter: OnboardingRouterProtocol {
+    weak var viewController: UIViewController?
+    weak var coordinator: AppRouter?
 
-    // MARK: - Public Properties
-
-    var onFinish: (() -> Void)?
-
-    // MARK: - Private Properties
-
-    private let resolver: Resolver
-
-    // MARK: - Initializers
-
-    init(resolver: Resolver) {
-        self.resolver = resolver
+    init(viewController: UIViewController, coordinator: AppRouter?) {
+        self.viewController = viewController
+        self.coordinator = coordinator
     }
 
-    // MARK: - Public Methods
-
-    func start() -> UIViewController {
-        guard let viewController = resolver.resolve(OnboardingViewController.self) else {
-            fatalError("Error: Failed to resolve AuthViewController")
-        }
-
-        viewController.onContinue = { [weak self] in
-            self?.onFinish?()
-        }
-
-        return viewController
+    func navigateToAuthorizationScreen() {
+        // TODO: Добавить метод перехода к авторизации
     }
 }
