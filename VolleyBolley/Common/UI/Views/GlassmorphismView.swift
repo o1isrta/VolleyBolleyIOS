@@ -278,6 +278,16 @@ class GlassmorphismView: UIView {
         layer.masksToBounds = true
     }
     
+    // MARK: - Deinitialization
+    
+    deinit {
+        // Проверяем состояние animator'а перед завершением
+        if animator.state != .inactive {
+            animator.stopAnimation(false)
+            animator.finishAnimation(at: .current)
+        }
+    }
+    
     // MARK: - UIView Overrides
     
     override func layoutSubviews() {
