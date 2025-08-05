@@ -27,7 +27,7 @@ enum AppColor {
 		static let mapButton = orange
         static let fbButton = fbblue
 
-		// badges
+        // badges
 		static let badgeDefault = steelBlue
 		static let badgeSelected = mutedTeal
 		static let levelBadgeLight = blue
@@ -38,11 +38,12 @@ enum AppColor {
 		// pin
 		static let pinDefault = mutedTeal
 		static let pinSelected = orange
-
 		static let searField = white
-
 		static let calendar = white
-	}
+
+        //alert
+        static let alert = grey
+    }
 
 	enum Text {
 		static let primary = white
@@ -104,4 +105,5 @@ private extension AppColor {
 	static let butterYellow = UIColor(hex: "#F4E998")
 	static let mint = UIColor(hex: "#5CF08D")
     static let blurColor = UIColor(hex: "#AAC8E0", alpha: 0.19)
+    static let greyBackground = UIColor(hex: "#555252")
 }
