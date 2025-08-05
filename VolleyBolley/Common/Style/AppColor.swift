@@ -33,14 +33,15 @@ enum AppColor {
 		static let levelBadgeHard = orange
 		static let levelBadgePro = yellow
 
-		// pin
-		static let pinDefault = mutedTeal
-		static let pinSelected = orange
+        // pin
+        static let pinDefault = mutedTeal
+        static let pinSelected = orange
+        static let searField = white
+        static let calendar = white
 
-		static let searField = white
-
-		static let calendar = white
-	}
+        //alert
+        static let alert = grey
+    }
 
 	enum Text {
 		static let primary = white
@@ -89,9 +90,9 @@ private extension AppColor {
 	static let green = UIColor(hex: "#2DB69A")
 	static let orange = UIColor(hex: "#E6AC53")
 	static let yellow = UIColor(hex: "#E6C953")
+    static let mistGrey = UIColor(hex: "#8CA5A3")
+    static let darkGrey = UIColor(hex: "#484848")
 	static let grey = UIColor(hex: "#7C7C7C")
-	static let mistGrey = UIColor(hex: "#8CA5A3")
-	static let darkGrey = UIColor(hex: "#484848")
     static let separatorGray = UIColor(hex: "#C3C3C3")
 	static let darkCharcoal = UIColor(hex: "#333333")
 	static let lightGrey = UIColor(hex: "#E0E0E0")
@@ -100,4 +101,5 @@ private extension AppColor {
 	static let red = UIColor(hex: "#BA0000")
 	static let butterYellow = UIColor(hex: "#F4E998")
 	static let mint = UIColor(hex: "#5CF08D")
+    static let greyBackground = UIColor(hex: "#555252")
 }
