@@ -7,6 +7,8 @@
 
 import UIKit
 
+// MARK: - LocationTitleViewModel
+
 struct LocationTitleViewModel {
 	let title: String
 	let location: String

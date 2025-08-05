@@ -45,7 +45,13 @@ class CourtDetailsView: UIView {
 		courtButtonsViewType: CourtButtonsViewType = .oneButton,
 		detailsButtonData: CourtButtonData? = nil
 	) {
-		courtTitleView.configure(with: court, distance: distance)
+		let courtTitleViewModel = CourtTitleViewModel(
+			title: court.location.courtName,
+			location: court.location.locationName,
+			distance: distance
+		)
+		courtTitleView.configure(with: courtTitleViewModel)
+
 		courtView.configure(
 				with: court,
 				doneButtonData: doneButtonData,
@@ -63,7 +69,13 @@ class CourtDetailsView: UIView {
 		courtButtonsViewType: CourtButtonsViewType = .oneButton,
 		detailsButtonData: CourtButtonData? = nil
 	) {
-		courtTitleView.configure(with: court, distance: distance)
+		let courtTitleViewModel = CourtTitleViewModel(
+			title: court.location.courtName,
+			location: court.location.locationName,
+			distance: distance
+		)
+		courtTitleView.configure(with: courtTitleViewModel)
+
 		courtView.configure(
 				with: court,
 				for: game,

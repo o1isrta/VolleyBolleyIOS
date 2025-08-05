@@ -48,6 +48,7 @@ final class CourtImageView: UIView {
 //			// Здесь можно добавить асинхронную загрузку изображения
 //			courtImageView.image = courtData.imageUrl
 //		}
+		// TODO
 		courtImageView.image = UIImage(named: "court")
 
 		tagStackView.arrangedSubviews.forEach {

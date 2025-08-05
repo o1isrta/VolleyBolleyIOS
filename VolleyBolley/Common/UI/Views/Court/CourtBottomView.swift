@@ -36,7 +36,13 @@ final class CourtBottomView: UIView {
 		courtButtonsViewType: CourtButtonsViewType = .oneButton,
 		detailsButtonData: CourtButtonData? = nil
 	) {
-		courtTitleView.configure(with: court, distance: distance)
+		let courtTitleViewModel = CourtTitleViewModel(
+			title: court.location.courtName,
+			location: court.location.locationName,
+			distance: distance
+		)
+		courtTitleView.configure(with: courtTitleViewModel)
+
 		courtButtonsView.configure(
 				type: courtButtonsViewType,
 				doneButtonData: doneButtonData,
