@@ -9,7 +9,6 @@ import Swinject
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
     var window: UIWindow?
     var appRouter: AppRouter?
 
@@ -23,12 +22,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         NetworkEnvironment.current = AppEnvironment.fromPlist()
 
         let window = UIWindow(windowScene: windowScene)
+        self.window = window
+
         DIContainer.initialize(window: window)
 
         guard let appRouter = DIContainer.shared.resolver.resolve(AppRouter.self) else {
             assertionFailure("Failed to resolve AppRouter from DIContainer")
             return
         }
+        self.appRouter = appRouter
+
         appRouter.start()
 
         window.makeKeyAndVisible()
