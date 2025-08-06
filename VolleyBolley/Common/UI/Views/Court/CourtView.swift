@@ -7,6 +7,50 @@
 
 import UIKit
 
+// MARK: - CourtViewModel
+
+struct CourtViewModel {
+	let court: CourtModel
+	let doneButtonData: CourtButtonData
+	let detailsButtonData: CourtButtonData?
+
+	init(
+		court: CourtModel,
+		doneButtonData: CourtButtonData,
+		detailsButtonData: CourtButtonData? = nil
+	) {
+		self.court = court
+		self.doneButtonData = doneButtonData
+		self.detailsButtonData = detailsButtonData
+	}
+}
+
+// MARK: - GameViewModel
+
+struct GameViewModel {
+	let court: CourtModel
+	let game: GameModel
+	let hostType: HostType
+	let doneButtonData: CourtButtonData
+	let detailsButtonData: CourtButtonData?
+
+	init(
+		court: CourtModel,
+		game: GameModel,
+		hostType: HostType,
+		doneButtonData: CourtButtonData,
+		detailsButtonData: CourtButtonData? = nil
+	) {
+		self.court = court
+		self.game = game
+		self.hostType = hostType
+		self.doneButtonData = doneButtonData
+		self.detailsButtonData = detailsButtonData
+	}
+}
+
+// MARK: - CourtView
+
 /// Custom View to show information for two variants
 /// - with court details
 /// - with game details (host, game details)
@@ -38,68 +82,58 @@ final class CourtView: UIView {
 
 	// MARK: - Public Methods
 
-	func configure(
-		with court: CourtModel,
-		doneButtonData: CourtButtonData,
-		detailsButtonData: CourtButtonData? = nil
-	) {
+	func configure(with model: CourtViewModel) {
 		descriptionView.addArrangedSubview(courtDescriptionView)
 
 		let courtImageViewModel = CourtImageViewModel(
-			imageURL: court.imageUrl,
-			tags: court.tagList
+			imageURL: model.court.imageUrl,
+			tags: model.court.tagList
 		)
 		courtImageView.configure(with: courtImageViewModel)
 
 		let courtDescriptionModel = CourtDescriptionViewModel(
-			price: court.price,
-			description: court.description,
-			contact: court.contacts?[0].value
+			price: model.court.price,
+			description: model.court.description,
+			contact: model.court.contacts?[0].value
 		)
 		courtDescriptionView.configure(with: courtDescriptionModel)
 
 		let courtButtonsViewModel = CourtButtonsViewModel(
-			doneButtonData: doneButtonData,
-			detailsButtonData: detailsButtonData
+			doneButtonData: model.doneButtonData,
+			detailsButtonData: model.detailsButtonData
 		)
 		courtButtonsView.configure(with: courtButtonsViewModel)
-		setupButtonsUI(isExistDetailsButton: detailsButtonData != nil)
+		setupButtonsUI(isExistDetailsButton: model.detailsButtonData != nil)
 	}
 
-	func configure(
-		with court: CourtModel,
-		for game: GameModel,
-		hostType: HostType,
-		doneButtonData: CourtButtonData,
-		detailsButtonData: CourtButtonData? = nil
-	) {
+	func configure(with model: GameViewModel) {
 		descriptionView.addArrangedSubview(gameDescriptionView)
 
 		let courtImageViewModel = CourtImageViewModel(
-			imageURL: court.imageUrl,
-			tags: court.tagList
+			imageURL: model.court.imageUrl,
+			tags: model.court.tagList
 		)
 		courtImageView.configure(with: courtImageViewModel)
 
 		let gameDescriptionViewModel = GameDescriptionViewModel(
-			hostType: hostType,
-			hostFirstName: game.host.firstName,
-			hostLastName: game.host.lastName,
-			hostLevel: game.host.levelType,
-			hostAvatarURL: game.host.avatarURL,
-			startTime: game.startTime,
-			endTime: game.endTime,
-			gameLevels: game.levels,
-			gameGender: game.gender
+			hostType: model.hostType,
+			hostFirstName: model.game.host.firstName,
+			hostLastName: model.game.host.lastName,
+			hostLevel: model.game.host.levelType,
+			hostAvatarURL: model.game.host.avatarURL,
+			startTime: model.game.startTime,
+			endTime: model.game.endTime,
+			gameLevels: model.game.levels,
+			gameGender: model.game.gender
 		)
 		gameDescriptionView.configure(with: gameDescriptionViewModel)
 
 		let courtButtonsViewModel = CourtButtonsViewModel(
-			doneButtonData: doneButtonData,
-			detailsButtonData: detailsButtonData
+			doneButtonData: model.doneButtonData,
+			detailsButtonData: model.detailsButtonData
 		)
 		courtButtonsView.configure(with: courtButtonsViewModel)
-		setupButtonsUI(isExistDetailsButton: detailsButtonData != nil)
+		setupButtonsUI(isExistDetailsButton: model.detailsButtonData != nil)
 	}
 }
 
@@ -150,21 +184,20 @@ import SwiftUI
 #Preview("Game") {
 	UIViewPreview {
 		let view = CourtView()
-		let court = CourtModel.mockData
-		let game = GameModel.mockData
-		view.configure(
-				with: court,
-				for: game,
-				hostType: .game,
-				doneButtonData: CourtButtonData(
-					title: "CHOOSE THIS GAME",
-					action: { print("aaaaaaa")}
-					),
-				detailsButtonData: CourtButtonData(
-					title: "Details",
-					action: { print("bbbbbbb")}
-				)
+		let model = GameViewModel(
+			court: CourtModel.mockData,
+			game: GameModel.mockData,
+			hostType: .game,
+			doneButtonData: CourtButtonData(
+				title: "CHOOSE THIS GAME",
+				action: { print("aaaaaaa")}
+			),
+			detailsButtonData: CourtButtonData(
+				title: "Details",
+				action: { print("bbbbbbb")}
 			)
+		)
+		view.configure(with: model)
 		return view
 	}
 	.padding()
@@ -176,14 +209,14 @@ import SwiftUI
 #Preview("Court") {
 	UIViewPreview {
 		let view = CourtView()
-		let court = CourtModel.mockData
-		view.configure(
-				with: court,
-				doneButtonData: CourtButtonData(
-					title: "Choose this court",
-					action: { print("aaaaaaa")}
-				)
+		let model = CourtViewModel(
+			court: CourtModel.mockData,
+			doneButtonData: CourtButtonData(
+				title: "Choose this court",
+				action: { print("aaaaaaa")}
 			)
+		)
+		view.configure(with: model)
 		return view
 	}
 	.padding()
