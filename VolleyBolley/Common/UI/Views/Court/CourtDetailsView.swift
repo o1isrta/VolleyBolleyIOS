@@ -96,11 +96,12 @@ class CourtDetailsView: UIView {
 		)
 		courtTitleView.configure(with: courtTitleViewModel)
 
-		courtView.configure(
-			with: model.court,
+		let courtViewModel = CourtViewModel(
+			court: model.court,
 			doneButtonData: model.doneButtonData,
 			detailsButtonData: model.detailsButtonData
 		)
+		courtView.configure(with: courtViewModel)
 	}
 
 	func configure(with model: GameDetailsViewModel) {
@@ -111,13 +112,14 @@ class CourtDetailsView: UIView {
 		)
 		courtTitleView.configure(with: courtTitleViewModel)
 
-		courtView.configure(
-			with: model.court,
-			for: model.game,
+		let courtViewModel = GameViewModel(
+			court: model.court,
+			game: model.game,
 			hostType: model.hostType,
 			doneButtonData: model.doneButtonData,
 			detailsButtonData: model.detailsButtonData
-			)
+		)
+		courtView.configure(with: courtViewModel)
 	}
 }
 
