@@ -14,6 +14,7 @@ struct LocationTitleViewModel {
 	let location: String
 }
 
+/// Custom View to show information about court: title and location
 final class LocationTitleView: UIView {
 
 	// MARK: - Private Properties
