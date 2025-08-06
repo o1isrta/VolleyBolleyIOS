@@ -83,7 +83,18 @@ final class CourtView: UIView {
 		)
 		courtImageView.configure(with: courtImageViewModel)
 
-		gameDescriptionView.configure(with: game, hostType: hostType)
+		let gameDescriptionViewModel = GameDescriptionViewModel(
+			hostType: hostType,
+			hostFirstName: game.host.firstName,
+			hostLastName: game.host.lastName,
+			hostLevel: game.host.levelType,
+			hostAvatarURL: game.host.avatarURL,
+			startTime: game.startTime,
+			endTime: game.endTime,
+			gameLevels: game.levels,
+			gameGender: game.gender
+		)
+		gameDescriptionView.configure(with: gameDescriptionViewModel)
 
 		courtButtonsView.configure(
 				type: courtButtonsViewType,

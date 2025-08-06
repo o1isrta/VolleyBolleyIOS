@@ -19,6 +19,38 @@ enum HostType: String, CaseIterable {
 	}
 }
 
+// MARK: - GameDescriptionViewModel
+
+struct GameDescriptionViewModel {
+	let hostType: String
+	let hostName: String
+	let hostAvatarURL: String
+	let hostLevel: String
+	let gameDate: String
+	let gameLevel: String
+	let gameGender: String
+
+	init(
+		hostType: HostType,
+		hostFirstName: String,
+		hostLastName: String,
+		hostLevel: String,
+		hostAvatarURL: String,
+		startTime: String,
+		endTime: String,
+		gameLevels: [String],
+		gameGender: String
+	) {
+		self.hostType = hostType.caption
+		self.hostName = "\(hostFirstName) \(hostLastName)"
+		self.hostLevel = String(hostLevel.prefix(1).uppercased())
+		self.hostAvatarURL = hostAvatarURL
+		self.gameDate = Date.formatDateRange(startString: startTime, endString: endTime) ?? "-"
+		self.gameLevel = gameLevels.joined(separator: ", ")
+		self.gameGender = gameGender
+	}
+}
+
 final class GameDescriptionView: UIView {
 
 	// MARK: - Private Properties
@@ -104,29 +136,28 @@ final class GameDescriptionView: UIView {
 
 	// MARK: - Public Methods
 
-	func configure(with game: GameModel, hostType: HostType) {
-		captionLabel.text = hostType.caption
-
-		let time = Date.formatDateRange(startString: game.startTime, endString: game.endTime)
+	func configure(with model: GameDescriptionViewModel) {
+		captionLabel.text = model.hostType
 		dateLabel.setTextWithDifferentStyles([
 			(String(localized: "When: "), AppFont.ActayWide.bold(size: 16)),
-			(time ?? "-", AppFont.Hero.regular(size: 16))
+			(model.gameDate, AppFont.Hero.regular(size: 16))
 		])
 
 		levelLabel.setTextWithDifferentStyles([
 			(String(localized: "Level: "), AppFont.ActayWide.bold(size: 16)),
-			(game.levels.joined(separator: ", "), AppFont.Hero.regular(size: 16))
+			(model.gameLevel, AppFont.Hero.regular(size: 16))
 		])
 
 		genderLabel.setTextWithDifferentStyles([
 			(String(localized: "Gender: "), AppFont.ActayWide.bold(size: 16)),
-			(game.gender, AppFont.Hero.regular(size: 16))
+			(model.gameGender, AppFont.Hero.regular(size: 16))
 		])
 
 		// TODO
+//		userAvatarView.configure(with: model.hostAvatarURL)
 		userAvatarView.configure(with: UIImage(named: "img-person"))
-		userNameLabel.text = "\(game.host.firstName) \(game.host.lastName)"
-		userLevelLabel.text = String(game.host.levelType.prefix(1).uppercased())
+		userNameLabel.text = model.hostName
+		userLevelLabel.text = model.hostLevel
 	}
 }
 
@@ -187,7 +218,18 @@ import SwiftUI
 			UIViewPreview {
 				let view = GameDescriptionView()
 				let game = GameModel.mockData
-				view.configure(with: game, hostType: .game)
+				let model = GameDescriptionViewModel(
+					hostType: HostType.game,
+					hostFirstName: game.host.firstName,
+					hostLastName: game.host.lastName,
+					hostLevel: game.host.levelType,
+					hostAvatarURL: game.host.avatarURL,
+					startTime: game.startTime,
+					endTime: game.endTime,
+					gameLevels: game.levels,
+					gameGender: game.gender
+				)
+				view.configure(with: model)
 				return view
 			}
 			.frame(width: .infinity, height: 148)
@@ -199,7 +241,18 @@ import SwiftUI
 			UIViewPreview {
 				let view = GameDescriptionView()
 				let game = GameModel.mockData
-				view.configure(with: game, hostType: .tournament)
+				let model = GameDescriptionViewModel(
+					hostType: HostType.tournament,
+					hostFirstName: game.host.firstName,
+					hostLastName: game.host.lastName,
+					hostLevel: game.host.levelType,
+					hostAvatarURL: game.host.avatarURL,
+					startTime: game.startTime,
+					endTime: game.endTime,
+					gameLevels: game.levels,
+					gameGender: game.gender
+				)
+				view.configure(with: model)
 				return view
 			}
 			.frame(width: .infinity, height: 148)
