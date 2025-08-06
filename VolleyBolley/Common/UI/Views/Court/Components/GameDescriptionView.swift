@@ -7,18 +7,6 @@
 
 import UIKit
 
-enum HostType: String, CaseIterable {
-	case game
-	case tournament
-
-	var caption: String {
-		switch self {
-		case .game: return String(localized: "Game host")
-		case .tournament: return String(localized: "Tournament host")
-		}
-	}
-}
-
 // MARK: - GameDescriptionViewModel
 
 struct GameDescriptionViewModel {
@@ -48,6 +36,18 @@ struct GameDescriptionViewModel {
 		self.gameDate = Date.formatDateRange(startString: startTime, endString: endTime) ?? "-"
 		self.gameLevel = gameLevels.joined(separator: ", ")
 		self.gameGender = gameGender
+	}
+}
+
+enum HostType: String, CaseIterable {
+	case game
+	case tournament
+
+	var caption: String {
+		switch self {
+		case .game: return String(localized: "Game host")
+		case .tournament: return String(localized: "Tournament host")
+		}
 	}
 }
 
