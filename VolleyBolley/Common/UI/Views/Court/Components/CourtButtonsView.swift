@@ -14,6 +14,24 @@ enum CourtButtonsViewType: CaseIterable {
 	case twoButtons
 }
 
+// MARK: - CourtButtonsViewModel
+
+struct CourtButtonsViewModel {
+	let type: CourtButtonsViewType
+	let doneButtonData: CourtButtonData
+	let detailsButtonData: CourtButtonData?
+
+	init(
+		type: CourtButtonsViewType,
+		doneButtonData: CourtButtonData,
+		detailsButtonData: CourtButtonData? = nil
+	) {
+		self.type = type
+		self.doneButtonData = doneButtonData
+		self.detailsButtonData = detailsButtonData
+	}
+}
+
 final class CourtButtonsView: UIView {
 
 	// MARK: - Public Properties
@@ -64,20 +82,16 @@ final class CourtButtonsView: UIView {
 
 	// MARK: - Public Methods
 
-	func configure(
-		type: CourtButtonsViewType,
-		doneButtonData: CourtButtonData,
-		detailsButtonData: CourtButtonData? = nil
-	) {
-		doneButton.setTitle(doneButtonData.title, for: .normal)
-		doneButtonCallback = doneButtonData.action
+	func configure(with model: CourtButtonsViewModel) {
+		doneButton.setTitle(model.doneButtonData.title, for: .normal)
+		doneButtonCallback = model.doneButtonData.action
 
-		if let detailsButtonData {
+		if let detailsButtonData = model.detailsButtonData {
 			detailsButton.setTitle(detailsButtonData.title, for: .normal)
 			detailsButtonCallback = detailsButtonData.action
 		}
 
-		setupButtonsUI(courtButtonsViewType: type)
+		setupButtonsUI(courtButtonsViewType: model.type)
 	}
 }
 

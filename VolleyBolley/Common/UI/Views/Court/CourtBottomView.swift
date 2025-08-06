@@ -43,11 +43,12 @@ final class CourtBottomView: UIView {
 		)
 		courtTitleView.configure(with: courtTitleViewModel)
 
-		courtButtonsView.configure(
-				type: courtButtonsViewType,
-				doneButtonData: doneButtonData,
-				detailsButtonData: detailsButtonData
-			)
+		let courtButtonsViewModel = CourtButtonsViewModel(
+			type: courtButtonsViewType,
+			doneButtonData: doneButtonData,
+			detailsButtonData: detailsButtonData
+		)
+		courtButtonsView.configure(with: courtButtonsViewModel)
 		setupButtonsUI(courtButtonsViewType: courtButtonsViewType)
 	}
 }
