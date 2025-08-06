@@ -34,7 +34,7 @@ struct CourtBottomViewModel {
 // MARK: - CourtBottomView
 
 /// Custom bottom view to display information with location name and custom number of buttons
-final class CourtBottomView: UIView {
+final class CourtBottomView: GlassmorphismView {
 
 	// MARK: - Private Properties
 
@@ -88,7 +88,7 @@ private extension CourtBottomView {
 	}
 
 	func setupUI() {
-		backgroundColor = AppColor.Background.screen// TODO: need replace to glass effect
+		backgroundColor = AppColor.Background.screen
 		layer.cornerRadius = 32
 		layer.masksToBounds = true
 
@@ -135,7 +135,6 @@ import SwiftUI
 			return view
 		}
 		.frame(width: .infinity, height: 136)
-		.background(Color(cgColor: AppColor.Background.screen.cgColor))
 		.padding()
 
 		UIViewPreview {
@@ -158,7 +157,6 @@ import SwiftUI
 			return view
 		}
 		.frame(width: .infinity, height: 136)
-		.background(Color(cgColor: AppColor.Background.screen.cgColor))
 		.padding()
 
 		UIViewPreview {
@@ -177,7 +175,6 @@ import SwiftUI
 			return view
 		}
 		.frame(width: .infinity, height: 136)
-		.background(Color(cgColor: AppColor.Background.screen.cgColor))
 		.padding()
 	}
 }
