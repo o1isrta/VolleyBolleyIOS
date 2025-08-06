@@ -42,7 +42,6 @@ class CourtDetailsView: UIView {
 		with court: CourtModel,
 		distance: String,
 		doneButtonData: CourtButtonData,
-		courtButtonsViewType: CourtButtonsViewType = .oneButton,
 		detailsButtonData: CourtButtonData? = nil
 	) {
 		let courtTitleViewModel = CourtTitleViewModel(
@@ -55,7 +54,6 @@ class CourtDetailsView: UIView {
 		courtView.configure(
 				with: court,
 				doneButtonData: doneButtonData,
-				courtButtonsViewType: courtButtonsViewType,
 				detailsButtonData: detailsButtonData
 			)
 	}
@@ -66,7 +64,6 @@ class CourtDetailsView: UIView {
 		game: GameModel,
 		hostType: HostType,
 		doneButtonData: CourtButtonData,
-		courtButtonsViewType: CourtButtonsViewType = .oneButton,
 		detailsButtonData: CourtButtonData? = nil
 	) {
 		let courtTitleViewModel = CourtTitleViewModel(
@@ -81,7 +78,6 @@ class CourtDetailsView: UIView {
 				for: game,
 				hostType: hostType,
 				doneButtonData: doneButtonData,
-				courtButtonsViewType: courtButtonsViewType,
 				detailsButtonData: detailsButtonData
 			)
 	}
@@ -131,7 +127,6 @@ import SwiftUI
 				title: "CHOOSE THIS GAME",
 				action: { print("aaaaaaa")}
 				),
-			courtButtonsViewType: .twoButtons,
 			detailsButtonData: CourtButtonData(
 				title: "Details",
 				action: { print("bbbbbbb")}
@@ -155,7 +150,6 @@ import SwiftUI
 				title: "CHOOSE THIS GAME",
 				action: { print("aaaaaaa")}
 				),
-			courtButtonsViewType: .oneButton,
 			detailsButtonData: CourtButtonData(
 				title: "Details",
 				action: { print("bbbbbbb")}

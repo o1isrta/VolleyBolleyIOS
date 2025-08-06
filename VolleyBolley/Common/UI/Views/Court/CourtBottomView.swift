@@ -33,7 +33,6 @@ final class CourtBottomView: UIView {
 		with court: CourtModel,
 		distance: String,
 		doneButtonData: CourtButtonData,
-		courtButtonsViewType: CourtButtonsViewType = .oneButton,
 		detailsButtonData: CourtButtonData? = nil
 	) {
 		let courtTitleViewModel = CourtTitleViewModel(
@@ -44,12 +43,11 @@ final class CourtBottomView: UIView {
 		courtTitleView.configure(with: courtTitleViewModel)
 
 		let courtButtonsViewModel = CourtButtonsViewModel(
-			type: courtButtonsViewType,
 			doneButtonData: doneButtonData,
 			detailsButtonData: detailsButtonData
 		)
 		courtButtonsView.configure(with: courtButtonsViewModel)
-		setupButtonsUI(courtButtonsViewType: courtButtonsViewType)
+		setupButtonsUI(isExistDetailsButton: detailsButtonData != nil)
 	}
 }
 
@@ -57,13 +55,12 @@ final class CourtBottomView: UIView {
 
 private extension CourtBottomView {
 
-	func setupButtonsUI(courtButtonsViewType: CourtButtonsViewType) {
-		switch courtButtonsViewType {
-		case .oneButton:
-			courtButtonsView.widthAnchor.constraint(equalToConstant: 215).isActive = false
-			courtButtonsView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20).isActive = true
-		case .twoButtons:
+	func setupButtonsUI(isExistDetailsButton: Bool) {
+		if isExistDetailsButton {
 			courtButtonsView.widthAnchor.constraint(equalToConstant: 205).isActive = true
+			courtButtonsView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20).isActive = true
+		} else {
+			courtButtonsView.widthAnchor.constraint(equalToConstant: 215).isActive = false
 			courtButtonsView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20).isActive = true
 		}
 	}
@@ -106,7 +103,6 @@ import SwiftUI
 						title: "CHOOSE THIS GAME",
 						action: { print("aaaaaaa")}
 						),
-					courtButtonsViewType: .oneButton,
 					detailsButtonData: CourtButtonData(
 						title: "Details",
 						action: { print("bbbbbbb")}
@@ -128,7 +124,6 @@ import SwiftUI
 						title: "CHOOSE THIS GAME",
 						action: { print("aaaaaaa")}
 						),
-					courtButtonsViewType: .oneButton,
 					detailsButtonData: CourtButtonData(
 						title: "Details",
 						action: { print("bbbbbbb")}
@@ -149,12 +144,7 @@ import SwiftUI
 					doneButtonData: CourtButtonData(
 						title: "CHOOSE THIS GAME",
 						action: { print("aaaaaaa")}
-						),
-					courtButtonsViewType: .twoButtons,
-					detailsButtonData: CourtButtonData(
-						title: "Details",
-						action: { print("bbbbbbb")}
-					)
+						)
 				)
 			return view
 		}

@@ -9,24 +9,16 @@ import UIKit
 
 typealias CourtButtonData = (title: String, action: () -> Void)
 
-enum CourtButtonsViewType: CaseIterable {
-	case oneButton
-	case twoButtons
-}
-
 // MARK: - CourtButtonsViewModel
 
 struct CourtButtonsViewModel {
-	let type: CourtButtonsViewType
 	let doneButtonData: CourtButtonData
 	let detailsButtonData: CourtButtonData?
 
 	init(
-		type: CourtButtonsViewType,
 		doneButtonData: CourtButtonData,
 		detailsButtonData: CourtButtonData? = nil
 	) {
-		self.type = type
 		self.doneButtonData = doneButtonData
 		self.detailsButtonData = detailsButtonData
 	}
@@ -89,9 +81,15 @@ final class CourtButtonsView: UIView {
 		if let detailsButtonData = model.detailsButtonData {
 			detailsButton.setTitle(detailsButtonData.title, for: .normal)
 			detailsButtonCallback = detailsButtonData.action
-		}
 
-		setupButtonsUI(courtButtonsViewType: model.type)
+			doneButton.widthAnchor.constraint(equalToConstant: 205).isActive = true
+			detailsButton.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+			detailsButton.isHidden = false
+		} else {
+			buttonStackView.widthAnchor.constraint(equalToConstant: 215).isActive = false
+			buttonStackView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+			detailsButton.isHidden = true
+		}
 	}
 }
 
@@ -105,19 +103,6 @@ private extension CourtButtonsView {
 
 	@objc func didTapDetailsButton() {
 		detailsButtonCallback?()
-	}
-
-	func setupButtonsUI(courtButtonsViewType: CourtButtonsViewType) {
-		switch courtButtonsViewType {
-		case .oneButton:
-			buttonStackView.widthAnchor.constraint(equalToConstant: 215).isActive = false
-			buttonStackView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-			detailsButton.isHidden = true
-		case .twoButtons:
-			doneButton.widthAnchor.constraint(equalToConstant: 205).isActive = true
-			detailsButton.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-			detailsButton.isHidden = false
-		}
 	}
 
 	func setupUI() {

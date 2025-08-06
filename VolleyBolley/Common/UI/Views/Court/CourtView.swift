@@ -41,7 +41,6 @@ final class CourtView: UIView {
 	func configure(
 		with court: CourtModel,
 		doneButtonData: CourtButtonData,
-		courtButtonsViewType: CourtButtonsViewType = .oneButton,
 		detailsButtonData: CourtButtonData? = nil
 	) {
 		descriptionView.addArrangedSubview(courtDescriptionView)
@@ -60,12 +59,11 @@ final class CourtView: UIView {
 		courtDescriptionView.configure(with: courtDescriptionModel)
 
 		let courtButtonsViewModel = CourtButtonsViewModel(
-			type: courtButtonsViewType,
 			doneButtonData: doneButtonData,
 			detailsButtonData: detailsButtonData
 		)
 		courtButtonsView.configure(with: courtButtonsViewModel)
-		setupButtonsUI(courtButtonsViewType: courtButtonsViewType)
+		setupButtonsUI(isExistDetailsButton: detailsButtonData != nil)
 	}
 
 	func configure(
@@ -73,7 +71,6 @@ final class CourtView: UIView {
 		for game: GameModel,
 		hostType: HostType,
 		doneButtonData: CourtButtonData,
-		courtButtonsViewType: CourtButtonsViewType = .oneButton,
 		detailsButtonData: CourtButtonData? = nil
 	) {
 		descriptionView.addArrangedSubview(gameDescriptionView)
@@ -98,12 +95,11 @@ final class CourtView: UIView {
 		gameDescriptionView.configure(with: gameDescriptionViewModel)
 
 		let courtButtonsViewModel = CourtButtonsViewModel(
-			type: courtButtonsViewType,
 			doneButtonData: doneButtonData,
 			detailsButtonData: detailsButtonData
 		)
 		courtButtonsView.configure(with: courtButtonsViewModel)
-		setupButtonsUI(courtButtonsViewType: courtButtonsViewType)
+		setupButtonsUI(isExistDetailsButton: detailsButtonData != nil)
 	}
 }
 
@@ -111,12 +107,11 @@ final class CourtView: UIView {
 
 private extension CourtView {
 
-	func setupButtonsUI(courtButtonsViewType: CourtButtonsViewType) {
-		switch courtButtonsViewType {
-		case .oneButton:
+	func setupButtonsUI(isExistDetailsButton: Bool) {
+		if isExistDetailsButton {
 			courtButtonsView.widthAnchor.constraint(equalToConstant: 215).isActive = false
 			courtButtonsView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-		case .twoButtons:
+		} else {
 			courtButtonsView.widthAnchor.constraint(equalToConstant: 205).isActive = true
 			courtButtonsView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
 		}
@@ -165,7 +160,6 @@ import SwiftUI
 					title: "CHOOSE THIS GAME",
 					action: { print("aaaaaaa")}
 					),
-				courtButtonsViewType: .oneButton,
 				detailsButtonData: CourtButtonData(
 					title: "Details",
 					action: { print("bbbbbbb")}
