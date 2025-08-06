@@ -60,7 +60,7 @@ struct GameDetailsViewModel {
 /// Custom View to show information with location title for two variants
 /// - with court details
 /// - with game details (host, game details)
-class CourtDetailsView: UIView {
+class CourtDetailsView: GlassmorphismView {
 
 	// MARK: - Private Properties
 
@@ -81,9 +81,9 @@ class CourtDetailsView: UIView {
 		setupUI()
 	}
 
+	@available(*, unavailable)
 	required init?(coder: NSCoder) {
-		super.init(coder: coder)
-		setupUI()
+		fatalError("init(coder:) has not been implemented")
 	}
 
 	// MARK: - Public Methods
@@ -126,7 +126,7 @@ class CourtDetailsView: UIView {
 private extension CourtDetailsView {
 
 	private func setupUI() {
-		backgroundColor = AppColor.Background.screen// TODO: need replace to glass effect
+		backgroundColor = AppColor.Background.screen
 		layer.cornerRadius = 32
 		layer.masksToBounds = true
 		// main stack
@@ -177,7 +177,6 @@ import SwiftUI
 		return view
 	}
 	.frame(width: .infinity, height: 509)
-	.background(Color(cgColor: AppColor.Background.screen.cgColor))
 	.padding()
 }
 
@@ -200,7 +199,6 @@ import SwiftUI
 		return view
 	}
 	.frame(width: .infinity, height: 472)
-	.background(Color(cgColor: AppColor.Background.screen.cgColor))
 	.padding()
 }
 #endif
