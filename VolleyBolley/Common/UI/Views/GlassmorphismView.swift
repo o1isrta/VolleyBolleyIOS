@@ -9,10 +9,24 @@ import UIKit
 
 /// UIView с эффектом "glassmorphism" - полупрозрачное размытое стекло с настраиваемыми тенями и границами
 class GlassmorphismView: UIView {
-    
+
     /// Темы оформления blur-эффекта
     public enum Theme {
         case light, dark
+    }
+    
+    // MARK: - Constants
+    
+    enum Constants {
+        static let defaultBlurIntensity: CGFloat = 0.2
+        static let defaultCornerRadius: CGFloat = 24
+        static let defaultBorderWidth: CGFloat = 1.0
+        static let defaultInnerShadowOpacity: Float = 0.3
+        static let defaultInnerShadowRadius: CGFloat = 18.0
+        static let defaultInnerShadowOffset = CGSize(width: 0, height: -16)
+        static let defaultOuterShadowOpacity: Float = 0.15
+        static let defaultOuterShadowOffset = CGSize(width: 0, height: 8)
+        static let defaultOuterShadowRadius: CGFloat = 16
     }
     
     // MARK: - Private Properties
@@ -24,15 +38,15 @@ class GlassmorphismView: UIView {
     private let animator = UIViewPropertyAnimator(duration: 0, curve: .linear)
     
     /// Текущая интенсивность размытия (0.2 = слабое размытие по умолчанию)
-    private var animatorFractionComplete: CGFloat = 0.2
+    private var animatorFractionComplete: CGFloat = Constants.defaultBlurIntensity
     
     /// Слой для отрисовки внутренней тени (создается по требованию)
     private var innerShadowLayer: CAShapeLayer?
     
-    // MARK: - Public Properties - Geometry
+    // MARK: - Public Properties
     
     /// Радиус скругления углов
-    public var cornerRadius: CGFloat = 24 {
+    public var cornerRadius: CGFloat = Constants.defaultCornerRadius {
         didSet { updateAppearance() }
     }
     
@@ -42,11 +56,9 @@ class GlassmorphismView: UIView {
     }
     
     /// Толщина границы в points
-    public var borderWidth: CGFloat = 1.0 {
+    public var borderWidth: CGFloat = Constants.defaultBorderWidth {
         didSet { updateAppearance() }
     }
-    
-    // MARK: - Public Properties - Blur & Background
     
     /// Полупрозрачный цвет фона поверх размытия для дополнительного тонирования
     public var tintedBackgroundColor: UIColor = AppColor.Glassmorphism.tintColor.withAlphaComponent(0.07) {
@@ -63,8 +75,6 @@ class GlassmorphismView: UIView {
         get { animatorFractionComplete }
         set { setBlurIntensity(newValue) }
     }
-    
-    // MARK: - Public Properties - Outer Shadow
     
     /// Цвет внешней тени (drop shadow)
     public var outerShadowColor: UIColor? {
@@ -95,25 +105,23 @@ class GlassmorphismView: UIView {
         set { layer.shadowRadius = newValue }
     }
     
-    // MARK: - Public Properties - Inner Shadow
-    
     /// Цвет внутренней тени (обычно светлый для эффекта подсветки)
     public var innerShadowColor: UIColor = AppColor.Glassmorphism.innerShadowColor {
         didSet { updateInnerShadow() }
     }
     
     /// Прозрачность внутренней тени (0.0 - 1.0)
-    public var innerShadowOpacity: Float = 0.3 {
+    public var innerShadowOpacity: Float = Constants.defaultInnerShadowOpacity {
         didSet { updateInnerShadow() }
     }
     
     /// Радиус размытия внутренней тени
-    public var innerShadowRadius: CGFloat = 18.0 {
+    public var innerShadowRadius: CGFloat = Constants.defaultInnerShadowRadius {
         didSet { updateInnerShadow() }
     }
     
     /// Смещение внутренней тени для имитации направления света
-    public var innerShadowOffset: CGSize = CGSize(width: 0, height: -16) {
+    public var innerShadowOffset: CGSize = Constants.defaultInnerShadowOffset {
         didSet { updateInnerShadow() }
     }
     
@@ -180,9 +188,9 @@ class GlassmorphismView: UIView {
         
         // Настройка внешней тени по умолчанию для эффекта "парения"
         layer.shadowColor = UIColor.black.cgColor
-        layer.shadowOpacity = 0.15
-        layer.shadowOffset = CGSize(width: 0, height: 8)
-        layer.shadowRadius = 16
+        layer.shadowOpacity = Constants.defaultOuterShadowOpacity
+        layer.shadowOffset = Constants.defaultOuterShadowOffset
+        layer.shadowRadius = Constants.defaultOuterShadowRadius
     }
     
     // MARK: - Public Methods
@@ -277,8 +285,6 @@ class GlassmorphismView: UIView {
         // Включаем маскирование для ограничения тени границами view
         layer.masksToBounds = true
     }
-    
-    // MARK: - Deinitialization
     
     deinit {
         // Проверяем состояние animator'а перед завершением
