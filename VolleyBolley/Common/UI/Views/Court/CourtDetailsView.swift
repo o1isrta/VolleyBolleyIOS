@@ -7,6 +7,56 @@
 
 import UIKit
 
+// MARK: - CourtDetailsViewModel
+
+struct CourtDetailsViewModel {
+	let court: CourtModel
+	let distance: String
+	let doneButtonData: CourtButtonData
+	let detailsButtonData: CourtButtonData?
+
+	init(
+		court: CourtModel,
+		distance: String,
+		doneButtonData: CourtButtonData,
+		detailsButtonData: CourtButtonData? = nil
+	) {
+		self.court = court
+		self.distance = distance
+		self.doneButtonData = doneButtonData
+		self.detailsButtonData = detailsButtonData
+	}
+}
+
+// MARK: - GameDetailsViewModel
+
+struct GameDetailsViewModel {
+	let court: CourtModel
+	let distance: String
+	let game: GameModel
+	let hostType: HostType
+	let doneButtonData: CourtButtonData
+	let detailsButtonData: CourtButtonData?
+
+	init(
+		court: CourtModel,
+		distance: String,
+		game: GameModel,
+		hostType: HostType,
+		doneButtonData: CourtButtonData,
+		detailsButtonData: CourtButtonData? = nil
+	) {
+		self.court = court
+		self.distance = distance
+		self.game = game
+		self.hostType = hostType
+		self.doneButtonData = doneButtonData
+		self.detailsButtonData = detailsButtonData
+	}
+}
+
+// MARK: - CourtDetailsView
+
 /// Custom View to show information with location title for two variants
 /// - with court details
 /// - with game details (host, game details)
@@ -38,47 +88,35 @@ class CourtDetailsView: UIView {
 
 	// MARK: - Public Methods
 
-	func configure(
-		with court: CourtModel,
-		distance: String,
-		doneButtonData: CourtButtonData,
-		detailsButtonData: CourtButtonData? = nil
-	) {
+	func configure(with model: CourtDetailsViewModel) {
 		let courtTitleViewModel = CourtTitleViewModel(
-			title: court.location.courtName,
-			location: court.location.locationName,
-			distance: distance
+			title: model.court.location.courtName,
+			location: model.court.location.locationName,
+			distance: model.distance
 		)
 		courtTitleView.configure(with: courtTitleViewModel)
 
 		courtView.configure(
-				with: court,
-				doneButtonData: doneButtonData,
-				detailsButtonData: detailsButtonData
-			)
+			with: model.court,
+			doneButtonData: model.doneButtonData,
+			detailsButtonData: model.detailsButtonData
+		)
 	}
 
-	func configure(
-		with court: CourtModel,
-		distance: String,
-		game: GameModel,
-		hostType: HostType,
-		doneButtonData: CourtButtonData,
-		detailsButtonData: CourtButtonData? = nil
-	) {
+	func configure(with model: GameDetailsViewModel) {
 		let courtTitleViewModel = CourtTitleViewModel(
-			title: court.location.courtName,
-			location: court.location.locationName,
-			distance: distance
+			title: model.court.location.courtName,
+			location: model.court.location.locationName,
+			distance: model.distance
 		)
 		courtTitleView.configure(with: courtTitleViewModel)
 
 		courtView.configure(
-				with: court,
-				for: game,
-				hostType: hostType,
-				doneButtonData: doneButtonData,
-				detailsButtonData: detailsButtonData
+			with: model.court,
+			for: model.game,
+			hostType: model.hostType,
+			doneButtonData: model.doneButtonData,
+			detailsButtonData: model.detailsButtonData
 			)
 	}
 }
@@ -118,10 +156,11 @@ import SwiftUI
 		let view = CourtDetailsView()
 		let court = CourtModel.mockData
 		let game = GameModel.mockData
-		view.configure(
-			with: court,
-			distance: "",
-			game: game,
+
+		let model = GameDetailsViewModel(
+			court: CourtModel.mockData,
+			distance: "Nearest",
+			game: GameModel.mockData,
 			hostType: .game,
 			doneButtonData: CourtButtonData(
 				title: "CHOOSE THIS GAME",
@@ -132,6 +171,7 @@ import SwiftUI
 				action: { print("bbbbbbb")}
 			)
 		)
+		view.configure(with: model)
 		return view
 	}
 	.frame(width: .infinity, height: 509)
@@ -142,9 +182,8 @@ import SwiftUI
 #Preview("Court") {
 	UIViewPreview {
 		let view = CourtDetailsView()
-		let court = CourtModel.mockData
-		view.configure(
-			with: court,
+		let model = CourtDetailsViewModel(
+			court: CourtModel.mockData,
 			distance: "Nearest",
 			doneButtonData: CourtButtonData(
 				title: "CHOOSE THIS GAME",
@@ -155,6 +194,7 @@ import SwiftUI
 				action: { print("bbbbbbb")}
 			)
 		)
+		view.configure(with: model)
 		return view
 	}
 	.frame(width: .infinity, height: 472)
