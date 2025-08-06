@@ -7,6 +7,14 @@
 
 import UIKit
 
+// MARK: - CourtTitleViewModel
+
+struct CourtTitleViewModel {
+	let title: String
+	let location: String
+	let distance: String
+}
+
 enum CourtTitleViewType: CaseIterable {
 	case icon
 	case none
@@ -17,14 +25,6 @@ enum CourtTitleViewType: CaseIterable {
 		case .none: return true
 		}
 	}
-}
-
-// MARK: - CourtTitleViewModel
-
-struct CourtTitleViewModel {
-	let title: String
-	let location: String
-	let distance: String
 }
 
 final class CourtTitleView: UIView {
