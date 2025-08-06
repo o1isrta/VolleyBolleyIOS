@@ -68,7 +68,7 @@ final class CourtBottomView: UIView {
 			detailsButtonData: model.detailsButtonData
 		)
 		courtButtonsView.configure(with: courtButtonsViewModel)
-		
+
 		setupButtonsUI(isExistDetailsButton: model.detailsButtonData != nil)
 	}
 }
