@@ -17,7 +17,7 @@ class GlassmorphismView: UIView {
     
     // MARK: - Constants
     
-    enum Constants {
+    private enum Constants {
         static let defaultBlurIntensity: CGFloat = 0.2
         static let defaultCornerRadius: CGFloat = 24
         static let defaultBorderWidth: CGFloat = 1.0
@@ -28,20 +28,6 @@ class GlassmorphismView: UIView {
         static let defaultOuterShadowOffset = CGSize(width: 0, height: 8)
         static let defaultOuterShadowRadius: CGFloat = 16
     }
-    
-    // MARK: - Private Properties
-    
-    /// Основной компонент для создания эффекта размытия фона
-    private let blurView = UIVisualEffectView()
-    
-    /// Аниматор для плавного управления интенсивностью blur-эффекта
-    private let animator = UIViewPropertyAnimator(duration: 0, curve: .linear)
-    
-    /// Текущая интенсивность размытия (0.2 = слабое размытие по умолчанию)
-    private var animatorFractionComplete: CGFloat = Constants.defaultBlurIntensity
-    
-    /// Слой для отрисовки внутренней тени (создается по требованию)
-    private var innerShadowLayer: CAShapeLayer?
     
     // MARK: - Public Properties
     
@@ -124,6 +110,21 @@ class GlassmorphismView: UIView {
     public var innerShadowOffset: CGSize = Constants.defaultInnerShadowOffset {
         didSet { updateInnerShadow() }
     }
+    
+    // MARK: - Private Properties
+    
+    /// Основной компонент для создания эффекта размытия фона
+    private let blurView = UIVisualEffectView()
+    
+    /// Аниматор для плавного управления интенсивностью blur-эффекта
+    private let animator = UIViewPropertyAnimator(duration: 0, curve: .linear)
+    
+    /// Текущая интенсивность размытия (0.2 = слабое размытие по умолчанию)
+    private var animatorFractionComplete: CGFloat = Constants.defaultBlurIntensity
+    
+    /// Слой для отрисовки внутренней тени (создается по требованию)
+    private var innerShadowLayer: CAShapeLayer?
+    
     
     // MARK: - Initialization
     
