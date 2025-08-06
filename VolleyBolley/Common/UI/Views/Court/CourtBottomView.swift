@@ -7,6 +7,32 @@
 
 import UIKit
 
+// MARK: - CourtBottomViewModel
+
+struct CourtBottomViewModel {
+	let courtName: String
+	let locationName: String
+	let distance: String
+	let doneButtonData: CourtButtonData
+	let detailsButtonData: CourtButtonData?
+
+	init(
+		courtName: String,
+		locationName: String,
+		distance: String,
+		doneButtonData: CourtButtonData,
+		detailsButtonData: CourtButtonData? = nil
+	) {
+		self.courtName = courtName
+		self.locationName = locationName
+		self.distance = distance
+		self.doneButtonData = doneButtonData
+		self.detailsButtonData = detailsButtonData
+	}
+}
+
+// MARK: - CourtBottomView
+
 /// Custom bottom view to display information with location name and custom number of buttons
 final class CourtBottomView: UIView {
 
@@ -29,25 +55,21 @@ final class CourtBottomView: UIView {
 
 	// MARK: - Public Methods
 
-	func configure(
-		with court: CourtModel,
-		distance: String,
-		doneButtonData: CourtButtonData,
-		detailsButtonData: CourtButtonData? = nil
-	) {
+	func configure(with model: CourtBottomViewModel) {
 		let courtTitleViewModel = CourtTitleViewModel(
-			title: court.location.courtName,
-			location: court.location.locationName,
-			distance: distance
+			title: model.courtName,
+			location: model.locationName,
+			distance: model.distance
 		)
 		courtTitleView.configure(with: courtTitleViewModel)
 
 		let courtButtonsViewModel = CourtButtonsViewModel(
-			doneButtonData: doneButtonData,
-			detailsButtonData: detailsButtonData
+			doneButtonData: model.doneButtonData,
+			detailsButtonData: model.detailsButtonData
 		)
 		courtButtonsView.configure(with: courtButtonsViewModel)
-		setupButtonsUI(isExistDetailsButton: detailsButtonData != nil)
+		
+		setupButtonsUI(isExistDetailsButton: model.detailsButtonData != nil)
 	}
 }
 
@@ -96,18 +118,20 @@ import SwiftUI
 		UIViewPreview {
 			let view = CourtBottomView()
 			let court = CourtModel.mockData
-			view.configure(
-					with: court,
-					distance: "Nearest",
-					doneButtonData: CourtButtonData(
-						title: "CHOOSE THIS GAME",
-						action: { print("aaaaaaa")}
-						),
-					detailsButtonData: CourtButtonData(
-						title: "Details",
-						action: { print("bbbbbbb")}
-					)
+			let model = CourtBottomViewModel(
+				courtName: court.location.courtName,
+				locationName: court.location.locationName,
+				distance: "Nearest",
+				doneButtonData: CourtButtonData(
+					title: "CHOOSE THIS GAME",
+					action: { print("aaaaaaa")}
+				),
+				detailsButtonData: CourtButtonData(
+					title: "Details",
+					action: { print("bbbbbbb")}
 				)
+			)
+			view.configure(with: model)
 			return view
 		}
 		.frame(width: .infinity, height: 136)
@@ -117,18 +141,20 @@ import SwiftUI
 		UIViewPreview {
 			let view = CourtBottomView()
 			let court = CourtModel.mockData
-			view.configure(
-					with: court,
-					distance: "",
-					doneButtonData: CourtButtonData(
-						title: "CHOOSE THIS GAME",
-						action: { print("aaaaaaa")}
-						),
-					detailsButtonData: CourtButtonData(
-						title: "Details",
-						action: { print("bbbbbbb")}
-					)
+			let model = CourtBottomViewModel(
+				courtName: court.location.courtName,
+				locationName: court.location.locationName,
+				distance: "",
+				doneButtonData: CourtButtonData(
+					title: "CHOOSE THIS GAME",
+					action: { print("aaaaaaa")}
+				),
+				detailsButtonData: CourtButtonData(
+					title: "Details",
+					action: { print("bbbbbbb")}
 				)
+			)
+			view.configure(with: model)
 			return view
 		}
 		.frame(width: .infinity, height: 136)
@@ -138,14 +164,16 @@ import SwiftUI
 		UIViewPreview {
 			let view = CourtBottomView()
 			let court = CourtModel.mockData
-			view.configure(
-					with: court,
-					distance: "",
-					doneButtonData: CourtButtonData(
-						title: "CHOOSE THIS GAME",
-						action: { print("aaaaaaa")}
-						)
+			let model = CourtBottomViewModel(
+				courtName: court.location.courtName,
+				locationName: court.location.locationName,
+				distance: "",
+				doneButtonData: CourtButtonData(
+					title: "CHOOSE THIS GAME",
+					action: { print("aaaaaaa")}
 				)
+			)
+			view.configure(with: model)
 			return view
 		}
 		.frame(width: .infinity, height: 136)
