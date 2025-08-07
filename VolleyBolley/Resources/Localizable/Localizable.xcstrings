@@ -328,6 +328,18 @@
         }
       }
     },
+    "DELETE ACCOUNT" : {
+      "comment" : "Profile",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DELETE ACCOUNT"
+          }
+        }
+      }
+    },
     "donate_button" : {
       "comment" : "Game",
       "extractionState" : "manual",
