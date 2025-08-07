@@ -43,6 +43,14 @@ final class TimePickerButton: UIButton {
         return stack
     }()
     
+    private lazy var glassView: GlassmorphismView = {
+        let view = GlassmorphismView()
+        view.cornerRadius = Constants.cornerRadius
+        view.blurIntensity = 1.0
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private var date: Date? {
         didSet {
             updateLabel()
@@ -67,15 +75,6 @@ final class TimePickerButton: UIButton {
         return CGSize(width: 89, height: 45)
     }
     
-//    override func layoutSubviews() {
-//        super.layoutSubviews()
-//        if backgroundImage(for: .normal) == nil {
-//            if let gradientImage = UIImage.gradientImage(size: bounds.size) {
-//                setBackgroundImage(gradientImage, for: .normal)
-//            }
-//        }
-//    }
-    
     // MARK: - Internal Methods
     
     func setDate(_ date: Date) {
@@ -87,10 +86,17 @@ final class TimePickerButton: UIButton {
     private func setup() {
         layer.cornerRadius = Constants.cornerRadius
         clipsToBounds = true
-        backgroundColor = .gray
-        addSubview(labelStack)
+
+        [glassView, labelStack].forEach {
+            addSubview($0)
+        }
+        sendSubviewToBack(glassView)
         
         NSLayoutConstraint.activate([
+            glassView.topAnchor.constraint(equalTo: topAnchor),
+            glassView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            glassView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            glassView.trailingAnchor.constraint(equalTo: trailingAnchor),
             labelStack.centerXAnchor.constraint(equalTo: centerXAnchor),
             labelStack.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
@@ -126,5 +132,4 @@ import SwiftUI
     TimePickerButton()
 }
 #endif
-
 
