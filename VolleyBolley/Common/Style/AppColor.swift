@@ -75,6 +75,13 @@ enum AppColor {
 		static let greenLightStart = butterYellow
 		static let greenLightEnd = mint
 	}
+    
+    enum Glassmorphism {
+        static let border = white
+        static let tintColor = white
+        static let innerShadowColor = white
+        static let outerShadowColor = darkCharcoal
+    }
 }
 
 /// Цвета по названиям
