@@ -45,15 +45,17 @@ enum AppColor {
 		static let pinDefault = mutedTeal
 		static let pinSelected = orange
 
-		static let searField = white
+        static let searField = white
+        static let calendar = white
 
-		static let calendar = white
-	}
+        // alert
+        static let alert = gray
+    }
 
 	enum Text {
 		static let primary = white
 		static let inverted = ashBrown
-		static let placeHolder = grey
+		static let placeHolder = gray
 	}
 
     enum Border {
@@ -74,7 +76,7 @@ enum AppColor {
 
 	enum Calendar {
 		static let primary = darkCharcoal
-		static let secondary = lightGrey
+		static let secondary = lightGray
 		static let disabled = mistGrey
 	}
 
@@ -82,6 +84,13 @@ enum AppColor {
 		static let greenLightStart = butterYellow
 		static let greenLightEnd = mint
 	}
+
+    enum Glassmorphism {
+        static let border = white
+        static let tintColor = white
+        static let innerShadowColor = white
+        static let outerShadowColor = darkCharcoal
+    }
 }
 
 /// Цвета по названиям
@@ -101,14 +110,15 @@ private extension AppColor {
     static let yellow = UIColor(hex: "#E6C953")
     static let mistGrey = UIColor(hex: "#8CA5A3")
     static let darkGray = UIColor(hex: "#484848")
-    static let grey = UIColor(hex: "#7C7C7C")
+    static let gray = UIColor(hex: "#7C7C7C")
+    static let lightGray = UIColor(hex: "#E0E0E0")
+    static let separatorGray = UIColor(hex: "#C3C3C3")
     static let steelBlue = UIColor(hex: "#516372")
     static let mutedTeal = UIColor(hex: "#578D83")
     static let red = UIColor(hex: "#BA0000")
     static let butterYellow = UIColor(hex: "#F4E998")
     static let mint = UIColor(hex: "#5CF08D")
     static let facebookBlue = UIColor(hex: "#1877F2")
-    static let separatorGray = UIColor(hex: "#C3C3C3")
 	static let darkCharcoal = UIColor(hex: "#333333")
-	static let lightGrey = UIColor(hex: "#E0E0E0")
+    static let grayBackground = UIColor(hex: "#555252")
 }
