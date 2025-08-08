@@ -13,8 +13,16 @@ enum AppEffect {
         static let alert = semiTransparentGray
     }
 
-    static func glass() -> GlassEffectView {
-        let view = GlassEffectView()
+    static func glass() -> GlassmorphismView {
+        let view = GlassmorphismView()
+        view.isUserInteractionEnabled = false
+        return view
+    }
+
+    static func glassHightLighted() -> GlassmorphismView {
+        let view = GlassmorphismView()
+        view.isUserInteractionEnabled = false
+        view.theme = .dark
         return view
     }
 }

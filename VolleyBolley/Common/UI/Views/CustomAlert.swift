@@ -50,10 +50,10 @@ final class CustomAlertView: UIView {
 
     private lazy var doneButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitleColor(AppColor.Background.actionButtonDefault, for: .normal)
+        button.setTitleColor(AppColor.Background.buttonActionSelected, for: .normal)
         button.backgroundColor = .clear
         button.titleLabel?.font = AppFont.ActayWide.bold(size: 16)
-        button.layer.borderColor = AppColor.Background.actionButtonDefault.cgColor
+        button.layer.borderColor = AppColor.Background.buttonActionSelected.cgColor
         button.layer.borderWidth = 1.0
         button.layer.cornerRadius = 16
         button.layer.masksToBounds = true
@@ -115,15 +115,15 @@ final class CustomAlertView: UIView {
 
     private func styleYesButtonAsPrimary() {
         doneButton.setTitleColor(AppColor.Text.inverted, for: .normal)
-        doneButton.backgroundColor = AppColor.Background.actionButtonDefault
+        doneButton.backgroundColor = AppColor.Background.buttonActionSelected
         doneButton.layer.borderWidth = 0
     }
 
     private func styleYesButtonAsSecondary() {
-        doneButton.setTitleColor(AppColor.Background.actionButtonDefault, for: .normal)
+        doneButton.setTitleColor(AppColor.Background.buttonActionSelected, for: .normal)
         doneButton.backgroundColor = .clear
         doneButton.layer.borderWidth = 1.0
-        doneButton.layer.borderColor = AppColor.Background.actionButtonDefault.cgColor
+        doneButton.layer.borderColor = AppColor.Background.buttonActionSelected.cgColor
     }
 
     // MARK: - Actions
