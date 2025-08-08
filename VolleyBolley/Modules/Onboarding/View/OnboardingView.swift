@@ -56,7 +56,7 @@ final class OnboardingViewController: UIViewController, OnboardingViewProtocol {
     private lazy var backgroundImageView: UIImageView = {
         let imageView = UIImageView(image: .launch)
         imageView.contentMode = .scaleAspectFill
-        imageView.backgroundColor = .launchScreen
+        imageView.backgroundColor = AppColor.Background.screen
         return imageView
     }()
 
