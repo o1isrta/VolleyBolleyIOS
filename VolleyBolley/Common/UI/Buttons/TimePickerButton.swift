@@ -46,6 +46,7 @@ final class TimePickerButton: UIButton {
     private lazy var glassView: GlassmorphismView = {
         let view = GlassmorphismView()
         view.cornerRadius = Constants.cornerRadius
+        view.innerShadowRadius = 0
         view.blurIntensity = 1.0
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
