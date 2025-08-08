@@ -22,7 +22,7 @@ enum AppColor {
         // button
         static let buttonPrimaryNormal = clear
         static let buttonPrimarySelected = yellow
-        static let buttonPrimaryDisabled = mistGrey
+        static let buttonPrimaryDisabled = mistGray
         static let buttonAuthGoogle = white
         static let buttonAuthFacebook = facebookBlue
         static let buttonMap = orange
@@ -75,7 +75,7 @@ enum AppColor {
 	enum Calendar {
 		static let primary = darkCharcoal
 		static let secondary = lightGray
-		static let disabled = mistGrey
+		static let disabled = mistGray
 	}
 
 	enum Gradient {
@@ -106,7 +106,7 @@ private extension AppColor {
     static let green = UIColor(hex: "#2DB69A")
     static let orange = UIColor(hex: "#E6AC53")
     static let yellow = UIColor(hex: "#E6C953")
-    static let mistGrey = UIColor(hex: "#8CA5A3")
+    static let mistGray = UIColor(hex: "#8CA5A3")
     static let darkGray = UIColor(hex: "#484848")
     static let gray = UIColor(hex: "#7C7C7C")
     static let lightGray = UIColor(hex: "#E0E0E0")
