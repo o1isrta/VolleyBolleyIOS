@@ -1280,9 +1280,6 @@
         }
       }
     },
-    "NEXT STEP" : {
-
-    },
     "next_step_button" : {
       "comment" : "Registration",
       "extractionState" : "manual",
