@@ -9,6 +9,7 @@ import Swinject
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+
     var window: UIWindow?
     var appRouter: AppRouter?
 

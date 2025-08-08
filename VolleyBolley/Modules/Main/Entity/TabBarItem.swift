@@ -14,9 +14,9 @@ enum TabBarItem: Int, CaseIterable {
 
     var title: String {
         switch self {
-        case .home: return String(localized: "Home", comment: "Tab bar item title")
-        case .games: return String(localized: "My games", comment: "Tab bar item title")
-        case .profile: return String(localized: "Profile", comment: "Tab bar item title")
+        case .home: return String(localized: "common.home")
+        case .games: return String(localized: "common.myGames")
+        case .profile: return String(localized: "common.profile")
         }
     }
 

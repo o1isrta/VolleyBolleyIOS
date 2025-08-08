@@ -13,12 +13,14 @@ protocol ProfileViewProtocol: AnyObject {
     func displayError(message: String)
 }
 
+// TODO: - Remove calendar demo
 final class ProfileViewController: BaseViewController, ProfileViewProtocol {
 
     // MARK: - Private Properties
 
     private let presenter: ProfilePresenterProtocol
 
+    private lazy var calendarComponent: CalendarComponentProtocol = CalendarComponent(delegate: self)
     private lazy var navigationBarView = CustomNavBarView()
 
     private lazy var label: UILabel = {
@@ -74,6 +76,8 @@ final class ProfileViewController: BaseViewController, ProfileViewProtocol {
     private func setupLayout() {
         setupConstraintsNavBar()
         setupConstraintsLabel()
+
+        setupCalendar()
     }
 
     // MARK: - Constraints
@@ -96,5 +100,33 @@ final class ProfileViewController: BaseViewController, ProfileViewProtocol {
             label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
+    }
+
+    private func setupCalendar() {
+        let calendarVC = calendarComponent.createCalendarViewController()
+        addChild(calendarVC)
+        view.addSubviews(calendarVC.view)
+        calendarVC.didMove(toParent: self)
+
+        NSLayoutConstraint.activate([
+            calendarVC.view.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 10),
+            calendarVC.view.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            calendarVC.view.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            calendarVC.view.widthAnchor.constraint(equalToConstant: 319),
+            calendarVC.view.heightAnchor.constraint(equalToConstant: 350)
+        ])
+    }
+
+    private func updateDateLabel(with date: Date) {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .full
+        formatter.timeStyle = .none
+        label.text = "Выбранная дата: \(formatter.string(from: date))"
+    }
+}
+
+extension ProfileViewController: CalendarComponentDelegate {
+    func didSelectDate(_ date: Date) {
+        updateDateLabel(with: date)
     }
 }

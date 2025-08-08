@@ -48,26 +48,16 @@ final class CustomAlertView: UIView {
         return label
     }()
 
-    private lazy var doneButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitleColor(AppColor.Background.actionButtonDefault, for: .normal)
-        button.backgroundColor = .clear
-        button.titleLabel?.font = AppFont.ActayWide.bold(size: 16)
-        button.layer.borderColor = AppColor.Background.actionButtonDefault.cgColor
-        button.layer.borderWidth = 1.0
-        button.layer.cornerRadius = 16
-        button.layer.masksToBounds = true
-        button.addTarget(self, action: #selector(yesButtonTapped), for: .touchUpInside)
+    private lazy var doneButton: AppButtonPrimaryView = {
+        let button = AppButtonPrimaryView(.done)
+        button.setAction(self.didTapDoneButton)
         return button
     }()
 
-    private lazy var cancelButton: NextStepButton = {
-        let button = NextStepButton(
-            title: String(localized: ""),
-            isActive: true,
-            target: self,
-            action: #selector(yesButtonTapped)
-        )
+    private lazy var cancelButton: AppButtonPrimaryView = {
+        let button = AppButtonPrimaryView(.cancel)
+        button.isSelected = true
+        button.setAction(self.didTapCancelButton)
         return button
     }()
 
@@ -86,6 +76,7 @@ final class CustomAlertView: UIView {
         setupView()
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -101,38 +92,22 @@ final class CustomAlertView: UIView {
             cancelButton.isHidden = false
             doneActionButton = model.doneAction
             cancelActionButton = model.cancelAction
-            styleYesButtonAsSecondary()
 
         case .oneButton:
             doneButton.isHidden = false
+            doneButton.isSelected = true
             cancelButton.isHidden = true
             doneActionButton = model.doneAction
-            styleYesButtonAsPrimary()
         }
     }
 
     // MARK: - Private Method
 
-    private func styleYesButtonAsPrimary() {
-        doneButton.setTitleColor(AppColor.Text.inverted, for: .normal)
-        doneButton.backgroundColor = AppColor.Background.actionButtonDefault
-        doneButton.layer.borderWidth = 0
-    }
-
-    private func styleYesButtonAsSecondary() {
-        doneButton.setTitleColor(AppColor.Background.actionButtonDefault, for: .normal)
-        doneButton.backgroundColor = .clear
-        doneButton.layer.borderWidth = 1.0
-        doneButton.layer.borderColor = AppColor.Background.actionButtonDefault.cgColor
-    }
-
-    // MARK: - Actions
-
-    @objc private func yesButtonTapped() {
+    private func didTapDoneButton(_ button: AppButtonPrimaryView) {
         doneActionButton?()
     }
 
-    @objc private func noButtonTapped() {
+    private func didTapCancelButton(_ button: AppButtonPrimaryView) {
         cancelActionButton?()
     }
 }
@@ -140,7 +115,7 @@ final class CustomAlertView: UIView {
 // MARK: - Constants
 
 private extension CustomAlertView {
-    
+
     func setupUI() {
         addSubviews(
             backgroundView,
@@ -181,22 +156,49 @@ private extension CustomAlertView {
     }
 }
 
+// MARK: - Preview
+
 #if DEBUG
 import SwiftUI
 
 struct CustomUIViewPreview: UIViewRepresentable {
+    let model: CustomAlertModel
+
     func makeUIView(context: Context) -> UIView {
-        return CustomAlertView()
+        let view = CustomAlertView()
+        view.configure(with: model)
+        return view
     }
 
     func updateUIView(_ uiView: UIView, context: Context) {}
 }
 
 struct CustomUIViewPreview_Previews: PreviewProvider {
+    static var oneButtonPreview: some View {
+        CustomUIViewPreview(model: CustomAlertModel(
+            title: "One Button Alert",
+            doneAction: nil,
+            cancelAction: nil,
+            alertType: .oneButton
+        ))
+        .previewDisplayName("One Button Alert")
+    }
+
+    static var twoButtonsPreview: some View {
+        CustomUIViewPreview(model: CustomAlertModel(
+            title: "Two Buttons Alert",
+            doneAction: nil,
+            cancelAction: nil,
+            alertType: .twoButtons
+        ))
+        .previewDisplayName("Two Buttons Alert")
+    }
+
     static var previews: some View {
-        CustomUIViewPreview()
-            .previewLayout(.sizeThatFits)
-            .padding()
+        Group {
+            oneButtonPreview
+            twoButtonsPreview
+        }
     }
 }
 #endif
