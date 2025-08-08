@@ -1,5 +1,5 @@
 //
-//  CourtView.swift
+//  CourtAndGameView.swift
 //  VolleyBolley
 //
 //  Created by Roman Romanov on 01.08.2025.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-// MARK: - CourtViewModel
+// MARK: - CourtAndGameViewModel
 
 struct CourtViewModel {
 	let court: CourtModel
@@ -49,12 +49,12 @@ struct GameViewModel {
 	}
 }
 
-// MARK: - CourtView
+// MARK: - CourtAndGameView
 
 /// Custom View to show information for two variants
 /// - with court details
 /// - with game details (host, game details)
-final class CourtView: UIView {
+final class CourtAndGameView: UIView {
 
 	// MARK: - Private Properties
 
@@ -139,7 +139,7 @@ final class CourtView: UIView {
 
 // MARK: - Private Methods
 
-private extension CourtView {
+private extension CourtAndGameView {
 
 	func setupButtonsUI(isExistDetailsButton: Bool) {
 		if isExistDetailsButton {
@@ -183,7 +183,7 @@ import SwiftUI
 
 #Preview("Game") {
 	UIViewPreview {
-		let view = CourtView()
+		let view = CourtAndGameView()
 		let model = GameViewModel(
 			court: CourtModel.mockData,
 			game: GameModel.mockData,
@@ -208,7 +208,7 @@ import SwiftUI
 
 #Preview("Court") {
 	UIViewPreview {
-		let view = CourtView()
+		let view = CourtAndGameView()
 		let model = CourtViewModel(
 			court: CourtModel.mockData,
 			doneButtonData: CourtButtonData(

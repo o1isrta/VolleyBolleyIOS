@@ -66,7 +66,7 @@ class CourtDetailsView: GlassmorphismView {
 
 	private lazy var courtTitleView: CourtTitleView = CourtTitleView(type: .icon)
 
-	private lazy var courtView: CourtView = CourtView()
+	private lazy var courtAndGameView: CourtAndGameView = CourtAndGameView()
 
 	private lazy var mainStack: UIStackView = {
 		let stackView = UIStackView()
@@ -101,7 +101,7 @@ class CourtDetailsView: GlassmorphismView {
 			doneButtonData: model.doneButtonData,
 			detailsButtonData: model.detailsButtonData
 		)
-		courtView.configure(with: courtViewModel)
+		courtAndGameView.configure(with: courtViewModel)
 	}
 
 	func configure(with model: GameDetailsViewModel) {
@@ -119,7 +119,7 @@ class CourtDetailsView: GlassmorphismView {
 			doneButtonData: model.doneButtonData,
 			detailsButtonData: model.detailsButtonData
 		)
-		courtView.configure(with: courtViewModel)
+		courtAndGameView.configure(with: courtViewModel)
 	}
 }
 
@@ -132,7 +132,7 @@ private extension CourtDetailsView {
 		// main stack
 		[
 			courtTitleView,
-			courtView
+			courtAndGameView
 		].forEach {
 			mainStack.addArrangedSubview($0)
 		}
@@ -145,7 +145,7 @@ private extension CourtDetailsView {
 			mainStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20),
 
 			courtTitleView.heightAnchor.constraint(equalToConstant: 36),
-			courtView.heightAnchor.constraint(equalToConstant: 380)
+			courtAndGameView.heightAnchor.constraint(equalToConstant: 380)
 		])
 	}
 }
