@@ -1,0 +1,10 @@
+//
+//  NetworkEnvironment.swift
+//  VolleyBolley
+//
+//  Created by Nikolai Eremenko on 05.08.2025.
+//
+
+//struct NetworkEnvironment {
+//    static var current: AppEnvironment = .production
+//}

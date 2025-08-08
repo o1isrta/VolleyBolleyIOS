@@ -10,6 +10,7 @@
 		3CB112362E0B224800EF5EC4 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 3CB112352E0B224800EF5EC4 /* Kingfisher */; };
 		3CB1123A2E0B24BB00EF5EC4 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 3CB112392E0B24BB00EF5EC4 /* Swinject */; };
 		910884042E27A010001078FF /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 910884032E27A010001078FF /* Moya */; };
+		913F635E2E41415F005038B7 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = 913F635D2E41415F005038B7 /* SkeletonView */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +46,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				913F635E2E41415F005038B7 /* SkeletonView in Frameworks */,
 				3CB112362E0B224800EF5EC4 /* Kingfisher in Frameworks */,
 				3CB1123A2E0B24BB00EF5EC4 /* Swinject in Frameworks */,
 				910884042E27A010001078FF /* Moya in Frameworks */,
@@ -94,6 +96,7 @@
 				3CB112352E0B224800EF5EC4 /* Kingfisher */,
 				3CB112392E0B24BB00EF5EC4 /* Swinject */,
 				910884032E27A010001078FF /* Moya */,
+				913F635D2E41415F005038B7 /* SkeletonView */,
 			);
 			productName = VolleyBolley;
 			productReference = 3CB112072E0B1FEF00EF5EC4 /* VolleyBolley.app */;
@@ -128,6 +131,7 @@
 				3CB112342E0B224800EF5EC4 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				3CB112382E0B24BB00EF5EC4 /* XCRemoteSwiftPackageReference "Swinject" */,
 				91F7CA372E10998000E1EA41 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
+				913F635C2E41415F005038B7 /* XCRemoteSwiftPackageReference "SkeletonView" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 3CB112082E0B1FEF00EF5EC4 /* Products */;
@@ -620,6 +624,14 @@
 				minimumVersion = 2.9.1;
 			};
 		};
+		913F635C2E41415F005038B7 /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Juanpe/SkeletonView.git";
+			requirement = {
+				kind = exactVersion;
+				version = 1.31.0;
+			};
+		};
 		91F7CA372E10998000E1EA41 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SimplyDanny/SwiftLintPlugins";
@@ -645,6 +657,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3CB1122E2E0B21EB00EF5EC4 /* XCRemoteSwiftPackageReference "Moya" */;
 			productName = Moya;
+		};
+		913F635D2E41415F005038B7 /* SkeletonView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 913F635C2E41415F005038B7 /* XCRemoteSwiftPackageReference "SkeletonView" */;
+			productName = SkeletonView;
 		};
 		91F7CA382E1099A500E1EA41 /* SwiftLintBuildToolPlugin */ = {
 			isa = XCSwiftPackageProductDependency;
