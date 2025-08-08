@@ -21,10 +21,7 @@ class OnboardingPresenter: OnboardingPresenterProtocol {
 
     // MARK: - Public Methods
 
-    func viewDidLoad() {
-//        let item = interactor.getWelcomeItem()
-//        view?.configureView(with: item)
-    }
+    func viewDidLoad() {}
 
     func didTapGetStartedButton() {
         interactor.markOnboardingShown()

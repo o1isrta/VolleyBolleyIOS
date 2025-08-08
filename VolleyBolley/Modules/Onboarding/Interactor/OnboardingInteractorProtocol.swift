@@ -7,5 +7,4 @@
 
 protocol OnboardingInteractorProtocol: AnyObject {
     func markOnboardingShown()
-//    func getWelcomeItem() -> OnboardingItem
 }
