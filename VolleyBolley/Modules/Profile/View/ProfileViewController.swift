@@ -77,7 +77,7 @@ final class ProfileViewController: BaseViewController, ProfileViewProtocol {
         setupConstraintsNavBar()
         setupConstraintsLabel()
 
-        setupCalendar()
+        //setupCalendar()
     }
 
     // MARK: - Constraints

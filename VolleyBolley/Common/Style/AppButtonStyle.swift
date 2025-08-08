@@ -137,7 +137,7 @@ struct AppButtonStyle {
         gradientBorderColors: []
     )
 
-    // TODO: - Add secondary with arrow icon
+    // TODO: - Add secondary with arrow icon and changeLevel button style
 
     // MARK: - Tertiary
 
@@ -243,7 +243,7 @@ struct AppButtonStyle {
     )
 
     static let actionHighlightedNormal = AppButtonStyle(
-        backgroundColor: AppColor.Background.navBar.withAlphaComponent(0.3),
+        backgroundColor: .clear,
         titleColor: AppColor.Text.primary,
         font: AppFont.ActayWide.bold(size: 24),
         cornerRadius: 32,
@@ -252,7 +252,7 @@ struct AppButtonStyle {
         tintColor: AppColor.Icon.primary,
         gradientBackgroundColors: [],
         gradientBorderColors: [],
-        backgroundEffectProvider: { AppEffect.glass() }
+        backgroundEffectProvider: { AppEffect.glassHightLighted() }
     )
 
     static let actionHighlightedSelected = AppButtonStyle(
@@ -264,8 +264,6 @@ struct AppButtonStyle {
         borderColor: .clear,
         tintColor: AppColor.Icon.primary,
         gradientBackgroundColors: [],
-        gradientBorderColors: []
+        gradientBorderColors: [],
     )
-
-    // TODO: - Add changeLevel button style
 }

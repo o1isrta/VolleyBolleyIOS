@@ -56,7 +56,7 @@ extension AppButtonAction: AppButtonConfig {
         case [.normal, .highlighted]:
             return .actionHighlightedNormal
         default:
-            return .secondaryNormal
+            return nil
         }
     }
 }
