@@ -84,14 +84,14 @@ final class OnboardingViewController: UIViewController, OnboardingViewProtocol {
     // MARK: - Private Methods
 
     private func setupUI() {
-        [backgroundImageView,
-         titleLabel,
-         descriptionLabel,
-         logoImageView,
-         appNameLabel,
-         getStartedButton].forEach {
-            view.addSubviews($0)
-        }
+        view.addSubviews(
+            backgroundImageView,
+            titleLabel,
+            descriptionLabel,
+            logoImageView,
+            appNameLabel,
+            getStartedButton
+        )
     }
 
     // MARK: - Actions
