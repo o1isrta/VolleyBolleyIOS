@@ -99,7 +99,7 @@ class AppButtonView<Config: AppButtonConfig>: UIButton {
             )
         }
 
-        if let newEffect = visualState(for: state)?.backgroundEffect as? GlassEffectView {
+        if let newEffect = visualState(for: state)?.backgroundEffect as? GlassmorphismView {
             newEffect.frame = bounds
             newEffect.cornerRadius = currentCornerRadius
 
