@@ -25,4 +25,14 @@ enum AppDateFormatters {
         formatter.timeStyle = .short
         return formatter
     }()
+    
+    static let time12Hour: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "h:mm a"
+        formatter.amSymbol = "AM"
+        formatter.pmSymbol = "PM"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        return formatter
+    }()
+    
 }
