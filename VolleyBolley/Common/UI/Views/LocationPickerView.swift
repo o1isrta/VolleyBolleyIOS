@@ -62,7 +62,7 @@ class LocationPickerView: UIView, UITableViewDelegate, UITableViewDataSource {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.isScrollEnabled = true
 
-        tableView.backgroundColor = .white
+        tableView.backgroundColor = AppColor.Background.primary
         tableView.separatorInset = .zero
         return tableView
     }()
@@ -71,7 +71,7 @@ class LocationPickerView: UIView, UITableViewDelegate, UITableViewDataSource {
 
     private var heightConstraint: NSLayoutConstraint?
     private var tableHeightConstraint: NSLayoutConstraint?
-    private var isOpen = false
+    private var isOpenList = false
     private let rowHeight: CGFloat = 51
     private let closedHeight: CGFloat = 51
     private let maxTableHeight: CGFloat = 102
@@ -157,17 +157,17 @@ class LocationPickerView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
 
     @objc func toggleTableView() {
-        isOpen.toggle()
+        isOpenList.toggle()
         tableContainer.isHidden = false
 
         let tableContentHeight = CGFloat(items.count) * rowHeight
         let adjustedTableHeight = min(tableContentHeight, maxTableHeight)
-        let totalHeight = isOpen ? closedHeight + adjustedTableHeight : closedHeight
+        let totalHeight = isOpenList ? closedHeight + adjustedTableHeight : closedHeight
 
-        tableHeightConstraint?.constant = isOpen ? adjustedTableHeight : 0
+        tableHeightConstraint?.constant = isOpenList ? adjustedTableHeight : 0
         heightConstraint?.constant = totalHeight
 
-        if isOpen {
+        if isOpenList {
             tableContainer.alpha = 0
             tableContainer.transform = CGAffineTransform(scaleX: 0.97, y: 0.97)
 
@@ -212,9 +212,9 @@ class LocationPickerView: UIView, UITableViewDelegate, UITableViewDataSource {
 
         let tableContentHeight = CGFloat(items.count) * rowHeight
         let adjustedTableHeight = min(tableContentHeight, maxTableHeight)
-        tableHeightConstraint?.constant = isOpen ? adjustedTableHeight : 0
+        tableHeightConstraint?.constant = isOpenList ? adjustedTableHeight : 0
 
-        if isOpen {
+        if isOpenList {
             heightConstraint?.constant = closedHeight + adjustedTableHeight
         }
     }
