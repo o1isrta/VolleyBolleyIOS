@@ -51,7 +51,7 @@ final class AuthViewController: UIViewController, AuthViewProtocol {
         button.setTitle(String(localized: "  Continue with Google"), for: .normal)
         button.titleLabel?.font = AppFont.Hero.bold(size: 18)
         button.setTitleColor(AppColor.Text.inverted, for: .normal)
-        button.backgroundColor = .white
+        button.backgroundColor = AppColor.Background.primary
 
         if let googleIcon = UIImage(named: "google") {
             button.setImage(googleIcon, for: .normal)
