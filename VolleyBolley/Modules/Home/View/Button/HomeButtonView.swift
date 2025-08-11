@@ -69,13 +69,19 @@ class BaseHomeButtonView: UIButton {
         return view
     }()
 
-    private lazy var courtTitleView: CourtTitleView = {
-        let view = CourtTitleView(type: .icon)
+    private lazy var venueView: LocationTitleView = {
+        let view = LocationTitleView(type: .icon)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
-    private lazy var homeButtonSubTitleLabel: UILabel = {
+    private lazy var weatherView: WeatherView = {
+        let view = WeatherView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
+    private lazy var nearYouLabel: UILabel = {
         let view = UILabel()
         view.font = AppFont.Hero.regular(size: 16)
         view.text = String(localized: "home.nearYou")
@@ -132,8 +138,18 @@ class BaseHomeButtonView: UIButton {
 
     // MARK: - Public Methods
 
-    func configure(with viewModel: HomeButtonViewModel) {
+    func configure(with viewModel: HomeButtonConfigurable) {
+        if let venueModel = viewModel as? VenueButtonViewModel {
+            let locationTitleViewModel = LocationTitleViewModel(
+                title: venueModel.locationName,
+                location: venueModel.locationAddress
+            )
+            venueView.configure(with: locationTitleViewModel)
 
+//            let weatherViewModel = WeatherViewModel(condition: venueModel.)
+//
+//            weatherView.configure(with: WeatherViewModel)
+        }
     }
 
     func setAction(_ action: @escaping (BaseHomeButtonView) -> Void) {

@@ -7,14 +7,15 @@
 
 import UIKit
 
-struct HomeButtonViewModel {
-    let weather: WeatherViewModel?
-    let gamesAvailable: Int
+protocol HomeButtonConfigurable {}
 
-//    init(user: User, avatarImage: UIImage?) {
-//        self.displayName = user.firstName
-//        self.avatarImage = avatarImage
-//        self.levelText = user.level.title
-//        self.levelColor = user.level.color
-//    }
+struct VenueButtonViewModel: HomeButtonConfigurable {
+    let temperature: String
+    let conditionIconName: String
+    let locationName: String
+    let locationAddress: String
+}
+
+struct GamesButtonViewModel: HomeButtonConfigurable {
+    let gamesCount: Int
 }
