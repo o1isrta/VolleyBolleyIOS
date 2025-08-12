@@ -75,10 +75,9 @@ final class TimePickerButton: UIButton {
 
     // MARK: - Initializers
 
-    /// Инициализатор кнопки с опциональной датой
-    /// - Parameter date: дата, которая будет отображена. Если nil — отображается заглушка ("_:__").
-    init() {
-        super.init(frame: .zero)
+    /// Инициализатор кнопки
+    override init(frame: CGRect){
+        super.init(frame: frame)
         setup()
         updateLabel()
     }
@@ -151,7 +150,7 @@ final class TimePickerButton: UIButton {
             datePicker.bottomAnchor.constraint(equalTo: alert.view.bottomAnchor, constant: -44)
         ])
 
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel))
         alert.addAction(UIAlertAction(title: "ОК", style: .default, handler: { [weak self] _ in
             self?.time = datePicker.date
         }))
