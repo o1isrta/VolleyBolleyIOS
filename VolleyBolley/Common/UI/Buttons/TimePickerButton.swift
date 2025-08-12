@@ -54,7 +54,6 @@ final class TimePickerButton: UIButton {
         stack.alignment = .center
         stack.spacing = Constants.stackSpacing
         stack.isUserInteractionEnabled = false
-        stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
     
@@ -64,12 +63,11 @@ final class TimePickerButton: UIButton {
         view.cornerRadius = Constants.cornerRadius
         view.innerShadowRadius = 0
         view.isUserInteractionEnabled = false
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     /// Текущее выбранное время, отображаемое на кнопке
-    private(set) var date: Date? {
+    private(set) var time: Date? {
         didSet {
             updateLabel()
         }
@@ -97,9 +95,7 @@ final class TimePickerButton: UIButton {
         layer.cornerRadius = Constants.cornerRadius
         clipsToBounds = true
         
-        [glassView, labelStack].forEach {
-            addSubview($0)
-        }
+        addSubviews(glassView, labelStack)
         sendSubviewToBack(glassView)
         
         NSLayoutConstraint.activate([
@@ -116,13 +112,13 @@ final class TimePickerButton: UIButton {
     
     /// Форматирует и обновляет текст в метках timeLabel и periodLabel в зависимости от значения date
     private func updateLabel() {
-        guard let date else {
+        guard let time else {
             timeLabel.text = "_:__"
             periodLabel.text = "PM"
             return
         }
         
-        let fullTime = AppDateFormatters.time12Hour.string(from: date)
+        let fullTime = AppDateFormatters.time12Hour.string(from: time)
         let components = fullTime.components(separatedBy: " ")
         timeLabel.text = components.first ?? "_:__"
         periodLabel.text = components.last ?? "PM"
@@ -144,10 +140,9 @@ final class TimePickerButton: UIButton {
         datePicker.datePickerMode = .time
         datePicker.preferredDatePickerStyle = .wheels
         datePicker.locale = Locale(identifier: "en_US_POSIX")
-        datePicker.translatesAutoresizingMaskIntoConstraints = false
-        datePicker.date = date ?? Date()
+        datePicker.date = time ?? Date()
         
-        alert.view.addSubview(datePicker)
+        alert.view.addSubviews(datePicker)
         
         NSLayoutConstraint.activate([
             datePicker.topAnchor.constraint(equalTo: alert.view.topAnchor, constant: 8),
@@ -158,7 +153,7 @@ final class TimePickerButton: UIButton {
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         alert.addAction(UIAlertAction(title: "ОК", style: .default, handler: { [weak self] _ in
-            self?.date = datePicker.date
+            self?.time = datePicker.date
         }))
         
         topController.present(alert, animated: true)
