@@ -26,7 +26,7 @@ struct CourtButtonsViewModel {
 
 final class CourtButtonsView: UIView {
 
-	// MARK: - Public Properties
+	// MARK: - Private Properties
 
 	private var doneButtonCallback: (() -> Void)?
 	private var detailsButtonCallback: (() -> Void)?
