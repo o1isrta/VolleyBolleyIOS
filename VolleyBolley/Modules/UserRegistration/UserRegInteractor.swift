@@ -6,7 +6,7 @@
 //
 import Foundation
 
-class UserRegInteractor: UserRegInteractorProtocol {
+final class UserRegInteractor: UserRegInteractorProtocol {
 
     weak var presenter: UserRegInteractorOutputProtocol?
 

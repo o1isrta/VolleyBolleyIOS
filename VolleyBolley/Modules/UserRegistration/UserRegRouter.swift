@@ -6,7 +6,7 @@
 //
 import UIKit
 
-class UserRegRouter: UserRegRouterProtocol {
+final class UserRegRouter: UserRegRouterProtocol {
 
     weak var viewController: UIViewController?
     weak var coordinator: AppRouter?

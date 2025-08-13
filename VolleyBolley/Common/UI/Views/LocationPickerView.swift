@@ -4,7 +4,6 @@
 //
 //  Created by Олег Козырев on 31.07.2025.
 //
-
 import UIKit
 
 protocol LocationPickerViewDelegate: AnyObject {
@@ -15,6 +14,22 @@ protocol LocationPickerViewDelegate: AnyObject {
 class LocationPickerView: UIView, UITableViewDelegate, UITableViewDataSource {
 
     weak var delegate: LocationPickerViewDelegate?
+
+    private var placeholder: String {
+        didSet {
+            if selectedItem == nil {
+                titleLabel.text = placeholder
+            }
+        }
+    }
+
+    private var selectedItem: String? {
+        didSet {
+            titleLabel.text = selectedItem ?? placeholder
+        }
+    }
+
+    private let cellIdentifier = "LocationCell"
 
     private let titleContainer: UIView = {
         let titleContainer = UIView()
@@ -33,14 +48,14 @@ class LocationPickerView: UIView, UITableViewDelegate, UITableViewDataSource {
         titleLabel.textColor = AppColor.Text.placeHolder
         titleLabel.font = AppFont.Hero.regular(size: 16)
         titleLabel.textAlignment = .left
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
         return titleLabel
     }()
 
     private let arrowImageView: UIImageView = {
-        let arrowImageView = UIImageView(image: UIImage(systemName: "chevron.down"))
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 7, weight: .regular)
+        let arrowImageView = UIImageView(image: UIImage(systemName: "chevron.down", withConfiguration: imageConfig))
         arrowImageView.tintColor = AppColor.Icon.inverted
-        arrowImageView.translatesAutoresizingMaskIntoConstraints = false
+        arrowImageView.contentMode = .scaleAspectFit
         return arrowImageView
     }()
 
@@ -59,15 +74,12 @@ class LocationPickerView: UIView, UITableViewDelegate, UITableViewDataSource {
 
     private let tableView: UITableView = {
         let tableView = UITableView()
-        tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.isScrollEnabled = true
-
         tableView.backgroundColor = AppColor.Background.primary
         tableView.separatorInset = .zero
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
-
-    private let cellIdentifier = "LocationCell"
 
     private var heightConstraint: NSLayoutConstraint?
     private var tableHeightConstraint: NSLayoutConstraint?
@@ -78,26 +90,13 @@ class LocationPickerView: UIView, UITableViewDelegate, UITableViewDataSource {
 
     private var items: [String]
 
-    var placeholder: String {
-        didSet {
-            if selectedItem == nil {
-                titleLabel.text = placeholder
-            }
-        }
-    }
-
-    private var selectedItem: String? {
-        didSet {
-            titleLabel.text = selectedItem ?? placeholder
-        }
-    }
-
     init(items: [String], placeholder: String = "Select") {
         self.items = items
         self.placeholder = placeholder
         super.init(frame: .zero)
 
         setup()
+        setupTableView()
     }
 
     required init?(coder: NSCoder) {
@@ -113,8 +112,12 @@ class LocationPickerView: UIView, UITableViewDelegate, UITableViewDataSource {
         addSubview(titleContainer)
         addSubview(tableContainer)
 
-        titleContainer.addSubview(titleLabel)
-        titleContainer.addSubview(arrowImageView)
+        [titleLabel,
+         arrowImageView].forEach {
+            titleContainer.addSubview($0)
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
+
         tableContainer.addSubview(tableView)
 
         NSLayoutConstraint.activate([
@@ -145,10 +148,6 @@ class LocationPickerView: UIView, UITableViewDelegate, UITableViewDataSource {
 
         titleLabel.text = placeholder
 
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
-
         tableHeightConstraint = tableContainer.heightAnchor.constraint(equalToConstant: 0)
         tableHeightConstraint?.isActive = true
 
@@ -156,7 +155,13 @@ class LocationPickerView: UIView, UITableViewDelegate, UITableViewDataSource {
         heightConstraint?.isActive = true
     }
 
-    @objc func toggleTableView() {
+    private func setupTableView() {
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
+    }
+
+    @objc private func toggleTableView() {
         isOpenList.toggle()
         tableContainer.isHidden = false
 
@@ -219,7 +224,7 @@ class LocationPickerView: UIView, UITableViewDelegate, UITableViewDataSource {
         }
     }
 
-    func clearSelection() {
+    private func clearSelection() {
         selectedItem = nil
     }
 
@@ -235,7 +240,7 @@ class LocationPickerView: UIView, UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
         cell.textLabel?.text = items[indexPath.row]
         cell.textLabel?.textColor = AppColor.Text.placeHolder
-        cell.backgroundColor = .white
+        cell.backgroundColor = AppColor.Background.primary
         return cell
     }
 

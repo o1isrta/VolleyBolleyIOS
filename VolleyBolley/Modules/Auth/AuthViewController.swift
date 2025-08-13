@@ -29,7 +29,6 @@ final class AuthViewController: UIViewController, AuthViewProtocol {
 
         label.attributedText = attributedString
         label.numberOfLines = 4
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
@@ -95,14 +94,12 @@ final class AuthViewController: UIViewController, AuthViewProtocol {
         view.layer.cornerRadius = 32
         view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         view.clipsToBounds = true
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
     private lazy var backgroundImageView: UIImageView = {
         let imageView = UIImageView(image: .auth)
         imageView.contentMode = .scaleAspectFill
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
 
@@ -113,9 +110,11 @@ final class AuthViewController: UIViewController, AuthViewProtocol {
     }
 
     private func setupUI() {
-        view.addSubview(backgroundImageView)
-        view.addSubview(descriptionLabel)
-        view.addSubview(bottomView)
+        [backgroundImageView,
+         descriptionLabel,
+         bottomView].forEach {
+            view.addSubviews($0)
+        }
 
         bottomView.addSubview(buttonsStack)
 

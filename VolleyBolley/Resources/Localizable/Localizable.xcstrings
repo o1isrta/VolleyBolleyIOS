@@ -1144,9 +1144,6 @@
         }
       }
     },
-    "Registration" : {
-
-    },
     "registration_title" : {
       "comment" : "Registration",
       "extractionState" : "manual",
@@ -1155,6 +1152,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Registration"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Регистрация"
           }
         }
       }
@@ -1288,6 +1291,12 @@
             "state" : "translated",
             "value" : "Sign up\\nwith\\na social\\nmedia"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Регистрация через соцсети"
+          }
         }
       }
     },
@@ -1317,9 +1326,6 @@
           }
         }
       }
-    },
-    "This app helps you find beach volleyball games and match with players at your skill level." : {
-
     },
     "time_from_label" : {
       "comment" : "Game",
@@ -1393,6 +1399,12 @@
             "state" : "translated",
             "value" : "This app helps you find beach volleyball games and match with players at your skill level."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Это приложение помогает искать матчи по пляжному волейболу и объединяться с игроками вашего уровня."
+          }
         }
       }
     },
@@ -1405,11 +1417,14 @@
             "state" : "translated",
             "value" : "Welcome!"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добро пожаловать!"
+          }
         }
       }
-    },
-    "Welcome!" : {
-
     },
     "Your city" : {
 
@@ -1425,6 +1440,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Your message"
+          }
+        }
+      }
+    },
+    "кк" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Это приложение помогает искать матчи по пляжному волейболу и объединяться с игроками вашего уровня."
           }
         }
       }

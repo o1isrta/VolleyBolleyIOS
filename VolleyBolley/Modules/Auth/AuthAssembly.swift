@@ -12,7 +12,6 @@ final class AuthAssembly: Assembly {
     func assemble(container: Container) {
         container.register(AuthViewController.self) { resolver in
             let authVC = AuthViewController()
-
             let interactor = AuthorizationInteractor()
             let appRouter = resolver.resolve(AppRouter.self)
             let router = AuthRouter(viewController: authVC, coordinator: appRouter)

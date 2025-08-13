@@ -6,7 +6,7 @@
 //
 import Foundation
 
-class AuthorizationPresenter: AuthPresenterProtocol {
+final class AuthorizationPresenter: AuthPresenterProtocol {
     weak var view: AuthViewProtocol?
     private let interactor: AuthInteractorProtocol
     private let router: AuthRouterProtocol
