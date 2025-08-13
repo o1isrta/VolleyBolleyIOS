@@ -4,6 +4,12 @@
     "" : {
 
     },
+    "  Continue with Facebook" : {
+
+    },
+    "  Continue with Google" : {
+
+    },
     "%@ %@" : {
       "localizations" : {
         "en" : {
@@ -76,6 +82,9 @@
         }
       }
     },
+    "Anton" : {
+
+    },
     "app_name" : {
       "comment" : "LaunchScreen",
       "extractionState" : "manual",
@@ -139,6 +148,12 @@
         }
       }
     },
+    "Choose your city" : {
+
+    },
+    "Choose your country" : {
+
+    },
     "choose_city_placeholder" : {
       "comment" : "Registration",
       "extractionState" : "manual",
@@ -198,6 +213,9 @@
           }
         }
       }
+    },
+    "Continue with phone number" : {
+
     },
     "continue_with_facebook_button" : {
       "comment" : "Registration",
@@ -319,6 +337,9 @@
         }
       }
     },
+    "Date of birth" : {
+
+    },
     "date_label" : {
       "comment" : "Game",
       "extractionState" : "manual",
@@ -424,6 +445,9 @@
         }
       }
     },
+    "Female" : {
+
+    },
     "find_game_button" : {
       "comment" : "Game",
       "extractionState" : "manual",
@@ -496,6 +520,9 @@
         }
       }
     },
+    "Gender" : {
+
+    },
     "gender_female" : {
       "comment" : "Registration",
       "extractionState" : "manual",
@@ -547,6 +574,9 @@
         }
       }
     },
+    "Hard" : {
+
+    },
     "HARD" : {
       "comment" : "User level hard"
     },
@@ -588,6 +618,12 @@
           }
         }
       }
+    },
+    "Ivanov" : {
+
+    },
+    "Level" : {
+
     },
     "level_hard" : {
       "comment" : "Registration",
@@ -649,6 +685,9 @@
         }
       }
     },
+    "Light" : {
+
+    },
     "LIGHT" : {
       "comment" : "User level light"
     },
@@ -662,6 +701,9 @@
           }
         }
       }
+    },
+    "Male" : {
+
     },
     "manage_players_button" : {
       "comment" : "Game",
@@ -698,6 +740,9 @@
         }
       }
     },
+    "Medium" : {
+
+    },
     "MEDIUM" : {
       "comment" : "User level medium"
     },
@@ -711,6 +756,9 @@
           }
         }
       }
+    },
+    "Name" : {
+
     },
     "name_field" : {
       "comment" : "Registration",
@@ -1015,6 +1063,9 @@
         }
       }
     },
+    "Pro" : {
+
+    },
     "PRO" : {
       "comment" : "User level pro"
     },
@@ -1101,6 +1152,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Registration"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Регистрация"
           }
         }
       }
@@ -1222,6 +1279,9 @@
         }
       }
     },
+    "Sign up\nwith\na social\nmedia" : {
+
+    },
     "sign_up_with_label" : {
       "comment" : "Registration",
       "extractionState" : "manual",
@@ -1229,7 +1289,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sign up with a social media"
+            "value" : "Sign up\\nwith\\na social\\nmedia"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Регистрация через соцсети"
           }
         }
       }
@@ -1246,6 +1312,9 @@
         }
       }
     },
+    "Surname" : {
+
+    },
     "surname_field" : {
       "comment" : "Registration",
       "extractionState" : "manual",
@@ -1257,9 +1326,6 @@
           }
         }
       }
-    },
-    "This app helps you find beach volleyball games and match with players at your skill level." : {
-
     },
     "time_from_label" : {
       "comment" : "Game",
@@ -1333,6 +1399,12 @@
             "state" : "translated",
             "value" : "This app helps you find beach volleyball games and match with players at your skill level."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Это приложение помогает искать матчи по пляжному волейболу и объединяться с игроками вашего уровня."
+          }
         }
       }
     },
@@ -1345,10 +1417,19 @@
             "state" : "translated",
             "value" : "Welcome!"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добро пожаловать!"
+          }
         }
       }
     },
-    "Welcome!" : {
+    "Your city" : {
+
+    },
+    "Your country" : {
 
     },
     "your_message_placeholder" : {
@@ -1359,6 +1440,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Your message"
+          }
+        }
+      }
+    },
+    "кк" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Это приложение помогает искать матчи по пляжному волейболу и объединяться с игроками вашего уровня."
           }
         }
       }
