@@ -6,7 +6,7 @@
 //
 import Foundation
 
-class UserRegPresenter: UserRegPresenterProtocol {
+final class UserRegPresenter: UserRegPresenterProtocol {
     var countries = ["Cyprus", "Thailand"]
     let cities = ["Koh Phangan", "Koh Samui"]
 

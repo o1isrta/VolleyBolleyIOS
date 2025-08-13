@@ -7,7 +7,7 @@
 
 import UIKit
 
-class OnboardingRouter: OnboardingRouterProtocol {
+final class OnboardingRouter: OnboardingRouterProtocol {
 
     weak var viewController: UIViewController?
     weak var coordinator: AppRouter?

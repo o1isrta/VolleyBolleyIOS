@@ -7,8 +7,7 @@
 
 import UIKit
 
-class UserRegViewController: UIViewController, UITextFieldDelegate {
-
+final class UserRegViewController: UIViewController, UITextFieldDelegate {
     var presenter: UserRegPresenterProtocol?
 
     private lazy var scrollView: UIScrollView = {
@@ -27,7 +26,7 @@ class UserRegViewController: UIViewController, UITextFieldDelegate {
         return contentView
     }()
 
-    private lazy var titleLabel = CustomTitle(text: String(localized: "Registration"), isLarge: true)
+    private lazy var titleLabel = CustomTitle(text: String(localized: "registration_title"), isLarge: true)
 
     private lazy var nameLabel = CustomLabel(text: String(localized: "Name"), isBold: true)
     private lazy var nameTextField: UITextField = {
