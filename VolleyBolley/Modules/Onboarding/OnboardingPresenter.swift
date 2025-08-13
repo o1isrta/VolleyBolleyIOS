@@ -7,7 +7,7 @@
 
 import Foundation
 
-class OnboardingPresenter: OnboardingPresenterProtocol {
+final class OnboardingPresenter: OnboardingPresenterProtocol {
     weak var view: OnboardingViewProtocol?
     private let interactor: OnboardingInteractorProtocol
     private let router: OnboardingRouterProtocol

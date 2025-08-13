@@ -7,12 +7,12 @@
 
 import UIKit
 
-class OnboardingViewController: UIViewController {
+final class OnboardingViewController: UIViewController {
     var presenter: OnboardingPresenterProtocol?
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = String(localized: "Welcome!")
+        label.text = String(localized: "welcome_title")
         label.font = AppFont.ActayWide.bold(size: 36)
         label.textColor = AppColor.Text.primary
         label.textAlignment = .left
@@ -22,7 +22,7 @@ class OnboardingViewController: UIViewController {
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
 		label.text = String(
-			localized: "This app helps you find beach volleyball games and match with players at your skill level."
+			localized: "welcome_description"
 		)
         label.font = AppFont.Hero.regular(size: 20)
         label.textColor = AppColor.Text.primary
