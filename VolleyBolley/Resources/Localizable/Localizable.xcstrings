@@ -17,6 +17,18 @@
     "%lld" : {
 
     },
+    "About" : {
+      "comment" : "Profile",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About"
+          }
+        }
+      }
+    },
     "add_payment_button" : {
       "comment" : "Game",
       "extractionState" : "manual",
@@ -425,6 +437,18 @@
         }
       }
     },
+    "FAQ" : {
+      "comment" : "Profile",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "FAQ"
+          }
+        }
+      }
+    },
     "Favorites" : {
       "comment" : "Segment Control",
       "localizations" : {
@@ -675,6 +699,18 @@
         }
       }
     },
+    "Log out" : {
+      "comment" : "Profile",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Log out"
+          }
+        }
+      }
+    },
     "manage_players_button" : {
       "comment" : "Game",
       "extractionState" : "manual",
@@ -799,6 +835,18 @@
         }
       }
     },
+    "Payments" : {
+      "comment" : "Profile",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Payments"
+          }
+        }
+      }
+    },
     "per_person_inline_label" : {
       "comment" : "Game",
       "extractionState" : "manual",
@@ -819,6 +867,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Per person:"
+          }
+        }
+      }
+    },
+    "Personal data" : {
+      "comment" : "Profile",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Personal data"
           }
         }
       }
@@ -963,6 +1023,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "PRO"
+          }
+        }
+      }
+    },
+    "Players" : {
+      "comment" : "Profile",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Players"
           }
         }
       }
@@ -1254,6 +1326,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Starts today"
+          }
+        }
+      }
+    },
+    "Support" : {
+      "comment" : "Profile",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Support"
           }
         }
       }

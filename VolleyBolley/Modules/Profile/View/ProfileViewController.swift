@@ -13,6 +13,40 @@ protocol ProfileViewProtocol: AnyObject {
     func displayError(message: String)
 }
 
+enum ProfileMenuItem: CaseIterable {
+    case players
+    case personal
+    case fluentPayment
+    case support
+    case faq
+    case about
+    case logOut
+
+    var icon: String {
+        switch self {
+        case .players: return "players"
+        case .personal: return "personal"
+        case .fluentPayment: return "fluent_payment"
+        case .support: return "support"
+        case .faq: return "tooltip"
+        case .about: return "about"
+        case .logOut: return "log_out"
+        }
+    }
+
+    var title: String {
+        switch self {
+        case .players: return String(localized: "Players")
+        case .personal: return String(localized: "Personal data")
+        case .fluentPayment: return String(localized: "Payments")
+        case .support: return String(localized: "Support")
+        case .faq: return String(localized: "FAQ")
+        case .about: return String(localized: "About")
+        case .logOut: return String(localized: "Log out")
+        }
+    }
+}
+
 final class ProfileViewController: BaseViewController, ProfileViewProtocol {
 
     // MARK: - Private Properties
@@ -22,6 +56,8 @@ final class ProfileViewController: BaseViewController, ProfileViewProtocol {
     private lazy var navigationBarView = CustomNavBarView()
     private lazy var mainTabBarController = MainTabBarController()
 
+    private lazy var menuItems = ProfileMenuItem.allCases
+
     private lazy var label: UILabel = {
         let view = UILabel()
         view.textAlignment = .center
@@ -29,10 +65,24 @@ final class ProfileViewController: BaseViewController, ProfileViewProtocol {
         return view
     }()
 
+    private lazy var tableBackground: GlassmorphismView = {
+        let view = GlassmorphismView()
+        view.theme = .light
+        view.blurIntensity = 0.25
+        view.cornerRadius = 32
+        view.tintedBackgroundColor = UIColor.white.withAlphaComponent(0.05)
+        return view
+    }()
+
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
-        tableView.backgroundColor = .black
+        tableView.backgroundColor = .clear
         tableView.layer.cornerRadius = 32
+        tableView.separatorStyle = .none
+        tableView.isScrollEnabled = false
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(MenuCell.self, forCellReuseIdentifier: MenuCell.identifier)
         return tableView
     }()
 
@@ -60,10 +110,14 @@ final class ProfileViewController: BaseViewController, ProfileViewProtocol {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setupView()
         presenter.viewDidLoad()
     }
+
+    override func viewDidLayoutSubviews() {
+         super.viewDidLayoutSubviews()
+         tableBackground.frame = tableBackground.frame
+     }
 
     // MARK: - Public Methods
 
@@ -83,8 +137,14 @@ final class ProfileViewController: BaseViewController, ProfileViewProtocol {
 // MARK: - Constants
 
 private extension ProfileViewController {
+    
     func setupUI() {
-        [navigationBarView, label, tableView, deleteButton].forEach {
+        [navigationBarView, label, deleteButton].forEach {
+            view.addSubview($0)
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
+
+        [tableBackground, tableView].forEach {
             view.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
@@ -107,6 +167,11 @@ private extension ProfileViewController {
             label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
 
+            tableBackground.topAnchor.constraint(equalTo: navigationBarView.bottomAnchor, constant: 8),
+            tableBackground.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
+            tableBackground.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
+            tableBackground.heightAnchor.constraint(equalToConstant: 400),
+
             tableView.topAnchor.constraint(equalTo: navigationBarView.bottomAnchor, constant: 8),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
@@ -120,6 +185,34 @@ private extension ProfileViewController {
             mainTabBarController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             mainTabBarController.view.heightAnchor.constraint(equalToConstant: 81)
         ])
+    }
+}
+
+extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return menuItems.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: MenuCell.identifier,
+            for: indexPath) as? MenuCell else {
+            return UITableViewCell()
+        }
+        let item = menuItems[indexPath.row]
+        let isLast = indexPath.row == menuItems.count - 1
+        cell.configure(iconName: item.icon, title: item.title, isLast: isLast)
+        return cell
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        print("Tapped: \(menuItems[indexPath.row].title)")
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 56
     }
 }
 
