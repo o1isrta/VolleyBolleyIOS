@@ -7,7 +7,7 @@
 
 import Swinject
 
-class OnboardingAssembly: Assembly {
+final class OnboardingAssembly: Assembly {
 
     func assemble(container: Container) {
         container.register(OnboardingViewController.self) { resolver in
