@@ -19,7 +19,13 @@ final class UserRegInteractor: UserRegInteractorProtocol {
 
     func registerUser(name: String, surname: String, gender: String) {
         if name.isEmpty || surname.isEmpty || gender.isEmpty {
-            presenter?.registrationDidFail(error: NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "All fields required"]))
+			presenter?.registrationDidFail(
+					error: NSError(
+						domain: "",
+						code: -1,
+						userInfo: [NSLocalizedDescriptionKey: "All fields required"]
+					)
+				)
         } else {
             presenter?.registrationDidSucceed()
         }

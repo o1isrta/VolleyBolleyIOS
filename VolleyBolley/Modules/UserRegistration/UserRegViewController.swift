@@ -31,7 +31,7 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
     private lazy var nameLabel = CustomLabel(text: String(localized: "Name"), isBold: true)
     private lazy var nameTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = String(localized: "Anton")
+        textField.placeholder = "Anton"// TODO String(localized:)
         textField.backgroundColor = AppColor.Border.primary
         textField.layer.cornerRadius = 16
         textField.textColor = AppColor.Text.placeHolder
@@ -43,7 +43,7 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
     private lazy var surnameLabel = CustomLabel(text: String(localized: "Surname"), isBold: true)
     private lazy var surnameTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = String(localized: "Ivanov")
+        textField.placeholder = "Ivanov"// TODO String(localized:)
         textField.backgroundColor = AppColor.Border.primary
         textField.layer.cornerRadius = 16
         textField.textColor = AppColor.Text.placeHolder
