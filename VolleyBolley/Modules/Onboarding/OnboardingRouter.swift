@@ -7,7 +7,7 @@
 
 import UIKit
 
-class OnboardingRouter: OnboardingRouterProtocol {
+final class OnboardingRouter: OnboardingRouterProtocol {
 
     weak var viewController: UIViewController?
     weak var coordinator: AppRouter?
@@ -18,6 +18,6 @@ class OnboardingRouter: OnboardingRouterProtocol {
     }
 
     func navigateToAuthorizationScreen() {
-        // TODO: Добавить метод перехода к авторизации
+        coordinator?.start()
     }
 }
