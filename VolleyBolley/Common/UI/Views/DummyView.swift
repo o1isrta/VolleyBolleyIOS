@@ -153,25 +153,6 @@ private extension DummyView {
 
 #if DEBUG
 import SwiftUI
-
-struct UIViewPreview<View: UIView>: UIViewRepresentable {
-	let view: View
-
-	init(_ builder: @escaping () -> View) {
-		view = builder()
-	}
-
-	// MARK: - UIViewRepresentable
-	func makeUIView(context: Context) -> View {
-		return view
-	}
-
-	func updateUIView(_ uiView: View, context: Context) {
-		uiView.setContentHuggingPriority(.defaultLow, for: .horizontal)
-		uiView.setContentHuggingPriority(.defaultLow, for: .vertical)
-	}
-}
-
 @available(iOS 17.0, *)
 #Preview {
 	UIViewPreview {

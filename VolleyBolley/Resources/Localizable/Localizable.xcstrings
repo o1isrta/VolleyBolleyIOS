@@ -1,12 +1,22 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "" : {
+    "  Continue with Facebook" : {
       "localizations" : {
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : ""
+            "value" : "  Продолжить с Facebook"
+          }
+        }
+      }
+    },
+    "  Continue with Google" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "  Продолжить c Google"
           }
         }
       }
@@ -48,6 +58,24 @@
         }
       }
     },
+    "app_name" : {
+      "comment" : "LaunchScreen",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VOLLEYBOLLEY"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VOLLEYBOLLEY"
+          }
+        }
+      }
+    },
     "Archive" : {
       "comment" : "Segment Control",
       "localizations" : {
@@ -60,6 +88,7 @@
       }
     },
     "Cancel" : {
+      "comment" : "Cancel button",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -69,7 +98,70 @@
         }
       }
     },
+    "Choose your city" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выберите ваш город"
+          }
+        }
+      }
+    },
+    "Choose your country" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выберите вашу страну"
+          }
+        }
+      }
+    },
+    "Contacts: " : {
+      "comment" : "Court Details",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Контакты: "
+          }
+        }
+      }
+    },
+    "Continue with phone number" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Продолжить с номером телефона"
+          }
+        }
+      }
+    },
+    "Court pricing: " : {
+      "comment" : "Court Details",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Стоимость корта: "
+          }
+        }
+      }
+    },
+    "Date of birth" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Дата рождения"
+          }
+        }
+      }
+    },
     "Done" : {
+      "comment" : "Done button",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -226,12 +318,64 @@
         }
       }
     },
+    "Female" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Женский"
+          }
+        }
+      }
+    },
+    "Game host" : {
+      "comment" : "Header of Game Description",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ведущий игры"
+          }
+        }
+      }
+    },
+    "Gender" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пол"
+          }
+        }
+      }
+    },
+    "Gender: " : {
+      "comment" : "Game Description",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пол: "
+          }
+        }
+      }
+    },
     "GET STARTED" : {
       "localizations" : {
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "НАЧАТЬ"
+          }
+        }
+      }
+    },
+    "Hard" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hard"
           }
         }
       }
@@ -258,6 +402,37 @@
         }
       }
     },
+    "Level" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Уровень"
+          }
+        }
+      }
+    },
+    "Level: " : {
+      "comment" : "User info",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Уровень: "
+          }
+        }
+      }
+    },
+    "Light" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Light"
+          }
+        }
+      }
+    },
     "LIGHT" : {
       "comment" : "User level light",
       "localizations" : {
@@ -280,6 +455,16 @@
         }
       }
     },
+    "Male" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Мужской"
+          }
+        }
+      }
+    },
     "Map" : {
       "comment" : "Segment Control",
       "localizations" : {
@@ -287,6 +472,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Карта"
+          }
+        }
+      }
+    },
+    "Medium" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Medium"
           }
         }
       }
@@ -313,12 +508,33 @@
         }
       }
     },
+    "Name" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Имя"
+          }
+        }
+      }
+    },
     "NEXT STEP" : {
+      "comment" : "Next button",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ДАЛЬШЕ"
+          }
+        }
+      }
+    },
+    "Pro" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pro"
           }
         }
       }
@@ -341,6 +557,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Профиль"
+          }
+        }
+      }
+    },
+    "registration_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registration"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Регистрация"
           }
         }
       }
@@ -378,12 +610,26 @@
         }
       }
     },
-    "This app helps you find beach volleyball games and match with players at your skill level." : {
+    "Sign up\nwith\na social\nmedia" : {
+
+    },
+    "Surname" : {
       "localizations" : {
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Это приложение поможет вам найти матчи по пляжному волейболу и подобрать себе соперников соответствующего уровня мастерства."
+            "value" : "Фамилия"
+          }
+        }
+      }
+    },
+    "Tournament host" : {
+      "comment" : "Header of Game Description",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Хозяин турнира"
           }
         }
       }
@@ -398,12 +644,65 @@
         }
       }
     },
-    "Welcome!" : {
+    "welcome_description" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This app helps you find beach volleyball games and match with players at your skill level."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Это приложение поможет вам найти матчи по пляжному волейболу и подобрать себе соперников соответствующего уровня мастерства."
+          }
+        }
+      }
+    },
+    "welcome_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Welcome!"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Добро пожаловать!"
+          }
+        }
+      }
+    },
+    "When: " : {
+      "comment" : "Game Description",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Когда: "
+          }
+        }
+      }
+    },
+    "Your city" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ваш город"
+          }
+        }
+      }
+    },
+    "Your country" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ваша страна"
           }
         }
       }
