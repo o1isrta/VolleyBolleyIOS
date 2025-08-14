@@ -31,6 +31,7 @@ final class CourtButtonsView: UIView {
 	private var doneButtonCallback: (() -> Void)?
 	private var detailsButtonCallback: (() -> Void)?
 
+	// TODO: refactoding
 	private lazy var doneButton: UIButton = {
 		let button = UIButton(type: .system)
 		button.backgroundColor = .systemBlue
@@ -40,6 +41,7 @@ final class CourtButtonsView: UIView {
 		return button
 	}()
 
+	// TODO: refactoding
 	private lazy var detailsButton: UIButton = {
 		let button = UIButton(type: .system)
 		button.backgroundColor = .systemGray5
@@ -50,13 +52,11 @@ final class CourtButtonsView: UIView {
 	}()
 
 	private lazy var buttonStackView: UIStackView = {
-		let stackView = UIStackView()
+		let stackView = UIStackView(arrangedSubviews: [doneButton, detailsButton])
 		stackView.axis = .horizontal
 		stackView.spacing = 8
 		stackView.alignment = .leading
 		stackView.distribution = .fill
-		stackView.addArrangedSubview(doneButton)
-		stackView.addArrangedSubview(detailsButton)
 		return stackView
 	}()
 
@@ -107,13 +107,6 @@ private extension CourtButtonsView {
 
 	func setupUI() {
 		backgroundColor = .clear
-		// button stack
-		[
-			doneButton,
-			detailsButton
-		].forEach {
-			buttonStackView.addArrangedSubview($0)
-		}
 
 		addSubviews(buttonStackView)
 
