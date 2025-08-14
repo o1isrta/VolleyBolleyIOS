@@ -63,7 +63,7 @@ final class CustomAlertView: UIView {
 
 	private lazy var cancelButton: NextStepButton = {
 		let button = NextStepButton(
-			title: String(localized: ""),
+			title: "",// TODO: String(localized: "")
 			isActive: true,
 			target: self,
 			action: #selector(yesButtonTapped)
