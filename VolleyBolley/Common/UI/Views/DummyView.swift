@@ -90,18 +90,12 @@ final class DummyView: UIView {
 		return stackView
 	}()
 
-	// TODO: refactoring
-	private lazy var doneButton: UIButton = {
-		let button = UIButton(type: .system)
-		button.setTitleColor(AppColor.Text.inverted, for: .normal)
-		button.setTitle(dummyViewType.buttonTitle, for: .normal)
-		button.titleLabel?.font = AppFont.ActayWide.bold(size: 16)
-		button.backgroundColor = AppColor.Background.actionButtonDefault
-		button.layer.cornerRadius = 16
-		button.layer.masksToBounds = true
-		button.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
-		return button
-	}()
+	private lazy var doneButton: UIButton = NextStepButton(
+		title: dummyViewType.buttonTitle,
+		isActive: true,
+		target: self,
+		action: #selector(doneButtonTapped)
+	)
 
 	// MARK: - Initializers
 
