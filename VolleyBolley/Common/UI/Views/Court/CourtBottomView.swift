@@ -68,24 +68,12 @@ final class CourtBottomView: GlassmorphismView {
 			detailsButtonData: model.detailsButtonData
 		)
 		courtButtonsView.configure(with: courtButtonsViewModel)
-
-		setupButtonsUI(isExistDetailsButton: model.detailsButtonData != nil)
 	}
 }
 
 // MARK: - Private Methods
 
 private extension CourtBottomView {
-
-	func setupButtonsUI(isExistDetailsButton: Bool) {
-		if isExistDetailsButton {
-			courtButtonsView.widthAnchor.constraint(equalToConstant: 205).isActive = true
-			courtButtonsView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20).isActive = true
-		} else {
-			courtButtonsView.widthAnchor.constraint(equalToConstant: 215).isActive = false
-			courtButtonsView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20).isActive = true
-		}
-	}
 
 	func setupUI() {
 		backgroundColor = AppColor.Background.screen
@@ -105,6 +93,7 @@ private extension CourtBottomView {
 
 			courtButtonsView.topAnchor.constraint(equalTo: courtTitleView.bottomAnchor, constant: 16),
 			courtButtonsView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+			courtButtonsView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
 			courtButtonsView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20)
 		])
 	}
