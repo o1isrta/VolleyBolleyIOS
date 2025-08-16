@@ -168,7 +168,7 @@ private extension MapViewController {
 		let model = CourtBottomViewModel(
 			courtName: court.location.courtName,
 			locationName: court.location.locationName,
-			distance: "",
+			distance: distance,
 			doneButtonData: CourtButtonData(
 				title: String(localized: "CHOOSE THIS COURT"),
 				action: chooseCourtAction
