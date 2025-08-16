@@ -12,34 +12,14 @@ class CourtTableViewCell: UITableViewCell {
     // MARK: - Private Properties
 
     private lazy var mainStackView: UIStackView = {
-        let stackView = UIStackView()
+		let stackView = UIStackView(arrangedSubviews: [locationTitleView, distanceContainer])
         stackView.axis = .horizontal
         stackView.distribution = .equalSpacing
         stackView.spacing = 20
         return stackView
     }()
 
-    private lazy var descriptionStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.distribution = .equalCentering
-        stackView.spacing = 0
-        return stackView
-    }()
-
-    private lazy var titleLabel: UILabel = {
-        let label = UILabel()
-		label.font = AppFont.Hero.bold(size: 16)
-		label.textColor = AppColor.Text.primary
-        return label
-    }()
-
-    private lazy var locationLabel: UILabel = {
-        let label = UILabel()
-		label.font = AppFont.Hero.light(size: 14)
-		label.textColor = AppColor.Text.primary
-        return label
-    }()
+	private lazy var locationTitleView = LocationTitleView(type: .none)
 
     private lazy var distanceContainer: UIView = {
         let view = UIView()
@@ -71,14 +51,17 @@ class CourtTableViewCell: UITableViewCell {
     // MARK: - Public Methods
 
     func configure(with court: CourtModel, distance: Double) {
-		titleLabel.text = court.location.courtName
-		locationLabel.text = court.location.locationName
+		let locationTitleViewModel = LocationTitleViewModel(
+			title: court.location.courtName,
+			location: court.location.locationName
+		)
+		locationTitleView.configure(with: locationTitleViewModel)
 
         let distanceText: String
         if distance >= 0 {
             distanceText = distance < 1
-                ? String(format: "%.0f м", distance * 1000)
-                : String(format: "%.1f км", distance)
+                ? String(format: "%.0f m", distance * 1000)
+                : String(format: "%.1f km", distance)
         } else {
             distanceText = "—"
         }
@@ -94,23 +77,8 @@ private extension CourtTableViewCell {
     func setupUI() {
         selectionStyle = .none
 		backgroundColor = .clear
-        // description
-        [
-            titleLabel,
-            locationLabel
-        ].forEach {
-            descriptionStackView.addArrangedSubview($0)
-        }
-        // distance
-        distanceContainer.addSubviews(distanceLabel)
-        // main elements
-        [
-            descriptionStackView,
-            distanceContainer
-        ].forEach {
-            mainStackView.addArrangedSubview($0)
-        }
 
+        distanceContainer.addSubviews(distanceLabel)
         contentView.addSubviews(mainStackView)
 
         NSLayoutConstraint.activate([

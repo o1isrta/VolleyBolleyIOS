@@ -54,7 +54,29 @@ final class AppRouter {
     }
 
     private func showAuthorization() {
-		// TODO: Добавить переход к авторизации
+        guard let authVC = resolver.resolve(AuthViewController.self) else {
+            fatalError("AuthViewController не зарегистрирован")
+        }
+        let nav = UINavigationController(rootViewController: authVC)
+
+        UIView.transition(with: window, duration: 0.4, options: .transitionCrossDissolve) {
+            self.window.rootViewController = nav
+        }
+
+        window.makeKeyAndVisible()
+    }
+
+    func showUserReg() {
+        guard let userRegVC = resolver.resolve(UserRegViewController.self) else {
+            fatalError("UserRegViewController не зарегистрирован")
+        }
+        let nav = UINavigationController(rootViewController: userRegVC)
+
+        UIView.transition(with: window, duration: 0.4, options: .transitionCrossDissolve) {
+            self.window.rootViewController = nav
+        }
+        
+        window.makeKeyAndVisible()
     }
 
     private func showMainApp() {

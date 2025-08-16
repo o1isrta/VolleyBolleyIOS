@@ -7,6 +7,20 @@
 
 import UIKit
 
+// MARK: - CourtDescriptionViewModel
+
+struct CourtDescriptionViewModel {
+	let price: String
+	let description: String
+	let contact: String
+
+	init(price: String?, description: String?, contact: String?) {
+		self.price = price ?? "-"
+		self.description = description ?? ""
+		self.contact = contact ?? "-"
+	}
+}
+
 final class CourtDescriptionView: UIView {
 
 	// MARK: - Private Properties
@@ -55,15 +69,15 @@ final class CourtDescriptionView: UIView {
 
 	// MARK: - Public Methods
 
-	func configure(with court: CourtModel) {
+	func configure(with model: CourtDescriptionViewModel) {
 		priceLabel.setTextWithDifferentStyles([
 			(String(localized: "Court pricing: "), AppFont.ActayWide.bold(size: 16)),
-			(court.price ?? "-", AppFont.Hero.regular(size: 16))
+			(model.price, AppFont.Hero.regular(size: 16))
 		])
-		descriptionLabel.text = court.description
+		descriptionLabel.text = model.description
 		contactLabel.setTextWithDifferentStyles([
 			(String(localized: "Contacts: "), AppFont.ActayWide.bold(size: 16)),
-			(court.contacts?[0].value ?? "-", AppFont.Hero.regular(size: 16))
+			(model.contact, AppFont.Hero.regular(size: 16))
 		])
 	}
 }
@@ -98,7 +112,12 @@ import SwiftUI
 #Preview {
 	UIViewPreview {
 		let view = CourtDescriptionView()
-		let model = CourtModel.mockData
+		let courtModel = CourtModel.mockData
+		let model = CourtDescriptionViewModel(
+			price: courtModel.price,
+			description: courtModel.description,
+			contact: courtModel.contacts?[0].value
+		)
 		view.configure(with: model)
 		return view
 	}

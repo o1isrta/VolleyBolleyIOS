@@ -11,7 +11,7 @@ class CourtDetailsCell: UITableViewCell {
 
 	// MARK: - Private Properties
 
-	private let courtView = CourtView()
+	private let courtAndGameView = CourtAndGameView()
 
 	// MARK: - Initializers
 
@@ -28,14 +28,14 @@ class CourtDetailsCell: UITableViewCell {
 	// MARK: - Public Methods
 
 	func configure(with court: CourtModel) {
-		courtView.configure(
-			with: court,
+		let model = CourtViewModel(
+			court: court,
 			doneButtonData: CourtButtonData(
 				title: "CHOOSE THIS COURT",
 				action: { print("CHOOSE THIS COURT: click clack") }
-			),
-			courtButtonsViewType: .oneSmallButton
+			)
 		)
+		courtAndGameView.configure(with: model)
 	}
 }
 
@@ -43,17 +43,15 @@ class CourtDetailsCell: UITableViewCell {
 
 private extension CourtDetailsCell {
 
-
-
 	func setupUI() {
 		selectionStyle = .none
 		backgroundColor = .clear
-		contentView.addSubviews(courtView)
+		contentView.addSubviews(courtAndGameView)
 		NSLayoutConstraint.activate([
-			courtView.topAnchor.constraint(equalTo: contentView.topAnchor),
-			courtView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-			courtView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-			courtView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+			courtAndGameView.topAnchor.constraint(equalTo: contentView.topAnchor),
+			courtAndGameView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+			courtAndGameView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+			courtAndGameView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
 		])
 	}
 }

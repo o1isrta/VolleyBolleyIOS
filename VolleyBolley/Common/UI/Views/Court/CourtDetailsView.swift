@@ -7,16 +7,66 @@
 
 import UIKit
 
+// MARK: - CourtDetailsViewModel
+
+struct CourtDetailsViewModel {
+	let court: CourtModel
+	let distance: String
+	let doneButtonData: CourtButtonData
+	let detailsButtonData: CourtButtonData?
+
+	init(
+		court: CourtModel,
+		distance: String,
+		doneButtonData: CourtButtonData,
+		detailsButtonData: CourtButtonData? = nil
+	) {
+		self.court = court
+		self.distance = distance
+		self.doneButtonData = doneButtonData
+		self.detailsButtonData = detailsButtonData
+	}
+}
+
+// MARK: - GameDetailsViewModel
+
+struct GameDetailsViewModel {
+	let court: CourtModel
+	let distance: String
+	let game: GameModel
+	let hostType: HostType
+	let doneButtonData: CourtButtonData
+	let detailsButtonData: CourtButtonData?
+
+	init(
+		court: CourtModel,
+		distance: String,
+		game: GameModel,
+		hostType: HostType,
+		doneButtonData: CourtButtonData,
+		detailsButtonData: CourtButtonData? = nil
+	) {
+		self.court = court
+		self.distance = distance
+		self.game = game
+		self.hostType = hostType
+		self.doneButtonData = doneButtonData
+		self.detailsButtonData = detailsButtonData
+	}
+}
+
+// MARK: - CourtDetailsView
+
 /// Custom View to show information with location title for two variants
 /// - with court details
 /// - with game details (host, game details)
-class CourtDetailsView: UIView {
+class CourtDetailsView: GlassmorphismView {
 
 	// MARK: - Private Properties
 
 	private lazy var courtTitleView: CourtTitleView = CourtTitleView(type: .icon)
 
-	private lazy var courtView: CourtView = CourtView()
+	private lazy var courtAndGameView: CourtAndGameView = CourtAndGameView()
 
 	private lazy var mainStack: UIStackView = {
 		let stackView = UIStackView()
@@ -31,60 +81,58 @@ class CourtDetailsView: UIView {
 		setupUI()
 	}
 
+	@available(*, unavailable)
 	required init?(coder: NSCoder) {
-		super.init(coder: coder)
-		setupUI()
+		fatalError("init(coder:) has not been implemented")
 	}
 
 	// MARK: - Public Methods
 
-	func configure(
-		with court: CourtModel,
-		distance: String,
-		doneButtonData: CourtButtonData,
-		courtButtonsViewType: CourtButtonsViewType = .oneBigButton,
-		detailsButtonData: CourtButtonData? = nil
-	) {
-		courtTitleView.configure(with: court, distance: distance)
-		courtView.configure(
-				with: court,
-				doneButtonData: doneButtonData,
-				courtButtonsViewType: courtButtonsViewType,
-				detailsButtonData: detailsButtonData
-			)
+	func configure(with model: CourtDetailsViewModel) {
+		let courtTitleViewModel = CourtTitleViewModel(
+			title: model.court.location.courtName,
+			location: model.court.location.locationName,
+			distance: model.distance
+		)
+		courtTitleView.configure(with: courtTitleViewModel)
+
+		let courtViewModel = CourtViewModel(
+			court: model.court,
+			doneButtonData: model.doneButtonData,
+			detailsButtonData: model.detailsButtonData
+		)
+		courtAndGameView.configure(with: courtViewModel)
 	}
 
-	func configure(
-		with court: CourtModel,
-		distance: String,
-		game: GameModel,
-		hostType: HostType,
-		doneButtonData: CourtButtonData,
-		courtButtonsViewType: CourtButtonsViewType = .oneBigButton,
-		detailsButtonData: CourtButtonData? = nil
-	) {
-		courtTitleView.configure(with: court, distance: distance)
-		courtView.configure(
-				with: court,
-				for: game,
-				hostType: hostType,
-				doneButtonData: doneButtonData,
-				courtButtonsViewType: courtButtonsViewType,
-				detailsButtonData: detailsButtonData
-			)
+	func configure(with model: GameDetailsViewModel) {
+		let courtTitleViewModel = CourtTitleViewModel(
+			title: model.court.location.courtName,
+			location: model.court.location.locationName,
+			distance: model.distance
+		)
+		courtTitleView.configure(with: courtTitleViewModel)
+
+		let courtViewModel = GameViewModel(
+			court: model.court,
+			game: model.game,
+			hostType: model.hostType,
+			doneButtonData: model.doneButtonData,
+			detailsButtonData: model.detailsButtonData
+		)
+		courtAndGameView.configure(with: courtViewModel)
 	}
 }
 
 private extension CourtDetailsView {
 
 	private func setupUI() {
-		backgroundColor = AppColor.Background.screen// TODO: need replace to glass effect
+		backgroundColor = AppColor.Background.screen
 		layer.cornerRadius = 32
 		layer.masksToBounds = true
 		// main stack
 		[
 			courtTitleView,
-			courtView
+			courtAndGameView
 		].forEach {
 			mainStack.addArrangedSubview($0)
 		}
@@ -97,7 +145,7 @@ private extension CourtDetailsView {
 			mainStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20),
 
 			courtTitleView.heightAnchor.constraint(equalToConstant: 36),
-			courtView.heightAnchor.constraint(equalToConstant: 380)
+			courtAndGameView.heightAnchor.constraint(equalToConstant: 380)
 		])
 	}
 }
@@ -110,49 +158,47 @@ import SwiftUI
 		let view = CourtDetailsView()
 		let court = CourtModel.mockData
 		let game = GameModel.mockData
-		view.configure(
-			with: court,
-			distance: "",
-			game: game,
+
+		let model = GameDetailsViewModel(
+			court: CourtModel.mockData,
+			distance: "Nearest",
+			game: GameModel.mockData,
 			hostType: .game,
 			doneButtonData: CourtButtonData(
 				title: "CHOOSE THIS GAME",
 				action: { print("aaaaaaa")}
 				),
-			courtButtonsViewType: .oneBigButton,
 			detailsButtonData: CourtButtonData(
 				title: "Details",
 				action: { print("bbbbbbb")}
 			)
 		)
+		view.configure(with: model)
 		return view
 	}
 	.frame(width: .infinity, height: 509)
-	.background(Color(cgColor: AppColor.Background.screen.cgColor))
 	.padding()
 }
 
 #Preview("Court") {
 	UIViewPreview {
 		let view = CourtDetailsView()
-		let court = CourtModel.mockData
-		view.configure(
-			with: court,
+		let model = CourtDetailsViewModel(
+			court: CourtModel.mockData,
 			distance: "Nearest",
 			doneButtonData: CourtButtonData(
 				title: "CHOOSE THIS GAME",
 				action: { print("aaaaaaa")}
 				),
-			courtButtonsViewType: .oneBigButton,
 			detailsButtonData: CourtButtonData(
 				title: "Details",
 				action: { print("bbbbbbb")}
 			)
 		)
+		view.configure(with: model)
 		return view
 	}
 	.frame(width: .infinity, height: 472)
-	.background(Color(cgColor: AppColor.Background.screen.cgColor))
 	.padding()
 }
 #endif
