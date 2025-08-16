@@ -97,7 +97,6 @@ private extension CourtTitleView {
 		addSubviews(mainStackView)
 
 		NSLayoutConstraint.activate([
-			distanceLabel.heightAnchor.constraint(equalToConstant: 23),
 			distanceLabel.widthAnchor.constraint(equalToConstant: 81),
 			distanceLabel.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor),
 
