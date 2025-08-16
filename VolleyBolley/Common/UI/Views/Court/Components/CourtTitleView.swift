@@ -32,23 +32,13 @@ final class CourtTitleView: UIView {
 	// MARK: - Private Properties
 
 	private var locationTitleView: LocationTitleView
-
-	private lazy var distanceLabel: UILabel = {
-		let label = UILabel()
-		label.font = AppFont.Hero.regular(size: 16)
-		label.textColor = AppColor.Text.primary
-		label.backgroundColor = AppColor.Background.badgeDefault
-		label.layer.cornerRadius = 10
-		label.layer.masksToBounds = true
-		label.textAlignment = .center
-		label.sizeToFit()
-		label.isHidden = true
-		return label
-	}()
+	private lazy var distanceView = DistanceView()
 
 	private lazy var mainStackView: UIStackView = {
-		let stackView = UIStackView()
+		let stackView = UIStackView(arrangedSubviews: [locationTitleView, distanceView])
 		stackView.axis = .horizontal
+		stackView.distribution = .equalSpacing
+		stackView.alignment = .center
 		stackView.spacing = 10
 		return stackView
 	}()
@@ -75,8 +65,8 @@ final class CourtTitleView: UIView {
 				location: model.location
 			)
 		)
-		distanceLabel.text = model.distance
-		distanceLabel.isHidden = model.distance.isEmpty
+		distanceView.configure(distance: model.distance)
+		distanceView.isHidden = model.distance.isEmpty
 	}
 }
 
@@ -86,24 +76,14 @@ private extension CourtTitleView {
 
 	func setupUI() {
 		backgroundColor = .clear
-		// header
-		[
-			locationTitleView,
-			distanceLabel
-		].forEach {
-			mainStackView.addArrangedSubview($0)
-		}
-
 		addSubviews(mainStackView)
-
 		NSLayoutConstraint.activate([
-			distanceLabel.widthAnchor.constraint(equalToConstant: 81),
-			distanceLabel.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor),
+			locationTitleView.heightAnchor.constraint(greaterThanOrEqualToConstant: 36),
 
-			mainStackView.heightAnchor.constraint(equalToConstant: 36),
 			mainStackView.topAnchor.constraint(equalTo: topAnchor),
 			mainStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-			mainStackView.trailingAnchor.constraint(equalTo: trailingAnchor)
+			mainStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+			mainStackView.bottomAnchor.constraint(equalTo: bottomAnchor)
 		])
 	}
 }
