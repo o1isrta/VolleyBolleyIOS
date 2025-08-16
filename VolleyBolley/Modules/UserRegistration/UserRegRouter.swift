@@ -21,6 +21,7 @@ final class UserRegRouter: UserRegRouterProtocol {
     }
 
     func showLevelInfoScreen() {
-        // TODO: Сделать переход на экран описания уровней
+        let vc = LevelInfoViewController()
+        viewController?.navigationController?.pushViewController(vc, animated: true)
     }
 }
