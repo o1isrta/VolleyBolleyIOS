@@ -1,8 +1,25 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "" : {
-
+    "  Continue with Facebook" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "  Продолжить с Facebook"
+          }
+        }
+      }
+    },
+    "  Continue with Google" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "  Продолжить c Google"
+          }
+        }
+      }
     },
     "%@ %@" : {
       "localizations" : {
@@ -11,32 +28,21 @@
             "state" : "new",
             "value" : "%1$@ %2$@"
           }
-        }
-      }
-    },
-    "%lld" : {
-
-    },
-    "add_payment_button" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
+        },
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Add payment"
+            "value" : "%1$@ %2$@"
           }
         }
       }
     },
-    "add_selected_button" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
+    "%lld" : {
       "localizations" : {
-        "en" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ADD SELECTED"
+            "value" : "%lld"
           }
         }
       }
@@ -52,48 +58,6 @@
         }
       }
     },
-    "all_players_label" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "All players"
-          }
-        }
-      }
-    },
-    "already_invited_label" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Already invited"
-          }
-        }
-      }
-    },
-    "app_name" : {
-      "comment" : "LaunchScreen",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "VOLLEYBOLLEY"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "VOLLEYBOLLEY"
-          }
-        }
-      }
-    },
     "Archive" : {
       "comment" : "Segment Control",
       "localizations" : {
@@ -105,36 +69,13 @@
         }
       }
     },
-    "birthdate_field" : {
-      "comment" : "Registration",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Date of bith"
-          }
-        }
-      }
-    },
     "Cancel" : {
+      "comment" : "Cancel button",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Отмена"
-          }
-        }
-      }
-    },
-    "change_button" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Change"
           }
         }
       }
@@ -150,62 +91,22 @@
         }
       }
     },
-    "choose_city_placeholder" : {
-      "comment" : "Registration",
-      "extractionState" : "manual",
+    "Choose your city" : {
       "localizations" : {
-        "en" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choose your city"
+            "value" : "Выберите ваш город"
           }
         }
       }
     },
-    "choose_country_placeholder" : {
-      "comment" : "Registration",
-      "extractionState" : "manual",
+    "Choose your country" : {
       "localizations" : {
-        "en" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choose your location"
-          }
-        }
-      }
-    },
-    "city_koh_phangan" : {
-      "comment" : "Registration",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Koh Phangan"
-          }
-        }
-      }
-    },
-    "city_koh_samui" : {
-      "comment" : "Registration",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Koh Samui"
-          }
-        }
-      }
-    },
-    "city_label" : {
-      "comment" : "Registration",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Your city"
+            "value" : "Выберите вашу страну"
           }
         }
       }
@@ -221,74 +122,12 @@
         }
       }
     },
-    "continue_with_facebook_button" : {
-      "comment" : "Registration",
-      "extractionState" : "manual",
+    "Continue with phone number" : {
       "localizations" : {
-        "en" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Continue with Facebook"
-          }
-        }
-      }
-    },
-    "continue_with_google_button" : {
-      "comment" : "Registration",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Continue with Google"
-          }
-        }
-      }
-    },
-    "continue_with_phone_button" : {
-      "comment" : "Registration",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Continue with phone number"
-          }
-        }
-      }
-    },
-    "country_cyprus" : {
-      "comment" : "Registration",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cyprus"
-          }
-        }
-      }
-    },
-    "country_label" : {
-      "comment" : "Registration",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Your county"
-          }
-        }
-      }
-    },
-    "country_thailand" : {
-      "comment" : "Registration",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Thailand"
+            "value" : "Продолжить с номером телефона"
           }
         }
       }
@@ -304,62 +143,12 @@
         }
       }
     },
-    "create_game_label" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
+    "Date of birth" : {
       "localizations" : {
-        "en" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Create a game"
-          }
-        }
-      }
-    },
-    "create_new_game_button" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Create a new game"
-          }
-        }
-      }
-    },
-    "create_tournament_label" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Create a tourney"
-          }
-        }
-      }
-    },
-    "current_account_label" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Current account"
-          }
-        }
-      }
-    },
-    "date_label" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Date"
+            "value" : "Дата рождения"
           }
         }
       }
@@ -375,84 +164,13 @@
         }
       }
     },
-    "donate_button" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Donate"
-          }
-        }
-      }
-    },
     "Done" : {
+      "comment" : "Done button",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Готово"
-          }
-        }
-      }
-    },
-    "enter_code_placeholder" : {
-      "comment" : "Registration",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Enter the 6-digit code"
-          }
-        }
-      }
-    },
-    "error_code_expired" : {
-      "comment" : "Registration",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Code expired"
-          }
-        }
-      }
-    },
-    "error_invalid_code" : {
-      "comment" : "Registration",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Invalid code"
-          }
-        }
-      }
-    },
-    "error_invalid_phone" : {
-      "comment" : "Registration",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Please enter a valid phone number"
-          }
-        }
-      }
-    },
-    "error_phone_too_short" : {
-      "comment" : "Registration",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Number is too short"
           }
         }
       }
@@ -468,20 +186,18 @@
         }
       }
     },
-    "find_game_button" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
+    "Female" : {
       "localizations" : {
-        "en" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Find a game"
+            "value" : "Женский"
           }
         }
       }
     },
     "Game host" : {
-      "comment" : "Header of game info popup",
+      "comment" : "Header of Game Description",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -491,103 +207,18 @@
         }
       }
     },
-    "game_completed_title" : {
-      "comment" : "Player rating",
-      "extractionState" : "manual",
+    "Gender" : {
       "localizations" : {
-        "en" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Game completed"
-          }
-        }
-      }
-    },
-    "game_created_message" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Game created"
-          }
-        }
-      }
-    },
-    "game_duration_label" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Game duration"
-          }
-        }
-      }
-    },
-    "game_ended_rate_prompt" : {
-      "comment" : "Player rating",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "The game on October 6 has ended. Would you like to rate the players?"
-          }
-        }
-      }
-    },
-    "games_available_label" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "games available"
-          }
-        }
-      }
-    },
-    "gender_female" : {
-      "comment" : "Registration",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Female"
-          }
-        }
-      }
-    },
-    "gender_label" : {
-      "comment" : "Registration",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gender"
-          }
-        }
-      }
-    },
-    "gender_male" : {
-      "comment" : "Registration",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Male"
+            "value" : "Пол"
           }
         }
       }
     },
     "Gender: " : {
+      "comment" : "Game Description",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -598,67 +229,18 @@
       }
     },
     "GET STARTED" : {
-
-    },
-    "get_started_button" : {
-      "comment" : "Onboarding",
-      "extractionState" : "manual",
       "localizations" : {
-        "en" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "GET STARTED"
+            "value" : "НАЧАТЬ"
           }
         }
       }
     },
-    "HARD" : {
-      "comment" : "User level hard"
-    },
-    "Home" : {
-      "comment" : "Tab bar item title"
-    },
-    "invite_players_button" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
+    "Hard" : {
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Invite players"
-          }
-        }
-      }
-    },
-    "invite_players_button_uppercase" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "INVITE PLAYERS"
-          }
-        }
-      }
-    },
-    "invites_sent_success_message" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Invites have been successfully sent to players!"
-          }
-        }
-      }
-    },
-    "level_hard" : {
-      "comment" : "Registration",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hard"
@@ -666,56 +248,40 @@
         }
       }
     },
-    "level_label" : {
-      "comment" : "Registration",
-      "extractionState" : "manual",
+    "HARD" : {
+      "comment" : "User level hard",
       "localizations" : {
-        "en" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Level"
+            "value" : "HARD"
           }
         }
       }
     },
-    "level_light" : {
-      "comment" : "Registration",
-      "extractionState" : "manual",
+    "Home" : {
+      "comment" : "Tab bar item title",
       "localizations" : {
-        "en" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Light"
+            "value" : "Главная"
           }
         }
       }
     },
-    "level_medium" : {
-      "comment" : "Registration",
-      "extractionState" : "manual",
+    "Level" : {
       "localizations" : {
-        "en" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Medium"
-          }
-        }
-      }
-    },
-    "level_pro" : {
-      "comment" : "Registration",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pro"
+            "value" : "Уровень"
           }
         }
       }
     },
     "Level: " : {
-      "comment" : "Gsme level",
+      "comment" : "User info",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -725,8 +291,26 @@
         }
       }
     },
+    "Light" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Light"
+          }
+        }
+      }
+    },
     "LIGHT" : {
-      "comment" : "User level light"
+      "comment" : "User level light",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LIGHT"
+          }
+        }
+      }
     },
     "List" : {
       "comment" : "Segment Control",
@@ -739,14 +323,12 @@
         }
       }
     },
-    "manage_players_button" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
+    "Male" : {
       "localizations" : {
-        "en" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Manage players"
+            "value" : "Мужской"
           }
         }
       }
@@ -762,20 +344,26 @@
         }
       }
     },
-    "max_players_label" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
+    "Medium" : {
       "localizations" : {
-        "en" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Maximum players"
+            "value" : "Medium"
           }
         }
       }
     },
     "MEDIUM" : {
-      "comment" : "User level medium"
+      "comment" : "User level medium",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MEDIUM"
+          }
+        }
+      }
     },
     "My games" : {
       "comment" : "Tab bar item title",
@@ -788,32 +376,12 @@
         }
       }
     },
-    "name_field" : {
-      "comment" : "Registration",
-      "extractionState" : "manual",
+    "Name" : {
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Name"
-          }
-        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Имя"
-          }
-        }
-      }
-    },
-    "near_game_button\n" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Near you"
           }
         }
       }
@@ -830,217 +398,30 @@
       }
     },
     "NEXT STEP" : {
-
-    },
-    "next_step_button" : {
-      "comment" : "Registration",
-      "extractionState" : "manual",
+      "comment" : "Next button",
       "localizations" : {
-        "en" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NEXT STEP"
+            "value" : "СЛЕДУЮЩИЙ ШАГ"
           }
         }
       }
     },
-    "note_for_players_placeholder" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
+    "Pro" : {
       "localizations" : {
-        "en" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Leave a note for players ..."
+            "value" : "Pro"
           }
         }
       }
     },
-    "payment_input_hint" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
+    "PRO" : {
+      "comment" : "User level pro",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Enter the participation fee per person"
-          }
-        }
-      }
-    },
-    "payment_label" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Payment"
-          }
-        }
-      }
-    },
-    "per_person_inline_label" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "per person"
-          }
-        }
-      }
-    },
-    "per_person_label" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Per person:"
-          }
-        }
-      }
-    },
-    "phone_number_hint" : {
-      "comment" : "Registration",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "+ With the country code"
-          }
-        }
-      }
-    },
-    "phone_number_label" : {
-      "comment" : "Registration",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Your phone number"
-          }
-        }
-      }
-    },
-    "pick_date_button" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pick date"
-          }
-        }
-      }
-    },
-    "place_label" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Place"
-          }
-        }
-      }
-    },
-    "player_group_men" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Men"
-          }
-        }
-      }
-    },
-    "player_group_mix" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mix"
-          }
-        }
-      }
-    },
-    "player_group_women" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Women"
-          }
-        }
-      }
-    },
-    "player_level_hard" : {
-      "comment" : "Levels",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "HARD"
-          }
-        }
-      }
-    },
-    "player_level_label" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Level:"
-          }
-        }
-      }
-    },
-    "player_level_light" : {
-      "comment" : "Levels",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "LIGHT"
-          }
-        }
-      }
-    },
-    "player_level_medium" : {
-      "comment" : "Levels",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "MEDIUM"
-          }
-        }
-      }
-    },
-    "player_level_pro" : {
-      "comment" : "Levels",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "PRO"
@@ -1048,188 +429,29 @@
         }
       }
     },
-    "privacy_description" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Set privacy if you want to play with particular players"
-          }
-        }
-      }
-    },
-    "privacy_label" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Privacy"
-          }
-        }
-      }
-    },
-    "privacy_private_option" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Private"
-          }
-        }
-      }
-    },
-    "privacy_public_option" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Public"
-          }
-        }
-      }
-    },
-    "private_game_label" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Private game"
-          }
-        }
-      }
-    },
-    "PRO" : {
-      "comment" : "User level pro"
-    },
     "Profile" : {
-      "comment" : "Tab bar item title"
-    },
-    "rate_level_confirm_button" : {
-      "comment" : "Player rating",
-      "extractionState" : "manual",
+      "comment" : "Tab bar item title",
       "localizations" : {
-        "en" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Confirm level"
-          }
-        }
-      }
-    },
-    "rate_level_down_button" : {
-      "comment" : "Player rating",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Level down"
-          }
-        }
-      }
-    },
-    "rate_level_up_button" : {
-      "comment" : "Player rating",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Level up"
-          }
-        }
-      }
-    },
-    "rate_players_button" : {
-      "comment" : "Player rating",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "RATE PLAYERS"
-          }
-        }
-      }
-    },
-    "rate_players_level_title" : {
-      "comment" : "Player rating",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Rate the players' level"
-          }
-        }
-      }
-    },
-    "rate_skip_button" : {
-      "comment" : "Player rating",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SKIP"
+            "value" : "Профиль"
           }
         }
       }
     },
     "registration_title" : {
-      "comment" : "Registration",
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Registration"
           }
-        }
-      }
-    },
-    "resend_code_button" : {
-      "comment" : "Registration",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
+        },
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Get new code"
-          }
-        }
-      }
-    },
-    "save_game_button" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Save game"
-          }
-        }
-      }
-    },
-    "save_game_button_uppercase" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SAVE GAME"
+            "value" : "Регистрация"
           }
         }
       }
@@ -1267,101 +489,15 @@
         }
       }
     },
-    "send_code_button" : {
-      "comment" : "Registration",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Send code"
-          }
-        }
-      }
-    },
-    "send_code_button_uppercase" : {
-      "comment" : "Registration",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SEND CODE"
-          }
-        }
-      }
-    },
-    "send_invites_button" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Send invites"
-          }
-        }
-      }
-    },
-    "share_link_button" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Share link"
-          }
-        }
-      }
-    },
-    "sign_up_with_label" : {
-      "comment" : "Registration",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sign up with a social media"
-          }
-        }
-      }
-    },
-    "starts_today_label" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Starts today"
-          }
-        }
-      }
-    },
-    "surname_field" : {
-      "comment" : "Registration",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Surname"
-          }
-        }
-      }
-    },
-    "This app helps you find beach volleyball games and match with players at your skill level." : {
+    "Sign up\nwith\na social\nmedia" : {
 
     },
-    "time_from_label" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
+    "Surname" : {
       "localizations" : {
-        "en" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "from"
+            "value" : "Фамилия"
           }
         }
       }
@@ -1374,18 +510,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "to"
-          }
-        }
-      }
-    },
-    "today_label" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Today"
           }
         }
       }
@@ -1403,7 +527,7 @@
       }
     },
     "Tournament host" : {
-      "comment" : "Header of game info popup",
+      "comment" : "Header of Game Description",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1413,50 +537,50 @@
         }
       }
     },
-    "verify_button" : {
-      "comment" : "Registration",
-      "extractionState" : "manual",
+    "VOLLEYBOLLEY" : {
       "localizations" : {
-        "en" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "VERIFY"
+            "value" : "VOLLEYBOLLEY"
           }
         }
       }
     },
-    "VOLLEYBOLLEY" : {
-
-    },
     "welcome_description" : {
-      "comment" : "Onboarding",
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "This app helps you find beach volleyball games and match with players at your skill level."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Это приложение поможет вам найти матчи по пляжному волейболу и подобрать себе соперников соответствующего уровня мастерства."
+          }
         }
       }
     },
     "welcome_title" : {
-      "comment" : "Onboarding",
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Welcome!"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добро пожаловать!"
+          }
         }
       }
     },
-    "Welcome!" : {
-
-    },
     "When: " : {
-      "comment" : "Date of game header",
+      "comment" : "Game Description",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1466,14 +590,22 @@
         }
       }
     },
-    "your_message_placeholder" : {
-      "comment" : "Game",
-      "extractionState" : "manual",
+    "Your city" : {
       "localizations" : {
-        "en" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Your message"
+            "value" : "Ваш город"
+          }
+        }
+      }
+    },
+    "Your country" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ваша страна"
           }
         }
       }

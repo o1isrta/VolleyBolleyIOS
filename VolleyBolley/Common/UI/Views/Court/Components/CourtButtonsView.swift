@@ -9,19 +9,29 @@ import UIKit
 
 typealias CourtButtonData = (title: String, action: () -> Void)
 
-enum CourtButtonsViewType: CaseIterable {
-	case oneSmallButton
-	case oneBigButton
-	case twoButtons
+// MARK: - CourtButtonsViewModel
+
+struct CourtButtonsViewModel {
+	let doneButtonData: CourtButtonData
+	let detailsButtonData: CourtButtonData?
+
+	init(
+		doneButtonData: CourtButtonData,
+		detailsButtonData: CourtButtonData? = nil
+	) {
+		self.doneButtonData = doneButtonData
+		self.detailsButtonData = detailsButtonData
+	}
 }
 
 final class CourtButtonsView: UIView {
 
-	// MARK: - Public Properties
+	// MARK: - Private Properties
 
 	private var doneButtonCallback: (() -> Void)?
 	private var detailsButtonCallback: (() -> Void)?
 
+	// TODO: refactoding
 	private lazy var doneButton: UIButton = {
 		let button = UIButton(type: .system)
 		button.backgroundColor = .systemBlue
@@ -31,6 +41,7 @@ final class CourtButtonsView: UIView {
 		return button
 	}()
 
+	// TODO: refactoding
 	private lazy var detailsButton: UIButton = {
 		let button = UIButton(type: .system)
 		button.backgroundColor = .systemGray5
@@ -41,13 +52,11 @@ final class CourtButtonsView: UIView {
 	}()
 
 	private lazy var buttonStackView: UIStackView = {
-		let stackView = UIStackView()
+		let stackView = UIStackView(arrangedSubviews: [doneButton, detailsButton])
 		stackView.axis = .horizontal
 		stackView.spacing = 8
 		stackView.alignment = .leading
 		stackView.distribution = .fill
-		stackView.addArrangedSubview(doneButton)
-		stackView.addArrangedSubview(detailsButton)
 		return stackView
 	}()
 
@@ -65,20 +74,22 @@ final class CourtButtonsView: UIView {
 
 	// MARK: - Public Methods
 
-	func configure(
-		type: CourtButtonsViewType,
-		doneButtonData: CourtButtonData,
-		detailsButtonData: CourtButtonData? = nil
-	) {
-		doneButton.setTitle(doneButtonData.title, for: .normal)
-		doneButtonCallback = doneButtonData.action
+	func configure(with model: CourtButtonsViewModel) {
+		doneButton.setTitle(model.doneButtonData.title, for: .normal)
+		doneButtonCallback = model.doneButtonData.action
 
-		if let detailsButtonData {
+		if let detailsButtonData = model.detailsButtonData {
 			detailsButton.setTitle(detailsButtonData.title, for: .normal)
 			detailsButtonCallback = detailsButtonData.action
-		}
 
-		setupButtonsUI(courtButtonsViewType: type)
+			doneButton.widthAnchor.constraint(equalToConstant: 205).isActive = true
+			detailsButton.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+			detailsButton.isHidden = false
+		} else {
+			buttonStackView.widthAnchor.constraint(equalToConstant: 215).isActive = false
+			buttonStackView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+			detailsButton.isHidden = true
+		}
 	}
 }
 
@@ -94,32 +105,8 @@ private extension CourtButtonsView {
 		detailsButtonCallback?()
 	}
 
-	func setupButtonsUI(courtButtonsViewType: CourtButtonsViewType) {
-		switch courtButtonsViewType {
-		case .oneBigButton:
-			buttonStackView.widthAnchor.constraint(equalToConstant: 215).isActive = false
-			buttonStackView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-			detailsButton.isHidden = true
-		case .oneSmallButton:
-			buttonStackView.widthAnchor.constraint(equalToConstant: 215).isActive = true
-			buttonStackView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = false
-			detailsButton.isHidden = true
-		case .twoButtons:
-			doneButton.widthAnchor.constraint(equalToConstant: 205).isActive = true
-			detailsButton.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-			detailsButton.isHidden = false
-		}
-	}
-
 	func setupUI() {
 		backgroundColor = .clear
-		// button stack
-		[
-			doneButton,
-			detailsButton
-		].forEach {
-			buttonStackView.addArrangedSubview($0)
-		}
 
 		addSubviews(buttonStackView)
 

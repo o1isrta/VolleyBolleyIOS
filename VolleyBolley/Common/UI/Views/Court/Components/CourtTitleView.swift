@@ -7,6 +7,14 @@
 
 import UIKit
 
+// MARK: - CourtTitleViewModel
+
+struct CourtTitleViewModel {
+	let title: String
+	let location: String
+	let distance: String
+}
+
 enum CourtTitleViewType: CaseIterable {
 	case icon
 	case none
@@ -23,38 +31,7 @@ final class CourtTitleView: UIView {
 
 	// MARK: - Private Properties
 
-	private lazy var titleLabel: UILabel = {
-		let label = UILabel()
-		label.font = AppFont.Hero.bold(size: 16)
-		label.textColor = AppColor.Text.primary
-		label.numberOfLines = 1
-		label.textAlignment = .left
-		return label
-	}()
-
-	private lazy var locationLabel: UILabel = {
-		let label = UILabel()
-		label.font = AppFont.Hero.light(size: 14)
-		label.textColor = AppColor.Text.primary
-		label.numberOfLines = 2
-		label.textAlignment = .left
-		return label
-	}()
-
-	private lazy var titleStackView: UIStackView = {
-		let stackView = UIStackView()
-		stackView.axis = .vertical
-		stackView.distribution = .equalSpacing
-		stackView.spacing = 0
-		return stackView
-	}()
-
-	private lazy var iconImageView: UIImageView = {
-		let image = UIImage(named: "location")
-		let imageView = UIImageView(image: image)
-		imageView.contentMode = .scaleAspectFit
-		return imageView
-	}()
+	private var locationTitleView: LocationTitleView
 
 	private lazy var distanceLabel: UILabel = {
 		let label = UILabel()
@@ -79,8 +56,8 @@ final class CourtTitleView: UIView {
 	// MARK: - Initializers
 
 	init(type: CourtTitleViewType) {
+		self.locationTitleView = LocationTitleView(type: type)
 		super.init(frame: .zero)
-		iconImageView.isHidden = type.isIconHidden
 		setupUI()
 	}
 
@@ -91,11 +68,15 @@ final class CourtTitleView: UIView {
 
 	// MARK: - Public Methods
 
-	func configure(with court: CourtModel, distance: String) {
-		titleLabel.text = court.location.courtName
-		locationLabel.text = court.location.locationName
-		distanceLabel.text = distance
-		distanceLabel.isHidden = distance.isEmpty
+	func configure(with model: CourtTitleViewModel) {
+		locationTitleView.configure(
+			with: LocationTitleViewModel(
+				title: model.title,
+				location: model.location
+			)
+		)
+		distanceLabel.text = model.distance
+		distanceLabel.isHidden = model.distance.isEmpty
 	}
 }
 
@@ -105,17 +86,9 @@ private extension CourtTitleView {
 
 	func setupUI() {
 		backgroundColor = .clear
-		// court description
-		[
-			titleLabel,
-			locationLabel
-		].forEach {
-			titleStackView.addArrangedSubview($0)
-		}
 		// header
 		[
-			iconImageView,
-			titleStackView,
+			locationTitleView,
 			distanceLabel
 		].forEach {
 			mainStackView.addArrangedSubview($0)
@@ -124,9 +97,6 @@ private extension CourtTitleView {
 		addSubviews(mainStackView)
 
 		NSLayoutConstraint.activate([
-			iconImageView.heightAnchor.constraint(equalToConstant: 15),
-			iconImageView.widthAnchor.constraint(equalToConstant: 15),
-
 			distanceLabel.heightAnchor.constraint(equalToConstant: 23),
 			distanceLabel.widthAnchor.constraint(equalToConstant: 81),
 			distanceLabel.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor),
@@ -138,3 +108,81 @@ private extension CourtTitleView {
 		])
 	}
 }
+
+#if DEBUG
+import SwiftUI
+@available(iOS 17.0, *)
+#Preview {
+	ZStack {
+		Color(cgColor: AppColor.Background.screen.cgColor)
+
+		VStack {
+			UIViewPreview {
+				let view = CourtTitleView(type: .icon)
+				let court = CourtModel.mockData
+				let model = CourtTitleViewModel(
+					title: court.location.courtName,
+					location: court.location.locationName,
+					distance: "Nearest"
+				)
+				view.configure(with: model)
+				return view
+			}
+			.frame(width: .infinity, height: 36)
+			.padding()
+
+			Divider()
+				.background(Color(.systemGray5))
+
+			UIViewPreview {
+				let view = CourtTitleView(type: .icon)
+				let court = CourtModel.mockData
+				let model = CourtTitleViewModel(
+					title: court.location.courtName,
+					location: court.location.locationName,
+					distance: "2 km"
+				)
+				view.configure(with: model)
+				return view
+			}
+			.frame(width: .infinity, height: 36)
+			.padding()
+
+			Divider()
+				.background(Color(.systemGray5))
+
+			UIViewPreview {
+				let view = CourtTitleView(type: .none)
+				let court = CourtModel.mockData
+				let model = CourtTitleViewModel(
+					title: court.location.courtName,
+					location: court.location.locationName,
+					distance: ""
+				)
+				view.configure(with: model)
+				return view
+			}
+			.frame(width: .infinity, height: 36)
+			.padding()
+
+			Divider()
+				.background(Color(.systemGray5))
+
+			UIViewPreview {
+				let view = CourtTitleView(type: .none)
+				let court = CourtModel.mockData
+				let model = CourtTitleViewModel(
+					title: court.location.courtName,
+					location: court.location.locationName,
+					distance: "Nearest"
+				)
+				view.configure(with: model)
+				return view
+			}
+			.frame(width: .infinity, height: 36)
+			.padding()
+		}
+	}
+	.ignoresSafeArea()
+}
+#endif

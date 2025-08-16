@@ -15,7 +15,7 @@ extension Date {
 
 	static func formatDateRange(startString: String, endString: String) -> String? {
 		let inputFormatter = AppDateFormatters.apiDateOnly
-		
+
 		guard
 			let startDate = inputFormatter.date(from: startString),
 			let endDate = inputFormatter.date(from: endString)

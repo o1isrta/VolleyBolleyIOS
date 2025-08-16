@@ -7,8 +7,34 @@
 
 import UIKit
 
+// MARK: - CourtBottomViewModel
+
+struct CourtBottomViewModel {
+	let courtName: String
+	let locationName: String
+	let distance: String
+	let doneButtonData: CourtButtonData
+	let detailsButtonData: CourtButtonData?
+
+	init(
+		courtName: String,
+		locationName: String,
+		distance: String,
+		doneButtonData: CourtButtonData,
+		detailsButtonData: CourtButtonData? = nil
+	) {
+		self.courtName = courtName
+		self.locationName = locationName
+		self.distance = distance
+		self.doneButtonData = doneButtonData
+		self.detailsButtonData = detailsButtonData
+	}
+}
+
+// MARK: - CourtBottomView
+
 /// Custom bottom view to display information with location name and custom number of buttons
-final class CourtBottomView: UIView {
+final class CourtBottomView: GlassmorphismView {
 
 	// MARK: - Private Properties
 
@@ -29,20 +55,21 @@ final class CourtBottomView: UIView {
 
 	// MARK: - Public Methods
 
-	func configure(
-		with court: CourtModel,
-		distance: String,
-		doneButtonData: CourtButtonData,
-		courtButtonsViewType: CourtButtonsViewType = .oneBigButton,
-		detailsButtonData: CourtButtonData? = nil
-	) {
-		courtTitleView.configure(with: court, distance: distance)
-		courtButtonsView.configure(
-				type: courtButtonsViewType,
-				doneButtonData: doneButtonData,
-				detailsButtonData: detailsButtonData
-			)
-		setupButtonsUI(courtButtonsViewType: courtButtonsViewType)
+	func configure(with model: CourtBottomViewModel) {
+		let courtTitleViewModel = CourtTitleViewModel(
+			title: model.courtName,
+			location: model.locationName,
+			distance: model.distance
+		)
+		courtTitleView.configure(with: courtTitleViewModel)
+
+		let courtButtonsViewModel = CourtButtonsViewModel(
+			doneButtonData: model.doneButtonData,
+			detailsButtonData: model.detailsButtonData
+		)
+		courtButtonsView.configure(with: courtButtonsViewModel)
+
+		setupButtonsUI(isExistDetailsButton: model.detailsButtonData != nil)
 	}
 }
 
@@ -50,22 +77,18 @@ final class CourtBottomView: UIView {
 
 private extension CourtBottomView {
 
-	func setupButtonsUI(courtButtonsViewType: CourtButtonsViewType) {
-		switch courtButtonsViewType {
-		case .oneBigButton:
-			courtButtonsView.widthAnchor.constraint(equalToConstant: 215).isActive = false
-			courtButtonsView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20).isActive = true
-		case .oneSmallButton:
-			courtButtonsView.widthAnchor.constraint(equalToConstant: 215).isActive = true
-			courtButtonsView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20).isActive = false
-		case .twoButtons:
+	func setupButtonsUI(isExistDetailsButton: Bool) {
+		if isExistDetailsButton {
 			courtButtonsView.widthAnchor.constraint(equalToConstant: 205).isActive = true
+			courtButtonsView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20).isActive = true
+		} else {
+			courtButtonsView.widthAnchor.constraint(equalToConstant: 215).isActive = false
 			courtButtonsView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20).isActive = true
 		}
 	}
 
 	func setupUI() {
-		backgroundColor = AppColor.Background.screen// TODO: need replace to glass effect
+		backgroundColor = AppColor.Background.screen
 		layer.cornerRadius = 32
 		layer.masksToBounds = true
 
@@ -90,72 +113,68 @@ private extension CourtBottomView {
 #if DEBUG
 import SwiftUI
 @available(iOS 17.0, *)
-#Preview("Game") {
+#Preview {
 	VStack {
 		UIViewPreview {
 			let view = CourtBottomView()
 			let court = CourtModel.mockData
-			view.configure(
-					with: court,
-					distance: "Nearest",
-					doneButtonData: CourtButtonData(
-						title: "CHOOSE THIS GAME",
-						action: { print("aaaaaaa")}
-						),
-					courtButtonsViewType: .oneBigButton,
-					detailsButtonData: CourtButtonData(
-						title: "Details",
-						action: { print("bbbbbbb")}
-					)
+			let model = CourtBottomViewModel(
+				courtName: court.location.courtName,
+				locationName: court.location.locationName,
+				distance: "Nearest",
+				doneButtonData: CourtButtonData(
+					title: "CHOOSE THIS GAME",
+					action: { print("aaaaaaa")}
+				),
+				detailsButtonData: CourtButtonData(
+					title: "Details",
+					action: { print("bbbbbbb")}
 				)
+			)
+			view.configure(with: model)
 			return view
 		}
 		.frame(width: .infinity, height: 136)
-		.background(Color(cgColor: AppColor.Background.screen.cgColor))
 		.padding()
 
 		UIViewPreview {
 			let view = CourtBottomView()
 			let court = CourtModel.mockData
-			view.configure(
-					with: court,
-					distance: "",
-					doneButtonData: CourtButtonData(
-						title: "CHOOSE THIS GAME",
-						action: { print("aaaaaaa")}
-						),
-					courtButtonsViewType: .oneSmallButton,
-					detailsButtonData: CourtButtonData(
-						title: "Details",
-						action: { print("bbbbbbb")}
-					)
+			let model = CourtBottomViewModel(
+				courtName: court.location.courtName,
+				locationName: court.location.locationName,
+				distance: "",
+				doneButtonData: CourtButtonData(
+					title: "CHOOSE THIS GAME",
+					action: { print("aaaaaaa")}
+				),
+				detailsButtonData: CourtButtonData(
+					title: "Details",
+					action: { print("bbbbbbb")}
 				)
+			)
+			view.configure(with: model)
 			return view
 		}
 		.frame(width: .infinity, height: 136)
-		.background(Color(cgColor: AppColor.Background.screen.cgColor))
 		.padding()
 
 		UIViewPreview {
 			let view = CourtBottomView()
 			let court = CourtModel.mockData
-			view.configure(
-					with: court,
-					distance: "",
-					doneButtonData: CourtButtonData(
-						title: "CHOOSE THIS GAME",
-						action: { print("aaaaaaa")}
-						),
-					courtButtonsViewType: .twoButtons,
-					detailsButtonData: CourtButtonData(
-						title: "Details",
-						action: { print("bbbbbbb")}
-					)
+			let model = CourtBottomViewModel(
+				courtName: court.location.courtName,
+				locationName: court.location.locationName,
+				distance: "",
+				doneButtonData: CourtButtonData(
+					title: "CHOOSE THIS GAME",
+					action: { print("aaaaaaa")}
 				)
+			)
+			view.configure(with: model)
 			return view
 		}
 		.frame(width: .infinity, height: 136)
-		.background(Color(cgColor: AppColor.Background.screen.cgColor))
 		.padding()
 	}
 }

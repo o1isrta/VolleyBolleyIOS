@@ -165,30 +165,32 @@ extension MapViewController: MKMapViewDelegate {
 private extension MapViewController {
 
 	func setupBottomView(with court: CourtModel, distance: String) {
-		bottomView.configure(
-			with: court,
-			distance: distance,
+		let model = CourtBottomViewModel(
+			courtName: court.location.courtName,
+			locationName: court.location.locationName,
+			distance: "",
 			doneButtonData: CourtButtonData(
 				title: String(localized: "CHOOSE THIS COURT"),
 				action: chooseCourtAction
 			),
-			courtButtonsViewType: .twoButtons,
 			detailsButtonData: CourtButtonData(
 				title: String(localized: "DETAILS"),
 				action: showDetailsAction
 			)
 		)
+		bottomView.configure(with: model)
 	}
 
 	func setupPopupView(with court: CourtModel, distance: String) {
-		popupView.configure(
-			with: court,
+		let model = CourtDetailsViewModel(
+			court: court,
 			distance: distance,
 			doneButtonData: CourtButtonData(
 				title: String(localized: "CHOOSE THIS COURT"),
 				action: chooseCourtAction
 			)
 		)
+		popupView.configure(with: model)
 	}
 
 	func getDistanceMessage(court: CourtModel) -> String {
