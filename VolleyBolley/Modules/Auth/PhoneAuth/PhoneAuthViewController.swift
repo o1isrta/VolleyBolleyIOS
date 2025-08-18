@@ -6,9 +6,9 @@
 //
 import UIKit
 
-final class PhoneRegView: UIViewController {
+final class PhoneAuthViewController: UIViewController {
 
-    var presenter: PhoneRegPresenterProtocol?
+    var presenter: PhoneAuthPresenterProtocol?
 
     private let containerView: UIView = {
         let view = UIView()
@@ -119,7 +119,7 @@ final class PhoneRegView: UIViewController {
     }
 }
 
-extension PhoneRegView: PhoneRegViewProtocol {
+extension PhoneAuthViewController: PhoneAuthViewProtocol {
     func setNextButtonActive(_ isActive: Bool) {
         nextButton.setActive(isActive)
     }
