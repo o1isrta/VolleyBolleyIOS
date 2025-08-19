@@ -115,7 +115,7 @@ extension CourtListViewController: UITableViewDelegate {
 extension CourtListViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredCourts.count + (expandedIndex != nil ? 1 : 0)
+		getRowsCount()
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -125,7 +125,8 @@ extension CourtListViewController: UITableViewDataSource {
 				for: indexPath
 			) as? CourtDetailsCell {
                 let court = filteredCourts[expanded].court
-				cell.configure(with: court)
+				let isLast = indexPath.row == getRowsCount() - 1
+				cell.configure(with: court, isLast: isLast)
                 return cell
             }
         }
@@ -137,7 +138,8 @@ extension CourtListViewController: UITableViewDataSource {
             let realIndex = isRealIndex(row: indexPath.row)
 			if filteredCourts.indices.contains(realIndex) {
 				let item = filteredCourts[realIndex]
-				cell.configure(with: item.court, distance: item.distance)
+				let isLast = indexPath.row == getRowsCount() - 1 || indexPath.row == expandedIndex ? true : false
+				cell.configure(with: item.court, distance: item.distance, isLast: isLast)
 				return cell
 			}
         }
@@ -208,6 +210,10 @@ extension CourtListViewController: CLLocationManagerDelegate {
 
 private extension CourtListViewController {
 
+	func getRowsCount() -> Int {
+		filteredCourts.count + (expandedIndex != nil ? 1 : 0)
+	}
+
     func setupTable() {
         tableView.dataSource = self
         tableView.delegate = self
@@ -232,7 +238,7 @@ private extension CourtListViewController {
 			searchField.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor, constant: mainIndent),
 			searchField.trailingAnchor.constraint(equalTo: glassmorphismView.trailingAnchor, constant: -mainIndent),
 
-            tableView.topAnchor.constraint(equalTo: searchField.bottomAnchor, constant: 4),
+            tableView.topAnchor.constraint(equalTo: searchField.bottomAnchor, constant: 8),
             tableView.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor, constant: mainIndent),
             tableView.trailingAnchor.constraint(equalTo: glassmorphismView.trailingAnchor, constant: -mainIndent),
 			tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)

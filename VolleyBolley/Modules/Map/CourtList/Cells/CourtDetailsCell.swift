@@ -14,6 +14,7 @@ class CourtDetailsCell: UITableViewCell {
 	// MARK: - Private Properties
 
 	private let courtAndGameView = CourtAndGameView()
+	private lazy var separator = CustomSeparator()
 
 	// MARK: - Initializers
 
@@ -29,7 +30,7 @@ class CourtDetailsCell: UITableViewCell {
 
 	// MARK: - Public Methods
 
-	func configure(with court: CourtModel) {
+	func configure(with court: CourtModel, isLast: Bool) {
 		let model = CourtViewModel(
 			court: court,
 			doneButtonData: CourtButtonData(
@@ -38,6 +39,7 @@ class CourtDetailsCell: UITableViewCell {
 			)
 		)
 		courtAndGameView.configure(with: model)
+		separator.isHidden = isLast
 	}
 }
 
@@ -48,12 +50,17 @@ private extension CourtDetailsCell {
 	func setupUI() {
 		selectionStyle = .none
 		backgroundColor = .clear
-		contentView.addSubviews(courtAndGameView)
+		contentView.addSubviews(courtAndGameView, separator)
 		NSLayoutConstraint.activate([
 			courtAndGameView.topAnchor.constraint(equalTo: contentView.topAnchor),
 			courtAndGameView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
 			courtAndGameView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-			courtAndGameView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+			courtAndGameView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
+
+			separator.heightAnchor.constraint(equalToConstant: 1),
+			separator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+			separator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+			separator.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -1)
 		])
 	}
 }
