@@ -26,6 +26,12 @@
             "state" : "translated",
             "value" : "About"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "О приложении"
+          }
         }
       }
     },
@@ -352,6 +358,12 @@
             "state" : "translated",
             "value" : "DELETE ACCOUNT"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "УДАЛИТЬ АККАУНТ"
+          }
         }
       }
     },
@@ -442,6 +454,12 @@
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "FAQ"
+          }
+        },
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "FAQ"
@@ -708,6 +726,12 @@
             "state" : "translated",
             "value" : "Log out"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выйти"
+          }
         }
       }
     },
@@ -844,6 +868,12 @@
             "state" : "translated",
             "value" : "Payments"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Платежи"
+          }
         }
       }
     },
@@ -879,6 +909,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Personal data"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Персональные данные"
           }
         }
       }
@@ -1035,6 +1071,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Players"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Игроки"
           }
         }
       }
@@ -1338,6 +1380,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Support"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поддержка"
           }
         }
       }

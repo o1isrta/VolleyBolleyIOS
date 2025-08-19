@@ -68,9 +68,7 @@ final class ProfileViewController: BaseViewController, ProfileViewProtocol {
     private lazy var tableBackground: GlassmorphismView = {
         let view = GlassmorphismView()
         view.theme = .light
-        view.blurIntensity = 0.25
         view.cornerRadius = 32
-        view.tintedBackgroundColor = UIColor.white.withAlphaComponent(0.05)
         return view
     }()
 

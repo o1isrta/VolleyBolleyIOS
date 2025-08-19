@@ -37,11 +37,7 @@ final class MenuCell: UITableViewCell {
         return stack
     }()
 
-    private let separatorLine: UIView = {
-        let view = UIView()
-        view.backgroundColor = AppColor.Border.separator
-        return view
-    }()
+    private lazy var separatorLine = CustomSeparator()
 
     // MARK: - Initializers
 
