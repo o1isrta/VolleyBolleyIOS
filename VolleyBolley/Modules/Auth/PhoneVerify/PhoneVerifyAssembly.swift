@@ -9,12 +9,12 @@ import Swinject
 final class PhoneVerifyAssembly: Assembly {
 
     func assemble(container: Container) {
-        container.register(PhoneVerifyViewController.self) { resolver in
-            let phoneVerifyVC = PhoneVerifyViewController()
+        container.register(PhoneVerifyViewController.self) { (resolver, phoneNumber: String) in
+            let phoneVerifyVC = PhoneVerifyViewController(phoneNumber: phoneNumber)
             let interactor = PhoneVerifyInteractor()
             let appRouter = resolver.resolve(AppRouter.self)
             let router = PhoneVerifyRouter(viewController: phoneVerifyVC, coordinator: appRouter)
-            let presenter = PhoneVerifyPresenter(view: phoneVerifyVC, interactor: interactor, router: router)
+            let presenter = PhoneVerifyPresenter(view: phoneVerifyVC, interactor: interactor, router: router, phoneNumber: phoneNumber)
 
             interactor.presenter = presenter
             phoneVerifyVC.presenter = presenter

@@ -9,25 +9,11 @@ import UIKit
 final class PhoneVerifyRouter: PhoneVerifyRouterProtocol {
 
     weak var viewController: UIViewController?
+    weak var coordinator: AppRouter?
 
-    static func assembleModule(with phoneNumber: String) -> UIViewController {
-        let view = PhoneVerifyViewController(phoneNumber: phoneNumber)
-        let interactor = PhoneVerifyInteractor()
-        let router = PhoneVerifyRouter()
-        let presenter = PhoneVerifyPresenter(
-            view: view,
-            interactor: interactor,
-            router: router,
-            phoneNumber: phoneNumber
-        )
-
-        view.presenter = presenter
-        interactor.presenter = presenter
-        router.viewController = view
-
-        let navigationController = UINavigationController(rootViewController: view)
-        navigationController.navigationBar.isHidden = true
-        return navigationController
+    init(viewController: UIViewController, coordinator: AppRouter?) {
+        self.viewController = viewController
+        self.coordinator = coordinator
     }
 
     func navigateBack() {

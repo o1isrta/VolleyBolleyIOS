@@ -19,6 +19,7 @@ protocol PhoneAuthPresenterProtocol: AnyObject {
 }
 
 protocol PhoneAuthInteractorProtocol: AnyObject {
+    var presenter: PhoneAuthInteractorOutputProtocol? { get set }
     func validatePhoneNumber(_ phoneNumber: String)
     func getCountryCallingCode() -> String?
     func formatPhoneNumber(_ phoneNumber: String) -> String

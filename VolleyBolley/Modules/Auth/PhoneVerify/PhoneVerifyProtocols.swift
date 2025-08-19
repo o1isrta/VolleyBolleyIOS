@@ -22,12 +22,12 @@ protocol PhoneVerifyInteractorProtocol: AnyObject {
 }
 
 protocol PhoneVerifyInteractorOutputProtocol: AnyObject {
+//    var presenter: PhoneVerifyInteractorOutputProtocol? { get set }
     func verificationSucceeded()
     func verificationFailed(with error: Error)
 }
 
 protocol PhoneVerifyRouterProtocol: AnyObject {
-    static func assembleModule(with phoneNumber: String) -> UIViewController
     func navigateBack()
     func navigateToMainScreen()
 }

@@ -31,7 +31,8 @@ final class PhoneVerifyPresenter: PhoneVerifyPresenterProtocol, PhoneVerifyInter
     }
 
     func codeDidChange(_ code: String) {
-        view?.enableVerifyButton(code.count == 6)
+        let digitsOnly = code.filter { $0.isNumber }
+        view?.enableVerifyButton(digitsOnly.count == 6)
     }
 
     func didTapVerify(with code: String) {
@@ -43,6 +44,14 @@ final class PhoneVerifyPresenter: PhoneVerifyPresenterProtocol, PhoneVerifyInter
     }
 
     func verificationFailed(with error: Error) {
-        //
+        // Отключаем кнопку и показываем ошибку через View
+        view?.enableVerifyButton(false)
+        if let view = view as? UIViewController {
+            let alert = UIAlertController(title: "Error",
+                                          message: error.localizedDescription,
+                                          preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            view.present(alert, animated: true)
+        }
     }
 }

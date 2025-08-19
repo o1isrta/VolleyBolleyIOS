@@ -65,11 +65,8 @@ final class PhoneAuthViewController: UIViewController {
 
     private func setupUI() {
         view.addSubview(containerView)
-        containerView.addSubview(backButton)
-        containerView.addSubview(titleLabel)
-        containerView.addSubview(phoneNumberLabel)
-        containerView.addSubview(phoneTextField)
-        containerView.addSubview(nextButton)
+        [backButton, titleLabel, phoneNumberLabel, phoneTextField, nextButton]
+            .forEach { containerView.addSubview($0) }
 
         NSLayoutConstraint.activate([
             containerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
@@ -78,8 +75,8 @@ final class PhoneAuthViewController: UIViewController {
 
             backButton.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 22.5),
             backButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
-            backButton.widthAnchor.constraint(equalToConstant: 18),
-            backButton.heightAnchor.constraint(equalToConstant: 24),
+            backButton.widthAnchor.constraint(equalToConstant: 44),
+            backButton.heightAnchor.constraint(equalToConstant: 44),
 
             titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 20),
             titleLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
@@ -135,13 +132,9 @@ extension PhoneAuthViewController: PhoneAuthViewProtocol {
                 phoneTextField.text = code
             }
         }
-
-    func enableNextButton(_ isEnabled: Bool) {
-        nextButton.setActive(isEnabled)
-    }
 }
 
 @available(iOS 17.0, *)
 #Preview {
-    PhoneRegView()
+    PhoneAuthViewController()
 }
