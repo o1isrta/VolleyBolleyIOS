@@ -45,11 +45,19 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
 
         textField.setLeftPaddingPoints(16)
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.addTarget(self, action: #selector(verifCodeDidChange), for: .editingChanged)
+        textField.addTarget(self, action: #selector(сodeDidChange), for: .editingChanged)
         return textField
     }()
 
-    private let verifyButton = NextStepButton(title: "VERIFY", initialState: .inactive)
+    private lazy var verifyButton: NextStepButton = {
+            let button = NextStepButton(
+                title: "VERIFY",
+                isActive: false,
+                target: self,
+                action: #selector(verifyTapped)
+            )
+            return button
+        }()
 
     init(phoneNumber: String) {
         self.phoneNumber = phoneNumber
@@ -65,18 +73,12 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
         view.backgroundColor = AppColor.Background.screen
         setupUI()
         setupActions()
-
-        verifyButton.setTitle("VERIFY", for: .normal)
-        verifyButton.setState(.inactive)
     }
 
     private func setupUI() {
         view.addSubview(containerView)
-        containerView.addSubview(backButton)
-        containerView.addSubview(titleLabel)
-        containerView.addSubview(codeLabel)
-        containerView.addSubview(codeTextField)
-        containerView.addSubview(verifyButton)
+        [backButton, titleLabel, codeLabel, codeTextField, verifyButton]
+            .forEach { containerView.addSubview($0) }
 
         NSLayoutConstraint.activate([
             containerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
@@ -108,10 +110,9 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
 
     private func setupActions() {
         backButton.addTarget(self, action: #selector(backTapped), for: .touchUpInside)
-        verifyButton.addTarget(self, action: #selector(verifTapped), for: .touchUpInside)
     }
 
-    @objc private func verifCodeDidChange() {
+    @objc private func сodeDidChange() {
         presenter?.codeDidChange(codeTextField.text ?? "")
     }
 
@@ -119,18 +120,18 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
         presenter?.didTapBack()
     }
 
-    @objc private func verifTapped() {
+    @objc private func verifyTapped() {
         presenter?.didTapVerify(with: codeTextField.text ?? "")
     }
 
     func enableVerifyButton(_ isEnabled: Bool) {
-        verifyButton.setState(isEnabled ? .active : .inactive)
+        verifyButton.setActive(isEnabled)
     }
 }
 
 #if DEBUG
 @available(iOS 17.0, *)
 #Preview {
-    PhoneVerifyViewController()
+    PhoneVerifyViewController(phoneNumber: "")
 }
 #endif

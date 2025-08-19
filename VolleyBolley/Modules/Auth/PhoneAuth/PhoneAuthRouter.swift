@@ -21,23 +21,11 @@ class PhoneAuthRouter: PhoneAuthRouterProtocol {
     }
 
     func navigateToVerification(with phoneNumber: String) {
-        let verificationVC = PhoneVerifyRouter.assembleModule(with: phoneNumber)
-        viewController?.navigationController?.pushViewController(verificationVC, animated: true)
+        guard !phoneNumber.isEmpty else {
+            assertionFailure("Attempted to navigate with empty phone number")
+            return
+        }
 
-               DispatchQueue.main.async { [weak self] in
-                   guard !phoneNumber.isEmpty else {
-                       assertionFailure("Attempted to navigate with empty phone number")
-                       return
-                   }
-
-                   let verificationVC = PhoneVerifyRouter.assembleModule(with: phoneNumber)
-
-                   if let navigationController = self?.viewController?.navigationController {
-                       navigationController.pushViewController(verificationVC, animated: true)
-                   } else {
-                       verificationVC.modalPresentationStyle = .fullScreen
-                       self?.viewController?.present(verificationVC, animated: true)
-                   }
-               }
+        coordinator?.showPhoneVerify()
     }
 }

@@ -66,6 +66,32 @@ final class AppRouter {
         window.makeKeyAndVisible()
     }
 
+    func showPhoneAuth() {
+        guard let phoneAuthVC = resolver.resolve(PhoneAuthViewController.self) else {
+            fatalError("PhoneAuthViewController не зарегистрирован")
+        }
+        let nav = UINavigationController(rootViewController: phoneAuthVC)
+
+        UIView.transition(with: window, duration: 0.4, options: .transitionCrossDissolve) {
+            self.window.rootViewController = nav
+        }
+
+        window.makeKeyAndVisible()
+    }
+
+    func showPhoneVerify() {
+        guard let phoneVerifyVC = resolver.resolve(PhoneVerifyViewController.self) else {
+            fatalError("PhoneVerifyViewController не зарегистрирован")
+        }
+        let nav = UINavigationController(rootViewController: phoneVerifyVC)
+
+        UIView.transition(with: window, duration: 0.4, options: .transitionCrossDissolve) {
+            self.window.rootViewController = nav
+        }
+
+        window.makeKeyAndVisible()
+    }
+
     func showUserReg() {
         guard let userRegVC = resolver.resolve(UserRegViewController.self) else {
             fatalError("UserRegViewController не зарегистрирован")

@@ -7,17 +7,23 @@
 import Swinject
 
 final class PhoneAuthAssembly: Assembly {
-
     func assemble(container: Container) {
         container.register(PhoneAuthViewController.self) { resolver in
             let phoneRegVC = PhoneAuthViewController()
 
             let interactor = resolver.resolve(PhoneAuthInteractorProtocol.self)!
-            let appRouter = resolver.resolve(AppRouter.self)! // resolve вместо self.coordinator
+            let appRouter = resolver.resolve(AppRouter.self)!
             let router = PhoneAuthRouter(viewController: phoneRegVC, coordinator: appRouter)
-            let presenter = PhoneAuthPresenter(view: phoneRegVC, interactor: interactor, router: router)
+
+            let presenter = PhoneAuthPresenter(
+                view: phoneRegVC,
+                interactor: interactor,
+                router: router
+            )
 
             phoneRegVC.presenter = presenter
+            interactor.presenter = presenter
+
             return phoneRegVC
         }
 

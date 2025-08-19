@@ -18,7 +18,7 @@ final class AuthRouter: AuthRouterProtocol {
     }
 
     func showPhoneAuth() {
-        // TODO: Сделать переход к окну авторизации через телефон
+        coordinator?.showPhoneAuth()
     }
 
     func showUserRegScreen() {

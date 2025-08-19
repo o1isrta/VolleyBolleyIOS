@@ -37,7 +37,10 @@ class LevelInfoViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = AppColor.Background.screen
+//        view.backgroundColor = AppColor.Background.screen
+
+        view.backgroundColor = .clear
+        modalPresentationStyle = .overFullScreen
 
         setupUI()
     }
