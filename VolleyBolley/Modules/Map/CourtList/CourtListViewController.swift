@@ -36,6 +36,11 @@ class CourtListViewController: UIViewController {
     }()
 
 	private lazy var searchField = GradientSearchField(type: .search)
+	private lazy var glassmorphismView: GlassmorphismView = {
+		let view = GlassmorphismView()
+		view.cornerRadius = 32
+		return view
+	}()
 
     // MARK: - Initializers
 
@@ -115,14 +120,20 @@ extension CourtListViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let expanded = expandedIndex, indexPath.row == expanded + 1 {
-            if let cell = tableView.dequeueReusableCell(withIdentifier: "CourtDetailsCell", for: indexPath) as? CourtDetailsCell {
+			if let cell = tableView.dequeueReusableCell(
+				withIdentifier: CourtDetailsCell.reuseIdentifier,
+				for: indexPath
+			) as? CourtDetailsCell {
                 let court = filteredCourts[expanded].court
 				cell.configure(with: court)
                 return cell
             }
         }
 
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "CourtCell", for: indexPath) as? CourtTableViewCell {
+		if let cell = tableView.dequeueReusableCell(
+			withIdentifier: CourtTableViewCell.reuseIdentifier,
+			for: indexPath
+		) as? CourtTableViewCell {
             let realIndex = isRealIndex(row: indexPath.row)
 			if filteredCourts.indices.contains(realIndex) {
 				let item = filteredCourts[realIndex]
@@ -200,26 +211,31 @@ private extension CourtListViewController {
     func setupTable() {
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(CourtTableViewCell.self, forCellReuseIdentifier: "CourtCell")
-        tableView.register(CourtDetailsCell.self, forCellReuseIdentifier: "CourtDetailsCell")
+		tableView.register(CourtTableViewCell.self, forCellReuseIdentifier: CourtTableViewCell.reuseIdentifier)
+		tableView.register(CourtDetailsCell.self, forCellReuseIdentifier: CourtDetailsCell.reuseIdentifier)
         tableView.backgroundColor = .clear
     }
 
     func setupUI() {
-		view.backgroundColor = .clear  // TODO
-		view.addSubviews(searchField, tableView)
+		view.backgroundColor = .clear
+		view.addSubviews(glassmorphismView, searchField, tableView)
 
 		let mainIndent: CGFloat = 20
 
         NSLayoutConstraint.activate([
-			searchField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: mainIndent),
-			searchField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: mainIndent),
-			searchField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -mainIndent),
+			glassmorphismView.topAnchor.constraint(equalTo: view.topAnchor, constant: 8),
+			glassmorphismView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
+			glassmorphismView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
+			glassmorphismView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
 
-            tableView.topAnchor.constraint(equalTo: searchField.bottomAnchor, constant: 16),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: mainIndent),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -mainIndent),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+			searchField.topAnchor.constraint(equalTo: glassmorphismView.topAnchor, constant: mainIndent),
+			searchField.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor, constant: mainIndent),
+			searchField.trailingAnchor.constraint(equalTo: glassmorphismView.trailingAnchor, constant: -mainIndent),
+
+            tableView.topAnchor.constraint(equalTo: searchField.bottomAnchor, constant: 4),
+            tableView.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor, constant: mainIndent),
+            tableView.trailingAnchor.constraint(equalTo: glassmorphismView.trailingAnchor, constant: -mainIndent),
+			tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
 
