@@ -17,12 +17,14 @@ final class CourtTableViewCell: UITableViewCell {
 		let stackView = UIStackView(arrangedSubviews: [locationTitleView, distanceView])
         stackView.axis = .horizontal
         stackView.distribution = .equalSpacing
+		stackView.alignment = .center
         stackView.spacing = 20
         return stackView
     }()
 
 	private lazy var locationTitleView = LocationTitleView(type: .none)
 	private lazy var distanceView = DistanceView()
+	private lazy var separator = CustomSeparator()
 
     // MARK: - Initializers
 
@@ -38,7 +40,7 @@ final class CourtTableViewCell: UITableViewCell {
 
     // MARK: - Public Methods
 
-    func configure(with court: CourtModel, distance: Double) {
+	func configure(with court: CourtModel, distance: Double, isLast: Bool) {
 		let locationTitleViewModel = LocationTitleViewModel(
 			title: court.location.courtName,
 			location: court.location.locationName
@@ -55,6 +57,7 @@ final class CourtTableViewCell: UITableViewCell {
         }
 
 		distanceView.configure(distance: distanceText)
+		separator.isHidden = isLast
     }
 }
 
@@ -66,7 +69,7 @@ private extension CourtTableViewCell {
         selectionStyle = .none
 		backgroundColor = .clear
 
-        contentView.addSubviews(mainStackView)
+		contentView.addSubviews(mainStackView, separator)
 
         NSLayoutConstraint.activate([
             mainStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
@@ -74,8 +77,12 @@ private extension CourtTableViewCell {
             mainStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             mainStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
 
-			distanceView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-			distanceView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+			locationTitleView.heightAnchor.constraint(greaterThanOrEqualToConstant: 36),
+
+			separator.heightAnchor.constraint(equalToConstant: 1),
+			separator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+			separator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+			separator.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -1)
         ])
     }
 }
