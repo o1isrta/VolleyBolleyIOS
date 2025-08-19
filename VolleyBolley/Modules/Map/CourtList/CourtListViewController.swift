@@ -38,11 +38,7 @@ class CourtListViewController: UIViewController {
 	private var heightConstraint: NSLayoutConstraint!
 
 	private lazy var searchField = GradientSearchField(type: .search)
-	private lazy var glassmorphismView: GlassmorphismView = {
-		let view = GlassmorphismView()
-		view.cornerRadius = 32
-		return view
-	}()
+	private lazy var glassmorphismView = GlassmorphismView()
 
 	// MARK: - Initializers
 
