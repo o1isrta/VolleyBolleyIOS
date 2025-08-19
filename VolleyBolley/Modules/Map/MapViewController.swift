@@ -55,22 +55,21 @@ class MapViewController: UIViewController, MapViewProtocol {
 			// Recreate ListViewController with new courts
 			listVC.removeFromParent()
 			listVC.view.removeFromSuperview()
-			let newListVC = CourtListViewController(courts: courts, selected: nearest)
-			self.listVC = newListVC
-
-			// Re-add to view hierarchy
-			addChild(newListVC)
-			view.addSubviews(newListVC.view)
-			NSLayoutConstraint.activate([
-				newListVC.view.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 8),
-				newListVC.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-				newListVC.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-				newListVC.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-			])
-			newListVC.didMove(toParent: self)
-			newListVC.view.isHidden = true
-			listView = newListVC.view
 		}
+
+		let newListVC = CourtListViewController(courts: courts, selected: nearest)
+		self.listVC = newListVC
+		addChild(newListVC)
+		view.addSubviews(newListVC.view)
+		NSLayoutConstraint.activate([
+			newListVC.view.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor),
+			newListVC.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+			newListVC.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+			newListVC.view.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+		])
+		newListVC.didMove(toParent: self)
+		newListVC.view.isHidden = true
+		listView = newListVC.view
 
 		updateAnnotations(for: courts)
 
@@ -218,12 +217,13 @@ private extension MapViewController {
 	}
 
 	func setupUI() {
-		view.backgroundColor = AppColor.Background.screen// TODO: need replace to glass effect
+		view.backgroundColor = AppColor.Background.screen
 		view.addSubviews(
 			mapView,
 			segmentedControl,
 			bottomView
 		)
+		let popupBottonInset: CGFloat = -8
 
 		NSLayoutConstraint.activate([
 			segmentedControl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
@@ -238,13 +238,16 @@ private extension MapViewController {
 
 			bottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
 			bottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-			bottomView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8),
+			bottomView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: popupBottonInset),
 			bottomView.heightAnchor.constraint(equalToConstant: 136)
 		])
 
 		view.addSubviews(popupView)
 		popupView.isHidden = true
-		popupBottomConstraint = popupView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8)
+		popupBottomConstraint = popupView.bottomAnchor.constraint(
+				equalTo: view.safeAreaLayoutGuide.bottomAnchor,
+				constant: popupBottonInset
+			)
 		if let popupBottomConstraint {
 			NSLayoutConstraint.activate([popupBottomConstraint])
 		}
@@ -253,24 +256,6 @@ private extension MapViewController {
 			popupView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
 			popupView.heightAnchor.constraint(equalToConstant: 472)
 		])
-
-		// Добавляем listVC.view, но скрываем по умолчанию
-		if listVC == nil {
-			listVC = CourtListViewController(courts: courts, selected: nearestCourt)
-		}
-		if let listVC = listVC {
-			addChild(listVC)
-			view.addSubviews(listVC.view)
-			NSLayoutConstraint.activate([
-				listVC.view.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 8),
-				listVC.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-				listVC.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-				listVC.view.bottomAnchor.constraint(equalTo: bottomView.topAnchor, constant: -8)
-			])
-			listVC.didMove(toParent: self)
-			listVC.view.isHidden = true
-			listView = listVC.view
-		}
 	}
 
 	func updateAnnotations(for courts: [CourtModel]) {
