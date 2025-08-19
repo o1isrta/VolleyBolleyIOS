@@ -9,6 +9,8 @@ import UIKit
 
 class CourtDetailsCell: UITableViewCell {
 
+	static let reuseIdentifier = "CourtDetailsCell"
+
 	// MARK: - Private Properties
 
 	private let courtAndGameView = CourtAndGameView()

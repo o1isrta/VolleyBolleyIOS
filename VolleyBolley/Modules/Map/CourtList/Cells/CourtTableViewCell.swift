@@ -9,6 +9,8 @@ import UIKit
 
 final class CourtTableViewCell: UITableViewCell {
 
+	static var reuseIdentifier: String = "CourtTableViewCell"
+
     // MARK: - Private Properties
 
     private lazy var mainStackView: UIStackView = {
