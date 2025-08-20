@@ -28,7 +28,7 @@ final class CourtListViewController: UIViewController {
 	private var expandedIndex: Int?
 
 	private var tableViewHeightConstraint: NSLayoutConstraint!
-	private var tableViewContentSizeKeyPath: String = "tableViewContentSize"
+	private var tableViewContentSizeKeyPath: String = "contentSize"
 	private lazy var tableView: UITableView = {
 		let tableView = UITableView()
 		tableView.separatorStyle = .none
