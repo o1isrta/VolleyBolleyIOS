@@ -9,18 +9,20 @@ import UIKit
 
 final class CourtTableViewCell: UITableViewCell {
 
+	// MARK: - Public Properties
+
 	static var reuseIdentifier: String = "CourtTableViewCell"
 
-    // MARK: - Private Properties
+	// MARK: - Private Properties
 
-    private lazy var mainStackView: UIStackView = {
+	private lazy var mainStackView: UIStackView = {
 		let stackView = UIStackView(arrangedSubviews: [locationTitleView, distanceView])
-        stackView.axis = .horizontal
-        stackView.distribution = .equalSpacing
+		stackView.axis = .horizontal
+		stackView.distribution = .equalSpacing
 		stackView.alignment = .center
-        stackView.spacing = 20
-        return stackView
-    }()
+		stackView.spacing = 20
+		return stackView
+	}()
 
 	private lazy var locationTitleView = LocationTitleView(type: .none)
 	private lazy var distanceView = DistanceView()
@@ -35,19 +37,19 @@ final class CourtTableViewCell: UITableViewCell {
 		return label
 	}()
 
-    // MARK: - Initializers
+	// MARK: - Initializers
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupUI()
-    }
+	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+		super.init(style: style, reuseIdentifier: reuseIdentifier)
+		setupUI()
+	}
 
 	@available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
 
-    // MARK: - Public Methods
+	// MARK: - Public Methods
 
 	func configureAsNoCourts() {
 		noCourtsLabel.isHidden = false
@@ -67,35 +69,35 @@ final class CourtTableViewCell: UITableViewCell {
 		)
 		locationTitleView.configure(with: locationTitleViewModel)
 
-        let distanceText: String
-        if distance >= 0 {
-            distanceText = distance < 1
-                ? String(format: "%.0f m", distance * 1000)
-                : String(format: "%.1f km", distance)
-        } else {
-            distanceText = "—"
-        }
+		let distanceText: String
+		if distance >= 0 {
+			distanceText = distance < 1
+			? String(format: "%.0f m", distance * 1000)
+			: String(format: "%.1f km", distance)
+		} else {
+			distanceText = "—"
+		}
 
 		distanceView.configure(distance: distanceText)
 		separator.isHidden = isLast
-    }
+	}
 }
 
 // MARK: - Private Methods
 
 private extension CourtTableViewCell {
 
-    func setupUI() {
-        selectionStyle = .none
+	func setupUI() {
+		selectionStyle = .none
 		backgroundColor = .clear
 
 		contentView.addSubviews(mainStackView, noCourtsLabel, separator)
 
-        NSLayoutConstraint.activate([
-            mainStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
-            mainStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            mainStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            mainStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
+		NSLayoutConstraint.activate([
+			mainStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
+			mainStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+			mainStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+			mainStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
 
 			mainStackView.heightAnchor.constraint(greaterThanOrEqualToConstant: 36),
 			locationTitleView.heightAnchor.constraint(greaterThanOrEqualToConstant: 36),
@@ -108,6 +110,6 @@ private extension CourtTableViewCell {
 			separator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
 			separator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
 			separator.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -1)
-        ])
-    }
+		])
+	}
 }

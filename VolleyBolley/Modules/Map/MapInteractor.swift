@@ -87,7 +87,7 @@ final class MapInteractor: MapInteractorProtocol {
 					courtName: "East Side Court",
 					locationName: "USA, New Arc"
 				)
-			),
+			)
 			// for CourtTableViewCell ui tests
 //			CourtModel(
 //				id: 4,

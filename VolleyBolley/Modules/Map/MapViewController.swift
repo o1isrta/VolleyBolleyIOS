@@ -49,14 +49,12 @@ class MapViewController: UIViewController, MapViewProtocol {
 		self.courts = courts
 		nearestCourt = nearest
 		selectedCourt = nearest
-
 		// Update ListViewController with new courts
 		if let listVC = listVC {
 			// Recreate ListViewController with new courts
 			listVC.removeFromParent()
 			listVC.view.removeFromSuperview()
 		}
-
 		let newListVC = CourtListViewController(courts: courts, selected: nearest)
 		self.listVC = newListVC
 		addChild(newListVC)
@@ -129,17 +127,17 @@ extension MapViewController: MKMapViewDelegate {
 			annotationView?.annotation = annotation
 		}
 
-		// TODO: remove it
-		//        if
-		//            let nearest = nearestCourt,
-		//            annotation.coordinate.latitude == nearest.coordinate.latitude
-		//            && annotation.coordinate.longitude == nearest.coordinate.longitude {
-		//            annotationView?.markerTintColor = .systemGreen
-		//            annotationView?.glyphText = "★"
-		//        } else {
-		//            annotationView?.markerTintColor = .systemBlue
-		//            annotationView?.glyphText = nil
-		//        }
+		// TODO: - remove it in the future
+//        if
+//            let nearest = nearestCourt,
+//            annotation.coordinate.latitude == nearest.coordinate.latitude
+//            && annotation.coordinate.longitude == nearest.coordinate.longitude {
+//            annotationView?.markerTintColor = .systemGreen
+//            annotationView?.glyphText = "★"
+//        } else {
+//            annotationView?.markerTintColor = .systemBlue
+//            annotationView?.glyphText = nil
+//        }
 
 		return annotationView
 	}
@@ -245,9 +243,9 @@ private extension MapViewController {
 		view.addSubviews(popupView)
 		popupView.isHidden = true
 		popupBottomConstraint = popupView.bottomAnchor.constraint(
-				equalTo: view.safeAreaLayoutGuide.bottomAnchor,
-				constant: popupBottonInset
-			)
+			equalTo: view.safeAreaLayoutGuide.bottomAnchor,
+			constant: popupBottonInset
+		)
 		if let popupBottomConstraint {
 			NSLayoutConstraint.activate([popupBottomConstraint])
 		}
@@ -297,40 +295,15 @@ private extension MapViewController {
 		let distanceMessage = getDistanceMessage(court: court)
 		setupPopupView(with: court, distance: distanceMessage)
 		popupView.isHidden = false
-		print("show Details")
-		//        UIView.animate(withDuration: 0.3) {
-		//            self.popupBottomConstraint?.constant = -8
-		//            self.view.layoutIfNeeded()
-		//        }
 
 		self.popupView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7) // начальное состояние
 		UIView.animate(withDuration: 1.0, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: []) {
 			self.popupView.transform = .identity
 			self.popupView.alpha = 1
 		}
-		//        bottomView.isHidden = true
 	}
 
 	@objc func hideDetailsPopup() {
-		print("close Details")
-
-		//        UIView.animate(withDuration: 0.5, delay: 0.2, options: .curveEaseIn) {
-		//            self.popupView.transform = CGAffineTransform(scaleX: 0.3, y: 0.3)
-		//            self.popupView.alpha = 0
-		//        } completion: { _ in
-		//            self.popupView.isHidden = true
-		//        }
-
-		//        UIView.animate(withDuration: 0.5, animations: {
-		//            self.popupView.transform = CGAffineTransform(translationX: 0, y: 20)
-		////                .scaledBy(x: 0.01, y: 0.01)
-		//            self.popupView.alpha = 0
-		//        }) { _ in
-		//            self.popupView.isHidden = true
-		//            self.popupView.transform = .identity
-		//            self.popupView.alpha = 1
-		//        }
-
 		let originalCenter = popupView.center
 
 		UIView.animate(withDuration: 1.0, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: []) {
@@ -339,18 +312,9 @@ private extension MapViewController {
 			self.popupView.alpha = 0
 		} completion: { _ in
 			self.popupView.isHidden = true
-			// При необходимости восстановить:
 			self.popupView.center = originalCenter
 			self.popupView.transform = .identity
 			self.popupView.alpha = 1
 		}
-
-		//        UIView.animate(withDuration: 0.5, animations: {
-		//            self.popupBottomConstraint?.constant = -8
-		//            self.view.layoutIfNeeded()
-		//        }) { _ in
-		//            self.popupView.isHidden = true
-		////            self.bottomView.isHidden = false
-		//        }
 	}
 }
