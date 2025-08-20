@@ -24,7 +24,7 @@ class GlassmorphismView: UIView {
 
 	private enum Constants {
 		static let defaultBlurIntensity: CGFloat = 0.2
-		static let defaultCornerRadius: CGFloat = 24
+		static let defaultCornerRadius: CGFloat = 32
 		static let defaultBorderWidth: CGFloat = 1.0
 		static let defaultInnerShadowOpacity: Float = 0.3
 		static let defaultInnerShadowRadius: CGFloat = 18.0
