@@ -271,6 +271,7 @@
       }
     },
     "Level" : {
+      "comment" : "Game Description",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -408,6 +409,17 @@
         }
       }
     },
+    "No courts found" : {
+      "comment" : "Court list",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Корты не найдены"
+          }
+        }
+      }
+    },
     "Pro" : {
       "localizations" : {
         "ru" : {
@@ -522,6 +534,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tomorrow"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Завтра"
           }
         }
       }

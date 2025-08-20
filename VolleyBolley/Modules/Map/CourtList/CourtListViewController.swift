@@ -136,6 +136,16 @@ extension CourtListViewController: UITableViewDataSource {
 	}
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		if filteredCourts.count == 0 {
+			if let cell = tableView.dequeueReusableCell(
+				withIdentifier: CourtTableViewCell.reuseIdentifier,
+				for: indexPath
+			) as? CourtTableViewCell {
+				cell.configureAsNoCourts()
+				return cell
+			}
+		}
+
 		if let expanded = expandedIndex, indexPath.row == expanded + 1 {
 			if let cell = tableView.dequeueReusableCell(
 				withIdentifier: CourtDetailsCell.reuseIdentifier,
@@ -228,7 +238,11 @@ extension CourtListViewController: CLLocationManagerDelegate {
 private extension CourtListViewController {
 
 	func getRowsCount() -> Int {
-		filteredCourts.count + (expandedIndex != nil ? 1 : 0)
+		if filteredCourts.count == 0 {
+			return 1
+		}
+
+		return filteredCourts.count + (expandedIndex != nil ? 1 : 0)
 	}
 
 	func setupTable() {
@@ -255,7 +269,7 @@ private extension CourtListViewController {
 			searchField.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor, constant: mainIndent),
 			searchField.trailingAnchor.constraint(equalTo: glassmorphismView.trailingAnchor, constant: -mainIndent),
 
-			tableView.topAnchor.constraint(equalTo: searchField.bottomAnchor, constant: 8),
+			tableView.topAnchor.constraint(equalTo: searchField.bottomAnchor, constant: 4),
 			tableView.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor, constant: mainIndent),
 			tableView.trailingAnchor.constraint(equalTo: glassmorphismView.trailingAnchor, constant: -mainIndent),
 		])
