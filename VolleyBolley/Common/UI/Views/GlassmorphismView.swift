@@ -15,6 +15,11 @@ class GlassmorphismView: UIView {
 		case light, dark
 	}
 
+	public enum Style {
+		case standartGlass
+		case notificationGlass
+	}
+
 	// MARK: - Constants
 
 	private enum Constants {
@@ -194,6 +199,27 @@ class GlassmorphismView: UIView {
 	}
 
 	// MARK: - Public Methods
+
+	/// Создает и настраивает экземпляр GlassmorphismView с предопределенным стилем
+	/// - Parameter style: Стиль из `GlassmorphismView.Style`
+	/// - Returns: Сконфигурированный экземпляр `GlassmorphismView`
+	public static func make(style: Style) -> GlassmorphismView {
+		let view = GlassmorphismView()
+
+		switch style {
+		case .standartGlass:
+			// Здесь используются значения по умолчанию, которые заданы в классе
+			// Этот case можно оставить пустым, но для явности можно перечислить параметры
+			break
+
+		case .notificationGlass:
+			// Такой же, но более "белый" и заметный
+			view.tintedBackgroundColor = AppColor.Glassmorphism.tintColor.withAlphaComponent(0.25)
+			view.borderColor = AppColor.Glassmorphism.border.withAlphaComponent(0.4)
+		}
+
+		return view
+	}
 
 	/// Устанавливает интенсивность размытия с проверкой диапазона
 	/// - Parameter value: Значение от 0.0 до 1.0
