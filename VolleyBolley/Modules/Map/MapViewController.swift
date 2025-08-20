@@ -24,21 +24,30 @@ final class MapViewController: UIViewController, MapViewProtocol {
 	private let popupView = CourtDetailsView()
 	private var popupBottomConstraint: NSLayoutConstraint?
 
-	private let presenter = MapPresenter()
-	private let interactor = MapInteractor()
+	private let presenter: MapPresenterProtocol
+
 	private let locationManager = CLLocationManager()
 	private var courts: [CourtModel] = []
 	private var nearestCourt: CourtModel?
 	private var selectedCourt: CourtModel?
 	private var listVC: CourtListViewController?
 
+	// MARK: - Initializers
+
+	init(presenter: MapPresenterProtocol) {
+		self.presenter = presenter
+		super.init(nibName: nil, bundle: nil)
+	}
+
+	@available(*, unavailable)
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+
 	// MARK: - Public Methods
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		presenter.view = self
-		presenter.interactor = interactor
-
 		setupUI()
 		setupMap()
 		setupLocation()

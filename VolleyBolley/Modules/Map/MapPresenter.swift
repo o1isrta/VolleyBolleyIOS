@@ -21,12 +21,23 @@ final class MapPresenter: MapPresenterProtocol {
 	// MARK: - Public Properties
 
 	weak var view: MapViewProtocol?
-	var interactor: MapInteractorProtocol?
+	let interactor: MapInteractorProtocol
+	let router: MapRouterProtocol
+
+	// MARK: - Initializers
+
+	init(
+		interactor: MapInteractorProtocol,
+		router: MapRouterProtocol
+	) {
+		self.interactor = interactor
+		self.router = router
+	}
 
 	// MARK: - Public Methods
 
 	func viewDidLoad(userLocation: CLLocation?) {
-		interactor?.fetchCourts { [weak self] courts in
+		interactor.fetchCourts { [weak self] courts in
 			var nearest: CourtModel?
 			if let userLocation = userLocation {
 				nearest = courts

@@ -12,11 +12,21 @@ protocol MapRouterProtocol: AnyObject {
 }
 
 final class MapRouter: MapRouterProtocol {
-	
+
+	// MARK: - Public Properties
+
+	weak var viewController: UIViewController?
+
 	// MARK: - Private Properties
 
 	private weak var listVC: CourtListViewController?
-	
+
+	// MARK: - Public Methods
+
+	func attachViewController(_ view: UIViewController) {
+		viewController = view
+	}
+
 	// MARK: - Private Methods
 
 	func showList(from view: MapViewController, courts: [CourtModel], selected: CourtModel?) {
