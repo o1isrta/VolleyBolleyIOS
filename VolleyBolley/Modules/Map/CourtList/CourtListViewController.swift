@@ -8,7 +8,7 @@
 import CoreLocation
 import UIKit
 
-class CourtListViewController: UIViewController {
+final class CourtListViewController: UIViewController {
 
 	// MARK: - Private Properties
 

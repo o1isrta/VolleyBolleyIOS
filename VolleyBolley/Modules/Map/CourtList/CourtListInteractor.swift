@@ -20,7 +20,7 @@ protocol CourtListInteractorProtocol: AnyObject {
 	)
 }
 
-class CourtListInteractor: CourtListInteractorProtocol {
+final class CourtListInteractor: CourtListInteractorProtocol {
 
 	// MARK: - Private Properties
 

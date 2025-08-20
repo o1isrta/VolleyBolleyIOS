@@ -9,7 +9,7 @@ import CoreLocation
 import MapKit
 import UIKit
 
-class MapViewController: UIViewController, MapViewProtocol {
+final class MapViewController: UIViewController, MapViewProtocol {
 
 	// MARK: - Public Properties
 

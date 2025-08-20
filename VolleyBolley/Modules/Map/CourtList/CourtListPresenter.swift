@@ -17,7 +17,7 @@ protocol CourtListViewProtocol: AnyObject {
 	func showCourts(_ courts: [(court: CourtModel, distance: Double)])
 }
 
-class CourtListPresenter: CourtListPresenterProtocol {
+final class CourtListPresenter: CourtListPresenterProtocol {
 
 	// MARK: - Public Methods
 
