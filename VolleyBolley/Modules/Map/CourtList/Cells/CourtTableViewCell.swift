@@ -26,6 +26,15 @@ final class CourtTableViewCell: UITableViewCell {
 	private lazy var distanceView = DistanceView()
 	private lazy var separator = CustomSeparator()
 
+	private lazy var noCourtsLabel: UILabel = {
+		let label = UILabel()
+		label.font = AppFont.Hero.regular(size: 16)
+		label.textColor = AppColor.Text.primary
+		label.text = String(localized: "No courts found")
+		label.isHidden = true
+		return label
+	}()
+
     // MARK: - Initializers
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -40,7 +49,18 @@ final class CourtTableViewCell: UITableViewCell {
 
     // MARK: - Public Methods
 
+	func configureAsNoCourts() {
+		noCourtsLabel.isHidden = false
+		separator.isHidden = true
+		locationTitleView.isHidden = true
+		distanceView.isHidden = true
+	}
+
 	func configure(with court: CourtModel, distance: Double, isLast: Bool) {
+		noCourtsLabel.isHidden = true
+		locationTitleView.isHidden = false
+		distanceView.isHidden = false
+
 		let locationTitleViewModel = LocationTitleViewModel(
 			title: court.location.courtName,
 			location: court.location.locationName
@@ -69,15 +89,20 @@ private extension CourtTableViewCell {
         selectionStyle = .none
 		backgroundColor = .clear
 
-		contentView.addSubviews(mainStackView, separator)
+		contentView.addSubviews(mainStackView, noCourtsLabel, separator)
 
         NSLayoutConstraint.activate([
-            mainStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            mainStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
             mainStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             mainStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             mainStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
 
+			mainStackView.heightAnchor.constraint(greaterThanOrEqualToConstant: 36),
 			locationTitleView.heightAnchor.constraint(greaterThanOrEqualToConstant: 36),
+
+			noCourtsLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: -6),
+			noCourtsLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+			noCourtsLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
 
 			separator.heightAnchor.constraint(equalToConstant: 1),
 			separator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
