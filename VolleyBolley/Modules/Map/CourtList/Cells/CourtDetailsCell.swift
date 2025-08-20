@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CourtDetailsCell: UITableViewCell {
+final class CourtDetailsCell: UITableViewCell {
 
 	// MARK: - Public Properties
 
