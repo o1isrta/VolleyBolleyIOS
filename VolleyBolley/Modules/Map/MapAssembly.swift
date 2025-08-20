@@ -10,7 +10,7 @@ import Swinject
 final class MapAssembly: Assembly {
 
 	func assemble(container: Container) {
-		container.register(MapViewController.self) { resolver in
+		container.register(MapViewController.self) { _ in
 			let router = MapRouter()
 			let interactor = MapInteractor()
 
