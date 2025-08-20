@@ -20,14 +20,12 @@ enum AppColor {
 		static let primary = white
 
         // button
-        static let buttonPrimaryNormal = clear
-        static let buttonPrimarySelected = yellow
-        static let buttonPrimaryDisabled = mistGray
+        static let buttonYellowSelected = yellow
+        static let buttonYellowDisabled = mistGray
         static let buttonAuthGoogle = white
         static let buttonAuthFacebook = facebookBlue
         static let buttonMap = orange
-        static let buttonActionNormal = clear
-        static let buttonActionSelected = yellow
+        static let buttonSketchSelected = yellow
 
         // badge
         static let badgeDefault = steelBlue
@@ -70,6 +68,7 @@ enum AppColor {
 		static let star = orange
 		static let searField = darkGray
 		static let avatar = tealBlue
+        static let bellBadge = orange
 	}
 
 	enum Calendar {

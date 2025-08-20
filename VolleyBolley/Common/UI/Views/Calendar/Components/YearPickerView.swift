@@ -36,27 +36,27 @@ struct YearPickerView: View {
 	var body: some View {
 		NavigationView {
 			VStack {
-				Picker("yearPicker.selectYear", selection: $selectedYear) {
+				Picker("Select Year", selection: $selectedYear) {
 					ForEach(yearsRange, id: \.self) { year in
 						Text(year.description)
 					}
 				}
 				.pickerStyle(WheelPickerStyle())
 			}
-			.navigationTitle("yearPicker.selectYear")
+			.navigationTitle("Select Year")
 			.navigationBarTitleDisplayMode(.inline)
 			.toolbar {
 				ToolbarItem(placement: .cancellationAction) {
-					Button("common.cancel") {
+					Button("Cancel") {
 						dismiss()
 					}
 					.font(Font(AppFont.Hero.bold(size: 16) as CTFont))
 				}
 
 				ToolbarItem(placement: .confirmationAction) {
-                    Button("common.done") {
-                        updateCurrentDate()
-                    }
+					Button("Done") {
+						updateCurrentDate()
+					}
 					.font(Font(AppFont.Hero.bold(size: 16) as CTFont))
 				}
 			}
