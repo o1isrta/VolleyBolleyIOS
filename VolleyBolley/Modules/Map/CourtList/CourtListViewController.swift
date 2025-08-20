@@ -27,6 +27,8 @@ class CourtListViewController: UIViewController {
 	private var initialCourts: [CourtModel] = []
 	private var expandedIndex: Int?
 
+	private var tableViewHeightConstraint: NSLayoutConstraint!
+	private var tableViewContentSizeKeyPath: String = "tableViewContentSize"
 	private lazy var tableView: UITableView = {
 		let tableView = UITableView()
 		tableView.separatorStyle = .none
@@ -35,7 +37,6 @@ class CourtListViewController: UIViewController {
 		tableView.showsVerticalScrollIndicator = false
 		return tableView
 	}()
-	private var heightConstraint: NSLayoutConstraint!
 
 	private lazy var searchField = GradientSearchField(type: .search)
 	private lazy var glassmorphismView = GlassmorphismView()
@@ -49,13 +50,14 @@ class CourtListViewController: UIViewController {
 		self.initialCourts = courts
 		// Store initial courts but don't set distances yet
 		self.courtList = courts.map { ($0, -1) }
-
+		// TODO: -
 		print("🏀 ListViewController: Initialized with \(courts.count) courts") // TODO
 		for (index, court) in courts.enumerated() {
 			print("🏀 Court \(index + 1): '\(court.location.courtName)' at \(court.location.latitude), \(court.location.longitude)")
 		}
 	}
 
+	@available(*, unavailable)
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
@@ -70,31 +72,34 @@ class CourtListViewController: UIViewController {
 		setupUI()
 		setupLocation()
 		setupSearchTextField()
-
-		// Dynamic height update
-		tableView.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
 	}
 
-	override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-		if keyPath == "contentSize", object as? UITableView == tableView {
+	override func observeValue(
+		forKeyPath keyPath: String?,
+		of object: Any?,
+		change: [NSKeyValueChangeKey : Any]?,
+		context: UnsafeMutableRawPointer?
+	) {
+		if keyPath == tableViewContentSizeKeyPath, object as? UITableView == tableView {
 			if let newSize = change?[.newKey] as? CGSize {
 				// Limiting the max height to preserve scrolling
 				let maxHeight = UIScreen.main.bounds.height - 200
 				let newHeight = min(newSize.height, maxHeight)
 
-				heightConstraint.constant = newHeight
+				tableViewHeightConstraint.constant = newHeight
 			}
 		}
 	}
 
 	deinit {
-		tableView.removeObserver(self, forKeyPath: "contentSize")
+		tableView.removeObserver(self, forKeyPath: tableViewContentSizeKeyPath)
 	}
 }
 
 extension CourtListViewController: CourtListViewProtocol {
 
 	func showCourts(_ courts: [(court: CourtModel, distance: Double)]) {
+		// TODO: -
 		print("📱 ListViewController: Updating courts with distances")
 		for (index, court) in courtList.enumerated() {
 			print("📱 Court \(index + 1): '\(court.court.location.courtName)' - \(court.distance) km")
@@ -120,8 +125,8 @@ extension CourtListViewController: UITableViewDelegate {
 
 	private func isRealIndex(row: Int) -> Int {
 		let realIndex = expandedIndex != nil && row > expandedIndex ?? 0
-		? row - 1
-		: row
+			? row - 1
+			: row
 
 		return realIndex
 	}
@@ -136,6 +141,7 @@ extension CourtListViewController: UITableViewDataSource {
 	}
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		// no courts found
 		if filteredCourts.count == 0 {
 			if let cell = tableView.dequeueReusableCell(
 				withIdentifier: CourtTableViewCell.reuseIdentifier,
@@ -145,7 +151,7 @@ extension CourtListViewController: UITableViewDataSource {
 				return cell
 			}
 		}
-
+		// cell with court details
 		if let expanded = expandedIndex, indexPath.row == expanded + 1 {
 			if let cell = tableView.dequeueReusableCell(
 				withIdentifier: CourtDetailsCell.reuseIdentifier,
@@ -157,7 +163,7 @@ extension CourtListViewController: UITableViewDataSource {
 				return cell
 			}
 		}
-
+		// cell with court info
 		if let cell = tableView.dequeueReusableCell(
 			withIdentifier: CourtTableViewCell.reuseIdentifier,
 			for: indexPath
@@ -190,13 +196,12 @@ extension CourtListViewController: CLLocationManagerDelegate {
 
 	func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
 		print("❌ LocationManager: Failed to get location - \(error.localizedDescription)")
-
-		// Детальная обработка ошибок
+		// Detailed error handling
 		if let clError = error as? CLError {
 			switch clError.code {
 			case .denied:
 				print("❌ Пользователь запретил доступ к геолокации")
-				// Для тестирования используем тестовую локацию (Нью-Йорк)
+				// For testing we use a test location (New York)
 				let testLocation = CLLocation(latitude: 40.7589, longitude: -73.9851)
 				print("📍 Используем тестовую локацию: \(testLocation.coordinate.latitude), \(testLocation.coordinate.longitude)")
 				presenter.updateDistancesForCourts(initialCourts, userLocation: testLocation)
@@ -209,14 +214,12 @@ extension CourtListViewController: CLLocationManagerDelegate {
 				print("❌ Ошибка геолокации: \(clError.localizedDescription)")
 			}
 		}
-
 		// Use initial courts for distance calculation
 		presenter.updateDistancesForCourts(initialCourts, userLocation: nil)
 	}
 
 	func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
 		print("📍 LocationManager: Authorization status changed to \(status.rawValue)")
-
 		switch status {
 		case .authorizedWhenInUse, .authorizedAlways:
 			print("📍 Разрешение получено, запрашиваем локацию...")
@@ -251,6 +254,8 @@ private extension CourtListViewController {
 		tableView.register(CourtTableViewCell.self, forCellReuseIdentifier: CourtTableViewCell.reuseIdentifier)
 		tableView.register(CourtDetailsCell.self, forCellReuseIdentifier: CourtDetailsCell.reuseIdentifier)
 		tableView.backgroundColor = .clear
+		// Dynamic height update
+		tableView.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
 	}
 
 	func setupUI() {
@@ -271,11 +276,11 @@ private extension CourtListViewController {
 
 			tableView.topAnchor.constraint(equalTo: searchField.bottomAnchor, constant: 4),
 			tableView.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor, constant: mainIndent),
-			tableView.trailingAnchor.constraint(equalTo: glassmorphismView.trailingAnchor, constant: -mainIndent),
+			tableView.trailingAnchor.constraint(equalTo: glassmorphismView.trailingAnchor, constant: -mainIndent)
 		])
 
-		heightConstraint = tableView.heightAnchor.constraint(equalToConstant: 0)
-		heightConstraint.isActive = true
+		tableViewHeightConstraint = tableView.heightAnchor.constraint(equalToConstant: 0)
+		tableViewHeightConstraint.isActive = true
 	}
 
 	func setupLocation() {
