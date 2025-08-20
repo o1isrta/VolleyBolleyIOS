@@ -53,11 +53,11 @@ final class NextStepButton: UIButton {
         UIView.animate(withDuration: 0.2) { [weak self] in
             guard let self = self else { return }
             if isActive {
-                backgroundColor = AppColor.Background.buttonActionSelected
+                backgroundColor = AppColor.Background.buttonSketchSelected
                 setTitleColor(AppColor.Text.inverted, for: .normal)
                 isEnabled = true
             } else {
-                backgroundColor = AppColor.Background.buttonPrimaryDisabled
+                backgroundColor = AppColor.Background.buttonYellowDisabled
                 setTitleColor(AppColor.Text.primary, for: .normal)
                 isEnabled = false
             }

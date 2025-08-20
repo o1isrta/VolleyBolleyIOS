@@ -125,7 +125,6 @@ class GlassmorphismView: UIView {
     /// Слой для отрисовки внутренней тени (создается по требованию)
     private var innerShadowLayer: CAShapeLayer?
 
-
     // MARK: - Initialization
 
     override init(frame: CGRect) {
