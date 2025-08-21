@@ -2,43 +2,26 @@
 //  AuthRouter.swift
 //  VolleyBolley
 //
-//  Created by Nikolai Eremenko
+//  Created by Олег Козырев
 //
 
-import Swinject
 import UIKit
-
-protocol AuthRouterProtocol {
-    var onLoginSuccess: (() -> Void)? { get set }
-    func start() -> UIViewController
-}
 
 final class AuthRouter: AuthRouterProtocol {
 
-    // MARK: - Public Properties
+    weak var viewController: UIViewController?
+    weak var coordinator: AppRouter?
 
-    var onLoginSuccess: (() -> Void)?
-
-    // MARK: - Private Properties
-
-    private let resolver: Resolver
-
-    // MARK: - Initializers
-    init(resolver: Resolver) {
-        self.resolver = resolver
+    init(viewController: UIViewController, coordinator: AppRouter?) {
+        self.viewController = viewController
+        self.coordinator = coordinator
     }
 
-    // MARK: - Public Methods
+    func showPhoneAuth() {
+        // TODO: Сделать переход к окну авторизации через телефон
+    }
 
-    func start() -> UIViewController {
-        guard let viewController = resolver.resolve(AuthViewController.self) else {
-            fatalError("Error: Failed to resolve AuthViewController")
-        }
-
-        viewController.onLogin = { [weak self] in
-            self?.onLoginSuccess?()
-        }
-
-        return UINavigationController(rootViewController: viewController)
+    func showUserRegScreen() {
+        coordinator?.showUserReg()
     }
 }
