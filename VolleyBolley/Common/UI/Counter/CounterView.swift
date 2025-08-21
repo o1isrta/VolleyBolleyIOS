@@ -49,21 +49,19 @@ final class CounterView: UIView {
     
     private let minusButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("−", for: .normal)
-        button.titleLabel?.font = AppFont.Hero.bold(size: 24)
-        button.tintColor = .black
-        button.layer.cornerRadius = 22
-        button.clipsToBounds = true
+        button.setImage(UIImage(systemName: "minus"), for: .normal)
+        button.tintColor = .white
+        button.contentHorizontalAlignment = .center
+        button.contentVerticalAlignment = .center
         return button
     }()
     
     private let plusButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("+", for: .normal)
-        button.titleLabel?.font = AppFont.Hero.bold(size: 24)
-        button.tintColor = .black
-        button.layer.cornerRadius = 22
-        button.clipsToBounds = true
+        button.setImage(UIImage(systemName: "plus"), for: .normal)
+        button.tintColor = .white
+        button.contentHorizontalAlignment = .center
+        button.contentVerticalAlignment = .center
         return button
     }()
     
@@ -72,12 +70,13 @@ final class CounterView: UIView {
         label.textAlignment = .center
         label.font = AppFont.Hero.bold(size: 20)
         label.textColor = AppColor.Text.primary
-        label.layer.cornerRadius = 12
-        label.layer.borderWidth = 1
-        label.layer.borderColor = AppColor.Border.primary.cgColor
+        label.backgroundColor = .white
+        label.layer.cornerRadius = 16
         label.layer.masksToBounds = true
         return label
     }()
+    
+    private let gradientLayer = CAGradientLayer()
     
     // MARK: - Initializers
     init(type: CounterType, initialValue: Int) {
@@ -108,25 +107,52 @@ final class CounterView: UIView {
         plusButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            minusButton.widthAnchor.constraint(equalToConstant: 44),
-            minusButton.heightAnchor.constraint(equalToConstant: 44),
+            minusButton.widthAnchor.constraint(equalToConstant: 16),
+            minusButton.heightAnchor.constraint(equalToConstant: 16),
             minusButton.leadingAnchor.constraint(equalTo: leadingAnchor),
             minusButton.centerYAnchor.constraint(equalTo: centerYAnchor),
             
-            valueLabel.leadingAnchor.constraint(equalTo: minusButton.trailingAnchor, constant: 16),
+            valueLabel.leadingAnchor.constraint(equalTo: minusButton.trailingAnchor, constant: 8),
             valueLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
-            valueLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 50),
-            valueLabel.heightAnchor.constraint(equalToConstant: 44),
+            valueLabel.widthAnchor.constraint(equalToConstant: 64),
+            valueLabel.heightAnchor.constraint(equalToConstant: 39),
             
-            plusButton.widthAnchor.constraint(equalToConstant: 44),
-            plusButton.heightAnchor.constraint(equalToConstant: 44),
-            plusButton.leadingAnchor.constraint(equalTo: valueLabel.trailingAnchor, constant: 16),
+            plusButton.widthAnchor.constraint(equalToConstant: 16),
+            plusButton.heightAnchor.constraint(equalToConstant: 16),
+            plusButton.leadingAnchor.constraint(equalTo: valueLabel.trailingAnchor, constant: 8),
             plusButton.trailingAnchor.constraint(equalTo: trailingAnchor),
             plusButton.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
         
-        applyGradient(to: minusButton)
-        applyGradient(to: plusButton)
+        setupGradientBorder()
+    }
+    
+    private func setupGradientBorder() {
+        gradientLayer.colors = [
+            AppColor.Gradient.greenLightStart.cgColor,
+            AppColor.Gradient.greenLightEnd.cgColor
+        ]
+        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
+        gradientLayer.endPoint = CGPoint(x: 1, y: 1)
+        gradientLayer.cornerRadius = 12
+        gradientLayer.masksToBounds = true
+        
+        let shape = CAShapeLayer()
+        shape.lineWidth = 2
+        shape.path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: 64, height: 39), cornerRadius: 12).cgPath
+        shape.fillColor = UIColor.clear.cgColor
+        shape.strokeColor = UIColor.black.cgColor
+        gradientLayer.mask = shape
+        
+        valueLabel.layer.addSublayer(gradientLayer)
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        gradientLayer.frame = valueLabel.bounds
+        if let shape = gradientLayer.mask as? CAShapeLayer {
+            shape.path = UIBezierPath(roundedRect: valueLabel.bounds, cornerRadius: 12).cgPath
+        }
     }
     
     // MARK: - Private Methods
@@ -136,19 +162,6 @@ final class CounterView: UIView {
         
         minusButton.alpha = minusButton.isEnabled ? 1.0 : 0.5
         plusButton.alpha = plusButton.isEnabled ? 1.0 : 0.5
-    }
-    
-    private func applyGradient(to button: UIButton) {
-        let gradient = CAGradientLayer()
-        gradient.colors = [
-            AppColor.Gradient.greenLightStart.cgColor,
-            AppColor.Gradient.greenLightEnd.cgColor
-        ]
-        gradient.startPoint = CGPoint(x: 0, y: 0)
-        gradient.endPoint = CGPoint(x: 1, y: 1)
-        gradient.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
-        gradient.cornerRadius = 22
-        button.layer.insertSublayer(gradient, at: 0)
     }
     
     @objc
@@ -166,3 +179,16 @@ final class CounterView: UIView {
     }
 }
 
+#if DEBUG
+import SwiftUI
+
+@available(iOS 17.0, *)
+#Preview {
+    UIViewPreview {
+        CounterView(type: .players, initialValue: 4)
+    }
+    .frame(width: 120, height: 39)
+    .padding()
+    .background(Color.gray)
+}
+#endif
