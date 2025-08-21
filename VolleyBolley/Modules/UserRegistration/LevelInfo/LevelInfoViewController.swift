@@ -73,7 +73,6 @@ class LevelInfoViewController: UIViewController {
             labelDescription.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             labelDescription.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -20)
         ])
-
     }
 
     private func makeLevelsDescription() -> NSAttributedString {

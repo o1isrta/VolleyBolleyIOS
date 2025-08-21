@@ -393,9 +393,6 @@
         }
       }
     },
-    "next_step" : {
-
-    },
     "Pro" : {
       "localizations" : {
         "ru" : {
@@ -477,7 +474,7 @@
         }
       }
     },
-    "send_code" : {
+    "SEND CODE" : {
 
     },
     "Sign up\nwith\na social\nmedia" : {
