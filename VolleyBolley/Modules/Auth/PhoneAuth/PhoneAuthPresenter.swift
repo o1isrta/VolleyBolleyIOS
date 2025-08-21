@@ -37,7 +37,7 @@ class PhoneAuthPresenter: PhoneAuthPresenterProtocol {
 extension PhoneAuthPresenter: PhoneAuthInteractorOutputProtocol {
     func phoneValidationResult(isValid: Bool) {
         view?.setNextButtonActive(isValid)
-        view?.updateNextButtonTitle(isValid ? String(localized: "send_code") : String(localized: "next_step"))
+//        view?.updateNextButtonTitle(isValid ? String(localized: "send_code") : String(localized: "next_step"))
     }
 
     func didReceiveFormattedNumber(_ number: String) {

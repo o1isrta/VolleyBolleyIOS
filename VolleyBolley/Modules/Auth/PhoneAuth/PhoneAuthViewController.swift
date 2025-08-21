@@ -48,13 +48,18 @@ final class PhoneAuthViewController: UIViewController {
 
     private lazy var nextButton: NextStepButton = {
         let button = NextStepButton(
-            title: String(localized: "NEXT STEP"),
+            title: String(localized: "SEND CODE"),
             isActive: false,
             target: self,
             action: #selector(nextStepTapped)
         )
         return button
     }()
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,8 +80,8 @@ final class PhoneAuthViewController: UIViewController {
 
             backButton.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 22.5),
             backButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
-            backButton.widthAnchor.constraint(equalToConstant: 44),
-            backButton.heightAnchor.constraint(equalToConstant: 44),
+            backButton.widthAnchor.constraint(equalToConstant: 18),
+            backButton.heightAnchor.constraint(equalToConstant: 24),
 
             titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 20),
             titleLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
