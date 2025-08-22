@@ -393,6 +393,176 @@
         }
       }
     },
+    "paywall.addPaymentButton" : {
+      "comment" : "Paywall screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add payment"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добавить платеж"
+          }
+        }
+      }
+    },
+    "paywall.currentAccountLabel" : {
+      "comment" : "Paywall screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Current account"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Текущий счет"
+          }
+        }
+      }
+    },
+    "paywall.paymentDescription" : {
+      "comment" : "Paywall screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Share payment among players"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Распределение выплат между игроками"
+          }
+        }
+      }
+    },
+    "paywall.paymentPerPerson" : {
+      "comment" : "Paywall screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Per person:"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "На человека:"
+          }
+        }
+      }
+    },
+    "paywall.paymentTitle" : {
+      "comment" : "Paywall screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Payment"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Оплата"
+          }
+        }
+      }
+    },
+    "paywall.privacyDescription" : {
+      "comment" : "Paywall screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Set privacy if you want to play with particular players"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Установите режим конфиденциальности, если хотите играть с определенными игроками"
+          }
+        }
+      }
+    },
+    "paywall.privacyTitle" : {
+      "comment" : "Paywall screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Privacy"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Конфиденциальность"
+          }
+        }
+      }
+    },
+    "paywall.privateButton" : {
+      "comment" : "Paywall screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Private"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Частная"
+          }
+        }
+      }
+    },
+    "paywall.publicButton" : {
+      "comment" : "Paywall screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Public"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Публичкая"
+          }
+        }
+      }
+    },
+    "paywall.saveGameButton" : {
+      "comment" : "Paywall screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SAVE GAME"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "СОХРАНИТЬ ИГРУ"
+          }
+        }
+      }
+    },
     "Pro" : {
       "localizations" : {
         "ru" : {
@@ -475,7 +645,14 @@
       }
     },
     "Sign up\nwith\na social\nmedia" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign up\nwith\na social\nmedia"
+          }
+        }
+      }
     },
     "Surname" : {
       "localizations" : {
