@@ -8,7 +8,7 @@
 import UIKit
 
 // TODO(API): Temporary implementation — waiting for backend spec
-enum UserLevel {
+enum UserLevel: CaseIterable {
     case light
     case medium
     case hard
@@ -42,6 +42,15 @@ enum UserLevel {
         case .hard: return AppColor.Background.levelBadgeHard
         case .pro: return AppColor.Background.levelBadgePro
         case .unknown: return .gray
+        }
+    }
+    
+    var titleColor: UIColor {
+        switch self {
+        case .light, .medium, .unknown:
+            return AppColor.Text.primary
+        case .hard, .pro:
+            return AppColor.Text.inverted
         }
     }
 }
