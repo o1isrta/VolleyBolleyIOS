@@ -34,13 +34,16 @@ final class PaywallController: BaseViewController {
 	)
 
 	private lazy var privacyButtonsStackView: UIStackView = {
+		let view = UIView()
+		view.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
 		let stack = UIStackView(arrangedSubviews: [
 			privacyPublicButton,
-			privacyPrivateButton
+			privacyPrivateButton,
+			view
 		])
 		stack.axis = .horizontal
-		stack.distribution = .fillProportionally
-		stack.alignment = .fill
+		stack.distribution = .fill
+		stack.alignment = .leading
 		stack.spacing = 10
 		stack.layoutMargins = UIEdgeInsets(top: internalSpacing, left: 0, bottom: 0, right: 0)
 		stack.isLayoutMarginsRelativeArrangement = true
@@ -164,8 +167,6 @@ private extension PaywallController {
 
 		NSLayoutConstraint.activate([
 			separator.heightAnchor.constraint(equalToConstant: 1),
-
-			privacyButtonsStackView.widthAnchor.constraint(equalTo: mainStackView.widthAnchor, multiplier: 3/5),
 
 			amountStackView.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor),
 			amountStackView.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor),
