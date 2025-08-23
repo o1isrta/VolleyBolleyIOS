@@ -75,7 +75,7 @@ final class AppRouter {
         UIView.transition(with: window, duration: 0.4, options: .transitionCrossDissolve) {
             self.window.rootViewController = nav
         }
-        
+
         window.makeKeyAndVisible()
     }
 
