@@ -563,6 +563,23 @@
         }
       }
     },
+    "paywall.screenTitle" : {
+      "comment" : "Paywall screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create a game"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Создать игру"
+          }
+        }
+      }
+    },
     "Pro" : {
       "localizations" : {
         "ru" : {

@@ -16,6 +16,8 @@ final class PaywallController: BaseViewController {
 
 	private let glassmorphismView = GlassmorphismView()
 
+	private lazy var screenTitle = CustomTitle(text: String(localized: "paywall.screenTitle"), isLarge: true)
+
 	private lazy var privacyTitle = CustomTitle(text: String(localized: "paywall.privacyTitle"), isLarge: true)
 	private lazy var privacyDescription = CustomLabel(text: String(localized: "paywall.privacyDescription"))
 
@@ -27,7 +29,7 @@ final class PaywallController: BaseViewController {
 		action: #selector(privacyPublicButtonTapped)
 	)
 	private lazy var privacyPrivateButton = PickButton(
-		title: String(localized: "paywall.privateButton"),// TODO: -
+		title: String(localized: "paywall.privateButton"),// TODO: - need to refactoring
 		isSelected: !isPublicButtonSelected,
 		target: self,
 		action: #selector(privacyPrivateButtonTapped)
@@ -95,7 +97,6 @@ final class PaywallController: BaseViewController {
 	}()
 	private lazy var accountLabel: UILabel = {
 		let label = UILabel()
-		label.text = "988 016 7890"// TODO: - remove in the future
 		label.font = AppFont.Hero.regular(size: 16)
 		label.textColor = AppColor.Text.primary
 		label.isHidden = true
@@ -167,11 +168,17 @@ final class PaywallController: BaseViewController {
 private extension PaywallController {
 
 	func setupUI() {
-		view.addSubviews(glassmorphismView)
+		view.addSubviews(
+			glassmorphismView,
+			screenTitle
+		)
 		glassmorphismView.addSubviews(mainStackView)
 
 		NSLayoutConstraint.activate([
 			separator.heightAnchor.constraint(equalToConstant: 1),
+
+			screenTitle.centerXAnchor.constraint(equalTo: mainStackView.centerXAnchor),
+			screenTitle.topAnchor.constraint(equalTo: glassmorphismView.topAnchor, constant: mainSpacing),
 
 			amountStackView.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor),
 			amountStackView.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor),
@@ -181,7 +188,7 @@ private extension PaywallController {
 			glassmorphismView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -8),
 			glassmorphismView.bottomAnchor.constraint(equalTo: mainStackView.bottomAnchor, constant: mainSpacing),
 
-			mainStackView.topAnchor.constraint(equalTo: glassmorphismView.topAnchor, constant: mainSpacing),
+			mainStackView.topAnchor.constraint(equalTo: screenTitle.bottomAnchor, constant: mainSpacing),
 			mainStackView.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor, constant: mainSpacing),
 			mainStackView.trailingAnchor.constraint(equalTo: glassmorphismView.trailingAnchor, constant: -mainSpacing)
 		])
@@ -210,6 +217,8 @@ private extension PaywallController {
 		addPaymentButton.isHidden = isPaymentSelected
 		saveGameButton.setActive(isPaymentSelected)
 		accountLabel.isHidden = !isPaymentSelected
+		
+		accountLabel.text = "988 016 7890"// TODO: - remove in the future
 	}
 }
 
