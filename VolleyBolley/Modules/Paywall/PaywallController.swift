@@ -80,7 +80,7 @@ final class PaywallController: BaseViewController {
 	private lazy var paymentDescription = CustomLabel(text: String(localized: "paywall.paymentDescription"))
 	private lazy var paymentPerPerson = CustomLabel(text: String(localized: "paywall.paymentPerPerson"), isBold: true)
 	private lazy var priceView: UIView = {
-		let priceView = PriceView()
+		let priceView = PriceView()// TODO: this should be input !!!
 		priceView.configure(value: "5$")// TODO: from where this value?
 		return priceView
 	}()
@@ -199,6 +199,9 @@ private extension PaywallController {
 
 			amountStackView.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor),
 			amountStackView.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor),
+			amountStackView.heightAnchor.constraint(equalToConstant: 52),
+
+			saveGameButton.heightAnchor.constraint(equalToConstant: 44),
 
 			glassmorphismView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
 			glassmorphismView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 8),
@@ -239,6 +242,7 @@ private extension PaywallController {
 		addPaymentButton.isHidden = isPaymentSelected
 		accountLabel.isHidden = !isPaymentSelected
 
+		paymentDescription.text = String(localized: "paywall.paymentRequirementDescription")
 		accountLabel.text = "988 016 7890"// TODO: - remove in the future
 	}
 }
