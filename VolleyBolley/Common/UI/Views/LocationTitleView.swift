@@ -55,6 +55,7 @@ final class LocationTitleView: UIView {
 	private lazy var mainStackView: UIStackView = {
 		let stackView = UIStackView()
 		stackView.axis = .horizontal
+		stackView.alignment = .center
 		stackView.spacing = 10
 		return stackView
 	}()
