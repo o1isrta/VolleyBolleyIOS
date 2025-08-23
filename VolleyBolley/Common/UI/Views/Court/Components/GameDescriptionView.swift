@@ -89,6 +89,7 @@ final class GameDescriptionView: UIView {
 		let stackView = UIStackView()
 		stackView.axis = .horizontal
 		stackView.spacing = 8
+		stackView.alignment = .center
 		return stackView
 	}()
 
