@@ -17,23 +17,33 @@ final class PaywallController: BaseViewController {
 	private let glassmorphismView = GlassmorphismView()
 
 	private lazy var screenTitle = CustomTitle(text: String(localized: "paywall.screenTitle"), isLarge: true)
+	private lazy var backButton: UtilityButton = {
+		let button = UtilityButton(style: .small)
+		button.setImage(.chevronBackward, for: .normal)
+		button.tintColor = AppColor.Icon.primary
+		button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+		return button
+	}()
 
 	private lazy var privacyTitle = CustomTitle(text: String(localized: "paywall.privacyTitle"), isLarge: true)
 	private lazy var privacyDescription = CustomLabel(text: String(localized: "paywall.privacyDescription"))
 
 	private var isPublicButtonSelected: Bool = true
-	private lazy var privacyPublicButton = PickButton(
-		title: String(localized: "paywall.publicButton"),
-		isSelected: isPublicButtonSelected,
-		target: self,
-		action: #selector(privacyPublicButtonTapped)
-	)
-	private lazy var privacyPrivateButton = PickButton(
-		title: String(localized: "paywall.privateButton"),// TODO: - need to refactoring
-		isSelected: !isPublicButtonSelected,
-		target: self,
-		action: #selector(privacyPrivateButtonTapped)
-	)
+	private lazy var privacyPublicButton: GreenButton = {
+		let button = GreenButton()
+		button.isSelected = isPublicButtonSelected
+		button.setTitle(String(localized: "paywall.publicButton"), for: .normal)
+		button.addTarget(self, action: #selector(privacyPublicButtonTapped), for: .touchUpInside)
+		return button
+	}()
+	private lazy var privacyPrivateButton: GreenButton = {
+		let button = GreenButton(imagePlacement: .trailing)
+		button.isSelected = !isPublicButtonSelected
+		button.setTitle(String(localized: "paywall.privateButton"), for: .normal)
+		button.setImage(.arrowForward, for: .normal)
+		button.addTarget(self, action: #selector(privacyPrivateButtonTapped), for: .touchUpInside)
+		return button
+	}()
 
 	private lazy var privacyButtonsStackView: UIStackView = {
 		let view = UIView()
@@ -102,12 +112,13 @@ final class PaywallController: BaseViewController {
 		label.isHidden = true
 		return label
 	}()
-	private lazy var addPaymentButton = PickButton(
-		title: String(localized: "paywall.addPaymentButton"),
-		isSelected: false,
-		target: self,
-		action: #selector(addPaymentButtonTapped)
-	)
+	private lazy var addPaymentButton: GreenButton = {
+		let button = GreenButton()
+		button.isSelected = false
+		button.setTitle(String(localized: "paywall.addPaymentButton"), for: .normal)
+		button.addTarget(self, action: #selector(addPaymentButtonTapped), for: .touchUpInside)
+		return button
+	}()
 	private lazy var amountStackView: UIStackView = {
 		let stack = UIStackView(arrangedSubviews: [
 			currentAccountLabel,
@@ -115,7 +126,7 @@ final class PaywallController: BaseViewController {
 			addPaymentButton
 		])
 		stack.axis = .horizontal
-		stack.distribution = .fill
+		stack.distribution = .equalSpacing
 		stack.alignment = .center
 		stack.layoutMargins = UIEdgeInsets(top: internalSpacing, left: 0, bottom: 0, right: 0)
 		stack.isLayoutMarginsRelativeArrangement = true
@@ -136,12 +147,14 @@ final class PaywallController: BaseViewController {
 	}()
 
 	private var isPaymentSelected: Bool = false
-	private lazy var saveGameButton = NextStepButton(
-		title: String(localized: "paywall.saveGameButton"),
-		isActive: isPaymentSelected,
-		target: self,
-		action: #selector(saveGameButtonTapped)
-	)
+	private lazy var saveGameButton: YellowButton = {
+		let button = YellowButton()
+		button.isEnabled = isPaymentSelected
+		button.isSelected = true
+		button.setTitle(String(localized: "paywall.saveGameButton"), for: .normal)
+		button.addTarget(self, action: #selector(saveGameButtonTapped), for: .touchUpInside)
+		return button
+	}()
 
 	private lazy var mainStackView: UIStackView = {
 		let stack = UIStackView(arrangedSubviews: [
@@ -170,12 +183,16 @@ private extension PaywallController {
 	func setupUI() {
 		view.addSubviews(
 			glassmorphismView,
-			screenTitle
+			screenTitle,
+			backButton
 		)
 		glassmorphismView.addSubviews(mainStackView)
 
 		NSLayoutConstraint.activate([
 			separator.heightAnchor.constraint(equalToConstant: 1),
+
+			backButton.topAnchor.constraint(equalTo: glassmorphismView.topAnchor, constant: 14),
+			backButton.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor, constant: mainSpacing / 2),
 
 			screenTitle.centerXAnchor.constraint(equalTo: mainStackView.centerXAnchor),
 			screenTitle.topAnchor.constraint(equalTo: glassmorphismView.topAnchor, constant: mainSpacing),
@@ -194,6 +211,10 @@ private extension PaywallController {
 		])
 	}
 
+	@objc func backButtonTapped() {
+		print("Back Button clicked")
+	}
+
 	@objc func privacyPublicButtonTapped() {
 		changePrivacyButtonState()
 	}
@@ -204,8 +225,8 @@ private extension PaywallController {
 
 	func changePrivacyButtonState() {
 		isPublicButtonSelected.toggle()
-		privacyPublicButton.updateSelectionState(isPublicButtonSelected)
-		privacyPrivateButton.updateSelectionState(!isPublicButtonSelected)
+		privacyPublicButton.isSelected = isPublicButtonSelected
+		privacyPrivateButton.isSelected = !isPublicButtonSelected
 	}
 
 	@objc func saveGameButtonTapped() {
@@ -214,10 +235,10 @@ private extension PaywallController {
 
 	@objc func addPaymentButtonTapped() {
 		isPaymentSelected.toggle()
+		saveGameButton.isEnabled = isPaymentSelected
 		addPaymentButton.isHidden = isPaymentSelected
-		saveGameButton.setActive(isPaymentSelected)
 		accountLabel.isHidden = !isPaymentSelected
-		
+
 		accountLabel.text = "988 016 7890"// TODO: - remove in the future
 	}
 }
