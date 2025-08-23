@@ -67,14 +67,19 @@ final class PaywallController: BaseViewController {
 	private lazy var paymentTitle = CustomTitle(text: String(localized: "paywall.paymentTitle"), isLarge: true)
 	private lazy var paymentDescription = CustomLabel(text: String(localized: "paywall.paymentDescription"))
 	private lazy var paymentPerPerson = CustomLabel(text: String(localized: "paywall.paymentPerPerson"), isBold: true)
+	private lazy var priceView: UIView = {
+		let priceView = PriceView()
+		priceView.configure(value: "5$")// TODO: from where this value?
+		return priceView
+	}()
 	private lazy var paymentPerPersonStackView: UIStackView = {
 		let stack = UIStackView(arrangedSubviews: [
-			paymentPerPerson
-			// TODO: - amount per person
+			paymentPerPerson,
+			priceView
 		])
 		stack.axis = .horizontal
 		stack.distribution = .fill
-		stack.alignment = .leading
+		stack.alignment = .center
 		stack.spacing = 9
 		stack.layoutMargins = UIEdgeInsets(top: internalSpacing, left: 0, bottom: 0, right: 0)
 		stack.isLayoutMarginsRelativeArrangement = true
