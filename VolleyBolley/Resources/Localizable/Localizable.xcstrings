@@ -445,6 +445,23 @@
         }
       }
     },
+    "paywall.paymentRequirementDescription" : {
+      "comment" : "Paywall screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter the participation fee per person"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Введите стоимость участия на человека"
+          }
+        }
+      }
+    },
     "paywall.paymentTitle" : {
       "comment" : "Paywall screen",
       "localizations" : {
