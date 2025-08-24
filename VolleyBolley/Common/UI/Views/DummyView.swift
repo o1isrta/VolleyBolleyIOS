@@ -60,8 +60,7 @@ final class DummyView: UIView {
 	private var dummyViewType: DummyViewType
 
 	private lazy var imageView: UIImageView = {
-		let image = UIImage(named: "bad_grade")
-		let imageView = UIImageView(image: image)
+		let imageView = UIImageView(image: .Icon.badGrade)
 		imageView.contentMode = .scaleAspectFit
 		return imageView
 	}()
@@ -90,12 +89,13 @@ final class DummyView: UIView {
 		return stackView
 	}()
 
-	private lazy var doneButton: UIButton = NextStepButton(
-		title: dummyViewType.buttonTitle,
-		isActive: true,
-		target: self,
-		action: #selector(doneButtonTapped)
-	)
+	private lazy var doneButton: YellowButton = {
+		let button = YellowButton()
+		button.isSelected = true
+		button.setTitle(dummyViewType.buttonTitle, for: .normal)
+		button.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
+		return button
+	}()
 
 	// MARK: - Initializers
 
