@@ -37,7 +37,7 @@ final class AuthViewController: UIViewController, AuthViewProtocol {
         button.setTitle(String(localized: "Continue with phone number"), for: .normal)
         button.titleLabel?.font = AppFont.Hero.bold(size: 18)
         button.setTitleColor(AppColor.Text.inverted, for: .normal)
-        button.backgroundColor = AppColor.Background.largeActionButtonDefault
+        button.backgroundColor = AppColor.Background.buttonYellowSelected
         button.layer.cornerRadius = 16
         button.clipsToBounds = true
         button.translatesAutoresizingMaskIntoConstraints = false
