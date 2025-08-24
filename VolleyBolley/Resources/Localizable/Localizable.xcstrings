@@ -47,6 +47,24 @@
         }
       }
     },
+    "About" : {
+      "comment" : "Profile",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "О приложении"
+          }
+        }
+      }
+    },
     "All players" : {
       "comment" : "Segment Control",
       "localizations" : {
@@ -290,6 +308,24 @@
         }
       }
     },
+    "DELETE ACCOUNT" : {
+      "comment" : "Profile",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DELETE ACCOUNT"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "УДАЛИТЬ АККАУНТ"
+          }
+        }
+      }
+    },
     "DETAILS" : {
       "comment" : "\"Details\" button",
       "localizations" : {
@@ -308,6 +344,24 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Готово"
+          }
+        }
+      }
+    },
+    "FAQ" : {
+      "comment" : "Profile",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "FAQ"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "FAQ"
           }
         }
       }
@@ -387,6 +441,24 @@
         }
       }
     },
+    "Log out" : {
+      "comment" : "Profile",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Log out"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выйти"
+          }
+        }
+      }
+    },
     "Male" : {
       "localizations" : {
         "ru" : {
@@ -462,6 +534,60 @@
         }
       }
     },
+    "Payments" : {
+      "comment" : "Profile",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Payments"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Платежи"
+          }
+        }
+      }
+    },
+    "Personal data" : {
+      "comment" : "Profile",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Personal data"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Персональные данные"
+          }
+        }
+      }
+    },
+    "Players" : {
+      "comment" : "Profile",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Players"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Игроки"
+          }
+        }
+      }
+    },
     "registration_title" : {
       "localizations" : {
         "en" : {
@@ -517,6 +643,24 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sign up\nwith\na social\nmedia"
+          }
+        }
+      }
+    },
+    "Support" : {
+      "comment" : "Profile",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Support"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поддержка"
           }
         }
       }
