@@ -20,7 +20,7 @@ final class CustomMarkerAnnotationView: MKAnnotationView {
 	}
 
 	private func configure() {
-		image = UIImage(resource: ImageResource.pinGame)
+		image = UIImage(resource: .Icon.pinGame)
 		frame.size = CGSize(width: 30, height: 50)
 		centerOffset = CGPoint(x: 0, y: -frame.height/2)
 	}
