@@ -9,7 +9,7 @@ import UIKit
 
 final class MenuCell: UITableViewCell {
 
-    static let identifier = "MenuCell"
+    static let menuCellIdentifier = "MenuCell"
 
     // MARK: - Private Properties
 
@@ -68,9 +68,9 @@ final class MenuCell: UITableViewCell {
     }
 }
 
-// MARK: - Constants
+// MARK: - Private methods
 
-extension MenuCell {
+private extension MenuCell {
 
     func setupUI() {
         [stack, separatorLine].forEach {
@@ -79,7 +79,7 @@ extension MenuCell {
         }
     }
 
-    private func setupView() {
+    func setupView() {
         setupUI()
         setupSeparatorLineHeight()
 

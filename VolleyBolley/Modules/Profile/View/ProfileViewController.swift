@@ -68,7 +68,7 @@ final class ProfileViewController: BaseViewController, ProfileViewProtocol {
     private lazy var tableBackground: GlassmorphismView = {
         let view = GlassmorphismView()
         view.theme = .light
-        view.cornerRadius = 32
+        view.cornerRadius = 32 // TODO: Как только добавять базовый радиус, нужно удлить эту строчку
         return view
     }()
 
@@ -80,7 +80,7 @@ final class ProfileViewController: BaseViewController, ProfileViewProtocol {
         tableView.isScrollEnabled = false
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(MenuCell.self, forCellReuseIdentifier: MenuCell.identifier)
+        tableView.register(MenuCell.self, forCellReuseIdentifier: MenuCell.menuCellIdentifier)
         return tableView
     }()
 
@@ -110,12 +110,8 @@ final class ProfileViewController: BaseViewController, ProfileViewProtocol {
         super.viewDidLoad()
         setupView()
         presenter.viewDidLoad()
+        tableBackground.frame = tableBackground.frame
     }
-
-    override func viewDidLayoutSubviews() {
-         super.viewDidLayoutSubviews()
-         tableBackground.frame = tableBackground.frame
-     }
 
     // MARK: - Public Methods
 
@@ -132,7 +128,7 @@ final class ProfileViewController: BaseViewController, ProfileViewProtocol {
     }
 }
 
-// MARK: - Constants
+// MARK: - Private methods
 
 private extension ProfileViewController {
     
@@ -186,7 +182,9 @@ private extension ProfileViewController {
     }
 }
 
-extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
+// MARK: - UITableViewDataSource
+
+extension ProfileViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return menuItems.count
@@ -194,7 +192,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: MenuCell.identifier,
+            withIdentifier: MenuCell.menuCellIdentifier,
             for: indexPath) as? MenuCell else {
             return UITableViewCell()
         }
@@ -203,6 +201,11 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         cell.configure(iconName: item.icon, title: item.title, isLast: isLast)
         return cell
     }
+}
+
+// MARK: - UITableViewDelegate
+
+extension ProfileViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
