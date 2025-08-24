@@ -139,7 +139,7 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
     )
 
     private var selectedGender: String? = String(localized: "Male")
-    private var selectedLevel: String? = String(localized: "common.light")
+    private var selectedLevel: String? = String(localized: "common.light").capitalized(with: .current)
     private var selectedCountry: String?
     private var selectedCity: String?
 
