@@ -9,7 +9,7 @@ import CoreLocation
 import MapKit
 import UIKit
 
-final class MapViewController: UIViewController, MapViewProtocol {
+final class MapViewController: BaseViewController, MapViewProtocol {
 
 	// MARK: - Public Properties
 
@@ -224,7 +224,6 @@ private extension MapViewController {
 	}
 
 	func setupUI() {
-		view.backgroundColor = AppColor.Background.screen
 		view.addSubviews(
 			mapView,
 			segmentedControl,
