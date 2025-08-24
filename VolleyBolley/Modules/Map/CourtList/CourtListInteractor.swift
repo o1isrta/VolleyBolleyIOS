@@ -34,6 +34,8 @@ final class CourtListInteractor: CourtListInteractorProtocol {
 		self.courts = courts
 	}
 
+	// MARK: - Public Methods
+
 	func fetchCourtsWithDistance(
 		userLocation: CLLocation?,
 		completion: @escaping ([(court: CourtModel, distance: Double)]) -> Void
