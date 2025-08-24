@@ -58,4 +58,11 @@ extension CALayer {
         gradient.mask = maskLayer
         return gradient
     }
+
+    func toUIImage() -> UIImage {
+        let renderer = UIGraphicsImageRenderer(size: bounds.size)
+        return renderer.image { ctx in
+            render(in: ctx.cgContext)
+        }
+    }
 }
