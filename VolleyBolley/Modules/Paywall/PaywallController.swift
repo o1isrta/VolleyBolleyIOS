@@ -81,7 +81,7 @@ final class PaywallController: BaseViewController {
 	private lazy var paymentPerPerson = CustomLabel(text: String(localized: "paywall.paymentPerPerson"), isBold: true)
 	private lazy var priceView: UIView = {
 		let priceView = PriceView()// TODO: this should be input !!!
-		priceView.configure(value: "5$")// TODO: from where this value?
+		priceView.configure(value: "5$")// TODO: value from input priceView
 		return priceView
 	}()
 	private lazy var paymentPerPersonStackView: UIStackView = {
