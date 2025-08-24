@@ -13,6 +13,7 @@ import UIKit
 /// isActive - состояние кнопки
 /// target: Объект, на котором вызывается метод
 /// action: Метод, вызываемый при нажатии
+@available(*, message: "Use YellowButton instead")
 final class NextStepButton: UIButton {
 
     private var isActive: Bool = false {
