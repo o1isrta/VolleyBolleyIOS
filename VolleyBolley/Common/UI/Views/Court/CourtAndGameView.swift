@@ -103,7 +103,6 @@ final class CourtAndGameView: UIView {
 			detailsButtonData: model.detailsButtonData
 		)
 		courtButtonsView.configure(with: courtButtonsViewModel)
-		setupButtonsUI(isExistDetailsButton: model.detailsButtonData != nil)
 	}
 
 	func configure(with model: GameViewModel) {
@@ -133,23 +132,12 @@ final class CourtAndGameView: UIView {
 			detailsButtonData: model.detailsButtonData
 		)
 		courtButtonsView.configure(with: courtButtonsViewModel)
-		setupButtonsUI(isExistDetailsButton: model.detailsButtonData != nil)
 	}
 }
 
 // MARK: - Private Methods
 
 private extension CourtAndGameView {
-
-	func setupButtonsUI(isExistDetailsButton: Bool) {
-		if isExistDetailsButton {
-			courtButtonsView.widthAnchor.constraint(equalToConstant: 215).isActive = false
-			courtButtonsView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-		} else {
-			courtButtonsView.widthAnchor.constraint(equalToConstant: 205).isActive = true
-			courtButtonsView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-		}
-	}
 
 	func setupUI() {
 		addSubviews(
@@ -172,6 +160,7 @@ private extension CourtAndGameView {
 
 			courtButtonsView.topAnchor.constraint(equalTo: descriptionView.bottomAnchor, constant: 16),
 			courtButtonsView.leadingAnchor.constraint(equalTo: leadingAnchor),
+			courtButtonsView.trailingAnchor.constraint(equalTo: trailingAnchor),
 			courtButtonsView.bottomAnchor.constraint(equalTo: bottomAnchor)
 		])
 	}
