@@ -110,14 +110,14 @@ import SwiftUI
 			let model = CourtBottomViewModel(
 				courtName: court.location.courtName,
 				locationName: court.location.locationName,
-				distance: "Nearest",
+				distance: String(localized: "Nearest"),
 				doneButtonData: CourtButtonData(
-					title: "CHOOSE THIS GAME",
-					action: { print("aaaaaaa")}
+					title: String(localized: "CHOOSE THIS GAME"),
+					action: { print("aaaaaaa") }
 				),
 				detailsButtonData: CourtButtonData(
-					title: "Details",
-					action: { print("bbbbbbb")}
+					title: String(localized: "DETAILS"),
+					action: { print("bbbbbbb") }
 				)
 			)
 			view.configure(with: model)
@@ -134,12 +134,12 @@ import SwiftUI
 				locationName: court.location.locationName,
 				distance: "",
 				doneButtonData: CourtButtonData(
-					title: "CHOOSE THIS GAME",
-					action: { print("aaaaaaa")}
+					title: String(localized: "CHOOSE THIS GAME"),
+					action: { print("aaaaaaa") }
 				),
 				detailsButtonData: CourtButtonData(
-					title: "Details",
-					action: { print("bbbbbbb")}
+					title: String(localized: "DETAILS"),
+					action: { print("bbbbbbb") }
 				)
 			)
 			view.configure(with: model)
@@ -156,8 +156,8 @@ import SwiftUI
 				locationName: court.location.locationName,
 				distance: "",
 				doneButtonData: CourtButtonData(
-					title: "CHOOSE THIS GAME",
-					action: { print("aaaaaaa")}
+					title: String(localized: "CHOOSE THIS GAME"),
+					action: { print("aaaaaaa") }
 				)
 			)
 			view.configure(with: model)

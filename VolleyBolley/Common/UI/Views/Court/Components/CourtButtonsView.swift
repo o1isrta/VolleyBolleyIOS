@@ -31,22 +31,14 @@ final class CourtButtonsView: UIView {
 	private var doneButtonCallback: (() -> Void)?
 	private var detailsButtonCallback: (() -> Void)?
 
-	// TODO: refactoding
-	private lazy var doneButton: UIButton = {
-		let button = UIButton(type: .system)
-		button.backgroundColor = .systemBlue
-		button.setTitleColor(.white, for: .normal)
-		button.layer.cornerRadius = 16
+	private lazy var doneButton: YellowButton = {
+		let button = YellowButton()
+		button.isSelected = true
 		button.addTarget(self, action: #selector(didTapChooseButton), for: .touchUpInside)
 		return button
 	}()
-
-	// TODO: refactoding
-	private lazy var detailsButton: UIButton = {
-		let button = UIButton(type: .system)
-		button.backgroundColor = .systemGray5
-		button.setTitleColor(.systemBlue, for: .normal)
-		button.layer.cornerRadius = 16
+	private lazy var detailsButton: YellowButton = {
+		let button = YellowButton()
 		button.addTarget(self, action: #selector(didTapDetailsButton), for: .touchUpInside)
 		return button
 	}()
@@ -82,10 +74,10 @@ final class CourtButtonsView: UIView {
 			detailsButton.setTitle(detailsButtonData.title, for: .normal)
 			detailsButtonCallback = detailsButtonData.action
 
-			doneButton.widthAnchor.constraint(equalTo: buttonStackView.widthAnchor, multiplier: 3/5).isActive = true
+			doneButton.widthAnchor.constraint(equalTo: buttonStackView.widthAnchor, multiplier: 4/6).isActive = true
 			detailsButton.isHidden = false
 		} else {
-			doneButton.widthAnchor.constraint(equalTo: buttonStackView.widthAnchor, multiplier: 3/5).isActive = false
+			doneButton.widthAnchor.constraint(equalTo: buttonStackView.widthAnchor, multiplier: 4/6).isActive = false
 			detailsButton.isHidden = true
 		}
 	}
@@ -119,3 +111,51 @@ private extension CourtButtonsView {
 		])
 	}
 }
+
+#if DEBUG
+import SwiftUI
+@available(iOS 17.0, *)
+#Preview {
+	VStack {
+		UIViewPreview {
+			let view = CourtBottomView()
+			let court = CourtModel.mockData
+			let model = CourtBottomViewModel(
+				courtName: court.location.courtName,
+				locationName: court.location.locationName,
+				distance: String(localized: "Nearest"),
+				doneButtonData: CourtButtonData(
+					title: String(localized: "CHOOSE THIS GAME"),
+					action: { print("aaaaaaa") }
+				),
+				detailsButtonData: CourtButtonData(
+					title: String(localized: "DETAILS"),
+					action: { print("bbbbbbb") }
+				)
+			)
+			view.configure(with: model)
+			return view
+		}
+		.frame(width: .infinity, height: 136)
+		.padding()
+
+		UIViewPreview {
+			let view = CourtBottomView()
+			let court = CourtModel.mockData
+			let model = CourtBottomViewModel(
+				courtName: court.location.courtName,
+				locationName: court.location.locationName,
+				distance: "",
+				doneButtonData: CourtButtonData(
+					title: String(localized: "CHOOSE THIS GAME"),
+					action: { print("aaaaaaa") }
+				)
+			)
+			view.configure(with: model)
+			return view
+		}
+		.frame(width: .infinity, height: 136)
+		.padding()
+	}
+}
+#endif
