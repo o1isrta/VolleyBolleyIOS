@@ -99,25 +99,25 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
         return button
     }()
     private lazy var lightLevelButton = PickButton(
-        title: String(localized: "Light"),
+		title: String(localized: "common.light").capitalized(with: .current),
         isSelected: true,
         target: self,
         action: #selector(levelButtonTapped(_:))
     )
     private lazy var mediumLevelButton = PickButton(
-        title: String(localized: "Medium"),
+        title: String(localized: "common.medium").capitalized(with: .current),
         isSelected: false,
         target: self,
         action: #selector(levelButtonTapped(_:))
     )
     private lazy var hardLevelButton = PickButton(
-        title: String(localized: "Hard"),
+        title: String(localized: "common.hard").capitalized(with: .current),
         isSelected: false,
         target: self,
         action: #selector(levelButtonTapped(_:))
     )
     private lazy var proLevelButton = PickButton(
-        title: String(localized: "Pro"),
+        title: String(localized: "common.pro").capitalized(with: .current),
         isSelected: false,
         target: self,
         action: #selector(levelButtonTapped(_:))
@@ -139,7 +139,7 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
     )
 
     private var selectedGender: String? = String(localized: "Male")
-    private var selectedLevel: String? = String(localized: "Light")
+    private var selectedLevel: String? = String(localized: "common.light")
     private var selectedCountry: String?
     private var selectedCity: String?
 
