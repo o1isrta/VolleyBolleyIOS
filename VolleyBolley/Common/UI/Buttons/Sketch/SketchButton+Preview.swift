@@ -103,7 +103,7 @@ final class SketchButtonPreviewVC: UIViewController {
     private func makeButton(
         title: String,
         image: UIImage? = nil,
-        selected: Bool = false,
+        selected: Bool = false
     ) -> SketchButton {
         let button = SketchButton()
         button.isSelected = selected
