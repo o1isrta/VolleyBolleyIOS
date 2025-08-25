@@ -29,7 +29,11 @@ final class MapRouter: MapRouterProtocol {
 
 	// MARK: - Private Methods
 
-	func showList(from view: MapViewController, courts: [CourtModel], selected: CourtModel?) {
+	func showList(
+		from view: MapViewController,
+		courts: [CourtModel],
+		selected: CourtModel?
+	) {
 		let listVC = CourtListViewController(courts: courts, selected: selected)
 		view.addChild(listVC)
 		listVC.view.frame = view.view.bounds
