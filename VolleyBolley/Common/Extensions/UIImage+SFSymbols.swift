@@ -7,4 +7,15 @@ extension UIImage {
     static let playHouseFill = UIImage(systemName: "play.house.fill")
     static let volleyBallFill = UIImage(systemName: "volleyball.fill")
     static let personFill = UIImage(systemName: "person.fill")
+
+    static let plus = UIImage(systemName: "plus")
+    static let minus = UIImage(systemName: "minus")
+    static let chevronBackward = UIImage(systemName: "chevron.backward")
+    static let chevronForward = UIImage(systemName: "chevron.forward")
+    static let chevronUp = UIImage(systemName: "chevron.up")
+    static let chevronDown = UIImage(systemName: "chevron.down")
+
+    static let arrowForward = UIImage(systemName: "arrow.forward")
+    static let bell = UIImage(systemName: "bell")
+    static let bellBadge = UIImage(systemName: "bell.badge")
 }
