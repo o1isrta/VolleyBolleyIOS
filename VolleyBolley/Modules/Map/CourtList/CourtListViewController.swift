@@ -27,7 +27,7 @@ final class CourtListViewController: UIViewController {
 	private var initialCourts: [CourtModel] = []
 	private var expandedIndex: Int?
 
-	private var tableViewHeightConstraint: NSLayoutConstraint!
+	private var tableViewHeightConstraint: NSLayoutConstraint?
 	private var tableViewContentSizeKeyPath: String = "contentSize"
 	private lazy var tableView: UITableView = {
 		let tableView = UITableView()
@@ -86,7 +86,7 @@ final class CourtListViewController: UIViewController {
 				let maxHeight = UIScreen.main.bounds.height - 200
 				let newHeight = min(newSize.height, maxHeight)
 
-				tableViewHeightConstraint.constant = newHeight
+				tableViewHeightConstraint?.constant = newHeight
 			}
 		}
 	}
@@ -280,7 +280,7 @@ private extension CourtListViewController {
 		])
 
 		tableViewHeightConstraint = tableView.heightAnchor.constraint(equalToConstant: 0)
-		tableViewHeightConstraint.isActive = true
+		tableViewHeightConstraint?.isActive = true
 	}
 
 	func setupLocation() {
