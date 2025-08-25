@@ -7,23 +7,19 @@
 
 import UIKit
 
-/// Тип счетчика: для игроков или для команд
 enum CounterType {
     case players
     case teams
-    
+
     var minValue: Int {
         switch self {
         case .players: return Constants.minPlayers
         case .teams: return Constants.minTeams
         }
     }
-    
-    var maxValue: Int {
-        Constants.maxValue
-    }
-    
-    // MARK: - Constants
+
+    var maxValue: Int { Constants.maxValue }
+
     private enum Constants {
         static let minPlayers = 4
         static let minTeams = 3
@@ -31,163 +27,194 @@ enum CounterType {
     }
 }
 
-/// Переиспользуемый счетчик для выбора количества игроков или команд
+// MARK: - CounterView
+
 final class CounterView: UIView {
-    
+
+    // MARK: - Constants
+    private enum Constants {
+        static let buttonSize: CGFloat = 16
+        static let containerWidth: CGFloat = 63
+        static let containerHeight: CGFloat = 39
+        static let containerCornerRadius: CGFloat = 16
+        static let labelCornerRadius: CGFloat = 18
+        static let buttonSpacing: CGFloat = 8
+    }
+
     // MARK: - Public Properties
     var type: CounterType
     var valueChanged: ((Int) -> Void)?
-    
-    // MARK: - Private Properties
-    private var value: Int {
-        didSet {
-            valueLabel.text = "\(value)"
-            updateButtonsState()
-            valueChanged?(value)
-        }
+    public var value: Int {
+        didSet { updateValue(animated: true) }
     }
-    
+
+    // MARK: - Private Properties
     private let minusButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(systemName: "minus"), for: .normal)
         button.tintColor = .white
-        button.contentHorizontalAlignment = .center
-        button.contentVerticalAlignment = .center
         return button
     }()
-    
+
     private let plusButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(systemName: "plus"), for: .normal)
         button.tintColor = .white
-        button.contentHorizontalAlignment = .center
-        button.contentVerticalAlignment = .center
         return button
     }()
-    
+
+    private let valueContainer: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = Constants.containerCornerRadius
+        view.layer.masksToBounds = true
+        return view
+    }()
+
     private let valueLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = AppFont.Hero.bold(size: 20)
-        label.textColor = AppColor.Text.primary
+        label.font = AppFont.Hero.regular(size: 16)
+        label.textColor = AppColor.Text.inverted
         label.backgroundColor = .white
-        label.layer.cornerRadius = 16
+        label.layer.cornerRadius = Constants.labelCornerRadius
         label.layer.masksToBounds = true
         return label
     }()
-    
+
     private let gradientLayer = CAGradientLayer()
-    
+    private let shapeLayer = CAShapeLayer()
+
+    private var minusLeadingConstraint: NSLayoutConstraint!
+    private var valueLeadingConstraint: NSLayoutConstraint!
+    private var plusLeadingConstraint: NSLayoutConstraint!
+
     // MARK: - Initializers
     init(type: CounterType, initialValue: Int) {
         self.type = type
         self.value = initialValue
         super.init(frame: .zero)
         setupView()
-        updateButtonsState()
+        valueLabel.text = "\(value)"
+        configureButtonsState(animated: false)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    // MARK: - Setup
+
+    // MARK: - Private Methods
     private func setupView() {
-        addSubview(minusButton)
-        addSubview(valueLabel)
-        addSubview(plusButton)
-        
+        addSubviews(minusButton, valueContainer, plusButton)
+        valueContainer.addSubviews(valueLabel)
+
         minusButton.addTarget(self, action: #selector(handleDecrement), for: .touchUpInside)
         plusButton.addTarget(self, action: #selector(handleIncrement), for: .touchUpInside)
-        
-        valueLabel.text = "\(value)"
-        
-        minusButton.translatesAutoresizingMaskIntoConstraints = false
-        valueLabel.translatesAutoresizingMaskIntoConstraints = false
-        plusButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            minusButton.widthAnchor.constraint(equalToConstant: 16),
-            minusButton.heightAnchor.constraint(equalToConstant: 16),
-            minusButton.leadingAnchor.constraint(equalTo: leadingAnchor),
-            minusButton.centerYAnchor.constraint(equalTo: centerYAnchor),
-            
-            valueLabel.leadingAnchor.constraint(equalTo: minusButton.trailingAnchor, constant: 8),
-            valueLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
-            valueLabel.widthAnchor.constraint(equalToConstant: 64),
-            valueLabel.heightAnchor.constraint(equalToConstant: 39),
-            
-            plusButton.widthAnchor.constraint(equalToConstant: 16),
-            plusButton.heightAnchor.constraint(equalToConstant: 16),
-            plusButton.leadingAnchor.constraint(equalTo: valueLabel.trailingAnchor, constant: 8),
-            plusButton.trailingAnchor.constraint(equalTo: trailingAnchor),
-            plusButton.centerYAnchor.constraint(equalTo: centerYAnchor)
-        ])
-        
+
+        setupConstraints()
         setupGradientBorder()
     }
-    
+
+    private func setupConstraints() {
+        minusLeadingConstraint = minusButton.leadingAnchor.constraint(equalTo: leadingAnchor)
+        valueLeadingConstraint = valueContainer.leadingAnchor.constraint(
+            equalTo: minusButton.trailingAnchor,
+            constant: Constants.buttonSpacing
+        )
+        plusLeadingConstraint = plusButton.leadingAnchor.constraint(
+            equalTo: valueContainer.trailingAnchor,
+            constant: Constants.buttonSpacing
+        )
+
+        NSLayoutConstraint.activate([
+            minusButton.widthAnchor.constraint(equalToConstant: Constants.buttonSize),
+            minusButton.heightAnchor.constraint(equalToConstant: Constants.buttonSize),
+            minusLeadingConstraint,
+            minusButton.centerYAnchor.constraint(equalTo: centerYAnchor),
+
+            valueContainer.widthAnchor.constraint(equalToConstant: Constants.containerWidth),
+            valueContainer.heightAnchor.constraint(equalToConstant: Constants.containerHeight),
+            valueContainer.centerYAnchor.constraint(equalTo: centerYAnchor),
+            valueLeadingConstraint,
+
+            valueLabel.leadingAnchor.constraint(equalTo: valueContainer.leadingAnchor, constant: 1),
+            valueLabel.trailingAnchor.constraint(equalTo: valueContainer.trailingAnchor, constant: -1),
+            valueLabel.topAnchor.constraint(equalTo: valueContainer.topAnchor, constant: 1),
+            valueLabel.bottomAnchor.constraint(equalTo: valueContainer.bottomAnchor, constant: -1),
+
+            plusButton.widthAnchor.constraint(equalToConstant: Constants.buttonSize),
+            plusButton.heightAnchor.constraint(equalToConstant: Constants.buttonSize),
+            plusLeadingConstraint,
+            plusButton.centerYAnchor.constraint(equalTo: centerYAnchor)
+        ])
+    }
+
+    /// Настройка градиентной обводки для контейнера
     private func setupGradientBorder() {
         gradientLayer.colors = [
             AppColor.Gradient.greenLightStart.cgColor,
             AppColor.Gradient.greenLightEnd.cgColor
         ]
-        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
-        gradientLayer.endPoint = CGPoint(x: 1, y: 1)
-        gradientLayer.cornerRadius = 12
-        gradientLayer.masksToBounds = true
-        
-        let shape = CAShapeLayer()
-        shape.lineWidth = 2
-        shape.path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: 64, height: 39), cornerRadius: 12).cgPath
-        shape.fillColor = UIColor.clear.cgColor
-        shape.strokeColor = UIColor.black.cgColor
-        gradientLayer.mask = shape
-        
-        valueLabel.layer.addSublayer(gradientLayer)
+        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0)
+        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1)
+        shapeLayer.lineWidth = 1
+        shapeLayer.fillColor = UIColor.clear.cgColor
+        shapeLayer.strokeColor = UIColor.black.cgColor
+        gradientLayer.mask = shapeLayer
+        valueContainer.layer.addSublayer(gradientLayer)
     }
     
+    private func updateValue(animated: Bool) {
+        valueLabel.text = "\(value)"
+        configureButtonsState(animated: animated)
+        valueChanged?(value)
+    }
+
+    /// Обновление состояния кнопок (показ/скрытие + констрейнты)
+    private func configureButtonsState(animated: Bool) {
+        let isAtMin = value <= type.minValue
+        let duration = animated ? 0.25 : 0.0
+
+        UIView.animate(withDuration: duration) {
+            self.minusLeadingConstraint.constant = isAtMin ? -Constants.buttonSize : 0
+            self.valueLeadingConstraint.constant = isAtMin ? 0 : Constants.buttonSpacing
+            self.layoutIfNeeded()
+        }
+
+        minusButton.isHidden = isAtMin
+        plusButton.isHidden = value >= type.maxValue
+    }
+
+    // MARK: - Actions
+    @objc private func handleDecrement() {
+        guard value > type.minValue else { return }
+        value -= 1
+    }
+
+    @objc private func handleIncrement() {
+        guard value < type.maxValue else { return }
+        value += 1
+    }
+
+    // MARK: - Layout
     override func layoutSubviews() {
         super.layoutSubviews()
-        gradientLayer.frame = valueLabel.bounds
-        if let shape = gradientLayer.mask as? CAShapeLayer {
-            shape.path = UIBezierPath(roundedRect: valueLabel.bounds, cornerRadius: 12).cgPath
-        }
-    }
-    
-    // MARK: - Private Methods
-    private func updateButtonsState() {
-        minusButton.isEnabled = value > type.minValue
-        plusButton.isEnabled = value < type.maxValue
-        
-        minusButton.alpha = minusButton.isEnabled ? 1.0 : 0.5
-        plusButton.alpha = plusButton.isEnabled ? 1.0 : 0.5
-    }
-    
-    @objc
-    private func handleDecrement() {
-        if value > type.minValue {
-            value -= 1
-        }
-    }
-    
-    @objc
-    private func handleIncrement() {
-        if value < type.maxValue {
-            value += 1
-        }
+        gradientLayer.frame = valueContainer.bounds
+        shapeLayer.path = UIBezierPath(
+            roundedRect: valueContainer.bounds.insetBy(dx: 1.5, dy: 1.5),
+            cornerRadius: valueContainer.layer.cornerRadius
+        ).cgPath
     }
 }
 
-#if DEBUG
+// MARK: - Preview (Debug only)
 import SwiftUI
-
+#if DEBUG
 @available(iOS 17.0, *)
 #Preview {
     UIViewPreview {
         CounterView(type: .players, initialValue: 4)
     }
-    .frame(width: 120, height: 39)
+    .frame(width: 120, height: 50)
     .padding()
     .background(Color.gray)
 }
