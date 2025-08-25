@@ -31,6 +31,8 @@ final class CourtButtonsView: UIView {
 	private var doneButtonCallback: (() -> Void)?
 	private var detailsButtonCallback: (() -> Void)?
 
+	private var doneButtonWidthConstraint: NSLayoutConstraint?
+
 	private lazy var doneButton: YellowButton = {
 		let button = YellowButton()
 		button.isSelected = true
@@ -69,16 +71,16 @@ final class CourtButtonsView: UIView {
 	func configure(with model: CourtButtonsViewModel) {
 		doneButton.setTitle(model.doneButtonData.title, for: .normal)
 		doneButtonCallback = model.doneButtonData.action
+		doneButtonWidthConstraint?.isActive = false
+		detailsButton.isHidden = true
 
 		if let detailsButtonData = model.detailsButtonData {
+			detailsButton.isHidden = false
 			detailsButton.setTitle(detailsButtonData.title, for: .normal)
 			detailsButtonCallback = detailsButtonData.action
 
-			doneButton.widthAnchor.constraint(equalTo: buttonStackView.widthAnchor, multiplier: 4/6).isActive = true
-			detailsButton.isHidden = false
-		} else {
-			doneButton.widthAnchor.constraint(equalTo: buttonStackView.widthAnchor, multiplier: 4/6).isActive = false
-			detailsButton.isHidden = true
+			doneButtonWidthConstraint = doneButton.widthAnchor.constraint(equalTo: buttonStackView.widthAnchor, multiplier: 4/6)
+			doneButtonWidthConstraint?.isActive = true
 		}
 	}
 }
