@@ -41,6 +41,12 @@ final class LevelBadgeView: UIView {
     override var intrinsicContentSize: CGSize {
         return CGSize(width: Constants.badgeSize, height: Constants.badgeSize)
     }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layer.cornerRadius = min(bounds.width, bounds.height) / 2
+        layer.masksToBounds = true
+    }
 }
 
 // MARK: - Private Methods
@@ -52,7 +58,6 @@ private extension LevelBadgeView {
         levelLabel.textColor = level.titleColor
         backgroundColor = level.color
         
-        layer.cornerRadius = Constants.badgeSize / 2
         layer.masksToBounds = true
         layer.borderWidth = Constants.badgeBorder
         layer.borderColor = AppColor.Border.primary.cgColor
