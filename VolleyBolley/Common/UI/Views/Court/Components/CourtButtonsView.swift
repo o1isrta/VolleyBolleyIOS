@@ -82,12 +82,10 @@ final class CourtButtonsView: UIView {
 			detailsButton.setTitle(detailsButtonData.title, for: .normal)
 			detailsButtonCallback = detailsButtonData.action
 
-			doneButton.widthAnchor.constraint(equalToConstant: 205).isActive = true
-			detailsButton.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+			doneButton.widthAnchor.constraint(equalTo: buttonStackView.widthAnchor, multiplier: 3/5).isActive = true
 			detailsButton.isHidden = false
 		} else {
-			buttonStackView.widthAnchor.constraint(equalToConstant: 215).isActive = false
-			buttonStackView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+			doneButton.widthAnchor.constraint(equalTo: buttonStackView.widthAnchor, multiplier: 3/5).isActive = false
 			detailsButton.isHidden = true
 		}
 	}
