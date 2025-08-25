@@ -58,7 +58,11 @@ final class CourtTableViewCell: UITableViewCell {
 		distanceView.isHidden = true
 	}
 
-	func configure(with court: CourtModel, distance: Double, isLast: Bool) {
+	func configure(
+		with court: CourtModel,
+		distance: Double,
+		isLast: Bool
+	) {
 		noCourtsLabel.isHidden = true
 		locationTitleView.isHidden = false
 		distanceView.isHidden = false
