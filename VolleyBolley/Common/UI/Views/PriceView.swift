@@ -11,12 +11,15 @@ final class PriceView: UIView {
 
 	// MARK: - Public Properties
 
+	var onTextChanged: ((String?) -> Void)?
+
 	var text: String? {
 		get { return textField.text }
 		set {
 			guard let text = newValue else { return }
 			let filtered = text.filter { "0123456789".contains($0) }
 			textField.text = String(filtered)
+			onTextChanged?(textField.text)
 		}
 	}
 
@@ -144,6 +147,10 @@ private extension PriceView {
 // MARK: - UITextFieldDelegate
 
 extension PriceView: UITextFieldDelegate {
+
+	func textFieldDidChangeSelection(_ textField: UITextField) {
+		onTextChanged?(textField.text)
+	}
 
 	func textField(
 		_ textField: UITextField,
