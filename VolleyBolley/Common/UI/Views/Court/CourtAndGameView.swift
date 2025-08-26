@@ -202,7 +202,7 @@ import SwiftUI
 			court: CourtModel.mockData,
 			doneButtonData: CourtButtonData(
 				title: "Choose this court",
-				action: { print("aaaaaaa")}
+				action: { print("aaaaaaa") }
 			)
 		)
 		view.configure(with: model)
