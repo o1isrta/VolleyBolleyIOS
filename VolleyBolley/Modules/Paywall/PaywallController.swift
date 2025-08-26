@@ -28,17 +28,17 @@ final class PaywallController: BaseViewController {
 	private lazy var privacyTitle = CustomTitle(text: String(localized: "paywall.privacyTitle"), isLarge: true)
 	private lazy var privacyDescription = CustomLabel(text: String(localized: "paywall.privacyDescription"))
 
-	private var isPublicButtonSelected: Bool = true
+	private var isPublicGameSelected: Bool = true
 	private lazy var privacyPublicButton: GreenButton = {
 		let button = GreenButton()
-		button.isSelected = isPublicButtonSelected
+		button.isSelected = isPublicGameSelected
 		button.setTitle(String(localized: "paywall.publicButton"), for: .normal)
 		button.addTarget(self, action: #selector(privacyPublicButtonTapped), for: .touchUpInside)
 		return button
 	}()
 	private lazy var privacyPrivateButton: GreenButton = {
 		let button = GreenButton(imagePlacement: .trailing)
-		button.isSelected = !isPublicButtonSelected
+		button.isSelected = !isPublicGameSelected
 		button.setTitle(String(localized: "paywall.privateButton"), for: .normal)
 		button.setImage(.arrowForward, for: .normal)
 		button.addTarget(self, action: #selector(privacyPrivateButtonTapped), for: .touchUpInside)
@@ -79,9 +79,10 @@ final class PaywallController: BaseViewController {
 	private lazy var paymentTitle = CustomTitle(text: String(localized: "paywall.paymentTitle"), isLarge: true)
 	private lazy var paymentDescription = CustomLabel(text: String(localized: "paywall.paymentDescription"))
 	private lazy var paymentPerPerson = CustomLabel(text: String(localized: "paywall.paymentPerPerson"), isBold: true)
-	private lazy var priceView: UIView = {
-		let priceView = PriceView()// TODO: this should be input !!!
-		priceView.configure(value: "5$")// TODO: value from input priceView
+	private lazy var priceView: PriceView = {
+		let priceView = PriceView()
+		priceView.text = "5"
+		priceView.isUserInteractionEnabled = false
 		return priceView
 	}()
 	private lazy var paymentPerPersonStackView: UIStackView = {
@@ -173,12 +174,18 @@ final class PaywallController: BaseViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		setupUI()
+		setupGesture()
 	}
 }
 
 // MARK: - Private Methods
 
 private extension PaywallController {
+
+	func setupGesture() {
+		let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapOutside))
+		view.addGestureRecognizer(tapGesture)
+	}
 
 	func setupUI() {
 		view.addSubviews(
@@ -200,6 +207,9 @@ private extension PaywallController {
 			amountStackView.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor),
 			amountStackView.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor),
 			amountStackView.heightAnchor.constraint(equalToConstant: 52),
+
+			priceView.heightAnchor.constraint(equalToConstant: 30),
+			priceView.widthAnchor.constraint(equalToConstant: 75),
 
 			saveGameButton.heightAnchor.constraint(equalToConstant: 44),
 
@@ -227,13 +237,25 @@ private extension PaywallController {
 	}
 
 	func changePrivacyButtonState() {
-		isPublicButtonSelected.toggle()
-		privacyPublicButton.isSelected = isPublicButtonSelected
-		privacyPrivateButton.isSelected = !isPublicButtonSelected
+		isPublicGameSelected.toggle()
+		privacyPublicButton.isSelected = isPublicGameSelected
+		privacyPrivateButton.isSelected = !isPublicGameSelected
+	}
+
+	@objc func handleTapOutside(_ gesture: UITapGestureRecognizer) {
+		if !priceView.frame.contains(gesture.location(in: view)) {
+			priceView.resignActive()
+		}
 	}
 
 	@objc func saveGameButtonTapped() {
+		// TODO: adding alert for empty price value
+
 		print("Save Game Button clicked")
+		print("Price: \(priceView.text ?? "")")
+		print("Price Double: \(String(describing: priceView.getNumericValue()))")
+		print("Account: \(String(describing: accountLabel.text))")
+		print("Public game: \(isPublicGameSelected)")
 	}
 
 	@objc func addPaymentButtonTapped() {
@@ -242,7 +264,11 @@ private extension PaywallController {
 		addPaymentButton.isHidden = isPaymentSelected
 		accountLabel.isHidden = !isPaymentSelected
 
+		priceView.isUserInteractionEnabled = isPaymentSelected
+		priceView.becomeActive()
+
 		paymentDescription.text = String(localized: "paywall.paymentRequirementDescription")
+
 		accountLabel.text = "988 016 7890"// TODO: - remove in the future
 	}
 }
@@ -250,13 +276,8 @@ private extension PaywallController {
 // MARK: - Preview
 
 #if DEBUG
-import SwiftUI
-
 @available(iOS 17.0, *)
 #Preview {
-	UIViewControllerPreview {
-		PaywallController()
-	}
-	.edgesIgnoringSafeArea(.all)
+	PaywallController()
 }
 #endif
