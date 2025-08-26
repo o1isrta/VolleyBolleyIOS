@@ -52,16 +52,16 @@ final class CounterView: UIView {
 
     // MARK: - Private Properties
 
-    private let minusButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(systemName: "minus"), for: .normal)
+    private let minusButton: UtilityButton = {
+        let button = UtilityButton(style: .small)
+        button.setImage(.minus, for: .normal)
         button.tintColor = AppColor.Text.primary
         return button
     }()
 
-    private let plusButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(systemName: "plus"), for: .normal)
+    private let plusButton: UtilityButton = {
+        let button = UtilityButton(style: .small)
+        button.setImage(.plus, for: .normal)
         button.tintColor = AppColor.Text.primary
         return button
     }()
@@ -160,7 +160,7 @@ final class CounterView: UIView {
     /// Настройка градиентной обводки для контейнера
     private func setupGradientBorder() {
         shapeLayer.lineWidth = 1
-        shapeLayer.fillColor = UIColor.clear.cgColor
+        shapeLayer.fillColor = AppColor.Background.clear.cgColor
         shapeLayer.strokeColor = AppColor.Border.primary.cgColor
 
         gradientLayer.mask = shapeLayer
