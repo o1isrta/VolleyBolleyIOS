@@ -48,6 +48,7 @@ final class PriceView: UIView {
 
 	private lazy var textField: UITextField = {
 		let textField = UITextField()
+		textField.delegate = self
 		textField.attributedPlaceholder = NSAttributedString(
 			string: "0",
 			attributes: [
@@ -113,8 +114,6 @@ final class PriceView: UIView {
 private extension PriceView {
 
 	func setupGesture() {
-		textField.delegate = self
-
 		let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
 		containerView.addGestureRecognizer(tapGesture)
 	}
