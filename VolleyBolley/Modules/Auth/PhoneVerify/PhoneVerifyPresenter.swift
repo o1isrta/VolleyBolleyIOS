@@ -7,6 +7,9 @@
 import UIKit
 
 final class PhoneVerifyPresenter: PhoneVerifyPresenterProtocol, PhoneVerifyInteractorOutputProtocol {
+    var presenter: (any PhoneVerifyInteractorOutputProtocol)?
+    
+    
     weak var view: PhoneVerifyViewProtocol?
     var interactor: PhoneVerifyInteractorProtocol
     var router: PhoneVerifyRouterProtocol
@@ -53,5 +56,9 @@ final class PhoneVerifyPresenter: PhoneVerifyPresenterProtocol, PhoneVerifyInter
             alert.addAction(UIAlertAction(title: "OK", style: .default))
             view.present(alert, animated: true)
         }
+    }
+
+    func didTapResendCode() {
+        interactor.resendCode(for: phoneNumber)
     }
 }

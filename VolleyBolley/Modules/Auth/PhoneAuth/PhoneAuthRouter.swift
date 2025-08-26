@@ -4,16 +4,19 @@
 //
 //  Created by Олег Козырев on 17.08.2025.
 //
+import Swinject
 import UIKit
 
-class PhoneAuthRouter: PhoneAuthRouterProtocol {
+final class PhoneAuthRouter: PhoneAuthRouterProtocol {
 
     weak var viewController: UIViewController?
-    weak var coordinator: AppRouter?
+    private let resolver: Resolver
+    private let window: UIWindow?
 
-    init(viewController: UIViewController, coordinator: AppRouter?) {
+    init(viewController: UIViewController, resolver: Resolver, window: UIWindow? = nil) {
         self.viewController = viewController
-        self.coordinator = coordinator
+        self.resolver = resolver
+        self.window = window
     }
 
     func navigateBack() {
@@ -21,11 +24,22 @@ class PhoneAuthRouter: PhoneAuthRouterProtocol {
     }
 
     func navigateToVerification(with phoneNumber: String) {
-        guard !phoneNumber.isEmpty else {
-            assertionFailure("Attempted to navigate with empty phone number")
-            return
+        guard !phoneNumber.isEmpty else { return }
+
+        guard let phoneVerifyVC = resolver.resolve(PhoneVerifyViewController.self, argument: phoneNumber) else {
+            fatalError("PhoneVerifyViewController не зарегистрирован в DI")
         }
 
-        coordinator?.showPhoneVerify()
+        if let navController = viewController?.navigationController {
+            navController.pushViewController(phoneVerifyVC, animated: true)
+        } else if let window = window {
+            let nav = UINavigationController(rootViewController: phoneVerifyVC)
+            UIView.transition(with: window, duration: 0.4, options: [.transitionCrossDissolve, .allowUserInteraction]) {
+                window.rootViewController = nav
+            }
+            window.makeKeyAndVisible()
+        } else {
+            viewController?.present(phoneVerifyVC, animated: true)
+        }
     }
 }

@@ -27,22 +27,14 @@ class LevelInfoViewController: UIViewController {
 
     private lazy var titleLabel = CustomTitle(text: "About levels", isLarge: true)
 
-    private lazy var labelDescription: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.attributedText = makeLevelsDescription()
-        return label
-    }()
+    private lazy var levelsStack = makeLevelRow()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        view.backgroundColor = AppColor.Background.screen
-
-        view.backgroundColor = .clear
-        modalPresentationStyle = .overFullScreen
-
+                view.backgroundColor = AppColor.Background.screen
+//        view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         setupUI()
+        animatePopupAppearance()
     }
 
     private func setupUI() {
@@ -50,16 +42,16 @@ class LevelInfoViewController: UIViewController {
 
         [backButton,
          titleLabel,
-         labelDescription].forEach {
+         levelsStack].forEach {
             contentView.addSubview($0)
         }
 
         let safeArea = view.safeAreaLayoutGuide
 
         NSLayoutConstraint.activate([
-            contentView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 8),
-            contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
-            contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
+            contentView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 38),
+            contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             contentView.heightAnchor.constraint(equalToConstant: 251),
 
             backButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 19.5),
@@ -68,41 +60,66 @@ class LevelInfoViewController: UIViewController {
             titleLabel.centerYAnchor.constraint(equalTo: backButton.centerYAnchor),
             titleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
 
-            labelDescription.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16),
-            labelDescription.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            labelDescription.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            labelDescription.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -20)
+            levelsStack.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16),
+            levelsStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            levelsStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            levelsStack.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -20)
         ])
     }
 
-    private func makeLevelsDescription() -> NSAttributedString {
-        let text = """
-            Light: New to the game
-            
-            Medium: Know rules, still learning
-            
-            Hard: Skilled, play often, tournaments experience
-            
-            Pro: Elite level, official championships experience
-            """
-        let attributed = NSMutableAttributedString(string: text)
+    // MARK: - Создание уровней
+    private func makeLevelRow() -> UIStackView {
+        let gradientNames = GradientLabel(
+            names: ["Light:", "Medium:", "Hard:", "Pro:"],
+            gradientColors: [UIColor.systemYellow, UIColor.systemGreen]
+        )
 
-        attributed.addAttribute(.font, value: AppFont.Hero.regular(size: 16), range: NSRange(location: 0, length: attributed.length))
-        attributed.addAttribute(.foregroundColor, value: AppColor.Text.primary, range: NSRange(location: 0, length: attributed.length))
+        let descStack = UIStackView()
+            descStack.axis = .vertical
+            descStack.alignment = .leading
+            descStack.spacing = 12
 
-        let levels = ["Light", "Medium", "Hard", "Pro"]
-        for level in levels {
-            if let range = attributed.string.range(of: "\(level):") {
-                let nsRange = NSRange(range, in: attributed.string)
-                attributed.addAttribute(.font, value: AppFont.Hero.bold(size: 16), range: nsRange)
+            [
+                "New to the game",
+                "Know rules, still learning",
+                "Skilled, play often, tournaments experience",
+                "Elite level, official championships experience"
+            ].forEach { text in
+                let label = UILabel()
+                label.text = text
+                label.font = AppFont.Hero.regular(size: 16)
+                label.textColor = AppColor.Text.primary
+                label.numberOfLines = 0
+                descStack.addArrangedSubview(label)
             }
+
+            let container = UIStackView(arrangedSubviews: [gradientNames, descStack])
+            container.axis = .horizontal
+            container.alignment = .top
+            container.spacing = 8
+            container.translatesAutoresizingMaskIntoConstraints = false
+
+            return container
         }
 
-        return attributed
+    @objc private func didTapBack() {
+        dismiss(animated: true)
     }
 
-    @objc private func didTapBack() {
-        navigationController?.popViewController(animated: true)
+    private func animatePopupAppearance() {
+        contentView.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+        contentView.alpha = 0
+
+        UIView.animate(withDuration: 0.25,
+                       delay: 0,
+                       usingSpringWithDamping: 0.8,
+                       initialSpringVelocity: 0.6,
+                       options: .curveEaseOut,
+                       animations: {
+            self.contentView.transform = .identity
+            self.contentView.alpha = 1
+        }, completion: nil)
     }
 }
+
 

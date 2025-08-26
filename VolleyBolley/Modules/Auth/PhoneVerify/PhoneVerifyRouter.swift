@@ -21,8 +21,6 @@ final class PhoneVerifyRouter: PhoneVerifyRouterProtocol {
     }
 
     func navigateToMainScreen() {
-//        // Реализация перехода на главный экран после успешной верификации
-//        let mainVC = MainViewController()
-//        viewController?.navigationController?.setViewControllers([mainVC], animated: true)
+        coordinator?.showUserReg()
     }
 }

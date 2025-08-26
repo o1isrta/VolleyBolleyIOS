@@ -6,14 +6,14 @@
 //
 import Foundation
 
-class PhoneAuthPresenter: PhoneAuthPresenterProtocol {
+final class PhoneAuthPresenter: PhoneAuthPresenterProtocol {
 
     weak var view: PhoneAuthViewProtocol?
     var interactor: PhoneAuthInteractorProtocol?
     var router: PhoneAuthRouterProtocol?
 
-    private let minPhoneNumberLength = 10
-    private let maxPhoneNumberLength = 15
+    private var currentPhoneNumber: String = ""
+    private var isNextButtonTapped: Bool = false
 
     init(view: PhoneAuthViewProtocol, interactor: PhoneAuthInteractorProtocol, router: PhoneAuthRouterProtocol) {
         self.view = view
@@ -21,27 +21,41 @@ class PhoneAuthPresenter: PhoneAuthPresenterProtocol {
         self.router = router
     }
 
+    func viewDidLoad() {
+        if let code = interactor?.getCountryCallingCode() {
+            view?.autoFillCountryCode(code)
+        }
+    }
+
     func didTapBack() {
         router?.navigateBack()
     }
 
     func didTapNextStep(with phoneNumber: String) {
+        currentPhoneNumber = phoneNumber
+        isNextButtonTapped = true
         interactor?.validatePhoneNumber(phoneNumber)
     }
 
     func phoneNumberDidChange(_ phoneNumber: String) {
+        currentPhoneNumber = phoneNumber
+        isNextButtonTapped = false
         interactor?.validatePhoneNumber(phoneNumber)
     }
 }
 
 extension PhoneAuthPresenter: PhoneAuthInteractorOutputProtocol {
-    func phoneValidationResult(isValid: Bool) {
+    func didValidatePhoneNumber(isValid: Bool) {
         view?.setNextButtonActive(isValid)
-//        view?.updateNextButtonTitle(isValid ? String(localized: "send_code") : String(localized: "next_step"))
+        view?.updateNextButtonTitle(isValid ? "SEND CODE" : "NEXT STEP")
+
+        if isValid && isNextButtonTapped {
+            router?.navigateToVerification(with: currentPhoneNumber)
+        }
     }
 
     func didReceiveFormattedNumber(_ number: String) {
-       // TODO: Форматирование номера
+        view?.updatePhoneNumberText(number)
     }
 
     func didReceiveCountryCode(_ code: String) {

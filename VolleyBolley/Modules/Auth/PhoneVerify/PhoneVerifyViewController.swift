@@ -9,6 +9,8 @@ import UIKit
 final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol {
     var presenter: PhoneVerifyPresenterProtocol?
     private let phoneNumber: String?
+    private var timer: Timer?
+    private var secondsRemaining = 30
 
     private let containerView: UIView = {
         let view = UIView()
@@ -43,10 +45,32 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
         textField.backgroundColor = .systemBackground
         textField.textColor = AppColor.Text.placeHolder
 
-        textField.setLeftPaddingPoints(16)
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.addTarget(self, action: #selector(сodeDidChange), for: .editingChanged)
         return textField
+    }()
+
+    private let resendLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = AppColor.Text.primary
+        label.font = AppFont.Hero.regular(size: 14)
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
+    private let getNewCodeButton: UIButton = {
+        let button = UIButton(type: .system)
+        let title = "Get new code"
+        let attributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.systemGreen,
+            .underlineStyle: NSUnderlineStyle.single.rawValue
+        ]
+        let attributedTitle = NSAttributedString(string: title, attributes: attributes)
+        button.setAttributedTitle(attributedTitle, for: .normal)
+        button.isHidden = true
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
 
     private lazy var verifyButton: NextStepButton = {
@@ -73,11 +97,18 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
         view.backgroundColor = AppColor.Background.screen
         setupUI()
         setupActions()
+        startResendTimer()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        timer?.invalidate()
+        timer = nil
     }
 
     private func setupUI() {
         view.addSubview(containerView)
-        [backButton, titleLabel, codeLabel, codeTextField, verifyButton]
+        [backButton, titleLabel, codeLabel, codeTextField, resendLabel, getNewCodeButton, verifyButton]
             .forEach { containerView.addSubview($0) }
 
         NSLayoutConstraint.activate([
@@ -101,7 +132,14 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
             codeTextField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
             codeTextField.heightAnchor.constraint(equalToConstant: 51),
 
-            verifyButton.topAnchor.constraint(equalTo: codeTextField.bottomAnchor, constant: 20),
+            resendLabel.topAnchor.constraint(equalTo: codeTextField.bottomAnchor, constant: 8),
+            resendLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
+
+            getNewCodeButton.topAnchor.constraint(equalTo: codeTextField.bottomAnchor, constant: 8),
+            getNewCodeButton.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
+
+            verifyButton.topAnchor.constraint(equalTo: resendLabel.bottomAnchor, constant: 18),
+            verifyButton.topAnchor.constraint(equalTo: getNewCodeButton.bottomAnchor, constant: 18),
             verifyButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
             verifyButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
             verifyButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -20)
@@ -110,6 +148,33 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
 
     private func setupActions() {
         backButton.addTarget(self, action: #selector(backTapped), for: .touchUpInside)
+        getNewCodeButton.addTarget(self, action: #selector(getNewCodeTapped), for: .touchUpInside)
+    }
+
+    private func startResendTimer() {
+        resendLabel.isHidden = false
+        getNewCodeButton.isHidden = true
+        secondsRemaining = 30
+        resendLabel.text = "Resend in 00:\(secondsRemaining < 10 ? "0\(secondsRemaining)" : "\(secondsRemaining)")"
+        
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
+            guard let self = self else { return }
+            self.secondsRemaining -= 1
+            if self.secondsRemaining > 0 {
+                self.resendLabel.text = "Resend in 00:\(self.secondsRemaining < 10 ? "0\(self.secondsRemaining)" : "\(self.secondsRemaining)")"
+            } else {
+                self.timer?.invalidate()
+                self.timer = nil
+                self.resendLabel.isHidden = true
+                self.getNewCodeButton.isHidden = false
+            }
+        }
+    }
+    
+    @objc private func getNewCodeTapped() {
+        startResendTimer()
+        presenter?.didTapResendCode()
     }
 
     @objc private func сodeDidChange() {

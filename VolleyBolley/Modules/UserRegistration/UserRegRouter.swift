@@ -22,8 +22,9 @@ final class UserRegRouter: UserRegRouterProtocol {
 
     func showLevelInfoScreen() {
         let levelVC = LevelInfoViewController()
-        levelVC.modalPresentationStyle = .pageSheet   // или .formSheet, .fullScreen
-        levelVC.modalTransitionStyle = .coverVertical // анимация появления
-        viewController?.present(levelVC, animated: true, completion: nil)
+        levelVC.modalPresentationStyle = .overFullScreen
+        levelVC.modalTransitionStyle = .crossDissolve // плавное появление
+        
+        viewController?.present(levelVC, animated: true)
     }
 }

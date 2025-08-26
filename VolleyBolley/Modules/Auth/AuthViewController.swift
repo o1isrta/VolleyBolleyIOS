@@ -159,7 +159,6 @@ final class AuthViewController: UIViewController, AuthViewProtocol {
     @objc private func facebookTapped() {
         presenter?.facebookButtonTapped()
     }
-
 }
 
 #if DEBUG
