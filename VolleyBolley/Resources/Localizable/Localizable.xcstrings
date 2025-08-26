@@ -551,6 +551,7 @@
       }
     },
     "Log out" : {
+      "comment" : "Profile",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
