@@ -49,14 +49,7 @@
     },
     "About" : {
       "comment" : "Profile",
-      "extractionState" : "manual",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "About"
-          }
-        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -348,16 +341,144 @@
         }
       }
     },
-    "FAQ" : {
-      "comment" : "Profile",
-      "extractionState" : "manual",
+    "dummyView.noArchivedGames.description" : {
+      "comment" : "DummyView",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "FAQ"
+            "value" : "No archived games found."
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Архивированных игр не найдено."
+          }
+        }
+      }
+    },
+    "dummyView.noGames.buttonTitle" : {
+      "comment" : "DummyView",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CREATE A GAME"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "СОЗДАТЬ ИГРУ"
+          }
+        }
+      }
+    },
+    "dummyView.noGames.description" : {
+      "comment" : "DummyView",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No games found."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Игры не найдены."
+          }
+        }
+      }
+    },
+    "dummyView.noGames.message" : {
+      "comment" : "DummyView",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Would you like to create a game?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Хотите создать игру?"
+          }
+        }
+      }
+    },
+    "dummyView.noInvites.buttonTitle" : {
+      "comment" : "DummyView",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "JOIN THE GAME"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ПРИСОЕДИНИТСЯ К ИГРЕ"
+          }
+        }
+      }
+    },
+    "dummyView.noInvites.description" : {
+      "comment" : "DummyView",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No invites found."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Приглашения не найдены."
+          }
+        }
+      }
+    },
+    "dummyView.noInvites.message" : {
+      "comment" : "DummyView",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Would you like to join the game?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Хотите присоединиться к игре?"
+          }
+        }
+      }
+    },
+    "dummyView.noUpcomingGames.description" : {
+      "comment" : "DummyView",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No upcoming games found."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Предстоящие игры не найдены."
+          }
+        }
+      }
+    },
+    "FAQ" : {
+      "localizations" : {
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -442,15 +563,7 @@
       }
     },
     "Log out" : {
-      "comment" : "Profile",
-      "extractionState" : "manual",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Log out"
-          }
-        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -518,7 +631,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "СЛЕДУЮЩИЙ ШАГ"
+            "value" : "ДАЛЬШЕ"
           }
         }
       }
@@ -536,14 +649,7 @@
     },
     "Payments" : {
       "comment" : "Profile",
-      "extractionState" : "manual",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Payments"
-          }
-        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -554,14 +660,7 @@
     },
     "Personal data" : {
       "comment" : "Profile",
-      "extractionState" : "manual",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Personal data"
-          }
-        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -572,14 +671,7 @@
     },
     "Players" : {
       "comment" : "Profile",
-      "extractionState" : "manual",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Players"
-          }
-        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -649,14 +741,7 @@
     },
     "Support" : {
       "comment" : "Profile",
-      "extractionState" : "manual",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Support"
-          }
-        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -790,7 +875,14 @@
       }
     },
     "ОК" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        }
+      }
     }
   },
   "version" : "1.1"
