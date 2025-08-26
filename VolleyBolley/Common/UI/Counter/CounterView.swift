@@ -32,6 +32,7 @@ enum CounterType {
 final class CounterView: UIView {
 
     // MARK: - Constants
+
     private enum Constants {
         static let buttonSize: CGFloat = 16
         static let containerWidth: CGFloat = 63
@@ -42,6 +43,7 @@ final class CounterView: UIView {
     }
 
     // MARK: - Public Properties
+
     var type: CounterType
     var valueChanged: ((Int) -> Void)?
     public var value: Int {
@@ -49,17 +51,18 @@ final class CounterView: UIView {
     }
 
     // MARK: - Private Properties
+
     private let minusButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(systemName: "minus"), for: .normal)
-        button.tintColor = .white
+        button.tintColor = AppColor.Text.primary
         return button
     }()
 
     private let plusButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(systemName: "plus"), for: .normal)
-        button.tintColor = .white
+        button.tintColor = AppColor.Text.primary
         return button
     }()
 
@@ -75,31 +78,33 @@ final class CounterView: UIView {
         label.textAlignment = .center
         label.font = AppFont.Hero.regular(size: 16)
         label.textColor = AppColor.Text.inverted
-        label.backgroundColor = .white
+        label.backgroundColor = AppColor.Background.primary
         label.layer.cornerRadius = Constants.labelCornerRadius
         label.layer.masksToBounds = true
         return label
     }()
 
-    private let gradientLayer = CAGradientLayer()
+    private let gradientLayer: CAGradientLayer = CALayer.getGradientLayer()
     private let shapeLayer = CAShapeLayer()
 
-    private var minusLeadingConstraint: NSLayoutConstraint!
-    private var valueLeadingConstraint: NSLayoutConstraint!
-    private var plusLeadingConstraint: NSLayoutConstraint!
+    private var minusLeadingConstraint: NSLayoutConstraint?
+    private var valueLeadingConstraint: NSLayoutConstraint?
+    private var plusLeadingConstraint: NSLayoutConstraint?
 
     // MARK: - Initializers
-    init(type: CounterType, initialValue: Int) {
+
+    init(type: CounterType) {
         self.type = type
-        self.value = initialValue
+        self.value = type.minValue
         super.init(frame: .zero)
         setupView()
         valueLabel.text = "\(value)"
         configureButtonsState(animated: false)
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        nil
     }
 
     // MARK: - Private Methods
@@ -115,26 +120,30 @@ final class CounterView: UIView {
     }
 
     private func setupConstraints() {
-        minusLeadingConstraint = minusButton.leadingAnchor.constraint(equalTo: leadingAnchor)
-        valueLeadingConstraint = valueContainer.leadingAnchor.constraint(
+        let minusLeading = minusButton.leadingAnchor.constraint(equalTo: leadingAnchor)
+        let valueLeading = valueContainer.leadingAnchor.constraint(
             equalTo: minusButton.trailingAnchor,
             constant: Constants.buttonSpacing
         )
-        plusLeadingConstraint = plusButton.leadingAnchor.constraint(
+        let plusLeading = plusButton.leadingAnchor.constraint(
             equalTo: valueContainer.trailingAnchor,
             constant: Constants.buttonSpacing
         )
 
+        self.minusLeadingConstraint = minusLeading
+        self.valueLeadingConstraint = valueLeading
+        self.plusLeadingConstraint = plusLeading
+
         NSLayoutConstraint.activate([
             minusButton.widthAnchor.constraint(equalToConstant: Constants.buttonSize),
             minusButton.heightAnchor.constraint(equalToConstant: Constants.buttonSize),
-            minusLeadingConstraint,
+            minusLeading,
             minusButton.centerYAnchor.constraint(equalTo: centerYAnchor),
 
             valueContainer.widthAnchor.constraint(equalToConstant: Constants.containerWidth),
             valueContainer.heightAnchor.constraint(equalToConstant: Constants.containerHeight),
             valueContainer.centerYAnchor.constraint(equalTo: centerYAnchor),
-            valueLeadingConstraint,
+            valueLeading,
 
             valueLabel.leadingAnchor.constraint(equalTo: valueContainer.leadingAnchor, constant: 1),
             valueLabel.trailingAnchor.constraint(equalTo: valueContainer.trailingAnchor, constant: -1),
@@ -143,26 +152,21 @@ final class CounterView: UIView {
 
             plusButton.widthAnchor.constraint(equalToConstant: Constants.buttonSize),
             plusButton.heightAnchor.constraint(equalToConstant: Constants.buttonSize),
-            plusLeadingConstraint,
+            plusLeading,
             plusButton.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
     }
 
     /// Настройка градиентной обводки для контейнера
     private func setupGradientBorder() {
-        gradientLayer.colors = [
-            AppColor.Gradient.greenLightStart.cgColor,
-            AppColor.Gradient.greenLightEnd.cgColor
-        ]
-        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0)
-        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1)
         shapeLayer.lineWidth = 1
         shapeLayer.fillColor = UIColor.clear.cgColor
-        shapeLayer.strokeColor = UIColor.black.cgColor
+        shapeLayer.strokeColor = AppColor.Border.primary.cgColor
+
         gradientLayer.mask = shapeLayer
         valueContainer.layer.addSublayer(gradientLayer)
     }
-    
+
     private func updateValue(animated: Bool) {
         valueLabel.text = "\(value)"
         configureButtonsState(animated: animated)
@@ -175,8 +179,8 @@ final class CounterView: UIView {
         let duration = animated ? 0.25 : 0.0
 
         UIView.animate(withDuration: duration) {
-            self.minusLeadingConstraint.constant = isAtMin ? -Constants.buttonSize : 0
-            self.valueLeadingConstraint.constant = isAtMin ? 0 : Constants.buttonSpacing
+            self.minusLeadingConstraint?.constant = isAtMin ? -Constants.buttonSize : 0
+            self.valueLeadingConstraint?.constant = isAtMin ? 0 : Constants.buttonSpacing
             self.layoutIfNeeded()
         }
 
@@ -185,6 +189,7 @@ final class CounterView: UIView {
     }
 
     // MARK: - Actions
+
     @objc private func handleDecrement() {
         guard value > type.minValue else { return }
         value -= 1
@@ -196,6 +201,7 @@ final class CounterView: UIView {
     }
 
     // MARK: - Layout
+
     override func layoutSubviews() {
         super.layoutSubviews()
         gradientLayer.frame = valueContainer.bounds
@@ -207,12 +213,13 @@ final class CounterView: UIView {
 }
 
 // MARK: - Preview (Debug only)
+
 import SwiftUI
 #if DEBUG
 @available(iOS 17.0, *)
 #Preview {
     UIViewPreview {
-        CounterView(type: .players, initialValue: 4)
+        CounterView(type: .players)
     }
     .frame(width: 120, height: 50)
     .padding()
