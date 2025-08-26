@@ -43,4 +43,7 @@ final class PhoneVerifyInteractor: PhoneVerifyInteractorProtocol {
             }
         }
     }
+
+    func resendCode(for phoneNumber: String) {
+    }
 }

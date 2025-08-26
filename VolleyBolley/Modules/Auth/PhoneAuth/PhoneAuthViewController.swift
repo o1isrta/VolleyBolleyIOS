@@ -10,7 +10,7 @@ final class PhoneAuthViewController: UIViewController {
 
     var presenter: PhoneAuthPresenterProtocol?
 
-    private let containerView: UIView = {
+    private lazy var containerView: UIView = {
         let view = UIView()
         view.backgroundColor = AppColor.Background.blur
         view.layer.cornerRadius = 32
@@ -18,10 +18,13 @@ final class PhoneAuthViewController: UIViewController {
         return view
     }()
 
-    private let backButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(systemName: "chevron.left"), for: .normal)
-        button.tintColor = .white
+    private lazy var backButton: UIButton = {
+        var config = UIButton.Configuration.plain()
+        config.image = UIImage(systemName: "chevron.left")
+        config.baseForegroundColor = .white
+        config.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
+
+        let button = UIButton(configuration: config, primaryAction: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -32,7 +35,10 @@ final class PhoneAuthViewController: UIViewController {
 
     private lazy var phoneTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "+ With the country code"
+        textField.attributedPlaceholder = NSAttributedString(
+            string: "+ With the country code",
+            attributes: [.foregroundColor: AppColor.Text.placeHolder]
+        )
         textField.keyboardType = .phonePad
         textField.borderStyle = .none
         textField.layer.cornerRadius = 16
@@ -43,6 +49,7 @@ final class PhoneAuthViewController: UIViewController {
         textField.setLeftPaddingPoints(16)
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.addTarget(self, action: #selector(phoneNumberDidChange), for: .editingChanged)
+        textField.accessibilityIdentifier = "phoneTextField"
         return textField
     }()
 
@@ -66,6 +73,11 @@ final class PhoneAuthViewController: UIViewController {
         view.backgroundColor = AppColor.Background.screen
         setupUI()
         setupActions()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        phoneTextField.becomeFirstResponder()
     }
 
     private func setupUI() {
@@ -127,16 +139,19 @@ extension PhoneAuthViewController: PhoneAuthViewProtocol {
     }
 
     func updateNextButtonTitle(_ title: String) {
-        UIView.transition(with: nextButton, duration: 0.3, options: .transitionCrossDissolve) {
+        UIView.transition(with: nextButton, duration: 0.3, options: [.transitionCrossDissolve, .allowUserInteraction]) {
             self.nextButton.setTitle(title, for: .normal)
         }
     }
 
     func autoFillCountryCode(_ code: String) {
-            if phoneTextField.text?.isEmpty ?? true {
-                phoneTextField.text = code
-            }
-        }
+        guard let text = phoneTextField.text, text.isEmpty || text.first != "+" else { return }
+        phoneTextField.text = code
+    }
+
+    func updatePhoneNumberText(_ text: String) {
+           phoneTextField.text = text
+       }
 }
 
 @available(iOS 17.0, *)

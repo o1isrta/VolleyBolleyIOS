@@ -10,9 +10,11 @@ protocol PhoneAuthViewProtocol: AnyObject {
     func setNextButtonActive(_ isActive: Bool)
     func updateNextButtonTitle(_ title: String)
     func autoFillCountryCode(_ code: String)
+    func updatePhoneNumberText(_ text: String)
 }
 
 protocol PhoneAuthPresenterProtocol: AnyObject {
+    func viewDidLoad()
     func didTapBack()
     func didTapNextStep(with phoneNumber: String)
     func phoneNumberDidChange(_ phoneNumber: String)
@@ -26,7 +28,7 @@ protocol PhoneAuthInteractorProtocol: AnyObject {
 }
 
 protocol PhoneAuthInteractorOutputProtocol: AnyObject {
-    func phoneValidationResult(isValid: Bool)
+    func didValidatePhoneNumber(isValid: Bool)
     func didReceiveFormattedNumber(_ number: String)
     func didReceiveCountryCode(_ code: String)
 }

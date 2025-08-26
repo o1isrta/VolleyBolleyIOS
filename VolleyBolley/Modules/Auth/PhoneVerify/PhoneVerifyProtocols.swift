@@ -14,15 +14,17 @@ protocol PhoneVerifyPresenterProtocol: AnyObject {
     func viewDidLoad()
     func didTapBack()
     func codeDidChange(_ code: String)
+    func didTapResendCode()
     func didTapVerify(with code: String)
 }
 
 protocol PhoneVerifyInteractorProtocol: AnyObject {
     func verifyCode(_ code: String, for phoneNumber: String)
+    func resendCode(for phoneNumber: String)
 }
 
 protocol PhoneVerifyInteractorOutputProtocol: AnyObject {
-//    var presenter: PhoneVerifyInteractorOutputProtocol? { get set }
+    var presenter: PhoneVerifyInteractorOutputProtocol? { get set }
     func verificationSucceeded()
     func verificationFailed(with error: Error)
 }
