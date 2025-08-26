@@ -135,11 +135,11 @@ import SwiftUI
 				distance: "",
 				doneButtonData: CourtButtonData(
 					title: "CHOOSE THIS GAME",
-					action: { print("aaaaaaa")}
+					action: { print("aaaaaaa") }
 				),
 				detailsButtonData: CourtButtonData(
 					title: "Details",
-					action: { print("bbbbbbb")}
+					action: { print("bbbbbbb") }
 				)
 			)
 			view.configure(with: model)
@@ -157,7 +157,7 @@ import SwiftUI
 				distance: "",
 				doneButtonData: CourtButtonData(
 					title: "CHOOSE THIS GAME",
-					action: { print("aaaaaaa")}
+					action: { print("aaaaaaa") }
 				)
 			)
 			view.configure(with: model)
