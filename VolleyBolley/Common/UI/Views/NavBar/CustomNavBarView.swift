@@ -10,9 +10,6 @@ final class CustomNavBarView: UIView {
         static let nameLabelLeading: CGFloat = 8
 
         static let navBarCornerRadius: CGFloat = 32
-        static let levelViewCornerRadius: CGFloat = 23
-        static let levelViewBorderWidth: CGFloat = 1
-        static let levelViewSize: CGFloat = 46
         static let levelViewTrailing: CGFloat = -8
         static let levelViewBottom: CGFloat = -8
     }
@@ -20,27 +17,11 @@ final class CustomNavBarView: UIView {
     // MARK: - Private Properties
 
     private lazy var avatarImageView = AvatarImageView()
+    private lazy var levelView = LevelBadgeView()
 
     private lazy var nameLabel: UILabel = {
         let view = UILabel()
         view.font = AppFont.ActayWide.bold(size: 20)
-        view.textColor = AppColor.Text.primary
-        return view
-    }()
-
-    private lazy var levelView: UIView = {
-        let view = UIView()
-        view.layer.cornerRadius = Constants.levelViewCornerRadius
-        view.layer.borderWidth = Constants.levelViewBorderWidth
-        view.layer.borderColor = AppColor.Border.primary.cgColor
-        view.clipsToBounds = true
-        return view
-    }()
-
-    private lazy var levelLabel: UILabel = {
-        let view = UILabel()
-        view.textAlignment = .center
-        view.font = AppFont.Quantex.regular(size: 8)
         view.textColor = AppColor.Text.primary
         return view
     }()
@@ -63,8 +44,7 @@ final class CustomNavBarView: UIView {
     func configure(with viewModel: NavBarViewModel) {
         avatarImageView.configure(with: viewModel.avatarImage)
         nameLabel.text = viewModel.displayName.capitalized
-        levelView.backgroundColor = viewModel.levelColor
-        levelLabel.text = viewModel.levelText
+        levelView.configure(with: viewModel.level)
     }
 
     // MARK: - Private Methods
@@ -76,7 +56,7 @@ final class CustomNavBarView: UIView {
         layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         layer.masksToBounds = true
 
-        [avatarImageView, nameLabel, levelView, levelLabel].forEach {
+        [avatarImageView, nameLabel, levelView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             addSubview($0)
         }
@@ -114,12 +94,7 @@ final class CustomNavBarView: UIView {
     private func setupConstraintsLevelView() {
         NSLayoutConstraint.activate([
             levelView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: Constants.levelViewTrailing),
-            levelView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: Constants.levelViewBottom),
-            levelView.widthAnchor.constraint(equalToConstant: Constants.levelViewSize),
-            levelView.heightAnchor.constraint(equalToConstant: Constants.levelViewSize),
-
-            levelLabel.centerXAnchor.constraint(equalTo: levelView.centerXAnchor),
-            levelLabel.centerYAnchor.constraint(equalTo: levelView.centerYAnchor)
+            levelView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: Constants.levelViewBottom)
         ])
     }
 }
