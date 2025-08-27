@@ -87,77 +87,68 @@ final class CounterView: UIView {
     private let gradientLayer: CAGradientLayer = CALayer.getGradientLayer()
     private let shapeLayer = CAShapeLayer()
 
-    private var minusLeadingConstraint: NSLayoutConstraint?
-    private var valueLeadingConstraint: NSLayoutConstraint?
-    private var plusLeadingConstraint: NSLayoutConstraint?
+    private lazy var stackView: UIStackView = {
+        let stack = UIStackView(
+            arrangedSubviews: [
+                minusButton,
+                valueContainer,
+                plusButton
+            ]
+        )
+        stack.axis = .horizontal
+        stack.spacing = Constants.buttonSpacing
+        stack.alignment = .center
+        stack.distribution = .equalSpacing
+        return stack
+    }()
 
-    // MARK: - Initializers
+    // MARK: - Init
 
     init(type: CounterType) {
         self.type = type
         self.value = type.minValue
         super.init(frame: .zero)
         setupView()
+        setupGradientBorder()
         valueLabel.text = "\(value)"
         configureButtonsState(animated: false)
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        nil
-    }
+    required init?(coder: NSCoder) { nil }
 
     // MARK: - Private Methods
+
     private func setupView() {
-        addSubviews(minusButton, valueContainer, plusButton)
+        addSubviews(stackView)
         valueContainer.addSubviews(valueLabel)
-
-        minusButton.addTarget(self, action: #selector(handleDecrement), for: .touchUpInside)
-        plusButton.addTarget(self, action: #selector(handleIncrement), for: .touchUpInside)
-
-        setupConstraints()
-        setupGradientBorder()
-    }
-
-    private func setupConstraints() {
-        let minusLeading = minusButton.leadingAnchor.constraint(equalTo: leadingAnchor)
-        let valueLeading = valueContainer.leadingAnchor.constraint(
-            equalTo: minusButton.trailingAnchor,
-            constant: Constants.buttonSpacing
-        )
-        let plusLeading = plusButton.leadingAnchor.constraint(
-            equalTo: valueContainer.trailingAnchor,
-            constant: Constants.buttonSpacing
-        )
-
-        self.minusLeadingConstraint = minusLeading
-        self.valueLeadingConstraint = valueLeading
-        self.plusLeadingConstraint = plusLeading
 
         NSLayoutConstraint.activate([
             minusButton.widthAnchor.constraint(equalToConstant: Constants.buttonSize),
             minusButton.heightAnchor.constraint(equalToConstant: Constants.buttonSize),
-            minusLeading,
-            minusButton.centerYAnchor.constraint(equalTo: centerYAnchor),
+
+            plusButton.widthAnchor.constraint(equalToConstant: Constants.buttonSize),
+            plusButton.heightAnchor.constraint(equalToConstant: Constants.buttonSize),
 
             valueContainer.widthAnchor.constraint(equalToConstant: Constants.containerWidth),
             valueContainer.heightAnchor.constraint(equalToConstant: Constants.containerHeight),
-            valueContainer.centerYAnchor.constraint(equalTo: centerYAnchor),
-            valueLeading,
+
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            stackView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor),
+            stackView.centerYAnchor.constraint(equalTo: centerYAnchor),
 
             valueLabel.leadingAnchor.constraint(equalTo: valueContainer.leadingAnchor, constant: 1),
             valueLabel.trailingAnchor.constraint(equalTo: valueContainer.trailingAnchor, constant: -1),
             valueLabel.topAnchor.constraint(equalTo: valueContainer.topAnchor, constant: 1),
-            valueLabel.bottomAnchor.constraint(equalTo: valueContainer.bottomAnchor, constant: -1),
-
-            plusButton.widthAnchor.constraint(equalToConstant: Constants.buttonSize),
-            plusButton.heightAnchor.constraint(equalToConstant: Constants.buttonSize),
-            plusLeading,
-            plusButton.centerYAnchor.constraint(equalTo: centerYAnchor)
+            valueLabel.bottomAnchor.constraint(equalTo: valueContainer.bottomAnchor, constant: -1)
         ])
+
+        minusButton.addTarget(self, action: #selector(handleDecrement), for: .touchUpInside)
+        plusButton.addTarget(self, action: #selector(handleIncrement), for: .touchUpInside)
+
+        setupGradientBorder()
     }
 
-    /// Настройка градиентной обводки для контейнера
     private func setupGradientBorder() {
         shapeLayer.lineWidth = 1
         shapeLayer.fillColor = AppColor.Background.clear.cgColor
@@ -165,6 +156,21 @@ final class CounterView: UIView {
 
         gradientLayer.mask = shapeLayer
         valueContainer.layer.addSublayer(gradientLayer)
+
+        gradientLayer.frame = CGRect(
+            x: 0, y: 0,
+            width: Constants.containerWidth,
+            height: Constants.containerHeight
+        )
+        shapeLayer.path = UIBezierPath(
+            roundedRect: CGRect(
+                x: 0,
+                y: 0,
+                width: Constants.containerWidth,
+                height: Constants.containerHeight
+            ).insetBy(dx: 1.5, dy: 1.5),
+            cornerRadius: Constants.containerCornerRadius
+        ).cgPath
     }
 
     private func updateValue(animated: Bool) {
@@ -173,19 +179,31 @@ final class CounterView: UIView {
         valueChanged?(value)
     }
 
-    /// Обновление состояния кнопок (показ/скрытие + констрейнты)
     private func configureButtonsState(animated: Bool) {
         let isAtMin = value <= type.minValue
+        let isAtMax = value >= type.maxValue
         let duration = animated ? 0.25 : 0.0
 
-        UIView.animate(withDuration: duration) {
-            self.minusLeadingConstraint?.constant = isAtMin ? -Constants.buttonSize : 0
-            self.valueLeadingConstraint?.constant = isAtMin ? 0 : Constants.buttonSpacing
-            self.layoutIfNeeded()
+        func animate(_ button: UIButton, hide: Bool) {
+            if hide {
+                UIView.animate(withDuration: duration, animations: {
+                    button.alpha = 0
+                }, completion: { _ in
+                    button.isHidden = true
+                })
+            } else {
+                if button.isHidden {
+                    button.isHidden = false
+                    button.alpha = 0
+                    UIView.animate(withDuration: duration) {
+                        button.alpha = 1
+                    }
+                }
+            }
         }
 
-        minusButton.isHidden = isAtMin
-        plusButton.isHidden = value >= type.maxValue
+        animate(minusButton, hide: isAtMin)
+        animate(plusButton, hide: isAtMax)
     }
 
     // MARK: - Actions
@@ -199,8 +217,6 @@ final class CounterView: UIView {
         guard value < type.maxValue else { return }
         value += 1
     }
-
-    // MARK: - Layout
 
     override func layoutSubviews() {
         super.layoutSubviews()
