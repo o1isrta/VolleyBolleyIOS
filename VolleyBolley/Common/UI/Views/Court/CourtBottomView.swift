@@ -13,15 +13,15 @@ struct CourtBottomViewModel {
 	let courtName: String
 	let locationName: String
 	let distance: String
-	let doneButtonData: CourtButtonData
-	let detailsButtonData: CourtButtonData?
+	let doneButtonData: ButtonDataModel
+	let detailsButtonData: ButtonDataModel?
 
 	init(
 		courtName: String,
 		locationName: String,
 		distance: String,
-		doneButtonData: CourtButtonData,
-		detailsButtonData: CourtButtonData? = nil
+		doneButtonData: ButtonDataModel,
+		detailsButtonData: ButtonDataModel? = nil
 	) {
 		self.courtName = courtName
 		self.locationName = locationName
@@ -111,11 +111,11 @@ import SwiftUI
 				courtName: court.location.courtName,
 				locationName: court.location.locationName,
 				distance: "Nearest",
-				doneButtonData: CourtButtonData(
+				doneButtonData: ButtonDataModel(
 					title: "CHOOSE THIS GAME",
 					action: { print("aaaaaaa")}
 				),
-				detailsButtonData: CourtButtonData(
+				detailsButtonData: ButtonDataModel(
 					title: "Details",
 					action: { print("bbbbbbb")}
 				)
@@ -133,11 +133,11 @@ import SwiftUI
 				courtName: court.location.courtName,
 				locationName: court.location.locationName,
 				distance: "",
-				doneButtonData: CourtButtonData(
+				doneButtonData: ButtonDataModel(
 					title: "CHOOSE THIS GAME",
 					action: { print("aaaaaaa") }
 				),
-				detailsButtonData: CourtButtonData(
+				detailsButtonData: ButtonDataModel(
 					title: "Details",
 					action: { print("bbbbbbb") }
 				)
@@ -155,7 +155,7 @@ import SwiftUI
 				courtName: court.location.courtName,
 				locationName: court.location.locationName,
 				distance: "",
-				doneButtonData: CourtButtonData(
+				doneButtonData: ButtonDataModel(
 					title: "CHOOSE THIS GAME",
 					action: { print("aaaaaaa") }
 				)
