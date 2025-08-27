@@ -8,6 +8,7 @@
 import UIKit
 
 struct CustomAlertModel {
+	let title: String?
 	let message: String
 	let primaryButton: ButtonDataModel
 	let secondaryButton: ButtonDataModel?
@@ -17,6 +18,19 @@ struct CustomAlertModel {
 		primaryButton: ButtonDataModel,
 		secondaryButton: ButtonDataModel? = nil
 	) {
+		self.title = nil
+		self.message = message
+		self.primaryButton = primaryButton
+		self.secondaryButton = secondaryButton
+	}
+
+	init(
+		title: String,
+		message: String,
+		primaryButton: ButtonDataModel,
+		secondaryButton: ButtonDataModel? = nil
+	) {
+		self.title = title
 		self.message = message
 		self.primaryButton = primaryButton
 		self.secondaryButton = secondaryButton
@@ -41,6 +55,13 @@ final class CustomAlertView: UIView {
 		view.backgroundColor = AppColor.Background.modal
 		view.layer.cornerRadius = 32
 		return view
+	}()
+
+	private lazy var titleLabel: CustomTitle = {
+		let label = CustomTitle(text: "", isLarge: true)
+		label.textAlignment = .center
+		label.isHidden = true
+		return label
 	}()
 
 	private lazy var messageLabel: CustomLabel = {
@@ -71,9 +92,8 @@ final class CustomAlertView: UIView {
 	}()
 
 	private lazy var mainStack: UIStackView = {
-		let stack = UIStackView(arrangedSubviews: [messageLabel, buttonStack])
+		let stack = UIStackView(arrangedSubviews: [titleLabel, messageLabel, buttonStack])
 		stack.axis = .vertical
-		stack.distribution = .fillEqually
 		stack.spacing = 12
 		return stack
 	}()
@@ -97,6 +117,11 @@ final class CustomAlertView: UIView {
 		primaryButton.setTitle(model.primaryButton.title, for: .normal)
 		primaryAction = model.primaryButton.action
 		secondaryButton.isHidden = true
+
+		if let title = model.title {
+			titleLabel.text = title
+			titleLabel.isHidden = false
+		}
 
 		if let secondaryButtonData = model.secondaryButton {
 			secondaryButton.isHidden = false
@@ -151,7 +176,28 @@ private extension CustomAlertView {
 #if DEBUG
 import SwiftUI
 @available(iOS 17.0, *)
-#Preview("Log out") {
+#Preview("Notifications") {
+	UIViewPreview {
+		let view = CustomAlertView()
+		let model = CustomAlertModel(
+			title: "Notifications",
+			message: "Stay in the loop on games and invites!",
+			primaryButton: ButtonDataModel(
+				title: "ENABLE",
+				action: { print("ENABLE") }
+			),
+			secondaryButton: ButtonDataModel(
+				title: "SKIP",
+				action: { print("SKIP") }
+			)
+		)
+		view.configure(with: model)
+		return view
+	}
+	.ignoresSafeArea()
+}
+
+#Preview("Exit") {
 	UIViewPreview {
 		let view = CustomAlertView()
 		let model = CustomAlertModel(
