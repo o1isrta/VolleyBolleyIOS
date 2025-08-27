@@ -8,6 +8,7 @@ import UIKit
 
 final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol {
     var presenter: PhoneVerifyPresenterProtocol?
+
     private let phoneNumber: String?
     private var timer: Timer?
     private var secondsRemaining = 30
@@ -63,8 +64,9 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
         let button = UIButton(type: .system)
         let title = "Get new code"
         let attributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.systemGreen,
-            .underlineStyle: NSUnderlineStyle.single.rawValue
+            .foregroundColor: AppColor.Gradient.greenLightStart,
+            .underlineStyle: NSUnderlineStyle.single.rawValue,
+            .font: AppFont.Hero.regular(size: 14)
         ]
         let attributedTitle = NSAttributedString(string: title, attributes: attributes)
         button.setAttributedTitle(attributedTitle, for: .normal)
@@ -139,7 +141,6 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
             getNewCodeButton.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
 
             verifyButton.topAnchor.constraint(equalTo: resendLabel.bottomAnchor, constant: 18),
-            verifyButton.topAnchor.constraint(equalTo: getNewCodeButton.bottomAnchor, constant: 18),
             verifyButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
             verifyButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
             verifyButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -20)
@@ -154,7 +155,8 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
     private func startResendTimer() {
         resendLabel.isHidden = false
         getNewCodeButton.isHidden = true
-        secondsRemaining = 30
+//        secondsRemaining = 30
+        secondsRemaining = 3
         resendLabel.text = "Resend in 00:\(secondsRemaining < 10 ? "0\(secondsRemaining)" : "\(secondsRemaining)")"
         
         timer?.invalidate()

@@ -37,6 +37,7 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
         textField.textColor = AppColor.Text.placeHolder
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.setLeftPaddingPoints(16)
+        textField.addTarget(self, action: #selector(nameTextFieldDidChange), for: .editingChanged)
         return textField
     }()
 
@@ -133,7 +134,7 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
 
     private lazy var getStartedButton = NextStepButton(
         title: String(localized: "GET STARTED"),
-        isActive: true,
+        isActive: false,
         target: self,
         action: #selector(getStartedTapped)
     )
@@ -166,7 +167,7 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
         setupActions()
 
         presenter?.viewDidLoad()
-
+        updateGetStartedButtonState()
         view.layoutIfNeeded()
     }
 
@@ -341,6 +342,15 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
         let gender = selectedGender ?? ""
         presenter?.didTapGetStarted(name: name, surname: surname, gender: gender)
     }
+
+    @objc private func nameTextFieldDidChange() {
+            updateGetStartedButtonState()
+        }
+
+    private func updateGetStartedButtonState() {
+           let hasName = !(nameTextField.text ?? "").isEmpty
+           getStartedButton.setActive(hasName)
+       }
 
     func textField(
         _ textField: UITextField,
