@@ -2,7 +2,7 @@
 //  CustomAlertView.swift
 //  VolleyBolley
 //
-//  Created by Вадим on 15.07.2025.
+//  Created by Roman Romanov on 27.08.2025.
 //
 
 import UIKit
