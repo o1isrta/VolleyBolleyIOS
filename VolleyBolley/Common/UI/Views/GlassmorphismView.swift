@@ -10,306 +10,229 @@ import UIKit
 /// UIView с эффектом "glassmorphism" - полупрозрачное размытое стекло с настраиваемыми тенями и границами
 class GlassmorphismView: UIView {
 
-	/// Темы оформления blur-эффекта
-	public enum Theme {
-		case light, dark
-	}
+    enum Theme {
+        case light, dark
+    }
 
-	// MARK: - Constants
+    enum Style {
+        case standartGlass
+        case notificationGlass
+    }
 
-	private enum Constants {
-		static let defaultBlurIntensity: CGFloat = 0.2
-		static let defaultCornerRadius: CGFloat = 24
-		static let defaultBorderWidth: CGFloat = 1.0
-		static let defaultInnerShadowOpacity: Float = 0.3
-		static let defaultInnerShadowRadius: CGFloat = 18.0
-		static let defaultInnerShadowOffset = CGSize(width: 0, height: -16)
-		static let defaultOuterShadowOpacity: Float = 0.15
-		static let defaultOuterShadowOffset = CGSize(width: 0, height: 8)
-		static let defaultOuterShadowRadius: CGFloat = 16
-	}
+    // MARK: - Public Properties
 
-	// MARK: - Public Properties
+    var cornerRadius: CGFloat = 0 {
+        didSet { updateAppearance() }
+    }
 
-	/// Радиус скругления углов
-	public var cornerRadius: CGFloat = Constants.defaultCornerRadius {
-		didSet { updateAppearance() }
-	}
+    var borderColor: UIColor = .clear {
+        didSet { updateAppearance() }
+    }
 
-	/// Цвет границы (рекомендуется использовать полупрозрачный белый)
-	public var borderColor: UIColor = AppColor.Glassmorphism.border.withAlphaComponent(0.15) {
-		didSet { updateAppearance() }
-	}
+    var borderWidth: CGFloat = 0 {
+        didSet { updateAppearance() }
+    }
 
-	/// Толщина границы в points
-	public var borderWidth: CGFloat = Constants.defaultBorderWidth {
-		didSet { updateAppearance() }
-	}
+    var tintedBackgroundColor: UIColor = .clear {
+        didSet { updateAppearance() }
+    }
 
-	/// Полупрозрачный цвет фона поверх размытия для дополнительного тонирования
-	public var tintedBackgroundColor: UIColor = AppColor.Glassmorphism.tintColor.withAlphaComponent(0.07) {
-		didSet { updateAppearance() }
-	}
+    var theme: Theme = .light {
+        didSet { setTheme(theme) }
+    }
 
-	/// Тема размытия - определяет светлый или темный стиль UIBlurEffect
-	public var theme: Theme = .light {
-		didSet { setTheme(theme) }
-	}
+    var blurIntensity: CGFloat {
+        get { animatorFractionComplete }
+        set { setBlurIntensity(newValue) }
+    }
 
-	/// Интенсивность размытия (0.0 = без размытия, 1.0 = полное размытие)
-	public var blurIntensity: CGFloat {
-		get { animatorFractionComplete }
-		set { setBlurIntensity(newValue) }
-	}
+    var outerShadowColor: UIColor? {
+        get {
+            guard let cgColor = layer.shadowColor else { return nil }
+            return UIColor(cgColor: cgColor)
+        }
+        set {
+            layer.shadowColor = newValue?.cgColor
+        }
+    }
 
-	/// Цвет внешней тени (drop shadow)
-	public var outerShadowColor: UIColor? {
-		get {
-			guard let cgColor = layer.shadowColor else { return nil }
-			return UIColor(cgColor: cgColor)
-		}
-		set {
-			layer.shadowColor = newValue?.cgColor
-		}
-	}
+    var outerShadowOpacity: Float {
+        get { layer.shadowOpacity }
+        set { layer.shadowOpacity = newValue }
+    }
 
-	/// Прозрачность внешней тени (0.0 - 1.0)
-	public var outerShadowOpacity: Float {
-		get { layer.shadowOpacity }
-		set { layer.shadowOpacity = newValue }
-	}
+    var outerShadowOffset: CGSize {
+        get { layer.shadowOffset }
+        set { layer.shadowOffset = newValue }
+    }
 
-	/// Смещение внешней тени (x, y в points)
-	public var outerShadowOffset: CGSize {
-		get { layer.shadowOffset }
-		set { layer.shadowOffset = newValue }
-	}
+    var outerShadowRadius: CGFloat {
+        get { layer.shadowRadius }
+        set { layer.shadowRadius = newValue }
+    }
 
-	/// Радиус размытия внешней тени
-	public var outerShadowRadius: CGFloat {
-		get { layer.shadowRadius }
-		set { layer.shadowRadius = newValue }
-	}
+    var innerShadowColor: UIColor = AppColor.Glassmorphism.innerShadowColor {
+        didSet { updateInnerShadow() }
+    }
 
-	/// Цвет внутренней тени (обычно светлый для эффекта подсветки)
-	public var innerShadowColor: UIColor = AppColor.Glassmorphism.innerShadowColor {
-		didSet { updateInnerShadow() }
-	}
+    var innerShadowOpacity: Float = 0 {
+        didSet { updateInnerShadow() }
+    }
 
-	/// Прозрачность внутренней тени (0.0 - 1.0)
-	public var innerShadowOpacity: Float = Constants.defaultInnerShadowOpacity {
-		didSet { updateInnerShadow() }
-	}
+    var innerShadowRadius: CGFloat = 0 {
+        didSet { updateInnerShadow() }
+    }
 
-	/// Радиус размытия внутренней тени
-	public var innerShadowRadius: CGFloat = Constants.defaultInnerShadowRadius {
-		didSet { updateInnerShadow() }
-	}
+    var innerShadowOffset: CGSize = .zero {
+        didSet { updateInnerShadow() }
+    }
 
-	/// Смещение внутренней тени для имитации направления света
-	public var innerShadowOffset: CGSize = Constants.defaultInnerShadowOffset {
-		didSet { updateInnerShadow() }
-	}
+    // MARK: - Private Properties
 
-	// MARK: - Private Properties
+    private let blurView = UIVisualEffectView()
+    private let animator = UIViewPropertyAnimator(duration: 0, curve: .linear)
+    private var animatorFractionComplete: CGFloat = 0.2
 
-	/// Основной компонент для создания эффекта размытия фона
-	private let blurView = UIVisualEffectView()
+    private var innerShadowLayer: CAShapeLayer?
 
-	/// Аниматор для плавного управления интенсивностью blur-эффекта
-	private let animator = UIViewPropertyAnimator(duration: 0, curve: .linear)
+    // MARK: - Initialization
 
-	/// Текущая интенсивность размытия (0.2 = слабое размытие по умолчанию)
-	private var animatorFractionComplete: CGFloat = Constants.defaultBlurIntensity
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        initialize()
+    }
 
-	/// Слой для отрисовки внутренней тени (создается по требованию)
-	private var innerShadowLayer: CAShapeLayer?
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
-	// MARK: - Initialization
+    /// Выполняет первоначальную настройку всех компонентов glassmorphism эффекта
+    private func initialize() {
+        backgroundColor = .clear
+        setupBlurView()
+        apply(.standard)
+    }
 
-	override init(frame: CGRect) {
-		super.init(frame: frame)
-		initialize()
-	}
+    /// Настраивает UIVisualEffectView для создания blur эффекта
+    private func setupBlurView() {
+        blurView.layer.cornerRadius = cornerRadius
+        blurView.clipsToBounds = true
+        blurView.translatesAutoresizingMaskIntoConstraints = false
 
-	@available(*, unavailable)
-	required init?(coder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
-	}
+        blurView.effect = nil
 
-	/// Выполняет первоначальную настройку всех компонентов glassmorphism эффекта
-	private func initialize() {
-		// Делаем основной view прозрачным - весь эффект создается через blurView
-		backgroundColor = .clear
+        addSubview(blurView)
+        NSLayoutConstraint.activate([
+            blurView.topAnchor.constraint(equalTo: topAnchor),
+            blurView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            blurView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            blurView.trailingAnchor.constraint(equalTo: trailingAnchor)
+        ])
+    }
 
-		// Настройка blur компонента
-		setupBlurView()
+    // MARK: - Public Methods
 
-		// Настройка основных визуальных свойств (граница, тень)
-		setupInitialAppearance()
-	}
+    static func make(style: Style) -> GlassmorphismView {
+        switch style {
+        case .standartGlass:
+            return GlassmorphismView(configuration: .standard)
+        case .notificationGlass:
+            return GlassmorphismView(configuration: .notification)
+        }
+    }
 
-	/// Настраивает UIVisualEffectView для создания blur эффекта
-	private func setupBlurView() {
-		blurView.layer.cornerRadius = cornerRadius
-		blurView.clipsToBounds = true // Обрезаем blur по границам скругления
-		blurView.translatesAutoresizingMaskIntoConstraints = false
+    func setBlurIntensity(_ value: CGFloat) {
+        let intensity = max(0.0, min(1.0, value))
+        animatorFractionComplete = intensity
+        animator.fractionComplete = intensity
+    }
 
-		// Создаем animator для управления интенсивностью размытия
-		// Сначала убираем эффект, затем добавляем его через animator
-		blurView.effect = nil
-		animator.addAnimations { [weak self] in
-			guard let self else { return }
-			let style: UIBlurEffect.Style = (self.theme == .dark) ? .dark : .light
-			self.blurView.effect = UIBlurEffect(style: style)
-		}
-		// Устанавливаем начальную интенсивность
-		animator.fractionComplete = animatorFractionComplete
+    func setTheme(_ theme: Theme) {
+        blurView.effect = nil
+        animator.stopAnimation(true)
 
-		// Добавляем тонирующий слой поверх размытия
-		blurView.contentView.backgroundColor = tintedBackgroundColor
+        animator.addAnimations { [weak self] in
+            guard let self else { return }
+            let style: UIBlurEffect.Style = (theme == .dark) ? .dark : .light
+            self.blurView.effect = UIBlurEffect(style: style)
+        }
+        animator.fractionComplete = animatorFractionComplete
+    }
 
-		// Встраиваем blur в иерархию view
-		addSubview(blurView)
-		NSLayoutConstraint.activate([
-			blurView.topAnchor.constraint(equalTo: topAnchor),
-			blurView.bottomAnchor.constraint(equalTo: bottomAnchor),
-			blurView.leadingAnchor.constraint(equalTo: leadingAnchor),
-			blurView.trailingAnchor.constraint(equalTo: trailingAnchor)
-		])
-	}
+    // MARK: - Private Methods
 
-	/// Устанавливает начальные значения для границ и внешней тени
-	private func setupInitialAppearance() {
-		// Настройка границы на основном layer
-		layer.cornerRadius = cornerRadius
-		layer.borderColor = borderColor.cgColor
-		layer.borderWidth = borderWidth
+    /// Обновляет все визуальные свойства при изменении параметров
+    private func updateAppearance() {
+        layer.cornerRadius = cornerRadius
+        blurView.layer.cornerRadius = cornerRadius
+        blurView.clipsToBounds = true
 
-		// Настройка внешней тени по умолчанию для эффекта "парения"
-		layer.shadowColor = UIColor.black.cgColor
-		layer.shadowOpacity = Constants.defaultOuterShadowOpacity
-		layer.shadowOffset = Constants.defaultOuterShadowOffset
-		layer.shadowRadius = Constants.defaultOuterShadowRadius
-	}
+        layer.borderColor = borderColor.cgColor
+        layer.borderWidth = borderWidth
 
-	// MARK: - Public Methods
+        blurView.contentView.backgroundColor = tintedBackgroundColor
 
-	/// Устанавливает интенсивность размытия с проверкой диапазона
-	/// - Parameter value: Значение от 0.0 до 1.0
-	public func setBlurIntensity(_ value: CGFloat) {
-		let intensity = max(0.0, min(1.0, value))
-		animatorFractionComplete = intensity
-		animator.fractionComplete = intensity
-	}
+        updateInnerShadow()
+    }
 
-	/// Переключает тему оформления и автоматически подстраивает цвета
-	/// - Parameter theme: Светлая или темная тема
-	public func setTheme(_ theme: Theme) {
-		// Сбрасываем текущий эффект размытия
-		blurView.effect = nil
-		animator.stopAnimation(true)
+    /// Создает или обновляет слой внутренней тени
+    /// Использует технику "вырезания" для имитации тени внутри границ view
+    private func updateInnerShadow() {
+        if innerShadowOpacity <= 0 || innerShadowRadius <= 0 {
+            innerShadowLayer?.removeFromSuperlayer()
+            innerShadowLayer = nil
+            layer.masksToBounds = false
+            return
+        }
 
-		// Создаем новый animator с соответствующим стилем blur
-		animator.addAnimations { [weak self] in
-			guard let self else { return }
-			let style: UIBlurEffect.Style = (theme == .dark) ? .dark : .light
-			self.blurView.effect = UIBlurEffect(style: style)
-		}
-		// Восстанавливаем сохраненную интенсивность
-		animator.fractionComplete = animatorFractionComplete
+        if innerShadowLayer == nil {
+            let shadowLayer = CAShapeLayer()
+            shadowLayer.fillRule = .evenOdd
+            innerShadowLayer = shadowLayer
+            layer.addSublayer(shadowLayer)
+        }
 
-		// Автоматически подстраиваем цвета под тему
-		borderColor = AppColor.Glassmorphism.border.withAlphaComponent(theme == .light ? 0.15 : 0.1)
-		layer.shadowOpacity = theme == .light ? 0.15 : 0.25
-	}
+        guard let shadowLayer = innerShadowLayer else { return }
 
-	// MARK: - Private Methods
+        shadowLayer.frame = bounds
+        shadowLayer.cornerRadius = cornerRadius
+        shadowLayer.shadowColor = innerShadowColor.cgColor
+        shadowLayer.shadowOffset = innerShadowOffset
+        shadowLayer.shadowOpacity = innerShadowOpacity
+        shadowLayer.shadowRadius = innerShadowRadius
 
-	/// Обновляет все визуальные свойства при изменении параметров
-	private func updateAppearance() {
-		// Синхронизируем скругление между основным view и blur view
-		layer.cornerRadius = cornerRadius
-		blurView.layer.cornerRadius = cornerRadius
-		blurView.clipsToBounds = true
+        let expandedRect = bounds.insetBy(dx: -innerShadowRadius * 2, dy: -innerShadowRadius * 2)
+        let outerPath = UIBezierPath(roundedRect: expandedRect, cornerRadius: cornerRadius + innerShadowRadius * 2)
+        let innerPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius).reversing()
+        outerPath.append(innerPath)
+        shadowLayer.path = outerPath.cgPath
+        shadowLayer.maskedCorners = layer.maskedCorners
 
-		// Обновляем границу
-		layer.borderColor = borderColor.cgColor
-		layer.borderWidth = borderWidth
+        layer.masksToBounds = true
+    }
 
-		// Обновляем цвет тонирующего слоя
-		blurView.contentView.backgroundColor = tintedBackgroundColor
+    deinit {
+        if animator.state != .inactive {
+            animator.stopAnimation(false)
+            animator.finishAnimation(at: .current)
+        }
+    }
 
-		// Пересчитываем внутреннюю тень с новыми параметрами
-		updateInnerShadow()
-	}
+    // MARK: - UIView Overrides
 
-	/// Создает или обновляет слой внутренней тени
-	/// Использует технику "вырезания" для имитации тени внутри границ view
-	private func updateInnerShadow() {
-		// Если тень не нужна, удаляем слой и разрешаем внешнюю тень
-		if innerShadowOpacity <= 0 || innerShadowRadius <= 0 {
-			innerShadowLayer?.removeFromSuperlayer()
-			innerShadowLayer = nil
-			layer.masksToBounds = false
-			return
-		}
+    override func layoutSubviews() {
+        super.layoutSubviews()
 
-		// Создаем слой при первом использовании
-		if innerShadowLayer == nil {
-			let shadowLayer = CAShapeLayer()
-			shadowLayer.fillRule = .evenOdd // Для техники "вырезания"
-			innerShadowLayer = shadowLayer
-			layer.addSublayer(shadowLayer)
-		}
+        blurView.frame = bounds
 
-		guard let shadowLayer = innerShadowLayer else { return }
-
-		// Настраиваем геометрию и свойства тени
-		shadowLayer.frame = bounds
-		shadowLayer.cornerRadius = cornerRadius
-		shadowLayer.shadowColor = innerShadowColor.cgColor
-		shadowLayer.shadowOffset = innerShadowOffset
-		shadowLayer.shadowOpacity = innerShadowOpacity
-		shadowLayer.shadowRadius = innerShadowRadius
-
-		// Создаем составной путь: большой внешний прямоугольник минус внутренний
-		// Это позволяет тени отображаться только по внутреннему периметру
-		let expandedRect = bounds.insetBy(dx: -innerShadowRadius * 2, dy: -innerShadowRadius * 2)
-		let outerPath = UIBezierPath(roundedRect: expandedRect, cornerRadius: cornerRadius + innerShadowRadius * 2)
-		let innerPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius).reversing()
-		outerPath.append(innerPath)
-		shadowLayer.path = outerPath.cgPath
-		shadowLayer.maskedCorners = layer.maskedCorners
-
-		// Включаем маскирование для ограничения тени границами view
-		layer.masksToBounds = true
-	}
-
-	deinit {
-		// Проверяем состояние animator'а перед завершением
-		if animator.state != .inactive {
-			animator.stopAnimation(false)
-			animator.finishAnimation(at: .current)
-		}
-	}
-
-	// MARK: - UIView Overrides
-
-	override func layoutSubviews() {
-		super.layoutSubviews()
-
-		// Убеждаемся, что blur покрывает всю площадь
-		blurView.frame = bounds
-
-		// При изменении размеров пересчитываем геометрию внутренней тени
-		if let shadowLayer = innerShadowLayer {
-			shadowLayer.frame = bounds
-			let expandedRect = bounds.insetBy(dx: -innerShadowRadius * 2, dy: -innerShadowRadius * 2)
-			let outerPath = UIBezierPath(roundedRect: expandedRect, cornerRadius: cornerRadius + innerShadowRadius * 2)
-			let innerPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius).reversing()
-			outerPath.append(innerPath)
-			shadowLayer.path = outerPath.cgPath
-		}
-	}
+        if let shadowLayer = innerShadowLayer {
+            shadowLayer.frame = bounds
+            let expandedRect = bounds.insetBy(dx: -innerShadowRadius * 2, dy: -innerShadowRadius * 2)
+            let outerPath = UIBezierPath(roundedRect: expandedRect, cornerRadius: cornerRadius + innerShadowRadius * 2)
+            let innerPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius).reversing()
+            outerPath.append(innerPath)
+            shadowLayer.path = outerPath.cgPath
+        }
+    }
 }
