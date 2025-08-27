@@ -131,7 +131,7 @@ final class CustomAlertView: UIView {
 
 	// MARK: - Public Methods
 
-	func configure(with model: CustomAlertModel, alertType: AlertType = .general) {
+	func configure(with model: CustomAlertModel, for alertType: AlertType = .general) {
 		messageLabel.text = model.message
 		primaryButton.setTitle(model.primaryButton.title, for: .normal)
 		primaryAction = model.primaryButton.action
@@ -227,7 +227,7 @@ import SwiftUI
 				action: { print(String(localized: "customAlertView.button.skip")) }
 			)
 		)
-		view.configure(with: model, alertType: .notification)
+		view.configure(with: model, for: .notification)
 		return view
 	}
 	.ignoresSafeArea()
