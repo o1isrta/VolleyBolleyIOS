@@ -39,6 +39,11 @@ struct CustomAlertModel {
 
 final class CustomAlertView: UIView {
 
+	enum AlertType {
+		case notification
+		case general
+	}
+
 	// MARK: - Private Properties
 
 	private var primaryAction: (() -> Void)?
@@ -91,8 +96,22 @@ final class CustomAlertView: UIView {
 		return stack
 	}()
 
+	private lazy var notificationOpportunitiesStack: UIStackView = {
+		let stack = UIStackView()
+		stack.isHidden = true
+		stack.axis = .vertical
+		return stack
+	}()
+
 	private lazy var mainStack: UIStackView = {
-		let stack = UIStackView(arrangedSubviews: [titleLabel, messageLabel, buttonStack])
+		let stack = UIStackView(
+			arrangedSubviews: [
+				titleLabel,
+				messageLabel,
+				notificationOpportunitiesStack,
+				buttonStack
+			]
+		)
 		stack.axis = .vertical
 		stack.spacing = 12
 		return stack
@@ -112,7 +131,7 @@ final class CustomAlertView: UIView {
 
 	// MARK: - Public Methods
 
-	func configure(with model: CustomAlertModel) {
+	func configure(with model: CustomAlertModel, alertType: AlertType = .general) {
 		messageLabel.text = model.message
 		primaryButton.setTitle(model.primaryButton.title, for: .normal)
 		primaryAction = model.primaryButton.action
@@ -121,6 +140,10 @@ final class CustomAlertView: UIView {
 		if let title = model.title {
 			titleLabel.text = title
 			titleLabel.isHidden = false
+		}
+
+		if alertType == .notification {
+			configureAsNotification()
 		}
 
 		if let secondaryButtonData = model.secondaryButton {
@@ -134,6 +157,19 @@ final class CustomAlertView: UIView {
 // MARK: - Private Method
 
 private extension CustomAlertView {
+
+	func configureAsNotification() {
+		messageLabel.textAlignment = .justified
+		notificationOpportunitiesStack.isHidden = false
+		[
+			String(localized: "customAlertView.notificationOpportunities.achievements"),
+			String(localized: "customAlertView.notificationOpportunities.reminders"),
+			String(localized: "customAlertView.notificationOpportunities.ratings")
+		].forEach {
+			let label = CustomLabel(text: "• \($0)", isBold: true)
+			notificationOpportunitiesStack.addArrangedSubview(label)
+		}
+	}
 
 	@objc func primaryButtonTapped() {
 		primaryAction?()
@@ -180,18 +216,18 @@ import SwiftUI
 	UIViewPreview {
 		let view = CustomAlertView()
 		let model = CustomAlertModel(
-			title: "Notifications",
-			message: "Stay in the loop on games and invites!",
+			title: String(localized: "customAlertView.title.notification"),
+			message: String(localized: "customAlertView.message.notification"),
 			primaryButton: ButtonDataModel(
-				title: "ENABLE",
-				action: { print("ENABLE") }
+				title: String(localized: "customAlertView.button.enable"),
+				action: { print(String(localized: "customAlertView.button.enable")) }
 			),
 			secondaryButton: ButtonDataModel(
-				title: "SKIP",
-				action: { print("SKIP") }
+				title: String(localized: "customAlertView.button.skip"),
+				action: { print(String(localized: "customAlertView.button.skip")) }
 			)
 		)
-		view.configure(with: model)
+		view.configure(with: model, alertType: .notification)
 		return view
 	}
 	.ignoresSafeArea()
@@ -201,14 +237,14 @@ import SwiftUI
 	UIViewPreview {
 		let view = CustomAlertView()
 		let model = CustomAlertModel(
-			message: "Are you sure you want to log out of your account?",
+			message: String(localized: "customAlertView.message.logout"),
 			primaryButton: ButtonDataModel(
-				title: "NO",
-				action: { print("NO") }
+				title: String(localized: "customAlertView.button.no"),
+				action: { print(String(localized: "customAlertView.button.no")) }
 			),
 			secondaryButton: ButtonDataModel(
-				title: "YES",
-				action: { print("YES") }
+				title: String(localized: "customAlertView.button.yes"),
+				action: { print(String(localized: "customAlertView.button.yes")) }
 			)
 		)
 		view.configure(with: model)
@@ -221,10 +257,10 @@ import SwiftUI
 	UIViewPreview {
 		let view = CustomAlertView()
 		let model = CustomAlertModel(
-			message: "Invites have been successfully sent to players!",
+			message: String(localized: "customAlertView.message.invitesSent"),
 			primaryButton: ButtonDataModel(
-				title: "DONE",
-				action: { print("DONE") }
+				title: String(localized: "customAlertView.button.done"),
+				action: { print(String(localized: "customAlertView.button.done")) }
 			)
 		)
 		view.configure(with: model)
@@ -239,12 +275,12 @@ import SwiftUI
 		let model = CustomAlertModel(
 			message: "The game on October 6 has ended. Would you like to rate the players?",
 			primaryButton: ButtonDataModel(
-				title: "RATE PLAYERS",
-				action: { print("RATE PLAYERS") }
+				title: String(localized: "customAlertView.button.rate"),
+				action: { print(String(localized: "customAlertView.button.rate")) }
 			),
 			secondaryButton: ButtonDataModel(
-				title: "SKIP",
-				action: { print("SKIP") }
+				title: String(localized: "customAlertView.button.skip"),
+				action: { print(String(localized: "customAlertView.button.skip")) }
 			)
 		)
 		view.configure(with: model)

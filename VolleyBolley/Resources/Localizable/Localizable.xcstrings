@@ -269,6 +269,247 @@
         }
       }
     },
+    "customAlertView.button.done" : {
+      "comment" : "Custom Alert",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DONE"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ГОТОВО"
+          }
+        }
+      }
+    },
+    "customAlertView.button.enable" : {
+      "comment" : "Custom Alert",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ENABLE"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ВКЛЮЧИТЬ"
+          }
+        }
+      }
+    },
+    "customAlertView.button.no" : {
+      "comment" : "Custom Alert",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "NO"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "НЕТ"
+          }
+        }
+      }
+    },
+    "customAlertView.button.rate" : {
+      "comment" : "Custom Alert",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "RATE PLAYERS"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ОЦЕНИТЕ ИГРОКОВ"
+          }
+        }
+      }
+    },
+    "customAlertView.button.skip" : {
+      "comment" : "Custom Alert",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SKIP"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ПРОПУСТИТЬ"
+          }
+        }
+      }
+    },
+    "customAlertView.button.yes" : {
+      "comment" : "Custom Alert",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "YES"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ДА"
+          }
+        }
+      }
+    },
+    "customAlertView.message.invitesSent" : {
+      "comment" : "Custom Alert",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invites have been successfully sent to players!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Приглашения успешно отправлены игрокам!"
+          }
+        }
+      }
+    },
+    "customAlertView.message.logout" : {
+      "comment" : "Custom Alert",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to log out of your account?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы уверены, что хотите выйти из своей учетной записи?"
+          }
+        }
+      }
+    },
+    "customAlertView.message.noInternet" : {
+      "comment" : "Custom Alert",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You're offline. Check your internet connection and try again."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы не в сети. Проверьте подключение к интернету и повторите попытку."
+          }
+        }
+      }
+    },
+    "customAlertView.message.notification" : {
+      "comment" : "Custom Alert",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stay in the loop on games and invites!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Будьте в курсе игр и приглашений!"
+          }
+        }
+      }
+    },
+    "customAlertView.notificationOpportunities.achievements" : {
+      "comment" : "Custom Alert",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game invites"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Приглашения в игры"
+          }
+        }
+      }
+    },
+    "customAlertView.notificationOpportunities.ratings" : {
+      "comment" : "Custom Alert",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Player ratings after games"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Рейтинги игроков после игр"
+          }
+        }
+      }
+    },
+    "customAlertView.notificationOpportunities.reminders" : {
+      "comment" : "Custom Alert",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Match reminders"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Напоминания о матчах"
+          }
+        }
+      }
+    },
+    "customAlertView.title.notification" : {
+      "comment" : "Custom Alert",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notifications"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Уведомления"
+          }
+        }
+      }
+    },
     "Date of birth" : {
       "localizations" : {
         "ru" : {
