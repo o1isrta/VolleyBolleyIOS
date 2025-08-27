@@ -12,14 +12,14 @@ import UIKit
 struct CourtDetailsViewModel {
 	let court: CourtModel
 	let distance: String
-	let doneButtonData: CourtButtonData
-	let detailsButtonData: CourtButtonData?
+	let doneButtonData: ButtonDataModel
+	let detailsButtonData: ButtonDataModel?
 
 	init(
 		court: CourtModel,
 		distance: String,
-		doneButtonData: CourtButtonData,
-		detailsButtonData: CourtButtonData? = nil
+		doneButtonData: ButtonDataModel,
+		detailsButtonData: ButtonDataModel? = nil
 	) {
 		self.court = court
 		self.distance = distance
@@ -35,16 +35,16 @@ struct GameDetailsViewModel {
 	let distance: String
 	let game: GameModel
 	let hostType: HostType
-	let doneButtonData: CourtButtonData
-	let detailsButtonData: CourtButtonData?
+	let doneButtonData: ButtonDataModel
+	let detailsButtonData: ButtonDataModel?
 
 	init(
 		court: CourtModel,
 		distance: String,
 		game: GameModel,
 		hostType: HostType,
-		doneButtonData: CourtButtonData,
-		detailsButtonData: CourtButtonData? = nil
+		doneButtonData: ButtonDataModel,
+		detailsButtonData: ButtonDataModel? = nil
 	) {
 		self.court = court
 		self.distance = distance
@@ -164,11 +164,11 @@ import SwiftUI
 			distance: "Nearest",
 			game: GameModel.mockData,
 			hostType: .game,
-			doneButtonData: CourtButtonData(
+			doneButtonData: ButtonDataModel(
 				title: "CHOOSE THIS GAME",
 				action: { print("aaaaaaa")}
 				),
-			detailsButtonData: CourtButtonData(
+			detailsButtonData: ButtonDataModel(
 				title: "Details",
 				action: { print("bbbbbbb")}
 			)
@@ -186,11 +186,11 @@ import SwiftUI
 		let model = CourtDetailsViewModel(
 			court: CourtModel.mockData,
 			distance: "Nearest",
-			doneButtonData: CourtButtonData(
+			doneButtonData: ButtonDataModel(
 				title: "CHOOSE THIS GAME",
 				action: { print("aaaaaaa") }
 				),
-			detailsButtonData: CourtButtonData(
+			detailsButtonData: ButtonDataModel(
 				title: "Details",
 				action: { print("bbbbbbb") }
 			)
