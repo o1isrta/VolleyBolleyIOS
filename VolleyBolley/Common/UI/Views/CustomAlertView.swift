@@ -136,6 +136,7 @@ final class CustomAlertView: UIView {
 		primaryButton.setTitle(model.primaryButton.title, for: .normal)
 		primaryAction = model.primaryButton.action
 		secondaryButton.isHidden = true
+		titleLabel.isHidden = true
 
 		if let title = model.title {
 			titleLabel.text = title
