@@ -135,8 +135,11 @@ final class CustomAlertView: UIView {
 		messageLabel.text = model.message
 		primaryButton.setTitle(model.primaryButton.title, for: .normal)
 		primaryAction = model.primaryButton.action
+
 		secondaryButton.isHidden = true
 		titleLabel.isHidden = true
+		messageLabel.textAlignment = .center
+		notificationOpportunitiesStack.isHidden = true
 
 		if let title = model.title {
 			titleLabel.text = title
