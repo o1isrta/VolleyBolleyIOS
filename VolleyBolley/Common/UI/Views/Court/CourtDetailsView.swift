@@ -188,11 +188,11 @@ import SwiftUI
 			distance: "Nearest",
 			doneButtonData: CourtButtonData(
 				title: "CHOOSE THIS GAME",
-				action: { print("aaaaaaa")}
+				action: { print("aaaaaaa") }
 				),
 			detailsButtonData: CourtButtonData(
 				title: "Details",
-				action: { print("bbbbbbb")}
+				action: { print("bbbbbbb") }
 			)
 		)
 		view.configure(with: model)
