@@ -230,8 +230,8 @@ final class CounterView: UIView {
 
 // MARK: - Preview (Debug only)
 
-import SwiftUI
 #if DEBUG
+import SwiftUI
 @available(iOS 17.0, *)
 #Preview {
     UIViewPreview {
