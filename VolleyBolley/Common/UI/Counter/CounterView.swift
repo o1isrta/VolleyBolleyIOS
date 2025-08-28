@@ -109,7 +109,6 @@ final class CounterView: UIView {
         self.value = type.minValue
         super.init(frame: .zero)
         setupView()
-        setupGradientBorder()
         valueLabel.text = "\(value)"
         configureButtonsState(animated: false)
     }
