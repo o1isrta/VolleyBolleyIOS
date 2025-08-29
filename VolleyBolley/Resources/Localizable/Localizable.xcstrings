@@ -91,6 +91,28 @@
         }
       }
     },
+    "CHOOSE THIS COURT" : {
+      "comment" : "\"CHOOSE THIS COURT\" button",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ВЫБРАТЬ ЭТОТ КОРТ"
+          }
+        }
+      }
+    },
+    "CHOOSE THIS GAME" : {
+      "comment" : "\"CHOOSE THIS GAME\" button",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ВЫБРАТЬ ЭТУ ИГРУ"
+          }
+        }
+      }
+    },
     "Choose your city" : {
       "localizations" : {
         "ru" : {
@@ -542,6 +564,17 @@
         }
       }
     },
+    "DETAILS" : {
+      "comment" : "\"Details\" button",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ПОДРОБНЕЕ"
+          }
+        }
+      }
+    },
     "Done" : {
       "comment" : "Done button",
       "localizations" : {
@@ -732,22 +765,12 @@
       }
     },
     "Gender" : {
+      "comment" : "User info / Game Description",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Пол"
-          }
-        }
-      }
-    },
-    "Gender: " : {
-      "comment" : "Game Description",
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Пол: "
           }
         }
       }
@@ -763,22 +786,12 @@
       }
     },
     "Level" : {
+      "comment" : "User info / Game Description",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Уровень"
-          }
-        }
-      }
-    },
-    "Level: " : {
-      "comment" : "User info",
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Уровень: "
           }
         }
       }
@@ -846,6 +859,17 @@
         }
       }
     },
+    "Nearest" : {
+      "comment" : "CourtView title",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ближайший"
+          }
+        }
+      }
+    },
     "NEXT STEP" : {
       "comment" : "Next button",
       "localizations" : {
@@ -853,6 +877,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ДАЛЬШЕ"
+          }
+        }
+      }
+    },
+    "No courts found" : {
+      "comment" : "Court list",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Корты не найдены"
           }
         }
       }
@@ -970,6 +1005,36 @@
         }
       }
     },
+    "time_to_label" : {
+      "comment" : "Game",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "to"
+          }
+        }
+      }
+    },
+    "tomorrow_label" : {
+      "comment" : "Game",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tomorrow"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Завтра"
+          }
+        }
+      }
+    },
     "Tournament host" : {
       "comment" : "Header of Game Description",
       "localizations" : {
@@ -1023,13 +1088,13 @@
         }
       }
     },
-    "When: " : {
+    "When" : {
       "comment" : "Game Description",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Когда: "
+            "value" : "Когда"
           }
         }
       }
