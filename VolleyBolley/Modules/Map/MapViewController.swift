@@ -136,18 +136,6 @@ extension MapViewController: MKMapViewDelegate {
 			annotationView?.annotation = annotation
 		}
 
-		// TODO: - remove it in the future
-//        if
-//            let nearest = nearestCourt,
-//            annotation.coordinate.latitude == nearest.coordinate.latitude
-//            && annotation.coordinate.longitude == nearest.coordinate.longitude {
-//            annotationView?.markerTintColor = .systemGreen
-//            annotationView?.glyphText = "★"
-//        } else {
-//            annotationView?.markerTintColor = .systemBlue
-//            annotationView?.glyphText = nil
-//        }
-
 		return annotationView
 	}
 
@@ -175,11 +163,11 @@ private extension MapViewController {
 			courtName: court.location.courtName,
 			locationName: court.location.locationName,
 			distance: distance,
-			doneButtonData: CourtButtonData(
+			doneButtonData: ButtonDataModel(
 				title: String(localized: "CHOOSE THIS COURT"),
 				action: chooseCourtAction
 			),
-			detailsButtonData: CourtButtonData(
+			detailsButtonData: ButtonDataModel(
 				title: String(localized: "DETAILS"),
 				action: showDetailsAction
 			)
@@ -191,7 +179,7 @@ private extension MapViewController {
 		let model = CourtDetailsViewModel(
 			court: court,
 			distance: distance,
-			doneButtonData: CourtButtonData(
+			doneButtonData: ButtonDataModel(
 				title: String(localized: "CHOOSE THIS COURT"),
 				action: chooseCourtAction
 			)

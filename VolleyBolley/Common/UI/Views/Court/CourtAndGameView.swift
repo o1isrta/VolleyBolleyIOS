@@ -177,11 +177,11 @@ import SwiftUI
 			court: CourtModel.mockData,
 			game: GameModel.mockData,
 			hostType: .game,
-			doneButtonData: CourtButtonData(
+			doneButtonData: ButtonDataModel(
 				title: String(localized: "CHOOSE THIS GAME"),
 				action: { print("aaaaaaa") }
 			),
-			detailsButtonData: CourtButtonData(
+			detailsButtonData: ButtonDataModel(
 				title: String(localized: "DETAILS"),
 				action: { print("bbbbbbb") }
 			)
@@ -200,7 +200,7 @@ import SwiftUI
 		let view = CourtAndGameView()
 		let model = CourtViewModel(
 			court: CourtModel.mockData,
-			doneButtonData: CourtButtonData(
+			doneButtonData: ButtonDataModel(
 				title: String(localized: "CHOOSE THIS COURT"),
 				action: { print("aaaaaaa") }
 			)
