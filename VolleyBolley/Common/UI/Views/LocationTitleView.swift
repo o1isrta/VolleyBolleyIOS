@@ -46,8 +46,7 @@ final class LocationTitleView: UIView {
 	}()
 
 	private lazy var iconImageView: UIImageView = {
-		let image = UIImage(named: "location")
-		let imageView = UIImageView(image: image)
+		let imageView = UIImageView(image: .Icon.location)
 		imageView.contentMode = .scaleAspectFit
 		return imageView
 	}()

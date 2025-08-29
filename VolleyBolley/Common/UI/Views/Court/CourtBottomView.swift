@@ -13,15 +13,15 @@ struct CourtBottomViewModel {
 	let courtName: String
 	let locationName: String
 	let distance: String
-	let doneButtonData: CourtButtonData
-	let detailsButtonData: CourtButtonData?
+	let doneButtonData: ButtonDataModel
+	let detailsButtonData: ButtonDataModel?
 
 	init(
 		courtName: String,
 		locationName: String,
 		distance: String,
-		doneButtonData: CourtButtonData,
-		detailsButtonData: CourtButtonData? = nil
+		doneButtonData: ButtonDataModel,
+		detailsButtonData: ButtonDataModel? = nil
 	) {
 		self.courtName = courtName
 		self.locationName = locationName
@@ -110,35 +110,13 @@ import SwiftUI
 			let model = CourtBottomViewModel(
 				courtName: court.location.courtName,
 				locationName: court.location.locationName,
-				distance: "Nearest",
-				doneButtonData: CourtButtonData(
-					title: "CHOOSE THIS GAME",
-					action: { print("aaaaaaa")}
-				),
-				detailsButtonData: CourtButtonData(
-					title: "Details",
-					action: { print("bbbbbbb")}
-				)
-			)
-			view.configure(with: model)
-			return view
-		}
-		.frame(width: .infinity, height: 136)
-		.padding()
-
-		UIViewPreview {
-			let view = CourtBottomView()
-			let court = CourtModel.mockData
-			let model = CourtBottomViewModel(
-				courtName: court.location.courtName,
-				locationName: court.location.locationName,
-				distance: "",
-				doneButtonData: CourtButtonData(
-					title: "CHOOSE THIS GAME",
+				distance: String(localized: "Nearest"),
+				doneButtonData: ButtonDataModel(
+					title: String(localized: "CHOOSE THIS GAME"),
 					action: { print("aaaaaaa") }
 				),
-				detailsButtonData: CourtButtonData(
-					title: "Details",
+				detailsButtonData: ButtonDataModel(
+					title: String(localized: "DETAILS"),
 					action: { print("bbbbbbb") }
 				)
 			)
@@ -155,8 +133,30 @@ import SwiftUI
 				courtName: court.location.courtName,
 				locationName: court.location.locationName,
 				distance: "",
-				doneButtonData: CourtButtonData(
-					title: "CHOOSE THIS GAME",
+				doneButtonData: ButtonDataModel(
+					title: String(localized: "CHOOSE THIS GAME"),
+					action: { print("aaaaaaa") }
+				),
+				detailsButtonData: ButtonDataModel(
+					title: String(localized: "DETAILS"),
+					action: { print("bbbbbbb") }
+				)
+			)
+			view.configure(with: model)
+			return view
+		}
+		.frame(width: .infinity, height: 136)
+		.padding()
+
+		UIViewPreview {
+			let view = CourtBottomView()
+			let court = CourtModel.mockData
+			let model = CourtBottomViewModel(
+				courtName: court.location.courtName,
+				locationName: court.location.locationName,
+				distance: "",
+				doneButtonData: ButtonDataModel(
+					title: String(localized: "CHOOSE THIS GAME"),
 					action: { print("aaaaaaa") }
 				)
 			)
