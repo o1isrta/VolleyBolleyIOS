@@ -13,14 +13,14 @@ enum CounterType {
 
     var minValue: Int {
         switch self {
-        case .players: return Constants.minPlayers
-        case .teams: return Constants.minTeams
+        case .players: return LimitConstants.minPlayers
+        case .teams: return LimitConstants.minTeams
         }
     }
 
-    var maxValue: Int { Constants.maxValue }
+    var maxValue: Int { LimitConstants.maxValue }
 
-    private enum Constants {
+    private enum LimitConstants {
         static let minPlayers = 4
         static let minTeams = 3
         static let maxValue = 24
@@ -33,7 +33,7 @@ final class CounterView: UIView {
 
     // MARK: - Constants
 
-    private enum Constants {
+    private enum LayoutConstants {
         static let buttonSize: CGFloat = 16
         static let containerWidth: CGFloat = 63
         static let containerHeight: CGFloat = 39
@@ -68,7 +68,7 @@ final class CounterView: UIView {
 
     private let valueContainer: UIView = {
         let view = UIView()
-        view.layer.cornerRadius = Constants.containerCornerRadius
+        view.layer.cornerRadius = LayoutConstants.containerCornerRadius
         view.layer.masksToBounds = true
         return view
     }()
@@ -79,7 +79,7 @@ final class CounterView: UIView {
         label.font = AppFont.Hero.regular(size: 16)
         label.textColor = AppColor.Text.inverted
         label.backgroundColor = AppColor.Background.primary
-        label.layer.cornerRadius = Constants.labelCornerRadius
+        label.layer.cornerRadius = LayoutConstants.labelCornerRadius
         label.layer.masksToBounds = true
         return label
     }()
@@ -96,7 +96,7 @@ final class CounterView: UIView {
             ]
         )
         stack.axis = .horizontal
-        stack.spacing = Constants.buttonSpacing
+        stack.spacing = LayoutConstants.buttonSpacing
         stack.alignment = .center
         stack.distribution = .equalSpacing
         return stack
@@ -123,14 +123,14 @@ final class CounterView: UIView {
         valueContainer.addSubviews(valueLabel)
 
         NSLayoutConstraint.activate([
-            minusButton.widthAnchor.constraint(equalToConstant: Constants.buttonSize),
-            minusButton.heightAnchor.constraint(equalToConstant: Constants.buttonSize),
+            minusButton.widthAnchor.constraint(equalToConstant: LayoutConstants.buttonSize),
+            minusButton.heightAnchor.constraint(equalToConstant: LayoutConstants.buttonSize),
 
-            plusButton.widthAnchor.constraint(equalToConstant: Constants.buttonSize),
-            plusButton.heightAnchor.constraint(equalToConstant: Constants.buttonSize),
+            plusButton.widthAnchor.constraint(equalToConstant: LayoutConstants.buttonSize),
+            plusButton.heightAnchor.constraint(equalToConstant: LayoutConstants.buttonSize),
 
-            valueContainer.widthAnchor.constraint(equalToConstant: Constants.containerWidth),
-            valueContainer.heightAnchor.constraint(equalToConstant: Constants.containerHeight),
+            valueContainer.widthAnchor.constraint(equalToConstant: LayoutConstants.containerWidth),
+            valueContainer.heightAnchor.constraint(equalToConstant: LayoutConstants.containerHeight),
 
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
             stackView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor),
@@ -158,17 +158,17 @@ final class CounterView: UIView {
 
         gradientLayer.frame = CGRect(
             x: 0, y: 0,
-            width: Constants.containerWidth,
-            height: Constants.containerHeight
+            width: LayoutConstants.containerWidth,
+            height: LayoutConstants.containerHeight
         )
         shapeLayer.path = UIBezierPath(
             roundedRect: CGRect(
                 x: 0,
                 y: 0,
-                width: Constants.containerWidth,
-                height: Constants.containerHeight
+                width: LayoutConstants.containerWidth,
+                height: LayoutConstants.containerHeight
             ).insetBy(dx: 1.5, dy: 1.5),
-            cornerRadius: Constants.containerCornerRadius
+            cornerRadius: LayoutConstants.containerCornerRadius
         ).cgPath
     }
 
