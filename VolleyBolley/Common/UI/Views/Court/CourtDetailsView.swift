@@ -12,14 +12,14 @@ import UIKit
 struct CourtDetailsViewModel {
 	let court: CourtModel
 	let distance: String
-	let doneButtonData: CourtButtonData
-	let detailsButtonData: CourtButtonData?
+	let doneButtonData: ButtonDataModel
+	let detailsButtonData: ButtonDataModel?
 
 	init(
 		court: CourtModel,
 		distance: String,
-		doneButtonData: CourtButtonData,
-		detailsButtonData: CourtButtonData? = nil
+		doneButtonData: ButtonDataModel,
+		detailsButtonData: ButtonDataModel? = nil
 	) {
 		self.court = court
 		self.distance = distance
@@ -35,16 +35,16 @@ struct GameDetailsViewModel {
 	let distance: String
 	let game: GameModel
 	let hostType: HostType
-	let doneButtonData: CourtButtonData
-	let detailsButtonData: CourtButtonData?
+	let doneButtonData: ButtonDataModel
+	let detailsButtonData: ButtonDataModel?
 
 	init(
 		court: CourtModel,
 		distance: String,
 		game: GameModel,
 		hostType: HostType,
-		doneButtonData: CourtButtonData,
-		detailsButtonData: CourtButtonData? = nil
+		doneButtonData: ButtonDataModel,
+		detailsButtonData: ButtonDataModel? = nil
 	) {
 		self.court = court
 		self.distance = distance
