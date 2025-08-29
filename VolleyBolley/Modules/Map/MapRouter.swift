@@ -30,17 +30,17 @@ final class MapRouter: MapRouterProtocol {
 	// MARK: - Private Methods
 
 	func showList(
-		from view: MapViewController,
+		from mapViewController: MapViewController,
 		courts: [CourtModel],
 		selected: CourtModel?
 	) {
 		let listVC = CourtListViewController(courts: courts, selected: selected)
-		view.addChild(listVC)
-		listVC.view.frame = view.view.bounds
-		view.view.addSubview(listVC.view)
-		listVC.didMove(toParent: view)
+		mapViewController.addChild(listVC)
+		listVC.view.frame = mapViewController.view.bounds
+		mapViewController.view.addSubview(listVC.view)
+		listVC.didMove(toParent: mapViewController)
 		listVC.view.isHidden = false
 		self.listVC = listVC
-		view.listView = listVC.view
+		mapViewController.listView = listVC.view
 	}
 }
