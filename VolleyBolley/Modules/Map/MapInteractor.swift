@@ -17,7 +17,6 @@ final class MapInteractor: MapInteractorProtocol {
 
 	func fetchCourts(completion: @escaping ([CourtModel]) -> Void) {
 		let courts = CourtModel.mockDataArray
-//		courts.append(CourtModel.mockDataForUITets)
 		completion(courts)
 	}
 }
