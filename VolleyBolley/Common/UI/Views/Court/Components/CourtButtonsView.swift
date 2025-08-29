@@ -124,11 +124,11 @@ import SwiftUI
 				courtName: court.location.courtName,
 				locationName: court.location.locationName,
 				distance: String(localized: "Nearest"),
-				doneButtonData: CourtButtonData(
+				doneButtonData: ButtonDataModel(
 					title: String(localized: "CHOOSE THIS GAME"),
 					action: { print("aaaaaaa") }
 				),
-				detailsButtonData: CourtButtonData(
+				detailsButtonData: ButtonDataModel(
 					title: String(localized: "DETAILS"),
 					action: { print("bbbbbbb") }
 				)
@@ -146,7 +146,7 @@ import SwiftUI
 				courtName: court.location.courtName,
 				locationName: court.location.locationName,
 				distance: "",
-				doneButtonData: CourtButtonData(
+				doneButtonData: ButtonDataModel(
 					title: String(localized: "CHOOSE THIS GAME"),
 					action: { print("aaaaaaa") }
 				)

@@ -35,7 +35,7 @@ final class CourtDetailsCell: UITableViewCell {
 	func configure(with court: CourtModel, isLast: Bool) {
 		let model = CourtViewModel(
 			court: court,
-			doneButtonData: CourtButtonData(
+			doneButtonData: ButtonDataModel(
 				title: "CHOOSE THIS COURT",
 				action: { print("CHOOSE THIS COURT: click clack") }
 			)
