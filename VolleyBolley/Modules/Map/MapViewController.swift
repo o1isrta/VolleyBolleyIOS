@@ -283,6 +283,7 @@ private extension MapViewController {
 	}
 
 	private func chooseCourtAction() {
+		// TODO: add action for court selection
 		print("Choose this Court")
 	}
 
