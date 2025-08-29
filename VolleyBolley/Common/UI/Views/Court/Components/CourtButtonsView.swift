@@ -7,17 +7,15 @@
 
 import UIKit
 
-typealias CourtButtonData = (title: String, action: () -> Void)
-
 // MARK: - CourtButtonsViewModel
 
 struct CourtButtonsViewModel {
-	let doneButtonData: CourtButtonData
-	let detailsButtonData: CourtButtonData?
+	let doneButtonData: ButtonDataModel
+	let detailsButtonData: ButtonDataModel?
 
 	init(
-		doneButtonData: CourtButtonData,
-		detailsButtonData: CourtButtonData? = nil
+		doneButtonData: ButtonDataModel,
+		detailsButtonData: ButtonDataModel? = nil
 	) {
 		self.doneButtonData = doneButtonData
 		self.detailsButtonData = detailsButtonData

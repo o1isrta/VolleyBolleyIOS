@@ -11,13 +11,13 @@ import UIKit
 
 struct CourtViewModel {
 	let court: CourtModel
-	let doneButtonData: CourtButtonData
-	let detailsButtonData: CourtButtonData?
+	let doneButtonData: ButtonDataModel
+	let detailsButtonData: ButtonDataModel?
 
 	init(
 		court: CourtModel,
-		doneButtonData: CourtButtonData,
-		detailsButtonData: CourtButtonData? = nil
+		doneButtonData: ButtonDataModel,
+		detailsButtonData: ButtonDataModel? = nil
 	) {
 		self.court = court
 		self.doneButtonData = doneButtonData
@@ -31,15 +31,15 @@ struct GameViewModel {
 	let court: CourtModel
 	let game: GameModel
 	let hostType: HostType
-	let doneButtonData: CourtButtonData
-	let detailsButtonData: CourtButtonData?
+	let doneButtonData: ButtonDataModel
+	let detailsButtonData: ButtonDataModel?
 
 	init(
 		court: CourtModel,
 		game: GameModel,
 		hostType: HostType,
-		doneButtonData: CourtButtonData,
-		detailsButtonData: CourtButtonData? = nil
+		doneButtonData: ButtonDataModel,
+		detailsButtonData: ButtonDataModel? = nil
 	) {
 		self.court = court
 		self.game = game
@@ -177,11 +177,11 @@ import SwiftUI
 			court: CourtModel.mockData,
 			game: GameModel.mockData,
 			hostType: .game,
-			doneButtonData: CourtButtonData(
+			doneButtonData: ButtonDataModel(
 				title: "CHOOSE THIS GAME",
 				action: { print("aaaaaaa")}
 			),
-			detailsButtonData: CourtButtonData(
+			detailsButtonData: ButtonDataModel(
 				title: "Details",
 				action: { print("bbbbbbb")}
 			)
@@ -200,7 +200,7 @@ import SwiftUI
 		let view = CourtAndGameView()
 		let model = CourtViewModel(
 			court: CourtModel.mockData,
-			doneButtonData: CourtButtonData(
+			doneButtonData: ButtonDataModel(
 				title: "Choose this court",
 				action: { print("aaaaaaa") }
 			)
