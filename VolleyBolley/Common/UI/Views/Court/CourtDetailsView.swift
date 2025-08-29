@@ -161,16 +161,16 @@ import SwiftUI
 
 		let model = GameDetailsViewModel(
 			court: CourtModel.mockData,
-			distance: "Nearest",
+			distance: String(localized: "Nearest"),
 			game: GameModel.mockData,
 			hostType: .game,
 			doneButtonData: ButtonDataModel(
-				title: "CHOOSE THIS GAME",
-				action: { print("aaaaaaa")}
+				title: String(localized: "CHOOSE THIS GAME"),
+				action: { print("aaaaaaa") }
 				),
 			detailsButtonData: ButtonDataModel(
-				title: "Details",
-				action: { print("bbbbbbb")}
+				title: String(localized: "DETAILS"),
+				action: { print("bbbbbbb") }
 			)
 		)
 		view.configure(with: model)
@@ -185,13 +185,13 @@ import SwiftUI
 		let view = CourtDetailsView()
 		let model = CourtDetailsViewModel(
 			court: CourtModel.mockData,
-			distance: "Nearest",
+			distance: String(localized: "Nearest"),
 			doneButtonData: ButtonDataModel(
-				title: "CHOOSE THIS GAME",
+				title: String(localized: "CHOOSE THIS GAME"),
 				action: { print("aaaaaaa") }
 				),
 			detailsButtonData: ButtonDataModel(
-				title: "Details",
+				title: String(localized: "DETAILS"),
 				action: { print("bbbbbbb") }
 			)
 		)
