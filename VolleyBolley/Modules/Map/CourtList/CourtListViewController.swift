@@ -119,10 +119,6 @@ extension CourtListViewController: UITableViewDelegate {
 		tableView.reloadData()
 	}
 
-	private func handleCourtSelection(_ selectedCourt: CourtModel) {
-		print("handleCourtSelection: \(selectedCourt)")
-	}
-
 	private func isRealIndex(row: Int) -> Int {
 		let realIndex = expandedIndex != nil && row > expandedIndex ?? 0
 			? row - 1
