@@ -5,7 +5,6 @@
 //  Created by Roman Romanov on 08.07.2025.
 //
 
-import CoreLocation
 import Foundation
 
 protocol MapInteractorProtocol: AnyObject {
