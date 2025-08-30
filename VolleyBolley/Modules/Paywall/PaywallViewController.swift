@@ -7,7 +7,22 @@
 
 import UIKit
 
-final class PaywallController: BaseViewController {
+protocol PaywallViewProtocol: AnyObject {
+	var presenter: PaywallPresenterProtocol? { get set }
+
+	func updateSaveButtonState(isEnabled: Bool)
+	func updatePaymentSelection(isSelected: Bool)
+	func updatePrivacyState(isPublic: Bool)
+	func updatePlayersVisibility(isVisible: Bool)
+	func updateAccountInfo(accountNumber: String)
+	func updatePaymentDescription(text: String)
+}
+
+final class PaywallViewController: BaseViewController {
+
+	// MARK: - Public Properties
+
+	var presenter: PaywallPresenterProtocol?
 
 	// MARK: - Private Properties
 
@@ -43,17 +58,14 @@ final class PaywallController: BaseViewController {
 	private lazy var privacyTitle = CustomTitle(text: String(localized: "paywall.privacyTitle"), isLarge: true)
 	private lazy var privacyDescription = CustomLabel(text: String(localized: "paywall.privacyDescription"))
 
-	private var isPublicGameSelected: Bool = true
 	private lazy var privacyPublicButton: GreenButton = {
 		let button = GreenButton()
-		button.isSelected = isPublicGameSelected
 		button.setTitle(String(localized: "paywall.publicButton"), for: .normal)
 		button.addTarget(self, action: #selector(privacyPublicButtonTapped), for: .touchUpInside)
 		return button
 	}()
 	private lazy var privacyPrivateButton: GreenButton = {
 		let button = GreenButton(imagePlacement: .trailing)
-		button.isSelected = !isPublicGameSelected
 		button.setTitle(String(localized: "paywall.privateButton"), for: .normal)
 		button.setImage(.arrowForward, for: .normal)
 		button.addTarget(self, action: #selector(privacyPrivateButtonTapped), for: .touchUpInside)
@@ -98,8 +110,8 @@ final class PaywallController: BaseViewController {
 		let priceView = PriceView()
 		priceView.text = "5"
 		priceView.isUserInteractionEnabled = false
-		priceView.onTextChanged = { [weak self] _ in
-			self?.updateSaveButtonState()
+		priceView.onTextChanged = { [weak self] text in
+			self?.presenter?.priceTextChanged(text: text)
 		}
 		return priceView
 	}()
@@ -165,7 +177,6 @@ final class PaywallController: BaseViewController {
 		return stack
 	}()
 
-	private var isPaymentSelected: Bool = false
 	private lazy var saveGameButton: YellowButton = {
 		let button = YellowButton()
 		button.isEnabled = false
@@ -194,17 +205,13 @@ final class PaywallController: BaseViewController {
 		super.viewDidLoad()
 		setupUI()
 		setupGesture()
+		presenter?.viewDidLoad()
 	}
 }
 
 // MARK: - Private Methods
 
-private extension PaywallController {
-
-	func updateSaveButtonState() {
-		let hasText = !(priceView.text?.isEmpty ?? true)
-		saveGameButton.isEnabled = isPaymentSelected && hasText
-	}
+private extension PaywallViewController {
 
 	func setupGesture() {
 		let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapOutside))
@@ -251,24 +258,18 @@ private extension PaywallController {
 	}
 
 	@objc func backButtonTapped() {
-		print("Back Button clicked")
 		priceView.resignActive()
+		presenter?.backButtonTapped()
 	}
 
 	@objc func privacyPublicButtonTapped() {
-		isPublicGameSelected = true
-		changeGamePrivacyState()
+		priceView.resignActive()
+		presenter?.privacyPublicButtonTapped()
 	}
 
 	@objc func privacyPrivateButtonTapped() {
-		isPublicGameSelected = false
-		changeGamePrivacyState()
-	}
-
-	func changeGamePrivacyState() {
 		priceView.resignActive()
-		privacyPublicButton.isSelected = isPublicGameSelected
-		privacyPrivateButton.isSelected = !isPublicGameSelected
+		presenter?.privacyPrivateButtonTapped()
 	}
 
 	@objc func handleTapOutside(_ gesture: UITapGestureRecognizer) {
@@ -278,36 +279,45 @@ private extension PaywallController {
 	}
 
 	@objc func saveGameButtonTapped() {
-		print("Save Game Button clicked")
-		print("Price: \(priceView.text ?? "")")
-		print("Price Double: \(String(describing: priceView.getNumericValue()))")
-		print("Account: \(String(describing: accountLabel.text))")
-		print("Public game: \(isPublicGameSelected)")
-		print("Players counter: \(playersCounter.value)")
+		priceView.resignActive()
+		presenter?.updatePlayersCount(to: playersCounter.value)
+		presenter?.saveGameButtonTapped()
 	}
 
 	@objc func addPaymentButtonTapped() {
-		isPaymentSelected.toggle()
-		addPaymentButton.isHidden = isPaymentSelected
-		accountLabel.isHidden = !isPaymentSelected
-		playersStackView.isHidden = !isPaymentSelected
-
-		priceView.isUserInteractionEnabled = isPaymentSelected
-		priceView.becomeActive()
-
-		paymentDescription.text = String(localized: "paywall.paymentRequirementDescription")
-
-		accountLabel.text = "988 016 7890"// TODO: - remove in the future
-
-		updateSaveButtonState()
+		presenter?.addPaymentButtonTapped()
 	}
 }
 
-// MARK: - Preview
+// MARK: - PaywallViewProtocol
 
-#if DEBUG
-@available(iOS 17.0, *)
-#Preview {
-	PaywallController()
+extension PaywallViewController: PaywallViewProtocol {
+
+	func updateSaveButtonState(isEnabled: Bool) {
+		saveGameButton.isEnabled = isEnabled
+	}
+
+	func updatePaymentSelection(isSelected: Bool) {
+		addPaymentButton.isHidden = isSelected
+		accountLabel.isHidden = !isSelected
+		priceView.isUserInteractionEnabled = isSelected
+		priceView.becomeActive()
+	}
+
+	func updatePrivacyState(isPublic: Bool) {
+		privacyPublicButton.isSelected = isPublic
+		privacyPrivateButton.isSelected = !isPublic
+	}
+
+	func updatePlayersVisibility(isVisible: Bool) {
+		playersStackView.isHidden = !isVisible
+	}
+
+	func updateAccountInfo(accountNumber: String) {
+		accountLabel.text = accountNumber
+	}
+
+	func updatePaymentDescription(text: String) {
+		paymentDescription.text = text
+	}
 }
-#endif
