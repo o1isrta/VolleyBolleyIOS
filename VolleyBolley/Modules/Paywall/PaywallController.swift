@@ -25,6 +25,21 @@ final class PaywallController: BaseViewController {
 		return button
 	}()
 
+	private lazy var playersTitle = CustomTitle(text: String(localized: "paywall.playersTitle"), isLarge: true)
+	private lazy var playersCounter = CounterView(type: .players)
+	private lazy var playersStackView: UIStackView = {
+		let stack = UIStackView(arrangedSubviews: [
+			playersTitle,
+			playersCounter
+		])
+		stack.axis = .vertical
+		stack.distribution = .fill
+		stack.alignment = .leading
+		stack.spacing = internalSpacing
+		stack.isHidden = true
+		return stack
+	}()
+
 	private lazy var privacyTitle = CustomTitle(text: String(localized: "paywall.privacyTitle"), isLarge: true)
 	private lazy var privacyDescription = CustomLabel(text: String(localized: "paywall.privacyDescription"))
 
@@ -162,6 +177,7 @@ final class PaywallController: BaseViewController {
 
 	private lazy var mainStackView: UIStackView = {
 		let stack = UIStackView(arrangedSubviews: [
+			playersStackView,
 			privacyStackView,
 			separator,
 			paymentStackView,
@@ -211,6 +227,8 @@ private extension PaywallController {
 
 			screenTitle.centerXAnchor.constraint(equalTo: mainStackView.centerXAnchor),
 			screenTitle.topAnchor.constraint(equalTo: glassmorphismView.topAnchor, constant: mainSpacing),
+
+			playersCounter.heightAnchor.constraint(equalToConstant: 39),
 
 			amountStackView.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor),
 			amountStackView.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor),
@@ -265,12 +283,14 @@ private extension PaywallController {
 		print("Price Double: \(String(describing: priceView.getNumericValue()))")
 		print("Account: \(String(describing: accountLabel.text))")
 		print("Public game: \(isPublicGameSelected)")
+		print("Players counter: \(playersCounter.value)")
 	}
 
 	@objc func addPaymentButtonTapped() {
 		isPaymentSelected.toggle()
 		addPaymentButton.isHidden = isPaymentSelected
 		accountLabel.isHidden = !isPaymentSelected
+		playersStackView.isHidden = !isPaymentSelected
 
 		priceView.isUserInteractionEnabled = isPaymentSelected
 		priceView.becomeActive()
