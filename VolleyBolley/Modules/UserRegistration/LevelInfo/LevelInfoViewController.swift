@@ -11,11 +11,18 @@ class LevelInfoViewController: UIViewController {
     private lazy var contentView: UIView = {
         let container = UIView()
         container.translatesAutoresizingMaskIntoConstraints = false
-        container.backgroundColor = AppColor.Background.blur
+        container.backgroundColor = AppColor.Background.screen
         container.layer.cornerRadius = 32
         return container
     }()
 
+    private lazy var blurEffectView: UIVisualEffectView = {
+           let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialDark)
+           let effectView = UIVisualEffectView(effect: blurEffect)
+           effectView.translatesAutoresizingMaskIntoConstraints = false
+           return effectView
+       }()
+    
     private lazy var backButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(systemName: "chevron.left"), for: .normal)
@@ -31,14 +38,13 @@ class LevelInfoViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-                view.backgroundColor = AppColor.Background.screen
-//        view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         setupUI()
         animatePopupAppearance()
     }
 
     private func setupUI() {
         view.addSubview(contentView)
+        contentView.addSubview(blurEffectView)
 
         [backButton,
          titleLabel,
@@ -53,6 +59,11 @@ class LevelInfoViewController: UIViewController {
             contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             contentView.heightAnchor.constraint(equalToConstant: 251),
+            
+            blurEffectView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            blurEffectView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            blurEffectView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            blurEffectView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
 
             backButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 19.5),
             backButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
@@ -67,40 +78,58 @@ class LevelInfoViewController: UIViewController {
         ])
     }
 
-    // MARK: - Создание уровней
     private func makeLevelRow() -> UIStackView {
-        let gradientNames = GradientLabel(
-            names: ["Light:", "Medium:", "Hard:", "Pro:"],
-            gradientColors: [UIColor.systemYellow, UIColor.systemGreen]
-        )
-
-        let descStack = UIStackView()
-            descStack.axis = .vertical
-            descStack.alignment = .leading
-            descStack.spacing = 12
-
-            [
-                "New to the game",
-                "Know rules, still learning",
-                "Skilled, play often, tournaments experience",
-                "Elite level, official championships experience"
-            ].forEach { text in
-                let label = UILabel()
-                label.text = text
-                label.font = AppFont.Hero.regular(size: 16)
-                label.textColor = AppColor.Text.primary
-                label.numberOfLines = 0
-                descStack.addArrangedSubview(label)
-            }
-
-            let container = UIStackView(arrangedSubviews: [gradientNames, descStack])
-            container.axis = .horizontal
-            container.alignment = .top
-            container.spacing = 8
-            container.translatesAutoresizingMaskIntoConstraints = false
-
-            return container
+        // Создаем стек для названий уровней с зеленым цветом
+        let levelsStack = UIStackView()
+        levelsStack.axis = .vertical
+        levelsStack.alignment = .leading
+        levelsStack.spacing = 12
+        
+        let levelTitles = [
+            "Light:",
+            "Medium:",
+            "Hard:",
+            "Pro:"
+        ]
+        
+        let levelDescriptions = [
+            "New to the game",
+            "Know rules, still learning",
+            "Skilled, play often, tournaments experience",
+            "Elite level, official championships experience"
+        ]
+        
+        // Создаем label для каждого уровня
+        for count in 0..<levelTitles.count {
+            let levelContainer = UIStackView()
+            levelContainer.axis = .horizontal
+            levelContainer.alignment = .top
+            levelContainer.spacing = 8
+            
+            // Название уровня - зеленый цвет
+            let titleLabel = GradientTextLabel()
+            titleLabel.text = levelTitles[count]
+            titleLabel.font = AppFont.Hero.bold(size: 16) // Жирный шрифт для выделения
+            titleLabel.gradientColors = [
+                AppColor.Gradient.greenLightStart,
+                AppColor.Gradient.greenLightEnd
+            ]
+            
+            // Описание уровня
+            let descLabel = UILabel()
+            descLabel.text = levelDescriptions[count]
+            descLabel.font = AppFont.Hero.regular(size: 16)
+            descLabel.textColor = AppColor.Text.primary
+            descLabel.numberOfLines = 0
+            
+            levelContainer.addArrangedSubview(titleLabel)
+            levelContainer.addArrangedSubview(descLabel)
+            levelsStack.addArrangedSubview(levelContainer)
         }
+        
+        levelsStack.translatesAutoresizingMaskIntoConstraints = false
+        return levelsStack
+    }
 
     @objc private func didTapBack() {
         dismiss(animated: true)
