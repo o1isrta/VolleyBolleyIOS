@@ -60,21 +60,39 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
         return label
     }()
 
-    private let getNewCodeButton: UIButton = {
-        let button = UIButton(type: .system)
-        let title = "Get new code"
-        let attributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: AppColor.Gradient.greenLightStart,
-            .underlineStyle: NSUnderlineStyle.single.rawValue,
-            .font: AppFont.Hero.regular(size: 14)
+//    private let getNewCodeButton: UIButton = {
+//        let button = UIButton(type: .system)
+//        let title = "Get new code"
+//        let attributes: [NSAttributedString.Key: Any] = [
+//            .foregroundColor: AppColor.Gradient.greenLightStart,
+//            .underlineStyle: NSUnderlineStyle.single.rawValue,
+//            .font: AppFont.Hero.regular(size: 14)
+//        ]
+//        let attributedTitle = NSAttributedString(string: title, attributes: attributes)
+//        button.setAttributedTitle(attributedTitle, for: .normal)
+//        button.isHidden = true
+//        button.translatesAutoresizingMaskIntoConstraints = false
+//        return button
+//    }()
+    
+    private let getNewCodeButton: GradientTextButton = {
+        let button = GradientTextButton(type: .system)
+        button.setTitle("Get new code", for: .normal)
+        button.titleLabel?.font = AppFont.Hero.regular(size: 14)
+        
+        button.textGradientColors = [
+            UIColor.red.cgColor,
+            UIColor.black.cgColor
         ]
-        let attributedTitle = NSAttributedString(string: title, attributes: attributes)
-        button.setAttributedTitle(attributedTitle, for: .normal)
-        button.isHidden = true
+        
+        button.textGradientStartPoint = CGPoint(x: 0.5, y: 0)
+        button.textGradientEndPoint = CGPoint(x: 0.5, y: 1)
+        
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.isHidden = true
         return button
     }()
-
+    
     private lazy var verifyButton: NextStepButton = {
             let button = NextStepButton(
                 title: "VERIFY",
