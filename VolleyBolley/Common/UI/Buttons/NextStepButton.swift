@@ -13,6 +13,7 @@ import UIKit
 /// isActive - состояние кнопки
 /// target: Объект, на котором вызывается метод
 /// action: Метод, вызываемый при нажатии
+@available(*, deprecated, message: "Use YellowButton instead")
 final class NextStepButton: UIButton {
 
     private var isActive: Bool = false {
@@ -53,11 +54,11 @@ final class NextStepButton: UIButton {
         UIView.animate(withDuration: 0.2) { [weak self] in
             guard let self = self else { return }
             if isActive {
-                backgroundColor = AppColor.Background.actionButtonDefault
+                backgroundColor = AppColor.Background.buttonSketchSelected
                 setTitleColor(AppColor.Text.inverted, for: .normal)
                 isEnabled = true
             } else {
-                backgroundColor = AppColor.Background.actionButtonDisabled
+                backgroundColor = AppColor.Background.buttonYellowDisabled
                 setTitleColor(AppColor.Text.primary, for: .normal)
                 isEnabled = false
             }
