@@ -11,13 +11,13 @@ import UIKit
 
 struct CourtViewModel {
 	let court: CourtModel
-	let doneButtonData: CourtButtonData
-	let detailsButtonData: CourtButtonData?
+	let doneButtonData: ButtonDataModel
+	let detailsButtonData: ButtonDataModel?
 
 	init(
 		court: CourtModel,
-		doneButtonData: CourtButtonData,
-		detailsButtonData: CourtButtonData? = nil
+		doneButtonData: ButtonDataModel,
+		detailsButtonData: ButtonDataModel? = nil
 	) {
 		self.court = court
 		self.doneButtonData = doneButtonData
@@ -31,15 +31,15 @@ struct GameViewModel {
 	let court: CourtModel
 	let game: GameModel
 	let hostType: HostType
-	let doneButtonData: CourtButtonData
-	let detailsButtonData: CourtButtonData?
+	let doneButtonData: ButtonDataModel
+	let detailsButtonData: ButtonDataModel?
 
 	init(
 		court: CourtModel,
 		game: GameModel,
 		hostType: HostType,
-		doneButtonData: CourtButtonData,
-		detailsButtonData: CourtButtonData? = nil
+		doneButtonData: ButtonDataModel,
+		detailsButtonData: ButtonDataModel? = nil
 	) {
 		self.court = court
 		self.game = game
@@ -103,7 +103,6 @@ final class CourtAndGameView: UIView {
 			detailsButtonData: model.detailsButtonData
 		)
 		courtButtonsView.configure(with: courtButtonsViewModel)
-		setupButtonsUI(isExistDetailsButton: model.detailsButtonData != nil)
 	}
 
 	func configure(with model: GameViewModel) {
@@ -133,23 +132,12 @@ final class CourtAndGameView: UIView {
 			detailsButtonData: model.detailsButtonData
 		)
 		courtButtonsView.configure(with: courtButtonsViewModel)
-		setupButtonsUI(isExistDetailsButton: model.detailsButtonData != nil)
 	}
 }
 
 // MARK: - Private Methods
 
 private extension CourtAndGameView {
-
-	func setupButtonsUI(isExistDetailsButton: Bool) {
-		if isExistDetailsButton {
-			courtButtonsView.widthAnchor.constraint(equalToConstant: 215).isActive = false
-			courtButtonsView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-		} else {
-			courtButtonsView.widthAnchor.constraint(equalToConstant: 205).isActive = true
-			courtButtonsView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-		}
-	}
 
 	func setupUI() {
 		addSubviews(
@@ -172,6 +160,7 @@ private extension CourtAndGameView {
 
 			courtButtonsView.topAnchor.constraint(equalTo: descriptionView.bottomAnchor, constant: 16),
 			courtButtonsView.leadingAnchor.constraint(equalTo: leadingAnchor),
+			courtButtonsView.trailingAnchor.constraint(equalTo: trailingAnchor),
 			courtButtonsView.bottomAnchor.constraint(equalTo: bottomAnchor)
 		])
 	}
@@ -188,13 +177,13 @@ import SwiftUI
 			court: CourtModel.mockData,
 			game: GameModel.mockData,
 			hostType: .game,
-			doneButtonData: CourtButtonData(
-				title: "CHOOSE THIS GAME",
-				action: { print("aaaaaaa")}
+			doneButtonData: ButtonDataModel(
+				title: String(localized: "CHOOSE THIS GAME"),
+				action: { print("aaaaaaa") }
 			),
-			detailsButtonData: CourtButtonData(
-				title: "Details",
-				action: { print("bbbbbbb")}
+			detailsButtonData: ButtonDataModel(
+				title: String(localized: "DETAILS"),
+				action: { print("bbbbbbb") }
 			)
 		)
 		view.configure(with: model)
@@ -211,9 +200,9 @@ import SwiftUI
 		let view = CourtAndGameView()
 		let model = CourtViewModel(
 			court: CourtModel.mockData,
-			doneButtonData: CourtButtonData(
-				title: "Choose this court",
-				action: { print("aaaaaaa")}
+			doneButtonData: ButtonDataModel(
+				title: String(localized: "CHOOSE THIS COURT"),
+				action: { print("aaaaaaa") }
 			)
 		)
 		view.configure(with: model)

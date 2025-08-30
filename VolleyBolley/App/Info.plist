@@ -2,8 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>APP_ENV</key>
-    <string>$(APP_ENV)</string>
+	<key>APP_ENV</key>
+	<string>$(APP_ENV)</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>ActayWide-Bold.otf</string>
@@ -29,5 +29,7 @@
 			</array>
 		</dict>
 	</dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Для отображения ближайших спортивных площадок на карте</string>
 </dict>
 </plist>

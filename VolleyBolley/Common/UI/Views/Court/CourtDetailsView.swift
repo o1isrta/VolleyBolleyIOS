@@ -12,14 +12,14 @@ import UIKit
 struct CourtDetailsViewModel {
 	let court: CourtModel
 	let distance: String
-	let doneButtonData: CourtButtonData
-	let detailsButtonData: CourtButtonData?
+	let doneButtonData: ButtonDataModel
+	let detailsButtonData: ButtonDataModel?
 
 	init(
 		court: CourtModel,
 		distance: String,
-		doneButtonData: CourtButtonData,
-		detailsButtonData: CourtButtonData? = nil
+		doneButtonData: ButtonDataModel,
+		detailsButtonData: ButtonDataModel? = nil
 	) {
 		self.court = court
 		self.distance = distance
@@ -35,16 +35,16 @@ struct GameDetailsViewModel {
 	let distance: String
 	let game: GameModel
 	let hostType: HostType
-	let doneButtonData: CourtButtonData
-	let detailsButtonData: CourtButtonData?
+	let doneButtonData: ButtonDataModel
+	let detailsButtonData: ButtonDataModel?
 
 	init(
 		court: CourtModel,
 		distance: String,
 		game: GameModel,
 		hostType: HostType,
-		doneButtonData: CourtButtonData,
-		detailsButtonData: CourtButtonData? = nil
+		doneButtonData: ButtonDataModel,
+		detailsButtonData: ButtonDataModel? = nil
 	) {
 		self.court = court
 		self.distance = distance
@@ -161,16 +161,16 @@ import SwiftUI
 
 		let model = GameDetailsViewModel(
 			court: CourtModel.mockData,
-			distance: "Nearest",
+			distance: String(localized: "Nearest"),
 			game: GameModel.mockData,
 			hostType: .game,
-			doneButtonData: CourtButtonData(
-				title: "CHOOSE THIS GAME",
-				action: { print("aaaaaaa")}
+			doneButtonData: ButtonDataModel(
+				title: String(localized: "CHOOSE THIS GAME"),
+				action: { print("aaaaaaa") }
 				),
-			detailsButtonData: CourtButtonData(
-				title: "Details",
-				action: { print("bbbbbbb")}
+			detailsButtonData: ButtonDataModel(
+				title: String(localized: "DETAILS"),
+				action: { print("bbbbbbb") }
 			)
 		)
 		view.configure(with: model)
@@ -185,14 +185,14 @@ import SwiftUI
 		let view = CourtDetailsView()
 		let model = CourtDetailsViewModel(
 			court: CourtModel.mockData,
-			distance: "Nearest",
-			doneButtonData: CourtButtonData(
-				title: "CHOOSE THIS GAME",
-				action: { print("aaaaaaa")}
+			distance: String(localized: "Nearest"),
+			doneButtonData: ButtonDataModel(
+				title: String(localized: "CHOOSE THIS GAME"),
+				action: { print("aaaaaaa") }
 				),
-			detailsButtonData: CourtButtonData(
-				title: "Details",
-				action: { print("bbbbbbb")}
+			detailsButtonData: ButtonDataModel(
+				title: String(localized: "DETAILS"),
+				action: { print("bbbbbbb") }
 			)
 		)
 		view.configure(with: model)
