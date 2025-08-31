@@ -69,7 +69,7 @@ struct GlassmorphismConfiguration {
 
     static var notification: GlassmorphismConfiguration {
         GlassmorphismConfiguration(
-            cornerRadius: 32,
+            cornerRadius: 16,
             borderColor: AppColor.Glassmorphism.border.withAlphaComponent(0.4),
             borderWidth: 0.0,
             tintedBackgroundColor: AppColor.Glassmorphism.tintColor.withAlphaComponent(0.15),
