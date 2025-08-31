@@ -52,7 +52,12 @@ final class NotificationCardView: UIView {
 	}()
 
 	private lazy var mainStackView: UIStackView = {
-		let stackView = UIStackView(arrangedSubviews: [textStackView, dateLabel])
+		let stackView = UIStackView(
+			arrangedSubviews: [
+				textStackView,
+				dateLabel
+			]
+		)
 		stackView.axis = .horizontal
 		stackView.distribution = .fillProportionally
 		stackView.alignment = .top
@@ -112,6 +117,8 @@ private extension NotificationCardView {
 		])
 	}
 }
+
+// MARK: - Preview
 
 #if DEBUG
 import SwiftUI

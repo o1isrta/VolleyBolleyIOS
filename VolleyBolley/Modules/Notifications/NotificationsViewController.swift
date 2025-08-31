@@ -8,8 +8,10 @@
 import UIKit
 
 final class NotificationsViewController: BaseViewController {
-	
+
 }
+
+// MARK: - Private Methods
 
 #if DEBUG
 @available(iOS 17.0, *)
