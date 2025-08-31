@@ -15,7 +15,7 @@ struct YellowButtonStyle {
     var cornerRadius: CGFloat = 16
     var borderWidth: CGFloat = 0
     var borderColor: UIColor = .clear
-    var contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16)
+    var contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 10, bottom: 16, trailing: 10)
 }
 
 enum YellowButtonStateStyle {
