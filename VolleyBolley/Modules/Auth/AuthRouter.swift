@@ -18,7 +18,8 @@ final class AuthRouter: AuthRouterProtocol {
     }
 
     func showPhoneAuth() {
-        coordinator?.showPhoneAuth()
+        guard let authVC = viewController as? AuthViewController else { return }
+        coordinator?.showPhoneAuth(from: authVC)
     }
 
     func showUserRegScreen() {

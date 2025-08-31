@@ -11,18 +11,19 @@ class LevelInfoViewController: UIViewController {
     private lazy var contentView: UIView = {
         let container = UIView()
         container.translatesAutoresizingMaskIntoConstraints = false
-        container.backgroundColor = AppColor.Background.screen
+        container.backgroundColor = .clear
         container.layer.cornerRadius = 32
+        container.clipsToBounds = true
         return container
     }()
 
     private lazy var blurEffectView: UIVisualEffectView = {
-           let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialDark)
-           let effectView = UIVisualEffectView(effect: blurEffect)
-           effectView.translatesAutoresizingMaskIntoConstraints = false
-           return effectView
-       }()
-    
+        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialDark)
+        let effectView = UIVisualEffectView(effect: blurEffect)
+        effectView.translatesAutoresizingMaskIntoConstraints = false
+        return effectView
+    }()
+
     private lazy var backButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(systemName: "chevron.left"), for: .normal)
@@ -33,7 +34,6 @@ class LevelInfoViewController: UIViewController {
     }()
 
     private lazy var titleLabel = CustomTitle(text: "About levels", isLarge: true)
-
     private lazy var levelsStack = makeLevelRow()
 
     override func viewDidLoad() {
@@ -52,14 +52,12 @@ class LevelInfoViewController: UIViewController {
             contentView.addSubview($0)
         }
 
-        let safeArea = view.safeAreaLayoutGuide
-
         NSLayoutConstraint.activate([
-            contentView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 38),
+            contentView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            contentView.heightAnchor.constraint(equalToConstant: 251),
-            
+//            contentView.heightAnchor.constraint(equalToConstant: 251),
+
             blurEffectView.topAnchor.constraint(equalTo: contentView.topAnchor),
             blurEffectView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             blurEffectView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
@@ -74,60 +72,59 @@ class LevelInfoViewController: UIViewController {
             levelsStack.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16),
             levelsStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             levelsStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            levelsStack.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -20)
+            levelsStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
         ])
+
+        contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 251).isActive = true
     }
 
     private func makeLevelRow() -> UIStackView {
-        // Создаем стек для названий уровней с зеленым цветом
         let levelsStack = UIStackView()
         levelsStack.axis = .vertical
-        levelsStack.alignment = .leading
-        levelsStack.spacing = 12
-        
-        let levelTitles = [
-            "Light:",
-            "Medium:",
-            "Hard:",
-            "Pro:"
-        ]
-        
+        levelsStack.alignment = .fill
+        levelsStack.spacing = 21.73
+        levelsStack.translatesAutoresizingMaskIntoConstraints = false
+
+        let levelTitles = ["Light:", "Medium:", "Hard:", "Pro:"]
         let levelDescriptions = [
             "New to the game",
             "Know rules, still learning",
             "Skilled, play often, tournaments experience",
             "Elite level, official championships experience"
         ]
-        
-        // Создаем label для каждого уровня
+
         for count in 0..<levelTitles.count {
-            let levelContainer = UIStackView()
-            levelContainer.axis = .horizontal
-            levelContainer.alignment = .top
-            levelContainer.spacing = 8
-            
-            // Название уровня - зеленый цвет
             let titleLabel = GradientTextLabel()
+            titleLabel.gradientColors = [AppColor.Gradient.greenLightStart, AppColor.Gradient.greenLightEnd]
             titleLabel.text = levelTitles[count]
-            titleLabel.font = AppFont.Hero.bold(size: 16) // Жирный шрифт для выделения
-            titleLabel.gradientColors = [
-                AppColor.Gradient.greenLightStart,
-                AppColor.Gradient.greenLightEnd
-            ]
-            
-            // Описание уровня
+            titleLabel.font = AppFont.Hero.bold(size: 16)
+            titleLabel.numberOfLines = 1
+            titleLabel.translatesAutoresizingMaskIntoConstraints = false
+
+            titleLabel.widthAnchor.constraint(equalToConstant: 80).isActive = true
+
             let descLabel = UILabel()
             descLabel.text = levelDescriptions[count]
             descLabel.font = AppFont.Hero.regular(size: 16)
             descLabel.textColor = AppColor.Text.primary
             descLabel.numberOfLines = 0
-            
-            levelContainer.addArrangedSubview(titleLabel)
-            levelContainer.addArrangedSubview(descLabel)
-            levelsStack.addArrangedSubview(levelContainer)
+            descLabel.translatesAutoresizingMaskIntoConstraints = false
+
+            let rowStack = UIStackView(arrangedSubviews: [titleLabel, descLabel])
+            rowStack.axis = .horizontal
+            rowStack.spacing = 12
+            rowStack.alignment = .top
+            rowStack.translatesAutoresizingMaskIntoConstraints = false
+
+            descLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
+            titleLabel.setContentHuggingPriority(.required, for: .horizontal)
+
+            descLabel.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
+            descLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+
+            levelsStack.addArrangedSubview(rowStack)
         }
-        
-        levelsStack.translatesAutoresizingMaskIntoConstraints = false
+
         return levelsStack
     }
 
@@ -150,5 +147,3 @@ class LevelInfoViewController: UIViewController {
         }, completion: nil)
     }
 }
-
-

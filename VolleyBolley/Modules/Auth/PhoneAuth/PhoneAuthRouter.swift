@@ -10,17 +10,17 @@ import UIKit
 final class PhoneAuthRouter: PhoneAuthRouterProtocol {
 
     weak var viewController: UIViewController?
+    weak var coordinator: AppRouter?
     private let resolver: Resolver
-    private let window: UIWindow?
 
-    init(viewController: UIViewController, resolver: Resolver, window: UIWindow? = nil) {
+    init(viewController: UIViewController, coordinator: AppRouter?, resolver: Resolver) {
         self.viewController = viewController
+        self.coordinator = coordinator
         self.resolver = resolver
-        self.window = window
     }
 
     func navigateBack() {
-        viewController?.navigationController?.popViewController(animated: true)
+        coordinator?.start()
     }
 
     func navigateToVerification(with phoneNumber: String) {
@@ -30,16 +30,36 @@ final class PhoneAuthRouter: PhoneAuthRouterProtocol {
             fatalError("PhoneVerifyViewController не зарегистрирован в DI")
         }
 
-        if let navController = viewController?.navigationController {
-            navController.pushViewController(phoneVerifyVC, animated: true)
-        } else if let window = window {
-            let nav = UINavigationController(rootViewController: phoneVerifyVC)
-            UIView.transition(with: window, duration: 0.4, options: [.transitionCrossDissolve, .allowUserInteraction]) {
-                window.rootViewController = nav
+        print("PhoneVerifyViewController frame: \(phoneVerifyVC.view.frame)")
+        print("PhoneVerifyViewController background: \(phoneVerifyVC.view.backgroundColor)")
+        print("PhoneVerifyViewController subviews: \(phoneVerifyVC.view.subviews)")
+
+        // Принудительно установите background для теста
+        phoneVerifyVC.view.backgroundColor = .red // Яркий цвет для теста
+
+        performNavigation(to: phoneVerifyVC)
+    }
+
+    private func performNavigation(to viewController: UIViewController) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+
+            print("Navigation controller: \(String(describing: self.viewController?.navigationController))")
+            print("Is navigation controller nil? \(self.viewController?.navigationController == nil)")
+
+            if let navController = self.viewController?.navigationController {
+                print("Navigation controller view controllers: \(navController.viewControllers)")
+                print("About to push view controller")
+                navController.pushViewController(viewController, animated: true)
+                print("Push completed")
+            } else {
+                print("No navigation controller - presenting modally")
+                let navController = UINavigationController(rootViewController: viewController)
+                navController.modalPresentationStyle = .fullScreen
+                self.viewController?.present(navController, animated: true) {
+                    print("Modal presentation completed")
+                }
             }
-            window.makeKeyAndVisible()
-        } else {
-            viewController?.present(phoneVerifyVC, animated: true)
         }
     }
 }

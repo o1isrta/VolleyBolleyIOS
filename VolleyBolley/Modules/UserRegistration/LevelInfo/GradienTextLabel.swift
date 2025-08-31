@@ -7,41 +7,75 @@
 import UIKit
 
 class GradientTextLabel: UILabel {
-    var gradientColors: [UIColor] = [.systemGreen, .systemYellow] {
+    var gradientColors: [UIColor] = [] {
         didSet {
-            setNeedsDisplay()
+            setNeedsLayout()
         }
     }
-    
-    override func drawText(in rect: CGRect) {
-        if let gradientColor = createGradientColor(in: rect) {
-            self.textColor = gradientColor
-        }
-        super.drawText(in: rect)
+
+    private var gradientLayer: CAGradientLayer?
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        updateGradient()
     }
-    
-    private func createGradientColor(in rect: CGRect) -> UIColor? {
-        let size = rect.size
-        UIGraphicsBeginImageContextWithOptions(size, false, 0)
-        guard let context = UIGraphicsGetCurrentContext() else { return nil }
-        
-        let colorSpace = CGColorSpaceCreateDeviceRGB()
-        let colors = gradientColors.map { $0.cgColor } as CFArray
-        let locations: [CGFloat] = [0.0, 1.0]
-        
-        guard let gradient = CGGradient(colorsSpace: colorSpace, colors: colors, locations: locations) else {
-            return nil
+
+    private func updateGradient() {
+        guard let text = text, !text.isEmpty, bounds.width > 0, bounds.height > 0 else {
+            gradientLayer?.removeFromSuperlayer()
+            gradientLayer = nil
+            return
         }
-        
-        let startPoint = CGPoint(x: size.width / 2, y: 0)
-        let endPoint = CGPoint(x: size.width / 2, y: size.height)
-        
-        context.drawLinearGradient(gradient, start: startPoint, end: endPoint, options: [])
-        
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        guard let cgImage = image?.cgImage else { return nil }
-        return UIColor(patternImage: UIImage(cgImage: cgImage))
+
+        if gradientLayer == nil {
+            gradientLayer = CAGradientLayer()
+            gradientLayer?.startPoint = CGPoint(x: 0.5, y: 0)
+            gradientLayer?.endPoint = CGPoint(x: 0.5, y: 1)
+            layer.addSublayer(gradientLayer!)
+        }
+
+        gradientLayer?.frame = bounds
+        gradientLayer?.colors = gradientColors.map { $0.cgColor }
+
+        textColor = .clear
+
+        UIGraphicsBeginImageContextWithOptions(bounds.size, false, 0)
+        defer { UIGraphicsEndImageContext() }
+
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = textAlignment
+
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: font as Any,
+            .paragraphStyle: paragraphStyle,
+            .foregroundColor: UIColor.white
+        ]
+
+        let attributedString = NSAttributedString(string: text, attributes: attributes)
+        let stringSize = attributedString.size()
+
+        let textRect = CGRect(
+            x: 0,
+            y: (bounds.height - stringSize.height) / 2,
+            width: bounds.width,
+            height: stringSize.height
+        )
+
+        attributedString.draw(in: textRect)
+
+        if let textImage = UIGraphicsGetImageFromCurrentImageContext()?.cgImage {
+            let maskLayer = CALayer()
+            maskLayer.contents = textImage
+            maskLayer.frame = bounds
+            gradientLayer?.mask = maskLayer
+        }
+    }
+
+    override var intrinsicContentSize: CGSize {
+        var size = super.intrinsicContentSize
+        if let text = text, !text.isEmpty {
+            size.width += 2
+        }
+        return size
     }
 }
