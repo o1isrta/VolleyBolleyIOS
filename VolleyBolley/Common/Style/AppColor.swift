@@ -19,6 +19,7 @@ enum AppColor {
 		static let modal = teal
 		static let primary = white
         static let blur = blurColor
+        static let clear = clearColor
 
         // button
         static let buttonYellowSelected = yellow
@@ -94,7 +95,7 @@ enum AppColor {
 /// Только для переиспользования в AppColor
 private extension AppColor {
 
-    static let clear = UIColor.clear
+    static let clearColor = UIColor.clear
     static let white = UIColor.white
     static let ashBrown = UIColor(hex: "#423F39")
     static let midnightTeal = UIColor(hex: "#295E6D")

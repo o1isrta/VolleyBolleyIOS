@@ -140,17 +140,17 @@ final class GameDescriptionView: UIView {
 	func configure(with model: GameDescriptionViewModel) {
 		captionLabel.text = model.hostType
 		dateLabel.setTextWithDifferentStyles([
-			(String(localized: "When: "), AppFont.ActayWide.bold(size: 16)),
+			(String(localized: "When") + ": ", AppFont.ActayWide.bold(size: 16)),
 			(model.gameDate, AppFont.Hero.regular(size: 16))
 		])
 
 		levelLabel.setTextWithDifferentStyles([
-			(String(localized: "Level: "), AppFont.ActayWide.bold(size: 16)),
+			(String(localized: "Level") + ": ", AppFont.ActayWide.bold(size: 16)),
 			(model.gameLevel, AppFont.Hero.regular(size: 16))
 		])
 
 		genderLabel.setTextWithDifferentStyles([
-			(String(localized: "Gender: "), AppFont.ActayWide.bold(size: 16)),
+			(String(localized: "Gender") + ": ", AppFont.ActayWide.bold(size: 16)),
 			(model.gameGender, AppFont.Hero.regular(size: 16))
 		])
 
