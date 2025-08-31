@@ -17,6 +17,7 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
         let view = UIView()
         view.backgroundColor = AppColor.Background.blur
         view.layer.cornerRadius = 32
+        view.clipsToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -59,21 +60,6 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-
-//    private let getNewCodeButton: UIButton = {
-//        let button = UIButton(type: .system)
-//        let title = "Get new code"
-//        let attributes: [NSAttributedString.Key: Any] = [
-//            .foregroundColor: AppColor.Gradient.greenLightStart,
-//            .underlineStyle: NSUnderlineStyle.single.rawValue,
-//            .font: AppFont.Hero.regular(size: 14)
-//        ]
-//        let attributedTitle = NSAttributedString(string: title, attributes: attributes)
-//        button.setAttributedTitle(attributedTitle, for: .normal)
-//        button.isHidden = true
-//        button.translatesAutoresizingMaskIntoConstraints = false
-//        return button
-//    }()
     
     private let getNewCodeButton: GradientTextButton = {
         let button = GradientTextButton(type: .system)
@@ -126,6 +112,13 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
         timer = nil
     }
 
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        print("Container bounds after layout: \(containerView.bounds)")
+    }
+
+
     private func setupUI() {
         view.addSubview(containerView)
         [backButton, titleLabel, codeLabel, codeTextField, resendLabel, getNewCodeButton, verifyButton]
@@ -135,6 +128,7 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
             containerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
             containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
             containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
+//            containerView.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8),
 
             backButton.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 22.5),
             backButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
@@ -173,8 +167,7 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
     private func startResendTimer() {
         resendLabel.isHidden = false
         getNewCodeButton.isHidden = true
-//        secondsRemaining = 30
-        secondsRemaining = 3
+        secondsRemaining = 30
         resendLabel.text = "Resend in 00:\(secondsRemaining < 10 ? "0\(secondsRemaining)" : "\(secondsRemaining)")"
         
         timer?.invalidate()

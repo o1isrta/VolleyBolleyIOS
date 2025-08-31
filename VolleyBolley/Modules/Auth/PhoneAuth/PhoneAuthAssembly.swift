@@ -10,41 +10,34 @@ import UIKit
 final class PhoneAuthAssembly: Assembly {
     func assemble(container: Container) {
 
-        // MARK: - Interactor
         container.register(PhoneAuthInteractorProtocol.self) { _ in
             PhoneAuthInteractor()
         }
 
-        // MARK: - Router
         container.register(PhoneAuthRouterProtocol.self) { (resolver, viewController: UIViewController) in
-            PhoneAuthRouter(viewController: viewController, resolver: resolver)
+            let coordinator = resolver.resolve(AppRouter.self)!
+            return PhoneAuthRouter(viewController: viewController, coordinator: coordinator, resolver: resolver)
         }
 
-        // MARK: - ViewController + Presenter
         container.register(PhoneAuthViewController.self) { resolver in
-            let vc = PhoneAuthViewController()
+            let phoneRegVC = PhoneAuthViewController()
 
-            // Interactor
             guard let interactor = resolver.resolve(PhoneAuthInteractorProtocol.self) else {
                 fatalError("PhoneAuthInteractor не зарегистрирован")
             }
 
-            // Router (с безопасным resolve)
-            guard let router = resolver.resolve(PhoneAuthRouterProtocol.self, argument: vc as UIViewController) else {
+            guard let router = resolver.resolve(PhoneAuthRouterProtocol.self, argument: phoneRegVC as UIViewController) else {
                 fatalError("PhoneAuthRouter не зарегистрирован")
             }
 
-            // Presenter
-            let presenter = PhoneAuthPresenter(view: vc, interactor: interactor, router: router)
+            let presenter = PhoneAuthPresenter(view: phoneRegVC, interactor: interactor, router: router)
 
-            // Связываем VIPER
-            vc.presenter = presenter
+            phoneRegVC.presenter = presenter
             interactor.presenter = presenter
 
-            return vc
+            return phoneRegVC
         }
 
-        // MARK: - PhoneVerifyViewController с DI и аргументом
         container.register(PhoneVerifyViewController.self) { (_, phoneNumber: String) in
             PhoneVerifyViewController(phoneNumber: phoneNumber)
         }
