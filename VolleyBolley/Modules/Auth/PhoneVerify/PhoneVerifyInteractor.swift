@@ -11,7 +11,6 @@ final class PhoneVerifyInteractor: PhoneVerifyInteractorProtocol {
     weak var presenter: PhoneVerifyInteractorOutputProtocol?
 
     func verifyCode(_ code: String, for phoneNumber: String) {
-        // 1. Проверяем базовые требования к коду (6 цифр)
         let digitsOnly = code.filter { $0.isNumber }
         guard digitsOnly.count == 6 else {
             let error = NSError(
@@ -23,15 +22,12 @@ final class PhoneVerifyInteractor: PhoneVerifyInteractorProtocol {
             return
         }
 
-        // 2. Эмуляция запроса к серверу
         DispatchQueue.global().asyncAfter(deadline: .now() + 1.5) {
             if digitsOnly == "123456" {
-                // 3. Успешная проверка кода
                 DispatchQueue.main.async {
                     self.presenter?.verificationSucceeded()
                 }
             } else {
-                // 4. Неверный код
                 let error = NSError(
                     domain: "",
                     code: 401,
@@ -45,5 +41,6 @@ final class PhoneVerifyInteractor: PhoneVerifyInteractorProtocol {
     }
 
     func resendCode(for phoneNumber: String) {
+        print("Запрос повторного отправления кода")
     }
 }

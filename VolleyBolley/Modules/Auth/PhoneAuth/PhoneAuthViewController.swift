@@ -80,6 +80,10 @@ final class PhoneAuthViewController: UIViewController {
         phoneTextField.becomeFirstResponder()
     }
 
+    deinit {
+        print("💥 PhoneVerifyViewController deallocated")
+    }
+
     private func setupUI() {
         view.addSubview(containerView)
         [backButton, titleLabel, phoneNumberLabel, phoneTextField, nextButton]

@@ -16,6 +16,8 @@ final class AppRouter {
     private let userSessionService: UserSessionServiceProtocol
     private let resolver: Resolver
 
+    private var navigationController: UINavigationController?
+
     private var onboardingRouter: OnboardingRouterProtocol?
     private var authRouter: AuthRouterProtocol?
 
@@ -49,6 +51,7 @@ final class AppRouter {
             fatalError("OnboardingViewController не зарегистрирован")
         }
         let nav = UINavigationController(rootViewController: onboardingVC)
+        navigationController = nav
         window.rootViewController = nav
         window.makeKeyAndVisible()
     }
@@ -58,42 +61,41 @@ final class AppRouter {
             fatalError("AuthViewController не зарегистрирован")
         }
         let nav = UINavigationController(rootViewController: authVC)
-
-        UIView.transition(with: window, duration: 0.4, options: .transitionCrossDissolve) {
-            self.window.rootViewController = nav
-        }
-
+        navigationController = nav
+        window.rootViewController = nav
         window.makeKeyAndVisible()
     }
 
-    func showPhoneAuth(from authVC: AuthViewController) {
-        guard let phoneAuthVC = resolver.resolve(PhoneAuthViewController.self) else {
-            fatalError("PhoneAuthViewController не зарегистрирован")
-        }
-
-        if let navController = authVC.navigationController, authVC.view.window != nil {
-            DispatchQueue.main.async {
-                navController.pushViewController(phoneAuthVC, animated: true)
-            }
-        } else {
-            DispatchQueue.main.async {
-                authVC.present(phoneAuthVC, animated: true)
-            }
-        }
+    func pushPhoneAuth() {
+        guard let nav = navigationController,
+              let phoneAuthVC = resolver.resolve(PhoneAuthViewController.self) else { return }
+        nav.pushViewController(phoneAuthVC, animated: true)
     }
 
-    func showUserReg() {
-        guard let userRegVC = resolver.resolve(UserRegViewController.self) else {
-            fatalError("UserRegViewController не зарегистрирован")
-        }
-        let nav = UINavigationController(rootViewController: userRegVC)
-
-        UIView.transition(with: window, duration: 0.4, options: .transitionCrossDissolve) {
-            self.window.rootViewController = nav
-        }
-
-        window.makeKeyAndVisible()
+    func pushPhoneVerify(phoneNumber: String) {
+        guard let nav = navigationController,
+              let phoneVerifyVC = resolver.resolve(PhoneVerifyViewController.self, argument: phoneNumber) else { return }
+        nav.pushViewController(phoneVerifyVC, animated: true)
     }
+
+    func pushUserReg() {
+        guard let nav = navigationController,
+              let userRegVC = resolver.resolve(UserRegViewController.self) else { return }
+        nav.pushViewController(userRegVC, animated: true)
+    }
+
+//    func showUserReg() {
+//        guard let userRegVC = resolver.resolve(UserRegViewController.self) else {
+//            fatalError("UserRegViewController не зарегистрирован")
+//        }
+//        let nav = UINavigationController(rootViewController: userRegVC)
+//
+//        UIView.transition(with: window, duration: 0.4, options: .transitionCrossDissolve) {
+//            self.window.rootViewController = nav
+//        }
+//
+//        window.makeKeyAndVisible()
+//    }
 
     private func showMainApp() {
         guard let router = resolver.resolve(MainAppRouterProtocol.self) else {

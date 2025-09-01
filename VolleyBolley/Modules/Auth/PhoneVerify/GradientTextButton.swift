@@ -7,83 +7,100 @@
 import UIKit
 
 class GradientTextButton: UIButton {
+
+    // MARK: - Properties
     var textGradientColors: [CGColor] = [] {
         didSet {
-            updateGradientText()
+            setNeedsLayout()
         }
     }
-    
+
     var textGradientStartPoint: CGPoint = CGPoint(x: 0.5, y: 0) {
         didSet {
-            updateGradientText()
+            setNeedsLayout()
         }
     }
-    
+
     var textGradientEndPoint: CGPoint = CGPoint(x: 0.5, y: 1) {
         didSet {
-            updateGradientText()
+            setNeedsLayout()
         }
     }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setup()
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setup()
-    }
-    
-    private func setup() {
-        // Убираем фон кнопки
-        backgroundColor = .clear
-    }
-    
-    override func setTitle(_ title: String?, for state: UIControl.State) {
-        super.setTitle(title, for: state)
-        updateGradientText()
-    }
-    
+
+    // MARK: - Lifecycle
     override func layoutSubviews() {
         super.layoutSubviews()
-        updateGradientText()
+        updateGradient()
     }
-    
-    private func updateGradientText() {
-        guard let title = currentTitle, !title.isEmpty else { return }
-        
-        // Создаем градиентное изображение
-        let gradientImage = createGradientImage()
-        
-        // Создаем атрибутированную строку с градиентом
-        let attributes: [NSAttributedString.Key: Any] = [
-            .font: titleLabel?.font ?? UIFont.systemFont(ofSize: 14),
-            .foregroundColor: UIColor(patternImage: gradientImage),
-            .underlineStyle: NSUnderlineStyle.single.rawValue
-        ]
-        
-        let attributedString = NSAttributedString(string: title, attributes: attributes)
-        setAttributedTitle(attributedString, for: .normal)
-    }
-    
-    private func createGradientImage() -> UIImage {
-        // Используем фиксированный размер для градиента
-        let size = CGSize(width: 200, height: 50)
-        
+
+    // MARK: - Private Methods
+    private func updateGradient() {
+        layer.sublayers?
+            .filter { $0 is CAGradientLayer }
+            .forEach { $0.removeFromSuperlayer() }
+
+        guard !textGradientColors.isEmpty,
+              bounds.width > 0,
+              bounds.height > 0,
+              let title = title(for: .normal),
+              !title.isEmpty else {
+            return
+        }
+
         let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = CGRect(origin: .zero, size: size)
         gradientLayer.colors = textGradientColors
         gradientLayer.startPoint = textGradientStartPoint
         gradientLayer.endPoint = textGradientEndPoint
-        
-        UIGraphicsBeginImageContextWithOptions(size, false, 0)
-        defer { UIGraphicsEndImageContext() }
-        
-        if let context = UIGraphicsGetCurrentContext() {
-            gradientLayer.render(in: context)
+        gradientLayer.frame = bounds
+
+        if let maskImage = createTextMaskImage() {
+            let maskLayer = CALayer()
+            maskLayer.contents = maskImage
+            maskLayer.frame = bounds
+            gradientLayer.mask = maskLayer
         }
-        
-        return UIGraphicsGetImageFromCurrentImageContext() ?? UIImage()
+
+        layer.addSublayer(gradientLayer)
+        setTitleColor(.clear, for: .normal)
+    }
+
+    private func createTextMaskImage() -> CGImage? {
+        UIGraphicsBeginImageContextWithOptions(bounds.size, false, 0)
+        defer { UIGraphicsEndImageContext() }
+
+        guard let context = UIGraphicsGetCurrentContext(),
+              let title = title(for: .normal),
+              let font = titleLabel?.font else {
+            return nil
+        }
+
+        context.clear(bounds)
+
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: font,
+            .foregroundColor: UIColor.white
+        ]
+
+        let attributedString = NSAttributedString(string: title, attributes: attributes)
+        let textSize = attributedString.size()
+
+        let textRect = CGRect(
+            x: (bounds.width - textSize.width) / 2,
+            y: (bounds.height - textSize.height) / 2,
+            width: textSize.width,
+            height: textSize.height
+        )
+
+        attributedString.draw(in: textRect)
+
+        return UIGraphicsGetImageFromCurrentImageContext()?.cgImage
+    }
+
+    deinit {
+        layer.sublayers?
+            .filter { $0 is CAGradientLayer }
+            .forEach { $0.removeFromSuperlayer() }
+
+        print("💥 GradientTextButton deallocated")
     }
 }

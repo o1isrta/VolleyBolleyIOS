@@ -7,9 +7,7 @@
 import UIKit
 
 final class PhoneVerifyPresenter: PhoneVerifyPresenterProtocol, PhoneVerifyInteractorOutputProtocol {
-    var presenter: (any PhoneVerifyInteractorOutputProtocol)?
-    
-    
+
     weak var view: PhoneVerifyViewProtocol?
     var interactor: PhoneVerifyInteractorProtocol
     var router: PhoneVerifyRouterProtocol
@@ -23,7 +21,10 @@ final class PhoneVerifyPresenter: PhoneVerifyPresenterProtocol, PhoneVerifyInter
         self.interactor = interactor
         self.router = router
         self.phoneNumber = phoneNumber
+        print("PhoneVerifyPresenter init")
     }
+
+    deinit { print("PhoneVerifyPresenter deinit") }
 
     func viewDidLoad() {
         view?.enableVerifyButton(false)
@@ -47,7 +48,6 @@ final class PhoneVerifyPresenter: PhoneVerifyPresenterProtocol, PhoneVerifyInter
     }
 
     func verificationFailed(with error: Error) {
-        // Отключаем кнопку и показываем ошибку через View
         view?.enableVerifyButton(false)
         if let view = view as? UIViewController {
             let alert = UIAlertController(title: "Error",

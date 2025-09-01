@@ -24,7 +24,6 @@ protocol PhoneVerifyInteractorProtocol: AnyObject {
 }
 
 protocol PhoneVerifyInteractorOutputProtocol: AnyObject {
-    var presenter: PhoneVerifyInteractorOutputProtocol? { get set }
     func verificationSucceeded()
     func verificationFailed(with error: Error)
 }
