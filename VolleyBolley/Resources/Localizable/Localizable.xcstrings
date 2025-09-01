@@ -1,9 +1,6 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "" : {
-
-    },
     "  Continue with Facebook" : {
       "localizations" : {
         "ru" : {
@@ -57,6 +54,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "О приложении"
+          }
+        }
+      }
+    },
+    "ADD SELECTED" : {
+      "comment" : "Game",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ДОБАВИТЬ ВЫБРАННОЕ"
           }
         }
       }
@@ -924,6 +932,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Игроки"
+          }
+        }
+      }
+    },
+    "Private game" : {
+      "comment" : "Game",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Частная игра"
           }
         }
       }

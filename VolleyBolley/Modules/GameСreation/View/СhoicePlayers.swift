@@ -17,7 +17,7 @@ final class СhoicePlayersViewController: BaseViewController, СhoicePlayersView
 
     // MARK: - Private Properties
 
-    private var players: [String] = [
+    private var playersMock: [String] = [
         "Polina Vasilieva",
         "Kristina Popova",
         "Anton Ivanov",
@@ -27,6 +27,7 @@ final class СhoicePlayersViewController: BaseViewController, СhoicePlayersView
     private let presenter: СhoicePlayersViewProtocol
 
     private lazy var navigationBarView = CustomNavBarView()
+    private lazy var mainTabBarController = MainTabBarController()
 
     private lazy var buttonBack: UtilityButton = { // TODO: Если нужно было подругому переиспользовать, то подскажите
         let button = UtilityButton(style: .large)
@@ -50,6 +51,15 @@ final class СhoicePlayersViewController: BaseViewController, СhoicePlayersView
         return view
     }()
 
+    private lazy var searchAndSegmentStack: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [searchBar, segmentedControl])
+        stack.axis = .vertical
+        stack.spacing = 8
+        stack.alignment = .fill
+        stack.distribution = .fill
+        return stack
+    }()
+
     private lazy var label: UILabel = {
         let view = UILabel()
         view.textAlignment = .center
@@ -65,7 +75,6 @@ final class СhoicePlayersViewController: BaseViewController, СhoicePlayersView
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .clear
-        tableView.layer.cornerRadius = 32
         tableView.separatorStyle = .none
         tableView.dataSource = self
         tableView.delegate = self
@@ -75,7 +84,7 @@ final class СhoicePlayersViewController: BaseViewController, СhoicePlayersView
 
     private lazy var actionButton: NextStepButton = {
         let button = NextStepButton(
-            title: String(localized: ""),
+            title: String(localized: "ADD SELECTED"),
             isActive: true,
             target: self,
             action: #selector(actionButtonTapped)
@@ -89,8 +98,6 @@ final class СhoicePlayersViewController: BaseViewController, СhoicePlayersView
         stack.spacing = 24
         return stack
     }()
-
-    private lazy var mainTabBarController = MainTabBarController()
 
     // MARK: - Initializers
 
@@ -125,10 +132,14 @@ final class СhoicePlayersViewController: BaseViewController, СhoicePlayersView
         print(message)
     }
 
+    // MARK: - Private methods
+
     @objc private func actionButtonTapped() {
         print("Сохранить игроков и перейти дальше")
     }
 }
+
+// MARK: - Private methods
 
 private extension СhoicePlayersViewController {
 
@@ -138,7 +149,7 @@ private extension СhoicePlayersViewController {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
 
-        [background, buttonBack, titleLabel, searchBar, segmentedControl, tableAndButtonStack].forEach {
+        [background, buttonBack, titleLabel, searchAndSegmentStack, tableAndButtonStack].forEach {
             view.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
@@ -172,25 +183,33 @@ private extension СhoicePlayersViewController {
             titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             titleLabel.centerYAnchor.constraint(equalTo: buttonBack.centerYAnchor),
 
-            searchBar.topAnchor.constraint(equalTo: buttonBack.bottomAnchor, constant: 16),
-            searchBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 28),
-            searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -28),
-
-            segmentedControl.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 8),
-            segmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 28),
-            segmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -28),
+            searchAndSegmentStack.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16),
+            searchAndSegmentStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 28),
+            searchAndSegmentStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -28),
 
             tableAndButtonStack.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 16),
             tableAndButtonStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 28),
             tableAndButtonStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -28),
-            tableAndButtonStack.heightAnchor.constraint(equalToConstant: 232)
+            tableAndButtonStack.heightAnchor.constraint(equalToConstant: 232),
+
+            mainTabBarController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            mainTabBarController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            mainTabBarController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            mainTabBarController.view.heightAnchor.constraint(equalToConstant: 81)
         ])
     }
 }
 
-extension СhoicePlayersViewController: UITableViewDataSource, UITableViewDelegate {
+// MARK: - UITableViewDataSource
+
+extension СhoicePlayersViewController: UITableViewDataSource {
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return playersMock.count
+    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        players.count
+        return 1
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -199,16 +218,27 @@ extension СhoicePlayersViewController: UITableViewDataSource, UITableViewDelega
             for: indexPath) as? PlayerCell else {
             return UITableViewCell()
         }
-        cell.configure(with: players[indexPath.row])
+        cell.configure(name: playersMock[indexPath.section])
         return cell
     }
+}
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("Выбран игрок: \(players[indexPath.row])")
-    }
+// MARK: - UITableViewDelegate
+
+extension СhoicePlayersViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 23
+    }
+
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return section == playersMock.count - 1 ? 0 : 24
+    }
+
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let view = UIView()
+        view.backgroundColor = .clear
+        return view
     }
 }
 
