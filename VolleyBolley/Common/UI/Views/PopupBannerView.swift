@@ -33,6 +33,11 @@ final class PopupBannerView: UIView {
         return CGSize(width: UIView.noIntrinsicMetric, height: Constants.height)
     }
 
+    // MARK: - Internal Properties
+
+    /// Вызывается при нажатии на баннер.
+    var onTap: (() -> Void)?
+
     // MARK: - Private Properties
 
     /// Лейбл, отображающий сообщение.
@@ -87,6 +92,7 @@ final class PopupBannerView: UIView {
         messageLabel.text = message
         setup()
         setupGradient()
+        setupGestureRecognizer()
     }
 
     @available(*, unavailable)
@@ -166,6 +172,18 @@ final class PopupBannerView: UIView {
         gradient.cornerRadius = Constants.cornerRadius
         layer.insertSublayer(gradient, at: 0)
         gradientLayer = gradient
+    }
+
+    /// Настраивает обработчик нажатия.
+    private func setupGestureRecognizer() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        addGestureRecognizer(tapGesture)
+        isUserInteractionEnabled = true
+    }
+
+    /// Обработчик нажатия.
+    @objc private func handleTap() {
+        onTap?()
     }
 
     /// Анимирует появление баннера.
@@ -252,6 +270,9 @@ struct PopupBannerViewControllerRepresentable: UIViewControllerRepresentable {
         button.setTitle("Show Banner", for: .normal)
         button.addAction(UIAction { _ in
             let banner = PopupBannerView(message: "Anton invited you")
+            banner.onTap = {
+                print("tap")
+            }
             banner.show(in: viewController.view, under: navBar)
         }, for: .touchUpInside)
 
