@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct NotificationCardModel {
+struct NotificationCardViewModel {
 	let title: String
 	let message: String
 	let date: String
@@ -67,7 +67,7 @@ final class NotificationCardView: UIView {
 
 	// MARK: - Initializers
 
-	init(model: NotificationCardModel) {
+	init(model: NotificationCardViewModel) {
 		super.init(frame: .zero)
 		setupUI()
 		configure(with: model)
@@ -86,7 +86,7 @@ final class NotificationCardView: UIView {
 
 private extension NotificationCardView {
 
-	func configure(with model: NotificationCardModel) {
+	func configure(with model: NotificationCardViewModel) {
 		titleLabel.text = model.title
 		messageLabel.text = model.message
 		dateLabel.text = model.date
@@ -125,7 +125,7 @@ import SwiftUI
 @available(iOS 17.0, *)
 #Preview {
 	UIViewPreview {
-		let model = NotificationCardModel(
+		let model = NotificationCardViewModel(
 			title: "New invite",
 			message: "Anton Ivanov invited you",
 			date: Date()
@@ -138,7 +138,7 @@ import SwiftUI
 	.padding()
 
 	UIViewPreview {
-		let model = NotificationCardModel(
+		let model = NotificationCardViewModel(
 			title: "Removed from tourney",
 			message: "12 September, 2:00-8:00 pm",
 			date: Date()
