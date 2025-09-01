@@ -4,6 +4,7 @@
 //
 //  Created by Олег Кор on 18.08.2025.
 //
+import Swinject
 import UIKit
 
 final class PhoneVerifyRouter: PhoneVerifyRouterProtocol {
@@ -21,6 +22,6 @@ final class PhoneVerifyRouter: PhoneVerifyRouterProtocol {
     }
 
     func navigateToMainScreen() {
-        coordinator?.showUserReg()
+        coordinator?.pushUserReg()
     }
 }

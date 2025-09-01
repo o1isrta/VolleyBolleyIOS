@@ -13,7 +13,7 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
     private var timer: Timer?
     private var secondsRemaining = 30
 
-    private let containerView: UIView = {
+    private lazy var containerView: UIView = {
         let view = UIView()
         view.backgroundColor = AppColor.Background.blur
         view.layer.cornerRadius = 32
@@ -22,7 +22,7 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
         return view
     }()
 
-    private let backButton: UIButton = {
+    private lazy var backButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(systemName: "chevron.left"), for: .normal)
         button.tintColor = .white
@@ -40,19 +40,17 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
         textField.keyboardType = .numberPad
         textField.borderStyle = .none
         textField.textAlignment = .center
-
         textField.layer.cornerRadius = 16
         textField.layer.borderWidth = 1
         textField.layer.borderColor = AppColor.Border.primary.cgColor
         textField.backgroundColor = .systemBackground
         textField.textColor = AppColor.Text.placeHolder
-
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.addTarget(self, action: #selector(сodeDidChange), for: .editingChanged)
         return textField
     }()
 
-    private let resendLabel: UILabel = {
+    private lazy var resendLabel: UILabel = {
         let label = UILabel()
         label.textColor = AppColor.Text.primary
         label.font = AppFont.Hero.regular(size: 14)
@@ -61,7 +59,7 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
         return label
     }()
     
-    private let getNewCodeButton: GradientTextButton = {
+    private lazy var getNewCodeButton: GradientTextButton = {
         let button = GradientTextButton(type: .system)
         button.setTitle("Get new code", for: .normal)
         button.titleLabel?.font = AppFont.Hero.regular(size: 14)
@@ -70,15 +68,15 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
             UIColor.red.cgColor,
             UIColor.black.cgColor
         ]
-        
+
         button.textGradientStartPoint = CGPoint(x: 0.5, y: 0)
         button.textGradientEndPoint = CGPoint(x: 0.5, y: 1)
-        
+
         button.translatesAutoresizingMaskIntoConstraints = false
         button.isHidden = true
         return button
     }()
-    
+
     private lazy var verifyButton: NextStepButton = {
             let button = NextStepButton(
                 title: "VERIFY",
@@ -92,6 +90,7 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
     init(phoneNumber: String) {
         self.phoneNumber = phoneNumber
         super.init(nibName: nil, bundle: nil)
+        print("🔍 Retain count after init: \(CFGetRetainCount(self))")
     }
 
     required init?(coder: NSCoder) {
@@ -104,20 +103,28 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
         setupUI()
         setupActions()
         startResendTimer()
+        presenter?.viewDidLoad()
+        print("🔍 Retain count in viewDidLoad: \(CFGetRetainCount(self))")
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+            print("🔍 Retain count after 0.1s: \(self.map { CFGetRetainCount($0) } ?? 0)")
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            print("🔍 Retain count after 1s: \(self.map { CFGetRetainCount($0) } ?? 0)")
+        }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         timer?.invalidate()
         timer = nil
+        print("🔍 Retain count before disappear: \(CFGetRetainCount(self))")
     }
 
-
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        print("Container bounds after layout: \(containerView.bounds)")
+    deinit {
+        print("💥 PhoneVerifyViewController deallocated")
     }
-
 
     private func setupUI() {
         view.addSubview(containerView)
@@ -128,7 +135,7 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
             containerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
             containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
             containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
-//            containerView.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8),
+//            containerView.heightAnchor.constraint(equalToConstant: 350),
 
             backButton.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 22.5),
             backButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
@@ -168,23 +175,27 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
         resendLabel.isHidden = false
         getNewCodeButton.isHidden = true
         secondsRemaining = 30
-        resendLabel.text = "Resend in 00:\(secondsRemaining < 10 ? "0\(secondsRemaining)" : "\(secondsRemaining)")"
-        
+        updateResendLabel()
+
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
             guard let self = self else { return }
             self.secondsRemaining -= 1
-            if self.secondsRemaining > 0 {
-                self.resendLabel.text = "Resend in 00:\(self.secondsRemaining < 10 ? "0\(self.secondsRemaining)" : "\(self.secondsRemaining)")"
-            } else {
+            if self.secondsRemaining <= 0 {
                 self.timer?.invalidate()
                 self.timer = nil
                 self.resendLabel.isHidden = true
                 self.getNewCodeButton.isHidden = false
+            } else {
+                self.updateResendLabel()
             }
         }
     }
-    
+
+    private func updateResendLabel() {
+           resendLabel.text = "Resend in 00:\(secondsRemaining < 10 ? "0\(secondsRemaining)" : "\(secondsRemaining)")"
+       }
+
     @objc private func getNewCodeTapped() {
         startResendTimer()
         presenter?.didTapResendCode()
@@ -210,6 +221,6 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
 #if DEBUG
 @available(iOS 17.0, *)
 #Preview {
-    PhoneVerifyViewController(phoneNumber: "")
+    PhoneVerifyViewController(phoneNumber: "123")
 }
 #endif
