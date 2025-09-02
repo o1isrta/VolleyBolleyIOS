@@ -2,7 +2,7 @@
 //  PhoneVerifyPresenter.swift
 //  VolleyBolley
 //
-//  Created by Олег Кор on 18.08.2025.
+//  Created by Олег Козырев on 18.08.2025.
 //
 import UIKit
 
@@ -21,10 +21,7 @@ final class PhoneVerifyPresenter: PhoneVerifyPresenterProtocol, PhoneVerifyInter
         self.interactor = interactor
         self.router = router
         self.phoneNumber = phoneNumber
-        print("PhoneVerifyPresenter init")
     }
-
-    deinit { print("PhoneVerifyPresenter deinit") }
 
     func viewDidLoad() {
         view?.enableVerifyButton(false)

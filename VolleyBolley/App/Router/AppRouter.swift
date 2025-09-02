@@ -84,19 +84,6 @@ final class AppRouter {
         nav.pushViewController(userRegVC, animated: true)
     }
 
-//    func showUserReg() {
-//        guard let userRegVC = resolver.resolve(UserRegViewController.self) else {
-//            fatalError("UserRegViewController не зарегистрирован")
-//        }
-//        let nav = UINavigationController(rootViewController: userRegVC)
-//
-//        UIView.transition(with: window, duration: 0.4, options: .transitionCrossDissolve) {
-//            self.window.rootViewController = nav
-//        }
-//
-//        window.makeKeyAndVisible()
-//    }
-
     private func showMainApp() {
         guard let router = resolver.resolve(MainAppRouterProtocol.self) else {
             print("Error: Failed to resolve MainAppRouterProtocol")
