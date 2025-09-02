@@ -7,6 +7,12 @@
 
 import UIKit
 
+struct PlayerCellModel {
+    let name: String
+    let isFavorite: Bool
+    let isSelected: Bool
+}
+
 final class PlayerCell: UITableViewCell {
 
     // MARK: - Public Properties
@@ -89,12 +95,12 @@ final class PlayerCell: UITableViewCell {
 
     // MARK: - Public Method
 
-    func configure(name: String, isFavorite: Bool = false, isSelected: Bool = false) {
-         nameLabel.text = name
-         self.isFavorite = isFavorite
-         self.isChecked = isSelected
-         updateUI()
-     }
+    func configure(with model: PlayerCellModel) {
+        nameLabel.text = model.name
+        self.isFavorite = model.isFavorite
+        self.isChecked = model.isSelected
+        updateUI()
+    }
 
     // MARK: - Private Method
 

@@ -28,8 +28,10 @@ final class СhoicePlayersViewController: BaseViewController, СhoicePlayersView
 
     private lazy var navigationBarView = CustomNavBarView()
     private lazy var mainTabBarController = MainTabBarController()
+    private lazy var searchBar = GradientSearchField(type: .searchTeams)
+    private lazy var segmentedControl = CustomSegmentedControl(type: .players)
 
-    private lazy var buttonBack: UtilityButton = { // TODO: Если нужно было подругому переиспользовать, то подскажите
+    private lazy var buttonBack: UtilityButton = {
         let button = UtilityButton(style: .large)
         button.setImage(.chevronBackward, for: .normal)
         button.tintColor = AppColor.Icon.primary
@@ -40,16 +42,6 @@ final class СhoicePlayersViewController: BaseViewController, СhoicePlayersView
         text: String(localized: "Private game"),
         isLarge: true
     )
-
-    private lazy var searchBar: GradientSearchField = { // TODO: Другого SearchBar не нашел
-        let view = GradientSearchField(type: .searchTeams)
-        return view
-    }()
-
-    private lazy var segmentedControl: CustomSegmentedControl = {
-        let view = CustomSegmentedControl(type: .players)
-        return view
-    }()
 
     private lazy var searchAndSegmentStack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [searchBar, segmentedControl])
@@ -76,19 +68,18 @@ final class СhoicePlayersViewController: BaseViewController, СhoicePlayersView
         let tableView = UITableView()
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
+        tableView.isScrollEnabled = false
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(PlayerCell.self, forCellReuseIdentifier: PlayerCell.playerCellidentifier)
         return tableView
     }()
 
-    private lazy var actionButton: NextStepButton = {
-        let button = NextStepButton(
-            title: String(localized: "ADD SELECTED"),
-            isActive: true,
-            target: self,
-            action: #selector(actionButtonTapped)
-        )
+    private lazy var actionButton: YellowButton = {
+        let button = YellowButton(title: "ADD SELECTED")
+        button.isSelected = true
+        button.isEnabled = true
+        button.addTarget(self, action: #selector(actionButtonTapped), for: .touchUpInside)
         return button
     }()
 
@@ -134,7 +125,7 @@ final class СhoicePlayersViewController: BaseViewController, СhoicePlayersView
 
     // MARK: - Private methods
 
-    @objc private func actionButtonTapped() {
+    @objc private func actionButtonTapped() {  // TODO: Надо потом доработать логику кнопки
         print("Сохранить игроков и перейти дальше")
     }
 }
@@ -187,6 +178,8 @@ private extension СhoicePlayersViewController {
             searchAndSegmentStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 28),
             searchAndSegmentStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -28),
 
+            actionButton.heightAnchor.constraint(equalToConstant: 44),
+
             tableAndButtonStack.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 16),
             tableAndButtonStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 28),
             tableAndButtonStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -28),
@@ -218,7 +211,11 @@ extension СhoicePlayersViewController: UITableViewDataSource {
             for: indexPath) as? PlayerCell else {
             return UITableViewCell()
         }
-        cell.configure(name: playersMock[indexPath.section])
+        cell.configure(with: PlayerCellModel(
+            name: playersMock[indexPath.section],
+            isFavorite: false,
+            isSelected: false
+        ))
         return cell
     }
 }
