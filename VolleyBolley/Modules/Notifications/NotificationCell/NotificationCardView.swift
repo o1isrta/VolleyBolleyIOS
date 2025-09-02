@@ -67,10 +67,9 @@ final class NotificationCardView: UIView {
 
 	// MARK: - Initializers
 
-	init(model: NotificationCardViewModel) {
+	override init(frame: CGRect) {
 		super.init(frame: .zero)
 		setupUI()
-		configure(with: model)
 	}
 
 	override func layoutSubviews() {
@@ -80,17 +79,17 @@ final class NotificationCardView: UIView {
 
 	@available(*, unavailable)
 	required init?(coder: NSCoder) { nil }
-}
-
-// MARK: - Private Methods
-
-private extension NotificationCardView {
 
 	func configure(with model: NotificationCardViewModel) {
 		titleLabel.text = model.title
 		messageLabel.text = model.message
 		dateLabel.text = model.date
 	}
+}
+
+// MARK: - Private Methods
+
+private extension NotificationCardView {
 
 	func setupUI() {
 		backgroundColor = AppColor.Background.clear
@@ -130,7 +129,8 @@ import SwiftUI
 			message: "Anton Ivanov invited you",
 			date: Date()
 		)
-		let view = NotificationCardView(model: model)
+		let view = NotificationCardView()
+		view.configure(with: model)
 		return view
 	}
 	.frame(width: .infinity, height: 68)
@@ -143,7 +143,8 @@ import SwiftUI
 			message: "12 September, 2:00-8:00 pm",
 			date: Date()
 		)
-		let view = NotificationCardView(model: model)
+		let view = NotificationCardView()
+		view.configure(with: model)
 		return view
 	}
 	.frame(width: .infinity, height: 68)
