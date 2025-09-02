@@ -46,7 +46,7 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
         textField.backgroundColor = .systemBackground
         textField.textColor = AppColor.Text.placeHolder
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.addTarget(self, action: #selector(сodeDidChange), for: .editingChanged)
+        textField.addTarget(self, action: #selector(codeDidChange), for: .editingChanged)
         return textField
     }()
 
@@ -58,20 +58,11 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
-    private lazy var getNewCodeButton: GradientTextButton = {
-        let button = GradientTextButton(type: .system)
+
+    private lazy var getNewCodeButton: UIButton = {
+        let button = UIButton(type: .system)
         button.setTitle("Get new code", for: .normal)
         button.titleLabel?.font = AppFont.Hero.regular(size: 14)
-        
-        button.textGradientColors = [
-            UIColor.red.cgColor,
-            UIColor.black.cgColor
-        ]
-
-        button.textGradientStartPoint = CGPoint(x: 0.5, y: 0)
-        button.textGradientEndPoint = CGPoint(x: 0.5, y: 1)
-
         button.translatesAutoresizingMaskIntoConstraints = false
         button.isHidden = true
         return button
@@ -90,11 +81,15 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
     init(phoneNumber: String) {
         self.phoneNumber = phoneNumber
         super.init(nibName: nil, bundle: nil)
-        print("🔍 Retain count after init: \(CFGetRetainCount(self))")
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        getNewCodeButton.applyTextGradient(withUnderline: true)
     }
 
     override func viewDidLoad() {
@@ -104,26 +99,12 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
         setupActions()
         startResendTimer()
         presenter?.viewDidLoad()
-        print("🔍 Retain count in viewDidLoad: \(CFGetRetainCount(self))")
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
-            print("🔍 Retain count after 0.1s: \(self.map { CFGetRetainCount($0) } ?? 0)")
-        }
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-            print("🔍 Retain count after 1s: \(self.map { CFGetRetainCount($0) } ?? 0)")
-        }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         timer?.invalidate()
         timer = nil
-        print("🔍 Retain count before disappear: \(CFGetRetainCount(self))")
-    }
-
-    deinit {
-        print("💥 PhoneVerifyViewController deallocated")
     }
 
     private func setupUI() {
@@ -135,7 +116,6 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
             containerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
             containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
             containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
-//            containerView.heightAnchor.constraint(equalToConstant: 350),
 
             backButton.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 22.5),
             backButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
@@ -201,7 +181,7 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
         presenter?.didTapResendCode()
     }
 
-    @objc private func сodeDidChange() {
+    @objc private func codeDidChange() {
         presenter?.codeDidChange(codeTextField.text ?? "")
     }
 

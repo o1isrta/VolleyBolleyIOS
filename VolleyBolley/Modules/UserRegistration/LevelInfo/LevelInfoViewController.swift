@@ -8,21 +8,28 @@ import UIKit
 
 class LevelInfoViewController: UIViewController {
 
+    private lazy var backgroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = AppEffect.BackgroundAlert.alert
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
     private lazy var contentView: UIView = {
         let container = UIView()
         container.translatesAutoresizingMaskIntoConstraints = false
-        container.backgroundColor = .clear
+        container.backgroundColor = AppColor.Background.modal
         container.layer.cornerRadius = 32
         container.clipsToBounds = true
         return container
     }()
 
-    private lazy var blurEffectView: UIVisualEffectView = {
-        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialDark)
-        let effectView = UIVisualEffectView(effect: blurEffect)
-        effectView.translatesAutoresizingMaskIntoConstraints = false
-        return effectView
-    }()
+//    private lazy var blurEffectView: UIVisualEffectView = {
+//        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialDark)
+//        let effectView = UIVisualEffectView(effect: blurEffect)
+//        effectView.translatesAutoresizingMaskIntoConstraints = false
+//        return effectView
+//    }()
 
     private lazy var backButton: UIButton = {
         let button = UIButton(type: .system)
@@ -40,11 +47,12 @@ class LevelInfoViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         animatePopupAppearance()
+        view.backgroundColor = AppEffect.BackgroundAlert.alert
     }
 
     private func setupUI() {
+        view.addSubview(backgroundView)
         view.addSubview(contentView)
-        contentView.addSubview(blurEffectView)
 
         [backButton,
          titleLabel,
@@ -53,15 +61,20 @@ class LevelInfoViewController: UIViewController {
         }
 
         NSLayoutConstraint.activate([
-            contentView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-//            contentView.heightAnchor.constraint(equalToConstant: 251),
+            backgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            backgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            backgroundView.topAnchor.constraint(equalTo: view.topAnchor),
+            backgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
 
-            blurEffectView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            blurEffectView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            blurEffectView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            blurEffectView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            contentView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            contentView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
+            contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
+
+//            blurEffectView.topAnchor.constraint(equalTo: contentView.topAnchor),
+//            blurEffectView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+//            blurEffectView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+//            blurEffectView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
 
             backButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 19.5),
             backButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
@@ -74,8 +87,6 @@ class LevelInfoViewController: UIViewController {
             levelsStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             levelsStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
         ])
-
-        contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 251).isActive = true
     }
 
     private func makeLevelRow() -> UIStackView {
@@ -147,3 +158,10 @@ class LevelInfoViewController: UIViewController {
         }, completion: nil)
     }
 }
+
+#if DEBUG
+@available(iOS 17.0, *)
+#Preview {
+    LevelInfoViewController()
+}
+#endif
