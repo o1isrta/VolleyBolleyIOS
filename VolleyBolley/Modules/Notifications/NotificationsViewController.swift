@@ -137,15 +137,16 @@ extension NotificationsViewController: UITableViewDataSource {
 
 #if DEBUG
 @available(iOS 17.0, *)
-#Preview {
+#Preview("Notifications") {
 	let model = NotificationCardViewModel.mockDataArray
-	+ NotificationCardViewModel.mockDataArray
-	+ NotificationCardViewModel.mockDataArray
-	+ NotificationCardViewModel.mockDataArray
-	+ NotificationCardViewModel.mockDataArray
-	+ NotificationCardViewModel.mockDataArray
-	+ NotificationCardViewModel.mockDataArray
-	+ NotificationCardViewModel.mockDataArray
+	NotificationsViewController(notifications: model)
+}
+@available(iOS 17.0, *)
+#Preview("Multiple notifications") {
+	let model = Array(
+		repeating: NotificationCardViewModel.mockDataArray,
+		count: 7
+	).flatMap { $0 }
 	NotificationsViewController(notifications: model)
 }
 #endif
