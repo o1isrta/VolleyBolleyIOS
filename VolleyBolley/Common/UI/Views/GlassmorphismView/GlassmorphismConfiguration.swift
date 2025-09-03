@@ -16,38 +16,6 @@ struct GlassmorphismConfiguration {
     var innerShadowRadius: CGFloat
     var innerShadowOffset: CGSize
 
-    init(
-        cornerRadius: CGFloat,
-        borderColor: UIColor,
-        borderWidth: CGFloat,
-        tintedBackgroundColor: UIColor,
-        blurIntensity: CGFloat,
-        theme: GlassmorphismView.Theme,
-        outerShadowColor: UIColor?,
-        outerShadowOpacity: Float,
-        outerShadowOffset: CGSize,
-        outerShadowRadius: CGFloat,
-        innerShadowColor: UIColor,
-        innerShadowOpacity: Float,
-        innerShadowRadius: CGFloat,
-        innerShadowOffset: CGSize
-    ) {
-        self.cornerRadius = cornerRadius
-        self.borderColor = borderColor
-        self.borderWidth = borderWidth
-        self.tintedBackgroundColor = tintedBackgroundColor
-        self.blurIntensity = blurIntensity
-        self.theme = theme
-        self.outerShadowColor = outerShadowColor
-        self.outerShadowOpacity = outerShadowOpacity
-        self.outerShadowOffset = outerShadowOffset
-        self.outerShadowRadius = outerShadowRadius
-        self.innerShadowColor = innerShadowColor
-        self.innerShadowOpacity = innerShadowOpacity
-        self.innerShadowRadius = innerShadowRadius
-        self.innerShadowOffset = innerShadowOffset
-    }
-
     static var standard: GlassmorphismConfiguration {
         GlassmorphismConfiguration(
             cornerRadius: 32,
