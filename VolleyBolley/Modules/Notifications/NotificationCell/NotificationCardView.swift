@@ -21,6 +21,19 @@ struct NotificationCardViewModel {
 		self.message = message
 		self.date = date.formatted(date: .numeric, time: .omitted)
 	}
+
+	static var mockDataArray = [
+		NotificationCardViewModel(
+			title: "New invite",
+			message: "Anton Ivanov invited you",
+			date: Date()
+		),
+		NotificationCardViewModel(
+			title: "Removed from tourney",
+			message: "12 September, 2:00-8:00 pm",
+			date: Date()
+		)
+	]
 }
 
 final class NotificationCardView: UIView {
@@ -124,11 +137,7 @@ import SwiftUI
 @available(iOS 17.0, *)
 #Preview {
 	UIViewPreview {
-		let model = NotificationCardViewModel(
-			title: "New invite",
-			message: "Anton Ivanov invited you",
-			date: Date()
-		)
+		let model = NotificationCardViewModel.mockDataArray[0]
 		let view = NotificationCardView()
 		view.configure(with: model)
 		return view
@@ -138,11 +147,7 @@ import SwiftUI
 	.padding()
 
 	UIViewPreview {
-		let model = NotificationCardViewModel(
-			title: "Removed from tourney",
-			message: "12 September, 2:00-8:00 pm",
-			date: Date()
-		)
+		let model = NotificationCardViewModel.mockDataArray[1]
 		let view = NotificationCardView()
 		view.configure(with: model)
 		return view
