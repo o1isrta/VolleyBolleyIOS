@@ -11,6 +11,7 @@ final class ProfileAssembly: Assembly {
 
     func assemble(container: Container) {
         container.register(ProfileViewController.self) { resolver in
+            let appRouter = resolver.resolve(AppRouter.self)
 
             guard
                 let usersRepository = resolver.resolve(UsersRepositoryProtocol.self),
@@ -19,7 +20,7 @@ final class ProfileAssembly: Assembly {
                 fatalError("Error: Failed to register ProfileViewController")
             }
 
-            let router = ProfileRouter()
+            let router = ProfileRouter(coordinator: appRouter)
 
             let interactor = ProfileInteractor(
                 usersRepository: usersRepository,

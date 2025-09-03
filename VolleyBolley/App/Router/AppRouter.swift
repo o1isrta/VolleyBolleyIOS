@@ -42,6 +42,16 @@ final class AppRouter {
         }
     }
 
+    // TODO: Заменить на переход по вкладке
+    func showPersonalData() {
+        guard let personalDataVC = resolver.resolve(PersonalDataViewController.self) else {
+            fatalError("PersonalDataViewController не зарегистрирован")
+        }
+        let nav = UINavigationController(rootViewController: personalDataVC)
+        window.rootViewController = nav
+        window.makeKeyAndVisible()
+    }
+
     // MARK: - Private Methods
 
     private func showOnboarding() {

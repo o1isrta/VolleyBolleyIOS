@@ -7,6 +7,7 @@
 
 protocol ProfilePresenterProtocol: AnyObject {
     func viewDidLoad()
+    func didSelectMenuItem(_ item: ProfileMenuItem)
 }
 
 final class ProfilePresenter: ProfilePresenterProtocol {
@@ -44,6 +45,15 @@ final class ProfilePresenter: ProfilePresenterProtocol {
             case .failure(let error):
                 self.view?.displayError(message: error.localizedDescription)
             }
+        }
+    }
+
+    func didSelectMenuItem(_ item: ProfileMenuItem) {
+        switch item {
+        case .personal:
+            router.showPersonalData()
+        default:
+            break
         }
     }
 }
