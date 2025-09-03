@@ -126,7 +126,7 @@ private extension NotificationCardView {
 
 			mainStackView.topAnchor.constraint(equalTo: backgroundView.topAnchor, constant: mainInset),
 			mainStackView.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: mainInset),
-			mainStackView.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: mainInset),
+			mainStackView.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -mainInset),
 			mainStackView.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: -mainInset)
 		])
 	}
