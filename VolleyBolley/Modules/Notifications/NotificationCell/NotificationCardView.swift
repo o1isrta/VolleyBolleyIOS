@@ -87,7 +87,9 @@ final class NotificationCardView: UIView {
 
 	override func layoutSubviews() {
 		super.layoutSubviews()
-		titleLabel.applyGradient()
+		if titleLabel.layer.sublayers?.contains(where: { $0 is CAGradientLayer }) != true {
+			titleLabel.applyGradient()
+		}
 	}
 
 	@available(*, unavailable)

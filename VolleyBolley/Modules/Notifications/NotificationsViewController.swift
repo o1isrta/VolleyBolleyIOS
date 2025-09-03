@@ -32,6 +32,7 @@ final class NotificationsViewController: BaseViewController {
 		tableView.dataSource = self
 		tableView.delegate = self
 //		tableView.showsVerticalScrollIndicator = false
+		tableView.isScrollEnabled = true
 		tableView.register(NotificationCell.self, forCellReuseIdentifier: NotificationCell.reuseIdentifier)
 		return tableView
 	}()
