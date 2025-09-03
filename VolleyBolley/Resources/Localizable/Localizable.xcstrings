@@ -892,6 +892,23 @@
         }
       }
     },
+    "notifications.screenTitle" : {
+      "comment" : "Notifications",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notifications"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Уведомления"
+          }
+        }
+      }
+    },
     "Payments" : {
       "comment" : "Profile",
       "localizations" : {
