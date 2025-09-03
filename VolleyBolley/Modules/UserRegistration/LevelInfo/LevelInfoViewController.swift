@@ -24,13 +24,6 @@ class LevelInfoViewController: UIViewController {
         return container
     }()
 
-//    private lazy var blurEffectView: UIVisualEffectView = {
-//        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialDark)
-//        let effectView = UIVisualEffectView(effect: blurEffect)
-//        effectView.translatesAutoresizingMaskIntoConstraints = false
-//        return effectView
-//    }()
-
     private lazy var backButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(systemName: "chevron.left"), for: .normal)
@@ -40,7 +33,7 @@ class LevelInfoViewController: UIViewController {
         return button
     }()
 
-    private lazy var titleLabel = CustomTitle(text: "About levels", isLarge: true)
+    private lazy var titleLabel = CustomTitle(text: String(localized:"About levels"), isLarge: true)
     private lazy var levelsStack = makeLevelRow()
 
     override func viewDidLoad() {
@@ -71,11 +64,6 @@ class LevelInfoViewController: UIViewController {
             contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
             contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
 
-//            blurEffectView.topAnchor.constraint(equalTo: contentView.topAnchor),
-//            blurEffectView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-//            blurEffectView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-//            blurEffectView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-
             backButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 19.5),
             backButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
 
@@ -96,12 +84,17 @@ class LevelInfoViewController: UIViewController {
         levelsStack.spacing = 21.73
         levelsStack.translatesAutoresizingMaskIntoConstraints = false
 
-        let levelTitles = ["Light:", "Medium:", "Hard:", "Pro:"]
+        let levelTitles = [
+            String(localized:"Light:"),
+            String(localized:"Medium:"),
+            String(localized:"Hard:"), String(localized:"Pro:")
+        ]
+
         let levelDescriptions = [
-            "New to the game",
-            "Know rules, still learning",
-            "Skilled, play often, tournaments experience",
-            "Elite level, official championships experience"
+            String(localized:"New to the game"),
+            String(localized:"Know rules, still learning"),
+            String(localized:"Skilled, play often, tournaments experience"),
+            String(localized:"Elite level, official championships experience")
         ]
 
         for count in 0..<levelTitles.count {

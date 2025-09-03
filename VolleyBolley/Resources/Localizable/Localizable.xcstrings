@@ -47,6 +47,9 @@
         }
       }
     },
+    "+ With the country code" : {
+
+    },
     "About" : {
       "comment" : "Profile",
       "localizations" : {
@@ -57,6 +60,9 @@
           }
         }
       }
+    },
+    "About levels" : {
+
     },
     "All players" : {
       "comment" : "Segment Control",
@@ -722,6 +728,12 @@
         }
       }
     },
+    "Elite level, official championships experience" : {
+
+    },
+    "Enter the 6-digit code" : {
+
+    },
     "FAQ" : {
       "localizations" : {
         "ru" : {
@@ -775,6 +787,9 @@
         }
       }
     },
+    "Get new code" : {
+
+    },
     "GET STARTED" : {
       "localizations" : {
         "ru" : {
@@ -784,6 +799,12 @@
           }
         }
       }
+    },
+    "Hard:" : {
+
+    },
+    "Know rules, still learning" : {
+
     },
     "Level" : {
       "comment" : "User info / Game Description",
@@ -795,6 +816,9 @@
           }
         }
       }
+    },
+    "Light:" : {
+
     },
     "List" : {
       "comment" : "Segment Control",
@@ -838,6 +862,9 @@
         }
       }
     },
+    "Medium:" : {
+
+    },
     "My games" : {
       "comment" : "Tab bar item title",
       "localizations" : {
@@ -869,6 +896,9 @@
           }
         }
       }
+    },
+    "New to the game" : {
+
     },
     "NEXT STEP" : {
       "comment" : "Next button",
@@ -924,6 +954,12 @@
           }
         }
       }
+    },
+    "Pro:" : {
+
+    },
+    "Registration" : {
+
     },
     "registration_title" : {
       "localizations" : {
@@ -987,6 +1023,9 @@
         }
       }
     },
+    "Skilled, play often, tournaments experience" : {
+
+    },
     "Support" : {
       "comment" : "Profile",
       "localizations" : {
@@ -1048,6 +1087,9 @@
           }
         }
       }
+    },
+    "VERIFY" : {
+
     },
     "VOLLEYBOLLEY" : {
       "localizations" : {
@@ -1121,6 +1163,9 @@
           }
         }
       }
+    },
+    "Your phone number" : {
+
     },
     "ОК" : {
       "localizations" : {

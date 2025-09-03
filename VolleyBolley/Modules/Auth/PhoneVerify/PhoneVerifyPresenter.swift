@@ -37,14 +37,17 @@ final class PhoneVerifyPresenter: PhoneVerifyPresenterProtocol, PhoneVerifyInter
     }
 
     func didTapVerify(with code: String) {
+        view?.showLoading(true)
         interactor.verifyCode(code, for: phoneNumber)
     }
 
     func verificationSucceeded() {
+        view?.showLoading(false)
         router.navigateToMainScreen()
     }
 
     func verificationFailed(with error: Error) {
+        view?.showLoading(false)
         view?.enableVerifyButton(false)
         if let view = view as? UIViewController {
             let alert = UIAlertController(title: "Error",
