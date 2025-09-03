@@ -40,7 +40,7 @@ private extension NotificationCell {
 
 	func setupUI() {
 		selectionStyle = .none
-		backgroundColor = .clear
+		backgroundColor = AppColor.Background.clear
 		contentView.addSubviews(notificationCardView)
 		NSLayoutConstraint.activate([
 			notificationCardView.topAnchor.constraint(equalTo: contentView.topAnchor),

@@ -26,7 +26,7 @@ final class NotificationsViewController: BaseViewController {
 	private var tableViewContentSizeObserver: NSKeyValueObservation?
 	private lazy var tableView: UITableView = {
 		let tableView = UITableView()
-		tableView.backgroundColor = .clear
+		tableView.backgroundColor = AppColor.Background.clear
 		tableView.separatorStyle = .none
 		tableView.rowHeight = UITableView.automaticDimension
 		tableView.dataSource = self
