@@ -15,7 +15,7 @@ final class NotificationCell: UITableViewCell {
 
 	// MARK: - Private Properties
 
-	private lazy var notificationCardView = NotificationCardView()
+	private let notificationCardView = NotificationCardView()
 
 	// MARK: - Initializers
 
