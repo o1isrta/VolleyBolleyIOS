@@ -85,15 +85,17 @@ final class NotificationCardView: UIView {
 		setupUI()
 	}
 
+	@available(*, unavailable)
+	required init?(coder: NSCoder) { nil }
+
+	// MARK: - Public Methods
+
 	override func layoutSubviews() {
 		super.layoutSubviews()
 		if titleLabel.layer.sublayers?.contains(where: { $0 is CAGradientLayer }) != true {
 			titleLabel.applyGradient()
 		}
 	}
-
-	@available(*, unavailable)
-	required init?(coder: NSCoder) { nil }
 
 	func configure(with model: NotificationCardViewModel) {
 		titleLabel.text = model.title
@@ -121,8 +123,6 @@ private extension NotificationCardView {
 			backgroundView.leadingAnchor.constraint(equalTo: leadingAnchor),
 			backgroundView.trailingAnchor.constraint(equalTo: trailingAnchor),
 			backgroundView.bottomAnchor.constraint(equalTo: bottomAnchor),
-
-			dateLabel.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor),
 
 			mainStackView.topAnchor.constraint(equalTo: backgroundView.topAnchor, constant: mainInset),
 			mainStackView.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: mainInset),
