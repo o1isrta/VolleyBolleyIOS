@@ -40,8 +40,7 @@ final class NotificationCardView: UIView {
 
 	// MARK: - Private Properties
 
-	private let backgroundView = GlassmorphismView(configuration: .notification)
-
+	private lazy var backgroundView = GlassmorphismView(configuration: .notification)
 	private lazy var titleLabel = CustomLabel(text: "", isBold: true)
 	private lazy var messageLabel = CustomLabel(text: "")
 	private lazy var textStackView: UIStackView = {
