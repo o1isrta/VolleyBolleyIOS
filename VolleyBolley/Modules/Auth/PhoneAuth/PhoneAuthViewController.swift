@@ -29,14 +29,14 @@ final class PhoneAuthViewController: UIViewController {
         return button
     }()
 
-    private lazy var titleLabel = CustomTitle(text: "Registration", isLarge: true)
+    private lazy var titleLabel = CustomTitle(text: String(localized: "Registration"), isLarge: true)
 
-    private lazy var phoneNumberLabel = CustomLabel(text: "Your phone number", isBold: true)
+    private lazy var phoneNumberLabel = CustomLabel(text: String(localized: "Your phone number"), isBold: true)
 
     private lazy var phoneTextField: UITextField = {
         let textField = UITextField()
         textField.attributedPlaceholder = NSAttributedString(
-            string: "+ With the country code",
+            string: String(localized: "+ With the country code"),
             attributes: [.foregroundColor: AppColor.Text.placeHolder]
         )
         textField.keyboardType = .phonePad

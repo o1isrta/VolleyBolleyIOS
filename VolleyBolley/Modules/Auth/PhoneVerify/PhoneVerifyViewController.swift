@@ -30,9 +30,9 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
         return button
     }()
 
-    private lazy var titleLabel = CustomTitle(text: "Registration", isLarge: true)
+    private lazy var titleLabel = CustomTitle(text: String(localized: "Registration"), isLarge: true)
 
-    private lazy var codeLabel = CustomLabel(text: "Enter the 6-digit code", isBold: true)
+    private lazy var codeLabel = CustomLabel(text: String(localized: "Enter the 6-digit code"), isBold: true)
 
     private lazy var codeTextField: UITextField = {
         let textField = UITextField()
@@ -61,7 +61,7 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
 
     private lazy var getNewCodeButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Get new code", for: .normal)
+        button.setTitle(String(localized: "Get new code"), for: .normal)
         button.titleLabel?.font = AppFont.Hero.regular(size: 14)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.isHidden = true
@@ -70,7 +70,7 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
 
     private lazy var verifyButton: NextStepButton = {
             let button = NextStepButton(
-                title: "VERIFY",
+                title: String(localized: "VERIFY"),
                 isActive: false,
                 target: self,
                 action: #selector(verifyTapped)
@@ -190,11 +190,20 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
     }
 
     @objc private func verifyTapped() {
+        ProgressHub.shared.show(in: view)
         presenter?.didTapVerify(with: codeTextField.text ?? "")
     }
 
     func enableVerifyButton(_ isEnabled: Bool) {
         verifyButton.setActive(isEnabled)
+    }
+
+    func showLoading(_ isLoading: Bool) {
+        if isLoading {
+            ProgressHub.shared.show(in: view)
+        } else {
+            ProgressHub.shared.hide()
+        }
     }
 }
 
