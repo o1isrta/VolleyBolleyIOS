@@ -30,7 +30,6 @@ final class NotificationsViewController: BaseViewController {
 		tableView.separatorStyle = .none
 		tableView.rowHeight = UITableView.automaticDimension
 		tableView.dataSource = self
-		tableView.delegate = self
 		tableView.showsVerticalScrollIndicator = false
 		tableView.register(NotificationCell.self, forCellReuseIdentifier: NotificationCell.reuseIdentifier)
 		return tableView
@@ -110,11 +109,6 @@ private extension NotificationsViewController {
 			self.tableViewHeightConstraint?.constant = newHeight
 		}
 	}
-}
-
-// MARK: - UITableViewDelegate
-
-extension NotificationsViewController: UITableViewDelegate {
 }
 
 // MARK: - UITableViewDataSource
