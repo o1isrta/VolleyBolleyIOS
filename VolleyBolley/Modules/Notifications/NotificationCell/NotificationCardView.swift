@@ -97,6 +97,7 @@ final class NotificationCardView: UIView {
 	}
 
 	func configure(with model: NotificationCardViewModel) {
+		backgroundView.resetForReuse()
 		titleLabel.text = model.title
 		messageLabel.text = model.message
 		dateLabel.text = model.date
