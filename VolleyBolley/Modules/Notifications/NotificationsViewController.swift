@@ -31,8 +31,7 @@ final class NotificationsViewController: BaseViewController {
 		tableView.rowHeight = UITableView.automaticDimension
 		tableView.dataSource = self
 		tableView.delegate = self
-//		tableView.showsVerticalScrollIndicator = false
-		tableView.isScrollEnabled = true
+		tableView.showsVerticalScrollIndicator = false
 		tableView.register(NotificationCell.self, forCellReuseIdentifier: NotificationCell.reuseIdentifier)
 		return tableView
 	}()
@@ -89,8 +88,7 @@ private extension NotificationsViewController {
 
 			tableView.topAnchor.constraint(equalTo: screenTitle.bottomAnchor, constant: 12),
 			tableView.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor, constant: mainSpacing),
-			tableView.trailingAnchor.constraint(equalTo: glassmorphismView.trailingAnchor, constant: -mainSpacing),
-//			tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)// TODO: scroll is broken
+			tableView.trailingAnchor.constraint(equalTo: glassmorphismView.trailingAnchor, constant: -mainSpacing)
 		])
 
 		tableViewHeightConstraint = tableView.heightAnchor.constraint(equalToConstant: 0)
