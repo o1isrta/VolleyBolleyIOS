@@ -1,0 +1,37 @@
+//
+//  PersonalDataPresenter.swift
+//  VolleyBolley
+//
+//  Created by Anastasia Evdokimovich on 01.09.2025.
+//
+
+import Foundation
+
+protocol PersonalDataPresenterProtocol: AnyObject {
+    func viewDidLoad()
+}
+
+final class PersonalDataPresenter: PersonalDataPresenterProtocol {
+
+    // MARK: - Public Properties
+
+    weak var view: PersonalDataViewProtocol?
+    let interactor: PersonalDataInteractorProtocol
+    let router: PersonalDataRouterProtocol
+
+    // MARK: - Initializers
+
+    init(
+        interactor: PersonalDataInteractorProtocol,
+        router: PersonalDataRouterProtocol
+    ) {
+        self.interactor = interactor
+        self.router = router
+    }
+
+    // MARK: - Public Methods
+
+    func viewDidLoad() {
+        interactor.loadData()
+    }
+}
