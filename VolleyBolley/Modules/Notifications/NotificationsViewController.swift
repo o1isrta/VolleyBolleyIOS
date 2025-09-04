@@ -7,7 +7,16 @@
 
 import UIKit
 
+protocol NotificationsViewControllerProtocol: AnyObject {
+	func displayNotifications(_ notifications: [NotificationCardViewModel])
+	func displayEmptyState()
+}
+
 final class NotificationsViewController: BaseViewController {
+
+    // MARK: - Public Properties
+
+    var presenter: NotificationsPresenterProtocol?
 
 	// MARK: - Private Properties
 
@@ -35,22 +44,13 @@ final class NotificationsViewController: BaseViewController {
 		return tableView
 	}()
 
-	// MARK: - Initializers
-
-	init(notifications: [NotificationCardViewModel]) {
-		super.init(nibName: nil, bundle: nil)
-		self.notifications = notifications
-	}
-
-	@available(*, unavailable)
-	required init?(coder: NSCoder) { nil }
-
 	// MARK: - Public Methods
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		setupUI()
 		setupTableViewContentSizeObserver()
+        presenter?.viewDidLoad()
 	}
 }
 
@@ -59,7 +59,7 @@ final class NotificationsViewController: BaseViewController {
 private extension NotificationsViewController {
 
 	@objc func backButtonTapped() {
-//		presenter?.backButtonTapped()
+		presenter?.backButtonTapped()
 	}
 
 	func setupUI() {
@@ -111,6 +111,22 @@ private extension NotificationsViewController {
 	}
 }
 
+// MARK: - NotificationsViewControllerProtocol
+
+extension NotificationsViewController: NotificationsViewControllerProtocol {
+
+	func displayNotifications(_ notifications: [NotificationCardViewModel]) {
+		self.notifications = notifications
+		tableView.reloadData()
+	}
+
+	func displayEmptyState() {
+		self.notifications = []
+		tableView.reloadData()
+		// TODO: need to add empty State
+	}
+}
+
 // MARK: - UITableViewDataSource
 
 extension NotificationsViewController: UITableViewDataSource {
@@ -139,7 +155,7 @@ extension NotificationsViewController: UITableViewDataSource {
 @available(iOS 17.0, *)
 #Preview("Notifications") {
 	let model = NotificationCardViewModel.mockDataArray
-	NotificationsViewController(notifications: model)
+	NotificationsAssembly.createModule(with: model)
 }
 @available(iOS 17.0, *)
 #Preview("Multiple notifications") {
@@ -147,6 +163,6 @@ extension NotificationsViewController: UITableViewDataSource {
 		repeating: NotificationCardViewModel.mockDataArray,
 		count: 7
 	).flatMap { $0 }
-	NotificationsViewController(notifications: model)
+	NotificationsAssembly.createModule(with: model)
 }
 #endif
