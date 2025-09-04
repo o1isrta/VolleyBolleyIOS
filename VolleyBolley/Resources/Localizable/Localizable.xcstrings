@@ -892,6 +892,23 @@
         }
       }
     },
+    "notifications.noNotifications" : {
+      "comment" : "Notifications",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No notifications found"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Уведомлений не найдено"
+          }
+        }
+      }
+    },
     "notifications.screenTitle" : {
       "comment" : "Notifications",
       "localizations" : {
