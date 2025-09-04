@@ -22,7 +22,7 @@ final class CustomNavBarView: UIView {
 	private lazy var avatarImageView = AvatarImageView()
 	private lazy var levelView = LevelBadgeView()
 	private lazy var nameLabel = CustomTitle(text: "")
-	private lazy var notificationImageView = NotificationImageView()
+	private lazy var notificationButtonView = NotificationButtonView()
 
 	// MARK: - Initializers
 
@@ -44,7 +44,7 @@ final class CustomNavBarView: UIView {
 	}
 
 	func hasNewNotifications(_ hasNewNotifications: Bool) {
-		notificationImageView.hasNewNotifications(hasNewNotifications)
+		notificationButtonView.hasNewNotifications(hasNewNotifications)
 	}
 }
 
@@ -61,7 +61,7 @@ private extension CustomNavBarView {
 		addSubviews(
 			avatarImageView,
 			nameLabel,
-			notificationImageView,
+			notificationButtonView,
 			levelView
 		)
 	}
@@ -79,10 +79,10 @@ private extension CustomNavBarView {
 
 	func setupConstraintsNotificationImageView() {
 		NSLayoutConstraint.activate([
-			notificationImageView.trailingAnchor.constraint(equalTo: levelView.leadingAnchor),
-			notificationImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: Constants.notificationBottom),
-			notificationImageView.widthAnchor.constraint(equalToConstant: Constants.avatarSize),
-			notificationImageView.heightAnchor.constraint(equalToConstant: Constants.notificationSize)
+			notificationButtonView.trailingAnchor.constraint(equalTo: levelView.leadingAnchor),
+			notificationButtonView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: Constants.notificationBottom),
+			notificationButtonView.widthAnchor.constraint(equalToConstant: Constants.avatarSize),
+			notificationButtonView.heightAnchor.constraint(equalToConstant: Constants.notificationSize)
 		])
 	}
 
