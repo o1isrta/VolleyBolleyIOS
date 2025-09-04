@@ -1,7 +1,7 @@
 import UIKit
 
 final class CustomNavBarView: UIView {
-	
+
 	private enum Constants {
 		static let avatarSize: CGFloat = 46
 		static let avatarLeading: CGFloat = 8
