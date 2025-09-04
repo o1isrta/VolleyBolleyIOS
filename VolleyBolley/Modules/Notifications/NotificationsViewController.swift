@@ -123,7 +123,6 @@ extension NotificationsViewController: NotificationsViewControllerProtocol {
 	func displayEmptyState() {
 		self.notifications = []
 		tableView.reloadData()
-		// TODO: need to add empty State
 	}
 }
 
@@ -131,8 +130,16 @@ extension NotificationsViewController: NotificationsViewControllerProtocol {
 
 extension NotificationsViewController: UITableViewDataSource {
 
+	func getRowsCount() -> Int {
+		if notifications.count == 0 {
+			return 1
+		}
+
+		return notifications.count
+	}
+
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		notifications.count
+		getRowsCount()
 	}
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -140,8 +147,12 @@ extension NotificationsViewController: UITableViewDataSource {
 			withIdentifier: NotificationCell.reuseIdentifier,
 			for: indexPath
 		) as? NotificationCell {
-			let item = notifications[indexPath.row]
-			cell.configure(with: item)
+			if notifications.count == 0 {
+				cell.configureAsNoNotifications()
+			} else {
+				let item = notifications[indexPath.row]
+				cell.configure(with: item)
+			}
 			return cell
 		}
 
@@ -153,12 +164,16 @@ extension NotificationsViewController: UITableViewDataSource {
 
 #if DEBUG
 @available(iOS 17.0, *)
-#Preview("Notifications") {
+#Preview("No") {
+	NotificationsAssembly.createModule(with: [])
+}
+@available(iOS 17.0, *)
+#Preview("Several") {
 	let model = NotificationCardViewModel.mockDataArray
 	NotificationsAssembly.createModule(with: model)
 }
 @available(iOS 17.0, *)
-#Preview("Multiple notifications") {
+#Preview("Multiple") {
 	let model = Array(
 		repeating: NotificationCardViewModel.mockDataArray,
 		count: 7

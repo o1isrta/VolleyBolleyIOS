@@ -42,7 +42,7 @@ extension NotificationsInteractor: NotificationsInteractorInputProtocol {
 
 	func fetchNotifications() {
 		// TODO: get data from network
-		let mockNotifications = NotificationCardViewModel.mockDataArray
+		let mockNotifications: [NotificationCardViewModel] = []
 		presenter?.didFetchNotifications(mockNotifications)
 	}
 }

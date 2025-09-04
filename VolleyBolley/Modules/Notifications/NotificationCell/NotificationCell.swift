@@ -17,6 +17,15 @@ final class NotificationCell: UITableViewCell {
 
 	private let notificationCardView = NotificationCardView()
 
+	private lazy var noNotificationLabel: UILabel = {
+		let label = UILabel()
+		label.font = AppFont.Hero.regular(size: 16)
+		label.textColor = AppColor.Text.primary
+		label.text = String(localized: "notifications.noNotifications")
+		label.isHidden = true
+		return label
+	}()
+
 	// MARK: - Initializers
 
 	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -31,6 +40,13 @@ final class NotificationCell: UITableViewCell {
 
 	func configure(with model: NotificationCardViewModel) {
 		notificationCardView.configure(with: model)
+		noNotificationLabel.isHidden = true
+		notificationCardView.isHidden = false
+	}
+
+	func configureAsNoNotifications() {
+		noNotificationLabel.isHidden = false
+		notificationCardView.isHidden = true
 	}
 }
 
@@ -41,8 +57,16 @@ private extension NotificationCell {
 	func setupUI() {
 		selectionStyle = .none
 		backgroundColor = AppColor.Background.clear
-		contentView.addSubviews(notificationCardView)
+
+		contentView.addSubviews(
+			noNotificationLabel,
+			notificationCardView
+		)
+		
 		NSLayoutConstraint.activate([
+			noNotificationLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: -6),
+			noNotificationLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+
 			notificationCardView.topAnchor.constraint(equalTo: contentView.topAnchor),
 			notificationCardView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
 			notificationCardView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
