@@ -44,7 +44,7 @@ final class AboutViewController: BaseViewController, AboutViewProtocol {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "About"
-        label.font = .systemFont(ofSize: 24, weight: .bold)
+        label.font = AppFont.ActayWide.bold(size: 24)
         label.textColor = .white
         label.textAlignment = .center
         return label
@@ -66,9 +66,13 @@ final class AboutViewController: BaseViewController, AboutViewProtocol {
         tableView.isScrollEnabled = false
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 44
         tableView.register(AboutCell.self, forCellReuseIdentifier: AboutCell.reuseIdentifier)
         return tableView
     }()
+
+    private var tableBackgroundHeightConstraint: NSLayoutConstraint?
 
     init(presenter: AboutPresenterProtocol) {
         self.presenter = presenter
@@ -97,6 +101,16 @@ final class AboutViewController: BaseViewController, AboutViewProtocol {
 
         items = newItems
         tableView.reloadData()
+        tableView.layoutIfNeeded()
+
+        // пересчёт высоты под контент
+        let topPart: CGFloat = 20 + 24 + 16 // отступы + кнопка + spacing
+        let contentHeight = tableView.contentSize.height
+        tableBackgroundHeightConstraint?.constant = topPart + contentHeight
+
+        UIView.animate(withDuration: 0.15) {
+            self.view.layoutIfNeeded()
+        }
     }
 
     private func setupView() {
@@ -108,11 +122,13 @@ final class AboutViewController: BaseViewController, AboutViewProtocol {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
 
+        tableBackgroundHeightConstraint = tableBackground.heightAnchor.constraint(equalToConstant: 240)
+        tableBackgroundHeightConstraint?.isActive = true
+
         NSLayoutConstraint.activate([
             tableBackground.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
             tableBackground.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             tableBackground.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            tableBackground.heightAnchor.constraint(equalToConstant: 240),
 
             // Кнопка
             backButton.topAnchor.constraint(equalTo: tableBackground.topAnchor, constant: 20),
@@ -133,15 +149,13 @@ final class AboutViewController: BaseViewController, AboutViewProtocol {
     }
 
     @objc private func backButtonTapped() {
-        dismiss(animated: true) // или navigationController?.popViewController(animated: true)
+        dismiss(animated: true)
     }
 }
-
 
 // MARK: - UITableViewDataSource
 
 extension AboutViewController: UITableViewDataSource {
-
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         items.count
     }
@@ -153,7 +167,9 @@ extension AboutViewController: UITableViewDataSource {
         ) as? AboutCell else {
             return UITableViewCell()
         }
-        cell.configure(with: items[indexPath.row])
+        let item = items[indexPath.row]
+        let isLast = indexPath.row == items.count - 1
+        cell.configure(with: item, isLast: isLast)
         return cell
     }
 }
@@ -165,6 +181,7 @@ extension AboutViewController: UITableViewDelegate {
         UITableView.automaticDimension
     }
 }
+
 
 #if DEBUG
 import SwiftUI
