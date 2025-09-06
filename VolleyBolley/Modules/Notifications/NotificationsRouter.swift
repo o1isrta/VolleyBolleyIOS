@@ -18,7 +18,7 @@ final class NotificationsRouter: NotificationsRouterProtocol {
 
 	weak var viewController: UIViewController?
 
-	// MARK: - Public Methoda
+	// MARK: - Public Methods
 
 	func navigateBack(from view: NotificationsViewControllerProtocol?) {
 		if let viewController = viewController {
