@@ -9,8 +9,9 @@ final class CustomNavBarView: UIView {
 
 		static let nameLabelLeading: CGFloat = 8
 
-		static let notificationSize: CGFloat = 24
-		static let notificationBottom: CGFloat = -19
+		static let notificationSize: CGFloat = 46
+		static let notificationTrailing: CGFloat = -2
+		static let notificationBottom: CGFloat = -8
 
 		static let navBarCornerRadius: CGFloat = 32
 		static let levelViewTrailing: CGFloat = -8
@@ -71,17 +72,21 @@ private extension CustomNavBarView {
 	func setupLayout() {
 		setupConstraintsAvatarImageView()
 		setupConstraintsNameLabel()
-		setupConstraintsNotificationImageView()
+		setupConstraintsNotificationButtonView()
 		setupConstraintsLevelView()
 	}
 
 	// MARK: - Constraints
 
-	func setupConstraintsNotificationImageView() {
+	func setupConstraintsNotificationButtonView() {
 		NSLayoutConstraint.activate([
-			notificationButtonView.trailingAnchor.constraint(equalTo: levelView.leadingAnchor),
+			notificationButtonView.trailingAnchor
+				.constraint(
+					equalTo: levelView.leadingAnchor,
+					constant: Constants.notificationTrailing
+				),
 			notificationButtonView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: Constants.notificationBottom),
-			notificationButtonView.widthAnchor.constraint(equalToConstant: Constants.avatarSize),
+			notificationButtonView.widthAnchor.constraint(equalToConstant: Constants.notificationSize),
 			notificationButtonView.heightAnchor.constraint(equalToConstant: Constants.notificationSize)
 		])
 	}
