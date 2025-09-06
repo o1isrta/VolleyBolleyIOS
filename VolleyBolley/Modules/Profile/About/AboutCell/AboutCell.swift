@@ -15,8 +15,8 @@ final class AboutCell: UITableViewCell {
 
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = AppFont.Hero.regular(size: 16)
-        label.textColor = .clear
+        label.font = AppFont.Hero.bold(size: 16)
+        label.textColor = AppColor.Background.clear
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -42,9 +42,17 @@ final class AboutCell: UITableViewCell {
 
     private var gradientLayer: CAGradientLayer?
 
+    private lazy var separatorLine: UIView = {
+        let view = CustomSeparator()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
+    // MARK: - Init
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        backgroundColor = .clear
+        backgroundColor = AppColor.Background.clear
         selectionStyle = .none
         setupView()
     }
@@ -53,11 +61,16 @@ final class AboutCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(with item: AboutItem) {
+    // MARK: - Configure
+
+    func configure(with item: AboutItem, isLast: Bool = false) {
         titleLabel.text = item.title
         valueLabel.text = item.value
+        separatorLine.isHidden = isLast
         setNeedsLayout()
     }
+
+    // MARK: - Layout
 
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -76,16 +89,30 @@ final class AboutCell: UITableViewCell {
         gradientLayer = gradient
     }
 
+    // MARK: - Private
+
+    private func setupSeparatorLineHeight() {
+        let height = separatorLine.heightAnchor.constraint(equalToConstant: 1 / UIScreen.main.scale)
+        height.isActive = true
+    }
+
     private func setupView() {
         contentView.addSubview(stack)
+        contentView.addSubview(separatorLine)
+
+        setupSeparatorLineHeight()
 
         NSLayoutConstraint.activate([
             stack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
-            stack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
             stack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             stack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
 
-            titleLabel.widthAnchor.constraint(equalToConstant: 120)
+            separatorLine.topAnchor.constraint(equalTo: stack.bottomAnchor, constant: 12),
+            separatorLine.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            separatorLine.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            separatorLine.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
+
+        titleLabel.widthAnchor.constraint(equalToConstant: 120).isActive = true
     }
 }

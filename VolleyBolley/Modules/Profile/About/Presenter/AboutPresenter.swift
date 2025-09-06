@@ -30,4 +30,3 @@ final class AboutPresenter: AboutPresenterProtocol {
         view?.displayAboutInfo(viewModel)
     }
 }
-
