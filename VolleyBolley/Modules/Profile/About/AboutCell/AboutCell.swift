@@ -16,7 +16,7 @@ final class AboutCell: UITableViewCell {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = AppFont.Hero.regular(size: 16)
-        label.textColor = .systemGreen // ✅ зелёные заголовки
+        label.textColor = .clear
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -40,6 +40,8 @@ final class AboutCell: UITableViewCell {
         return stack
     }()
 
+    private var gradientLayer: CAGradientLayer?
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         backgroundColor = .clear
@@ -54,6 +56,24 @@ final class AboutCell: UITableViewCell {
     func configure(with item: AboutItem) {
         titleLabel.text = item.title
         valueLabel.text = item.value
+        setNeedsLayout()
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        gradientLayer?.removeFromSuperlayer()
+        guard let text = titleLabel.text, !text.isEmpty else { return }
+
+        let gradient = CALayer.makeGradientTextMask(for: titleLabel)
+        gradient.frame = titleLabel.bounds
+
+        if let textLayer = gradient.mask as? CATextLayer {
+            textLayer.alignmentMode = .left
+        }
+
+        titleLabel.layer.addSublayer(gradient)
+        gradientLayer = gradient
     }
 
     private func setupView() {
@@ -65,7 +85,7 @@ final class AboutCell: UITableViewCell {
             stack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             stack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
 
-            titleLabel.widthAnchor.constraint(equalToConstant: 120) // фикс для выравнивания
+            titleLabel.widthAnchor.constraint(equalToConstant: 120)
         ])
     }
 }
