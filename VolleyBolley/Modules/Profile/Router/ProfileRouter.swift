@@ -26,6 +26,10 @@ final class ProfileRouter: ProfileRouterProtocol {
     }
 
     func showPersonalData() {
-        coordinator?.showPersonalData()
+        guard let personalDataVC = DIContainer.shared.resolver.resolve(PersonalDataViewController.self) else {
+            fatalError("PersonalDataViewController не зарегистрирован")
+        }
+
+        viewController?.navigationController?.pushViewController(personalDataVC, animated: true)
     }
 }

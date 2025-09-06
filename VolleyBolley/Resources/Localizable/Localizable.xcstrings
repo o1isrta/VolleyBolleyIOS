@@ -914,6 +914,16 @@
         }
       }
     },
+    "personalData.screenTitle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Personal data"
+          }
+        }
+      }
+    },
     "Players" : {
       "comment" : "Profile",
       "localizations" : {

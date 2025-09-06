@@ -9,13 +9,14 @@ import Foundation
 
 protocol PersonalDataPresenterProtocol: AnyObject {
     func viewDidLoad()
+    func backButtonTapped()
 }
 
 final class PersonalDataPresenter: PersonalDataPresenterProtocol {
 
     // MARK: - Public Properties
 
-    weak var view: PersonalDataViewProtocol?
+    weak var view: PersonalDataViewControllerProtocol?
     let interactor: PersonalDataInteractorProtocol
     let router: PersonalDataRouterProtocol
 
@@ -33,5 +34,9 @@ final class PersonalDataPresenter: PersonalDataPresenterProtocol {
 
     func viewDidLoad() {
         interactor.loadData()
+    }
+
+    func backButtonTapped() {
+        router.navigateBack(from: view)
     }
 }
