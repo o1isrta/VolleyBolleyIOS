@@ -41,6 +41,23 @@ final class AboutViewController: BaseViewController, AboutViewProtocol {
         return view
     }()
 
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "About"
+        label.font = .systemFont(ofSize: 24, weight: .bold)
+        label.textColor = .white
+        label.textAlignment = .center
+        return label
+    }()
+
+    private lazy var backButton: UtilityButton = {
+        let button = UtilityButton(style: .small)
+        button.setImage(.chevronBackward, for: .normal)
+        button.tintColor = AppColor.Icon.primary
+        button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        return button
+    }()
+
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .clear
@@ -83,8 +100,11 @@ final class AboutViewController: BaseViewController, AboutViewProtocol {
     }
 
     private func setupView() {
-        [tableBackground, tableView].forEach {
-            view.addSubview($0)
+        view.addSubview(tableBackground)
+        tableBackground.translatesAutoresizingMaskIntoConstraints = false
+
+        [backButton, titleLabel, tableView].forEach {
+            tableBackground.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
 
@@ -94,13 +114,29 @@ final class AboutViewController: BaseViewController, AboutViewProtocol {
             tableBackground.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             tableBackground.heightAnchor.constraint(equalToConstant: 240),
 
-            tableView.topAnchor.constraint(equalTo: tableBackground.topAnchor),
+            // Кнопка
+            backButton.topAnchor.constraint(equalTo: tableBackground.topAnchor, constant: 20),
+            backButton.leadingAnchor.constraint(equalTo: tableBackground.leadingAnchor, constant: 20),
+            backButton.heightAnchor.constraint(equalToConstant: 24),
+            backButton.widthAnchor.constraint(equalToConstant: 24),
+
+            // Заголовок
+            titleLabel.centerXAnchor.constraint(equalTo: tableBackground.centerXAnchor),
+            titleLabel.centerYAnchor.constraint(equalTo: backButton.centerYAnchor),
+
+            // Таблица
+            tableView.topAnchor.constraint(equalTo: backButton.bottomAnchor, constant: 16),
             tableView.leadingAnchor.constraint(equalTo: tableBackground.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: tableBackground.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: tableBackground.bottomAnchor)
         ])
     }
+
+    @objc private func backButtonTapped() {
+        dismiss(animated: true) // или navigationController?.popViewController(animated: true)
+    }
 }
+
 
 // MARK: - UITableViewDataSource
 
