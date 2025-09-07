@@ -29,7 +29,7 @@ final class ProgressHub: UIView {
     private override init(frame: CGRect) {
         super.init(frame: frame)
         isUserInteractionEnabled = true
-        backgroundColor = UIColor.black.withAlphaComponent(0.2)
+        backgroundColor = AppColor.Background.blur
 
         addSubview(blurView)
         addSubview(ballView)

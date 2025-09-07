@@ -47,7 +47,6 @@ final class PhoneAuthPresenter: PhoneAuthPresenterProtocol {
 extension PhoneAuthPresenter: PhoneAuthInteractorOutputProtocol {
     func didValidatePhoneNumber(isValid: Bool) {
         view?.setNextButtonActive(isValid)
-        view?.updateNextButtonTitle(isValid ? "SEND CODE" : "NEXT STEP")
 
         if isValid && isNextButtonTapped {
             router?.navigateToVerification(with: currentPhoneNumber)

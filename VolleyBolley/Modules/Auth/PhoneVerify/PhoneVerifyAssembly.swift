@@ -31,7 +31,6 @@ final class PhoneVerifyAssembly: Assembly {
 
             interactor.presenter = presenter
             phoneVerifyVC.presenter = presenter
-            print("🔍 VC retain count after creation: \(CFGetRetainCount(phoneVerifyVC))")
             return phoneVerifyVC
         }.inObjectScope(.transient)
 
