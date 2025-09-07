@@ -32,19 +32,32 @@ struct AboutItem {
 
 final class AboutViewController: BaseViewController, AboutViewProtocol {
 
+    // MARK: - Constants
+
+    private enum Constants {
+        static let cornerRadius: CGFloat = 32
+        static let buttonSize: CGFloat = 24
+        static let padding: CGFloat = 16
+        static let topInset: CGFloat = 20
+        static let titleFontSize: CGFloat = 24
+        static let animationDuration: TimeInterval = 0.15
+        static let initialTableHeight: CGFloat = 240
+    }
+
+    // MARK: - Private Properties
+
     private let presenter: AboutPresenterProtocol
     private var items: [AboutItem] = []
 
     private lazy var tableBackground: GlassmorphismView = {
         let view = GlassmorphismView()
-        view.cornerRadius = 32
+        view.cornerRadius = Constants.cornerRadius
         return view
     }()
 
-    private lazy var titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "About"
-        label.font = AppFont.ActayWide.bold(size: 24)
+    private lazy var titleLabel: CustomLabel = {
+        let label = CustomLabel(text: String(localized: "About"), isBold: true)
+        label.font = AppFont.ActayWide.bold(size: Constants.titleFontSize)
         label.textColor = .white
         label.textAlignment = .center
         return label
@@ -54,14 +67,18 @@ final class AboutViewController: BaseViewController, AboutViewProtocol {
         let button = UtilityButton(style: .small)
         button.setImage(.chevronBackward, for: .normal)
         button.tintColor = AppColor.Icon.primary
-        button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        button.addTarget(
+            self,
+            action: #selector(backButtonTapped),
+            for: .touchUpInside
+        )
         return button
     }()
 
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .clear
-        tableView.layer.cornerRadius = 32
+        tableView.layer.cornerRadius = Constants.cornerRadius
         tableView.separatorStyle = .none
         tableView.isScrollEnabled = false
         tableView.dataSource = self
@@ -74,6 +91,8 @@ final class AboutViewController: BaseViewController, AboutViewProtocol {
 
     private var tableBackgroundHeightConstraint: NSLayoutConstraint?
 
+    // MARK: - Init
+
     init(presenter: AboutPresenterProtocol) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -84,64 +103,88 @@ final class AboutViewController: BaseViewController, AboutViewProtocol {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
         presenter.viewDidLoad()
     }
 
+    // MARK: - Public Methods
+
     func displayAboutInfo(_ viewModel: AboutViewModel) {
-        var newItems: [AboutItem] = []
+        items = [
+            AboutItem(
+                title: String(localized: "Founder"),
+                value: viewModel.founder
+            ),
+            AboutItem(
+                title: String(localized: "Designed by"),
+                value: viewModel.designers.joined(separator: ", ")
+            ),
+            AboutItem(
+                title: String(localized: "Developed by"),
+                value: viewModel.developers.joined(separator: ", ")
+            )
+        ]
 
-        newItems.append(AboutItem(title: "Founder", value: viewModel.founder))
-        newItems.append(AboutItem(title: "Designed by", value: viewModel.designers.joined(separator: ", ")))
-
-        let devs = viewModel.developers.isEmpty ? "" : viewModel.developers.joined(separator: ", ")
-        newItems.append(AboutItem(title: "Developed by", value: devs))
-
-        items = newItems
         tableView.reloadData()
         tableView.layoutIfNeeded()
 
-        // пересчёт высоты под контент
-        let topPart: CGFloat = 20 + 24
-        let contentHeight = tableView.contentSize.height
-        tableBackgroundHeightConstraint?.constant = topPart + contentHeight
+        let topPart = Constants.topInset + Constants.buttonSize
+        tableBackgroundHeightConstraint?.constant = topPart + tableView.contentSize.height
 
-        UIView.animate(withDuration: 0.15) {
+        UIView.animate(withDuration: Constants.animationDuration) {
             self.view.layoutIfNeeded()
         }
     }
 
+    // MARK: - Private Methods
+
     private func setupView() {
-        view.addSubview(tableBackground)
-        tableBackground.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubviews(tableBackground)
 
-        [backButton, titleLabel, tableView].forEach {
-            tableBackground.addSubview($0)
-            $0.translatesAutoresizingMaskIntoConstraints = false
-        }
+        tableBackground.addSubviews(
+            backButton,
+            titleLabel,
+            tableView
+        )
 
-        tableBackgroundHeightConstraint = tableBackground.heightAnchor.constraint(equalToConstant: 240)
+        tableBackgroundHeightConstraint = tableBackground.heightAnchor.constraint(
+            equalToConstant: Constants.initialTableHeight
+        )
         tableBackgroundHeightConstraint?.isActive = true
 
         NSLayoutConstraint.activate([
-            tableBackground.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
-            tableBackground.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            tableBackground.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            tableBackground.topAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.topAnchor,
+                constant: Constants.padding
+            ),
+            tableBackground.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor,
+                constant: Constants.padding
+            ),
+            tableBackground.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor,
+                constant: -Constants.padding
+            ),
 
-            // Кнопка
-            backButton.topAnchor.constraint(equalTo: tableBackground.topAnchor, constant: 20),
-            backButton.leadingAnchor.constraint(equalTo: tableBackground.leadingAnchor, constant: 20),
-            backButton.heightAnchor.constraint(equalToConstant: 24),
-            backButton.widthAnchor.constraint(equalToConstant: 24),
+            backButton.topAnchor.constraint(
+                equalTo: tableBackground.topAnchor,
+                constant: Constants.topInset
+            ),
+            backButton.leadingAnchor.constraint(
+                equalTo: tableBackground.leadingAnchor,
+                constant: Constants.topInset
+            ),
+            backButton.heightAnchor.constraint(equalToConstant: Constants.buttonSize),
+            backButton.widthAnchor.constraint(equalToConstant: Constants.buttonSize),
 
-            // Заголовок
             titleLabel.centerXAnchor.constraint(equalTo: tableBackground.centerXAnchor),
             titleLabel.centerYAnchor.constraint(equalTo: backButton.centerYAnchor),
 
-            // Таблица
-            tableView.topAnchor.constraint(equalTo: backButton.bottomAnchor, constant: 0),
+            tableView.topAnchor.constraint(equalTo: backButton.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: tableBackground.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: tableBackground.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: tableBackground.bottomAnchor)
@@ -156,20 +199,26 @@ final class AboutViewController: BaseViewController, AboutViewProtocol {
 // MARK: - UITableViewDataSource
 
 extension AboutViewController: UITableViewDataSource {
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         items.count
     }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(
+        _ tableView: UITableView,
+        cellForRowAt indexPath: IndexPath
+    ) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: AboutCell.reuseIdentifier,
             for: indexPath
         ) as? AboutCell else {
             return UITableViewCell()
         }
+
         let item = items[indexPath.row]
         let isLast = indexPath.row == items.count - 1
         cell.configure(with: item, isLast: isLast)
+
         return cell
     }
 }
@@ -177,11 +226,16 @@ extension AboutViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 
 extension AboutViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+
+    func tableView(
+        _ tableView: UITableView,
+        heightForRowAt indexPath: IndexPath
+    ) -> CGFloat {
         UITableView.automaticDimension
     }
 }
 
+// MARK: - Preview
 
 #if DEBUG
 import SwiftUI
@@ -190,20 +244,20 @@ struct AboutViewControllerPreview: UIViewControllerRepresentable {
     class StubPresenter: AboutPresenterProtocol {
         weak var view: AboutViewProtocol?
         func viewDidLoad() {
-            let vm = AboutViewModel(
+            let aboutViewModel = AboutViewModel(
                 founder: "Dmitrii Zverev",
                 designers: ["Malika Rozieva", "Zemlyanskaya Yulia"],
                 developers: []
             )
-            view?.displayAboutInfo(vm)
+            view?.displayAboutInfo(aboutViewModel)
         }
     }
 
     func makeUIViewController(context: Context) -> some UIViewController {
         let presenter = StubPresenter()
-        let vc = AboutViewController(presenter: presenter)
-        presenter.view = vc
-        return vc
+        let aboutView = AboutViewController(presenter: presenter)
+        presenter.view = aboutView
+        return aboutView
     }
 
     func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {}

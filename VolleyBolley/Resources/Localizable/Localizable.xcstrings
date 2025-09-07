@@ -564,6 +564,18 @@
         }
       }
     },
+    "Designed by" : {
+      "comment" : "DesignedByLabelAboutView",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Дизайн"
+          }
+        }
+      }
+    },
     "DETAILS" : {
       "comment" : "\"Details\" button",
       "localizations" : {
@@ -571,6 +583,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ПОДРОБНЕЕ"
+          }
+        }
+      }
+    },
+    "Developed by" : {
+      "comment" : "DevelopedByLabelAboutView",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Разработка"
           }
         }
       }
@@ -749,6 +773,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Женский"
+          }
+        }
+      }
+    },
+    "Founder" : {
+      "comment" : "FounderLabelAboutView",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Основатель"
           }
         }
       }

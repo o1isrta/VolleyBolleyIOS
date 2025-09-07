@@ -11,22 +11,24 @@ import UIKit
 
 final class AboutCell: UITableViewCell {
 
+    // MARK: - Constants
+
     static let reuseIdentifier = "AboutCell"
 
-    private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.font = AppFont.Hero.bold(size: 16)
-        label.textColor = AppColor.Background.clear
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+    private enum Constants {
+        static let horizontalInset: CGFloat = 20
+        static let verticalInset: CGFloat = 12
+        static let minHeight: CGFloat = 51
+        static let titleWidth: CGFloat = 120
+    }
 
-    private let valueLabel: UILabel = {
-        let label = UILabel()
+    // MARK: - Private Properties
+
+    private let titleLabel = CustomLabel(text: "", isBold: true)
+
+    private let valueLabel: CustomLabel = {
+        let label = CustomLabel(text: "", isBold: false)
         label.font = AppFont.Hero.regular(size: 16)
-        label.textColor = AppColor.Text.primary
-        label.numberOfLines = 0
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
@@ -89,33 +91,51 @@ final class AboutCell: UITableViewCell {
         gradientLayer = gradient
     }
 
-    // MARK: - Private
+    // MARK: - Private Methods
 
     private func setupSeparatorLineHeight() {
-        let height = separatorLine.heightAnchor.constraint(equalToConstant: 1 / UIScreen.main.scale)
+        let height = separatorLine.heightAnchor.constraint(
+            equalToConstant: 1 / UIScreen.main.scale
+        )
         height.isActive = true
     }
 
     private func setupView() {
-        contentView.addSubview(stack)
-        contentView.addSubview(separatorLine)
-
+        contentView.addSubviews(stack, separatorLine)
         setupSeparatorLineHeight()
 
         NSLayoutConstraint.activate([
-            stack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
-            stack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            stack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            stack.topAnchor.constraint(
+                equalTo: contentView.topAnchor,
+                constant: Constants.verticalInset
+            ),
+            stack.leadingAnchor.constraint(
+                equalTo: contentView.leadingAnchor,
+                constant: Constants.horizontalInset
+            ),
+            stack.trailingAnchor.constraint(
+                equalTo: contentView.trailingAnchor,
+                constant: -Constants.horizontalInset
+            ),
 
-            separatorLine.topAnchor.constraint(equalTo: stack.bottomAnchor, constant: 12),
-            separatorLine.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            separatorLine.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            separatorLine.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            separatorLine.topAnchor.constraint(
+                equalTo: stack.bottomAnchor,
+                constant: Constants.verticalInset
+            ),
+            separatorLine.leadingAnchor.constraint(
+                equalTo: contentView.leadingAnchor,
+                constant: Constants.horizontalInset
+            ),
+            separatorLine.trailingAnchor.constraint(
+                equalTo: contentView.trailingAnchor,
+                constant: -Constants.horizontalInset
+            ),
+            separatorLine.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+
+            titleLabel.widthAnchor.constraint(equalToConstant: Constants.titleWidth),
+            contentView.heightAnchor.constraint(
+                greaterThanOrEqualToConstant: Constants.minHeight
+            )
         ])
-
-        titleLabel.widthAnchor.constraint(equalToConstant: 120).isActive = true
-
-        contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 51).isActive = true
-
     }
 }

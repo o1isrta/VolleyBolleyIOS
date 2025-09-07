@@ -5,9 +5,13 @@
 //  Created by Demain Petropavlov on 05.09.2025.
 //
 
+// MARK: - AboutInteractorProtocol
+
 protocol AboutInteractorProtocol: AnyObject {
     func fetchAboutInfo() -> AboutInfo
 }
+
+// MARK: - AboutInfo
 
 struct AboutInfo {
     let founder: String
@@ -15,12 +19,25 @@ struct AboutInfo {
     let developers: [String]
 }
 
+// MARK: - AboutInteractor
+
 final class AboutInteractor: AboutInteractorProtocol {
+
+    // MARK: - Constants
+
+    private enum Constants {
+        static let founder = "Dmitrii Zverev"
+        static let designers = ["Malika Rozieva", "Zemlyanskaya Yulia"]
+        static let developers = ["Team VolleyBolley"]
+    }
+
+    // MARK: - AboutInteractorProtocol
+
     func fetchAboutInfo() -> AboutInfo {
-        return AboutInfo(
-            founder: "Dmitrii Zverev",
-            designers: ["Malika Rozieva", "Zemlyanskaya Yulia"],
-            developers: ["Team VolleyBolley"]
+        AboutInfo(
+            founder: Constants.founder,
+            designers: Constants.designers,
+            developers: Constants.developers
         )
     }
 }
