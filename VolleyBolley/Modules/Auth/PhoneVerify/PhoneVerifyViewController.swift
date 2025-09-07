@@ -23,9 +23,9 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
     }()
 
     private lazy var backButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(systemName: "chevron.left"), for: .normal)
-        button.tintColor = .white
+        let button = UtilityButton(style: .small)
+        button.setImage(.chevronBackward, for: .normal)
+        button.tintColor = AppColor.Icon.primary
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -50,14 +50,7 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
         return textField
     }()
 
-    private lazy var resendLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = AppColor.Text.primary
-        label.font = AppFont.Hero.regular(size: 14)
-        label.textAlignment = .center
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+    private lazy var resendLabel = CustomLabel(text: "", isBold: true)
 
     private lazy var getNewCodeButton: UIButton = {
         let button = UIButton(type: .system)

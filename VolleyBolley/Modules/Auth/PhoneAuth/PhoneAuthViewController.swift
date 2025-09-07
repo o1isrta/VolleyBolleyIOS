@@ -1,5 +1,5 @@
 //
-//  PhoneRegViewController.swift
+//  PhoneAuthViewController.swift
 //  VolleyBolley
 //
 //  Created by Олег Козырев on 16.08.2025.
@@ -19,12 +19,9 @@ final class PhoneAuthViewController: UIViewController {
     }()
 
     private lazy var backButton: UIButton = {
-        var config = UIButton.Configuration.plain()
-        config.image = UIImage(systemName: "chevron.left")
-        config.baseForegroundColor = .white
-        config.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
-
-        let button = UIButton(configuration: config, primaryAction: nil)
+        let button = UtilityButton(style: .small)
+        button.setImage(.chevronBackward, for: .normal)
+        button.tintColor = AppColor.Icon.primary
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -80,14 +77,9 @@ final class PhoneAuthViewController: UIViewController {
         phoneTextField.becomeFirstResponder()
     }
 
-    deinit {
-        print("💥 PhoneVerifyViewController deallocated")
-    }
-
     private func setupUI() {
         view.addSubview(containerView)
-        [backButton, titleLabel, phoneNumberLabel, phoneTextField, nextButton]
-            .forEach { containerView.addSubview($0) }
+        containerView.addSubviews(backButton, titleLabel, phoneNumberLabel, phoneTextField, nextButton)
 
         NSLayoutConstraint.activate([
             containerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),

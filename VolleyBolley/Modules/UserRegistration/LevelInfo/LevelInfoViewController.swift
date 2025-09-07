@@ -25,9 +25,9 @@ class LevelInfoViewController: UIViewController {
     }()
 
     private lazy var backButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(systemName: "chevron.left"), for: .normal)
-        button.tintColor = .white
+        let button = UtilityButton(style: .small)
+        button.setImage(.chevronBackward, for: .normal)
+        button.tintColor = AppColor.Icon.primary
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(didTapBack), for: .touchUpInside)
         return button
@@ -64,8 +64,10 @@ class LevelInfoViewController: UIViewController {
             contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
             contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
 
-            backButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 19.5),
+            backButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 22.5),
             backButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            backButton.widthAnchor.constraint(equalToConstant: 18),
+            backButton.heightAnchor.constraint(equalToConstant: 24),
 
             titleLabel.centerYAnchor.constraint(equalTo: backButton.centerYAnchor),
             titleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
