@@ -114,5 +114,8 @@ final class AboutCell: UITableViewCell {
         ])
 
         titleLabel.widthAnchor.constraint(equalToConstant: 120).isActive = true
+
+        contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 51).isActive = true
+
     }
 }

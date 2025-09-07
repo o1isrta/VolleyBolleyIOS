@@ -96,7 +96,7 @@ final class AboutViewController: BaseViewController, AboutViewProtocol {
         newItems.append(AboutItem(title: "Founder", value: viewModel.founder))
         newItems.append(AboutItem(title: "Designed by", value: viewModel.designers.joined(separator: ", ")))
 
-        let devs = viewModel.developers.isEmpty ? "—" : viewModel.developers.joined(separator: ", ")
+        let devs = viewModel.developers.isEmpty ? "" : viewModel.developers.joined(separator: ", ")
         newItems.append(AboutItem(title: "Developed by", value: devs))
 
         items = newItems
@@ -104,7 +104,7 @@ final class AboutViewController: BaseViewController, AboutViewProtocol {
         tableView.layoutIfNeeded()
 
         // пересчёт высоты под контент
-        let topPart: CGFloat = 20 + 24 + 16 // отступы + кнопка + spacing
+        let topPart: CGFloat = 20 + 24
         let contentHeight = tableView.contentSize.height
         tableBackgroundHeightConstraint?.constant = topPart + contentHeight
 
@@ -141,7 +141,7 @@ final class AboutViewController: BaseViewController, AboutViewProtocol {
             titleLabel.centerYAnchor.constraint(equalTo: backButton.centerYAnchor),
 
             // Таблица
-            tableView.topAnchor.constraint(equalTo: backButton.bottomAnchor, constant: 16),
+            tableView.topAnchor.constraint(equalTo: backButton.bottomAnchor, constant: 0),
             tableView.leadingAnchor.constraint(equalTo: tableBackground.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: tableBackground.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: tableBackground.bottomAnchor)
