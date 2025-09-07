@@ -7,15 +7,23 @@
 
 import UIKit
 
+// MARK: - AboutRouterProtocol
+
 protocol AboutRouterProtocol: AnyObject {
     func attachViewController(_ view: UIViewController)
 }
 
+// MARK: - AboutRouter
+
 final class AboutRouter: AboutRouterProtocol {
+
+    // MARK: - Properties
+
     weak var viewController: UIViewController?
+
+    // MARK: - AboutRouterProtocol
 
     func attachViewController(_ view: UIViewController) {
         viewController = view
     }
 }
-
