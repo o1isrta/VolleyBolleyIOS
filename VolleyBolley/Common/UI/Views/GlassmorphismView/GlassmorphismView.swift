@@ -160,6 +160,29 @@ class GlassmorphismView: UIView {
         animator.fractionComplete = animatorFractionComplete
     }
 
+	/// Сбрасывает вид гласморфизма в чистое состояние, удаляя накопленные слои.
+	/// Этот метод следует вызывать при повторном использовании ячеек, чтобы предотвратить накопление слоев.
+    func resetForReuse() {
+		// Полностью удаляем слой внутренней тени
+        innerShadowLayer?.removeFromSuperlayer()
+        innerShadowLayer = nil
+        // Сбрасываем свойства слоя
+        layer.masksToBounds = false
+        // Удаляем все потерянные экземпляры CAShapeLayer, которые могли накопиться
+        layer.sublayers?.forEach { sublayer in
+            if sublayer is CAShapeLayer {
+                sublayer.removeFromSuperlayer()
+            }
+        }
+        // Останавливаем и сбрасываем animator если необходимо
+        if animator.state != .inactive {
+            animator.stopAnimation(true)
+        }
+        // Сбрасываем состояние blurView
+        blurView.effect = nil
+        animatorFractionComplete = 0.2
+    }
+
     // MARK: - Private Methods
 
     /// Обновляет все визуальные свойства при изменении параметров
