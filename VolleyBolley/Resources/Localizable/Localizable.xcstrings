@@ -58,6 +58,17 @@
         }
       }
     },
+    "ADD SELECTED" : {
+      "comment" : "Game",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ДОБАВИТЬ ВЫБРАННОЕ"
+          }
+        }
+      }
+    },
     "All players" : {
       "comment" : "Segment Control",
       "localizations" : {
@@ -955,6 +966,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Игроки"
+          }
+        }
+      }
+    },
+    "Private game" : {
+      "comment" : "Game",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Частная игра"
           }
         }
       }
