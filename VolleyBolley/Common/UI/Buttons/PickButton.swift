@@ -3,6 +3,7 @@ import UIKit
 /// Создание кнопки с градиентной заливкой от желтого к зеленому:
 /// title - заголовок кнопки,
 /// isSelected - состояние нажата/не нажата
+@available(*, deprecated, message: "Use GreenButton instead")
 class PickButton: UIButton {
 
     private var gradientLayer: CAGradientLayer?

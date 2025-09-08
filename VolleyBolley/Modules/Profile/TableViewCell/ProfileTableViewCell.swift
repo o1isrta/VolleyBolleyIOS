@@ -1,5 +1,5 @@
 //
-//  TableViewCell.swift
+//  ProfileTableViewCell.swift
 //  VolleyBolley
 //
 //  Created by Вадим on 05.08.2025.
