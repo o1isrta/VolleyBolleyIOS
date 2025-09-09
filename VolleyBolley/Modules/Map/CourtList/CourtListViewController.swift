@@ -28,13 +28,18 @@ final class CourtListViewController: UIViewController {
 	private var expandedIndex: Int?
 
 	private var tableViewHeightConstraint: NSLayoutConstraint?
-	private var tableViewContentSizeKeyPath: String = "contentSize"
+	private var tableViewContentSizeObserver: NSKeyValueObservation?
 	private lazy var tableView: UITableView = {
 		let tableView = UITableView()
+		tableView.backgroundColor = AppColor.Background.clear
 		tableView.separatorStyle = .none
+		tableView.dataSource = self
+		tableView.delegate = self
 		tableView.rowHeight = UITableView.automaticDimension
 		tableView.estimatedRowHeight = 80
 		tableView.showsVerticalScrollIndicator = false
+		tableView.register(CourtTableViewCell.self, forCellReuseIdentifier: CourtTableViewCell.reuseIdentifier)
+		tableView.register(CourtDetailsCell.self, forCellReuseIdentifier: CourtDetailsCell.reuseIdentifier)
 		return tableView
 	}()
 
@@ -50,11 +55,6 @@ final class CourtListViewController: UIViewController {
 		self.initialCourts = courts
 		// Store initial courts but don't set distances yet
 		self.courtList = courts.map { ($0, -1) }
-		// TODO: -
-		print("🏀 ListViewController: Initialized with \(courts.count) courts") // TODO
-		for (index, court) in courts.enumerated() {
-			print("🏀 Court \(index + 1): '\(court.location.courtName)' at \(court.location.latitude), \(court.location.longitude)")
-		}
 	}
 
 	@available(*, unavailable)
@@ -68,31 +68,10 @@ final class CourtListViewController: UIViewController {
 		super.viewDidLoad()
 		presenter.view = self
 		presenter.interactor = interactor
-		setupTable()
 		setupUI()
 		setupLocation()
 		setupSearchTextField()
-	}
-
-	override func observeValue(
-		forKeyPath keyPath: String?,
-		of object: Any?,
-		change: [NSKeyValueChangeKey : Any]?,
-		context: UnsafeMutableRawPointer?
-	) {
-		if keyPath == tableViewContentSizeKeyPath, object as? UITableView == tableView {
-			if let newSize = change?[.newKey] as? CGSize {
-				// Limiting the max height to preserve scrolling
-				let maxHeight = UIScreen.main.bounds.height - 200
-				let newHeight = min(newSize.height, maxHeight)
-
-				tableViewHeightConstraint?.constant = newHeight
-			}
-		}
-	}
-
-	deinit {
-		tableView.removeObserver(self, forKeyPath: tableViewContentSizeKeyPath)
+		setupTableViewContentSizeObserver()
 	}
 }
 
@@ -236,22 +215,28 @@ extension CourtListViewController: CLLocationManagerDelegate {
 
 private extension CourtListViewController {
 
+	func setupTableViewContentSizeObserver() {
+		tableViewContentSizeObserver = tableView.observe(
+			\.contentSize,
+			 options: [.new]
+		) { [weak self] _, change in
+			guard
+				let self,
+				let newSize = change.newValue
+			else { return }
+			// Limiting the max height to preserve scrolling
+			let maxHeight = UIScreen.main.bounds.height - 200
+			let newHeight = min(newSize.height, maxHeight)
+			self.tableViewHeightConstraint?.constant = newHeight
+		}
+	}
+
 	func getRowsCount() -> Int {
 		if filteredCourts.count == 0 {
 			return 1
 		}
 
 		return filteredCourts.count + (expandedIndex != nil ? 1 : 0)
-	}
-
-	func setupTable() {
-		tableView.dataSource = self
-		tableView.delegate = self
-		tableView.register(CourtTableViewCell.self, forCellReuseIdentifier: CourtTableViewCell.reuseIdentifier)
-		tableView.register(CourtDetailsCell.self, forCellReuseIdentifier: CourtDetailsCell.reuseIdentifier)
-		tableView.backgroundColor = .clear
-		// Dynamic height update
-		tableView.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
 	}
 
 	func setupUI() {
