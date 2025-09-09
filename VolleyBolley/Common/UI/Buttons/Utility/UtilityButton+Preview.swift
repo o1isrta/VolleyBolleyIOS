@@ -89,7 +89,7 @@ final class UtilityButtonPreviewVC: UIViewController {
         let bellBadgeActiveButton = makeButton(image: .bellBadge)
         if let baseConfig = bellBadgeActiveButton.configuration?.preferredSymbolConfigurationForImage {
             let normalConfig = baseConfig.applying(
-                UIImage.SymbolConfiguration(paletteColors: [AppColor.Icon.bellBadge, .white])
+                UIImage.SymbolConfiguration(paletteColors: [AppColor.Icon.bellBadge, AppColor.Icon.primary])
             )
 
             let highlightedConfig = baseConfig.applying(
