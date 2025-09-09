@@ -77,7 +77,7 @@ final class AboutViewController: BaseViewController, AboutViewProtocol {
 
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
-        tableView.backgroundColor = .clear
+        tableView.backgroundColor = AppColor.Background.clear
         tableView.layer.cornerRadius = Constants.cornerRadius
         tableView.separatorStyle = .none
         tableView.isScrollEnabled = false
@@ -200,7 +200,10 @@ final class AboutViewController: BaseViewController, AboutViewProtocol {
 
 extension AboutViewController: UITableViewDataSource {
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(
+        _ tableView: UITableView,
+        numberOfRowsInSection section: Int
+    ) -> Int {
         items.count
     }
 
