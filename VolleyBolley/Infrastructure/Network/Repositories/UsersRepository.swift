@@ -5,8 +5,6 @@
 //  Created by Nikolai Eremenko on 16.07.2025.
 //
 
-import Foundation
-
 protocol UsersRepositoryProtocol {
     func getCurrentUser(completion: @escaping (Result<User, Error>) -> Void)
 }

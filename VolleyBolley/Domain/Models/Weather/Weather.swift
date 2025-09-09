@@ -9,7 +9,7 @@ import Foundation
 
 struct Weather {
     let locationName: String
-    let coordinate: Coordinate
+    let coordinate: GeoPoint
     let date: Date
     let condition: WeatherCondition
     let temperature: Temperature

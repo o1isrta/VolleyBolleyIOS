@@ -1,18 +1,18 @@
 //
-//  UsersAPI.swift
+//  CourtsAPI.swift
 //  VolleyBolley
 //
-//  Created by Nikolai Eremenko on 16.07.2025.
+//  Created by Nikolai Eremenko on 21.08.2025.
 //
 
 import Foundation
 import Moya
 
-enum UsersAPI {
-    case getCurrentUser
+enum CourtsAPI {
+    case getCourts(country: String)
 }
 
-extension UsersAPI: TargetType {
+extension CourtsAPI: TargetType {
 
     // NOTE: baseURL is unused, actual value is overridden in MoyaProvider's endpointClosure
     var baseURL: URL {
@@ -21,22 +21,26 @@ extension UsersAPI: TargetType {
 
     var path: String {
         switch self {
-        case .getCurrentUser:
-            return "/users/me"
+        case .getCourts:
+            return "/courts"
         }
     }
 
     var method: Moya.Method {
         switch self {
-        case .getCurrentUser:
+        case .getCourts:
             return .get
         }
     }
 
     var task: Task {
         switch self {
-        case .getCurrentUser:
-            return .requestPlain
+        case .getCourts(let country):
+
+            return .requestParameters(
+                parameters: ["country": country],
+                encoding: URLEncoding.queryString
+            )
         }
     }
 
@@ -50,17 +54,23 @@ extension UsersAPI: TargetType {
 
     var sampleData: Data {
         switch self {
-        case .getCurrentUser:
+        case .getCourts(let country):
+            let fileName: String
+            switch country.lowercased() {
+            case "thailand":
+                fileName = "get_courts_thailand_sample"
+            case "cyprus":
+                fileName = "get_courts_cyprus_sample"
+            default:
+                fileName = "get_courts_thailand_sample" // fallback
+            }
+
             guard
-                let url = Bundle.main.url(
-                    forResource: "get_current_user_sample",
-                    withExtension: "json"
-                ),
+                let url = Bundle.main.url(forResource: fileName, withExtension: "json"),
                 let data = try? Data(contentsOf: url)
             else {
                 return Data()
             }
-
             return data
         }
     }

@@ -1,33 +1,33 @@
 //
-//  UsersService.swift
+//  CourtsService.swift
 //  VolleyBolley
 //
-//  Created by Nikolai Eremenko on 16.07.2025.
+//  Created by Nikolai Eremenko on 21.08.2025.
 //
 
 import Foundation
 import Moya
 
-protocol UsersServiceProtocol {
-    func fetchCurrentUser(completion: @escaping (Result<UserDTO, Error>) -> Void)
+protocol CourtsServiceProtocol {
+    func fetchCourts(completion: @escaping (Result<CourtDTO, Error>) -> Void)
 }
 
-final class UsersService: UsersServiceProtocol {
+final class CourtsService: CourtsServiceProtocol {
 
     // MARK: - Private Properties
 
-    private let provider: MoyaProvider<UserAPI>
+    private let provider: MoyaProvider<CourtsAPI>
 
     // MARK: - Initializers
 
-    init(provider: MoyaProvider<UserAPI>) {
+    init(provider: MoyaProvider<CourtsAPI>) {
         self.provider = provider
     }
 
     // MARK: - Public Methods
 
-    func fetchCurrentUser(completion: @escaping (Result<UserDTO, Error>) -> Void) {
-        provider.request(.getCurrentUser) { result in
+    func fetchCourts(completion: @escaping (Result<CourtDTO, Error>) -> Void) {
+        provider.request(.getCourts(country: "thailand")) { result in
             do {
                 let response = try result.get()
 
@@ -35,9 +35,10 @@ final class UsersService: UsersServiceProtocol {
                     throw MoyaError.statusCode(response)
                 }
 
-                let dto = try AppJSONDecoders.server.decode(UserDTO.self, from: response.data)
+                let dto = try AppJSONDecoders.server.decode(CourtDTO.self, from: response.data)
                 completion(.success(dto))
             } catch {
+                // TODO: - Handle error
 #if DEBUG
                 print("UsersService.fetchCurrentUser failed: \(error)")
 #endif

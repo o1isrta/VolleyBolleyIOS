@@ -33,7 +33,6 @@ enum SketchButtonStateStyle {
             )
         case .highlightedNormal:
             return SketchButtonStyle(
-                backgroundColor: AppColor.Background.buttonSketchSelected,
                 backgroundEffectProvider: { AppEffect.glassHightLighted() }
             )
         case .highlightedSelected:

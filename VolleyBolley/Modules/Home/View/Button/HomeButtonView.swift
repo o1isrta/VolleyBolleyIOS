@@ -7,44 +7,11 @@
 
 import UIKit
 
-enum HomeButtonConfig {
-    case createNewGame
-    case findGame
-
-    var title: String {
-        switch self {
-        case .createNewGame: return String(localized: "common.createNewGame")
-        case .findGame: return String(localized: "home.findGame")
-        }
-    }
-
-    var gamesAvailableTitle: String? {
-        switch self {
-        case .findGame: return String(localized: "home.gamesAvailable")
-        default : return nil
-        }
-    }
-
-    //    var actionImage: UIImage? {
-//        switch self {
-//        case .createTourney: return UIImage.Icon.createTourney
-//        case .invitePlayers: return UIImage.Icon.invitePlayers
-//        case .sendInvites: return UIImage.Icon.sendInvites
-//        case .saveGame: return UIImage.Icon.saveGame
-//        case .donate: return UIImage.Icon.donate
-//        case .shareLink: return UIImage.Icon.share
-//        }
-//    }
-}
-
 class BaseHomeButtonView: UIButton {
 
     // MARK: - Private Properties
 
-    private let styleConfig: HomeButtonConfig
-    private var onTap: ((BaseHomeButtonView) -> Void)?
 
-    private var currentCornerRadius: CGFloat = 0
 
     private struct VisualState {
         let backgroundColor: UIColor
@@ -99,8 +66,7 @@ class BaseHomeButtonView: UIButton {
 
     // MARK: - Initializers
 
-    init(_ config: HomeButtonConfig) {
-        self.styleConfig = config
+    init() {
         super.init(frame: .zero)
 
         let config = UIButton.Configuration.plain()
@@ -150,12 +116,6 @@ class BaseHomeButtonView: UIButton {
 //
 //            weatherView.configure(with: WeatherViewModel)
         }
-    }
-
-    func setAction(_ action: @escaping (BaseHomeButtonView) -> Void) {
-        removeTarget(self, action: #selector(didTap), for: .touchUpInside)
-        onTap = action
-        addTarget(self, action: #selector(didTap), for: .touchUpInside)
     }
 
     // MARK: - Private Methods
@@ -225,13 +185,6 @@ class BaseHomeButtonView: UIButton {
 //            backgroundEffect: style.backgroundEffectProvider?()
 //        )
 //    }
-
-    // MARK: - Actions
-
-    @objc
-    private func didTap() {
-        onTap?(self)
-    }
 
     // MARK: - Layout
 

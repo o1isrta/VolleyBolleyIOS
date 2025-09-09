@@ -11,14 +11,14 @@ import Swinject
 final class NetworkAssembly: Assembly {
     func assemble(container: Container) {
 
-        container.register(MoyaProvider<UsersAPI>.self) { resolver in
+        container.register(MoyaProvider<UserAPI>.self) { resolver in
             guard let environment = resolver.resolve(AppEnvironment.self) else {
                 fatalError("AppEnvironment is not resolved")
             }
 
             let logger = NetworkLoggerPlugin(configuration: .init(logOptions: .verbose))
 
-            let endpointClosure: (UsersAPI) -> Endpoint = { target in
+            let endpointClosure: (UserAPI) -> Endpoint = { target in
                 let url = environment.baseURL.appendingPathComponent(target.path).absoluteString
 
                 return Endpoint(
@@ -30,16 +30,16 @@ final class NetworkAssembly: Assembly {
                 )
             }
 
-//            let endpointClosure: (UsersAPI) -> Endpoint = { target in
+//            let endpointClosure: (UserAPI) -> Endpoint = { target in
 //                let defaultEndpoint = MoyaProvider.defaultEndpointMapping(for: target)
 //                return defaultEndpoint.replacing(baseURL: environment.baseURL)
 //            }
 
-            let stubClosure: (UsersAPI) -> StubBehavior = environment.useStubbedProvider //NetworkEnvironment.current.useStubbedProvider
+            let stubClosure: (UserAPI) -> StubBehavior = environment.useStubbedProvider //NetworkEnvironment.current.useStubbedProvider
                 ? { _ in .immediate }
                 : MoyaProvider.neverStub
 
-            return MoyaProvider<UsersAPI>(
+            return MoyaProvider<UserAPI>(
                 endpointClosure: endpointClosure,
                 stubClosure: stubClosure,
                 plugins: [logger]
@@ -49,7 +49,7 @@ final class NetworkAssembly: Assembly {
 
         container.register(UsersServiceProtocol.self) { resolver in
             guard
-                let provider = resolver.resolve(MoyaProvider<UsersAPI>.self)
+                let provider = resolver.resolve(MoyaProvider<UserAPI>.self)
             else {
                 fatalError("Error: Failed to resolve MoyaProvider<UsersAPI>")
             }

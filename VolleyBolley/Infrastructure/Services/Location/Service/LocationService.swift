@@ -27,8 +27,20 @@ final class LocationService: NSObject, LocationServiceProtocol, CLLocationManage
         }
     }
 
+//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+//        if let location = locations.first {
+//            onLocationUpdate?(location)
+//            onLocationUpdate = nil
+//        }
+//    }
+//
+//    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+//        print("Location error: \(error.localizedDescription)")
+//        onLocationUpdate?(nil)
+//        onLocationUpdate = nil
+//    }
+
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Location error: \(error.localizedDescription)")
     }
 }
-

@@ -1,0 +1,51 @@
+[
+    {
+        "court_id": 101,
+        "price_description": "200฿/60min\n300฿/120min",
+        "description": "Best place in Phuket to play Beachvolleyball.",
+        "contact_list": [
+            {
+                "contact_type": "PHONE",
+                "contact": "+66 872 567 608"
+            },
+            {
+                "contact_type": "EMAIL",
+                "contact": "info@phuket-court.com"
+            }
+        ],
+        "photo_url": "https://github.com/xcode73/myapp-mocks/blob/main/VolleyBolley/Images/Venues/beach_volleyball/img1.png?raw=true",
+        "tags": [
+            "10 courts",
+            "Outdoor",
+            "Lights"
+        ],
+        "court_location": {
+            "latitude": 7.84590,
+            "longitude": 98.29348,
+            "court_name": "Beach Volleyball",
+            "location_name": "Patak Rd, Mueang"
+        }
+    },
+    {
+        "court_id": 102,
+        "price_description": "150฿/60min",
+        "description": "Both locals and tourists play",
+        "contact_list": [
+            {
+                "contact_type": "PHONE",
+                "contact": "+66 959 590 273"
+            }
+        ],
+        "photo_url": "https://github.com/xcode73/myapp-mocks/blob/main/VolleyBolley/Images/Venues/beachka/img1.png?raw=true",
+        "tags": [
+            "2 courts",
+            "Indoor"
+        ],
+        "court_location": {
+            "latitude": 12.90704,
+            "longitude": 100.86010,
+            "court_name": "BeachKa Volley",
+            "location_name": "Pattaya City, Chon Buri 20150"
+        }
+    }
+]

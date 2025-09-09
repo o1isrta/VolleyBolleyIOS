@@ -35,8 +35,10 @@ final class HomePresenter: HomePresenterProtocol {
     // MARK: - Public Methods
 
     func viewDidLoad() {
-        let message = interactor.fetchGreeting()
-        view?.showGreeting(message)
+
+//        let nearestCourt = interactor.fetchNearestCourt()
+//
+//        view?.displayCreateNewGameButton(viewModel: CreateNewGameButtonViewModel())
 
         interactor.loadUserData { [weak self] result in
             guard let self else { return }

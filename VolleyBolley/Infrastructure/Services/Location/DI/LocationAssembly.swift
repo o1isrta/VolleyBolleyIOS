@@ -17,10 +17,16 @@ final class LocationAssembly: Assembly {
 
             switch environment {
             case .mock:
-                return MockLocationService(lat: 55.75, lon: 37.61) // Москва, например
+                return MockLocationService(lat: 55.75, lon: 37.61)
             case .staging, .production:
                 return LocationService()
             }
+        }
+        .inObjectScope(.container)
+
+        container.register(LocationRepositoryProtocol.self) { resolver in
+            let service = resolver.resolve(LocationServiceProtocol.self)!
+            return LocationRepository(service: service)
         }
         .inObjectScope(.container)
     }

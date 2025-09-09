@@ -8,8 +8,8 @@
 import UIKit
 
 protocol HomeViewProtocol: AnyObject {
-    func showGreeting(_ message: String)
     func displayNavBar(viewModel: NavBarViewModel)
+    func displayCreateNewGameButton(viewModel: CreateNewGameButtonViewModel)
     func displayError(message: String)
 }
 
@@ -26,12 +26,6 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-
-//    private lazy var createGameButton: CreateGameButton = {
-//        let view = CreateGameButton()
-//        view.addTarget(self, action: #selector(didTapCreate), for: .touchUpInside)
-//        return view
-//    }()
 
     private lazy var navigationBarView: CustomNavBarView = {
         let view = CustomNavBarView()
@@ -65,28 +59,27 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
         return view
     }()
 
-    private lazy var createNewGameButton: AppButtonActionView = {
-        let view = AppButtonActionView(.invitePlayers)
-        view.setAction(self.didTapCreateNewGameButton)
+    private lazy var createNewGameButton = CreateNewGameButton()
+
+    private lazy var findGameButton: SketchButton = {
+        let view = SketchButton()
+        view.setTitle(String(localized: .homeFindGame), for: .normal)
+        view.setImage(UIImage.Icon.createTourney, for: .normal)
         return view
     }()
 
-    private lazy var findGameButton: AppButtonActionView = {
-        let view = AppButtonActionView(.saveGame)
-        view.setAction(self.didTapFindGameButton)
-        return view
-    }()
-
-    private lazy var createTourneyButton: AppButtonActionView = {
-        let view = AppButtonActionView(.createTourney)
+    private lazy var createTourneyButton: SketchButton = {
+        let view = SketchButton()
         view.isSelected = true
-        view.setAction(self.didTapCreateTourneyButton)
+        view.setTitle(String(localized: .commonCreateTourney), for: .normal)
+        view.setImage(UIImage.Icon.createTourney, for: .normal)
         return view
     }()
 
-    private lazy var donateButton: AppButtonActionView = {
-        let view = AppButtonActionView(.donate)
-        view.setAction(self.didTapDonateButton)
+    private lazy var donateButton: SketchButton = {
+        let view = SketchButton()
+        view.setTitle(String(localized: .commonDonate), for: .normal)
+        view.setImage(UIImage.Icon.donate, for: .normal)
         return view
     }()
 
@@ -113,12 +106,12 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
 
     // MARK: - Public Methods
 
-    func showGreeting(_ message: String) {
-        print(message)
-    }
-
     func displayNavBar(viewModel: NavBarViewModel) {
         navigationBarView.configure(with: viewModel)
+    }
+
+    func displayCreateNewGameButton(viewModel: CreateNewGameButtonViewModel) {
+        createNewGameButton.configure(with: viewModel)
     }
 
     func displayError(message: String) {
@@ -126,22 +119,6 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
     }
 
     // MARK: - Private Methods
-
-    private func didTapCreateNewGameButton(_ button: AppButtonActionView) {
-        print("CreateNewGame button tapped")
-    }
-
-    private func didTapFindGameButton(_ button: AppButtonActionView) {
-        print("FindGame button tapped")
-    }
-
-    private func didTapCreateTourneyButton(_ button: AppButtonActionView) {
-        print("CreateTourney button tapped")
-    }
-
-    private func didTapDonateButton(_ button: AppButtonActionView) {
-        print("Donate button tapped")
-    }
 
     private func setupView() {
         view.addSubview(navigationBarView)
@@ -166,7 +143,6 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
         setupConstraintsNavBar()
         setupConstraintsBackgroundImageView()
         setupConstraintsVStackView()
-        setupConstraintsBottomButtonViews()
     }
 
     // MARK: - Constraints
@@ -197,20 +173,6 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
             mainStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100)
         ])
     }
-
-    private func setupConstraintsBottomButtonViews() {
-        [createTourneyButton, donateButton].forEach {
-            $0.heightAnchor.constraint(equalToConstant: 180).isActive = true
-        }
-    }
-
-//    private func setupConstraintsCreateGameButton() {
-//        NSLayoutConstraint.activate([
-//            createGameButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 285),
-//            createGameButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
-//            createGameButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8)
-//        ])
-//    }
 }
 
 // MARK: - Preview

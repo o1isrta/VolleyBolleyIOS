@@ -1,0 +1,47 @@
+[
+    {
+        "court_id": 201,
+        "price_description": "200฿/60min\n300฿/120min",
+        "description": "Private & group beach volley training programs based on top-level sport training",
+        "contact_list": [
+            {
+                "contact_type": "PHONE",
+                "contact": "+35 799 343 090"
+            }
+        ],
+        "photo_url": "https://github.com/xcode73/myapp-mocks/blob/main/VolleyBolley/Images/Venues/jp_beach_volley_academy/Screenshot%202025-08-11%20at%2016.23.32.png?raw=true",
+        "tags": [
+            "3 courts",
+            "Outdoor",
+            "Lights"
+        ],
+        "court_location": {
+            "latitude": 34.71156,
+            "longitude": 33.16695,
+            "court_name": "JP Beach Volley Academy",
+            "location_name": "St Raphael Beach Parking Lot, Pyrgos 4520"
+        }
+    },
+    {
+        "court_id": 202,
+        "price_description": "150฿/60min",
+        "description": "Our multi-purpose venue is great for adults and children alike. At heart we are a multipurpose sports venue!",
+        "contact_list": [
+            {
+                "contact_type": "PHONE",
+                "contact": "+35 799 343 090"
+            }
+        ],
+        "photo_url": "https://github.com/xcode73/myapp-mocks/blob/main/VolleyBolley/Images/Venues/wembley/img1.png?raw=true",
+        "tags": [
+            "2 courts",
+            "Indoor"
+        ],
+        "court_location": {
+            "latitude": 34.98787,
+            "longitude": 33.85095,
+            "court_name": "Wembley Park Athletic Center",
+            "location_name": "Boumboulinas 1, Xylofagou 7520"
+        }
+    }
+]
