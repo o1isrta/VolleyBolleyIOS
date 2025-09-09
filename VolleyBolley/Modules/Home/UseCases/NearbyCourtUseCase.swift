@@ -7,7 +7,7 @@
 
 import Foundation
 
-//final class NearbyCourtUseCase: NearbyCourtUseCaseProtocol {
+// final class NearbyCourtUseCase: NearbyCourtUseCaseProtocol {
 //    private let locationRepository: LocationRepositoryProtocol
 //    private let courtRepository: CourtsRepositoryProtocol
 //    // private let weatherRepository: WeatherRepositoryProtocol
@@ -56,4 +56,4 @@ import Foundation
 //            }
 //        }
 //    }
-//}
+// }

@@ -5,13 +5,12 @@
 //  Created by Nikolai Eremenko on 05.08.2025.
 //
 
-//import Foundation
-//import CoreLocation
-//import WeatherKit
+// import Foundation
+// import CoreLocation
+// import WeatherKit
 //
-//final class MockWeatherService: WeatherServiceProtocol {
-    
-
+// final class MockWeatherService: WeatherServiceProtocol {
+//
 //    func getCurrentWeather(for location: CLLocation) async throws -> CurrentWeather {
 //        return CurrentWeather(
 //            temperature: Measurement(value: 22.0, unit: .celsius),
@@ -22,7 +21,14 @@
 //            uvIndex: 5,
 //            condition: .partlyCloudy,
 //            symbolName: "cloud.sun",
-//            precipitation: Precipitation(amount: Measurement(value: 0.0, unit: .millimeters), chance: 0.0, intensity: .none),
+//            precipitation: Precipitation(
+//                amount: Measurement(
+//                    value: 0.0,
+//                    unit: .millimeters
+//                ),
+//                chance: 0.0,
+//                intensity: .none
+//            ),
 //            cloudCover: 0.3,
 //            visibility: Measurement(value: 10.0, unit: .kilometers),
 //            sunrise: Date(),
@@ -33,4 +39,4 @@
 //            conditionDescription: "Partly Cloudy"
 //        )
 //    }
-//}
+// }

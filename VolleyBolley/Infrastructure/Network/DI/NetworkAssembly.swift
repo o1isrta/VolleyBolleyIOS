@@ -30,12 +30,7 @@ final class NetworkAssembly: Assembly {
                 )
             }
 
-//            let endpointClosure: (UserAPI) -> Endpoint = { target in
-//                let defaultEndpoint = MoyaProvider.defaultEndpointMapping(for: target)
-//                return defaultEndpoint.replacing(baseURL: environment.baseURL)
-//            }
-
-            let stubClosure: (UserAPI) -> StubBehavior = environment.useStubbedProvider //NetworkEnvironment.current.useStubbedProvider
+            let stubClosure: (UserAPI) -> StubBehavior = environment.useStubbedProvider
                 ? { _ in .immediate }
                 : MoyaProvider.neverStub
 
