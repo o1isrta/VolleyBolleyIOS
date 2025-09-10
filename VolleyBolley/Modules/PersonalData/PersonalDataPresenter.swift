@@ -16,7 +16,7 @@ final class PersonalDataPresenter: PersonalDataPresenterProtocol {
 
     // MARK: - Public Properties
 
-    weak var view: PersonalDataViewControllerProtocol?
+    weak var view: PersonalDataViewProtocol?
     let interactor: PersonalDataInteractorProtocol
     let router: PersonalDataRouterProtocol
 

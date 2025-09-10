@@ -7,19 +7,23 @@
 
 import UIKit
 
-protocol PersonalDataViewControllerProtocol: AnyObject {
+protocol PersonalDataViewProtocol: AnyObject {
 
 }
 
-final class PersonalDataViewController: BaseViewController, PersonalDataViewControllerProtocol {
+final class PersonalDataViewController: BaseViewController, PersonalDataViewProtocol {
 
     // MARK: - Constants
 
-    private enum LayoutConstants {
+    private enum Constants {
         static let mainIndent: CGFloat = 8
         static let mainSpacing: CGFloat = 20
+        static let mediumSpacing: CGFloat = 16
         static let tabBarHeight: CGFloat = 81
         static let backButtonTopInset: CGFloat = 14
+        static let profileImageSize: CGFloat = 122
+        static let editButtonSize: CGFloat = 24
+        static let glassmorphismCornerRadius: CGFloat = 32
     }
 
     // MARK: - Private Properties
@@ -33,7 +37,7 @@ final class PersonalDataViewController: BaseViewController, PersonalDataViewCont
     private lazy var dataStackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
-        stack.spacing = 16
+        stack.spacing = Constants.mediumSpacing
         return stack
     }()
 
@@ -49,6 +53,24 @@ final class PersonalDataViewController: BaseViewController, PersonalDataViewCont
         return button
     }()
 
+    private lazy var profileContainerView = UIView()
+
+    private lazy var profileImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage.Icon.profile
+        imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = true
+        return imageView
+    }()
+
+    private lazy var editButton: UIButton = {
+        let button = UIButton(type: .system)
+        let pencilImage = UIImage.Icon.pencil.withRenderingMode(.alwaysOriginal)
+        button.setImage(pencilImage, for: .normal)
+        button.clipsToBounds = true
+        button.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
+        return button
+    }()
 
     // MARK: - Initializers
 
@@ -69,7 +91,6 @@ final class PersonalDataViewController: BaseViewController, PersonalDataViewCont
         setupView()
         presenter.viewDidLoad()
     }
-
 }
 
 // MARK: - Private methods
@@ -81,6 +102,12 @@ private extension PersonalDataViewController {
         presenter.backButtonTapped()
     }
 
+    @objc
+    // TODO: Редактирование фото профиля
+    private func editButtonTapped() {
+        print("Редактирование фото")
+    }
+
     func setupView() {
         setupGlassmorphismView()
         setupSubviews()
@@ -89,37 +116,36 @@ private extension PersonalDataViewController {
 
     private func setupGlassmorphismView() {
         view.addSubviews(glassmorphismView)
-        glassmorphismView.layer.cornerRadius = 32
+        glassmorphismView.layer.cornerRadius = Constants.glassmorphismCornerRadius
         glassmorphismView.clipsToBounds = true
     }
 
     private func setupSubviews() {
-        [backButton, screenTitle, scrollView].forEach {
-            glassmorphismView.addSubview($0)
+        glassmorphismView.addSubviews(backButton, screenTitle, scrollView)
+        scrollView.addSubviews(contentView)
+        contentView.addSubviews(dataStackView)
+        profileContainerView.addSubviews(profileImageView, editButton)
+
+        [profileContainerView].forEach {
+            dataStackView.addArrangedSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
-
-        scrollView.addSubview(contentView)
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-
-        contentView.addSubview(dataStackView)
-        dataStackView.translatesAutoresizingMaskIntoConstraints = false
     }
 
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             glassmorphismView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            glassmorphismView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: LayoutConstants.mainIndent),
-            glassmorphismView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -LayoutConstants.mainIndent),
-            glassmorphismView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -LayoutConstants.tabBarHeight),
+            glassmorphismView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.mainIndent),
+            glassmorphismView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constants.mainIndent),
+            glassmorphismView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -Constants.tabBarHeight),
 
-            backButton.topAnchor.constraint(equalTo: glassmorphismView.topAnchor, constant: LayoutConstants.backButtonTopInset),
-            backButton.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor, constant: LayoutConstants.mainSpacing / 2),
+            backButton.topAnchor.constraint(equalTo: glassmorphismView.topAnchor, constant: Constants.backButtonTopInset),
+            backButton.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor, constant: Constants.mainSpacing / 2),
 
             screenTitle.centerXAnchor.constraint(equalTo: glassmorphismView.centerXAnchor),
-            screenTitle.topAnchor.constraint(equalTo: glassmorphismView.topAnchor, constant: LayoutConstants.mainSpacing),
+            screenTitle.topAnchor.constraint(equalTo: glassmorphismView.topAnchor, constant: Constants.mainSpacing),
 
-            scrollView.topAnchor.constraint(equalTo: screenTitle.bottomAnchor, constant: 16),
+            scrollView.topAnchor.constraint(equalTo: screenTitle.bottomAnchor, constant: Constants.mediumSpacing),
             scrollView.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: glassmorphismView.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: glassmorphismView.bottomAnchor),
@@ -131,9 +157,22 @@ private extension PersonalDataViewController {
             contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
 
             dataStackView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            dataStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: LayoutConstants.mainSpacing),
-            dataStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -LayoutConstants.mainSpacing),
-            dataStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -LayoutConstants.mainSpacing)
+            dataStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.mainSpacing),
+            dataStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constants.mainSpacing),
+            dataStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Constants.mainSpacing),
+
+            profileContainerView.topAnchor.constraint(equalTo: dataStackView.topAnchor),
+            profileContainerView.heightAnchor.constraint(equalToConstant: Constants.profileImageSize),
+
+            profileImageView.widthAnchor.constraint(equalToConstant: Constants.profileImageSize),
+            profileImageView.heightAnchor.constraint(equalToConstant: Constants.profileImageSize),
+            profileImageView.centerXAnchor.constraint(equalTo: profileContainerView.centerXAnchor),
+            profileImageView.topAnchor.constraint(equalTo: profileContainerView.topAnchor),
+
+            editButton.widthAnchor.constraint(equalToConstant: Constants.editButtonSize),
+            editButton.heightAnchor.constraint(equalToConstant: Constants.editButtonSize),
+            editButton.trailingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: -12),
+            editButton.bottomAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: -8)
         ])
     }
 }
@@ -143,7 +182,7 @@ import SwiftUI
 
 struct  PersonalDataViewControllerPreview: UIViewControllerRepresentable {
     class StubPresenter: PersonalDataPresenterProtocol {
-        weak var view: PersonalDataViewControllerProtocol?
+        weak var view: PersonalDataViewProtocol?
         func viewDidLoad() {}
         func backButtonTapped() {}
     }
