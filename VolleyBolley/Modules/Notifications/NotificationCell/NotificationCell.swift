@@ -62,7 +62,7 @@ private extension NotificationCell {
 			noNotificationLabel,
 			notificationCardView
 		)
-		
+
 		NSLayoutConstraint.activate([
 			noNotificationLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: -6),
 			noNotificationLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
