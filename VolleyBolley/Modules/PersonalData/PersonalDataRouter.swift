@@ -9,7 +9,7 @@ import UIKit
 
 protocol PersonalDataRouterProtocol: AnyObject {
     func attachViewController(_ view: UIViewController)
-    func navigateBack(from view: PersonalDataViewControllerProtocol?)
+    func navigateBack(from view: PersonalDataViewProtocol?)
 }
 
 final class PersonalDataRouter: PersonalDataRouterProtocol {
@@ -24,7 +24,7 @@ final class PersonalDataRouter: PersonalDataRouterProtocol {
         viewController = view
     }
 
-    func navigateBack(from view: PersonalDataViewControllerProtocol?) {
+    func navigateBack(from view: PersonalDataViewProtocol?) {
         if let viewController = viewController {
             viewController.navigationController?.popViewController(animated: true)
         } else if let view = view as? UIViewController {
