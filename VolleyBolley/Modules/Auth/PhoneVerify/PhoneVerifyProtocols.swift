@@ -8,7 +8,7 @@ import UIKit
 
 protocol PhoneVerifyViewProtocol: AnyObject {
     func enableVerifyButton(_ isEnabled: Bool)
-    func showLoading(_ show: Bool)
+//    func showLoading(_ show: Bool)
 }
 
 protocol PhoneVerifyPresenterProtocol: AnyObject {

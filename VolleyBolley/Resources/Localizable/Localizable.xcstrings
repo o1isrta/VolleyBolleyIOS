@@ -75,6 +75,9 @@
         }
       }
     },
+    "Anton" : {
+
+    },
     "Archive" : {
       "comment" : "Segment Control",
       "localizations" : {
@@ -801,6 +804,9 @@
       }
     },
     "Hard:" : {
+
+    },
+    "Ivanov" : {
 
     },
     "Know rules, still learning" : {

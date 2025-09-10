@@ -26,6 +26,7 @@ final class PhoneVerifyInteractor: PhoneVerifyInteractorProtocol {
             if digitsOnly == "123456" {
                 DispatchQueue.main.async {
                     self.presenter?.verificationSucceeded()
+                    //TODO: Заменить на реальный код из смс
                 }
             } else {
                 let error = NSError(
@@ -42,5 +43,6 @@ final class PhoneVerifyInteractor: PhoneVerifyInteractorProtocol {
 
     func resendCode(for phoneNumber: String) {
         print("Запрос повторного отправления кода")
+        //TODO: Добавить сетевой запрос повторной отправки смс-кода
     }
 }

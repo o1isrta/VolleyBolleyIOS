@@ -4,11 +4,11 @@
 //
 //  Created by Олег Козырев
 //
-
 import UIKit
 
 /// Экран авторизации через телефон, google, facebook
 final class AuthViewController: UIViewController, AuthViewProtocol {
+    
     var presenter: AuthPresenterProtocol?
 
     private lazy var descriptionLabel: UILabel = {

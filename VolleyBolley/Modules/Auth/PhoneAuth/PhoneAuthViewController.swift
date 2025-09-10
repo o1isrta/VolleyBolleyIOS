@@ -18,7 +18,7 @@ final class PhoneAuthViewController: UIViewController {
         return view
     }()
 
-    private lazy var backButton: UIButton = {
+    private lazy var backButton: UtilityButton = {
         let button = UtilityButton(style: .small)
         button.setImage(.chevronBackward, for: .normal)
         button.tintColor = AppColor.Icon.primary
@@ -86,7 +86,7 @@ final class PhoneAuthViewController: UIViewController {
             containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
             containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
 
-            backButton.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 22.5),
+            backButton.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 20),
             backButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
             backButton.widthAnchor.constraint(equalToConstant: 18),
             backButton.heightAnchor.constraint(equalToConstant: 24),

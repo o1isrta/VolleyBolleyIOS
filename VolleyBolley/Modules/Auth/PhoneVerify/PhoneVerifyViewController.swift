@@ -7,6 +7,7 @@
 import UIKit
 
 final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol {
+    
     var presenter: PhoneVerifyPresenterProtocol?
 
     private let phoneNumber: String?
@@ -22,7 +23,7 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
         return view
     }()
 
-    private lazy var backButton: UIButton = {
+    private lazy var backButton: UtilityButton = {
         let button = UtilityButton(style: .small)
         button.setImage(.chevronBackward, for: .normal)
         button.tintColor = AppColor.Icon.primary
@@ -110,7 +111,7 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
             containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
             containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
 
-            backButton.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 22.5),
+            backButton.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 20),
             backButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
             backButton.widthAnchor.constraint(equalToConstant: 18),
             backButton.heightAnchor.constraint(equalToConstant: 24),
@@ -183,20 +184,11 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
     }
 
     @objc private func verifyTapped() {
-        ProgressHub.shared.show(in: view)
         presenter?.didTapVerify(with: codeTextField.text ?? "")
     }
 
     func enableVerifyButton(_ isEnabled: Bool) {
         verifyButton.setActive(isEnabled)
-    }
-
-    func showLoading(_ isLoading: Bool) {
-        if isLoading {
-            ProgressHub.shared.show(in: view)
-        } else {
-            ProgressHub.shared.hide()
-        }
     }
 }
 

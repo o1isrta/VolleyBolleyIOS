@@ -5,24 +5,24 @@
 //  Created by Олег Козырев
 //
 
-import UIKit
 import Swinject
+import UIKit
 
 final class AuthRouter: AuthRouterProtocol {
     
     weak var viewController: UIViewController?
-    weak var coordinator: AppRouter?
+    weak var router: AppRouter?
 
     init(viewController: UIViewController, coordinator: AppRouter?) {
         self.viewController = viewController
-        self.coordinator = coordinator
+        self.router = coordinator
     }
 
     func showPhoneAuth() {
-        coordinator?.pushPhoneAuth()
+        router?.pushPhoneAuth()
     }
 
     func showUserRegScreen() {
-        coordinator?.pushUserReg()
+        router?.pushUserReg()
     }
 }

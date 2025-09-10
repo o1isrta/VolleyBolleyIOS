@@ -14,7 +14,6 @@ protocol PhoneAuthViewProtocol: AnyObject {
 }
 
 protocol PhoneAuthPresenterProtocol: AnyObject {
-    func viewDidLoad()
     func didTapBack()
     func didTapNextStep(with phoneNumber: String)
     func phoneNumberDidChange(_ phoneNumber: String)
@@ -23,7 +22,6 @@ protocol PhoneAuthPresenterProtocol: AnyObject {
 protocol PhoneAuthInteractorProtocol: AnyObject {
     var presenter: PhoneAuthInteractorOutputProtocol? { get set }
     func validatePhoneNumber(_ phoneNumber: String)
-    func getCountryCallingCode() -> String?
     func formatPhoneNumber(_ phoneNumber: String) -> String
 }
 
