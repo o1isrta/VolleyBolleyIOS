@@ -61,8 +61,16 @@
         }
       }
     },
-    "About levels" : {
-
+    "ADD SELECTED" : {
+      "comment" : "Game",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ДОБАВИТЬ ВЫБРАННОЕ"
+          }
+        }
+      }
     },
     "All players" : {
       "comment" : "Segment Control",
@@ -738,6 +746,7 @@
 
     },
     "FAQ" : {
+      "comment" : "Profile",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -838,6 +847,7 @@
       }
     },
     "Log out" : {
+      "comment" : "Profile",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -928,6 +938,40 @@
         }
       }
     },
+    "notifications.noNotifications" : {
+      "comment" : "Notifications",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No notifications found"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Уведомлений не найдено"
+          }
+        }
+      }
+    },
+    "notifications.screenTitle" : {
+      "comment" : "Notifications",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notifications"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Уведомления"
+          }
+        }
+      }
+    },
     "Payments" : {
       "comment" : "Profile",
       "localizations" : {
@@ -935,6 +979,227 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Платежи"
+          }
+        }
+      }
+    },
+    "paywall.addPaymentButton" : {
+      "comment" : "Paywall screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add payment"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добавить платеж"
+          }
+        }
+      }
+    },
+    "paywall.currentAccountLabel" : {
+      "comment" : "Paywall screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Current account"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Текущий счет"
+          }
+        }
+      }
+    },
+    "paywall.paymentDescription" : {
+      "comment" : "Paywall screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Share payment among players"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Распределение выплат между игроками"
+          }
+        }
+      }
+    },
+    "paywall.paymentPerPerson" : {
+      "comment" : "Paywall screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Per person:"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "На человека:"
+          }
+        }
+      }
+    },
+    "paywall.paymentRequirementDescription" : {
+      "comment" : "Paywall screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter the participation fee per person"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Введите стоимость участия на человека"
+          }
+        }
+      }
+    },
+    "paywall.paymentTitle" : {
+      "comment" : "Paywall screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Payment"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Оплата"
+          }
+        }
+      }
+    },
+    "paywall.playersTitle" : {
+      "comment" : "Paywall screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maximum players"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Максимум игроков"
+          }
+        }
+      }
+    },
+    "paywall.privacyDescription" : {
+      "comment" : "Paywall screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Set privacy if you want to play with particular players"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Установите режим конфиденциальности, если хотите играть с определенными игроками"
+          }
+        }
+      }
+    },
+    "paywall.privacyTitle" : {
+      "comment" : "Paywall screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Privacy"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Конфиденциальность"
+          }
+        }
+      }
+    },
+    "paywall.privateButton" : {
+      "comment" : "Paywall screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Private"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Частная"
+          }
+        }
+      }
+    },
+    "paywall.publicButton" : {
+      "comment" : "Paywall screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Public"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Публичкая"
+          }
+        }
+      }
+    },
+    "paywall.saveGameButton" : {
+      "comment" : "Paywall screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SAVE GAME"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "СОХРАНИТЬ ИГРУ"
+          }
+        }
+      }
+    },
+    "paywall.screenTitle" : {
+      "comment" : "Paywall screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create a game"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Создать игру"
           }
         }
       }
@@ -961,11 +1226,16 @@
         }
       }
     },
-    "Pro:" : {
-
-    },
-    "Registration" : {
-
+    "Private game" : {
+      "comment" : "Game",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Частная игра"
+          }
+        }
+      }
     },
     "registration_title" : {
       "localizations" : {
