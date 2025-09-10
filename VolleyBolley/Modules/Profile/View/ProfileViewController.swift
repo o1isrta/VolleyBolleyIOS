@@ -108,7 +108,6 @@ final class ProfileViewController: BaseViewController, ProfileViewProtocol {
         super.viewDidLoad()
         setupView()
         presenter.viewDidLoad()
-        tableBackground.frame = tableBackground.frame
     }
 
     // MARK: - Public Methods
