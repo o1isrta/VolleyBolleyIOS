@@ -15,10 +15,10 @@ protocol ProfileRouterProtocol: AnyObject {
 final class ProfileRouter: ProfileRouterProtocol {
 
     weak var viewController: UIViewController?
-    weak var coordinator: AppRouter?
+    weak var router: AppRouter?
 
-    init(coordinator: AppRouter?) {
-        self.coordinator = coordinator
+    init(router: AppRouter?) {
+        self.router = router
     }
 
     func attachViewController(_ view: UIViewController) {

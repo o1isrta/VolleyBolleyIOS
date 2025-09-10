@@ -20,7 +20,7 @@ final class ProfileAssembly: Assembly {
                 fatalError("Error: Failed to register ProfileViewController")
             }
 
-            let router = ProfileRouter(coordinator: appRouter)
+            let router = ProfileRouter(router: appRouter)
 
             let interactor = ProfileInteractor(
                 usersRepository: usersRepository,
