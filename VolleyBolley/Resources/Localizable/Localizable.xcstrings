@@ -102,6 +102,18 @@
         }
       }
     },
+    "Change photo" : {
+      "comment" : "Profile",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Изменить фото"
+          }
+        }
+      }
+    },
     "CHOOSE THIS COURT" : {
       "comment" : "\"CHOOSE THIS COURT\" button",
       "localizations" : {
