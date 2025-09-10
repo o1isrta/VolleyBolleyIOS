@@ -6,7 +6,7 @@
 //
 import UIKit
 
-class LevelInfoViewController: UIViewController {
+final class LevelInfoViewController: UIViewController {
 
     private lazy var backgroundView: UIView = {
         let view = UIView()
@@ -24,7 +24,7 @@ class LevelInfoViewController: UIViewController {
         return container
     }()
 
-    private lazy var backButton: UIButton = {
+    private lazy var backButton: UtilityButton = {
         let button = UtilityButton(style: .small)
         button.setImage(.chevronBackward, for: .normal)
         button.tintColor = AppColor.Icon.primary
@@ -33,7 +33,7 @@ class LevelInfoViewController: UIViewController {
         return button
     }()
 
-    private lazy var titleLabel = CustomTitle(text: String(localized:"About levels"), isLarge: true)
+    private lazy var titleLabel = CustomTitle(text: String(localized: "About levels"), isLarge: true)
     private lazy var levelsStack = makeLevelRow()
 
     override func viewDidLoad() {
@@ -64,7 +64,7 @@ class LevelInfoViewController: UIViewController {
             contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
             contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
 
-            backButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 22.5),
+            backButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
             backButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             backButton.widthAnchor.constraint(equalToConstant: 18),
             backButton.heightAnchor.constraint(equalToConstant: 24),
@@ -87,22 +87,23 @@ class LevelInfoViewController: UIViewController {
         levelsStack.translatesAutoresizingMaskIntoConstraints = false
 
         let levelTitles = [
-            String(localized:"Light:"),
-            String(localized:"Medium:"),
-            String(localized:"Hard:"), String(localized:"Pro:")
+            String(localized: "Light:"),
+            String(localized: "Medium:"),
+            String(localized: "Hard:"),
+            String(localized: "Pro:")
         ]
 
         let levelDescriptions = [
-            String(localized:"New to the game"),
-            String(localized:"Know rules, still learning"),
-            String(localized:"Skilled, play often, tournaments experience"),
-            String(localized:"Elite level, official championships experience")
+            String(localized: "New to the game"),
+            String(localized: "Know rules, still learning"),
+            String(localized: "Skilled, play often, tournaments experience"),
+            String(localized: "Elite level, official championships experience")
         ]
 
-        for count in 0..<levelTitles.count {
+        for levelCount in 0..<levelTitles.count {
             let titleLabel = GradientTextLabel()
             titleLabel.gradientColors = [AppColor.Gradient.greenLightStart, AppColor.Gradient.greenLightEnd]
-            titleLabel.text = levelTitles[count]
+            titleLabel.text = levelTitles[levelCount]
             titleLabel.font = AppFont.Hero.bold(size: 16)
             titleLabel.numberOfLines = 1
             titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -110,7 +111,7 @@ class LevelInfoViewController: UIViewController {
             titleLabel.widthAnchor.constraint(equalToConstant: 80).isActive = true
 
             let descLabel = UILabel()
-            descLabel.text = levelDescriptions[count]
+            descLabel.text = levelDescriptions[levelCount]
             descLabel.font = AppFont.Hero.regular(size: 16)
             descLabel.textColor = AppColor.Text.primary
             descLabel.numberOfLines = 0

@@ -21,12 +21,6 @@ final class PhoneAuthPresenter: PhoneAuthPresenterProtocol {
         self.router = router
     }
 
-    func viewDidLoad() {
-        if let code = interactor?.getCountryCallingCode() {
-            view?.autoFillCountryCode(code)
-        }
-    }
-
     func didTapBack() {
         router?.navigateBack()
     }

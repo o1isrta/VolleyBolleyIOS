@@ -8,6 +8,7 @@
 import UIKit
 
 final class OnboardingViewController: UIViewController {
+    
     var presenter: OnboardingPresenterProtocol?
 
     private lazy var titleLabel: UILabel = {

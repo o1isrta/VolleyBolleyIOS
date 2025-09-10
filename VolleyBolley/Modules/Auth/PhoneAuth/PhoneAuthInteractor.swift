@@ -6,7 +6,8 @@
 //
 import Foundation
 
-class PhoneAuthInteractor: PhoneAuthInteractorProtocol {
+final class PhoneAuthInteractor: PhoneAuthInteractorProtocol {
+    
     weak var presenter: PhoneAuthInteractorOutputProtocol?
 
     private struct CountryRule {
@@ -35,12 +36,5 @@ class PhoneAuthInteractor: PhoneAuthInteractorProtocol {
         let cleaned = phoneNumber.filter { $0.isNumber || $0 == "+" }
         presenter?.didReceiveFormattedNumber(cleaned)
         return cleaned
-    }
-
-    func getCountryCallingCode() -> String? {
-        if let region = Locale.current.region?.identifier, let rule = countryRules[region] {
-            return rule.code
-        }
-        return "+1"
     }
 }
