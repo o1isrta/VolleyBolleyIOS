@@ -38,7 +38,6 @@ final class AboutCell: UITableViewCell {
         stack.alignment = .top
         stack.spacing = 12
         stack.distribution = .fill
-        stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
 
@@ -46,7 +45,6 @@ final class AboutCell: UITableViewCell {
 
     private lazy var separatorLine: UIView = {
         let view = CustomSeparator()
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
