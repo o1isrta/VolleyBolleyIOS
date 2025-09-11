@@ -7,16 +7,8 @@
 
 import UIKit
 
-enum CreationType {
-    case game
-    case tourney
+protocol CreationSuccessView: AnyObject {
 
-    var titleText: String {
-        switch self {
-        case .game: return "Game created"
-        case .tourney: return "Tourney created"
-        }
-    }
 }
 
 final class CreationSuccessViewController: BaseViewController {
@@ -36,7 +28,7 @@ final class CreationSuccessViewController: BaseViewController {
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = self.type.titleText
+        label.text = presenter.titleText
         label.font = AppFont.ActayWide.bold(size: 24)
         label.textColor = AppColor.Text.primary
         return label
@@ -104,18 +96,12 @@ final class CreationSuccessViewController: BaseViewController {
         return view
     }()
 
-    private let type: CreationType
-    private let infoItems = [
-        CreationInfoItem(type: .place, title: "Karon Beach Club", description: "Patak Rd, Mueang Phuket"),
-        CreationInfoItem(type: .time, title: "Starts today", description: "2:00-3:00 pm"),
-        CreationInfoItem(type: .level, title: "Level: Hard", description: "Mix · 4 teams"),
-        CreationInfoItem(type: .price, title: "5$ per person", description: "988 016 7890")
-    ]
+    private let presenter: CreationSuccessPresenterProtocol
 
     // MARK: - Initializers
 
-    init(creationType: CreationType = .game) {
-        type = creationType
+    init(presenter: CreationSuccessPresenterProtocol) {
+        self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -143,7 +129,7 @@ final class CreationSuccessViewController: BaseViewController {
                 glassContainer.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
                 glassContainer.heightAnchor.constraint(equalToConstant: 332),
 
-                infoTableView.heightAnchor.constraint(equalToConstant: Constants.rowHeight * CGFloat(infoItems.count)),
+                infoTableView.heightAnchor.constraint(equalToConstant: Constants.rowHeight * CGFloat(presenter.numberOfItems)),
 
                 vStack.leadingAnchor.constraint(equalTo: glassContainer.leadingAnchor, constant: 20),
                 vStack.trailingAnchor.constraint(equalTo: glassContainer.trailingAnchor, constant: -20),
@@ -156,18 +142,24 @@ final class CreationSuccessViewController: BaseViewController {
         )
     }
 
-    @objc private func didTapDoneButton() {}
+    @objc private func didTapDoneButton() {
+        presenter.didTapDone()
+    }
 
-    @objc private func didTapInviteButton() {}
+    @objc private func didTapInviteButton() {
+        presenter.didTapInvite()
+    }
 
-    @objc private func didTapShareButton() {}
+    @objc private func didTapShareButton() {
+        presenter.didTapShare()
+    }
 }
 
 // MARK: - UITableViewDataSource
 
 extension CreationSuccessViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        infoItems.count
+        presenter.numberOfItems
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -178,7 +170,7 @@ extension CreationSuccessViewController: UITableViewDataSource {
             return UITableViewCell()
         }
 
-        cell.configure(with: infoItems[indexPath.row])
+        cell.configure(with: presenter.infoItem(at: indexPath.row))
 
         return cell
     }
@@ -191,7 +183,7 @@ import SwiftUI
 @available(iOS 17.0, *)
 #Preview {
     UIViewControllerPreview {
-        CreationSuccessViewController()
+        CreationSuccessViewController(presenter: CreationSuccessPresenter())
     }
     .edgesIgnoringSafeArea(.all)
 }
