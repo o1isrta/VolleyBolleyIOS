@@ -17,6 +17,7 @@ protocol PhoneAuthPresenterProtocol: AnyObject {
     func didTapBack()
     func didTapNextStep(with phoneNumber: String)
     func phoneNumberDidChange(_ phoneNumber: String)
+    func hideNavigationBar()
 }
 
 protocol PhoneAuthInteractorProtocol: AnyObject {
@@ -34,4 +35,5 @@ protocol PhoneAuthInteractorOutputProtocol: AnyObject {
 protocol PhoneAuthRouterProtocol: AnyObject {
     func navigateBack()
     func navigateToVerification(with phoneNumber: String)
+    func hideNavigationBar()
 }

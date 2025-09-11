@@ -43,13 +43,27 @@ final class LevelInfoViewController: UIViewController {
         view.backgroundColor = AppEffect.BackgroundAlert.alert
     }
 
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        for case let rowStack as UIStackView in levelsStack.arrangedSubviews {
+            if let titleLabel = rowStack.arrangedSubviews.first as? UILabel {
+                titleLabel.applyGradient(
+                    colors: [AppColor.Gradient.greenLightStart,
+                             AppColor.Gradient.greenLightEnd]
+                )
+            }
+        }
+    }
+
     private func setupUI() {
         view.addSubview(backgroundView)
         view.addSubview(contentView)
 
         [backButton,
          titleLabel,
-         levelsStack].forEach {
+         levelsStack]
+            .forEach {
             contentView.addSubview($0)
         }
 
@@ -101,8 +115,7 @@ final class LevelInfoViewController: UIViewController {
         ]
 
         for levelCount in 0..<levelTitles.count {
-            let titleLabel = GradientTextLabel()
-            titleLabel.gradientColors = [AppColor.Gradient.greenLightStart, AppColor.Gradient.greenLightEnd]
+            let titleLabel = UILabel()
             titleLabel.text = levelTitles[levelCount]
             titleLabel.font = AppFont.Hero.bold(size: 16)
             titleLabel.numberOfLines = 1
@@ -110,24 +123,24 @@ final class LevelInfoViewController: UIViewController {
 
             titleLabel.widthAnchor.constraint(equalToConstant: 80).isActive = true
 
-            let descLabel = UILabel()
-            descLabel.text = levelDescriptions[levelCount]
-            descLabel.font = AppFont.Hero.regular(size: 16)
-            descLabel.textColor = AppColor.Text.primary
-            descLabel.numberOfLines = 0
-            descLabel.translatesAutoresizingMaskIntoConstraints = false
+            let descriptionLabel = UILabel()
+            descriptionLabel.text = levelDescriptions[levelCount]
+            descriptionLabel.font = AppFont.Hero.regular(size: 16)
+            descriptionLabel.textColor = AppColor.Text.primary
+            descriptionLabel.numberOfLines = 0
+            descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
 
-            let rowStack = UIStackView(arrangedSubviews: [titleLabel, descLabel])
+            let rowStack = UIStackView(arrangedSubviews: [titleLabel, descriptionLabel])
             rowStack.axis = .horizontal
             rowStack.spacing = 12
             rowStack.alignment = .top
             rowStack.translatesAutoresizingMaskIntoConstraints = false
 
-            descLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
+            descriptionLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
             titleLabel.setContentHuggingPriority(.required, for: .horizontal)
 
-            descLabel.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
-            descLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+            descriptionLabel.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
+            descriptionLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
             levelsStack.addArrangedSubview(rowStack)
         }

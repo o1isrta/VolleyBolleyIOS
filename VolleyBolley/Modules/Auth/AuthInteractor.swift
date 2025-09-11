@@ -13,8 +13,4 @@ final class AuthorizationInteractor: AuthInteractorProtocol {
     func authWithGoogle() {
         presenter?.didAuthWithGoogleSuccess()
     }
-
-    func authWithFacebook() {
-        presenter?.didAuthWithFacebookSuccess()
-    }
 }

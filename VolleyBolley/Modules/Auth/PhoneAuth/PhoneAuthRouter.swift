@@ -26,4 +26,8 @@ final class PhoneAuthRouter: PhoneAuthRouterProtocol {
     func navigateToVerification(with phoneNumber: String) {
         coordinator?.pushPhoneVerify(phoneNumber: phoneNumber)
     }
+
+    func hideNavigationBar() {
+        viewController?.navigationController?.isNavigationBarHidden = true
+    }
 }

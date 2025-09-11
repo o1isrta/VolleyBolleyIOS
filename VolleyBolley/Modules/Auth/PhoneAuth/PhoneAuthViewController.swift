@@ -50,19 +50,15 @@ final class PhoneAuthViewController: UIViewController {
         return textField
     }()
 
-    private lazy var nextButton: NextStepButton = {
-        let button = NextStepButton(
-            title: String(localized: "SEND CODE"),
-            isActive: false,
-            target: self,
-            action: #selector(nextStepTapped)
-        )
+    private lazy var nextButton: YellowButton = {
+        let button = YellowButton(title: String(localized: "SEND CODE"))
+        button.isEnabled = false
         return button
     }()
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: false)
+        presenter?.hideNavigationBar()
     }
 
     override func viewDidLoad() {
@@ -131,7 +127,8 @@ final class PhoneAuthViewController: UIViewController {
 
 extension PhoneAuthViewController: PhoneAuthViewProtocol {
     func setNextButtonActive(_ isActive: Bool) {
-        nextButton.setActive(isActive)
+        nextButton.isSelected = isActive
+        nextButton.isEnabled = isActive
     }
 
     func updateNextButtonTitle(_ title: String) {
