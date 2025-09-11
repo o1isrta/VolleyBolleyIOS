@@ -58,8 +58,6 @@ final class AboutViewController: BaseViewController, AboutViewProtocol {
     private lazy var titleLabel: CustomLabel = {
         let label = CustomLabel(text: String(localized: "About"), isBold: true)
         label.font = AppFont.ActayWide.bold(size: Constants.titleFontSize)
-        label.textColor = .white
-        label.textAlignment = .center
         return label
     }()
 
