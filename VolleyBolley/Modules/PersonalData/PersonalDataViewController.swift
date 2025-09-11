@@ -34,7 +34,7 @@ final class PersonalDataViewController: BaseViewController, PersonalDataViewProt
     private let contentView = UIView()
     private lazy var glassmorphismView = GlassmorphismView()
 
-    private lazy var dataStackView: UIStackView = {
+    private lazy var formStackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
         stack.spacing = Constants.mediumSpacing
@@ -71,6 +71,33 @@ final class PersonalDataViewController: BaseViewController, PersonalDataViewProt
         button.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
         return button
     }()
+
+    // MARK: - Form fields
+
+    private lazy var nameLabel = CustomLabel(text: String(localized: "Name"), isBold: true)
+    private lazy var nameTextField: UITextField = {
+        let textField = UITextField()
+        textField.placeholder = String(localized: "Anton")
+        textField.backgroundColor = AppColor.Border.primary
+        textField.layer.cornerRadius = 16
+        textField.textColor = AppColor.Text.placeHolder
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.setLeftPaddingPoints(16)
+        return textField
+    }()
+
+    private lazy var surnameLabel = CustomLabel(text: String(localized: "Surname"), isBold: true)
+    private lazy var surnameTextField: UITextField = {
+        let textField = UITextField()
+        textField.placeholder = String(localized: "Ivanov")
+        textField.backgroundColor = AppColor.Border.primary
+        textField.layer.cornerRadius = 16
+        textField.textColor = AppColor.Text.placeHolder
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.setLeftPaddingPoints(16)
+        return textField
+    }()
+    private lazy var surnameSeparator = CustomSeparator()
 
     // MARK: - Initializers
 
@@ -123,11 +150,14 @@ private extension PersonalDataViewController {
     private func setupSubviews() {
         glassmorphismView.addSubviews(backButton, screenTitle, scrollView)
         scrollView.addSubviews(contentView)
-        contentView.addSubviews(dataStackView)
+        contentView.addSubviews(formStackView)
         profileContainerView.addSubviews(profileImageView, editButton)
 
-        [profileContainerView].forEach {
-            dataStackView.addArrangedSubview($0)
+        [profileContainerView,
+         nameLabel, nameTextField,
+         surnameLabel, surnameTextField, surnameSeparator
+        ].forEach {
+            formStackView.addArrangedSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
     }
@@ -156,12 +186,14 @@ private extension PersonalDataViewController {
             contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
             contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
 
-            dataStackView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            dataStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.mainSpacing),
-            dataStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constants.mainSpacing),
-            dataStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Constants.mainSpacing),
+            formStackView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            formStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.mainSpacing),
+            formStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constants.mainSpacing),
+            formStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Constants.mainSpacing),
 
-            profileContainerView.topAnchor.constraint(equalTo: dataStackView.topAnchor),
+            // Form Constraints
+
+            profileContainerView.topAnchor.constraint(equalTo: formStackView.topAnchor),
             profileContainerView.heightAnchor.constraint(equalToConstant: Constants.profileImageSize),
 
             profileImageView.widthAnchor.constraint(equalToConstant: Constants.profileImageSize),
@@ -172,7 +204,25 @@ private extension PersonalDataViewController {
             editButton.widthAnchor.constraint(equalToConstant: Constants.editButtonSize),
             editButton.heightAnchor.constraint(equalToConstant: Constants.editButtonSize),
             editButton.trailingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: -12),
-            editButton.bottomAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: -8)
+            editButton.bottomAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: -8),
+
+            nameLabel.topAnchor.constraint(equalTo: profileContainerView.bottomAnchor, constant: 8),
+            nameLabel.leadingAnchor.constraint(equalTo: formStackView.leadingAnchor),
+
+            nameTextField.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8),
+            nameTextField.leadingAnchor.constraint(equalTo: formStackView.leadingAnchor),
+            nameTextField.trailingAnchor.constraint(equalTo: formStackView.trailingAnchor),
+            nameTextField.heightAnchor.constraint(equalToConstant: 51),
+
+            surnameLabel.leadingAnchor.constraint(equalTo: formStackView.leadingAnchor),
+
+            surnameTextField.topAnchor.constraint(equalTo: surnameLabel.bottomAnchor, constant: 8),
+            surnameTextField.leadingAnchor.constraint(equalTo: formStackView.leadingAnchor),
+            surnameTextField.trailingAnchor.constraint(equalTo: formStackView.trailingAnchor),
+            surnameTextField.heightAnchor.constraint(equalToConstant: 51),
+
+            surnameSeparator.leadingAnchor.constraint(equalTo: formStackView.leadingAnchor),
+            surnameSeparator.trailingAnchor.constraint(equalTo: formStackView.trailingAnchor),
         ])
     }
 }
