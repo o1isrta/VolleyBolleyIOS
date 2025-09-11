@@ -36,6 +36,10 @@ final class PhoneAuthPresenter: PhoneAuthPresenterProtocol {
         isNextButtonTapped = false
         interactor?.validatePhoneNumber(phoneNumber)
     }
+
+    func hideNavigationBar() {
+        router?.hideNavigationBar()
+    }
 }
 
 extension PhoneAuthPresenter: PhoneAuthInteractorOutputProtocol {

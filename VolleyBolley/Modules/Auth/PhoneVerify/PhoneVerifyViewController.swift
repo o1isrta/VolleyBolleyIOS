@@ -10,6 +10,7 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
     
     var presenter: PhoneVerifyPresenterProtocol?
 
+    private var errorLabelHeightConstraint: NSLayoutConstraint?
     private let phoneNumber: String?
     private var timer: Timer?
     private var secondsRemaining = 30
@@ -48,10 +49,26 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
         textField.textColor = AppColor.Text.placeHolder
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.addTarget(self, action: #selector(codeDidChange), for: .editingChanged)
+
+        let placeholderText = "XXXXXX"
+        let attributed = NSAttributedString(
+            string: placeholderText,
+            attributes: [.kern: 7, .foregroundColor: AppColor.Text.placeHolder]
+        )
+        textField.attributedPlaceholder = attributed
+
         return textField
     }()
 
     private lazy var resendLabel = CustomLabel(text: "", isBold: true)
+
+    private lazy var errorLabel: CustomLabel = {
+        let errorLabel = CustomLabel(text: "", isBold: true)
+        errorLabel.font = AppFont.Hero.light(size: 14)
+        errorLabel.isHidden = true
+        errorLabel.translatesAutoresizingMaskIntoConstraints = false
+        return errorLabel
+    }()
 
     private lazy var getNewCodeButton: UIButton = {
         let button = UIButton(type: .system)
@@ -62,15 +79,12 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
         return button
     }()
 
-    private lazy var verifyButton: NextStepButton = {
-            let button = NextStepButton(
-                title: String(localized: "VERIFY"),
-                isActive: false,
-                target: self,
-                action: #selector(verifyTapped)
-            )
-            return button
-        }()
+    private lazy var verifyButton: YellowButton = {
+        let button = YellowButton(title: String(localized: "VERIFY"))
+        button.isEnabled = false
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
 
     init(phoneNumber: String) {
         self.phoneNumber = phoneNumber
@@ -103,8 +117,18 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
 
     private func setupUI() {
         view.addSubview(containerView)
-        [backButton, titleLabel, codeLabel, codeTextField, resendLabel, getNewCodeButton, verifyButton]
+        [backButton,
+         titleLabel,
+         codeLabel,
+         codeTextField,
+         resendLabel,
+         errorLabel,
+         getNewCodeButton,
+         verifyButton]
             .forEach { containerView.addSubview($0) }
+
+        errorLabelHeightConstraint = errorLabel.heightAnchor.constraint(equalToConstant: 17)
+        errorLabelHeightConstraint?.isActive = true
 
         NSLayoutConstraint.activate([
             containerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
@@ -127,10 +151,13 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
             codeTextField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
             codeTextField.heightAnchor.constraint(equalToConstant: 51),
 
-            resendLabel.topAnchor.constraint(equalTo: codeTextField.bottomAnchor, constant: 8),
+            errorLabel.topAnchor.constraint(equalTo: codeTextField.bottomAnchor, constant: 4),
+            errorLabel.centerXAnchor.constraint(equalTo: codeTextField.centerXAnchor),
+
+            resendLabel.topAnchor.constraint(equalTo: errorLabel.bottomAnchor, constant: 8),
             resendLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
 
-            getNewCodeButton.topAnchor.constraint(equalTo: codeTextField.bottomAnchor, constant: 8),
+            getNewCodeButton.topAnchor.constraint(equalTo: errorLabel.bottomAnchor, constant: 8),
             getNewCodeButton.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
 
             verifyButton.topAnchor.constraint(equalTo: resendLabel.bottomAnchor, constant: 18),
@@ -143,6 +170,7 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
     private func setupActions() {
         backButton.addTarget(self, action: #selector(backTapped), for: .touchUpInside)
         getNewCodeButton.addTarget(self, action: #selector(getNewCodeTapped), for: .touchUpInside)
+        verifyButton.addTarget(self, action: #selector(verifyTapped), for: .touchUpInside)
     }
 
     private func startResendTimer() {
@@ -176,6 +204,14 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
     }
 
     @objc private func codeDidChange() {
+        guard let text = codeTextField.text else { return }
+
+        let attributed = NSAttributedString(
+            string: text,
+            attributes: [.kern: 7, .foregroundColor: codeTextField.textColor ?? UIColor.label]
+        )
+
+        codeTextField.attributedText = attributed
         presenter?.codeDidChange(codeTextField.text ?? "")
     }
 
@@ -188,7 +224,23 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
     }
 
     func enableVerifyButton(_ isEnabled: Bool) {
-        verifyButton.setActive(isEnabled)
+        verifyButton.isSelected = isEnabled
+        verifyButton.isEnabled = isEnabled
+    }
+
+    func showError(_ message: String) {
+        errorLabel.text = message
+        errorLabel.isHidden = false
+        errorLabelHeightConstraint?.constant = 17
+        codeTextField.layer.borderColor = AppColor.Border.error.cgColor
+        codeTextField.textColor = AppColor.Border.error
+    }
+
+    func hideError() {
+        errorLabel.isHidden = true
+        errorLabelHeightConstraint?.constant = 0
+        codeTextField.layer.borderColor = AppColor.Border.primary.cgColor
+        codeTextField.textColor = AppColor.Text.placeHolder
     }
 }
 

@@ -13,6 +13,8 @@ final class PhoneVerifyPresenter: PhoneVerifyPresenterProtocol, PhoneVerifyInter
     var router: PhoneVerifyRouterProtocol
     private let phoneNumber: String
 
+    private var lastEnteredCode: String = ""
+
     init(view: PhoneVerifyViewProtocol,
          interactor: PhoneVerifyInteractorProtocol,
          router: PhoneVerifyRouterProtocol,
@@ -25,6 +27,7 @@ final class PhoneVerifyPresenter: PhoneVerifyPresenterProtocol, PhoneVerifyInter
 
     func viewDidLoad() {
         view?.enableVerifyButton(false)
+        view?.hideError()
     }
 
     func didTapBack() {
@@ -33,11 +36,29 @@ final class PhoneVerifyPresenter: PhoneVerifyPresenterProtocol, PhoneVerifyInter
 
     func codeDidChange(_ code: String) {
         let digitsOnly = code.filter { $0.isNumber }
-        view?.enableVerifyButton(digitsOnly.count == 6)
+        lastEnteredCode = digitsOnly
+        view?.hideError()
+        if digitsOnly.count == 6 {
+            interactor.verifyCodeForValidation(digitsOnly, for: phoneNumber)
+            view?.enableVerifyButton(false)
+        } else {
+            view?.enableVerifyButton(false)
+        }
     }
 
     func didTapVerify(with code: String) {
-        interactor.verifyCode(code, for: phoneNumber)
+        let digitsOnly = code.filter { $0.isNumber }
+        interactor.verifyCode(digitsOnly, for: phoneNumber)
+    }
+
+    func validationFailed(with error: Error) {
+        view?.showError(error.localizedDescription)
+        view?.enableVerifyButton(false)
+    }
+
+    func validationSucceeded() {
+        view?.hideError()
+        view?.enableVerifyButton(lastEnteredCode.count == 6)
     }
 
     func verificationSucceeded() {
@@ -46,13 +67,7 @@ final class PhoneVerifyPresenter: PhoneVerifyPresenterProtocol, PhoneVerifyInter
 
     func verificationFailed(with error: Error) {
         view?.enableVerifyButton(false)
-        if let view = view as? UIViewController {
-            let alert = UIAlertController(title: "Error",
-                                          message: error.localizedDescription,
-                                          preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default))
-            view.present(alert, animated: true)
-        }
+        view?.showError(error.localizedDescription)
     }
 
     func didTapResendCode() {

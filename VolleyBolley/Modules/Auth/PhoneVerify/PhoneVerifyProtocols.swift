@@ -8,7 +8,8 @@ import UIKit
 
 protocol PhoneVerifyViewProtocol: AnyObject {
     func enableVerifyButton(_ isEnabled: Bool)
-//    func showLoading(_ show: Bool)
+    func showError(_ message: String)
+    func hideError()
 }
 
 protocol PhoneVerifyPresenterProtocol: AnyObject {
@@ -22,11 +23,14 @@ protocol PhoneVerifyPresenterProtocol: AnyObject {
 protocol PhoneVerifyInteractorProtocol: AnyObject {
     func verifyCode(_ code: String, for phoneNumber: String)
     func resendCode(for phoneNumber: String)
+    func verifyCodeForValidation(_ code: String, for phoneNumber: String)
 }
 
 protocol PhoneVerifyInteractorOutputProtocol: AnyObject {
     func verificationSucceeded()
     func verificationFailed(with error: Error)
+    func validationFailed(with error: Error)
+    func validationSucceeded()
 }
 
 protocol PhoneVerifyRouterProtocol: AnyObject {

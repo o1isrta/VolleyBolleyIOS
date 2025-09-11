@@ -32,10 +32,27 @@ final class PhoneVerifyInteractor: PhoneVerifyInteractorProtocol {
                 let error = NSError(
                     domain: "",
                     code: 401,
-                    userInfo: [NSLocalizedDescriptionKey: "Неверный код подтверждения"]
+                    userInfo: [NSLocalizedDescriptionKey: String(localized: "Invalid code")]
                 )
                 DispatchQueue.main.async {
                     self.presenter?.verificationFailed(with: error)
+                }
+            }
+        }
+    }
+
+    func verifyCodeForValidation(_ code: String, for phoneNumber: String) {
+        let digitsOnly = code.filter { $0.isNumber }
+        guard digitsOnly.count == 6 else { return }
+
+        DispatchQueue.global().asyncAfter(deadline: .now() + 0.2) { [weak self] in
+            DispatchQueue.main.async {
+                if digitsOnly != "123456" {
+                    let error = NSError(domain: "", code: 401,
+                        userInfo: [NSLocalizedDescriptionKey: String(localized: "Invalid code")])
+                    self?.presenter?.validationFailed(with: error)
+                } else {
+                    self?.presenter?.validationSucceeded()
                 }
             }
         }

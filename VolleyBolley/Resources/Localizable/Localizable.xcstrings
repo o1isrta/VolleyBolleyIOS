@@ -2,6 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "  Continue with Facebook" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -61,8 +62,12 @@
         }
       }
     },
+    "About levels" : {
+
+    },
     "ADD SELECTED" : {
       "comment" : "Game",
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -815,6 +820,9 @@
     "Hard:" : {
 
     },
+    "Invalid code" : {
+
+    },
     "Ivanov" : {
 
     },
@@ -1236,6 +1244,12 @@
           }
         }
       }
+    },
+    "Pro:" : {
+
+    },
+    "Registration" : {
+
     },
     "registration_title" : {
       "localizations" : {
