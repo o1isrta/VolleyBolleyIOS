@@ -13,8 +13,6 @@ final class FAQCell: UITableViewCell {
 
     // MARK: - Private Properties
 
-    private var separatorHeightConstraint: NSLayoutConstraint?
-
     private lazy var titleLabel = CustomTitle(
         text: String(localized: ""),
         isLarge: false
@@ -58,13 +56,6 @@ final class FAQCell: UITableViewCell {
         subtitleLabel.text = item.subtitle
         separatorLine.isHidden = isLast
     }
-
-        // MARK: - Private Method
-
-        private func setupSeparatorLineHeight() {
-            let separatorHeight = separatorLine.heightAnchor.constraint(equalToConstant: 1 / UIScreen.main.scale)
-            separatorHeight.isActive = true
-        }
 }
 
 // MARK: - Private methods
@@ -80,7 +71,6 @@ private extension FAQCell {
 
     func setupView() {
         setupUI()
-        setupSeparatorLineHeight()
 
         NSLayoutConstraint.activate([
             stack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
