@@ -164,12 +164,7 @@ final class FAQViewController: BaseViewController, СhoicePlayersViewProtocol {
 private extension FAQViewController {
 
     func setupUI() {
-        [navigationBarView, label].forEach {
-            view.addSubview($0)
-            $0.translatesAutoresizingMaskIntoConstraints = false
-        }
-
-        [background, buttonBack, titleLabel, tableView].forEach {
+        [navigationBarView, label, background, buttonBack, titleLabel, tableView].forEach {
             view.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
