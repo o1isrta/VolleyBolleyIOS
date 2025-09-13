@@ -7,56 +7,143 @@
 
 import UIKit
 
-final class NewGameView: UIViewController {
+final class NewGameView: BaseViewController {
 
     var presenter: NewGamePresenterProtocol?
 
-    private let scrollView = UIScrollView()
-    private let contentView = UIView()
+        private lazy var scrollView: UIScrollView = {
+            let scrollView = UIScrollView()
+            scrollView.backgroundColor = AppColor.Background.screen
+            scrollView.translatesAutoresizingMaskIntoConstraints = false
+            scrollView.showsVerticalScrollIndicator = false
+            return scrollView
+        }()
 
-    private let containerView: UIView = {
-        let view = UIView()
-        view.backgroundColor = AppColor.Background.blur
-        view.layer.cornerRadius = 32
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+        private lazy var contentView: UIView = {
+            let contentView = UIView()
+            contentView.backgroundColor = AppColor.Background.blur
+            contentView.layer.cornerRadius = 32
+            contentView.layer.masksToBounds = true
+            contentView.translatesAutoresizingMaskIntoConstraints = false
+            return contentView
+        }()
 
-    private let backButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(systemName: "chevron.left"), for: .normal)
-        button.tintColor = .white
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
+        private lazy var titleLabel = CustomTitle(text: String(localized: "registration_title"), isLarge: true)
+        private lazy var nameLabel = CustomLabel(text: String(localized: "Name"), isBold: true)
+        private lazy var nameTextField: UITextField = {
+            let textField = UITextField()
+            textField.placeholder = String(localized: "Anton")
+            textField.backgroundColor = AppColor.Border.primary
+            textField.layer.cornerRadius = 16
+            textField.textColor = AppColor.Text.placeHolder
+            textField.translatesAutoresizingMaskIntoConstraints = false
+            textField.setLeftPaddingPoints(16)
+            textField.addTarget(self, action: #selector(nameTextFieldDidChange), for: .editingChanged)
+            return textField
+        }()
 
-    private lazy var titleLabel = CustomTitle(text: "Create a game", isLarge: true)
+        private lazy var surnameLabel = CustomLabel(text: String(localized: "Surname"), isBold: true)
+        private lazy var surnameTextField: UITextField = {
+            let textField = UITextField()
+            textField.placeholder = String(localized: "Ivanov")
+            textField.backgroundColor = AppColor.Border.primary
+            textField.layer.cornerRadius = 16
+            textField.textColor = AppColor.Text.placeHolder
+            textField.translatesAutoresizingMaskIntoConstraints = false
+            textField.setLeftPaddingPoints(16)
+            return textField
+        }()
+        private lazy var surnameSeparator = CustomSeparator()
 
-    private lazy var phoneNumberLabel = CustomLabel(text: "Your message", isBold: true)
+        private lazy var genderLabel = CustomLabel(text: String(localized: "Gender"), isBold: true)
+        private lazy var maleButton = PickButton(
+            title: String(localized: "Male"),
+            isSelected: true,
+            target: self,
+            action: #selector(genderButtonTapped(_:))
+        )
+        private lazy var femaleButton = PickButton(
+            title: String(localized: "Female"),
+            isSelected: false,
+            target: self,
+            action: #selector(genderButtonTapped(_:))
+        )
+        private lazy var genderSeparator = CustomSeparator()
 
-    private lazy var phoneTextField: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "+ With the country code"
-        textField.keyboardType = .phonePad
-        textField.borderStyle = .none
+        private lazy var birthdayLabel = CustomLabel(text: String(localized: "Date of birth"), isBold: true)
+        private lazy var birthdayTextField: UITextField = {
+            let textField = UITextField()
+            textField.placeholder = "__ / __ / ____"
+            textField.textAlignment = .center
+            textField.backgroundColor = AppColor.Text.primary
+            textField.layer.cornerRadius = 16
+            textField.translatesAutoresizingMaskIntoConstraints = false
+            textField.keyboardType = .numberPad
+            textField.textColor = AppColor.Text.placeHolder
+            textField.font = AppFont.Hero.regular(size: 16)
+            textField.delegate = self
+            return textField
+        }()
+        private let birthdaySeparator = CustomSeparator()
 
-        textField.layer.cornerRadius = 16
-        textField.layer.borderWidth = 1
-        textField.layer.borderColor = AppColor.Border.primary.cgColor
-        textField.backgroundColor = .systemBackground
-        //        textField.textColor = .label
-        textField.textColor = AppColor.Text.placeHolder
+        private lazy var levelLabel = CustomLabel(text: String(localized: "Level"), isBold: true)
+        private lazy var levelInfoButton: UIButton = {
+            var config = UIButton.Configuration.plain()
+            config.image = UIImage(systemName: "questionmark.circle")
+            config.imagePlacement = .leading
+            config.imagePadding = 0
+            config.baseForegroundColor = AppColor.Background.screen
+            config.background.backgroundColor = .white
+            config.background.cornerRadius = 12
 
-        textField.setLeftPaddingPoints(16)
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.addTarget(self, action: #selector(phoneNumberDidChange), for: .editingChanged)
-        return textField
-    }()
+            let button = UIButton(configuration: config)
+            button.translatesAutoresizingMaskIntoConstraints = false
+            return button
+        }()
+        private lazy var lightLevelButton = PickButton(
+            title: String(localized: "common.light").capitalized(with: .current),
+            isSelected: true,
+            target: self,
+            action: #selector(levelButtonTapped(_:))
+        )
+        private lazy var mediumLevelButton = PickButton(
+            title: String(localized: "common.medium").capitalized(with: .current),
+            isSelected: false,
+            target: self,
+            action: #selector(levelButtonTapped(_:))
+        )
+        private lazy var hardLevelButton = PickButton(
+            title: String(localized: "common.hard").capitalized(with: .current),
+            isSelected: false,
+            target: self,
+            action: #selector(levelButtonTapped(_:))
+        )
+        private lazy var proLevelButton = PickButton(
+            title: String(localized: "common.pro").capitalized(with: .current),
+            isSelected: false,
+            target: self,
+            action: #selector(levelButtonTapped(_:))
+        )
+        private lazy var levelSeparator = CustomSeparator()
 
-    private lazy var messageSeparator = CustomSeparator()
+        private lazy var countryLabel = CustomLabel(text: String(localized: "Your country"), isBold: true)
+        private var countryList: LocationPickerView?
+        private lazy var countrySeparator = CustomSeparator()
 
-    private let startNewGame = NextStepButton(title: "NEXT STEP", initialState: .inactive)
+        private lazy var cityLabel = CustomLabel(text: String(localized: "Your city"), isBold: true)
+        private var cityList: LocationPickerView?
 
+        private lazy var getStartedButton = NextStepButton(
+            title: String(localized: "GET STARTED"),
+            isActive: false,
+            target: self,
+            action: #selector(getStartedTapped)
+        )
+
+        private var selectedGender: String? = String(localized: "Male")
+        private var selectedLevel: String? = String(localized: "common.light").capitalized(with: .current)
+        private var selectedCountry: String?
+        private var selectedCity: String?
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = AppColor.Background.screen
