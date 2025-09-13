@@ -6,4 +6,9 @@ enum AppGradient {
         AppColor.Gradient.greenLightStart,
         AppColor.Gradient.greenLightEnd
     ]
+
+    static let greenLightWithAlpha = [
+        AppColor.Gradient.greenLightStart.withAlphaComponent(0.5),
+        AppColor.Gradient.greenLightEnd.withAlphaComponent(0.5)
+    ]
 }

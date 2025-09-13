@@ -34,49 +34,49 @@ final class AppRouter {
     // MARK: - Public Methods
 
     func start() {
-        if !userSessionService.isOnboardingShown {
-            showOnboarding()
-        } else if !userSessionService.isAuthorized {
-            showAuth()
+        // TODO: Переписать через userSessionService
+        if UserDefaults.standard.isOnboardingShown {
+            showAuthorization()
         } else {
-            showMainApp()
+            showOnboarding()
         }
     }
 
     // MARK: - Private Methods
 
     private func showOnboarding() {
-        guard var router = resolver.resolve(OnboardingRouterProtocol.self) else {
-            print("Error: Failed to resolve OnboardingRouterProtocol")
-            return
+        guard let onboardingVC = resolver.resolve(OnboardingViewController.self) else {
+            fatalError("OnboardingViewController не зарегистрирован")
         }
-
-        router.onFinish = { [weak self] in
-            guard let self else { return }
-
-            self.userSessionService.markOnboardingAsShown()
-            self.start()
-        }
-
-        onboardingRouter = router
-        window.rootViewController = router.start()
+        let nav = UINavigationController(rootViewController: onboardingVC)
+        window.rootViewController = nav
+        window.makeKeyAndVisible()
     }
 
-    private func showAuth() {
-        guard var router = resolver.resolve(AuthRouterProtocol.self) else {
-            print("Error: Failed to resolve AuthRouterProtocol")
-            return
+    private func showAuthorization() {
+        guard let authVC = resolver.resolve(AuthViewController.self) else {
+            fatalError("AuthViewController не зарегистрирован")
+        }
+        let nav = UINavigationController(rootViewController: authVC)
+
+        UIView.transition(with: window, duration: 0.4, options: .transitionCrossDissolve) {
+            self.window.rootViewController = nav
         }
 
-        router.onLoginSuccess = { [weak self] in
-            guard let self else { return }
+        window.makeKeyAndVisible()
+    }
 
-            self.userSessionService.markUserAuthorized()
-            self.start()
+    func showUserReg() {
+        guard let userRegVC = resolver.resolve(UserRegViewController.self) else {
+            fatalError("UserRegViewController не зарегистрирован")
+        }
+        let nav = UINavigationController(rootViewController: userRegVC)
+
+        UIView.transition(with: window, duration: 0.4, options: .transitionCrossDissolve) {
+            self.window.rootViewController = nav
         }
 
-        authRouter = router
-        window.rootViewController = router.start()
+        window.makeKeyAndVisible()
     }
 
     private func showMainApp() {

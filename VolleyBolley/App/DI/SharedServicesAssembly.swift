@@ -6,6 +6,7 @@
 //
 
 import Swinject
+import UIKit
 
 /// An assembly for registering shared application services with the Swinject dependency injection container.
 /// 
@@ -14,8 +15,9 @@ import Swinject
 /// 
 /// ## Registered Services
 /// - `SettingsStorageProtocol`: Registers a `UserDefaultsStorage` instance as a singleton.
-/// - `UserSessionServiceProtocol`: Registers a `DefaultUserSessionService`, injected with the shared `SettingsStorageProtocol` instance, as a singleton.
-/// 
+/// - `UserSessionServiceProtocol`: Registers a `DefaultUserSessionService`,
+/// injected with the shared `SettingsStorageProtocol` instance, as a singleton.
+///
 /// Registration is performed with `.inObjectScope(.container)` to ensure each service is a shared singleton.
 /// 
 /// - Warning: If resolving `SettingsStorageProtocol` fails when registering `UserSessionServiceProtocol`, a runtime
@@ -28,11 +30,7 @@ import Swinject
 /// assembly.assemble(container: container)
 /// ```
 final class SharedServicesAssembly: Assembly {
-
-    // MARK: - Public Methods
-
     func assemble(container: Container) {
-
         container.register(SettingsStorageProtocol.self) { _ in
             UserDefaultsStorage()
         }
