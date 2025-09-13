@@ -7,10 +7,10 @@
 
 import UIKit
 
+@MainActor
 protocol HomeViewProtocol: AnyObject {
     func displayNavBar(viewModel: NavBarViewModel)
-    func displayCreateNewGameButton(viewModel: CreateNewGameButtonViewModel)
-    func displayError(message: String)
+    func displayCreateNewGameButton(state: CreateNewGameButtonState)
 }
 
 final class HomeViewController: BaseViewController, HomeViewProtocol {
@@ -21,7 +21,7 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
 
     private lazy var backgroundImageView: UIImageView = {
         let view = UIImageView()
-        view.image = .bgHomeScreen
+        view.image = UIImage.Image.homeBackground
         view.contentMode = .topLeft
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -59,12 +59,19 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
         return view
     }()
 
-    private lazy var createNewGameButton = CreateNewGameButton()
+    private lazy var createNewGameButton: CreateNewGameButton = {
+        let view = CreateNewGameButton()
+        view.addAction(UIAction { [weak self] _ in
+             self?.presenter.didTapCreateNewGame()
+        }, for: .touchUpInside)
+        return view
+    }()
 
-    private lazy var findGameButton: SketchButton = {
-        let view = SketchButton()
-        view.setTitle(String(localized: .homeFindGame), for: .normal)
-        view.setImage(UIImage.Icon.createTourney, for: .normal)
+    private lazy var findGameButton: FindGameButton = {
+        let view = FindGameButton()
+        view.addAction(UIAction { [weak self] _ in
+             self?.presenter.didTapFindGame()
+        }, for: .touchUpInside)
         return view
     }()
 
@@ -73,6 +80,9 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
         view.isSelected = true
         view.setTitle(String(localized: .commonCreateTourney), for: .normal)
         view.setImage(UIImage.Icon.createTourney, for: .normal)
+        view.addAction(UIAction { [weak self] _ in
+             self?.presenter.didTapCreateTourney()
+        }, for: .touchUpInside)
         return view
     }()
 
@@ -80,6 +90,9 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
         let view = SketchButton()
         view.setTitle(String(localized: .commonDonate), for: .normal)
         view.setImage(UIImage.Icon.donate, for: .normal)
+        view.addAction(UIAction { [weak self] _ in
+            self?.presenter.didTapDonate()
+        }, for: .touchUpInside)
         return view
     }()
 
@@ -110,19 +123,15 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
         navigationBarView.configure(with: viewModel)
     }
 
-    func displayCreateNewGameButton(viewModel: CreateNewGameButtonViewModel) {
-        createNewGameButton.configure(with: viewModel)
-    }
-
-    func displayError(message: String) {
-        print(message)
+    func displayCreateNewGameButton(state: CreateNewGameButtonState) {
+        createNewGameButton.configure(state: state)
     }
 
     // MARK: - Private Methods
 
     private func setupView() {
-        view.addSubview(navigationBarView)
         view.addSubview(backgroundImageView)
+        view.addSubview(navigationBarView)
         view.addSubview(mainStackView)
 
         mainStackView.addArrangedSubview(topStackView)
@@ -140,8 +149,8 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
     }
 
     private func setupLayout() {
-        setupConstraintsNavBar()
         setupConstraintsBackgroundImageView()
+        setupConstraintsNavBar()
         setupConstraintsVStackView()
     }
 
@@ -158,10 +167,9 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
 
     private func setupConstraintsBackgroundImageView() {
         NSLayoutConstraint.activate([
-            backgroundImageView.topAnchor.constraint(equalTo: navigationBarView.bottomAnchor),
+            backgroundImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 90),
             backgroundImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            backgroundImageView.widthAnchor.constraint(equalToConstant: 297),
-            backgroundImageView.heightAnchor.constraint(equalToConstant: 270)
+            backgroundImageView.widthAnchor.constraint(equalTo: view.widthAnchor)
         ])
     }
 

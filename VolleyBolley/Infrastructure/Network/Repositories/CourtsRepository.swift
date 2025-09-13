@@ -5,11 +5,15 @@
 //  Created by Nikolai Eremenko on 24.08.2025.
 //
 
+import Foundation
+
 protocol CourtsRepositoryProtocol {
-    func getCourts(completion: @escaping (Result<Court, Error>) -> Void)
+    func getCourts(for country: String) async throws -> [Court]
+    func getNearestCourt(for country: String, userLocation: GeoPoint) async throws -> Court
 }
 
-final class CourtsRepository: CourtsRepositoryProtocol {
+final class CourtsRepository: CourtsRepositoryProtocol, ServiceInitializable {
+
     private let service: CourtsServiceProtocol
 
     // MARK: - Initializers
@@ -20,14 +24,30 @@ final class CourtsRepository: CourtsRepositoryProtocol {
 
     // MARK: - Public Methods
 
-    func getCourts(completion: @escaping (Result<Court, Error>) -> Void) {
-        service.fetchCourts { result in
-            switch result {
-            case .success(let dto):
-                completion(.success(dto.toDomain()))
-            case .failure(let error):
-                completion(.failure(error))
+    func getCourts(for country: String) async throws -> [Court] {
+        do {
+            let dtos = try await service.fetchCourts(for: country)
+            return dtos.map { $0.toDomain() }
+        } catch {
+            throw CourtError.serviceFailed
+        }
+    }
+
+    func getNearestCourt(for country: String, userLocation: GeoPoint) async throws -> Court {
+        do {
+            let courts = try await getCourts(for: country)
+
+            guard let nearest = courts.min(by: {
+                $0.location.distanceInKilometers(to: userLocation) <
+                $1.location.distanceInKilometers(to: userLocation)
+            }) else {
+                throw CourtError.notFound
             }
+            return nearest
+        } catch let error as CourtError {
+            throw error
+        } catch {
+            throw CourtError.unknown(error)
         }
     }
 }

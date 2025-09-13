@@ -8,7 +8,6 @@
 import UIKit
 
 protocol ProfileViewProtocol: AnyObject {
-    func showGreeting(_ message: String)
     func displayNavBar(viewModel: NavBarViewModel)
     func displayError(message: String)
 }
@@ -58,13 +57,6 @@ final class ProfileViewController: BaseViewController, ProfileViewProtocol {
 
     private lazy var menuItems = ProfileMenuItem.allCases
 
-    private lazy var label: UILabel = {
-        let view = UILabel()
-        view.textAlignment = .center
-        view.font = AppFont.Quantex.regular(size: 16)
-        return view
-    }()
-
     private lazy var tableBackground: GlassmorphismView = {
         let view = GlassmorphismView()
         return view
@@ -112,10 +104,6 @@ final class ProfileViewController: BaseViewController, ProfileViewProtocol {
 
     // MARK: - Public Methods
 
-    func showGreeting(_ message: String) {
-        label.text = message
-    }
-
     func displayNavBar(viewModel: NavBarViewModel) {
         navigationBarView.configure(with: viewModel)
     }
@@ -130,7 +118,7 @@ final class ProfileViewController: BaseViewController, ProfileViewProtocol {
 private extension ProfileViewController {
 
     func setupUI() {
-        [navigationBarView, label, deleteButton].forEach {
+        [navigationBarView, deleteButton].forEach {
             view.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
@@ -154,9 +142,6 @@ private extension ProfileViewController {
             navigationBarView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             navigationBarView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             navigationBarView.heightAnchor.constraint(equalToConstant: 106),
-
-            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
 
             tableBackground.topAnchor.constraint(equalTo: navigationBarView.bottomAnchor, constant: 8),
             tableBackground.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),

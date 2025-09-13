@@ -7,10 +7,16 @@
 
 import Foundation
 
+@MainActor
 protocol HomePresenterProtocol: AnyObject {
     func viewDidLoad()
+    func didTapCreateNewGame()
+    func didTapFindGame()
+    func didTapCreateTourney()
+    func didTapDonate()
 }
 
+@MainActor
 final class HomePresenter: HomePresenterProtocol {
 
     // MARK: - Public Properties
@@ -35,22 +41,63 @@ final class HomePresenter: HomePresenterProtocol {
     // MARK: - Public Methods
 
     func viewDidLoad() {
+        Task { [weak self] in
+            await self?.loadInitialData()
+        }
+    }
 
-//        let nearestCourt = interactor.fetchNearestCourt()
-//
-//        view?.displayCreateNewGameButton(viewModel: CreateNewGameButtonViewModel())
+    func didTapCreateNewGame() {
+        print("HomePresenter - Create New Game")
+    }
 
-        interactor.loadUserData { [weak self] result in
-            guard let self else { return }
+    func didTapFindGame() {
+        print("HomePresenter - Find Game")
+    }
 
-            switch result {
-            case .success(let (user, avatarImage)):
-                let viewModel = NavBarViewModel(user: user, avatarImage: avatarImage)
-                self.view?.displayNavBar(viewModel: viewModel)
+    func didTapCreateTourney() {
+        print("HomePresenter - Create Tourney")
+    }
 
-            case .failure(let error):
-                self.view?.displayError(message: error.localizedDescription)
+    func didTapDonate() {
+        print("HomePresenter - Donate")
+    }
+
+    private func loadInitialData() async {
+        await loadPlayer()
+        await loadCourtAndWeather()
+    }
+
+    private func loadPlayer() async {
+        do {
+            let (player, avatarImage) = try await interactor.loadPlayerData()
+            let navBarVM = NavBarViewModel(player: player, avatarImage: avatarImage)
+            view?.displayNavBar(viewModel: navBarVM)
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+
+    private func loadCourtAndWeather() async {
+        do {
+            let courtWithWeather = try await interactor.loadNearestCourtWithWeather()
+            let locationVM = LocationTitleViewModel(
+                title: courtWithWeather.court.name,
+                location: courtWithWeather.court.address
+            )
+
+            if let weather = courtWithWeather.weather {
+                let weatherVM = WeatherViewModel(weather: weather)
+                view?.displayCreateNewGameButton(
+                    state: .withLocationAndWeather(location: locationVM, weather: weatherVM)
+                )
+            } else {
+                view?.displayCreateNewGameButton(
+                    state: .withLocationOnly(location: locationVM)
+                )
             }
+        } catch {
+            print(error.localizedDescription)
+            view?.displayCreateNewGameButton(state: .basic)
         }
     }
 }

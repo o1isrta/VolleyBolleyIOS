@@ -16,9 +16,24 @@ struct CourtDTO: Decodable {
     let tagList: [String]?
     let location: CourtLocationDTO
 
+    enum CodingKeys: String, CodingKey {
+        case courtId = "court_id"
+        case priceDescription = "price_description"
+        case description
+        case contactList = "contact_list"
+        case photoUrl = "photo_url"
+        case tagList = "tags"
+        case location = "court_location"
+    }
+
     struct ContactDTO: Decodable {
         let contactType: String
         let contact: String
+
+        enum CodingKeys: String, CodingKey {
+            case contactType = "contact_type"
+            case contact
+        }
     }
 
     struct CourtLocationDTO: Decodable {
@@ -26,5 +41,12 @@ struct CourtDTO: Decodable {
         let longitude: Double
         let courtName: String
         let locationName: String
+
+        enum CodingKeys: String, CodingKey {
+            case latitude
+            case longitude
+            case courtName = "court_name"
+            case locationName = "location_name"
+        }
     }
 }

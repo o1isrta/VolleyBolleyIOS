@@ -145,17 +145,6 @@ final class SketchButton: UIButton {
         return config
     }
 
-    private func attributedTitle(
-        title: String,
-        color: UIColor,
-        font: UIFont
-    ) -> AttributedString {
-        var attributes = AttributeContainer()
-        attributes.foregroundColor = color
-        attributes.font = font
-        return AttributedString(title, attributes: attributes)
-    }
-
     private func resolveStyle(for state: UIControl.State) -> SketchButtonStyle {
         switch (state.contains(.selected), state.contains(.highlighted)) {
         case (true, true): return SketchButtonStateStyle.highlightedSelected.style

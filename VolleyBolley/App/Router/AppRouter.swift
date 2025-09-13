@@ -34,9 +34,16 @@ final class AppRouter {
     // MARK: - Public Methods
 
     func start() {
+        guard let environment = resolver.resolve(AppEnvironment.self) else {
+            fatalError("Error: Failed to resolve AppEnvironment")
+        }
+
         // TODO: Переписать через userSessionService
         if UserDefaults.standard.isOnboardingShown {
-            showAuthorization()
+            switch environment {
+            case .staging, .mock: showMainApp()
+            case .production: showAuthorization()
+            }
         } else {
             showOnboarding()
         }

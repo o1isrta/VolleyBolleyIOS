@@ -8,58 +8,24 @@
 import Moya
 import Swinject
 
-final class NetworkAssembly: Assembly {
+protocol ProviderInitializable {
+    associatedtype ProviderType
+    init(provider: ProviderType)
+}
+
+protocol ServiceInitializable {
+    associatedtype ServiceType
+    init(service: ServiceType)
+}
+
+struct NetworkAssembly: Assembly {
+
+    private let assemblies: [Assembly] = [
+        PlayersAssembly(),
+        CourtsAssembly()
+    ]
+
     func assemble(container: Container) {
-
-        container.register(MoyaProvider<UserAPI>.self) { resolver in
-            guard let environment = resolver.resolve(AppEnvironment.self) else {
-                fatalError("AppEnvironment is not resolved")
-            }
-
-            let logger = NetworkLoggerPlugin(configuration: .init(logOptions: .verbose))
-
-            let endpointClosure: (UserAPI) -> Endpoint = { target in
-                let url = environment.baseURL.appendingPathComponent(target.path).absoluteString
-
-                return Endpoint(
-                    url: url,
-                    sampleResponseClosure: { .networkResponse(200, target.sampleData) },
-                    method: target.method,
-                    task: target.task,
-                    httpHeaderFields: target.headers
-                )
-            }
-
-            let stubClosure: (UserAPI) -> StubBehavior = environment.useStubbedProvider
-                ? { _ in .immediate }
-                : MoyaProvider.neverStub
-
-            return MoyaProvider<UserAPI>(
-                endpointClosure: endpointClosure,
-                stubClosure: stubClosure,
-                plugins: [logger]
-            )
-        }
-        .inObjectScope(.container)
-
-        container.register(UsersServiceProtocol.self) { resolver in
-            guard
-                let provider = resolver.resolve(MoyaProvider<UserAPI>.self)
-            else {
-                fatalError("Error: Failed to resolve MoyaProvider<UsersAPI>")
-            }
-
-            return UsersService(provider: provider)
-        }
-        .inObjectScope(.container)
-
-        container.register(UsersRepositoryProtocol.self) { resolver in
-            guard let userService = resolver.resolve(UsersServiceProtocol.self) else {
-                fatalError("Error: Failed to resolve UsersService>")
-            }
-
-            return UsersRepository(service: userService)
-        }
-        .inObjectScope(.container)
+        assemblies.forEach { $0.assemble(container: container) }
     }
 }

@@ -4,13 +4,15 @@ import UIKit
 enum HomeModulePreviewBuilder {
     @MainActor
     static func build() -> UIViewController {
-        let usersRepository = MockUsersRepository()
+        let playersRepository = MockPlayersRepository()
         let imageLoader = MockImageLoadingService()
+        let nearestCourtWithWeatherUseCase = MockNearestCourtWithWeatherUseCase()
         let router = MockHomeRouter()
 
         let interactor = MockHomeInteractor(
-            usersRepository: usersRepository,
-            imageLoader: imageLoader
+            playersRepository: playersRepository,
+            imageLoader: imageLoader,
+            nearestCourtWithWeatherUseCase: nearestCourtWithWeatherUseCase
         )
 
         let presenter = HomePresenter(

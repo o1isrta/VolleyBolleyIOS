@@ -9,6 +9,10 @@ import UIKit
 
 final class DigitIconView: UIView {
 
+    // MARK: - Private Properties
+
+    private var digitImageViews: [UIImageView] = []
+
     private let digitIcons: [UIImage] = [
         .Icon.Digit.digit0,
         .Icon.Digit.digit1,
@@ -22,18 +26,24 @@ final class DigitIconView: UIView {
         .Icon.Digit.digit9
     ]
 
-    private let plusIcon = UIImage.Icon.invitePlayers
-
     private let stackView: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .horizontal
-        stack.spacing = 2
-        stack.alignment = .center
-        stack.distribution = .fillEqually
-        return stack
+        let view = UIStackView()
+        view.axis = .horizontal
+        view.alignment = .center
+        view.distribution = .fillProportionally
+        return view
     }()
 
-    private var digitImageViews: [UIImageView] = []
+    private let plusImageView: UIImageView = {
+        let view = UIImageView()
+        view.image = .plus // UIImage.Icon.invitePlayers
+        view.tintColor = AppColor.Icon.inverted
+        view.isHidden = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
+    // MARK: - Initializers
 
     init() {
         super.init(frame: .zero)
@@ -45,10 +55,7 @@ final class DigitIconView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func setupView() {
-        addSubview(stackView)
-        stackView.pinToSuperviewEdges()
-    }
+    // MARK: - Public API
 
     func configure(with number: Int) {
         stackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
@@ -71,14 +78,26 @@ final class DigitIconView: UIView {
             let imageView = UIImageView()
             imageView.contentMode = .scaleAspectFit
             imageView.image = digitIcons[digit]
+            imageView.tintColor = AppColor.Icon.inverted
             stackView.addArrangedSubview(imageView)
         }
 
         if showPlus {
-            let plusImageView = UIImageView()
-            plusImageView.contentMode = .scaleAspectFit
-            plusImageView.image = plusIcon
-            stackView.addArrangedSubview(plusImageView)
+            plusImageView.isHidden = false
         }
+    }
+
+    private func setupView() {
+        addSubviews(plusImageView, stackView)
+
+        stackView.pinToSuperviewEdges(insets: .init(top: 0, left: 10, bottom: 0, right: 10))
+        setupConstraintsPlusImageView()
+    }
+
+    private func setupConstraintsPlusImageView() {
+        NSLayoutConstraint.activate([
+            plusImageView.leadingAnchor.constraint(equalTo: stackView.trailingAnchor),
+            plusImageView.centerYAnchor.constraint(equalTo: stackView.centerYAnchor)
+        ])
     }
 }

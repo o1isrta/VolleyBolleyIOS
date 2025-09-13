@@ -4,10 +4,13 @@ import UIKit
 /// использовать коллекции
 class CustomSeparator: UIView {
 
+    override var intrinsicContentSize: CGSize {
+        return CGSize(width: UIView.noIntrinsicMetric, height: 1)
+    }
+
     init() {
         super.init(frame: .zero)
         self.backgroundColor = AppColor.Border.separator
-        self.heightAnchor.constraint(equalToConstant: 1).isActive = true
     }
 
 	@available(*, unavailable)

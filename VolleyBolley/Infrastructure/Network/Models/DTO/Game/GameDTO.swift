@@ -18,6 +18,6 @@ struct GameDTO: Decodable {
     let maxPlayers: Int
     let privacy: String
     let pricePerPlayer: Decimal
-    let players: [UserDTO]
+    let players: [PlayerDTO]
     let status: String // "scheduled", "cancelled", "completed"
 }

@@ -5,49 +5,53 @@
 //  Created by Nikolai Eremenko
 //
 
+import CoreLocation
 import UIKit
 
 protocol HomeInteractorProtocol: AnyObject {
-    func loadUserData(completion: @escaping (Result<(User, UIImage?), Error>) -> Void)
+    func loadPlayerData() async throws -> (Player, UIImage?)
+    func loadNearestCourtWithWeather() async throws -> NearestCourtWithWeather
 }
 
 final class HomeInteractor: HomeInteractorProtocol {
 
     // MARK: - Private Properties
 
-    private let usersRepository: UsersRepositoryProtocol
+    private let playersRepository: PlayersRepositoryProtocol
     private let imageLoader: ImageLoadingServiceProtocol
+    private let nearestCourtWithWeatherUseCase: NearestCourtWithWeatherUseCaseProtocol
 
     // MARK: - Initializers
 
     init(
-        usersRepository: UsersRepositoryProtocol,
-        imageLoader: ImageLoadingServiceProtocol
+        playersRepository: PlayersRepositoryProtocol,
+        imageLoader: ImageLoadingServiceProtocol,
+        nearestCourtWithWeatherUseCase: NearestCourtWithWeatherUseCaseProtocol
     ) {
-        self.usersRepository = usersRepository
+        self.playersRepository = playersRepository
         self.imageLoader = imageLoader
+        self.nearestCourtWithWeatherUseCase = nearestCourtWithWeatherUseCase
     }
 
     // MARK: - Public Methods
 
-    func loadUserData(completion: @escaping (Result<(User, UIImage?), Error>) -> Void) {
-        usersRepository.getCurrentUser { [weak self] result in
-            guard let self = self else { return }
+    func loadPlayerData() async throws -> (Player, UIImage?) {
+        let player = try await playersRepository.getCurrentPlayer()
+        let avatarImage: UIImage?
 
-            switch result {
-            case .success(let user):
-                guard let avatarURL = user.avatarURL else {
-                    completion(.success((user, nil)))
-                    return
-                }
-
-                self.imageLoader.loadImage(from: avatarURL) { image in
-                    completion(.success((user, image)))
-                }
-
-            case .failure(let error):
-                completion(.failure(error))
-            }
+        if let avatarURL = player.avatarURL {
+            avatarImage = try await imageLoader.loadImage(from: avatarURL)
+        } else {
+            avatarImage = nil
         }
+
+        return (player, avatarImage)
+    }
+
+    func loadNearestCourtWithWeather() async throws -> NearestCourtWithWeather {
+        let player = try await playersRepository.getCurrentPlayer()
+        let country = player.country.apiValue
+
+        return try await nearestCourtWithWeatherUseCase.getNearestCourtWithWeather(for: country)
     }
 }

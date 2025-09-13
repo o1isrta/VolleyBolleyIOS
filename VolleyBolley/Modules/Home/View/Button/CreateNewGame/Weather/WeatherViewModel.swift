@@ -6,13 +6,14 @@
 //
 
 import UIKit
+import WeatherKit
 
 struct WeatherViewModel {
     let icon: UIImage?
     let temperatureText: String
 
-    init(condition: WeatherCondition, temperatureInCelsius: Double) {
-        self.icon = condition.icon
-        self.temperatureText = "\(Int(round(temperatureInCelsius))) ℃"
+    init(weather: AppWeather) {
+        self.icon = weather.condition.icon
+        self.temperatureText = "\(Int(round(weather.temperature)))℃"
     }
 }

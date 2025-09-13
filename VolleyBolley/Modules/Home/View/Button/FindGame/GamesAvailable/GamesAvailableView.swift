@@ -24,7 +24,7 @@ final class GamesAvailableView: UIView {
         let label = UILabel()
         label.font = AppFont.Hero.bold(size: 12)
         label.textColor = AppColor.Text.inverted
-        label.text = String(localized: "home.gamesAvailable")
+        label.text = String(localized: .homeGamesAvailable)
         return label
     }()
 
@@ -49,6 +49,6 @@ final class GamesAvailableView: UIView {
         layer.cornerRadius = 28
 
         addSubview(vStackView)
-        vStackView.pinToSuperviewEdges()
+        vStackView.pinToSuperviewEdges(insets: .init(top: 9, left: 18, bottom: 9, right: 18))
     }
 }

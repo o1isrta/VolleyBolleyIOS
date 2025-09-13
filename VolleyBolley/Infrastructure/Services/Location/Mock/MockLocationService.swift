@@ -8,13 +8,14 @@
 import CoreLocation
 
 final class MockLocationService: LocationServiceProtocol {
+
     private let mockedLocation: CLLocation
 
-    init(lat: Double, lon: Double) {
+    init(lat: Double = 7.84927, lon: Double =  98.29500) {
         self.mockedLocation = CLLocation(latitude: lat, longitude: lon)
     }
 
-    func requestLocation(completion: @escaping (CLLocation?) -> Void) {
-        completion(mockedLocation)
+    func requestLocation() async throws -> CLLocation {
+        mockedLocation
     }
 }

@@ -8,51 +8,36 @@
 import UIKit
 
 protocol ProfileInteractorProtocol: AnyObject {
-    func fetchGreeting() -> String
-    func loadUserData(completion: @escaping (Result<(User, UIImage?), Error>) -> Void)
+    func loadPlayerData() async throws -> (Player, UIImage?)
 }
 
 final class ProfileInteractor: ProfileInteractorProtocol {
 
     // MARK: - Private Properties
 
-    private let usersRepository: UsersRepositoryProtocol
+    private let playersRepository: PlayersRepositoryProtocol
     private let imageLoader: ImageLoadingServiceProtocol
 
     // MARK: - Initializers
 
     init(
-        usersRepository: UsersRepositoryProtocol,
+        playersRepository: PlayersRepositoryProtocol,
         imageLoader: ImageLoadingServiceProtocol
     ) {
-        self.usersRepository = usersRepository
+        self.playersRepository = playersRepository
         self.imageLoader = imageLoader
     }
 
     // MARK: - Public Methods
 
-    func fetchGreeting() -> String {
-        return "Profile Module"
-    }
+    func loadPlayerData() async throws -> (Player, UIImage?) {
+        let player = try await playersRepository.getCurrentPlayer()
 
-    func loadUserData(completion: @escaping (Result<(User, UIImage?), Error>) -> Void) {
-        usersRepository.getCurrentUser { [weak self] result in
-            guard let self else { return }
-
-            switch result {
-            case .success(let user):
-                guard let avatarURL = user.avatarURL else {
-                    completion(.success((user, nil)))
-                    return
-                }
-
-                self.imageLoader.loadImage(from: avatarURL) { image in
-                    completion(.success((user, image)))
-                }
-
-            case .failure(let error):
-                completion(.failure(error))
-            }
+        if let avatarURL = player.avatarURL {
+            let image = try await imageLoader.loadImage(from: avatarURL)
+            return (player, image)
+        } else {
+            return (player, nil)
         }
     }
 }

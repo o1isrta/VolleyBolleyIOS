@@ -12,14 +12,13 @@ final class WeatherView: UIView {
     private lazy var hStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [iconImageView, temperatureLabel])
         stackView.axis = .horizontal
-        stackView.alignment = .center
-        stackView.spacing = 1
+        stackView.alignment = .bottom
+        stackView.spacing = 2
         return stackView
     }()
 
     private lazy var iconImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
         imageView.tintColor = AppColor.Icon.primary
         return imageView
     }()
@@ -44,17 +43,14 @@ final class WeatherView: UIView {
     }
 
     func configure(with viewModel: WeatherViewModel) {
-        iconImageView.image = viewModel.icon
+        let configuration = UIImage.SymbolConfiguration(pointSize: 24)
+        iconImageView.image = viewModel.icon?.applyingSymbolConfiguration(configuration)
         temperatureLabel.text = viewModel.temperatureText
     }
 
     private func setupUI() {
         addSubview(hStackView)
         hStackView.pinToSuperviewEdges()
-
-//        NSLayoutConstraint.activate([
-//            iconImageView.widthAnchor.constraint(equalToConstant: 20),
-//            iconImageView.heightAnchor.constraint(equalToConstant: 20)
-//        ])
+        temperatureLabel.heightAnchor.constraint(equalToConstant: 19).isActive = true
     }
 }

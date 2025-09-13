@@ -19,8 +19,7 @@ enum AppEnvironment: String {
         case .staging:
             return AppEnvironment.makeURL("https://e398050f-d75c-48f1-bb6c-28db405375f2.mock.pstmn.io")
         case .production:
-            // TODO: - Add production url
-            return AppEnvironment.makeURL("https://api.domain.com")
+            return AppEnvironment.makeURL("https://api.volleybolley.app/api")
         }
     }
 

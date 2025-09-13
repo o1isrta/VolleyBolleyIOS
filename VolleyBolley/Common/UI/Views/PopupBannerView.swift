@@ -250,15 +250,15 @@ struct PopupBannerViewControllerRepresentable: UIViewControllerRepresentable {
 
         navBar.configure(
             with: NavBarViewModel(
-                user: User(
+                player: Player(
                     firstName: "Artem",
                     lastName: "Ivanov",
-                    gender: 0,
-                    paymentID: 0,
-                    paymentAccount: "",
+                    gender: "man",
+                    paymentType: "visa",
+                    paymentAccount: "1234",
                     dateOfBirth: Date(),
-                    level: UserLevel(rawValue: 0),
-                    countryID: 0,
+                    level: .light,
+                    country: .thailand,
                     cityID: 0,
                     avatarURL: nil
                 ),

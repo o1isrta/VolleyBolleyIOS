@@ -63,6 +63,8 @@ final class DIContainer {
                 MediaServicesAssembly(),
                 AppAssembly(window: window),
                 SharedServicesAssembly(),
+                LocationAssembly(),
+                WeatherAssembly(),
                 OnboardingAssembly(),
                 AuthAssembly(),
                 UserRegAssembly(),

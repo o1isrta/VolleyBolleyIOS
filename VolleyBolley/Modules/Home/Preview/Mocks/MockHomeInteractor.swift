@@ -2,39 +2,42 @@
 import UIKit
 
 final class MockHomeInteractor: HomeInteractorProtocol {
-    private let usersRepository: UsersRepositoryProtocol
+
+    // MARK: - Private Properties
+
+    private let playersRepository: PlayersRepositoryProtocol
     private let imageLoader: ImageLoadingServiceProtocol
+    private let nearestCourtWithWeatherUseCase: NearestCourtWithWeatherUseCaseProtocol
 
     // MARK: - Initializers
 
-    init(usersRepository: UsersRepositoryProtocol, imageLoader: ImageLoadingServiceProtocol) {
-        self.usersRepository = usersRepository
+    init(
+        playersRepository: PlayersRepositoryProtocol,
+        imageLoader: ImageLoadingServiceProtocol,
+        nearestCourtWithWeatherUseCase: NearestCourtWithWeatherUseCaseProtocol
+    ) {
+        self.playersRepository = playersRepository
         self.imageLoader = imageLoader
+        self.nearestCourtWithWeatherUseCase = nearestCourtWithWeatherUseCase
     }
 
-    func fetchGreeting() -> String {
-        return "Home Module"
-    }
+    // MARK: - Public Methods
 
-    func loadUserData(completion: @escaping (Result<(User, UIImage?), any Error>) -> Void) {
-        usersRepository.getCurrentUser { [weak self] result in
-            guard let self = self else { return }
+    func loadPlayerData() async throws -> (Player, UIImage?) {
+        let player = try await playersRepository.getCurrentPlayer()
 
-            switch result {
-            case .success(let user):
-                guard let avatarURL = user.avatarURL else {
-                    completion(.success((user, nil)))
-                    return
-                }
-
-                self.imageLoader.loadImage(from: avatarURL) { image in
-                    completion(.success((user, image)))
-                }
-
-            case .failure(let error):
-                completion(.failure(error))
-            }
+        if let avatarURL = player.avatarURL {
+            let image = try await imageLoader.loadImage(from: avatarURL)
+            return (player, image)
+        } else {
+            return (player, nil)
         }
+    }
+
+    func loadNearestCourtWithWeather() async throws -> NearestCourtWithWeather {
+        let player = try await playersRepository.getCurrentPlayer()
+        let country = player.country
+        return try await nearestCourtWithWeatherUseCase.getNearestCourtWithWeather(for: country.apiValue)
     }
 }
 #endif
