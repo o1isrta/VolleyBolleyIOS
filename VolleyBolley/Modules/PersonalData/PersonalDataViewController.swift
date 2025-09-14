@@ -7,11 +7,7 @@
 
 import UIKit
 
-protocol PersonalDataViewProtocol: AnyObject {
-
-}
-
-final class PersonalDataViewController: BaseViewController, PersonalDataViewProtocol, UITextFieldDelegate {
+final class PersonalDataViewController: BaseViewController {
 
     // MARK: - Constants
 
@@ -35,6 +31,7 @@ final class PersonalDataViewController: BaseViewController, PersonalDataViewProt
     private lazy var glassmorphismView = GlassmorphismView()
 
     private var selectedGender: String? = String(localized: "Male")
+    private var selectedCountry: String?
 
     private lazy var formStackView: UIStackView = {
         let stack = UIStackView()
@@ -147,6 +144,10 @@ final class PersonalDataViewController: BaseViewController, PersonalDataViewProt
     }()
     private let birthdaySeparator = CustomSeparator()
 
+    private lazy var countryLabel = CustomLabel(text: String(localized: "Your country"), isBold: true)
+    private var countryList: LocationPickerView?
+    private lazy var countrySeparator = CustomSeparator()
+
     // MARK: - Initializers
 
     init(presenter: PersonalDataPresenterProtocol) {
@@ -163,81 +164,15 @@ final class PersonalDataViewController: BaseViewController, PersonalDataViewProt
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        let countries = presenter.countries
+        countryList = LocationPickerView(items: countries, placeholder: String(localized: "Choose your country"))
+        countryList?.delegate = self
+
         setupView()
         presenter.viewDidLoad()
-    }
 
-    // MARK: - Public Methods
-
-    func textField(
-        _ textField: UITextField,
-        shouldChangeCharactersIn range: NSRange,
-        replacementString string: String
-    ) -> Bool {
-        guard textField == birthdayTextField else { return true }
-
-        let currentText = textField.text ?? ""
-        guard let stringRange = Range(range, in: currentText) else { return false }
-        let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
-
-        let digitsOnly = updatedText.replacingOccurrences(of: "[^0-9]", with: "", options: .regularExpression)
-
-        if digitsOnly.count > 8 {
-            return false
-        }
-
-        var formattedText = ""
-        let dayEnd = min(2, digitsOnly.count)
-        if dayEnd > 0 {
-            let day = String(digitsOnly.prefix(dayEnd))
-            formattedText += day
-            if dayEnd == 2 {
-                formattedText += " / "
-            }
-        }
-
-        let monthStart = 2
-        let monthEnd = min(4, digitsOnly.count)
-        if monthEnd > monthStart {
-            let startIdx = digitsOnly.index(digitsOnly.startIndex, offsetBy: monthStart)
-            let endIdx = digitsOnly.index(digitsOnly.startIndex, offsetBy: monthEnd)
-            let month = String(digitsOnly[startIdx..<endIdx])
-            formattedText += month
-            if monthEnd == 4 {
-                formattedText += " / "
-            }
-        }
-
-        let yearStart = 4
-        if digitsOnly.count > yearStart {
-            let startIdx = digitsOnly.index(digitsOnly.startIndex, offsetBy: yearStart)
-            let year = String(digitsOnly[startIdx...])
-            formattedText += year
-        }
-
-        if digitsOnly.count >= 2 {
-            if let dayInt = Int(digitsOnly.prefix(2)), dayInt < 1 || dayInt > 31 {
-                return false
-            }
-        }
-        if digitsOnly.count >= 4 {
-            let monthRange = digitsOnly.index(digitsOnly.startIndex, offsetBy: 2)..<digitsOnly.index(digitsOnly.startIndex, offsetBy: 4)
-            if let monthInt = Int(digitsOnly[monthRange]), monthInt < 1 || monthInt > 12 {
-                return false
-            }
-        }
-        if digitsOnly.count == 8 {
-            let yearRange = digitsOnly.index(digitsOnly.startIndex, offsetBy: 4)..<digitsOnly.index(digitsOnly.startIndex, offsetBy: 8)
-            if let yearInt = Int(digitsOnly[yearRange]) {
-                let currentYear = Calendar.current.component(.year, from: Date())
-                if yearInt > currentYear {
-                    return false
-                }
-            }
-        }
-
-        textField.text = formattedText
-        return false
+        view.layoutIfNeeded()
     }
 }
 
@@ -264,18 +199,24 @@ private extension PersonalDataViewController {
         contentView.addSubviews(formStackView)
         profileContainerView.addSubviews(profileImageView, editButton)
 
-        [profileContainerView,
-         nameLabel, nameTextField,
-         surnameLabel, surnameTextField, surnameSeparator,
-         genderLabel, genderButtonsStackView, genderSeparator,
-         birthdayLabel, birthdayTextField, birthdaySeparator,
-        ].forEach {
+        let subviews: [UIView] = [
+            profileContainerView,
+            nameLabel, nameTextField,
+            surnameLabel, surnameTextField, surnameSeparator,
+            genderLabel, genderButtonsStackView, genderSeparator,
+            birthdayLabel, birthdayTextField, birthdaySeparator,
+            countryLabel, countryList, countrySeparator
+        ].compactMap { $0 }
+
+        subviews.forEach {
             formStackView.addArrangedSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
     }
 
     func setupConstraints() {
+        guard let countryList = countryList else { return }
+
         NSLayoutConstraint.activate([
             glassmorphismView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             glassmorphismView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.mainIndent),
@@ -354,6 +295,15 @@ private extension PersonalDataViewController {
 
             birthdaySeparator.leadingAnchor.constraint(equalTo: formStackView.leadingAnchor),
             birthdaySeparator.trailingAnchor.constraint(equalTo: formStackView.trailingAnchor),
+
+            countryLabel.leadingAnchor.constraint(equalTo: formStackView.leadingAnchor),
+
+            countryList.topAnchor.constraint(equalTo: countryLabel.bottomAnchor, constant: 12),
+            countryList.leadingAnchor.constraint(equalTo: formStackView.leadingAnchor),
+            countryList.trailingAnchor.constraint(equalTo: formStackView.trailingAnchor),
+
+            countrySeparator.leadingAnchor.constraint(equalTo: formStackView.leadingAnchor),
+            countrySeparator.trailingAnchor.constraint(equalTo: formStackView.trailingAnchor),
         ])
     }
 
@@ -376,11 +326,102 @@ private extension PersonalDataViewController {
     }
 }
 
+extension PersonalDataViewController: UITextFieldDelegate {
+    func textField(
+        _ textField: UITextField,
+        shouldChangeCharactersIn range: NSRange,
+        replacementString string: String
+    ) -> Bool {
+        guard textField == birthdayTextField else { return true }
+
+        let currentText = textField.text ?? ""
+        guard let stringRange = Range(range, in: currentText) else { return false }
+        let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
+
+        let digitsOnly = updatedText.replacingOccurrences(of: "[^0-9]", with: "", options: .regularExpression)
+
+        if digitsOnly.count > 8 {
+            return false
+        }
+
+        var formattedText = ""
+        let dayEnd = min(2, digitsOnly.count)
+        if dayEnd > 0 {
+            let day = String(digitsOnly.prefix(dayEnd))
+            formattedText += day
+            if dayEnd == 2 {
+                formattedText += " / "
+            }
+        }
+
+        let monthStart = 2
+        let monthEnd = min(4, digitsOnly.count)
+        if monthEnd > monthStart {
+            let startIdx = digitsOnly.index(digitsOnly.startIndex, offsetBy: monthStart)
+            let endIdx = digitsOnly.index(digitsOnly.startIndex, offsetBy: monthEnd)
+            let month = String(digitsOnly[startIdx..<endIdx])
+            formattedText += month
+            if monthEnd == 4 {
+                formattedText += " / "
+            }
+        }
+
+        let yearStart = 4
+        if digitsOnly.count > yearStart {
+            let startIdx = digitsOnly.index(digitsOnly.startIndex, offsetBy: yearStart)
+            let year = String(digitsOnly[startIdx...])
+            formattedText += year
+        }
+
+        if digitsOnly.count >= 2 {
+            if let dayInt = Int(digitsOnly.prefix(2)), dayInt < 1 || dayInt > 31 {
+                return false
+            }
+        }
+        if digitsOnly.count >= 4 {
+            let monthRange = digitsOnly.index(digitsOnly.startIndex, offsetBy: 2)..<digitsOnly.index(digitsOnly.startIndex, offsetBy: 4)
+            if let monthInt = Int(digitsOnly[monthRange]), monthInt < 1 || monthInt > 12 {
+                return false
+            }
+        }
+        if digitsOnly.count == 8 {
+            let yearRange = digitsOnly.index(digitsOnly.startIndex, offsetBy: 4)..<digitsOnly.index(digitsOnly.startIndex, offsetBy: 8)
+            if let yearInt = Int(digitsOnly[yearRange]) {
+                let currentYear = Calendar.current.component(.year, from: Date())
+                if yearInt > currentYear {
+                    return false
+                }
+            }
+        }
+
+        textField.text = formattedText
+        return false
+    }
+}
+
+extension PersonalDataViewController: PersonalDataViewProtocol {
+    func updateCountries(_ countries: [String]) {
+        countryList?.updateItems(countries)
+    }
+}
+
+extension PersonalDataViewController: LocationPickerViewDelegate {
+    func locationPickerView(_ pickerView: LocationPickerView, didSelectItem item: String) {
+        if pickerView == countryList {
+            selectedCountry = item
+        }
+//        } else if pickerView == cityList {
+//            selectedCity = item
+//        }
+    }
+}
+
 #if DEBUG
 import SwiftUI
 
 struct  PersonalDataViewControllerPreview: UIViewControllerRepresentable {
     class StubPresenter: PersonalDataPresenterProtocol {
+        var countries: [String] = ["Cyprus", "Thailand"]
         weak var view: PersonalDataViewProtocol?
         func viewDidLoad() {}
         func backButtonTapped() {}
