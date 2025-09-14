@@ -1445,6 +1445,22 @@
         }
       }
     },
+    "Update" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Update"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Обновить"
+          }
+        }
+      }
+    },
     "VOLLEYBOLLEY" : {
       "localizations" : {
         "ru" : {

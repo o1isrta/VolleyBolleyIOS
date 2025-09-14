@@ -152,6 +152,14 @@ final class PersonalDataViewController: BaseViewController {
     private lazy var cityLabel = CustomLabel(text: String(localized: "Your city"), isBold: true)
     private var cityList: LocationPickerView?
 
+    private lazy var updateButton: YellowButton = {
+        let button = YellowButton()
+        button.isSelected = true
+        button.setTitle(String(localized: "Update").uppercased(), for: .normal)
+        button.addTarget(self, action: #selector(updateButtonTapped), for: .touchUpInside)
+        return button
+    }()
+
     // MARK: - Initializers
 
     init(presenter: PersonalDataPresenterProtocol) {
@@ -214,7 +222,7 @@ private extension PersonalDataViewController {
             genderLabel, genderButtonsStackView, genderSeparator,
             birthdayLabel, birthdayTextField, birthdaySeparator,
             countryLabel, countryList, countrySeparator,
-            cityLabel, cityList
+            cityLabel, cityList, updateButton
         ].compactMap { $0 }
 
         subviews.forEach {
@@ -320,6 +328,9 @@ private extension PersonalDataViewController {
             cityList.topAnchor.constraint(equalTo: cityLabel.bottomAnchor, constant: 8),
             cityList.leadingAnchor.constraint(equalTo: formStackView.leadingAnchor),
             cityList.trailingAnchor.constraint(equalTo: formStackView.trailingAnchor),
+
+            updateButton.leadingAnchor.constraint(equalTo: formStackView.leadingAnchor),
+            updateButton.trailingAnchor.constraint(equalTo: formStackView.trailingAnchor)
         ])
     }
 
@@ -331,7 +342,6 @@ private extension PersonalDataViewController {
     @objc
     func editButtonTapped() {
         // TODO: Редактирование фото профиля
-        print("Редактирование фото")
     }
 
     @objc
@@ -339,6 +349,11 @@ private extension PersonalDataViewController {
         [maleButton, femaleButton].forEach { $0.isSelected = false }
         sender.isSelected = true
         selectedGender = sender.title(for: .normal)
+    }
+
+    @objc
+    func updateButtonTapped(_ sender: UIButton) {
+        presenter.updateButtonTapped()
     }
 }
 
@@ -441,6 +456,7 @@ struct  PersonalDataViewControllerPreview: UIViewControllerRepresentable {
         weak var view: PersonalDataViewProtocol?
         func viewDidLoad() {}
         func backButtonTapped() {}
+        func updateButtonTapped() {}
     }
 
     func makeUIViewController(context: Context) -> some UIViewController {

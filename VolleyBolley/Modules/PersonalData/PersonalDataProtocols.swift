@@ -17,6 +17,7 @@ protocol PersonalDataPresenterProtocol: AnyObject {
 
     func viewDidLoad()
     func backButtonTapped()
+    func updateButtonTapped()
 }
 
 protocol PersonalDataInteractorProtocol: AnyObject {
