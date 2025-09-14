@@ -38,14 +38,14 @@ final class CreationSuccessPresenter: CreationSuccessPresenterProtocol {
         infoItems.count
     }
     var titleText: String {
-        creationType.titleText
+        type.titleText
     }
 
     // MARK: - Private Properties
 
     private let interactor: CreationSuccessInteractorProtocol
     private let router: CreationSuccessRouterProtocol
-    private let creationType: CreationType
+    private let type: CreationType
 
     private var infoItems: [CreationInfoItem] = []
 
@@ -54,11 +54,11 @@ final class CreationSuccessPresenter: CreationSuccessPresenterProtocol {
     init(
         interactor: CreationSuccessInteractorProtocol,
         router: CreationSuccessRouterProtocol,
-        creationType: CreationType = .game
+        type: CreationType = .game
     ) {
         self.interactor = interactor
         self.router = router
-        self.creationType = creationType
+        self.type = type
     }
 
     // MARK: - Internal Methods
@@ -113,9 +113,9 @@ final class CreationSuccessPresenter: CreationSuccessPresenterProtocol {
             options: [],
             range: startRange,
             withTemplate: ""
-        )
+        ) ?? startTimeText
 
-        let timeRange = "\(String(describing: startWithoutAmPm))-\(endTimeText)"
+        let timeRange = "\(startWithoutAmPm)-\(endTimeText)"
 
         let startTitle: String
         if calendar.isDateInToday(info.startTime) {
@@ -127,7 +127,10 @@ final class CreationSuccessPresenter: CreationSuccessPresenterProtocol {
         }
 
         let capitalizedLevels = info.levels.map { $0.capitalizingFirstLetter() }
-        let levelDescription = NSLocalizedString("Level", comment: "") + ": " + capitalizedLevels.joined(separator: ", ")
+        let levelDescription = NSLocalizedString(
+            "Level",
+            comment: ""
+        ) + ": " + capitalizedLevels.joined(separator: ", ")
 
         let details: String
         if let gameInfo = info as? GameCreationInfo {
