@@ -75,15 +75,13 @@ final class CreationSuccessPresenter: CreationSuccessPresenterProtocol {
         router.closeScreen()
     }
 
-    func didTapInvite() {
+    func didTapInvite() {}
+
+    func didTapShare() {
         interactor.fetchInviteLink { [weak self] link in
             guard let link else { return }
             self?.router.openShareSheet(with: link)
         }
-    }
-
-    func didTapShare() {
-        router.openShareSheet(with: "")
     }
 
     // MARK: - Private Methods
