@@ -34,6 +34,8 @@ final class PersonalDataViewController: BaseViewController, PersonalDataViewProt
     private let contentView = UIView()
     private lazy var glassmorphismView = GlassmorphismView()
 
+    private var selectedGender: String? = String(localized: "Male")
+
     private lazy var formStackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
@@ -81,7 +83,6 @@ final class PersonalDataViewController: BaseViewController, PersonalDataViewProt
         textField.backgroundColor = AppColor.Border.primary
         textField.layer.cornerRadius = 16
         textField.textColor = AppColor.Text.placeHolder
-        textField.translatesAutoresizingMaskIntoConstraints = false
         textField.setLeftPaddingPoints(16)
         return textField
     }()
@@ -93,11 +94,42 @@ final class PersonalDataViewController: BaseViewController, PersonalDataViewProt
         textField.backgroundColor = AppColor.Border.primary
         textField.layer.cornerRadius = 16
         textField.textColor = AppColor.Text.placeHolder
-        textField.translatesAutoresizingMaskIntoConstraints = false
         textField.setLeftPaddingPoints(16)
         return textField
     }()
     private lazy var surnameSeparator = CustomSeparator()
+
+    private lazy var genderLabel = CustomLabel(text: String(localized: "Gender"), isBold: true)
+    private lazy var maleButton: GreenButton = {
+        let button = GreenButton()
+        button.setTitle(String(localized: "Male"), for: .normal)
+        button.isSelected = true
+        button.addTarget(self, action: #selector(genderButtonTapped(_:)), for: .touchUpInside)
+        return button
+    }()
+    private lazy var femaleButton: GreenButton = {
+        let button = GreenButton()
+        button.setTitle(String(localized: "Female"), for: .normal)
+        button.isSelected = false
+        button.addTarget(self, action: #selector(genderButtonTapped(_:)), for: .touchUpInside)
+        return button
+    }()
+    private lazy var genderButtonsStackView: UIStackView = {
+        let view = UIView()
+        view.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        let stack = UIStackView(arrangedSubviews: [
+            maleButton,
+            femaleButton,
+            view
+        ])
+        stack.axis = .horizontal
+        stack.distribution = .fill
+        stack.alignment = .leading
+        stack.spacing = 8
+        stack.isLayoutMarginsRelativeArrangement = true
+        return stack
+    }()
+    private lazy var genderSeparator = CustomSeparator()
 
     // MARK: - Initializers
 
@@ -130,9 +162,16 @@ private extension PersonalDataViewController {
     }
 
     @objc
-    // TODO: Редактирование фото профиля
     private func editButtonTapped() {
+        // TODO: Редактирование фото профиля
         print("Редактирование фото")
+    }
+
+    @objc
+    private func genderButtonTapped(_ sender: UIButton) {
+        [maleButton, femaleButton].forEach { $0.isSelected = false }
+        sender.isSelected = true
+        selectedGender = sender.title(for: .normal)
     }
 
     func setupView() {
@@ -155,7 +194,8 @@ private extension PersonalDataViewController {
 
         [profileContainerView,
          nameLabel, nameTextField,
-         surnameLabel, surnameTextField, surnameSeparator
+         surnameLabel, surnameTextField, surnameSeparator,
+         genderLabel, genderButtonsStackView, genderSeparator
         ].forEach {
             formStackView.addArrangedSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -223,6 +263,13 @@ private extension PersonalDataViewController {
 
             surnameSeparator.leadingAnchor.constraint(equalTo: formStackView.leadingAnchor),
             surnameSeparator.trailingAnchor.constraint(equalTo: formStackView.trailingAnchor),
+
+            genderLabel.leadingAnchor.constraint(equalTo: formStackView.leadingAnchor),
+
+            genderButtonsStackView.topAnchor.constraint(equalTo: genderLabel.bottomAnchor, constant: 8),
+
+            genderSeparator.leadingAnchor.constraint(equalTo: formStackView.leadingAnchor),
+            genderSeparator.trailingAnchor.constraint(equalTo: formStackView.trailingAnchor),
         ])
     }
 }
