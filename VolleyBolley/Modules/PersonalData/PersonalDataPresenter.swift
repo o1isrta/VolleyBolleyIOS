@@ -35,7 +35,7 @@ final class PersonalDataPresenter: PersonalDataPresenterProtocol {
     }
 
     func backButtonTapped() {
-        router.navigateBack(from: view)
+        router.navigateBack()
     }
 
     func updateButtonTapped() {
