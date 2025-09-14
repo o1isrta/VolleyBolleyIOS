@@ -60,6 +60,7 @@
     },
     "ADD SELECTED" : {
       "comment" : "Game",
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -776,6 +777,23 @@
         }
       }
     },
+    "game.created" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game created"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Игра создана"
+          }
+        }
+      }
+    },
     "Gender" : {
       "comment" : "User info / Game Description",
       "localizations" : {
@@ -1321,6 +1339,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Хозяин турнира"
+          }
+        }
+      }
+    },
+    "tourney.created" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Torney created"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Турнир создан"
           }
         }
       }

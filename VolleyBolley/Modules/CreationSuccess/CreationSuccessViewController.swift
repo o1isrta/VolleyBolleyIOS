@@ -8,10 +8,11 @@
 import UIKit
 
 protocol CreationSuccessView: AnyObject {
-
+    func reloadData()
+    func showError(_ error: Error)
 }
 
-final class CreationSuccessViewController: BaseViewController {
+final class CreationSuccessViewController: BaseViewController, CreationSuccessView {
 
     // MARK: - Constants
 
@@ -115,6 +116,20 @@ final class CreationSuccessViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
+        presenter.viewDidLoad()
+    }
+
+    // MARK: - Internal Methods
+
+    func reloadData() {
+        infoTableView.reloadData()
+        infoTableView.heightAnchor.constraint(equalToConstant: Constants.rowHeight * CGFloat(presenter.numberOfItems)).isActive = true
+    }
+
+    func showError(_ error: Error) {
+        let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
     }
 
     // MARK: - Private Methods
@@ -177,14 +192,37 @@ extension CreationSuccessViewController: UITableViewDataSource {
 }
 
 // MARK: - Preview
+
 #if DEBUG
 import SwiftUI
 
+final class MockCreationSuccessPresenter: CreationSuccessPresenterProtocol {
+    var numberOfItems: Int { 4 }
+    var titleText: String { "Game created" }
+
+    func infoItem(at index: Int) -> CreationInfoItem {
+        switch index {
+        case 0:
+            CreationInfoItem(type: .place, title: "Karon Beach Club", description: "Patak Rd, Mueang Phuket")
+        case 1:
+            CreationInfoItem(type: .time, title: "Starts today", description: "2:00 - 3:00 pm")
+        case 2:
+            CreationInfoItem(type: .level, title: "Level: Hard", description: "Mix · 4 players · private game")
+        case 3:
+            CreationInfoItem(type: .price, title: "5$ per person", description: "988 016 7890")
+        default:
+            CreationInfoItem(type: .place, title: "", description: "")
+        }
+    }
+
+    func didTapDone() {}
+    func didTapInvite() {}
+    func didTapShare() {}
+    func viewDidLoad() {}
+}
+
 @available(iOS 17.0, *)
 #Preview {
-    UIViewControllerPreview {
-        CreationSuccessViewController(presenter: CreationSuccessPresenter())
-    }
-    .edgesIgnoringSafeArea(.all)
+    CreationSuccessViewController(presenter: MockCreationSuccessPresenter())
 }
 #endif
