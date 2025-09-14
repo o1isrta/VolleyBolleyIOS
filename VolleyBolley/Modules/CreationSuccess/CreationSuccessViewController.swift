@@ -19,10 +19,12 @@ final class CreationSuccessViewController: BaseViewController, CreationSuccessVi
     private enum Constants {
         static let cornerRadius: CGFloat = 32
         static let rowHeight: CGFloat = 52
+        static let containerHeight: CGFloat = 332
+        static let containerInsets: CGFloat = 8
         static let vStackSpacing: CGFloat = 8
         static let hStackSpacing: CGFloat = 8
         static let hStackOffset: CGFloat = 8
-        static let insets: CGFloat = 20
+        static let contentInsets: CGFloat = 20
     }
 
     // MARK: - Private Properties
@@ -97,6 +99,8 @@ final class CreationSuccessViewController: BaseViewController, CreationSuccessVi
         return view
     }()
 
+    private var tableHeightConstraint: NSLayoutConstraint?
+
     private let presenter: CreationSuccessPresenterProtocol
 
     // MARK: - Initializers
@@ -123,7 +127,7 @@ final class CreationSuccessViewController: BaseViewController, CreationSuccessVi
 
     func reloadData() {
         infoTableView.reloadData()
-        infoTableView.heightAnchor.constraint(equalToConstant: Constants.rowHeight * CGFloat(presenter.numberOfItems)).isActive = true
+        tableHeightConstraint?.constant = Constants.rowHeight * CGFloat(presenter.numberOfItems)
     }
 
     func showError(_ error: Error) {
@@ -137,18 +141,21 @@ final class CreationSuccessViewController: BaseViewController, CreationSuccessVi
     private func setup() {
         view.addSubviews(glassContainer, vStack, hStack)
 
+        tableHeightConstraint = infoTableView.heightAnchor.constraint(
+            equalToConstant: Constants.rowHeight * CGFloat(presenter.numberOfItems)
+        )
+        tableHeightConstraint?.isActive = true
+
         NSLayoutConstraint.activate(
             [
-                glassContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
-                glassContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
-                glassContainer.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
-                glassContainer.heightAnchor.constraint(equalToConstant: 332),
+                glassContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.containerInsets),
+                glassContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constants.containerInsets),
+                glassContainer.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: Constants.containerInsets),
+                glassContainer.heightAnchor.constraint(equalToConstant: Constants.containerHeight),
 
-                infoTableView.heightAnchor.constraint(equalToConstant: Constants.rowHeight * CGFloat(presenter.numberOfItems)),
-
-                vStack.leadingAnchor.constraint(equalTo: glassContainer.leadingAnchor, constant: 20),
-                vStack.trailingAnchor.constraint(equalTo: glassContainer.trailingAnchor, constant: -20),
-                vStack.topAnchor.constraint(equalTo: glassContainer.topAnchor, constant: 20),
+                vStack.leadingAnchor.constraint(equalTo: glassContainer.leadingAnchor, constant: Constants.contentInsets),
+                vStack.trailingAnchor.constraint(equalTo: glassContainer.trailingAnchor, constant: -Constants.contentInsets),
+                vStack.topAnchor.constraint(equalTo: glassContainer.topAnchor, constant: Constants.contentInsets),
 
                 hStack.leadingAnchor.constraint(equalTo: glassContainer.leadingAnchor),
                 hStack.trailingAnchor.constraint(equalTo: glassContainer.trailingAnchor),
