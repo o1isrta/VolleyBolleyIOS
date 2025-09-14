@@ -12,6 +12,7 @@ final class PersonalDataPresenter: PersonalDataPresenterProtocol {
     // MARK: - Public Properties
 
     var countries = ["Cyprus", "Thailand"]
+    let cities = ["Koh Phangan", "Koh Samui"]
 
     weak var view: PersonalDataViewProtocol?
     let interactor: PersonalDataInteractorProtocol
