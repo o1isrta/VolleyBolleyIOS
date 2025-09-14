@@ -37,6 +37,10 @@ final class PersonalDataPresenter: PersonalDataPresenterProtocol {
     func backButtonTapped() {
         router.navigateBack(from: view)
     }
+
+    func updateButtonTapped() {
+        // TODO: Обновление профиля
+    }
 }
 
 extension PersonalDataPresenter: PersonalDataInteractorOutputProtocol {
