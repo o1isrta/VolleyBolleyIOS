@@ -20,10 +20,7 @@ final class PersonalDataRouter: PersonalDataRouterProtocol {
     }
 
     func navigateBack(from view: PersonalDataViewProtocol?) {
-        if let viewController = viewController {
-            viewController.navigationController?.popViewController(animated: true)
-        } else if let view = view as? UIViewController {
-            view.navigationController?.popViewController(animated: true)
-        }
+        let vc = viewController ?? (view as? UIViewController)
+        vc?.navigationController?.popViewController(animated: true)
     }
 }

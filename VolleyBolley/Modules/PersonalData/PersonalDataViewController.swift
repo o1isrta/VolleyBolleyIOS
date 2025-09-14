@@ -32,6 +32,7 @@ final class PersonalDataViewController: BaseViewController {
 
     private var selectedGender: String? = String(localized: "Male")
     private var selectedCountry: String?
+    private var selectedCity: String?
 
     private lazy var formStackView: UIStackView = {
         let stack = UIStackView()
@@ -148,6 +149,9 @@ final class PersonalDataViewController: BaseViewController {
     private var countryList: LocationPickerView?
     private lazy var countrySeparator = CustomSeparator()
 
+    private lazy var cityLabel = CustomLabel(text: String(localized: "Your city"), isBold: true)
+    private var cityList: LocationPickerView?
+
     // MARK: - Initializers
 
     init(presenter: PersonalDataPresenterProtocol) {
@@ -168,6 +172,10 @@ final class PersonalDataViewController: BaseViewController {
         let countries = presenter.countries
         countryList = LocationPickerView(items: countries, placeholder: String(localized: "Choose your country"))
         countryList?.delegate = self
+
+        let cities = presenter.cities
+        cityList = LocationPickerView(items: cities, placeholder: String(localized: "Choose your city"))
+        cityList?.delegate = self
 
         setupView()
         presenter.viewDidLoad()
@@ -205,7 +213,8 @@ private extension PersonalDataViewController {
             surnameLabel, surnameTextField, surnameSeparator,
             genderLabel, genderButtonsStackView, genderSeparator,
             birthdayLabel, birthdayTextField, birthdaySeparator,
-            countryLabel, countryList, countrySeparator
+            countryLabel, countryList, countrySeparator,
+            cityLabel, cityList
         ].compactMap { $0 }
 
         subviews.forEach {
@@ -216,6 +225,7 @@ private extension PersonalDataViewController {
 
     func setupConstraints() {
         guard let countryList = countryList else { return }
+        guard let cityList = cityList else { return }
 
         NSLayoutConstraint.activate([
             glassmorphismView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -304,6 +314,12 @@ private extension PersonalDataViewController {
 
             countrySeparator.leadingAnchor.constraint(equalTo: formStackView.leadingAnchor),
             countrySeparator.trailingAnchor.constraint(equalTo: formStackView.trailingAnchor),
+
+            cityLabel.leadingAnchor.constraint(equalTo: formStackView.leadingAnchor),
+
+            cityList.topAnchor.constraint(equalTo: cityLabel.bottomAnchor, constant: 8),
+            cityList.leadingAnchor.constraint(equalTo: formStackView.leadingAnchor),
+            cityList.trailingAnchor.constraint(equalTo: formStackView.trailingAnchor),
         ])
     }
 
@@ -409,10 +425,9 @@ extension PersonalDataViewController: LocationPickerViewDelegate {
     func locationPickerView(_ pickerView: LocationPickerView, didSelectItem item: String) {
         if pickerView == countryList {
             selectedCountry = item
+        } else if pickerView == cityList {
+            selectedCity = item
         }
-//        } else if pickerView == cityList {
-//            selectedCity = item
-//        }
     }
 }
 
@@ -421,7 +436,8 @@ import SwiftUI
 
 struct  PersonalDataViewControllerPreview: UIViewControllerRepresentable {
     class StubPresenter: PersonalDataPresenterProtocol {
-        var countries: [String] = ["Cyprus", "Thailand"]
+        let countries: [String] = ["Cyprus", "Thailand"]
+        let cities: [String] = ["Koh Phangan", "Koh Samui"]
         weak var view: PersonalDataViewProtocol?
         func viewDidLoad() {}
         func backButtonTapped() {}

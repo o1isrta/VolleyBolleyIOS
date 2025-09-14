@@ -13,6 +13,7 @@ protocol PersonalDataViewProtocol: AnyObject {
 
 protocol PersonalDataPresenterProtocol: AnyObject {
     var countries: [String] { get }
+    var cities: [String] { get }
 
     func viewDidLoad()
     func backButtonTapped()
