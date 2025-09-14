@@ -30,5 +30,5 @@ protocol PersonalDataInteractorOutputProtocol: AnyObject {
 
 protocol PersonalDataRouterProtocol: AnyObject {
     func attachViewController(_ view: UIViewController)
-    func navigateBack(from view: PersonalDataViewProtocol?)
+    func navigateBack()
 }
