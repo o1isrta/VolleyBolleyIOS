@@ -11,7 +11,7 @@ protocol PersonalDataViewProtocol: AnyObject {
 
 }
 
-final class PersonalDataViewController: BaseViewController, PersonalDataViewProtocol {
+final class PersonalDataViewController: BaseViewController, PersonalDataViewProtocol, UITextFieldDelegate {
 
     // MARK: - Constants
 
@@ -39,6 +39,7 @@ final class PersonalDataViewController: BaseViewController, PersonalDataViewProt
     private lazy var formStackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
+        stack.alignment = .leading
         stack.spacing = Constants.mediumSpacing
         return stack
     }()
@@ -131,6 +132,21 @@ final class PersonalDataViewController: BaseViewController, PersonalDataViewProt
     }()
     private lazy var genderSeparator = CustomSeparator()
 
+    private lazy var birthdayLabel = CustomLabel(text: String(localized: "Date of birth"), isBold: true)
+    private lazy var birthdayTextField: UITextField = {
+        let textField = UITextField()
+        textField.placeholder = "__ / __ / ____"
+        textField.textAlignment = .center
+        textField.backgroundColor = AppColor.Text.primary
+        textField.layer.cornerRadius = 16
+        textField.keyboardType = .numberPad
+        textField.textColor = AppColor.Text.placeHolder
+        textField.font = AppFont.Hero.regular(size: 16)
+        textField.delegate = self
+        return textField
+    }()
+    private let birthdaySeparator = CustomSeparator()
+
     // MARK: - Initializers
 
     init(presenter: PersonalDataPresenterProtocol) {
@@ -150,59 +166,116 @@ final class PersonalDataViewController: BaseViewController, PersonalDataViewProt
         setupView()
         presenter.viewDidLoad()
     }
+
+    // MARK: - Public Methods
+
+    func textField(
+        _ textField: UITextField,
+        shouldChangeCharactersIn range: NSRange,
+        replacementString string: String
+    ) -> Bool {
+        guard textField == birthdayTextField else { return true }
+
+        let currentText = textField.text ?? ""
+        guard let stringRange = Range(range, in: currentText) else { return false }
+        let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
+
+        let digitsOnly = updatedText.replacingOccurrences(of: "[^0-9]", with: "", options: .regularExpression)
+
+        if digitsOnly.count > 8 {
+            return false
+        }
+
+        var formattedText = ""
+        let dayEnd = min(2, digitsOnly.count)
+        if dayEnd > 0 {
+            let day = String(digitsOnly.prefix(dayEnd))
+            formattedText += day
+            if dayEnd == 2 {
+                formattedText += " / "
+            }
+        }
+
+        let monthStart = 2
+        let monthEnd = min(4, digitsOnly.count)
+        if monthEnd > monthStart {
+            let startIdx = digitsOnly.index(digitsOnly.startIndex, offsetBy: monthStart)
+            let endIdx = digitsOnly.index(digitsOnly.startIndex, offsetBy: monthEnd)
+            let month = String(digitsOnly[startIdx..<endIdx])
+            formattedText += month
+            if monthEnd == 4 {
+                formattedText += " / "
+            }
+        }
+
+        let yearStart = 4
+        if digitsOnly.count > yearStart {
+            let startIdx = digitsOnly.index(digitsOnly.startIndex, offsetBy: yearStart)
+            let year = String(digitsOnly[startIdx...])
+            formattedText += year
+        }
+
+        if digitsOnly.count >= 2 {
+            if let dayInt = Int(digitsOnly.prefix(2)), dayInt < 1 || dayInt > 31 {
+                return false
+            }
+        }
+        if digitsOnly.count >= 4 {
+            let monthRange = digitsOnly.index(digitsOnly.startIndex, offsetBy: 2)..<digitsOnly.index(digitsOnly.startIndex, offsetBy: 4)
+            if let monthInt = Int(digitsOnly[monthRange]), monthInt < 1 || monthInt > 12 {
+                return false
+            }
+        }
+        if digitsOnly.count == 8 {
+            let yearRange = digitsOnly.index(digitsOnly.startIndex, offsetBy: 4)..<digitsOnly.index(digitsOnly.startIndex, offsetBy: 8)
+            if let yearInt = Int(digitsOnly[yearRange]) {
+                let currentYear = Calendar.current.component(.year, from: Date())
+                if yearInt > currentYear {
+                    return false
+                }
+            }
+        }
+
+        textField.text = formattedText
+        return false
+    }
 }
 
 // MARK: - Private methods
 
 private extension PersonalDataViewController {
 
-    @objc
-    func backButtonTapped() {
-        presenter.backButtonTapped()
-    }
-
-    @objc
-    private func editButtonTapped() {
-        // TODO: Редактирование фото профиля
-        print("Редактирование фото")
-    }
-
-    @objc
-    private func genderButtonTapped(_ sender: UIButton) {
-        [maleButton, femaleButton].forEach { $0.isSelected = false }
-        sender.isSelected = true
-        selectedGender = sender.title(for: .normal)
-    }
-
     func setupView() {
-        setupGlassmorphismView()
+        setupScrollView()
         setupSubviews()
         setupConstraints()
     }
 
-    private func setupGlassmorphismView() {
+    func setupScrollView() {
         view.addSubviews(glassmorphismView)
         glassmorphismView.layer.cornerRadius = Constants.glassmorphismCornerRadius
         glassmorphismView.clipsToBounds = true
-    }
 
-    private func setupSubviews() {
         glassmorphismView.addSubviews(backButton, screenTitle, scrollView)
         scrollView.addSubviews(contentView)
+    }
+
+    func setupSubviews() {
         contentView.addSubviews(formStackView)
         profileContainerView.addSubviews(profileImageView, editButton)
 
         [profileContainerView,
          nameLabel, nameTextField,
          surnameLabel, surnameTextField, surnameSeparator,
-         genderLabel, genderButtonsStackView, genderSeparator
+         genderLabel, genderButtonsStackView, genderSeparator,
+         birthdayLabel, birthdayTextField, birthdaySeparator,
         ].forEach {
             formStackView.addArrangedSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
     }
 
-    private func setupConstraints() {
+    func setupConstraints() {
         NSLayoutConstraint.activate([
             glassmorphismView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             glassmorphismView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.mainIndent),
@@ -235,6 +308,7 @@ private extension PersonalDataViewController {
 
             profileContainerView.topAnchor.constraint(equalTo: formStackView.topAnchor),
             profileContainerView.heightAnchor.constraint(equalToConstant: Constants.profileImageSize),
+            profileContainerView.widthAnchor.constraint(equalTo: formStackView.widthAnchor),
 
             profileImageView.widthAnchor.constraint(equalToConstant: Constants.profileImageSize),
             profileImageView.heightAnchor.constraint(equalToConstant: Constants.profileImageSize),
@@ -270,7 +344,35 @@ private extension PersonalDataViewController {
 
             genderSeparator.leadingAnchor.constraint(equalTo: formStackView.leadingAnchor),
             genderSeparator.trailingAnchor.constraint(equalTo: formStackView.trailingAnchor),
+
+            birthdayLabel.leadingAnchor.constraint(equalTo: formStackView.leadingAnchor),
+
+            birthdayTextField.topAnchor.constraint(equalTo: birthdayLabel.bottomAnchor, constant: 8),
+            birthdayTextField.leadingAnchor.constraint(equalTo: formStackView.leadingAnchor),
+            birthdayTextField.widthAnchor.constraint(equalToConstant: 120),
+            birthdayTextField.heightAnchor.constraint(equalToConstant: 51),
+
+            birthdaySeparator.leadingAnchor.constraint(equalTo: formStackView.leadingAnchor),
+            birthdaySeparator.trailingAnchor.constraint(equalTo: formStackView.trailingAnchor),
         ])
+    }
+
+    @objc
+    func backButtonTapped() {
+        presenter.backButtonTapped()
+    }
+
+    @objc
+    func editButtonTapped() {
+        // TODO: Редактирование фото профиля
+        print("Редактирование фото")
+    }
+
+    @objc
+    func genderButtonTapped(_ sender: UIButton) {
+        [maleButton, femaleButton].forEach { $0.isSelected = false }
+        sender.isSelected = true
+        selectedGender = sender.title(for: .normal)
     }
 }
 
