@@ -71,7 +71,8 @@ final class DIContainer {
                 MyGamesAssembly(),
                 ProfileAssembly(),
 				NotificationsAssembly(),
-				PaywallAssembly()
+				PaywallAssembly(),
+                CreationSuccessAssembly()
             ]
         )
     }
