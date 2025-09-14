@@ -7,14 +7,14 @@
 
 import UIKit
 
-protocol PersonalDataInteractorProtocol: AnyObject {
-    func loadData()
-}
-
 final class PersonalDataInteractor: PersonalDataInteractorProtocol {
-    
-    func loadData() {
-        // Заглушка: здесь будет загрузка персональных данных
-        print("Personal data loaded")
+
+    weak var presenter: PersonalDataInteractorOutputProtocol?
+
+    func fetchCountries() {
+        let mockCountries = ["Cyprus", "Thailand", "Poland", "Germany"]
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.presenter?.didFetchCountries(mockCountries)
+        }
     }
 }

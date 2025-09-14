@@ -7,11 +7,6 @@
 
 import UIKit
 
-protocol PersonalDataRouterProtocol: AnyObject {
-    func attachViewController(_ view: UIViewController)
-    func navigateBack(from view: PersonalDataViewProtocol?)
-}
-
 final class PersonalDataRouter: PersonalDataRouterProtocol {
 
     // MARK: - Public Properties

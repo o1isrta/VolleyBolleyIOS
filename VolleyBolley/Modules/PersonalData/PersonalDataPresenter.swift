@@ -7,14 +7,11 @@
 
 import Foundation
 
-protocol PersonalDataPresenterProtocol: AnyObject {
-    func viewDidLoad()
-    func backButtonTapped()
-}
-
 final class PersonalDataPresenter: PersonalDataPresenterProtocol {
 
     // MARK: - Public Properties
+
+    var countries = ["Cyprus", "Thailand"]
 
     weak var view: PersonalDataViewProtocol?
     let interactor: PersonalDataInteractorProtocol
@@ -33,10 +30,17 @@ final class PersonalDataPresenter: PersonalDataPresenterProtocol {
     // MARK: - Public Methods
 
     func viewDidLoad() {
-        interactor.loadData()
+        interactor.fetchCountries()
     }
 
     func backButtonTapped() {
         router.navigateBack(from: view)
+    }
+}
+
+extension PersonalDataPresenter: PersonalDataInteractorOutputProtocol {
+    func didFetchCountries(_ countries: [String]) {
+        self.countries = countries
+        view?.updateCountries(countries)
     }
 }
