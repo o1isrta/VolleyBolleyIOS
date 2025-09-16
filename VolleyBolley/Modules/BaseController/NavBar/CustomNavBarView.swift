@@ -70,6 +70,7 @@ private extension CustomNavBarView {
 	// MARK: - Layout Setup
 
 	func setupLayout() {
+		heightAnchor.constraint(equalToConstant: 106).isActive = true
 		setupConstraintsAvatarImageView()
 		setupConstraintsNameLabel()
 		setupConstraintsNotificationButtonView()

@@ -9,7 +9,6 @@ import UIKit
 
 protocol FAQViewProtocol: AnyObject {
     func showGreeting(_ message: String)
-    func displayNavBar(viewModel: NavBarViewModel)
     func displayError(message: String)
 }
 
@@ -88,7 +87,6 @@ final class FAQViewController: BaseViewController, СhoicePlayersViewProtocol {
 
     private var faqItems: [FAQItem] = FAQItem.allCases
 
-    private lazy var navigationBarView = CustomNavBarView()
     private lazy var mainTabBarController = MainTabBarController()
 
     private lazy var buttonBack: UtilityButton = {
@@ -133,9 +131,7 @@ final class FAQViewController: BaseViewController, СhoicePlayersViewProtocol {
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder: NSCoder) { nil }
 
     // MARK: - Lifecycle
 
@@ -150,10 +146,6 @@ final class FAQViewController: BaseViewController, СhoicePlayersViewProtocol {
         label.text = message
     }
 
-    func displayNavBar(viewModel: NavBarViewModel) {
-        navigationBarView.configure(with: viewModel)
-    }
-
     func displayError(message: String) {
         print(message)
     }
@@ -164,10 +156,13 @@ final class FAQViewController: BaseViewController, СhoicePlayersViewProtocol {
 private extension FAQViewController {
 
     func setupUI() {
-        [navigationBarView, label, background, buttonBack, titleLabel, tableView].forEach {
-            view.addSubview($0)
-            $0.translatesAutoresizingMaskIntoConstraints = false
-        }
+		view.addSubviews(
+			label,
+			background,
+			buttonBack,
+			titleLabel,
+			tableView
+		)
 
         addChild(mainTabBarController)
         view.addSubview(mainTabBarController.view)
@@ -179,20 +174,15 @@ private extension FAQViewController {
         setupUI()
 
         NSLayoutConstraint.activate([
-            navigationBarView.topAnchor.constraint(equalTo: view.topAnchor),
-            navigationBarView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            navigationBarView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            navigationBarView.heightAnchor.constraint(equalToConstant: 106),
-
             label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
 
-            background.topAnchor.constraint(equalTo: navigationBarView.bottomAnchor, constant: 8),
+			background.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 8),
             background.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
             background.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
             background.bottomAnchor.constraint(equalTo: mainTabBarController.view.topAnchor, constant: -8),
 
-            buttonBack.topAnchor.constraint(equalTo: navigationBarView.bottomAnchor, constant: 20),
+            buttonBack.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 20),
             buttonBack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 28),
 
             titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -230,28 +220,16 @@ extension FAQViewController: UITableViewDataSource {
     }
 }
 
+// MARK: - Preview
+
 #if DEBUG
-import SwiftUI
-
-struct FAQViewControllerPreview: UIViewControllerRepresentable {
-    class StubPresenter: FAQViewProtocol {
-        func showGreeting(_ message: String) {}
-        func displayNavBar(viewModel: NavBarViewModel) {}
-        func displayError(message: String) {}
-    }
-
-    func makeUIViewController(context: Context) -> some UIViewController {
-        let presenter = StubPresenter()
-        return FAQViewController(presenter: presenter)
-    }
-
-    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {}
-}
-
-struct FAQViewController_Previews: PreviewProvider {
-    static var previews: some View {
-        FAQViewControllerPreview()
-            .edgesIgnoringSafeArea(.all)
-    }
+@available(iOS 17.0, *)
+#Preview {
+	class StubPresenter: FAQViewProtocol {
+		func showGreeting(_ message: String) {}
+		func displayError(message: String) {}
+	}
+	let presenter = StubPresenter()
+	return FAQViewController(presenter: presenter)
 }
 #endif

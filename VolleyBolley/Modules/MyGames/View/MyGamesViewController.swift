@@ -9,7 +9,6 @@ import UIKit
 
 protocol MyGamesViewProtocol: AnyObject {
     func showGreeting(_ message: String)
-    func displayNavBar(viewModel: NavBarViewModel)
     func displayError(message: String)
 }
 
@@ -18,8 +17,6 @@ final class MyGamesViewController: BaseViewController, MyGamesViewProtocol {
     // MARK: - Private Properties
 
     private let presenter: MyGamesPresenterProtocol
-
-    private lazy var navigationBarView = CustomNavBarView()
 
     private lazy var label: UILabel = {
         let view = UILabel()
@@ -36,9 +33,7 @@ final class MyGamesViewController: BaseViewController, MyGamesViewProtocol {
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder: NSCoder) { nil }
 
     // MARK: - Lifecycle
 
@@ -55,46 +50,24 @@ final class MyGamesViewController: BaseViewController, MyGamesViewProtocol {
         label.text = message
     }
 
-    func displayNavBar(viewModel: NavBarViewModel) {
-        navigationBarView.configure(with: viewModel)
-    }
-
     func displayError(message: String) {
+		// TODO:
         print(message)
     }
 
     // MARK: - Layout
 
     private func setupView() {
-        view.addSubview(navigationBarView)
         view.addSubview(label)
         setupLayout()
     }
 
     private func setupLayout() {
-        setupConstraintsNavBar()
-        setupConstraintsLabel()
-    }
+		label.translatesAutoresizingMaskIntoConstraints = false
 
-    // MARK: - Constraints
-
-    private func setupConstraintsNavBar() {
-        navigationBarView.translatesAutoresizingMaskIntoConstraints = false
-
-        NSLayoutConstraint.activate([
-            navigationBarView.topAnchor.constraint(equalTo: view.topAnchor),
-            navigationBarView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            navigationBarView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            navigationBarView.heightAnchor.constraint(equalToConstant: 106)
-        ])
-    }
-
-    private func setupConstraintsLabel() {
-        label.translatesAutoresizingMaskIntoConstraints = false
-
-        NSLayoutConstraint.activate([
-            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ])
+		NSLayoutConstraint.activate([
+			label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+			label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+		])
     }
 }
