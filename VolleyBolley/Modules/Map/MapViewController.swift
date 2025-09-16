@@ -40,9 +40,7 @@ final class MapViewController: BaseViewController, MapViewProtocol {
 	}
 
 	@available(*, unavailable)
-	required init?(coder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
-	}
+	required init?(coder: NSCoder) { nil }
 
 	// MARK: - Public Methods
 
@@ -231,14 +229,14 @@ private extension MapViewController {
 
 			bottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
 			bottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-			bottomView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: popupBottonInset),
+			bottomView.bottomAnchor.constraint(equalTo: tabBar.view.topAnchor, constant: popupBottonInset),
 			bottomView.heightAnchor.constraint(equalToConstant: 136)
 		])
 
 		view.addSubviews(popupView)
 		popupView.isHidden = true
 		popupBottomConstraint = popupView.bottomAnchor.constraint(
-			equalTo: view.safeAreaLayoutGuide.bottomAnchor,
+			equalTo: tabBar.view.topAnchor,
 			constant: popupBottonInset
 		)
 		if let popupBottomConstraint {

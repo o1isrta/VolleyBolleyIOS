@@ -52,8 +52,6 @@ final class ProfileViewController: BaseViewController, ProfileViewProtocol {
 
     private let presenter: ProfilePresenterProtocol
 
-    private lazy var mainTabBarController = MainTabBarController()
-
     private lazy var menuItems = ProfileMenuItem.allCases
 
     private lazy var label: UILabel = {
@@ -125,11 +123,6 @@ private extension ProfileViewController {
 			tableBackground,
 			tableView
 		)
-
-        addChild(mainTabBarController)
-        view.addSubview(mainTabBarController.view)
-        mainTabBarController.didMove(toParent: self)
-        mainTabBarController.view.translatesAutoresizingMaskIntoConstraints = false
     }
 
     func setupView() {
@@ -150,12 +143,7 @@ private extension ProfileViewController {
             tableView.heightAnchor.constraint(equalToConstant: 400),
 
             deleteButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 28),
-            deleteButton.bottomAnchor.constraint(equalTo: mainTabBarController.view.topAnchor, constant: -20),
-
-            mainTabBarController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            mainTabBarController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            mainTabBarController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            mainTabBarController.view.heightAnchor.constraint(equalToConstant: 81)
+			deleteButton.bottomAnchor.constraint(equalTo: tabBar.view.topAnchor, constant: -20)
         ])
     }
 }

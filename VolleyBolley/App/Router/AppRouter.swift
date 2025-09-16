@@ -10,87 +10,87 @@ import UIKit
 
 final class AppRouter {
 
-    // MARK: - Private Properties
+	// MARK: - Private Properties
 
-    private let window: UIWindow
-    private let userSessionService: UserSessionServiceProtocol
-    private let resolver: Resolver
+	private let window: UIWindow
+	private let userSessionService: UserSessionServiceProtocol
+	private let resolver: Resolver
 
-    private var onboardingRouter: OnboardingRouterProtocol?
-    private var authRouter: AuthRouterProtocol?
+	private var onboardingRouter: OnboardingRouterProtocol?
+	private var authRouter: AuthRouterProtocol?
 
-    // MARK: - Initializers
+	// MARK: - Initializers
 
-    init(
-        window: UIWindow,
-        userSessionService: UserSessionServiceProtocol,
-        resolver: Resolver
-    ) {
-        self.window = window
-        self.userSessionService = userSessionService
-        self.resolver = resolver
-    }
+	init(
+		window: UIWindow,
+		userSessionService: UserSessionServiceProtocol,
+		resolver: Resolver
+	) {
+		self.window = window
+		self.userSessionService = userSessionService
+		self.resolver = resolver
+	}
 
-    // MARK: - Public Methods
+	// MARK: - Public Methods
 
-    func start() {
-        // TODO: Переписать через userSessionService
-        if UserDefaults.standard.isOnboardingShown {
-            showAuthorization()
-        } else {
-            showOnboarding()
-        }
-    }
+	func start() {
+		// TODO: Переписать через userSessionService
+		if UserDefaults.standard.isOnboardingShown {
+			showAuthorization()
+		} else {
+			showOnboarding()
+		}
+	}
 
-    // MARK: - Private Methods
+	// MARK: - Private Methods
 
-    private func showOnboarding() {
-        guard let onboardingVC = resolver.resolve(OnboardingViewController.self) else {
-            fatalError("OnboardingViewController не зарегистрирован")
-        }
-        let nav = UINavigationController(rootViewController: onboardingVC)
-        window.rootViewController = nav
-        window.makeKeyAndVisible()
-    }
+	private func showOnboarding() {
+		guard let onboardingVC = resolver.resolve(OnboardingViewController.self) else {
+			fatalError("OnboardingViewController не зарегистрирован")
+		}
+		let nav = UINavigationController(rootViewController: onboardingVC)
+		window.rootViewController = nav
+		window.makeKeyAndVisible()
+	}
 
-    private func showAuthorization() {
-        guard let authVC = resolver.resolve(AuthViewController.self) else {
-            fatalError("AuthViewController не зарегистрирован")
-        }
-        let nav = UINavigationController(rootViewController: authVC)
+	private func showAuthorization() {
+		guard let authVC = resolver.resolve(AuthViewController.self) else {
+			fatalError("AuthViewController не зарегистрирован")
+		}
+		let nav = UINavigationController(rootViewController: authVC)
 
-        UIView.transition(with: window, duration: 0.4, options: .transitionCrossDissolve) {
-            self.window.rootViewController = nav
-        }
+		UIView.transition(with: window, duration: 0.4, options: .transitionCrossDissolve) {
+			self.window.rootViewController = nav
+		}
 
-        window.makeKeyAndVisible()
-    }
+		window.makeKeyAndVisible()
+	}
 
-    func showUserReg() {
-        guard let userRegVC = resolver.resolve(UserRegViewController.self) else {
-            fatalError("UserRegViewController не зарегистрирован")
-        }
-        let nav = UINavigationController(rootViewController: userRegVC)
+	func showUserReg() {
+		guard let userRegVC = resolver.resolve(UserRegViewController.self) else {
+			fatalError("UserRegViewController не зарегистрирован")
+		}
+		let nav = UINavigationController(rootViewController: userRegVC)
 
-        UIView.transition(with: window, duration: 0.4, options: .transitionCrossDissolve) {
-            self.window.rootViewController = nav
-        }
+		UIView.transition(with: window, duration: 0.4, options: .transitionCrossDissolve) {
+			self.window.rootViewController = nav
+		}
 
-        window.makeKeyAndVisible()
-    }
+		window.makeKeyAndVisible()
+	}
 
-    private func showMainApp() {
-        guard let router = resolver.resolve(MainAppRouterProtocol.self) else {
-            print("Error: Failed to resolve MainAppRouterProtocol")
-            return
-        }
+	private func showMainApp() {
+		guard let router = resolver.resolve(MainAppRouterProtocol.self) else {
+			print("Error: Failed to resolve MainAppRouterProtocol")
+			return
+		}
 
-        let root = router.start()
+		let root = router.start()
 
-        authRouter = nil
-        onboardingRouter = nil
+		authRouter = nil
+		onboardingRouter = nil
 
-        window.rootViewController = root
-        window.makeKeyAndVisible()
-    }
+		window.rootViewController = root
+		window.makeKeyAndVisible()
+	}
 }
