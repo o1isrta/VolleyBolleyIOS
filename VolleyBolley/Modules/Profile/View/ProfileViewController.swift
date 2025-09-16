@@ -93,9 +93,7 @@ final class ProfileViewController: BaseViewController, ProfileViewProtocol {
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder: NSCoder) { nil }
 
     // MARK: - Lifecycle
 
@@ -189,6 +187,7 @@ extension ProfileViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+		// TODO:
         print("Tapped: \(menuItems[indexPath.row].title)")
     }
 

@@ -37,18 +37,5 @@ final class HomePresenter: HomePresenterProtocol {
     func viewDidLoad() {
         let message = interactor.fetchGreeting()
         view?.showGreeting(message)
-
-        interactor.loadUserData { [weak self] result in
-            guard let self else { return }
-
-            switch result {
-            case .success(let (user, avatarImage)):
-                let viewModel = NavBarViewModel(user: user, avatarImage: avatarImage)
-                self.view?.displayNavBar(viewModel: viewModel)
-
-            case .failure(let error):
-                self.view?.displayError(message: error.localizedDescription)
-            }
-        }
     }
 }

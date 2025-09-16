@@ -82,7 +82,7 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
         config.imagePlacement = .leading
         config.imagePadding = 0
         config.baseForegroundColor = AppColor.Background.screen
-        config.background.backgroundColor = .white
+		config.background.backgroundColor = .white // TODO:
         config.background.cornerRadius = 12
         let button = UIButton(configuration: config)
         return button
@@ -126,7 +126,6 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
         target: self,
         action: #selector(getStartedTapped)
     )
-
     private var selectedGender: String? = String(localized: "Male")
     private var selectedLevel: String? = String(localized: "common.light").capitalized(with: .current)
     private var selectedCountry: String?
@@ -164,7 +163,6 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
         scrollView.addSubviews(contentView)
 
         let safeArea = view.safeAreaLayoutGuide
-
         NSLayoutConstraint.activate([
             scrollView.frameLayoutGuide.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 8),
             scrollView.frameLayoutGuide.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 8),
@@ -189,7 +187,6 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
             proLevelButton, levelSeparator, countryLabel, countryList,
             countrySeparator, cityLabel, cityList, getStartedButton
         ]
-
         subviews.compactMap { $0 }.forEach {
             contentView.addSubviews($0)
         }
@@ -413,6 +410,8 @@ extension UserRegViewController: LocationPickerViewDelegate {
         }
     }
 }
+
+// MARK: - Preview
 
 #if DEBUG
 @available(iOS 17.0, *)
