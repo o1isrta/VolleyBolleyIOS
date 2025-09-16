@@ -244,23 +244,8 @@ struct PopupBannerViewControllerRepresentable: UIViewControllerRepresentable {
 
     func makeUIViewController(context: Context) -> UIViewController {
 		let viewController = BaseViewController()
-		viewController.navBar.configure(
-            with: NavBarViewModel(
-                user: User(
-                    firstName: "Artem",
-                    lastName: "Ivanov",
-                    gender: 0,
-                    paymentID: 0,
-                    paymentAccount: "",
-                    dateOfBirth: Date(),
-                    level: UserLevel(rawValue: 0),
-                    countryID: 0,
-                    cityID: 0,
-                    avatarURL: nil
-                ),
-                avatarImage: UIImage(resource: .imgPerson)
-            )
-        )
+		// Configure navbar with mock data
+		viewController.navBar.configure(with: NavBarViewModel.mockDefault)
 
         let button = UIButton(type: .system)
         button.setTitle("Show Banner", for: .normal)
