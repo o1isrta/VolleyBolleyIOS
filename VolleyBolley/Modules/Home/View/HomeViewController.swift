@@ -9,7 +9,6 @@ import UIKit
 
 protocol HomeViewProtocol: AnyObject {
     func showGreeting(_ message: String)
-    func displayNavBar(viewModel: NavBarViewModel)
     func displayError(message: String)
 }
 
@@ -27,8 +26,6 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
 
     private let presenter: HomePresenterProtocol
 
-    private lazy var navigationBarView = CustomNavBarView()
-
     private lazy var label: UILabel = {
         let view = UILabel()
         view.textAlignment = .center
@@ -44,9 +41,7 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder: NSCoder) { nil }
 
     // MARK: - Lifecycle
 
@@ -63,10 +58,6 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
         label.text = message
     }
 
-    func displayNavBar(viewModel: NavBarViewModel) {
-        navigationBarView.configure(with: viewModel)
-    }
-
     func displayError(message: String) {
         print(message)
     }
@@ -74,13 +65,11 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
     // MARK: - Private Methods
 
     private func setupView() {
-        view.addSubview(navigationBarView)
-        view.addSubview(label)
+        view.addSubviews(label)
         setupLayout()
     }
 
     private func setupLayout() {
-        setupConstraintsNavBar()
         setupConstraintsLabel()
 
 		setupCalendar()
@@ -88,20 +77,7 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
 
     // MARK: - Constraints
 
-    private func setupConstraintsNavBar() {
-        navigationBarView.translatesAutoresizingMaskIntoConstraints = false
-
-        NSLayoutConstraint.activate([
-            navigationBarView.topAnchor.constraint(equalTo: view.topAnchor),
-            navigationBarView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            navigationBarView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            navigationBarView.heightAnchor.constraint(equalToConstant: 106)
-        ])
-    }
-
     private func setupConstraintsLabel() {
-        label.translatesAutoresizingMaskIntoConstraints = false
-
         NSLayoutConstraint.activate([
             label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
