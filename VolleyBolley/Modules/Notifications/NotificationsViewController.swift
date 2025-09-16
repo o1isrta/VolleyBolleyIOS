@@ -104,7 +104,7 @@ private extension NotificationsViewController {
 				let newSize = change.newValue
 			else { return }
 			// Limiting the max height to preserve scrolling
-			let maxHeight = UIScreen.main.bounds.height - 200
+			let maxHeight = UIScreen.main.bounds.height - 268
 			let newHeight = min(newSize.height, maxHeight)
 			self.tableViewHeightConstraint?.constant = newHeight
 		}

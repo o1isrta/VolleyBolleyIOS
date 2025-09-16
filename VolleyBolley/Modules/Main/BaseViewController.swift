@@ -20,31 +20,53 @@ import UIKit
 /// - SeeAlso: `UIViewController`
 class BaseViewController: UIViewController {
 
+	// MARK: - Public Properties
+
 	let navBar = CustomNavBarView()
+	let tabBar = MainTabBarController()
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = AppColor.Background.screen
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		view.backgroundColor = AppColor.Background.screen
 		setupCustomNavigationBar()
-    }
+		setupCustomTabBar()
+	}
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: false)
-    }
+	// MARK: - Public Methods
+
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		navigationController?.setNavigationBarHidden(true, animated: false)
+	}
 
 	override func viewDidLayoutSubviews() {
 		super.viewDidLayoutSubviews()
-		// ALWAYS raise the navbar above all other subviews
+		// ALWAYS raise the navbar/tabBar above all other subviews
 		view.bringSubviewToFront(navBar)
+		view.bringSubviewToFront(tabBar.view)
 	}
+}
 
-	private func setupCustomNavigationBar() {
+// MARK: - Private Methods
+
+private extension BaseViewController {
+
+	func setupCustomNavigationBar() {
 		view.addSubviews(navBar)
 		NSLayoutConstraint.activate([
 			navBar.topAnchor.constraint(equalTo: view.topAnchor),
 			navBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
 			navBar.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+		])
+	}
+
+	func setupCustomTabBar() {
+		view.addSubviews(tabBar.view)
+		NSLayoutConstraint.activate([
+			tabBar.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+			tabBar.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+			tabBar.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+			tabBar.view.heightAnchor.constraint(equalToConstant: 81)
 		])
 	}
 }

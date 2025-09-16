@@ -26,7 +26,6 @@ final class СhoicePlayersViewController: BaseViewController, СhoicePlayersView
 
     private let presenter: СhoicePlayersViewProtocol
 
-    private lazy var mainTabBarController = MainTabBarController()
     private lazy var searchBar = GradientSearchField(type: .searchTeams)
     private lazy var segmentedControl = CustomSegmentedControl(type: .players)
 
@@ -134,12 +133,6 @@ private extension СhoicePlayersViewController {
 			searchAndSegmentStack,
 			tableAndButtonStack
 		)
-
-		// TODO: возможно тоже нужно это делать в BaseViewController?
-        addChild(mainTabBarController)
-        view.addSubview(mainTabBarController.view)
-        mainTabBarController.didMove(toParent: self)
-        mainTabBarController.view.translatesAutoresizingMaskIntoConstraints = false
     }
 
     func setupView() {
@@ -169,12 +162,7 @@ private extension СhoicePlayersViewController {
             tableAndButtonStack.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 16),
             tableAndButtonStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 28),
             tableAndButtonStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -28),
-            tableAndButtonStack.heightAnchor.constraint(equalToConstant: 232),
-
-            mainTabBarController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            mainTabBarController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            mainTabBarController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            mainTabBarController.view.heightAnchor.constraint(equalToConstant: 81)
+            tableAndButtonStack.heightAnchor.constraint(equalToConstant: 232)
         ])
     }
 }

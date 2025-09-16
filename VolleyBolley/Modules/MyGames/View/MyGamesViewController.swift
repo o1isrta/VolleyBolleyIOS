@@ -58,13 +58,11 @@ final class MyGamesViewController: BaseViewController, MyGamesViewProtocol {
     // MARK: - Layout
 
     private func setupView() {
-        view.addSubview(label)
+        view.addSubviews(label)
         setupLayout()
     }
 
     private func setupLayout() {
-		label.translatesAutoresizingMaskIntoConstraints = false
-
 		NSLayoutConstraint.activate([
 			label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 			label.centerYAnchor.constraint(equalTo: view.centerYAnchor)

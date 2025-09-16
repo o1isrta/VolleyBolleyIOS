@@ -87,8 +87,6 @@ final class FAQViewController: BaseViewController, СhoicePlayersViewProtocol {
 
     private var faqItems: [FAQItem] = FAQItem.allCases
 
-    private lazy var mainTabBarController = MainTabBarController()
-
     private lazy var buttonBack: UtilityButton = {
         let button = UtilityButton(style: .large)
         button.setImage(.chevronBackward, for: .normal)
@@ -115,9 +113,10 @@ final class FAQViewController: BaseViewController, СhoicePlayersViewProtocol {
 
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
-        tableView.backgroundColor = .clear
+		tableView.backgroundColor = AppColor.Background.clear
         tableView.separatorStyle = .none
         tableView.isScrollEnabled = true
+		tableView.showsVerticalScrollIndicator = false
         tableView.dataSource = self
         tableView.register(FAQCell.self, forCellReuseIdentifier: FAQCell.faqId)
         return tableView
@@ -163,11 +162,6 @@ private extension FAQViewController {
 			titleLabel,
 			tableView
 		)
-
-        addChild(mainTabBarController)
-        view.addSubview(mainTabBarController.view)
-        mainTabBarController.didMove(toParent: self)
-        mainTabBarController.view.translatesAutoresizingMaskIntoConstraints = false
     }
 
     func setupView() {
@@ -180,7 +174,7 @@ private extension FAQViewController {
 			background.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 8),
             background.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
             background.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
-            background.bottomAnchor.constraint(equalTo: mainTabBarController.view.topAnchor, constant: -8),
+			background.bottomAnchor.constraint(equalTo: tabBar.view.topAnchor, constant: -8),
 
             buttonBack.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 20),
             buttonBack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 28),
@@ -191,12 +185,7 @@ private extension FAQViewController {
             tableView.topAnchor.constraint(equalTo: background.topAnchor, constant: 60),
             tableView.leadingAnchor.constraint(equalTo: background.leadingAnchor, constant: 20),
             tableView.trailingAnchor.constraint(equalTo: background.trailingAnchor, constant: -20),
-            tableView.bottomAnchor.constraint(equalTo: background.bottomAnchor, constant: -20),
-
-            mainTabBarController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            mainTabBarController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            mainTabBarController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            mainTabBarController.view.heightAnchor.constraint(equalToConstant: 81)
+            tableView.bottomAnchor.constraint(equalTo: background.bottomAnchor, constant: -20)
         ])
     }
 }
