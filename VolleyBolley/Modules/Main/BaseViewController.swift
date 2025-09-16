@@ -65,7 +65,8 @@ private extension BaseViewController {
 		NSLayoutConstraint.activate([
 			tabBar.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
 			tabBar.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-			tabBar.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+			tabBar.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+			tabBar.view.heightAnchor.constraint(equalToConstant: 81)
 		])
 	}
 }
