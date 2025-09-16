@@ -9,7 +9,6 @@ import UIKit
 
 protocol СhoicePlayersViewProtocol: AnyObject {
     func showGreeting(_ message: String)
-    func displayNavBar(viewModel: NavBarViewModel)
     func displayError(message: String)
 }
 
@@ -17,6 +16,7 @@ final class СhoicePlayersViewController: BaseViewController, СhoicePlayersView
 
     // MARK: - Private Properties
 
+	// TODO: remove it in the future
     private var playersMock: [String] = [
         "Polina Vasilieva",
         "Kristina Popova",
@@ -26,7 +26,6 @@ final class СhoicePlayersViewController: BaseViewController, СhoicePlayersView
 
     private let presenter: СhoicePlayersViewProtocol
 
-    private lazy var navigationBarView = CustomNavBarView()
     private lazy var mainTabBarController = MainTabBarController()
     private lazy var searchBar = GradientSearchField(type: .searchTeams)
     private lazy var segmentedControl = CustomSegmentedControl(type: .players)
@@ -59,10 +58,7 @@ final class СhoicePlayersViewController: BaseViewController, СhoicePlayersView
         return view
     }()
 
-    private lazy var background: GlassmorphismView = {
-        let view = GlassmorphismView()
-        return view
-    }()
+    private lazy var background = GlassmorphismView()
 
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -76,7 +72,7 @@ final class СhoicePlayersViewController: BaseViewController, СhoicePlayersView
     }()
 
     private lazy var actionButton: YellowButton = {
-        let button = YellowButton(title: "ADD SELECTED")
+        let button = YellowButton(title: String(localized: "ADD SELECTED"))
         button.isSelected = true
         button.isEnabled = true
         button.addTarget(self, action: #selector(actionButtonTapped), for: .touchUpInside)
@@ -98,9 +94,7 @@ final class СhoicePlayersViewController: BaseViewController, СhoicePlayersView
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder: NSCoder) { nil }
 
     // MARK: - Lifecycle
 
@@ -115,17 +109,14 @@ final class СhoicePlayersViewController: BaseViewController, СhoicePlayersView
         label.text = message
     }
 
-    func displayNavBar(viewModel: NavBarViewModel) {
-        navigationBarView.configure(with: viewModel)
-    }
-
     func displayError(message: String) {
         print(message)
     }
 
     // MARK: - Private methods
 
-    @objc private func actionButtonTapped() {  // TODO: Надо потом доработать логику кнопки
+    @objc private func actionButtonTapped() {
+		// TODO: Надо потом доработать логику кнопки
         print("Сохранить игроков и перейти дальше")
     }
 }
@@ -135,16 +126,16 @@ final class СhoicePlayersViewController: BaseViewController, СhoicePlayersView
 private extension СhoicePlayersViewController {
 
     func setupUI() {
-        [navigationBarView, label].forEach {
-            view.addSubview($0)
-            $0.translatesAutoresizingMaskIntoConstraints = false
-        }
+		view.addSubviews(
+			label,
+			background,
+			buttonBack,
+			titleLabel,
+			searchAndSegmentStack,
+			tableAndButtonStack
+		)
 
-        [background, buttonBack, titleLabel, searchAndSegmentStack, tableAndButtonStack].forEach {
-            view.addSubview($0)
-            $0.translatesAutoresizingMaskIntoConstraints = false
-        }
-
+		// TODO: возможно тоже нужно это делать в BaseViewController?
         addChild(mainTabBarController)
         view.addSubview(mainTabBarController.view)
         mainTabBarController.didMove(toParent: self)
@@ -155,20 +146,15 @@ private extension СhoicePlayersViewController {
         setupUI()
 
         NSLayoutConstraint.activate([
-            navigationBarView.topAnchor.constraint(equalTo: view.topAnchor),
-            navigationBarView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            navigationBarView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            navigationBarView.heightAnchor.constraint(equalToConstant: 106),
-
             label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
 
-            background.topAnchor.constraint(equalTo: navigationBarView.bottomAnchor, constant: 8),
+			background.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 8),
             background.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
             background.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
             background.heightAnchor.constraint(equalToConstant: 412),
 
-            buttonBack.topAnchor.constraint(equalTo: navigationBarView.bottomAnchor, constant: 20),
+			buttonBack.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 20),
             buttonBack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 28),
 
             titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -239,28 +225,16 @@ extension СhoicePlayersViewController: UITableViewDelegate {
     }
 }
 
+// MARK: - Preview
+
 #if DEBUG
-import SwiftUI
-
-struct ChoicePlayersViewControllerPreview: UIViewControllerRepresentable {
-    class StubPresenter: СhoicePlayersViewProtocol {
-        func showGreeting(_ message: String) {}
-        func displayNavBar(viewModel: NavBarViewModel) {}
-        func displayError(message: String) {}
-    }
-
-    func makeUIViewController(context: Context) -> some UIViewController {
-        let presenter = StubPresenter()
-        return СhoicePlayersViewController(presenter: presenter)
-    }
-
-    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {}
-}
-
-struct ChoicePlayersViewController_Previews: PreviewProvider {
-    static var previews: some View {
-        ChoicePlayersViewControllerPreview()
-            .edgesIgnoringSafeArea(.all)
-    }
+@available(iOS 17.0, *)
+#Preview {
+	class StubPresenter: СhoicePlayersViewProtocol {
+		func showGreeting(_ message: String) {}
+		func displayError(message: String) {}
+	}
+	let presenter = StubPresenter()
+	return СhoicePlayersViewController(presenter: presenter)
 }
 #endif

@@ -8,6 +8,7 @@
 import UIKit
 
 final class UserRegViewController: UIViewController, UITextFieldDelegate {
+
     var presenter: UserRegPresenterProtocol?
 
     private lazy var scrollView: UIScrollView = {
@@ -15,19 +16,12 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
         scrollView.backgroundColor = AppColor.Background.blur
         scrollView.layer.cornerRadius = 32
         scrollView.layer.masksToBounds = true
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.showsVerticalScrollIndicator = false
         return scrollView
     }()
-
-    private lazy var contentView: UIView = {
-        let contentView = UIView()
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        return contentView
-    }()
+    private lazy var contentView = UIView()
 
     private lazy var titleLabel = CustomTitle(text: String(localized: "registration_title"), isLarge: true)
-
     private lazy var nameLabel = CustomLabel(text: String(localized: "Name"), isBold: true)
     private lazy var nameTextField: UITextField = {
         let textField = UITextField()
@@ -35,7 +29,6 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
         textField.backgroundColor = AppColor.Border.primary
         textField.layer.cornerRadius = 16
         textField.textColor = AppColor.Text.placeHolder
-        textField.translatesAutoresizingMaskIntoConstraints = false
         textField.setLeftPaddingPoints(16)
         return textField
     }()
@@ -47,7 +40,6 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
         textField.backgroundColor = AppColor.Border.primary
         textField.layer.cornerRadius = 16
         textField.textColor = AppColor.Text.placeHolder
-        textField.translatesAutoresizingMaskIntoConstraints = false
         textField.setLeftPaddingPoints(16)
         return textField
     }()
@@ -75,7 +67,6 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
         textField.textAlignment = .center
         textField.backgroundColor = AppColor.Text.primary
         textField.layer.cornerRadius = 16
-        textField.translatesAutoresizingMaskIntoConstraints = false
         textField.keyboardType = .numberPad
         textField.textColor = AppColor.Text.placeHolder
         textField.font = AppFont.Hero.regular(size: 16)
@@ -93,9 +84,7 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
         config.baseForegroundColor = AppColor.Background.screen
         config.background.backgroundColor = .white
         config.background.cornerRadius = 12
-
         let button = UIButton(configuration: config)
-        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     private lazy var lightLevelButton = PickButton(
@@ -171,8 +160,8 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
     }
 
     private func setupScrollView() {
-        view.addSubview(scrollView)
-        scrollView.addSubview(contentView)
+        view.addSubviews(scrollView)
+        scrollView.addSubviews(contentView)
 
         let safeArea = view.safeAreaLayoutGuide
 
@@ -202,8 +191,7 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
         ]
 
         subviews.compactMap { $0 }.forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            contentView.addSubview($0)
+            contentView.addSubviews($0)
         }
     }
 
@@ -330,7 +318,6 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
          proLevelButton].forEach {
             $0.updateSelectionState(false)
         }
-
         sender.updateSelectionState(true)
         selectedLevel = sender.title(for: .normal)
     }
@@ -352,13 +339,11 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
         let currentText = textField.text ?? ""
         guard let stringRange = Range(range, in: currentText) else { return false }
         let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
-
         let digitsOnly = updatedText.replacingOccurrences(of: "[^0-9]", with: "", options: .regularExpression)
 
         if digitsOnly.count > 8 {
             return false
         }
-
         var formattedText = ""
         let dayEnd = min(2, digitsOnly.count)
         if dayEnd > 0 {
@@ -408,7 +393,6 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
                 }
             }
         }
-
         textField.text = formattedText
         return false
     }

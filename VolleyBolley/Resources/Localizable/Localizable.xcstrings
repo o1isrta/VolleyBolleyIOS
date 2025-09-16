@@ -63,12 +63,11 @@
     },
     "ADD SELECTED" : {
       "comment" : "Game",
-      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ДОБАВИТЬ ВЫБРАННОЕ"
+            "value" : "ДОБАВИТЬ ВЫБРАННЫХ"
           }
         }
       }

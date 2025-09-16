@@ -9,7 +9,6 @@ import UIKit
 
 protocol ProfileViewProtocol: AnyObject {
     func showGreeting(_ message: String)
-    func displayNavBar(viewModel: NavBarViewModel)
     func displayError(message: String)
 }
 
@@ -53,7 +52,6 @@ final class ProfileViewController: BaseViewController, ProfileViewProtocol {
 
     private let presenter: ProfilePresenterProtocol
 
-    private lazy var navigationBarView = CustomNavBarView()
     private lazy var mainTabBarController = MainTabBarController()
 
     private lazy var menuItems = ProfileMenuItem.allCases
@@ -65,10 +63,7 @@ final class ProfileViewController: BaseViewController, ProfileViewProtocol {
         return view
     }()
 
-    private lazy var tableBackground: GlassmorphismView = {
-        let view = GlassmorphismView()
-        return view
-    }()
+    private lazy var tableBackground = GlassmorphismView()
 
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -116,10 +111,6 @@ final class ProfileViewController: BaseViewController, ProfileViewProtocol {
         label.text = message
     }
 
-    func displayNavBar(viewModel: NavBarViewModel) {
-        navigationBarView.configure(with: viewModel)
-    }
-
     func displayError(message: String) {
         print(message)
     }
@@ -130,15 +121,12 @@ final class ProfileViewController: BaseViewController, ProfileViewProtocol {
 private extension ProfileViewController {
 
     func setupUI() {
-        [navigationBarView, label, deleteButton].forEach {
-            view.addSubview($0)
-            $0.translatesAutoresizingMaskIntoConstraints = false
-        }
-
-        [tableBackground, tableView].forEach {
-            view.addSubview($0)
-            $0.translatesAutoresizingMaskIntoConstraints = false
-        }
+		view.addSubviews(
+			label,
+			deleteButton,
+			tableBackground,
+			tableView
+		)
 
         addChild(mainTabBarController)
         view.addSubview(mainTabBarController.view)
@@ -150,20 +138,15 @@ private extension ProfileViewController {
         setupUI()
 
         NSLayoutConstraint.activate([
-            navigationBarView.topAnchor.constraint(equalTo: view.topAnchor),
-            navigationBarView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            navigationBarView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            navigationBarView.heightAnchor.constraint(equalToConstant: 106),
-
             label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
 
-            tableBackground.topAnchor.constraint(equalTo: navigationBarView.bottomAnchor, constant: 8),
+			tableBackground.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 8),
             tableBackground.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
             tableBackground.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
             tableBackground.heightAnchor.constraint(equalToConstant: 400),
 
-            tableView.topAnchor.constraint(equalTo: navigationBarView.bottomAnchor, constant: 8),
+            tableView.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 8),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
             tableView.heightAnchor.constraint(equalToConstant: 400),
@@ -214,27 +197,16 @@ extension ProfileViewController: UITableViewDelegate {
     }
 }
 
+// MARK: - Preview
+
 #if DEBUG
-import SwiftUI
-
-struct ProfileViewControllerPreview: UIViewControllerRepresentable {
-    class StubPresenter: ProfilePresenterProtocol {
-        weak var view: ProfileViewProtocol?
-        func viewDidLoad() {}
-    }
-
-    func makeUIViewController(context: Context) -> some UIViewController {
-        let presenter = StubPresenter()
-        return ProfileViewController(presenter: presenter)
-    }
-
-    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {}
-}
-
-struct ProfileViewController_Previews: PreviewProvider {
-    static var previews: some View {
-        ProfileViewControllerPreview()
-            .edgesIgnoringSafeArea(.all)
-    }
+@available(iOS 17.0, *)
+#Preview {
+	class StubPresenter: ProfilePresenterProtocol {
+		weak var view: ProfileViewProtocol?
+		func viewDidLoad() {}
+	}
+	let presenter = StubPresenter()
+	return ProfileViewController(presenter: presenter)
 }
 #endif
