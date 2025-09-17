@@ -11,9 +11,12 @@ protocol NavBarViewProtocol: AnyObject {
 
 final class CustomNavBarView: UIView {
 
-	// MARK: - VIPER Properties
+	// MARK: - Public Properties
 
 	var presenter: NavBarPresenterProtocol?
+
+	// MARK: - Private Properties
+
 	private weak var parentViewController: UIViewController?
 
 	private enum Constants {
@@ -31,8 +34,6 @@ final class CustomNavBarView: UIView {
 		static let levelViewTrailing: CGFloat = -8
 		static let levelViewBottom: CGFloat = -8
 	}
-
-	// MARK: - Private Properties
 
 	private lazy var avatarImageView = AvatarImageView()
 	private lazy var levelView = LevelBadgeView()
@@ -66,28 +67,28 @@ final class CustomNavBarView: UIView {
 		nameLabel.text = viewModel.displayName.capitalized
 		levelView.configure(with: viewModel.level)
 	}
+}
+
+// MARK: - Private Methods
+
+private extension CustomNavBarView {
 
 	// MARK: - VIPER Integration
 
-	private func setupVIPERIfNeeded() {
+	func setupVIPERIfNeeded() {
 		guard presenter == nil else { return }
 		// Auto-configure VIPER if not already set up
 		let navBarView = NavBarAssembly.createModule(with: parentViewController)
 		self.presenter = navBarView.presenter
 	}
 
-	private func notifyPresenterIfReady() {
+	func notifyPresenterIfReady() {
 		guard let presenter = presenter else {
 			setupVIPERIfNeeded()
 			return
 		}
 		presenter.viewIsReady()
 	}
-}
-
-// MARK: - Private Methods
-
-private extension CustomNavBarView {
 
 	func setupView() {
 		backgroundColor = AppColor.Background.navBar
