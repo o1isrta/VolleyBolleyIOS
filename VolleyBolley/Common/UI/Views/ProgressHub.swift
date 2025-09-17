@@ -83,7 +83,7 @@ final class ProgressHub: UIView {
     }
 
     // MARK: - Init
-    
+
     private override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
