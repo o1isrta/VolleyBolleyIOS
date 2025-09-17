@@ -101,10 +101,10 @@ final class LevelInfoViewController: UIViewController {
         levelsStack.translatesAutoresizingMaskIntoConstraints = false
 
         let levelTitles = [
-            String(localized: "Light:"),
-            String(localized: "Medium:"),
-            String(localized: "Hard:"),
-            String(localized: "Pro:")
+            String(localized: "common.light").capitalized(with: .current) + ":",
+            String(localized: "common.medium").capitalized(with: .current) + ":",
+            String(localized: "common.hard").capitalized(with: .current) + ":",
+            String(localized: "common.pro").capitalized(with: .current) + ":"
         ]
 
         let levelDescriptions = [

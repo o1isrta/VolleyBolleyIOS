@@ -8,7 +8,7 @@
 import UIKit
 
 final class UserRegViewController: UIViewController, UITextFieldDelegate {
-    
+
     var presenter: UserRegPresenterProtocol?
 
     private lazy var scrollView: UIScrollView = {
@@ -101,7 +101,7 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
         return button
     }()
     private lazy var lightLevelButton = PickButton(
-		title: String(localized: "common.light").capitalized(with: .current),
+        title: String(localized: "common.light").capitalized(with: .current),
         isSelected: true,
         target: self,
         action: #selector(levelButtonTapped(_:))

@@ -74,7 +74,12 @@ final class AppRouter {
 
     func pushPhoneVerify(phoneNumber: String) {
         guard let nav = navigationController,
-              let phoneVerifyVC = resolver.resolve(PhoneVerifyViewController.self, argument: phoneNumber) else { return }
+              let phoneVerifyVC = resolver.resolve(
+                PhoneVerifyViewController.self,
+                argument: phoneNumber
+              ) else {
+            return
+        }
         nav.pushViewController(phoneVerifyVC, animated: true)
     }
 

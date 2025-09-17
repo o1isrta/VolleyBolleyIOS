@@ -26,7 +26,7 @@ final class AuthAssembly: Assembly {
                 interactor: interactor,
                 router: router
             )
-            
+
             interactor.presenter = presenter
             authVC.presenter = presenter
 

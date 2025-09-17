@@ -9,7 +9,7 @@ import Swinject
 import UIKit
 
 final class AuthRouter: AuthRouterProtocol {
-    
+
     weak var viewController: UIViewController?
     weak var router: AppRouter?
 

@@ -8,7 +8,7 @@ import Swinject
 import UIKit
 
 final class PhoneAuthAssembly: Assembly {
-    
+
     func assemble(container: Container) {
         container.register(PhoneAuthViewController.self) { resolver in
             let phoneAuthVC = PhoneAuthViewController()
