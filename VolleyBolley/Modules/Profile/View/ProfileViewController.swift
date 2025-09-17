@@ -8,7 +8,6 @@
 import UIKit
 
 protocol ProfileViewProtocol: AnyObject {
-    func showGreeting(_ message: String)
     func displayError(message: String)
 }
 
@@ -46,21 +45,12 @@ enum ProfileMenuItem: CaseIterable {
     }
 }
 
-final class ProfileViewController: BaseViewController, ProfileViewProtocol {
+final class ProfileViewController: BaseViewController {
 
     // MARK: - Private Properties
 
     private let presenter: ProfilePresenterProtocol
-
     private lazy var menuItems = ProfileMenuItem.allCases
-
-	// TODO: это зачем?
-    private lazy var label: UILabel = {
-        let view = UILabel()
-        view.textAlignment = .center
-        view.font = AppFont.Quantex.regular(size: 16)
-        return view
-    }()
 
     private lazy var tableBackground = GlassmorphismView()
 
@@ -101,17 +91,15 @@ final class ProfileViewController: BaseViewController, ProfileViewProtocol {
         setupView()
         presenter.viewDidLoad()
     }
+}
 
-    // MARK: - Public Methods
+// MARK: - Public Methods
 
-	// TODO: это зачем?
-    func showGreeting(_ message: String) {
-        label.text = message
-    }
+extension ProfileViewController: ProfileViewProtocol {
 
-    func displayError(message: String) {
-        print(message)
-    }
+	func displayError(message: String) {
+		print(message)
+	}
 }
 
 // MARK: - Private methods
@@ -120,7 +108,6 @@ private extension ProfileViewController {
 
     func setupUI() {
 		view.addSubviews(
-			label,
 			deleteButton,
 			tableBackground,
 			tableView
@@ -131,9 +118,6 @@ private extension ProfileViewController {
         setupUI()
 
         NSLayoutConstraint.activate([
-            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-
 			tableBackground.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 8),
             tableBackground.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
             tableBackground.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
