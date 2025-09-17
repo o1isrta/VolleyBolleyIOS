@@ -30,6 +30,7 @@ class BaseViewController: UIViewController {
 		super.viewDidLoad()
 		view.backgroundColor = AppColor.Background.screen
 		setupCustomNavigationBar()
+		setupNotifications()
 	}
 
 	// MARK: - Public Methods
@@ -51,6 +52,19 @@ class BaseViewController: UIViewController {
 // MARK: - Private Methods
 
 private extension BaseViewController {
+
+	func setupNotifications() {
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(handleTabChange),
+			name: .tabDidChanged,
+			object: nil
+		)
+	}
+
+	@objc func handleTabChange() {
+		navBar.viewWillAppear()
+	}
 
 	func setupCustomNavigationBar() {
 		view.addSubviews(navBar)
