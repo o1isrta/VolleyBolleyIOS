@@ -37,6 +37,8 @@ class BaseViewController: UIViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		navigationController?.setNavigationBarHidden(true, animated: false)
+		// Notify navbar about view appearance for state synchronization
+		navBar.viewWillAppear()
 	}
 
 	override func viewDidLayoutSubviews() {

@@ -53,6 +53,12 @@ final class NotificationsViewController: BaseViewController {
 		setupTableViewContentSizeObserver()
         presenter?.viewDidLoad()
 	}
+
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		// Notify navbar about view appearance for state synchronization
+		navBar.viewWillAppear()
+	}
 }
 
 // MARK: - Private Methods
@@ -116,8 +122,7 @@ private extension NotificationsViewController {
 
 extension NotificationsViewController: NotificationsViewControllerProtocol {
 
-	func displayNotifications(_ notifications: [NotificationCardViewModel]) {
-		print("displayNotifications")// TODO: - Notifications
+	func displayNotifications(_ notifications: [NotificationCardViewModel]) { 
 		self.notifications = notifications
 		tableView.reloadData()
 	}
