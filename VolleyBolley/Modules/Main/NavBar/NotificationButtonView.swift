@@ -85,12 +85,8 @@ private extension NotificationButtonView {
 
 	@objc func notificationButtonTapped() {
 		// Always notify delegate about the tap for navigation
+		// The delegate (presenter) will handle state management
 		delegate?.notificationButtonDidTap()
-		// Clear notification badge if there were new notifications
-		if isNewNotifications {
-			isNewNotifications.toggle()
-			hasNewNotifications(isNewNotifications)
-		}
 	}
 
 	func setupUI() {

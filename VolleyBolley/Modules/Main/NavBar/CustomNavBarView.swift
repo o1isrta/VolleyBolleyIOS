@@ -6,6 +6,7 @@ protocol NavBarViewProtocol: AnyObject {
 	func configure(with viewModel: NavBarViewModel)
 	func updateNotifications(_ hasNewNotifications: Bool)
 	func setViewController(_ viewController: UIViewController?)
+	func viewWillAppear()
 }
 
 final class CustomNavBarView: UIView {
@@ -64,10 +65,6 @@ final class CustomNavBarView: UIView {
 		avatarImageView.configure(with: viewModel.avatarImage)
 		nameLabel.text = viewModel.displayName.capitalized
 		levelView.configure(with: viewModel.level)
-	}
-
-	func hasNewNotifications(_ hasNewNotifications: Bool) {
-		notificationButtonView.hasNewNotifications(hasNewNotifications)
 	}
 
 	// MARK: - VIPER Integration
@@ -169,6 +166,10 @@ extension CustomNavBarView: NavBarViewProtocol {
 	func setViewController(_ viewController: UIViewController?) {
 		self.parentViewController = viewController
 	}
+
+	func viewWillAppear() {
+		presenter?.viewWillAppear()
+	}
 }
 
 // MARK: - NotificationButtonDelegate
@@ -188,7 +189,7 @@ import SwiftUI
 #Preview {
 	UIViewPreview {
 		let view = NavBarAssembly.createModule(with: nil)
-		view.hasNewNotifications(true)
+		view.updateNotifications(true)
 		return view
 	}
 	.frame(width: .infinity, height: 68)

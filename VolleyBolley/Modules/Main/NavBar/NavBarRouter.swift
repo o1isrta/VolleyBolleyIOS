@@ -49,7 +49,6 @@ final class NavBarRouter: NavBarRouterProtocol {
 				where: {
 					$0 is NotificationsViewControllerProtocol
 				}) as? NotificationsViewControllerProtocol {
-			print("notificationsVC.presenter?.viewDidLoad()")// TODO: - Notifications
 			notificationsVC.displayNotifications(notifications)
 		}
 	}

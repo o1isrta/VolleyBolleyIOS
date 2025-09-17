@@ -14,6 +14,7 @@ protocol NavBarInteractorInputProtocol: AnyObject {
 	func fetchUserData()
 	func checkNotificationStatus()
 	func fetchNotifications()
+	func markNotificationsAsRead()
 }
 
 protocol NavBarInteractorOutputProtocol: AnyObject {
@@ -66,18 +67,24 @@ final class NavBarInteractor: NavBarInteractorInputProtocol {
 	}
 
 	func checkNotificationStatus() {
-		// TODO: In a real app, this would check for new notifications from a service
+		// TODO: this would check for new notifications from a service
+		// For now, we'll simulate this with mock data
+		// May be we should have any cache to prevent very often requests
 		DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
 			guard let self else { return }
-			// Fetch notification data first
-			self.hasNewNotifications = self.notificationData != NotificationCardViewModel.mockDataArray
-			print("Fetch notification data first", self.notificationData)// TODO: - Notifications
-			print("Fetch notification data first", self.hasNewNotifications)// TODO: - Notifications
-			guard self.hasNewNotifications == true else { return }
-			// Simulate checking for notifications
-			self.notificationData = NotificationCardViewModel.mockDataArray
-
+			// Fetch notification data
+			let newNotificationsData = NotificationCardViewModel.mockDataArray
+			// old notifications found only
+			if self.notificationData == newNotificationsData {
+				self.hasNewNotifications = false
+				self.presenter?.didUpdateNotificationStatus(self.hasNewNotifications)
+				return
+			}
+			self.notificationData = newNotificationsData
+			// Notify about data update
 			self.presenter?.didUpdateNotifications(self.notificationData)
+			// Notify about notification status
+			self.hasNewNotifications = true
 			self.presenter?.didUpdateNotificationStatus(self.hasNewNotifications)
 		}
 	}
@@ -85,5 +92,12 @@ final class NavBarInteractor: NavBarInteractorInputProtocol {
 	func fetchNotifications() {
 		// Return the already fetched notification data
 		presenter?.didFetchNotifications(notificationData)
+	}
+
+	func markNotificationsAsRead() {
+		// Mark notifications as read in the business logic
+		hasNewNotifications = false
+		// Notify presenter about the state change
+		presenter?.didUpdateNotificationStatus(hasNewNotifications)
 	}
 }

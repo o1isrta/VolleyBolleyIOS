@@ -13,6 +13,7 @@ protocol NavBarPresenterProtocol: AnyObject {
 	var router: NavBarRouterProtocol? { get set }
 
 	func viewIsReady()
+	func viewWillAppear()
 	func notificationButtonTapped()
 	func refreshUserData()
 }
@@ -28,22 +29,35 @@ final class NavBarPresenter: NavBarPresenterProtocol {
 	// MARK: - Private Properties
 
 	private var currentViewModel: NavBarViewModel?
+	private var hasNewNotifications: Bool = false
 	private var notificationData: [NotificationCardViewModel] = []
 
 	// MARK: - Public Methods
 
 	func viewIsReady() {
 		interactor?.fetchUserData()
-		interactor?.checkNotificationStatus()
 	}
 
 	func notificationButtonTapped() {
 		// Fetch notifications from interactor before navigation
 		interactor?.fetchNotifications()
+		// Clear the notification badge after navigation
+		if hasNewNotifications {
+			hasNewNotifications = false
+			view?.updateNotifications(hasNewNotifications)
+			// Also update the business logic state
+			interactor?.markNotificationsAsRead()
+		}
 	}
 
 	func refreshUserData() {
 		interactor?.fetchUserData()
+		interactor?.checkNotificationStatus()
+	}
+
+	func viewWillAppear() {
+		// Refresh notification status when view appears
+		// This ensures state synchronization when navigating between screens
 		interactor?.checkNotificationStatus()
 	}
 }
@@ -58,6 +72,7 @@ extension NavBarPresenter: NavBarInteractorOutputProtocol {
 	}
 
 	func didUpdateNotificationStatus(_ hasNewNotifications: Bool) {
+		self.hasNewNotifications = hasNewNotifications
 		view?.updateNotifications(hasNewNotifications)
 	}
 
