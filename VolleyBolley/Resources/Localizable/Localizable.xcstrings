@@ -24,16 +24,6 @@
         }
       }
     },
-    "%@ %@" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$@ %2$@"
-          }
-        }
-      }
-    },
     "%lld" : {
       "localizations" : {
         "ru" : {
@@ -108,9 +98,6 @@
           }
         }
       }
-    },
-    "CHOOSE THIS GAME" : {
-
     },
     "Choose your city" : {
       "localizations" : {
@@ -318,15 +305,6 @@
         }
       }
     },
-    "customAlertView.button.enable" : {
-
-    },
-    "customAlertView.button.skip" : {
-
-    },
-    "customAlertView.message.notification" : {
-
-    },
     "customAlertView.notificationOpportunities.achievements" : {
       "comment" : "Custom Alert",
       "localizations" : {
@@ -377,9 +355,6 @@
           }
         }
       }
-    },
-    "customAlertView.title.notification" : {
-
     },
     "Date of birth" : {
       "localizations" : {
