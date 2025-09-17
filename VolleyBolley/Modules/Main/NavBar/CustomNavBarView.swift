@@ -1,6 +1,19 @@
 import UIKit
 
+protocol NavBarViewProtocol: AnyObject {
+	var presenter: NavBarPresenterProtocol? { get set }
+
+	func configure(with viewModel: NavBarViewModel)
+	func updateNotifications(_ hasNewNotifications: Bool)
+	func setViewController(_ viewController: UIViewController?)
+}
+
 final class CustomNavBarView: UIView {
+
+	// MARK: - VIPER Properties
+
+	var presenter: NavBarPresenterProtocol?
+	private weak var parentViewController: UIViewController?
 
 	private enum Constants {
 		static let avatarSize: CGFloat = 46
@@ -31,10 +44,19 @@ final class CustomNavBarView: UIView {
 		super.init(frame: .zero)
 		setupView()
 		setupLayout()
+		// Set delegate for notification button
+		notificationButtonView.delegate = self
 	}
 
 	@available(*, unavailable)
 	required init?(coder: NSCoder) { nil }
+
+	override func didMoveToSuperview() {
+		super.didMoveToSuperview()
+		if superview != nil {
+			notifyPresenterIfReady()
+		}
+	}
 
 	// MARK: - Public Methods
 
@@ -46,6 +68,23 @@ final class CustomNavBarView: UIView {
 
 	func hasNewNotifications(_ hasNewNotifications: Bool) {
 		notificationButtonView.hasNewNotifications(hasNewNotifications)
+	}
+
+	// MARK: - VIPER Integration
+
+	private func setupVIPERIfNeeded() {
+		guard presenter == nil else { return }
+		// Auto-configure VIPER if not already set up
+		let navBarView = NavBarAssembly.createModule(with: parentViewController)
+		self.presenter = navBarView.presenter
+	}
+
+	private func notifyPresenterIfReady() {
+		guard let presenter = presenter else {
+			setupVIPERIfNeeded()
+			return
+		}
+		presenter.viewIsReady()
 	}
 }
 
@@ -119,6 +158,28 @@ private extension CustomNavBarView {
 	}
 }
 
+// MARK: - NavBarViewProtocol
+
+extension CustomNavBarView: NavBarViewProtocol {
+
+	func updateNotifications(_ hasNewNotifications: Bool) {
+		notificationButtonView.hasNewNotifications(hasNewNotifications)
+	}
+
+	func setViewController(_ viewController: UIViewController?) {
+		self.parentViewController = viewController
+	}
+}
+
+// MARK: - NotificationButtonDelegate
+
+extension CustomNavBarView: NotificationButtonDelegate {
+
+	func notificationButtonDidTap() {
+		presenter?.notificationButtonTapped()
+	}
+}
+
 // MARK: - Preview
 
 #if DEBUG
@@ -126,7 +187,7 @@ import SwiftUI
 @available(iOS 17.0, *)
 #Preview {
 	UIViewPreview {
-		let view = CustomNavBarView()
+		let view = NavBarAssembly.createModule(with: nil)
 		view.hasNewNotifications(true)
 		return view
 	}
@@ -135,7 +196,7 @@ import SwiftUI
 	.padding()
 
 	UIViewPreview {
-		let view = CustomNavBarView()
+		let view = NavBarAssembly.createModule(with: nil)
 		return view
 	}
 	.frame(width: .infinity, height: 68)
