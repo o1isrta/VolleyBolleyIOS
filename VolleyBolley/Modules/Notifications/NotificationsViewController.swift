@@ -8,6 +8,7 @@
 import UIKit
 
 protocol NotificationsViewControllerProtocol: AnyObject {
+	var presenter: NotificationsPresenterProtocol? { get }
 	func displayNotifications(_ notifications: [NotificationCardViewModel])
 	func displayEmptyState()
 }
@@ -116,6 +117,7 @@ private extension NotificationsViewController {
 extension NotificationsViewController: NotificationsViewControllerProtocol {
 
 	func displayNotifications(_ notifications: [NotificationCardViewModel]) {
+		print("displayNotifications")// TODO: - Notifications
 		self.notifications = notifications
 		tableView.reloadData()
 	}
