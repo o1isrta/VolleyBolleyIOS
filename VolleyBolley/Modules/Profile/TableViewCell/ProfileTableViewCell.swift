@@ -13,8 +13,6 @@ final class MenuCell: UITableViewCell {
 
     // MARK: - Private Properties
 
-    private var separatorHeightConstraint: NSLayoutConstraint?
-
     private lazy var iconView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -59,13 +57,6 @@ final class MenuCell: UITableViewCell {
         titleLabel.text = title
         separatorLine.isHidden = isLast
     }
-
-    // MARK: - Private Method
-
-    private func setupSeparatorLineHeight() {
-        let separatorHeightConstraint = separatorLine.heightAnchor.constraint(equalToConstant: 1 / UIScreen.main.scale)
-        separatorHeightConstraint.isActive = true
-    }
 }
 
 // MARK: - Private methods
@@ -81,7 +72,6 @@ private extension MenuCell {
 
     func setupView() {
         setupUI()
-        setupSeparatorLineHeight()
 
         NSLayoutConstraint.activate([
             iconView.widthAnchor.constraint(equalToConstant: 24),
