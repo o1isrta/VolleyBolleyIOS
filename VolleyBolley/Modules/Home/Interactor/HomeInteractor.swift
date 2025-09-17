@@ -64,7 +64,7 @@ final class HomeInteractor: HomeInteractorProtocol {
             playerLocation: playerLocation
         )
 
-        let weather = try await weatherRepository.getCurrentWeather(for: nearestCourt.location)
+        let weather = try await weatherRepository.getCurrentWeather(for: nearestCourt.location.point)
 
         let nearestCourtWithWeather = NearestCourtWithWeather(court: nearestCourt, weather: weather)
 

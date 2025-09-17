@@ -31,8 +31,8 @@ final class NearestCourtUseCase: CourtsUseCaseProtocol {
         let courts = try await courtRepository.getCourts(forceRefresh: false)
 
         guard let nearest = courts.min(by: {
-            $0.location.distanceInKilometers(to: playerLocation) <
-            $1.location.distanceInKilometers(to: playerLocation)
+            $0.location.point.distanceInKilometers(to: playerLocation) <
+                $1.location.point.distanceInKilometers(to: playerLocation)
         }) else {
             throw CourtsError.notFound
         }

@@ -9,10 +9,8 @@ import Foundation
 
 struct Court {
     let id: Int
-    let name: String
     let description: String?
-    let address: String
-    let location: GeoPoint
+    let location: CourtLocation
     let priceDescription: String?
     let photoURL: URL?
     let tags: [String]?

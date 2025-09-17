@@ -19,10 +19,8 @@ extension CourtDTO {
 
         return Court(
             id: courtId,
-            name: location.courtName,
             description: description,
-            address: location.locationName,
-            location: GeoPoint(lat: location.latitude, lon: location.longitude),
+            location: location.toDomain(),
             priceDescription: priceDescription,
             photoURL: parsedURL,
             tags: tagList,

@@ -84,8 +84,8 @@ final class HomePresenter: HomePresenterProtocol {
         do {
             let courtWithWeather = try await interactor.loadNearestCourtWithWeather()
             let locationVM = LocationTitleViewModel(
-                title: courtWithWeather.court.name,
-                location: courtWithWeather.court.address
+                title: courtWithWeather.court.location.name,
+                location: courtWithWeather.court.location.locationName
             )
 
             if let weather = courtWithWeather.weather {
