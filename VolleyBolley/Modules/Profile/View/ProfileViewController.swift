@@ -54,6 +54,7 @@ final class ProfileViewController: BaseViewController, ProfileViewProtocol {
 
     private lazy var menuItems = ProfileMenuItem.allCases
 
+	// TODO: это зачем?
     private lazy var label: UILabel = {
         let view = UILabel()
         view.textAlignment = .center
@@ -103,6 +104,7 @@ final class ProfileViewController: BaseViewController, ProfileViewProtocol {
 
     // MARK: - Public Methods
 
+	// TODO: это зачем?
     func showGreeting(_ message: String) {
         label.text = message
     }
@@ -143,7 +145,7 @@ private extension ProfileViewController {
             tableView.heightAnchor.constraint(equalToConstant: 400),
 
             deleteButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 28),
-			deleteButton.bottomAnchor.constraint(equalTo: tabBar.view.topAnchor, constant: -20)
+			deleteButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -60)
         ])
     }
 }

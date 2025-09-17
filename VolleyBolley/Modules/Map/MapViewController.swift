@@ -215,7 +215,7 @@ private extension MapViewController {
 			segmentedControl,
 			bottomView
 		)
-		let popupBottonInset: CGFloat = -8
+		let popupBottonInset: CGFloat = -55
 
 		NSLayoutConstraint.activate([
 			segmentedControl.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 8),
@@ -229,14 +229,14 @@ private extension MapViewController {
 
 			bottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
 			bottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-			bottomView.bottomAnchor.constraint(equalTo: tabBar.view.topAnchor, constant: popupBottonInset),
+			bottomView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: popupBottonInset),
 			bottomView.heightAnchor.constraint(equalToConstant: 136)
 		])
 
 		view.addSubviews(popupView)
 		popupView.isHidden = true
 		popupBottomConstraint = popupView.bottomAnchor.constraint(
-			equalTo: tabBar.view.topAnchor,
+			equalTo: view.safeAreaLayoutGuide.bottomAnchor,
 			constant: popupBottonInset
 		)
 		if let popupBottomConstraint {
