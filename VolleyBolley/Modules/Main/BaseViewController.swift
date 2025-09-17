@@ -54,6 +54,7 @@ class BaseViewController: UIViewController {
 private extension BaseViewController {
 
 	func setupNotifications() {
+		// This ensures state synchronization when navigating between tabs
 		NotificationCenter.default.addObserver(
 			self,
 			selector: #selector(handleTabChange),
