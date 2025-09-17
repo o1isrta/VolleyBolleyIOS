@@ -32,6 +32,16 @@ final class MapViewController: BaseViewController, MapViewProtocol {
 	private var selectedCourt: CourtModel?
 	private var listVC: CourtListViewController?
 
+    private lazy var backButton: UtilityButton = {
+        let view = UtilityButton(style: .small)
+        view.setImage(.chevronBackward, for: .normal)
+        view.tintColor = AppColor.Icon.inverted
+        view.addAction(UIAction { [weak self] _ in
+            self?.presenter.didTapBackButton()
+        }, for: .touchUpInside)
+        return view
+    }()
+
 	// MARK: - Initializers
 
 	init(presenter: MapPresenterProtocol) {
@@ -215,8 +225,10 @@ private extension MapViewController {
 		view.addSubviews(
 			mapView,
 			segmentedControl,
-			bottomView
+            bottomView,
+            backButton
 		)
+
 		let popupBottonInset: CGFloat = -8
 
 		NSLayoutConstraint.activate([
@@ -224,6 +236,9 @@ private extension MapViewController {
 			segmentedControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 			segmentedControl.widthAnchor.constraint(equalToConstant: 200),
 			segmentedControl.heightAnchor.constraint(equalToConstant: 36),
+
+            backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+            backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
 
 			mapView.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 8),
 			mapView.leadingAnchor.constraint(equalTo: view.leadingAnchor),

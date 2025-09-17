@@ -32,7 +32,7 @@ final class HomePresenter: HomePresenterProtocol {
 
     init(
         interactor: HomeInteractorProtocol,
-        router: HomeRouterProtocol
+        router: HomeRouterProtocol,
     ) {
         self.interactor = interactor
         self.router = router
@@ -47,24 +47,27 @@ final class HomePresenter: HomePresenterProtocol {
     }
 
     func didTapCreateNewGame() {
-        print("HomePresenter - Create New Game")
+        router.showMapForCreateNewGame()
     }
 
     func didTapFindGame() {
-        print("HomePresenter - Find Game")
+        router.showMapForFindGame()
     }
 
     func didTapCreateTourney() {
-        print("HomePresenter - Create Tourney")
+        router.showMapForCreateTourney()
     }
 
     func didTapDonate() {
-        print("HomePresenter - Donate")
+        router.showDonate()
     }
+
+    // MARK: - Private Methods
 
     private func loadInitialData() async {
         await loadPlayer()
         await loadCourtAndWeather()
+        await loadNearbyGamesCount()
     }
 
     private func loadPlayer() async {
@@ -97,7 +100,16 @@ final class HomePresenter: HomePresenterProtocol {
             }
         } catch {
             print(error.localizedDescription)
-            view?.displayCreateNewGameButton(state: .basic)
+            view?.displayCreateNewGameButton(state: .locationRestricted)
+        }
+    }
+
+    private func loadNearbyGamesCount() async {
+        do {
+            let nearbyGamesCount = try await interactor.loadTotalCountOfUpcomingGamesAndTournaments()
+            view?.displayFindGameButton(gamesCount: nearbyGamesCount)
+        } catch {
+            print(error.localizedDescription)
         }
     }
 }

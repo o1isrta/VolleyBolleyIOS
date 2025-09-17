@@ -1,4 +1,3 @@
-#if DEBUG
 //
 //  UIViewPreview.swift
 //  VolleyBolley
@@ -6,6 +5,7 @@
 //  Created by Roman Romanov on 03.08.2025.
 //
 
+#if DEBUG
 import SwiftUI
 
 struct UIViewPreview<View: UIView>: UIViewRepresentable {

@@ -8,6 +8,7 @@
 import Foundation
 
 enum AppEnvironment: String {
+
     case mock = "mock"
     case staging = "staging"
     case production = "production"

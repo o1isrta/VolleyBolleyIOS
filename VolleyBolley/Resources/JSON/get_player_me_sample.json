@@ -1,0 +1,10 @@
+{
+    "first_name": "Artem",
+    "last_name": "Petrov",
+    "gender": "MALE",
+    "date_of_birth": "1970-02-20",
+    "level": "LIGHT",
+    "country_id": 1,
+    "city_id": 1,
+    "avatar_url": "https://github.com/xcode73/myapp-mocks/blob/main/VolleyBolley/Images/Profile/profile1.jpg?raw=true"
+}

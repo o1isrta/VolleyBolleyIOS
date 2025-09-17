@@ -25,5 +25,10 @@ final class MapAssembly: Assembly {
 
 			return view
 		}
+
+        container.register(MapModuleFactoryProtocol.self) { resolver in
+            MapModuleFactory(resolver: resolver)
+        }
+        .inObjectScope(.container)
 	}
 }

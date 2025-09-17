@@ -7,6 +7,12 @@
 
 import UIKit
 
+enum CreateNewGameButtonState {
+    case locationRestricted
+    case withLocationAndWeather(location: LocationTitleViewModel, weather: WeatherViewModel)
+    case withLocationOnly(location: LocationTitleViewModel)
+}
+
 final class CreateNewGameButton: UIButton {
 
     // MARK: - Private Properties
@@ -64,7 +70,7 @@ final class CreateNewGameButton: UIButton {
 
     func configure(state: CreateNewGameButtonState) {
         switch state {
-        case .basic:
+        case .locationRestricted:
             locationTitleView.isHidden = true
             weatherView.isHidden = true
         case .withLocationOnly(let locationTitleViewModel):
@@ -76,9 +82,6 @@ final class CreateNewGameButton: UIButton {
             locationTitleView.configure(with: locationTitleViewModel)
             weatherView.isHidden = false
             weatherView.configure(with: weatherViewModel)
-        case .loading:
-            locationTitleView.isHidden = true
-            weatherView.isHidden = true
         }
     }
 
@@ -130,13 +133,48 @@ final class CreateNewGameButton: UIButton {
 // MARK: - Preview
 
 #if DEBUG
-import SwiftUI
 
 @available(iOS 17.0, *)
-#Preview {
-    UIViewControllerPreview {
-        HomeModulePreviewBuilder.build()
+#Preview("Button States") {
+    let screenView = UIView()
+    screenView.backgroundColor = AppColor.Background.screen
+
+    let stackView = UIStackView()
+    stackView.axis = .vertical
+    stackView.spacing = 16
+    stackView.alignment = .fill
+    stackView.distribution = .fillEqually
+    stackView.translatesAutoresizingMaskIntoConstraints = false
+
+    screenView.addSubview(stackView)
+
+    stackView.pinToSuperviewEdges(insets: .init(
+        top: 100, left: 8, bottom: 100, right: 8
+    ))
+
+    let shortCourt = LocationTitleViewModel(
+        title: "Karon Beach Club",
+        location: "Patak Rd, Mueang Phuket"
+    )
+    let weather = AppWeather(temperature: 26.0, condition: .partlyCloudy)
+    let weatherViewModel = WeatherViewModel(weather: weather)
+
+    let previewStates: [CreateNewGameButtonState] = [
+        .locationRestricted,
+        .withLocationOnly(location: shortCourt),
+        .withLocationAndWeather(location: shortCourt, weather: weatherViewModel)
+    ]
+
+    for state in previewStates {
+        let button = CreateNewGameButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.heightAnchor.constraint(equalToConstant: 116).isActive = true
+        button.widthAnchor.constraint(equalToConstant: 361).isActive = true
+        button.configure(state: state)
+        stackView.addArrangedSubview(button)
     }
-    .edgesIgnoringSafeArea(.all)
+
+    return screenView
 }
+
 #endif

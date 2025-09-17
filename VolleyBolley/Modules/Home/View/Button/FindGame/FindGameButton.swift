@@ -16,7 +16,7 @@ final class FindGameButton: UIButton {
     private lazy var vStackView: UIStackView = {
         let view = UIStackView(arrangedSubviews: [buttonTitleLabel, buttonSubTitleLabel])
         view.axis = .vertical
-        view.spacing = 8
+        view.spacing = 7
         view.isUserInteractionEnabled = false
         return view
     }()
@@ -46,6 +46,7 @@ final class FindGameButton: UIButton {
 
     private lazy var gamesAvailableView: GamesAvailableView = {
         let view = GamesAvailableView()
+        view.isHidden = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -56,7 +57,6 @@ final class FindGameButton: UIButton {
         super.init(frame: .zero)
 
         setupLayout()
-        gamesAvailableView.configure(with: 12)
 
         var config = UIButton.Configuration.plain()
         config.background.cornerRadius = 16
@@ -90,6 +90,7 @@ final class FindGameButton: UIButton {
 
     func configure(with gamesAvailable: Int) {
         gamesAvailableView.configure(with: gamesAvailable)
+        gamesAvailableView.isHidden = false
     }
 
     // MARK: - Private Methods
@@ -148,7 +149,6 @@ final class FindGameButton: UIButton {
     private func setupConstraintsVStackView() {
         NSLayoutConstraint.activate([
             vStackView.topAnchor.constraint(equalTo: topAnchor, constant: 18),
-            vStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -18),
             vStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 18),
             vStackView.trailingAnchor.constraint(equalTo: gamesAvailableView.leadingAnchor, constant: 8)
         ])
@@ -156,14 +156,39 @@ final class FindGameButton: UIButton {
 }
 
 // MARK: - Preview
+
 #if DEBUG
-import SwiftUI
 
 @available(iOS 17.0, *)
-#Preview {
-    UIViewControllerPreview {
-        HomeModulePreviewBuilder.build()
+#Preview("Button States") {
+    let screenView = UIView()
+    screenView.backgroundColor = AppColor.Background.screen
+
+    let stackView = UIStackView()
+    stackView.axis = .vertical
+    stackView.spacing = 16
+    stackView.alignment = .fill
+    stackView.distribution = .fillEqually
+    stackView.translatesAutoresizingMaskIntoConstraints = false
+
+    screenView.addSubview(stackView)
+
+    stackView.pinToSuperviewEdges(insets: .init(
+        top: 50, left: 8, bottom: 50, right: 8
+    ))
+
+    let gamesCounts = [0, 12, 101, 0]
+
+    for count in gamesCounts {
+        let button = FindGameButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.heightAnchor.constraint(equalToConstant: 116).isActive = true
+        button.widthAnchor.constraint(equalToConstant: 361).isActive = true
+
+        button.configure(with: count)
+        stackView.addArrangedSubview(button)
     }
-    .edgesIgnoringSafeArea(.all)
+
+    return screenView
 }
 #endif

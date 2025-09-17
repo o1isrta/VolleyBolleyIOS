@@ -253,9 +253,7 @@ struct PopupBannerViewControllerRepresentable: UIViewControllerRepresentable {
                 player: Player(
                     firstName: "Artem",
                     lastName: "Ivanov",
-                    gender: "man",
-                    paymentType: "visa",
-                    paymentAccount: "1234",
+                    gender: "MALE",
                     dateOfBirth: Date(),
                     level: .light,
                     country: .thailand,

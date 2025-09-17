@@ -9,7 +9,7 @@ import Foundation
 import Moya
 
 enum CourtsAPI {
-    case getCourts(country: String)
+    case getCourts
 }
 
 extension CourtsAPI: TargetType {
@@ -35,12 +35,8 @@ extension CourtsAPI: TargetType {
 
     var task: Task {
         switch self {
-        case .getCourts(let country):
-
-            return .requestParameters(
-                parameters: ["country": country],
-                encoding: URLEncoding.queryString
-            )
+        case .getCourts:
+            return .requestPlain
         }
     }
 
@@ -51,27 +47,28 @@ extension CourtsAPI: TargetType {
     var validationType: ValidationType {
         return .successCodes
     }
+}
+
+// MARK: - Mock data
+
+#if DEBUG
+extension CourtsAPI {
 
     var sampleData: Data {
         switch self {
-        case .getCourts(let country):
-            let fileName: String
-            switch country.lowercased() {
-            case "thailand":
-                fileName = "get_courts_thailand_sample"
-            case "cyprus":
-                fileName = "get_courts_cyprus_sample"
-            default:
-                fileName = "get_courts_thailand_sample" // fallback
-            }
-
+        case .getCourts:
             guard
-                let url = Bundle.main.url(forResource: fileName, withExtension: "json"),
+                let url = Bundle.main.url(
+                    forResource: "get_courts_sample",
+                    withExtension: "json"
+                ),
                 let data = try? Data(contentsOf: url)
             else {
                 return Data()
             }
+
             return data
         }
     }
 }
+#endif

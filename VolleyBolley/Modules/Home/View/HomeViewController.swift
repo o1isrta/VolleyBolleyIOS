@@ -11,6 +11,7 @@ import UIKit
 protocol HomeViewProtocol: AnyObject {
     func displayNavBar(viewModel: NavBarViewModel)
     func displayCreateNewGameButton(state: CreateNewGameButtonState)
+    func displayFindGameButton(gamesCount: Int)
 }
 
 final class HomeViewController: BaseViewController, HomeViewProtocol {
@@ -18,6 +19,7 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
     // MARK: - Private Properties
 
     private let presenter: HomePresenterProtocol
+    private var createNewGameCourtId: Int?
 
     private lazy var backgroundImageView: UIImageView = {
         let view = UIImageView()
@@ -127,6 +129,10 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
         createNewGameButton.configure(state: state)
     }
 
+    func displayFindGameButton(gamesCount: Int) {
+        findGameButton.configure(with: gamesCount)
+    }
+
     // MARK: - Private Methods
 
     private func setupView() {
@@ -184,14 +190,25 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
 }
 
 // MARK: - Preview
+
 #if DEBUG
-import SwiftUI
+import Swinject
 
 @available(iOS 17.0, *)
-#Preview {
-    UIViewControllerPreview {
-        HomeModulePreviewBuilder.build()
-    }
-    .edgesIgnoringSafeArea(.all)
+#Preview("Home Screen") {
+    let container = Container()
+
+    container.register(AppEnvironment.self) { _ in AppEnvironment.mock }
+
+    NetworkModulesAssembly().assemble(container: container)
+    MediaServicesAssembly().assemble(container: container)
+    UseCasesAssembly().assemble(container: container)
+    LocationAssembly().assemble(container: container)
+    WeatherAssembly().assemble(container: container)
+    MapAssembly().assemble(container: container)
+
+    HomeAssembly().assemble(container: container)
+
+    return container.resolve(HomeViewController.self)!
 }
 #endif

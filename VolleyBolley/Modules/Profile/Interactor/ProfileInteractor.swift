@@ -31,7 +31,7 @@ final class ProfileInteractor: ProfileInteractorProtocol {
     // MARK: - Public Methods
 
     func loadPlayerData() async throws -> (Player, UIImage?) {
-        let player = try await playersRepository.getCurrentPlayer()
+        let player = try await playersRepository.getCurrentPlayer(forceRefresh: false)
 
         if let avatarURL = player.avatarURL {
             let image = try await imageLoader.loadImage(from: avatarURL)

@@ -11,8 +11,6 @@ struct Player {
     let firstName: String
     let lastName: String
     let gender: String
-    let paymentType: String
-    let paymentAccount: String
     let dateOfBirth: Date?
     let level: PlayerLevel
     let country: Country

@@ -5,12 +5,12 @@
 //  Created by Nikolai Eremenko
 //
 
-import CoreLocation
 import UIKit
 
 protocol HomeInteractorProtocol: AnyObject {
     func loadPlayerData() async throws -> (Player, UIImage?)
     func loadNearestCourtWithWeather() async throws -> NearestCourtWithWeather
+    func loadTotalCountOfUpcomingGamesAndTournaments() async throws -> Int
 }
 
 final class HomeInteractor: HomeInteractorProtocol {
@@ -19,24 +19,34 @@ final class HomeInteractor: HomeInteractorProtocol {
 
     private let playersRepository: PlayersRepositoryProtocol
     private let imageLoader: ImageLoadingServiceProtocol
-    private let nearestCourtWithWeatherUseCase: NearestCourtWithWeatherUseCaseProtocol
+    private let locationRepository: LocationRepositoryProtocol
+    private let weatherRepository: WeatherRepositoryProtocol
+
+    private let courtsUseCase: CourtsUseCaseProtocol
+    private let gamesUseCase: GamesUseCaseProtocol
 
     // MARK: - Initializers
 
     init(
         playersRepository: PlayersRepositoryProtocol,
         imageLoader: ImageLoadingServiceProtocol,
-        nearestCourtWithWeatherUseCase: NearestCourtWithWeatherUseCaseProtocol
+        locationRepository: LocationRepositoryProtocol,
+        weatherRepository: WeatherRepositoryProtocol,
+        courtsUseCase: CourtsUseCaseProtocol,
+        gamesUseCase: GamesUseCaseProtocol
     ) {
         self.playersRepository = playersRepository
         self.imageLoader = imageLoader
-        self.nearestCourtWithWeatherUseCase = nearestCourtWithWeatherUseCase
+        self.locationRepository = locationRepository
+        self.weatherRepository = weatherRepository
+        self.courtsUseCase = courtsUseCase
+        self.gamesUseCase = gamesUseCase
     }
 
     // MARK: - Public Methods
 
     func loadPlayerData() async throws -> (Player, UIImage?) {
-        let player = try await playersRepository.getCurrentPlayer()
+        let player = try await playersRepository.getCurrentPlayer(forceRefresh: false)
         let avatarImage: UIImage?
 
         if let avatarURL = player.avatarURL {
@@ -49,9 +59,19 @@ final class HomeInteractor: HomeInteractorProtocol {
     }
 
     func loadNearestCourtWithWeather() async throws -> NearestCourtWithWeather {
-        let player = try await playersRepository.getCurrentPlayer()
-        let country = player.country.apiValue
+        let playerLocation = try await locationRepository.getPlayerLocation(forceUpdate: false)
+        let nearestCourt = try await courtsUseCase.getNearestCourt(
+            playerLocation: playerLocation
+        )
 
-        return try await nearestCourtWithWeatherUseCase.getNearestCourtWithWeather(for: country)
+        let weather = try await weatherRepository.getCurrentWeather(for: nearestCourt.location)
+
+        let nearestCourtWithWeather = NearestCourtWithWeather(court: nearestCourt, weather: weather)
+
+        return nearestCourtWithWeather
+    }
+
+    func loadTotalCountOfUpcomingGamesAndTournaments() async throws -> Int {
+        try await gamesUseCase.getTotalCountOfUpcomingGamesAndTournaments()
     }
 }

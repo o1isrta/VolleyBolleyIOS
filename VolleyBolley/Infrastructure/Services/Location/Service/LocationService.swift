@@ -8,7 +8,8 @@
 import CoreLocation
 
 protocol LocationServiceProtocol {
-    func requestLocation() async throws -> CLLocation
+    func requestLocation(forceUpdate: Bool) async throws -> CLLocation
+    var lastKnownLocation: CLLocation? { get }
 }
 
 final class LocationService: NSObject, LocationServiceProtocol, CLLocationManagerDelegate {
@@ -17,6 +18,8 @@ final class LocationService: NSObject, LocationServiceProtocol, CLLocationManage
 
     private let locationManager = CLLocationManager()
     private var continuation: CheckedContinuation<CLLocation, Error>?
+
+    private(set) var lastKnownLocation: CLLocation?
 
     // MARK: - Initializers
 
@@ -28,11 +31,12 @@ final class LocationService: NSObject, LocationServiceProtocol, CLLocationManage
 
     // MARK: - Public Methods
 
-    func requestLocation() async throws -> CLLocation {
-        if let location = locationManager.location,
+    func requestLocation(forceUpdate: Bool = false) async throws -> CLLocation {
+        if !forceUpdate,
+           let cached = lastKnownLocation,
            locationManager.authorizationStatus == .authorizedWhenInUse ||
            locationManager.authorizationStatus == .authorizedAlways {
-            return location
+            return cached
         }
 
         return try await withCheckedThrowingContinuation { continuation in

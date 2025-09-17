@@ -9,6 +9,7 @@ import UIKit
 
 protocol MapRouterProtocol: AnyObject {
 	func showList(from view: MapViewController, courts: [CourtModel], selected: CourtModel?)
+    func goBackToHome()
 }
 
 final class MapRouter: MapRouterProtocol {
@@ -27,8 +28,6 @@ final class MapRouter: MapRouterProtocol {
 		viewController = view
 	}
 
-	// MARK: - Private Methods
-
 	func showList(
 		from mapViewController: MapViewController,
 		courts: [CourtModel],
@@ -43,4 +42,8 @@ final class MapRouter: MapRouterProtocol {
 		self.listVC = listVC
 		mapViewController.listView = listVC.view
 	}
+
+    func goBackToHome() {
+        viewController?.navigationController?.popViewController(animated: true)
+    }
 }
