@@ -22,14 +22,14 @@ class BaseViewController: UIViewController {
 
 	// MARK: - Public Properties
 
-	let navBar = CustomNavBarView()
-	let tabBar = MainTabBarController()
+	lazy var navBar: CustomNavBarView = {
+		return NavBarAssembly.createModule(with: self)
+	}()
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.backgroundColor = AppColor.Background.screen
 		setupCustomNavigationBar()
-		setupCustomTabBar()
 	}
 
 	// MARK: - Public Methods
@@ -41,9 +41,8 @@ class BaseViewController: UIViewController {
 
 	override func viewDidLayoutSubviews() {
 		super.viewDidLayoutSubviews()
-		// ALWAYS raise the navbar/tabBar above all other subviews
+		// ALWAYS raise the navbar above all other subviews
 		view.bringSubviewToFront(navBar)
-		view.bringSubviewToFront(tabBar.view)
 	}
 }
 
@@ -57,16 +56,6 @@ private extension BaseViewController {
 			navBar.topAnchor.constraint(equalTo: view.topAnchor),
 			navBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
 			navBar.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-		])
-	}
-
-	func setupCustomTabBar() {
-		view.addSubviews(tabBar.view)
-		NSLayoutConstraint.activate([
-			tabBar.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-			tabBar.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-			tabBar.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-			tabBar.view.heightAnchor.constraint(equalToConstant: 81)
 		])
 	}
 }
