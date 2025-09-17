@@ -8,7 +8,7 @@ import Swinject
 import UIKit
 
 final class PhoneVerifyAssembly: Assembly {
-    
+
     func assemble(container: Container) {
         container.register(PhoneVerifyViewController.self) { (resolver, phoneNumber: String) in
             let phoneVerifyVC = PhoneVerifyViewController(phoneNumber: phoneNumber)

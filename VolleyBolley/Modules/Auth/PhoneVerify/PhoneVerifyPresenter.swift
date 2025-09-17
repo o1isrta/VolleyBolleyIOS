@@ -8,6 +8,8 @@ import UIKit
 
 final class PhoneVerifyPresenter: PhoneVerifyPresenterProtocol, PhoneVerifyInteractorOutputProtocol {
 
+    static let verificationCodeLength = 6
+
     weak var view: PhoneVerifyViewProtocol?
     var interactor: PhoneVerifyInteractorProtocol
     var router: PhoneVerifyRouterProtocol
@@ -38,7 +40,7 @@ final class PhoneVerifyPresenter: PhoneVerifyPresenterProtocol, PhoneVerifyInter
         let digitsOnly = code.filter { $0.isNumber }
         lastEnteredCode = digitsOnly
         view?.hideError()
-        if digitsOnly.count == 6 {
+        if digitsOnly.count == Self.verificationCodeLength {
             interactor.verifyCodeForValidation(digitsOnly, for: phoneNumber)
             view?.enableVerifyButton(false)
         } else {
@@ -58,7 +60,7 @@ final class PhoneVerifyPresenter: PhoneVerifyPresenterProtocol, PhoneVerifyInter
 
     func validationSucceeded() {
         view?.hideError()
-        view?.enableVerifyButton(lastEnteredCode.count == 6)
+        view?.enableVerifyButton(lastEnteredCode.count == Self.verificationCodeLength)
     }
 
     func verificationSucceeded() {

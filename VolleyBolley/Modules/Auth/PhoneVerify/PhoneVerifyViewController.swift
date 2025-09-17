@@ -7,7 +7,7 @@
 import UIKit
 
 final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol {
-    
+
     var presenter: PhoneVerifyPresenterProtocol?
 
     private var errorLabelHeightConstraint: NSLayoutConstraint?
@@ -38,7 +38,8 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
 
     private lazy var codeTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "XXXXXX"
+        let placeholderText = "XXXXXX"
+        textField.placeholder = placeholderText
         textField.keyboardType = .numberPad
         textField.borderStyle = .none
         textField.textAlignment = .center
@@ -50,7 +51,6 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.addTarget(self, action: #selector(codeDidChange), for: .editingChanged)
 
-        let placeholderText = "XXXXXX"
         let attributed = NSAttributedString(
             string: placeholderText,
             attributes: [.kern: 7, .foregroundColor: AppColor.Text.placeHolder]
@@ -91,9 +91,8 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
         super.init(nibName: nil, bundle: nil)
     }
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    @available(*, unavailable)
+    required init?(coder: NSCoder) { nil }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -125,7 +124,8 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
          errorLabel,
          getNewCodeButton,
          verifyButton]
-            .forEach { containerView.addSubview($0) }
+            .forEach
+            { containerView.addSubview($0) }
 
         errorLabelHeightConstraint = errorLabel.heightAnchor.constraint(equalToConstant: 17)
         errorLabelHeightConstraint?.isActive = true

@@ -12,7 +12,7 @@ final class PhoneVerifyInteractor: PhoneVerifyInteractorProtocol {
 
     func verifyCode(_ code: String, for phoneNumber: String) {
         let digitsOnly = code.filter { $0.isNumber }
-        guard digitsOnly.count == 6 else {
+        guard digitsOnly.count == PhoneVerifyPresenter.verificationCodeLength else {
             let error = NSError(
                 domain: "",
                 code: 400,
@@ -26,7 +26,7 @@ final class PhoneVerifyInteractor: PhoneVerifyInteractorProtocol {
             if digitsOnly == "123456" {
                 DispatchQueue.main.async {
                     self.presenter?.verificationSucceeded()
-                    //TODO: Заменить на реальный код из смс
+                    // TODO: Заменить на реальный код из смс
                 }
             } else {
                 let error = NSError(
@@ -43,7 +43,7 @@ final class PhoneVerifyInteractor: PhoneVerifyInteractorProtocol {
 
     func verifyCodeForValidation(_ code: String, for phoneNumber: String) {
         let digitsOnly = code.filter { $0.isNumber }
-        guard digitsOnly.count == 6 else { return }
+        guard digitsOnly.count == PhoneVerifyPresenter.verificationCodeLength else { return }
 
         DispatchQueue.global().asyncAfter(deadline: .now() + 0.2) { [weak self] in
             DispatchQueue.main.async {
@@ -60,6 +60,6 @@ final class PhoneVerifyInteractor: PhoneVerifyInteractorProtocol {
 
     func resendCode(for phoneNumber: String) {
         print("Запрос повторного отправления кода")
-        //TODO: Добавить сетевой запрос повторной отправки смс-кода
+        // TODO: Добавить сетевой запрос повторной отправки смс-кода
     }
 }

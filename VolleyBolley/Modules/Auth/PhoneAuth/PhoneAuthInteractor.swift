@@ -7,7 +7,7 @@
 import Foundation
 
 final class PhoneAuthInteractor: PhoneAuthInteractorProtocol {
-    
+
     weak var presenter: PhoneAuthInteractorOutputProtocol?
 
     private struct CountryRule {
@@ -16,8 +16,8 @@ final class PhoneAuthInteractor: PhoneAuthInteractorProtocol {
     }
 
     private let countryRules: [String: CountryRule] = [
-        "RU": CountryRule(code: "+7",  pattern: "### ###-##-##"),
-        "US": CountryRule(code: "+1",  pattern: "### ###-####"),
+        "RU": CountryRule(code: "+7", pattern: "### ###-##-##"),
+        "US": CountryRule(code: "+1", pattern: "### ###-####"),
         "GB": CountryRule(code: "+44", pattern: "#### ### ####"),
         "DE": CountryRule(code: "+49", pattern: "#### ######"),
         "FR": CountryRule(code: "+33", pattern: "# ## ## ## ##"),
