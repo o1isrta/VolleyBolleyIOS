@@ -14,7 +14,7 @@ final class FAQCell: UITableViewCell {
     // MARK: - Private Properties
 
     private lazy var titleLabel = CustomTitle(
-        text: String(localized: ""),
+        text: "",
         isLarge: false
     )
 
@@ -40,14 +40,13 @@ final class FAQCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        backgroundColor = .clear
+		backgroundColor = AppColor.Background.clear
         selectionStyle = .none
         setupView()
     }
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+	@available(*, unavailable)
+	required init?(coder: NSCoder) { nil }
 
     // MARK: - Public Method
 

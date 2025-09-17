@@ -8,7 +8,6 @@
 import UIKit
 
 protocol ProfileInteractorProtocol: AnyObject {
-    func fetchGreeting() -> String
 }
 
 final class ProfileInteractor: ProfileInteractorProtocol {
@@ -30,7 +29,4 @@ final class ProfileInteractor: ProfileInteractorProtocol {
 
     // MARK: - Public Methods
 
-    func fetchGreeting() -> String {
-        return "Profile Module"
-    }
 }

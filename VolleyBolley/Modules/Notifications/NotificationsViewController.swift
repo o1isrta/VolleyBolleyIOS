@@ -122,7 +122,7 @@ private extension NotificationsViewController {
 
 extension NotificationsViewController: NotificationsViewControllerProtocol {
 
-	func displayNotifications(_ notifications: [NotificationCardViewModel]) { 
+	func displayNotifications(_ notifications: [NotificationCardViewModel]) {
 		self.notifications = notifications
 		tableView.reloadData()
 	}
