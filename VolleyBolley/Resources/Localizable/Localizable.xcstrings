@@ -1368,7 +1368,29 @@
         }
       }
     },
-    "sketchButton.invite" : {
+    "sketchButton.createTourney" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create a tourney"
+          }
+        }
+      }
+    },
+    "sketchButton.donate" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Donate"
+          }
+        }
+      }
+    },
+    "sketchButton.invitePlayers" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1379,7 +1401,29 @@
         }
       }
     },
-    "sketchButton.share" : {
+    "sketchButton.saveGame" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save game"
+          }
+        }
+      }
+    },
+    "sketchButton.sendInvites" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send invites"
+          }
+        }
+      }
+    },
+    "sketchButton.shareLink" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
