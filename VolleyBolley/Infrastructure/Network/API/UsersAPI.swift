@@ -8,10 +8,7 @@
 import Foundation
 import Moya
 
-struct NetworkEnvironment {
-    static var current: AppEnvironment = .production
-}
-
+@available(*, deprecated, message: "Use DataAPI instead")
 enum UsersAPI {
     case getCurrentUser
 }
