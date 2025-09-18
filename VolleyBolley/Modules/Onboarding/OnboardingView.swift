@@ -8,6 +8,7 @@
 import UIKit
 
 final class OnboardingViewController: UIViewController {
+
     var presenter: OnboardingPresenterProtocol?
 
     private lazy var titleLabel: UILabel = {
@@ -21,9 +22,9 @@ final class OnboardingViewController: UIViewController {
 
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
-		label.text = String(
-			localized: "welcome_description"
-		)
+        label.text = String(
+            localized: "welcome_description"
+        )
         label.font = AppFont.Hero.regular(size: 20)
         label.textColor = AppColor.Text.primary
         label.numberOfLines = 0
@@ -45,12 +46,12 @@ final class OnboardingViewController: UIViewController {
         return label
     }()
 
-	private lazy var getStartedButton: UIButton = NextStepButton(
-		title: String(localized: "GET STARTED"),
-		isActive: true,
-		target: self,
-		action: #selector(getStartedTapped)
-	)
+    private lazy var getStartedButton: UIButton = NextStepButton(
+        title: String(localized: "GET STARTED"),
+        isActive: true,
+        target: self,
+        action: #selector(getStartedTapped)
+    )
 
     private lazy var backgroundImageView: UIImageView = {
         let imageView = UIImageView(image: .launch)
