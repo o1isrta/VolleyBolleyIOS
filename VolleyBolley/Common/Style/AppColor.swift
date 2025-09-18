@@ -60,6 +60,7 @@ enum AppColor {
         static let primary = white
         static let inverted = ashBrown
         static let separator = separatorGray
+        static let error = red
     }
 
 	enum Icon {
