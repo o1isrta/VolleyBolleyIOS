@@ -39,7 +39,7 @@ final class PersonalDataViewController: UIViewController {
     private var selectedCity: String?
 
     private lazy var screenTitle = CustomTitle(
-        text: String(localized: "personalData.screenTitle"),
+        text: String(localized: "Personal data"),
         isLarge: true
     )
     private lazy var backButton: UtilityButton = {
