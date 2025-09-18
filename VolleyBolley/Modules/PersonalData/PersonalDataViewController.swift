@@ -20,10 +20,9 @@ final class PersonalDataViewController: UIViewController {
         static let backButtonTopInset: CGFloat = 14
         static let profileImageSize: CGFloat = 122
         static let editButtonSize: CGFloat = 24
-        static let textFieldCornerRadius: CGFloat = 16
-        static let textFieldFontSize: CGFloat = 16
-        static let textFieldHeight: CGFloat = 51
+        static let buttonHeight: CGFloat = 51
         static let birthdayTextFieldWidth: CGFloat = 120
+        static let birthdayTextFieldLeftPadding: CGFloat = 0
     }
 
     // MARK: - Private Properties
@@ -72,18 +71,10 @@ final class PersonalDataViewController: UIViewController {
     // Name field
 
     private lazy var nameLabel = CustomLabel(text: String(localized: "Name"), isBold: true)
-    private lazy var nameTextField: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = String(localized: "Name")
-        textField.backgroundColor = AppColor.Border.primary
-        textField.layer.cornerRadius = Constants.textFieldCornerRadius
-        textField.textColor = AppColor.Text.placeHolder
-        textField.setLeftPaddingPoints(Constants.textFieldCornerRadius)
-        return textField
-    }()
+    private lazy var nameTextField = CustomTextField(
+        placeholder: String(localized: "Name")
+    )
     private lazy var nameStackView: UIStackView = {
-        let spacer = UIView()
-        spacer.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         let stack = UIStackView(arrangedSubviews: [nameLabel, nameTextField])
         stack.axis = .vertical
         stack.spacing = Constants.mainIndent
@@ -93,18 +84,10 @@ final class PersonalDataViewController: UIViewController {
     // Surname field
 
     private lazy var surnameLabel = CustomLabel(text: String(localized: "Surname"), isBold: true)
-    private lazy var surnameTextField: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = String(localized: "Surname")
-        textField.backgroundColor = AppColor.Border.primary
-        textField.layer.cornerRadius = Constants.textFieldCornerRadius
-        textField.textColor = AppColor.Text.placeHolder
-        textField.setLeftPaddingPoints(Constants.textFieldCornerRadius)
-        return textField
-    }()
+    private lazy var surnameTextField = CustomTextField(
+        placeholder: String(localized: "Surname")
+    )
     private lazy var surnameStackView: UIStackView = {
-        let spacer = UIView()
-        spacer.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         let stack = UIStackView(arrangedSubviews: [surnameLabel, surnameTextField])
         stack.axis = .vertical
         stack.spacing = Constants.mainIndent
@@ -132,14 +115,19 @@ final class PersonalDataViewController: UIViewController {
     private lazy var genderButtonsStackView: UIStackView = {
         let spacer = UIView()
         spacer.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-        let stack = UIStackView(arrangedSubviews: [maleButton, femaleButton, spacer])
+        let stack = UIStackView(arrangedSubviews: [
+            maleButton,
+            femaleButton,
+            spacer
+        ])
         stack.axis = .horizontal
+        stack.distribution = .fill
+        stack.alignment = .leading
         stack.spacing = Constants.mainIndent
+        stack.isLayoutMarginsRelativeArrangement = true
         return stack
     }()
     private lazy var genderStackView: UIStackView = {
-        let spacer = UIView()
-        spacer.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         let stack = UIStackView(arrangedSubviews: [genderLabel, genderButtonsStackView])
         stack.axis = .vertical
         stack.spacing = Constants.mainIndent
@@ -150,21 +138,17 @@ final class PersonalDataViewController: UIViewController {
     // Birthday field
 
     private lazy var birthdayLabel = CustomLabel(text: String(localized: "Date of birth"), isBold: true)
-    private lazy var birthdayTextField: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "__ / __ / ____"
-        textField.textAlignment = .center
-        textField.backgroundColor = AppColor.Text.primary
-        textField.layer.cornerRadius = Constants.textFieldCornerRadius
-        textField.keyboardType = .numberPad
-        textField.textColor = AppColor.Text.placeHolder
-        textField.font = AppFont.Hero.regular(size: Constants.textFieldFontSize)
-        textField.delegate = self
-        return textField
+    private lazy var birthdayTextField: CustomTextField = {
+        let field = CustomTextField(
+            placeholder: "__ / __ / ____",
+            alignment: .center,
+            keyboardType: .numberPad,
+            leftPadding: Constants.birthdayTextFieldLeftPadding
+        )
+        field.delegate = self
+        return field
     }()
     private lazy var birthdayStackView: UIStackView = {
-        let spacer = UIView()
-        spacer.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         let stack = UIStackView(arrangedSubviews: [birthdayLabel, birthdayTextField])
         stack.axis = .vertical
         stack.alignment = .leading
@@ -178,8 +162,6 @@ final class PersonalDataViewController: UIViewController {
     private lazy var countryLabel = CustomLabel(text: String(localized: "Your country"), isBold: true)
     private var countryList: LocationPickerView?
     private lazy var countryStackView: UIStackView = {
-        let spacer = UIView()
-        spacer.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         let stack = UIStackView(arrangedSubviews: [countryLabel, countryList ?? UIView()])
         stack.axis = .vertical
         stack.spacing = Constants.mainIndent
@@ -192,8 +174,6 @@ final class PersonalDataViewController: UIViewController {
     private lazy var cityLabel = CustomLabel(text: String(localized: "Your city"), isBold: true)
     private var cityList: LocationPickerView?
     private lazy var cityStackView: UIStackView = {
-        let spacer = UIView()
-        spacer.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         let stack = UIStackView(arrangedSubviews: [cityLabel, cityList ?? UIView()])
         stack.axis = .vertical
         stack.spacing = Constants.mainIndent
@@ -327,15 +307,9 @@ private extension PersonalDataViewController {
             editButton.trailingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: -Constants.mediumIndent),
             editButton.bottomAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: -Constants.mainIndent),
 
-            nameTextField.heightAnchor.constraint(equalToConstant: Constants.textFieldHeight),
-
-            surnameTextField.heightAnchor.constraint(equalToConstant: Constants.textFieldHeight),
-
-            birthdayTextField.heightAnchor.constraint(equalToConstant: Constants.textFieldHeight),
-
             birthdayTextField.widthAnchor.constraint(equalToConstant: Constants.birthdayTextFieldWidth),
 
-            updateButton.heightAnchor.constraint(equalToConstant: Constants.textFieldHeight)
+            updateButton.heightAnchor.constraint(equalToConstant: Constants.buttonHeight)
         ])
     }
 
