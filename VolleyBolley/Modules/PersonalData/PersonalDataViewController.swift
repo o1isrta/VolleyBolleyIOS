@@ -7,19 +7,23 @@
 
 import UIKit
 
-final class PersonalDataViewController: BaseViewController {
+final class PersonalDataViewController: UIViewController {
 
     // MARK: - Constants
 
     private enum Constants {
         static let mainIndent: CGFloat = 8
-        static let mainSpacing: CGFloat = 20
+        static let mediumIndent: CGFloat = 10
         static let mediumSpacing: CGFloat = 16
+        static let mainSpacing: CGFloat = 20
         static let tabBarHeight: CGFloat = 81
         static let backButtonTopInset: CGFloat = 14
         static let profileImageSize: CGFloat = 122
         static let editButtonSize: CGFloat = 24
-        static let glassmorphismCornerRadius: CGFloat = 32
+        static let textFieldCornerRadius: CGFloat = 16
+        static let textFieldFontSize: CGFloat = 16
+        static let textFieldHeight: CGFloat = 51
+        static let birthdayTextFieldWidth: CGFloat = 120
     }
 
     // MARK: - Private Properties
@@ -33,14 +37,6 @@ final class PersonalDataViewController: BaseViewController {
     private var selectedGender: String? = String(localized: "Male")
     private var selectedCountry: String?
     private var selectedCity: String?
-
-    private lazy var formStackView: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .vertical
-        stack.alignment = .leading
-        stack.spacing = Constants.mediumSpacing
-        return stack
-    }()
 
     private lazy var screenTitle = CustomTitle(
         text: String(localized: "personalData.screenTitle"),
@@ -73,30 +69,50 @@ final class PersonalDataViewController: BaseViewController {
         return button
     }()
 
-    // MARK: - Form fields
+    // Name field
 
     private lazy var nameLabel = CustomLabel(text: String(localized: "Name"), isBold: true)
     private lazy var nameTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = String(localized: "Anton")
+        textField.placeholder = String(localized: "Name")
         textField.backgroundColor = AppColor.Border.primary
-        textField.layer.cornerRadius = 16
+        textField.layer.cornerRadius = Constants.textFieldCornerRadius
         textField.textColor = AppColor.Text.placeHolder
-        textField.setLeftPaddingPoints(16)
+        textField.setLeftPaddingPoints(Constants.textFieldCornerRadius)
         return textField
     }()
+    private lazy var nameStackView: UIStackView = {
+        let spacer = UIView()
+        spacer.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        let stack = UIStackView(arrangedSubviews: [nameLabel, nameTextField])
+        stack.axis = .vertical
+        stack.spacing = Constants.mainIndent
+        return stack
+    }()
+
+    // Surname field
 
     private lazy var surnameLabel = CustomLabel(text: String(localized: "Surname"), isBold: true)
     private lazy var surnameTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = String(localized: "Ivanov")
+        textField.placeholder = String(localized: "Surname")
         textField.backgroundColor = AppColor.Border.primary
-        textField.layer.cornerRadius = 16
+        textField.layer.cornerRadius = Constants.textFieldCornerRadius
         textField.textColor = AppColor.Text.placeHolder
-        textField.setLeftPaddingPoints(16)
+        textField.setLeftPaddingPoints(Constants.textFieldCornerRadius)
         return textField
     }()
+    private lazy var surnameStackView: UIStackView = {
+        let spacer = UIView()
+        spacer.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        let stack = UIStackView(arrangedSubviews: [surnameLabel, surnameTextField])
+        stack.axis = .vertical
+        stack.spacing = Constants.mainIndent
+        return stack
+    }()
     private lazy var surnameSeparator = CustomSeparator()
+
+    // Gender field
 
     private lazy var genderLabel = CustomLabel(text: String(localized: "Gender"), isBold: true)
     private lazy var maleButton: GreenButton = {
@@ -114,21 +130,24 @@ final class PersonalDataViewController: BaseViewController {
         return button
     }()
     private lazy var genderButtonsStackView: UIStackView = {
-        let view = UIView()
-        view.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-        let stack = UIStackView(arrangedSubviews: [
-            maleButton,
-            femaleButton,
-            view
-        ])
+        let spacer = UIView()
+        spacer.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        let stack = UIStackView(arrangedSubviews: [maleButton, femaleButton, spacer])
         stack.axis = .horizontal
-        stack.distribution = .fill
-        stack.alignment = .leading
-        stack.spacing = 8
-        stack.isLayoutMarginsRelativeArrangement = true
+        stack.spacing = Constants.mainIndent
+        return stack
+    }()
+    private lazy var genderStackView: UIStackView = {
+        let spacer = UIView()
+        spacer.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        let stack = UIStackView(arrangedSubviews: [genderLabel, genderButtonsStackView])
+        stack.axis = .vertical
+        stack.spacing = Constants.mainIndent
         return stack
     }()
     private lazy var genderSeparator = CustomSeparator()
+
+    // Birthday field
 
     private lazy var birthdayLabel = CustomLabel(text: String(localized: "Date of birth"), isBold: true)
     private lazy var birthdayTextField: UITextField = {
@@ -136,21 +155,50 @@ final class PersonalDataViewController: BaseViewController {
         textField.placeholder = "__ / __ / ____"
         textField.textAlignment = .center
         textField.backgroundColor = AppColor.Text.primary
-        textField.layer.cornerRadius = 16
+        textField.layer.cornerRadius = Constants.textFieldCornerRadius
         textField.keyboardType = .numberPad
         textField.textColor = AppColor.Text.placeHolder
-        textField.font = AppFont.Hero.regular(size: 16)
+        textField.font = AppFont.Hero.regular(size: Constants.textFieldFontSize)
         textField.delegate = self
         return textField
     }()
+    private lazy var birthdayStackView: UIStackView = {
+        let spacer = UIView()
+        spacer.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        let stack = UIStackView(arrangedSubviews: [birthdayLabel, birthdayTextField])
+        stack.axis = .vertical
+        stack.alignment = .leading
+        stack.spacing = Constants.mainIndent
+        return stack
+    }()
     private let birthdaySeparator = CustomSeparator()
+
+    // Country field
 
     private lazy var countryLabel = CustomLabel(text: String(localized: "Your country"), isBold: true)
     private var countryList: LocationPickerView?
+    private lazy var countryStackView: UIStackView = {
+        let spacer = UIView()
+        spacer.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        let stack = UIStackView(arrangedSubviews: [countryLabel, countryList ?? UIView()])
+        stack.axis = .vertical
+        stack.spacing = Constants.mainIndent
+        return stack
+    }()
     private lazy var countrySeparator = CustomSeparator()
+
+    // City field
 
     private lazy var cityLabel = CustomLabel(text: String(localized: "Your city"), isBold: true)
     private var cityList: LocationPickerView?
+    private lazy var cityStackView: UIStackView = {
+        let spacer = UIView()
+        spacer.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        let stack = UIStackView(arrangedSubviews: [cityLabel, cityList ?? UIView()])
+        stack.axis = .vertical
+        stack.spacing = Constants.mainIndent
+        return stack
+    }()
 
     private lazy var updateButton: YellowButton = {
         let button = YellowButton()
@@ -158,6 +206,29 @@ final class PersonalDataViewController: BaseViewController {
         button.setTitle(String(localized: "Update").uppercased(), for: .normal)
         button.addTarget(self, action: #selector(updateButtonTapped), for: .touchUpInside)
         return button
+    }()
+
+    // MARK: - Form Stack
+    private lazy var formStackView: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [
+            profileContainerView,
+            nameStackView,
+            surnameStackView,
+            surnameSeparator,
+            genderStackView,
+            genderSeparator,
+            birthdayStackView,
+            birthdaySeparator,
+            countryStackView,
+            countrySeparator,
+            cityStackView,
+            updateButton
+        ])
+        stack.axis = .vertical
+        stack.alignment = .fill
+        stack.spacing = Constants.mediumSpacing
+        stack.setCustomSpacing(Constants.mainIndent, after: profileContainerView)
+        return stack
     }()
 
     // MARK: - Initializers
@@ -176,6 +247,7 @@ final class PersonalDataViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = AppColor.Background.screen
 
         let countries = presenter.countries
         countryList = LocationPickerView(items: countries, placeholder: String(localized: "Choose your country"))
@@ -187,8 +259,6 @@ final class PersonalDataViewController: BaseViewController {
 
         setupView()
         presenter.viewDidLoad()
-
-        view.layoutIfNeeded()
     }
 }
 
@@ -204,9 +274,6 @@ private extension PersonalDataViewController {
 
     func setupScrollView() {
         view.addSubviews(glassmorphismView)
-        glassmorphismView.layer.cornerRadius = Constants.glassmorphismCornerRadius
-        glassmorphismView.clipsToBounds = true
-
         glassmorphismView.addSubviews(backButton, screenTitle, scrollView)
         scrollView.addSubviews(contentView)
     }
@@ -214,27 +281,9 @@ private extension PersonalDataViewController {
     func setupSubviews() {
         contentView.addSubviews(formStackView)
         profileContainerView.addSubviews(profileImageView, editButton)
-
-        let subviews: [UIView] = [
-            profileContainerView,
-            nameLabel, nameTextField,
-            surnameLabel, surnameTextField, surnameSeparator,
-            genderLabel, genderButtonsStackView, genderSeparator,
-            birthdayLabel, birthdayTextField, birthdaySeparator,
-            countryLabel, countryList, countrySeparator,
-            cityLabel, cityList, updateButton
-        ].compactMap { $0 }
-
-        subviews.forEach {
-            formStackView.addArrangedSubview($0)
-            $0.translatesAutoresizingMaskIntoConstraints = false
-        }
     }
 
     func setupConstraints() {
-        guard let countryList = countryList else { return }
-        guard let cityList = cityList else { return }
-
         NSLayoutConstraint.activate([
             glassmorphismView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             glassmorphismView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.mainIndent),
@@ -242,7 +291,7 @@ private extension PersonalDataViewController {
             glassmorphismView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -Constants.tabBarHeight),
 
             backButton.topAnchor.constraint(equalTo: glassmorphismView.topAnchor, constant: Constants.backButtonTopInset),
-            backButton.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor, constant: Constants.mainSpacing / 2),
+            backButton.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor, constant: Constants.mediumIndent),
 
             screenTitle.centerXAnchor.constraint(equalTo: glassmorphismView.centerXAnchor),
             screenTitle.topAnchor.constraint(equalTo: glassmorphismView.topAnchor, constant: Constants.mainSpacing),
@@ -265,7 +314,6 @@ private extension PersonalDataViewController {
 
             // Form Constraints
 
-            profileContainerView.topAnchor.constraint(equalTo: formStackView.topAnchor),
             profileContainerView.heightAnchor.constraint(equalToConstant: Constants.profileImageSize),
             profileContainerView.widthAnchor.constraint(equalTo: formStackView.widthAnchor),
 
@@ -276,61 +324,18 @@ private extension PersonalDataViewController {
 
             editButton.widthAnchor.constraint(equalToConstant: Constants.editButtonSize),
             editButton.heightAnchor.constraint(equalToConstant: Constants.editButtonSize),
-            editButton.trailingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: -12),
-            editButton.bottomAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: -8),
+            editButton.trailingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: -Constants.mediumIndent),
+            editButton.bottomAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: -Constants.mainIndent),
 
-            nameLabel.topAnchor.constraint(equalTo: profileContainerView.bottomAnchor, constant: 8),
-            nameLabel.leadingAnchor.constraint(equalTo: formStackView.leadingAnchor),
+            nameTextField.heightAnchor.constraint(equalToConstant: Constants.textFieldHeight),
 
-            nameTextField.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8),
-            nameTextField.leadingAnchor.constraint(equalTo: formStackView.leadingAnchor),
-            nameTextField.trailingAnchor.constraint(equalTo: formStackView.trailingAnchor),
-            nameTextField.heightAnchor.constraint(equalToConstant: 51),
+            surnameTextField.heightAnchor.constraint(equalToConstant: Constants.textFieldHeight),
 
-            surnameLabel.leadingAnchor.constraint(equalTo: formStackView.leadingAnchor),
+            birthdayTextField.heightAnchor.constraint(equalToConstant: Constants.textFieldHeight),
 
-            surnameTextField.topAnchor.constraint(equalTo: surnameLabel.bottomAnchor, constant: 8),
-            surnameTextField.leadingAnchor.constraint(equalTo: formStackView.leadingAnchor),
-            surnameTextField.trailingAnchor.constraint(equalTo: formStackView.trailingAnchor),
-            surnameTextField.heightAnchor.constraint(equalToConstant: 51),
+            birthdayTextField.widthAnchor.constraint(equalToConstant: Constants.birthdayTextFieldWidth),
 
-            surnameSeparator.leadingAnchor.constraint(equalTo: formStackView.leadingAnchor),
-            surnameSeparator.trailingAnchor.constraint(equalTo: formStackView.trailingAnchor),
-
-            genderLabel.leadingAnchor.constraint(equalTo: formStackView.leadingAnchor),
-
-            genderButtonsStackView.topAnchor.constraint(equalTo: genderLabel.bottomAnchor, constant: 8),
-
-            genderSeparator.leadingAnchor.constraint(equalTo: formStackView.leadingAnchor),
-            genderSeparator.trailingAnchor.constraint(equalTo: formStackView.trailingAnchor),
-
-            birthdayLabel.leadingAnchor.constraint(equalTo: formStackView.leadingAnchor),
-
-            birthdayTextField.topAnchor.constraint(equalTo: birthdayLabel.bottomAnchor, constant: 8),
-            birthdayTextField.leadingAnchor.constraint(equalTo: formStackView.leadingAnchor),
-            birthdayTextField.widthAnchor.constraint(equalToConstant: 120),
-            birthdayTextField.heightAnchor.constraint(equalToConstant: 51),
-
-            birthdaySeparator.leadingAnchor.constraint(equalTo: formStackView.leadingAnchor),
-            birthdaySeparator.trailingAnchor.constraint(equalTo: formStackView.trailingAnchor),
-
-            countryLabel.leadingAnchor.constraint(equalTo: formStackView.leadingAnchor),
-
-            countryList.topAnchor.constraint(equalTo: countryLabel.bottomAnchor, constant: 12),
-            countryList.leadingAnchor.constraint(equalTo: formStackView.leadingAnchor),
-            countryList.trailingAnchor.constraint(equalTo: formStackView.trailingAnchor),
-
-            countrySeparator.leadingAnchor.constraint(equalTo: formStackView.leadingAnchor),
-            countrySeparator.trailingAnchor.constraint(equalTo: formStackView.trailingAnchor),
-
-            cityLabel.leadingAnchor.constraint(equalTo: formStackView.leadingAnchor),
-
-            cityList.topAnchor.constraint(equalTo: cityLabel.bottomAnchor, constant: 8),
-            cityList.leadingAnchor.constraint(equalTo: formStackView.leadingAnchor),
-            cityList.trailingAnchor.constraint(equalTo: formStackView.trailingAnchor),
-
-            updateButton.leadingAnchor.constraint(equalTo: formStackView.leadingAnchor),
-            updateButton.trailingAnchor.constraint(equalTo: formStackView.trailingAnchor)
+            updateButton.heightAnchor.constraint(equalToConstant: Constants.textFieldHeight)
         ])
     }
 
