@@ -4,11 +4,11 @@
 //
 //  Created by Олег Козырев
 //
-
 import UIKit
 
 /// Экран авторизации через телефон, google, facebook
 final class AuthViewController: UIViewController, AuthViewProtocol {
+
     var presenter: AuthPresenterProtocol?
 
     private lazy var descriptionLabel: UILabel = {
@@ -63,23 +63,6 @@ final class AuthViewController: UIViewController, AuthViewProtocol {
         return button
     }()
 
-    private lazy var facebookAuthButton: UIButton = {
-        let button = UIButton()
-        button.setTitle(String(localized: "  Continue with Facebook"), for: .normal)
-        button.titleLabel?.font = AppFont.Hero.bold(size: 18)
-        button.setTitleColor(AppColor.Text.primary, for: .normal)
-        button.backgroundColor = AppColor.Background.fbButton
-        if let facebookIcon = UIImage(named: "facebook") {
-            button.setImage(facebookIcon, for: .normal)
-        }
-
-        button.layer.cornerRadius = 16
-        button.clipsToBounds = true
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.heightAnchor.constraint(equalToConstant: 56).isActive = true
-        return button
-    }()
-
     private lazy var buttonsStack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
@@ -120,7 +103,6 @@ final class AuthViewController: UIViewController, AuthViewProtocol {
 
         buttonsStack.addArrangedSubview(phoneAuthButton)
         buttonsStack.addArrangedSubview(googleAuthButton)
-        buttonsStack.addArrangedSubview(facebookAuthButton)
 
         NSLayoutConstraint.activate([
             backgroundImageView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -134,7 +116,7 @@ final class AuthViewController: UIViewController, AuthViewProtocol {
             bottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             bottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            bottomView.heightAnchor.constraint(equalToConstant: 250),
+            bottomView.heightAnchor.constraint(equalToConstant: 170),
 
             buttonsStack.topAnchor.constraint(equalTo: bottomView.topAnchor, constant: 24),
             buttonsStack.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor, constant: 24),
@@ -145,7 +127,6 @@ final class AuthViewController: UIViewController, AuthViewProtocol {
     private func setupActions() {
         phoneAuthButton.addTarget(self, action: #selector(phoneTapped), for: .touchUpInside)
         googleAuthButton.addTarget(self, action: #selector(googleTapped), for: .touchUpInside)
-        facebookAuthButton.addTarget(self, action: #selector(facebookTapped), for: .touchUpInside)
     }
 
     @objc private func phoneTapped() {
@@ -155,11 +136,6 @@ final class AuthViewController: UIViewController, AuthViewProtocol {
     @objc private func googleTapped() {
         presenter?.googleButtonTapped()
     }
-
-    @objc private func facebookTapped() {
-        presenter?.facebookButtonTapped()
-    }
-
 }
 
 #if DEBUG
