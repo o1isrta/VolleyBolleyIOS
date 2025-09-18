@@ -64,6 +64,8 @@ final class DIContainer {
                 SharedServicesAssembly(),
                 OnboardingAssembly(),
                 AuthAssembly(),
+                PhoneAuthAssembly(),
+                PhoneVerifyAssembly(),
                 UserRegAssembly(),
                 MainAssembly(),
                 HomeAssembly(),

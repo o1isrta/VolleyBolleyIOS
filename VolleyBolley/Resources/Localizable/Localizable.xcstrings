@@ -5,6 +5,7 @@
 
     },
     "  Continue with Facebook" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -50,6 +51,9 @@
         }
       }
     },
+    "+ With the country code" : {
+
+    },
     "About" : {
       "comment" : "Profile",
       "localizations" : {
@@ -57,6 +61,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "О приложении"
+          }
+        }
+      }
+    },
+    "About levels" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Информация об уровнях игроков"
           }
         }
       }
@@ -93,6 +107,9 @@
           }
         }
       }
+    },
+    "Anton" : {
+
     },
     "Archive" : {
       "comment" : "Segment Control",
@@ -857,6 +874,9 @@
         }
       }
     },
+    "Get new code" : {
+
+    },
     "GET STARTED" : {
       "localizations" : {
         "ru" : {
@@ -866,6 +886,18 @@
           }
         }
       }
+    },
+    "Hard:" : {
+
+    },
+    "Invalid code" : {
+
+    },
+    "Ivanov" : {
+
+    },
+    "Know rules, still learning" : {
+
     },
     "Level" : {
       "comment" : "User info / Game Description",
@@ -931,6 +963,9 @@
         }
       }
     },
+    "Medium:" : {
+
+    },
     "My games" : {
       "comment" : "Tab bar item title",
       "localizations" : {
@@ -962,6 +997,9 @@
           }
         }
       }
+    },
+    "New to the game" : {
+
     },
     "NEXT STEP" : {
       "comment" : "Next button",
@@ -1373,6 +1411,9 @@
         }
       }
     },
+    "SEND CODE" : {
+
+    },
     "Sign up\nwith\na social\nmedia" : {
       "localizations" : {
         "ru" : {
@@ -1382,6 +1423,9 @@
           }
         }
       }
+    },
+    "Skilled, play often, tournaments experience" : {
+
     },
     "Support" : {
       "comment" : "Profile",
@@ -1455,21 +1499,8 @@
         }
       }
     },
-    "Update" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Update"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Обновить"
-          }
-        }
-      }
+    "VERIFY" : {
+
     },
     "VOLLEYBOLLEY" : {
       "localizations" : {
@@ -1563,6 +1594,9 @@
           }
         }
       }
+    },
+    "Your phone number" : {
+
     },
     "ОК" : {
       "localizations" : {
