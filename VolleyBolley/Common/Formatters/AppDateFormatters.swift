@@ -33,7 +33,7 @@ enum AppDateFormatters {
         formatter.timeStyle = .short
         return formatter
     }()
-    
+
     static let time12Hour: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "h:mm a"
@@ -63,7 +63,7 @@ enum AppDateFormatters {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
         formatter.timeStyle = .none
-        formatter.locale = Locale(identifier: "en_US")
+        formatter.locale = AppLocale.posix
         formatter.timeZone = .current
         return formatter
     }()

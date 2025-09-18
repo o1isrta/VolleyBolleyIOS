@@ -29,12 +29,8 @@ final class CreationSuccessViewController: BaseViewController, CreationSuccessVi
 
     // MARK: - Private Properties
 
-    private lazy var titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = presenter.titleText
-        label.font = AppFont.ActayWide.bold(size: 24)
-        label.textColor = AppColor.Text.primary
-        return label
+    private lazy var titleLabel: CustomTitle = {
+        CustomTitle(text: presenter.titleText, isLarge: true)
     }()
 
     private lazy var infoTableView: UITableView = {
@@ -131,9 +127,7 @@ final class CreationSuccessViewController: BaseViewController, CreationSuccessVi
     }
 
     func showError(_ error: Error) {
-        let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
-        present(alert, animated: true)
+        print(error)
     }
 
     // MARK: - Private Methods
@@ -148,14 +142,34 @@ final class CreationSuccessViewController: BaseViewController, CreationSuccessVi
 
         NSLayoutConstraint.activate(
             [
-                glassContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.containerInsets),
-                glassContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constants.containerInsets),
-                glassContainer.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: Constants.containerInsets),
-                glassContainer.heightAnchor.constraint(equalToConstant: Constants.containerHeight),
+                glassContainer.leadingAnchor.constraint(
+                    equalTo: view.leadingAnchor,
+                    constant: Constants.containerInsets
+                ),
+                glassContainer.trailingAnchor.constraint(
+                    equalTo: view.trailingAnchor,
+                    constant: -Constants.containerInsets
+                ),
+                glassContainer.topAnchor.constraint(
+                    equalTo: view.safeAreaLayoutGuide.topAnchor,
+                    constant: Constants.containerInsets
+                ),
+                glassContainer.heightAnchor.constraint(
+                    equalToConstant: Constants.containerHeight
+                ),
 
-                vStack.leadingAnchor.constraint(equalTo: glassContainer.leadingAnchor, constant: Constants.contentInsets),
-                vStack.trailingAnchor.constraint(equalTo: glassContainer.trailingAnchor, constant: -Constants.contentInsets),
-                vStack.topAnchor.constraint(equalTo: glassContainer.topAnchor, constant: Constants.contentInsets),
+                vStack.leadingAnchor.constraint(
+                    equalTo: glassContainer.leadingAnchor,
+                    constant: Constants.contentInsets
+                ),
+                vStack.trailingAnchor.constraint(
+                    equalTo: glassContainer.trailingAnchor,
+                    constant: -Constants.contentInsets
+                ),
+                vStack.topAnchor.constraint(
+                    equalTo: glassContainer.topAnchor,
+                    constant: Constants.contentInsets
+                ),
 
                 hStack.leadingAnchor.constraint(equalTo: glassContainer.leadingAnchor),
                 hStack.trailingAnchor.constraint(equalTo: glassContainer.trailingAnchor),
