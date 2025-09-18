@@ -13,12 +13,23 @@ final class AuthAssembly: Assembly {
         container.register(AuthViewController.self) { resolver in
             let authVC = AuthViewController()
             let interactor = AuthorizationInteractor()
+
             let appRouter = resolver.resolve(AppRouter.self)
-            let router = AuthRouter(viewController: authVC, coordinator: appRouter)
-            let presenter = AuthorizationPresenter(view: authVC, interactor: interactor, router: router)
+
+            let router = AuthRouter(
+                viewController: authVC,
+                coordinator: appRouter
+            )
+
+            let presenter = AuthorizationPresenter(
+                view: authVC,
+                interactor: interactor,
+                router: router
+            )
 
             interactor.presenter = presenter
             authVC.presenter = presenter
+
             return authVC
         }
 
