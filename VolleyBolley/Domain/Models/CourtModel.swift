@@ -156,7 +156,7 @@ struct CourtModel: Decodable, Equatable {
 	// swiftlint:enable line_length
 }
 
-struct ContactModel: Decodable {
+struct ContactModel: Codable {
 	let type: String
 	let value: String
 
