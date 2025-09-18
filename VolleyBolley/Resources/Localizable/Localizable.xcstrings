@@ -94,16 +94,6 @@
         }
       }
     },
-    "Anton" : {
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Антон"
-          }
-        }
-      }
-    },
     "Archive" : {
       "comment" : "Segment Control",
       "localizations" : {
@@ -873,22 +863,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "НАЧАТЬ"
-          }
-        }
-      }
-    },
-    "Ivanov" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ivanov"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Иванов"
           }
         }
       }
