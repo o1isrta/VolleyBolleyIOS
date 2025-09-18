@@ -49,7 +49,7 @@ final class CreationSuccessViewController: BaseViewController, CreationSuccessVi
 
     private lazy var doneButton: YellowButton = {
         let button = YellowButton()
-        button.setTitle("DONE", for: .normal)
+        button.setTitle(String(localized: "customAlertView.button.done"), for: .normal)
         button.isSelected = true
         button.addTarget(self, action: #selector(didTapDoneButton), for: .touchUpInside)
         return button
@@ -57,7 +57,7 @@ final class CreationSuccessViewController: BaseViewController, CreationSuccessVi
 
     private lazy var inviteButton: SketchButton = {
         let button = SketchButton(
-            title: "Invite players",
+            title: String(localized: "sketchButton.invite"),
             image: UIImage.Icon.invitePlayers
         )
         button.isSelected = true
@@ -67,7 +67,7 @@ final class CreationSuccessViewController: BaseViewController, CreationSuccessVi
 
     private lazy var shareButton: SketchButton = {
         let button = SketchButton(
-            title: "Share link",
+            title: String(localized: "sketchButton.share"),
             image: UIImage.Icon.share
         )
         button.addTarget(self, action: #selector(didTapShareButton), for: .touchUpInside)

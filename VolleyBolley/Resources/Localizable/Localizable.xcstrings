@@ -303,9 +303,96 @@
         }
       }
     },
+    "creation.level" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Level"
+          }
+        }
+      }
+    },
+    "creation.players" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d players"
+          }
+        }
+      }
+    },
+    "creation.price" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ per person"
+          }
+        }
+      }
+    },
+    "creation.privateGame" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "private game"
+          }
+        }
+      }
+    },
+    "creation.starts.on" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Starts on %@"
+          }
+        }
+      }
+    },
+    "creation.starts.today" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Starts today"
+          }
+        }
+      }
+    },
+    "creation.starts.tomorrow" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Starts tomorrow"
+          }
+        }
+      }
+    },
+    "creation.teams" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d teams"
+          }
+        }
+      }
+    },
     "customAlertView.button.done" : {
       "comment" : "Custom Alert",
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1277,6 +1364,28 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sign up\nwith\na social\nmedia"
+          }
+        }
+      }
+    },
+    "sketchButton.invite" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invite players"
+          }
+        }
+      }
+    },
+    "sketchButton.share" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Share link"
           }
         }
       }

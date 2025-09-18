@@ -13,8 +13,8 @@ enum CreationType {
 
     var titleText: String {
         switch self {
-        case .game: return NSLocalizedString("game.created", comment: "")
-        case .tourney: return NSLocalizedString("tourney.created", comment: "")
+        case .game: return String(localized: "game.created")
+        case .tourney: return String(localized: "tourney.created")
         }
     }
 }
@@ -117,41 +117,50 @@ final class CreationSuccessPresenter: CreationSuccessPresenterProtocol {
 
         let startTitle: String
         if calendar.isDateInToday(info.startTime) {
-            startTitle = "Starts today"
+            startTitle = String(localized: "creation.starts.today")
         } else if calendar.isDateInTomorrow(info.startTime) {
-            startTitle = "Starts tomorrow"
+            startTitle = String(localized: "creation.starts.tomorrow")
         } else {
-            startTitle = "Starts on \(AppDateFormatters.onlyDate.string(from: info.startTime))"
+            startTitle = String(
+                format: String(localized: "creation.starts.on"),
+                AppDateFormatters.onlyDate.string(from: info.startTime)
+            )
         }
 
         let capitalizedLevels = info.levels.map { $0.capitalizingFirstLetter() }
-        let levelDescription = NSLocalizedString(
-            "Level",
-            comment: ""
-        ) + ": " + capitalizedLevels.joined(separator: ", ")
+        let levelDescription = String(localized: "creation.level") + ": " + capitalizedLevels.joined(separator: ", ")
 
-        let details: String
+        var details: String
         if let gameInfo = info as? GameCreationInfo {
-            var desc = "\(gameInfo.gender.capitalizingFirstLetter()) · \(gameInfo.maximumPlayers) players"
+            var desc = String(
+                format: String(localized: "creation.players"),
+                gameInfo.maximumPlayers
+            )
+            desc = "\(gameInfo.gender.capitalizingFirstLetter()) · \(desc)"
             if gameInfo.isPrivate {
-                desc += " · private game"
+                desc += " · " + String(localized: "creation.privateGame")
             }
             details = desc
         } else if let tourneyInfo = info as? TourneyCreationInfo {
-            details = "\(tourneyInfo.gender.capitalizingFirstLetter()) · \(tourneyInfo.maximumTeams) teams"
+            details = String(
+                format: String(localized: "creation.teams"),
+                tourneyInfo.maximumTeams
+            )
+            details = "\(tourneyInfo.gender.capitalizingFirstLetter()) · \(details)"
         } else {
             details = ""
         }
+
+        let priceTitle = String(
+            format: String(localized: "creation.price"),
+            "\(info.pricePerPerson)$"
+        )
 
         infoItems = [
             CreationInfoItem(type: .place, title: info.courtName, description: info.locationName),
             CreationInfoItem(type: .time, title: startTitle, description: timeRange),
             CreationInfoItem(type: .level, title: levelDescription, description: details),
-            CreationInfoItem(
-                type: .price,
-                title: "\(info.pricePerPerson)$ per person",
-                description: info.paymentAccount
-            )
+            CreationInfoItem(type: .price, title: priceTitle, description: info.paymentAccount)
         ]
     }
 }
