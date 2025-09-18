@@ -56,20 +56,13 @@ final class CreationSuccessViewController: BaseViewController, CreationSuccessVi
     }()
 
     private lazy var inviteButton: SketchButton = {
-        let button = SketchButton(
-            title: String(localized: "sketchButton.invite"),
-            image: UIImage.Icon.invitePlayers
-        )
-        button.isSelected = true
+        let button = SketchButton(type: .invitePlayers, isSelected: true)
         button.addTarget(self, action: #selector(didTapInviteButton), for: .touchUpInside)
         return button
     }()
 
     private lazy var shareButton: SketchButton = {
-        let button = SketchButton(
-            title: String(localized: "sketchButton.share"),
-            image: UIImage.Icon.share
-        )
+        let button = SketchButton(type: .shareLink)
         button.addTarget(self, action: #selector(didTapShareButton), for: .touchUpInside)
         return button
     }()
