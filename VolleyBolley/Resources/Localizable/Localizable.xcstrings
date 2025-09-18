@@ -108,9 +108,6 @@
         }
       }
     },
-    "Anton" : {
-
-    },
     "Archive" : {
       "comment" : "Segment Control",
       "localizations" : {
@@ -798,6 +795,12 @@
         }
       }
     },
+    "Elite level, official championships experience" : {
+
+    },
+    "Enter the 6-digit code" : {
+
+    },
     "Fair Play Policy" : {
       "localizations" : {
         "ru" : {
@@ -887,13 +890,7 @@
         }
       }
     },
-    "Hard:" : {
-
-    },
     "Invalid code" : {
-
-    },
-    "Ivanov" : {
 
     },
     "Know rules, still learning" : {
@@ -962,9 +959,6 @@
           }
         }
       }
-    },
-    "Medium:" : {
-
     },
     "My games" : {
       "comment" : "Tab bar item title",
@@ -1300,16 +1294,6 @@
         }
       }
     },
-    "personalData.screenTitle" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Personal data"
-          }
-        }
-      }
-    },
     "Players" : {
       "comment" : "Profile",
       "localizations" : {
@@ -1495,6 +1479,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Хозяин турнира"
+          }
+        }
+      }
+    },
+    "Update" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Обновить"
           }
         }
       }

@@ -15,11 +15,6 @@ protocol ProfileRouterProtocol: AnyObject {
 final class ProfileRouter: ProfileRouterProtocol {
 
     weak var viewController: UIViewController?
-    weak var router: AppRouter?
-
-    init(router: AppRouter?) {
-        self.router = router
-    }
 
     func attachViewController(_ view: UIViewController) {
         viewController = view
