@@ -54,27 +54,26 @@ final class CreationSuccessInfoCell: UITableViewCell {
         return imageView
     }()
 
-    private lazy var titleLabel: UILabel = {
-        let label = UILabel()
-        label.font = AppFont.Hero.bold(size: 16)
-        label.textColor = AppColor.Text.primary
-        label.numberOfLines = 1
-        return label
+    private lazy var titleLabel: CustomLabel = {
+        CustomLabel(text: "", isBold: true)
     }()
 
     private lazy var descriptionLabel: UILabel = {
-        let label = UILabel()
-        label.font = AppFont.Hero.light(size: 14)
-        label.textColor = AppColor.Text.primary
-        label.numberOfLines = 1
-        return label
+        CustomLabel(text: "", isBold: false)
     }()
 
     private lazy var labelStack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [titleLabel, descriptionLabel])
         stack.axis = .vertical
-        stack.spacing = 0
         stack.alignment = .leading
+        return stack
+    }()
+
+    private lazy var mainStack: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [iconImageView, labelStack])
+        stack.axis = .horizontal
+        stack.alignment = .center
+        stack.spacing = Constants.spacing
         return stack
     }()
 
@@ -85,6 +84,7 @@ final class CreationSuccessInfoCell: UITableViewCell {
         setupCell()
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -102,19 +102,18 @@ final class CreationSuccessInfoCell: UITableViewCell {
 
     private func setupCell() {
         selectionStyle = .none
-        backgroundColor = .clear
-        contentView.backgroundColor = .clear
-        contentView.addSubviews(iconImageView, labelStack)
+        backgroundColor = AppColor.Background.clear
+        contentView.backgroundColor = AppColor.Background.clear
+        contentView.addSubviews(mainStack)
 
         NSLayoutConstraint.activate([
-            iconImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            iconImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            mainStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            mainStack.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor),
+            mainStack.topAnchor.constraint(equalTo: contentView.topAnchor),
+            mainStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+
             iconImageView.heightAnchor.constraint(equalToConstant: Constants.iconSize),
             iconImageView.widthAnchor.constraint(equalToConstant: Constants.iconSize),
-
-            labelStack.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: Constants.spacing),
-            labelStack.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor),
-            labelStack.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
     }
 }
