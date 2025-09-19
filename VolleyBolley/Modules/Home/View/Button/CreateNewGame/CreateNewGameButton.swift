@@ -35,13 +35,10 @@ final class CreateNewGameButton: UIButton {
         return view
     }()
 
-    private lazy var buttonTitleLabel: UILabel = {
-        let view = UILabel()
-        view.font = AppFont.ActayWide.bold(size: 24)
-        view.textColor = AppColor.Text.primary
-        view.text = String(localized: .homeCreateNewGame)
-        return view
-    }()
+    private lazy var buttonTitleLabel: CustomTitle = CustomTitle(
+        text: String(localized: .homeCreateNewGame),
+        isLarge: true
+    )
 
     private lazy var locationTitleView: LocationTitleView = {
         let view = LocationTitleView(type: .icon)
@@ -56,15 +53,13 @@ final class CreateNewGameButton: UIButton {
     init() {
         super.init(frame: .zero)
         setupLayout()
-        self.configuration = UIButton.Configuration.filled()
-        self.configurationUpdateHandler = { [weak self] button in
-            guard let self else { return }
-            button.configuration = self.configuration(for: button.state)
-        }
+        self.configuration = UIButton.Configuration.plain()
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     // MARK: - Public Methods
 

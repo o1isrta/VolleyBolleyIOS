@@ -8,7 +8,6 @@
 import UIKit
 
 protocol HomeViewProtocol: AnyObject {
-    func displayNavBar(viewModel: NavBarViewModel)
     func displayCreateNewGameButton(state: CreateNewGameButtonState)
     func displayFindGameButton(gamesCount: Int)
 }
@@ -28,14 +27,8 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
         return view
     }()
 
-    private lazy var navigationBarView: CustomNavBarView = {
-        let view = CustomNavBarView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-
     private lazy var mainStackView: UIStackView = {
-        let view = UIStackView()
+        let view = UIStackView(arrangedSubviews: [topStackView, bottomStackView])
         view.axis = .vertical
         view.spacing = 8
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -43,7 +36,7 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
     }()
 
     private lazy var topStackView: UIStackView = {
-        let view = UIStackView()
+        let view = UIStackView(arrangedSubviews: [createNewGameButton, findGameButton])
         view.axis = .vertical
         view.distribution = .fillEqually
         view.spacing = 8
@@ -52,7 +45,7 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
     }()
 
     private lazy var bottomStackView: UIStackView = {
-        let view = UIStackView()
+        let view = UIStackView(arrangedSubviews: [createTourneyButton, donateButton])
         view.axis = .horizontal
         view.spacing = 8
         view.distribution = .fillEqually
@@ -120,10 +113,6 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
 
     // MARK: - Public Methods
 
-    func displayNavBar(viewModel: NavBarViewModel) {
-        navigationBarView.configure(with: viewModel)
-    }
-
     func displayCreateNewGameButton(state: CreateNewGameButtonState) {
         createNewGameButton.configure(state: state)
     }
@@ -136,54 +125,19 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
 
     private func setupView() {
         view.addSubview(backgroundImageView)
-        view.addSubview(navigationBarView)
         view.addSubview(mainStackView)
 
-        mainStackView.addArrangedSubview(topStackView)
-        mainStackView.addArrangedSubview(bottomStackView)
-
-        [createNewGameButton, findGameButton].forEach {
-            topStackView.addArrangedSubview($0)
-        }
-
-        [createTourneyButton, donateButton].forEach {
-            bottomStackView.addArrangedSubview($0)
-        }
-
-        setupLayout()
-    }
-
-    private func setupLayout() {
+        mainStackView.pinToSuperviewEdges(insets: .init(top: 284, left: 8, bottom: 100, right: 8))
         setupConstraintsBackgroundImageView()
-        setupConstraintsNavBar()
-        setupConstraintsVStackView()
     }
 
     // MARK: - Constraints
-
-    private func setupConstraintsNavBar() {
-        NSLayoutConstraint.activate([
-            navigationBarView.topAnchor.constraint(equalTo: view.topAnchor),
-            navigationBarView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            navigationBarView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            navigationBarView.heightAnchor.constraint(equalToConstant: 106)
-        ])
-    }
 
     private func setupConstraintsBackgroundImageView() {
         NSLayoutConstraint.activate([
             backgroundImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 90),
             backgroundImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             backgroundImageView.widthAnchor.constraint(equalTo: view.widthAnchor)
-        ])
-    }
-
-    private func setupConstraintsVStackView() {
-        NSLayoutConstraint.activate([
-            mainStackView.topAnchor.constraint(equalTo: navigationBarView.bottomAnchor, constant: 178),
-            mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
-            mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
-            mainStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100)
         ])
     }
 }
