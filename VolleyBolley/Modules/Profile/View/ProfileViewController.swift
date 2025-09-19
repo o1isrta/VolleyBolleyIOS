@@ -161,8 +161,8 @@ extension ProfileViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-		// TODO:
-        print("Tapped: \(menuItems[indexPath.row].title)")
+        let item = menuItems[indexPath.row]
+        presenter.didSelectMenuItem(item)
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -170,16 +170,31 @@ extension ProfileViewController: UITableViewDelegate {
     }
 }
 
+#if DEBUG
+
 // MARK: - Preview
 
-#if DEBUG
-@available(iOS 17.0, *)
-#Preview {
+import SwiftUI
+
+struct ProfileViewControllerPreview: UIViewControllerRepresentable {
 	class StubPresenter: ProfilePresenterProtocol {
 		weak var view: ProfileViewProtocol?
 		func viewDidLoad() {}
+		func didSelectMenuItem(_ item: ProfileMenuItem) {}
 	}
-	let presenter = StubPresenter()
-	return ProfileViewController(presenter: presenter)
+
+	func makeUIViewController(context: Context) -> some UIViewController {
+		let presenter = StubPresenter()
+		return ProfileViewController(presenter: presenter)
+	}
+
+	func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {}
+}
+
+struct ProfileViewController_Previews: PreviewProvider {
+	static var previews: some View {
+		ProfileViewControllerPreview()
+			.edgesIgnoringSafeArea(.all)
+	}
 }
 #endif
