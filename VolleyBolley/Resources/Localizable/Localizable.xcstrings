@@ -5,6 +5,7 @@
 
     },
     "  Continue with Facebook" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -50,6 +51,9 @@
         }
       }
     },
+    "+ With the country code" : {
+
+    },
     "About" : {
       "comment" : "Profile",
       "localizations" : {
@@ -57,6 +61,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "О приложении"
+          }
+        }
+      }
+    },
+    "About levels" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Информация об уровнях игроков"
           }
         }
       }
@@ -589,6 +603,18 @@
         }
       }
     },
+    "Designed by" : {
+      "comment" : "DesignedByLabelAboutView",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Дизайн"
+          }
+        }
+      }
+    },
     "DETAILS" : {
       "comment" : "\"Details\" button",
       "localizations" : {
@@ -596,6 +622,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ПОДРОБНЕЕ"
+          }
+        }
+      }
+    },
+    "Developed by" : {
+      "comment" : "DevelopedByLabelAboutView",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Разработка"
           }
         }
       }
@@ -757,6 +795,38 @@
         }
       }
     },
+    "Elite level, official championships experience" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elite level, official championships experience"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Элитный уровень, опыт участия в официальных чемпионатах"
+          }
+        }
+      }
+    },
+    "Enter the 6-digit code" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter the 6-digit code"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Введите 6-значный код"
+          }
+        }
+      }
+    },
     "Fair Play Policy" : {
       "localizations" : {
         "ru" : {
@@ -799,6 +869,18 @@
         }
       }
     },
+    "Founder" : {
+      "comment" : "FounderLabelAboutView",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Основатель"
+          }
+        }
+      }
+    },
     "Game host" : {
       "comment" : "Header of Game Description",
       "localizations" : {
@@ -821,6 +903,9 @@
         }
       }
     },
+    "Get new code" : {
+
+    },
     "GET STARTED" : {
       "localizations" : {
         "ru" : {
@@ -830,6 +915,12 @@
           }
         }
       }
+    },
+    "Invalid code" : {
+
+    },
+    "Know rules, still learning" : {
+
     },
     "Level" : {
       "comment" : "User info / Game Description",
@@ -926,6 +1017,9 @@
           }
         }
       }
+    },
+    "New to the game" : {
+
     },
     "NEXT STEP" : {
       "comment" : "Next button",
@@ -1327,6 +1421,9 @@
         }
       }
     },
+    "SEND CODE" : {
+
+    },
     "Sign up\nwith\na social\nmedia" : {
       "localizations" : {
         "ru" : {
@@ -1336,6 +1433,9 @@
           }
         }
       }
+    },
+    "Skilled, play often, tournaments experience" : {
+
     },
     "Support" : {
       "comment" : "Profile",
@@ -1408,6 +1508,19 @@
           }
         }
       }
+    },
+    "Update" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Обновить"
+          }
+        }
+      }
+    },
+    "VERIFY" : {
+
     },
     "VOLLEYBOLLEY" : {
       "localizations" : {
@@ -1501,6 +1614,9 @@
           }
         }
       }
+    },
+    "Your phone number" : {
+
     },
     "ОК" : {
       "localizations" : {

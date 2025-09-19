@@ -64,6 +64,8 @@ final class DIContainer {
                 SharedServicesAssembly(),
                 OnboardingAssembly(),
                 AuthAssembly(),
+                PhoneAuthAssembly(),
+                PhoneVerifyAssembly(),
                 UserRegAssembly(),
                 MainAssembly(),
                 HomeAssembly(),
@@ -71,7 +73,8 @@ final class DIContainer {
                 MyGamesAssembly(),
                 ProfileAssembly(),
 				NotificationsAssembly(),
-				PaywallAssembly()
+				PaywallAssembly(),
+				PersonalDataAssembly()
             ]
         )
     }
