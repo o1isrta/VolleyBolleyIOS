@@ -9,40 +9,27 @@ import Moya
 import Swinject
 
 final class NetworkAssembly: Assembly {
-    func assemble(container: Container) {
 
-        container.register(MoyaProvider<UsersAPI>.self) { _ in
-            let logger = NetworkLoggerPlugin(configuration: .init(logOptions: .verbose))
+	func assemble(container: Container) {
+		// Registering the token storage
+		container.register(TokenStorageProtocol.self) { _ in
+			TokenStorage.shared
+		}.inObjectScope(.container)
+		// Registering NetworkService with DI token
+		container.register(NetworkServiceProtocol.self) { resolver in
+			guard let tokenStorage = resolver.resolve(TokenStorageProtocol.self) else {
+				fatalError("Error: Failed to resolve TokenStorageProtocol")
+			}
 
-            let stubClosure: (UsersAPI) -> StubBehavior = NetworkEnvironment.current.useStubbedProvider
-                ? { _ in .immediate }
-                : MoyaProvider.neverStub
+			let plugins: [PluginType] = [
+				NetworkLoggerPlugin(configuration: .init(logOptions: .verbose))
+			]
+			let stubClosure: (DataAPI) -> StubBehavior = NetworkEnvironment.current.useStubbedProvider
+				? { _ in .immediate }
+				: MoyaProvider.neverStub
 
-            return MoyaProvider<UsersAPI>(
-                stubClosure: stubClosure,
-                plugins: [logger]
-            )
-        }
-        .inObjectScope(.container)
-
-        container.register(UsersServiceProtocol.self) { resolver in
-            guard
-                let provider = resolver.resolve(MoyaProvider<UsersAPI>.self)
-            else {
-                fatalError("Error: Failed to resolve MoyaProvider<UsersAPI>")
-            }
-
-            return UsersService(provider: provider)
-        }
-        .inObjectScope(.container)
-
-        container.register(UsersRepositoryProtocol.self) { resolver in
-            guard let userService = resolver.resolve(UsersServiceProtocol.self) else {
-                fatalError("Error: Failed to resolve UsersService>")
-            }
-
-            return UsersRepository(service: userService)
-        }
-        .inObjectScope(.container)
-    }
+			let provider = MoyaProvider<DataAPI>(stubClosure: stubClosure, plugins: plugins)
+			return NetworkService(provider: provider) { tokenStorage.accessToken }
+		}.inObjectScope(.container)
+	}
 }

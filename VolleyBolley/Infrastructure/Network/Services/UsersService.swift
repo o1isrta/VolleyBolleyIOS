@@ -12,15 +12,16 @@ protocol UsersServiceProtocol {
     func fetchCurrentUser(completion: @escaping (Result<UserDTO, Error>) -> Void)
 }
 
+@available(*, deprecated, message: "Use NetworkService instead")
 final class UsersService: UsersServiceProtocol {
 
     // MARK: - Private Properties
 
-    private let provider: MoyaProvider<UsersAPI>
+	private let provider: MoyaProvider<DataAPI>
 
     // MARK: - Initializers
 
-    init(provider: MoyaProvider<UsersAPI>) {
+    init(provider: MoyaProvider<DataAPI>) {
         self.provider = provider
     }
 
