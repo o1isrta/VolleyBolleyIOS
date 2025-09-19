@@ -20,6 +20,7 @@ final class CustomNavBarView: UIView {
 	private weak var parentViewController: UIViewController?
 
 	private enum Constants {
+		static let viewHeight: CGFloat = 106
 		static let avatarSize: CGFloat = 46
 		static let avatarLeading: CGFloat = 8
 		static let avatarBottom: CGFloat = -8
@@ -107,7 +108,7 @@ private extension CustomNavBarView {
 	// MARK: - Layout Setup
 
 	func setupLayout() {
-		heightAnchor.constraint(equalToConstant: 106).isActive = true
+		heightAnchor.constraint(equalToConstant: Constants.viewHeight).isActive = true
 		setupConstraintsAvatarImageView()
 		setupConstraintsNameLabel()
 		setupConstraintsNotificationButtonView()
