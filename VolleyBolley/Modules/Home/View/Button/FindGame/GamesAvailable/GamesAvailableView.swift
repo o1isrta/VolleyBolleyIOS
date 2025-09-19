@@ -9,15 +9,17 @@ import UIKit
 
 final class GamesAvailableView: UIView {
 
+    // MARK: - Private Properties
+
     private enum Constants {
         static let stackSpacing: CGFloat = 8
         static let cornerRadius: CGFloat = 28
         static let contentInsets = UIEdgeInsets(top: 9, left: 18, bottom: 9, right: 18)
-        static let gamesAvailableFontSize: CGFloat = 12
+        static let titleFontSize: CGFloat = 12
     }
 
     private lazy var vStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [digitIconView, gamesAvailableLabel])
+        let stackView = UIStackView(arrangedSubviews: [digitIconView, titleLabel])
         stackView.axis = .vertical
         stackView.alignment = .center
         stackView.spacing = Constants.stackSpacing
@@ -27,9 +29,9 @@ final class GamesAvailableView: UIView {
 
     private lazy var digitIconView = DigitIconView()
 
-    private lazy var gamesAvailableLabel: UILabel = {
+    private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = AppFont.Hero.bold(size: Constants.gamesAvailableFontSize)
+        label.font = AppFont.Hero.bold(size: Constants.titleFontSize)
         label.textColor = AppColor.Text.inverted
         label.text = String(localized: .homeGamesAvailable)
         return label
