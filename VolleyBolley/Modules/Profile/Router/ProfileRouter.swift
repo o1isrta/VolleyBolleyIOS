@@ -9,6 +9,7 @@ import UIKit
 
 protocol ProfileRouterProtocol: AnyObject {
     func attachViewController(_ view: UIViewController)
+    func showPersonalData()
 }
 
 final class ProfileRouter: ProfileRouterProtocol {
@@ -17,5 +18,13 @@ final class ProfileRouter: ProfileRouterProtocol {
 
     func attachViewController(_ view: UIViewController) {
         viewController = view
+    }
+
+    func showPersonalData() {
+        guard let personalDataVC = DIContainer.shared.resolver.resolve(PersonalDataViewController.self) else {
+            fatalError("PersonalDataViewController не зарегистрирован")
+        }
+
+        viewController?.navigationController?.pushViewController(personalDataVC, animated: true)
     }
 }
