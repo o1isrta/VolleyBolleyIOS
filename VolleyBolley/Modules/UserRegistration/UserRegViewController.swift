@@ -18,7 +18,6 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
         scrollView.showsVerticalScrollIndicator = false
         return scrollView
     }()
-    private lazy var contentView = UIView()
 
     private lazy var contentView: UIView = {
         let contentView = UIView()
