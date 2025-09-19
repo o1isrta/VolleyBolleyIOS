@@ -21,13 +21,10 @@ final class FindGameButton: UIButton {
         return view
     }()
 
-    private lazy var buttonTitleLabel: UILabel = {
-        let view = UILabel()
-        view.font = AppFont.ActayWide.bold(size: 24)
-        view.textColor = AppColor.Text.primary
-        view.text = String(localized: .homeFindGame)
-        return view
-    }()
+    private lazy var buttonTitleLabel: CustomTitle = CustomTitle(
+        text: String(localized: .homeFindGame),
+        isLarge: true
+    )
 
     private lazy var buttonSubTitleLabel: UILabel = {
         let view = UILabel()
@@ -55,13 +52,8 @@ final class FindGameButton: UIButton {
 
     init() {
         super.init(frame: .zero)
-
         setupLayout()
-
-        var config = UIButton.Configuration.plain()
-        config.background.cornerRadius = 16
-
-        self.configuration = config
+        self.configuration = UIButton.Configuration.plain()
     }
 
     @available(*, unavailable)

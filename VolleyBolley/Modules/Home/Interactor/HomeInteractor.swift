@@ -8,53 +8,11 @@
 import UIKit
 
 protocol HomeInteractorProtocol: AnyObject {
-    func loadPlayerData() async -> (Player, UIImage?)
     func loadNearestCourtWithWeather() -> NearestCourtWithWeather
     func loadTotalCountOfUpcomingGamesAndTournaments() -> Int
 }
 
 final class HomeInteractor: HomeInteractorProtocol {
-
-    // MARK: - Private Properties
-
-    private let imageLoader: ImageLoadingServiceProtocol
-
-    // MARK: - Initializers
-
-    init(
-        imageLoader: ImageLoadingServiceProtocol
-    ) {
-        self.imageLoader = imageLoader
-    }
-
-    // MARK: - Public Methods
-
-    func loadPlayerData() async -> (Player, UIImage?) {
-        let player = Player(
-            firstName: "Artem",
-            lastName: "",
-            gender: "",
-            dateOfBirth: AppDateFormatters.serverDateOnly.date(from: "1970-02-20")!,
-            level: .light,
-            countryID: 1,
-            cityID: 1,
-            avatarURL: URL(
-                string: "https://raw.githubusercontent.com/xcode73/myapp-mocks/"
-                      + "main/VolleyBolley/Images/Profile/profile1.jpg"
-            )
-        )
-        var avatarImage: UIImage?
-
-        if let avatarURL = player.avatarURL {
-            do {
-                avatarImage = try await imageLoader.loadImage(from: avatarURL)
-            } catch {
-                print("❌ Failed to load avatar:", error)
-            }
-        }
-
-        return (player, avatarImage)
-    }
 
     func loadNearestCourtWithWeather() -> NearestCourtWithWeather {
         let nearestCourt = CourtModel(

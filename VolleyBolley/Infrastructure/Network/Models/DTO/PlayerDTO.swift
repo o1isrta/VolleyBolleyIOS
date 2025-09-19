@@ -21,7 +21,7 @@ struct PlayerDTO: Codable {
         avatarUrl.flatMap { URL(string: $0) }
     }
 
-    enum CodingKeys: String, CodingKey {
+    private enum CodingKeys: String, CodingKey {
         case firstName = "first_name"
         case lastName = "last_name"
         case gender

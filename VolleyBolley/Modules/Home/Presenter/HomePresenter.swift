@@ -61,17 +61,8 @@ final class HomePresenter: HomePresenterProtocol {
     // MARK: - Private Methods
 
     private func loadInitialData() {
-        loadPlayer()
         loadCourtAndWeather()
         loadNearbyGamesCount()
-    }
-
-    private func loadPlayer() {
-        Task { @MainActor in
-            let (player, avatarImage) = await interactor.loadPlayerData()
-            let navBarVM = NavBarViewModel(player: player, avatarImage: avatarImage)
-            view?.displayNavBar(viewModel: navBarVM)
-        }
     }
 
     private func loadCourtAndWeather() {
