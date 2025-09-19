@@ -19,6 +19,13 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
     private let presenter: HomePresenterProtocol
     private var createNewGameCourtId: Int?
 
+    private enum Constants {
+        static let backgroundTop: CGFloat = 90
+        static let verticalStackSpacing: CGFloat = 8
+        static let horizontalStackSpacing: CGFloat = 8
+        static let contentInsets = UIEdgeInsets(top: 284, left: 8, bottom: 100, right: 8)
+    }
+
     private lazy var backgroundImageView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage.Image.homeBackground
@@ -30,7 +37,7 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
     private lazy var mainStackView: UIStackView = {
         let view = UIStackView(arrangedSubviews: [topStackView, bottomStackView])
         view.axis = .vertical
-        view.spacing = 8
+        view.spacing = Constants.verticalStackSpacing
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -39,7 +46,7 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
         let view = UIStackView(arrangedSubviews: [createNewGameButton, findGameButton])
         view.axis = .vertical
         view.distribution = .fillEqually
-        view.spacing = 8
+        view.spacing = Constants.verticalStackSpacing
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -47,7 +54,7 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
     private lazy var bottomStackView: UIStackView = {
         let view = UIStackView(arrangedSubviews: [createTourneyButton, donateButton])
         view.axis = .horizontal
-        view.spacing = 8
+        view.spacing = Constants.horizontalStackSpacing
         view.distribution = .fillEqually
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -127,7 +134,7 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
         view.addSubview(backgroundImageView)
         view.addSubview(mainStackView)
 
-        mainStackView.pinToSuperviewEdges(insets: .init(top: 284, left: 8, bottom: 100, right: 8))
+        mainStackView.pinToSuperviewEdges(insets: Constants.contentInsets)
         setupConstraintsBackgroundImageView()
     }
 
@@ -135,7 +142,7 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
 
     private func setupConstraintsBackgroundImageView() {
         NSLayoutConstraint.activate([
-            backgroundImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 90),
+            backgroundImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: Constants.backgroundTop),
             backgroundImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             backgroundImageView.widthAnchor.constraint(equalTo: view.widthAnchor)
         ])
