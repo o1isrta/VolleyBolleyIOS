@@ -14,12 +14,10 @@ protocol NavBarInteractorInputProtocol: AnyObject {
 	func fetchUserData()
 	func checkNotificationStatus()
 	func fetchNotifications()
-	func markNotificationsAsRead()
 }
 
 protocol NavBarInteractorOutputProtocol: AnyObject {
 	func didFetchUserData(_ viewModel: NavBarViewModel)
-	func didUpdateNotificationStatus(_ hasNewNotifications: Bool)
 	func didUpdateNotifications(_ notifications: [NotificationCardViewModel])
 	func didFetchNotifications(_ notifications: [NotificationCardViewModel])
 	func didFailToFetchUserData(with error: Error)
@@ -34,7 +32,6 @@ final class NavBarInteractor: NavBarInteractorInputProtocol {
 	// MARK: - Private Properties
 
 	private var currentUser: User?
-	private var hasNewNotifications: Bool = false
 	private var notificationData: [NotificationCardViewModel] = []
 
 	// MARK: - Public Methods
@@ -76,28 +73,16 @@ final class NavBarInteractor: NavBarInteractorInputProtocol {
 			let newNotificationsData = NotificationCardViewModel.mockDataArray
 			// old notifications found only
 			if self.notificationData == newNotificationsData {
-				self.hasNewNotifications = false
-				self.presenter?.didUpdateNotificationStatus(self.hasNewNotifications)
 				return
 			}
 			self.notificationData = newNotificationsData
 			// Notify about data update
 			self.presenter?.didUpdateNotifications(self.notificationData)
-			// Notify about notification status
-			self.hasNewNotifications = true
-			self.presenter?.didUpdateNotificationStatus(self.hasNewNotifications)
 		}
 	}
 
 	func fetchNotifications() {
 		// Return the already fetched notification data
 		presenter?.didFetchNotifications(notificationData)
-	}
-
-	func markNotificationsAsRead() {
-		// Mark notifications as read in the business logic
-		hasNewNotifications = false
-		// Notify presenter about the state change
-		presenter?.didUpdateNotificationStatus(hasNewNotifications)
 	}
 }

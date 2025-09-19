@@ -31,6 +31,8 @@ class BaseViewController: UIViewController {
 		view.backgroundColor = AppColor.Background.screen
 		setupCustomNavigationBar()
 		setupNotifications()
+		// Notify navbar about view appearance for state synchronization
+		navBar.viewWillAppear()
 	}
 
 	// MARK: - Public Methods
@@ -38,8 +40,6 @@ class BaseViewController: UIViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		navigationController?.setNavigationBarHidden(true, animated: false)
-		// Notify navbar about view appearance for state synchronization
-		navBar.viewWillAppear()
 	}
 
 	override func viewDidLayoutSubviews() {
@@ -57,14 +57,18 @@ private extension BaseViewController {
 		// This ensures state synchronization when navigating between tabs
 		NotificationCenter.default.addObserver(
 			self,
-			selector: #selector(handleTabChange),
-			name: .tabDidChanged,
+			selector: #selector(handleNewNotification(_:)),
+			name: NotificationConstants.NavBar.newNotificationArrived,
 			object: nil
 		)
 	}
 
-	@objc func handleTabChange() {
-		navBar.viewWillAppear()
+	@objc func handleNewNotification(_ notification: Notification) {
+		guard let userInfo = notification.userInfo else { return }
+
+		if let navBarNotification = NavBarNotification(userInfo: userInfo) {
+			navBar.updateNotifications(navBarNotification.isArrived)
+		}
 	}
 
 	func setupCustomNavigationBar() {
