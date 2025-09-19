@@ -10,15 +10,9 @@ import Swinject
 final class MapAssembly: Assembly {
 
 	func assemble(container: Container) {
-		container.register(MapViewController.self) { resolver in
-			guard
-				let networkService = resolver.resolve(NetworkServiceProtocol.self)
-			else {
-				fatalError("Error: Failed to register NetworkService")
-			}
-
+		container.register(MapViewController.self) { _ in
 			let router = MapRouter()
-			let interactor = MapInteractor(networkService: networkService)
+			let interactor = MapInteractor()
 
 			let presenter = MapPresenter(
 				interactor: interactor,
@@ -31,5 +25,10 @@ final class MapAssembly: Assembly {
 
 			return view
 		}
+
+        container.register(MapModuleFactoryProtocol.self) { resolver in
+            MapModuleFactory(resolver: resolver)
+        }
+        .inObjectScope(.container)
 	}
 }

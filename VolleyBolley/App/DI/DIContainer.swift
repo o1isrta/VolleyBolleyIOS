@@ -57,7 +57,6 @@ final class DIContainer {
     init(window: UIWindow) {
         assembler = Assembler(
             [
-                SharedServicesAssembly(),
                 NetworkAssembly(),
                 MediaServicesAssembly(),
                 AppAssembly(window: window),

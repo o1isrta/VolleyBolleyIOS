@@ -51,7 +51,7 @@ final class PopupBannerView: UIView {
 
     /// Иконка приглашения.
     private lazy var inviteImageView: UIImageView = {
-        let image = UIImage(resource: .invite).withRenderingMode(.alwaysTemplate)
+        let image = UIImage.Icon.invite.withRenderingMode(.alwaysTemplate)
         let imageView = UIImageView(image: image)
         imageView.contentMode = .scaleAspectFit
         imageView.tintColor = AppColor.Icon.inverted
@@ -61,7 +61,7 @@ final class PopupBannerView: UIView {
 
     /// Иконка стрелки.
     private lazy var arrowImageView: UIImageView = {
-        let image = UIImage(resource: .arrow).withRenderingMode(.alwaysTemplate)
+        let image = UIImage.Icon.arrow.withRenderingMode(.alwaysTemplate)
         let imageView = UIImageView(image: image)
         imageView.contentMode = .scaleAspectFit
         imageView.tintColor = AppColor.Icon.inverted
@@ -250,14 +250,12 @@ struct PopupBannerViewControllerRepresentable: UIViewControllerRepresentable {
 
         navBar.configure(
             with: NavBarViewModel(
-                user: User(
+                player: Player(
                     firstName: "Artem",
                     lastName: "Ivanov",
-                    gender: 0,
-                    paymentID: 0,
-                    paymentAccount: "",
+                    gender: "MALE",
                     dateOfBirth: Date(),
-                    level: UserLevel(rawValue: 0),
+                    level: .light,
                     countryID: 0,
                     cityID: 0,
                     avatarURL: nil

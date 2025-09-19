@@ -13,7 +13,6 @@ final class MyGamesAssembly: Assembly {
         container.register(MyGamesViewController.self) { resolver in
 
             guard
-                let usersRepository = resolver.resolve(UsersRepositoryProtocol.self),
                 let imageLoader = resolver.resolve(ImageLoadingServiceProtocol.self)
             else {
                 fatalError("Error: Failed to register MyGamesViewController")
@@ -22,7 +21,6 @@ final class MyGamesAssembly: Assembly {
             let router = MyGamesRouter()
 
             let interactor = MyGamesInteractor(
-                usersRepository: usersRepository,
                 imageLoader: imageLoader
             )
 

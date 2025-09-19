@@ -50,7 +50,7 @@ final class LevelBadgeView: UIView {
 
     // MARK: - Public Methods
 
-    func configure(with level: UserLevel) {
+    func configure(with level: PlayerLevel) {
         levelLabel.text = level.title
         levelLabel.textColor = level.titleColor
         backgroundColor = level.color
@@ -87,7 +87,7 @@ import SwiftUI
         Color(AppColor.Background.screen).ignoresSafeArea()
 
         HStack(spacing: 12) {
-            ForEach(UserLevel.allCases, id: \.self) { level in
+            ForEach(PlayerLevel.allCases, id: \.self) { level in
                 UIViewPreview {
                     let view = LevelBadgeView()
                     view.configure(with: level)

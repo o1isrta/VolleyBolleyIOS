@@ -38,7 +38,7 @@ final class ProfilePresenter: ProfilePresenterProtocol {
 
             switch result {
             case .success(let (user, avatarImage)):
-                let viewModel = NavBarViewModel(user: user, avatarImage: avatarImage)
+                let viewModel = NavBarViewModel(player: user, avatarImage: avatarImage)
                 self.view?.displayNavBar(viewModel: viewModel)
 
             case .failure(let error):

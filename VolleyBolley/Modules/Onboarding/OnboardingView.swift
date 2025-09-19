@@ -33,7 +33,7 @@ final class OnboardingViewController: UIViewController {
     }()
 
     private lazy var logoImageView: UIImageView = {
-        let imageView = UIImageView(image: .vbLogo)
+        let imageView = UIImageView(image: UIImage.Image.vbLogo)
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
@@ -54,7 +54,7 @@ final class OnboardingViewController: UIViewController {
     )
 
     private lazy var backgroundImageView: UIImageView = {
-        let imageView = UIImageView(image: .launch)
+        let imageView = UIImageView(image: UIImage.Image.launch)
         imageView.contentMode = .scaleAspectFill
         imageView.backgroundColor = .launchScreen
         return imageView

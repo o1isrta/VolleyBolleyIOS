@@ -8,51 +8,78 @@
 import UIKit
 
 protocol HomeInteractorProtocol: AnyObject {
-    func fetchGreeting() -> String
-    func loadUserData(completion: @escaping (Result<(User, UIImage?), Error>) -> Void)
+    func loadPlayerData() async -> (Player, UIImage?)
+    func loadNearestCourtWithWeather() -> NearestCourtWithWeather
+    func loadTotalCountOfUpcomingGamesAndTournaments() -> Int
 }
 
 final class HomeInteractor: HomeInteractorProtocol {
 
     // MARK: - Private Properties
 
-    private let usersRepository: UsersRepositoryProtocol
     private let imageLoader: ImageLoadingServiceProtocol
 
     // MARK: - Initializers
 
     init(
-        usersRepository: UsersRepositoryProtocol,
         imageLoader: ImageLoadingServiceProtocol
     ) {
-        self.usersRepository = usersRepository
         self.imageLoader = imageLoader
     }
 
     // MARK: - Public Methods
 
-    func fetchGreeting() -> String {
-        return "Home Module"
-    }
+    func loadPlayerData() async -> (Player, UIImage?) {
+        let player = Player(
+            firstName: "Artem",
+            lastName: "",
+            gender: "",
+            dateOfBirth: AppDateFormatters.serverDateOnly.date(from: "1970-02-20")!,
+            level: .light,
+            countryID: 1,
+            cityID: 1,
+            avatarURL: URL(
+                string: "https://raw.githubusercontent.com/xcode73/myapp-mocks/"
+                      + "main/VolleyBolley/Images/Profile/profile1.jpg"
+            )
+        )
+        var avatarImage: UIImage?
 
-    func loadUserData(completion: @escaping (Result<(User, UIImage?), Error>) -> Void) {
-        usersRepository.getCurrentUser { [weak self] result in
-            guard let self = self else { return }
-
-            switch result {
-            case .success(let user):
-                guard let avatarURL = user.avatarURL else {
-                    completion(.success((user, nil)))
-                    return
-                }
-
-                self.imageLoader.loadImage(from: avatarURL) { image in
-                    completion(.success((user, image)))
-                }
-
-            case .failure(let error):
-                completion(.failure(error))
+        if let avatarURL = player.avatarURL {
+            do {
+                avatarImage = try await imageLoader.loadImage(from: avatarURL)
+            } catch {
+                print("❌ Failed to load avatar:", error)
             }
         }
+
+        return (player, avatarImage)
+    }
+
+    func loadNearestCourtWithWeather() -> NearestCourtWithWeather {
+        let nearestCourt = CourtModel(
+            id: 1,
+            price: "",
+            description: "",
+            contacts: [],
+            imageUrl: nil,
+            tagList: [],
+            location: LocationModel(
+                latitude: 0,
+                longitude: 0,
+                courtName: "Karon Beach Club",
+                locationName: "Patak Rd, Mueang Phuket"
+            )
+        )
+
+        let weather = AppWeather(temperature: 26.0, condition: .partlyCloudy)
+
+        let nearestCourtWithWeather = NearestCourtWithWeather(court: nearestCourt, weather: weather)
+
+        return nearestCourtWithWeather
+    }
+
+    func loadTotalCountOfUpcomingGamesAndTournaments() -> Int {
+        12
     }
 }
