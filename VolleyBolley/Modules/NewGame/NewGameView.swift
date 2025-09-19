@@ -8,9 +8,9 @@
 import UIKit
 
 final class NewGameView: BaseViewController {
-    
+
     var presenter: UserRegPresenterProtocol?
-    
+
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.backgroundColor = AppColor.Background.screen
@@ -18,7 +18,7 @@ final class NewGameView: BaseViewController {
         scrollView.showsVerticalScrollIndicator = false
         return scrollView
     }()
-    
+
     private lazy var contentView: UIView = {
         let contentView = UIView()
         contentView.backgroundColor = AppColor.Background.blur
@@ -27,7 +27,7 @@ final class NewGameView: BaseViewController {
         contentView.translatesAutoresizingMaskIntoConstraints = false
         return contentView
     }()
-    
+
     private lazy var backButton: UtilityButton = {
         let button = UtilityButton(style: .small)
         button.setImage(.chevronBackward, for: .normal)
@@ -35,22 +35,38 @@ final class NewGameView: BaseViewController {
         button.addTarget(self, action: #selector(didTapBack), for: .touchUpInside)
         return button
     }()
-    
+
     private lazy var titleLabel = CustomTitle(text: String(localized: "Create a game"), isLarge: true)
     private lazy var yourMessageTitle = CustomTitle(text: String(localized: "Your message"), isLarge: false)
-    
-    
+
+    private lazy var messageTextView: UIView = {
+        let view = UIView()
+        view.backgroundColor = AppColor.Background.blur
+        view.layer.cornerRadius = 16
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
     private lazy var messageTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Leave a note for players..."// TODO String(localized:)
-        textField.backgroundColor = AppColor.Background.blur
+        textField.backgroundColor = AppColor.Background.clear
         textField.layer.cornerRadius = 16
         textField.textColor = AppColor.Text.primary
         textField.setLeftPaddingPoints(16)
         return textField
     }()
+
+    private lazy var messageLettersCounter: UILabel = {
+        let counter = UILabel()
+        counter.textColor = AppColor.Text.placeHolder
+        counter.font = AppFont.Hero.light(size: 14)
+        counter.textAlignment = .right
+        return counter
+    }()
+
     private lazy var messageSeparator = CustomSeparator()
-    
+
     private lazy var placeLabel = CustomLabel(text: String(localized: "Place"), isBold: true)
     private lazy var placeButton = PickButton(
         title: String(localized: "Change"),
@@ -59,7 +75,7 @@ final class NewGameView: BaseViewController {
         action: #selector(placeButtonTapped)
     )
     private lazy var placeSeparator = CustomSeparator()
-    
+
     private lazy var dateLabel = CustomLabel(text: String(localized: "Date"), isBold: true)
     private lazy var todayButton = PickButton(
         title: String(localized: "Today").capitalized(with: .current),
@@ -67,19 +83,19 @@ final class NewGameView: BaseViewController {
         target: self,
         action: #selector(dateButtonTapped)
     )
-    
+
         private lazy var pickDateButton = PickButton(
             title: String(localized: "Pick date").capitalized(with: .current),
             isSelected: false,
             target: self,
             action: #selector(dateButtonTapped)
         )
-    
+
     private lazy var fromTimeButton = TimePickerButton()
     private lazy var toTimeButton = TimePickerButton()
-    
+
     private lazy var dateSeparator = CustomSeparator()
-    
+
     private lazy var genderLabel = CustomLabel(text: String(localized: "Gender"), isBold: true)
         private lazy var mixGenderButton = PickButton(
             title: String(localized: "Mix").capitalized(with: .current),
@@ -93,18 +109,18 @@ final class NewGameView: BaseViewController {
             target: self,
             action: #selector(genderButtonTapped)
         )
-    
+
         private lazy var femaleGenderButton = PickButton(
             title: String(localized: "Women").capitalized(with: .current),
             isSelected: false,
             target: self,
             action: #selector(genderButtonTapped)
         )
-    
+
         private lazy var genderSeparator = CustomSeparator()
-    
+
         private lazy var playerLevelLabel = CustomLabel(text: String(localized: "Player level"), isBold: true)
-    
+
         private lazy var lightLevelButton = PickButton(
             title: String(localized: "common.light").capitalized(with: .current),
             isSelected: true,
@@ -129,50 +145,50 @@ final class NewGameView: BaseViewController {
             target: self,
             action: #selector(levelButtonTapped)
         )
-    
+
         private lazy var getStartedButton = NextStepButton(
             title: String(localized: "GET STARTED"),
             isActive: false,
             target: self,
             action: #selector(getStartedTapped)
         )
-    
+
     private var selectedGender: String? = String(localized: "Mix")
     private var selectedLevel: String? = String(localized: "common.light").capitalized(with: .current)
     private var selectedDate: String?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupScrollView()
         setupUI()
         setupActions()
-        
+
         //        startNewGame.setTitle("NEXT STEP", for: .normal)
         //        startNewGame.setState(.inactive)
     }
-    
+
     private func setupScrollView() {
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         scrollView.addSubview(getStartedButton)
-        
+
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
+
             contentView.topAnchor.constraint(equalTo: scrollView.frameLayoutGuide.topAnchor, constant: 8),
             contentView.leadingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.leadingAnchor, constant: 8),
             contentView.trailingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.trailingAnchor, constant: -8),
             contentView.bottomAnchor.constraint(equalTo: scrollView.frameLayoutGuide.bottomAnchor, constant: -8),
-            
+
             getStartedButton.topAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
             getStartedButton.leadingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.leadingAnchor, constant: 8),
             getStartedButton.trailingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.trailingAnchor, constant: -8),
         ])
     }
-    
+
     private func setupUI() {
         [backButton, titleLabel, yourMessageTitle, messageTextField, messageSeparator,
          placeLabel, placeButton, placeSeparator, dateLabel, todayButton, pickDateButton,
@@ -183,76 +199,76 @@ final class NewGameView: BaseViewController {
             .forEach {
                 contentView.addSubviews($0)
             }
-        
+
         NSLayoutConstraint.activate([
             backButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
             backButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             backButton.widthAnchor.constraint(equalToConstant: 18),
             backButton.heightAnchor.constraint(equalToConstant: 24),
-            
+
             titleLabel.centerYAnchor.constraint(equalTo: backButton.centerYAnchor),
             titleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            
+
             yourMessageTitle.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16),
             yourMessageTitle.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            
+
             messageTextField.topAnchor.constraint(equalTo: yourMessageTitle.bottomAnchor, constant: 16),
             messageTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             messageTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             messageTextField.heightAnchor.constraint(equalToConstant: 89),
-            
+
             messageSeparator.topAnchor.constraint(equalTo: messageTextField.bottomAnchor, constant: 16),
             messageSeparator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             messageSeparator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            
+
             placeLabel.topAnchor.constraint(equalTo: messageSeparator.bottomAnchor, constant: 16),
             placeLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            
+
             placeButton.topAnchor.constraint(equalTo: placeLabel.bottomAnchor, constant: 12),
             placeButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -26),
-            
+
             placeSeparator.topAnchor.constraint(equalTo: placeButton.bottomAnchor, constant: 16),
             placeSeparator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             placeSeparator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            
+
             dateLabel.topAnchor.constraint(equalTo: placeSeparator.bottomAnchor, constant: 16),
             dateLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            
+
             todayButton.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 12),
             todayButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            
+
             pickDateButton.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 12),
             pickDateButton.leadingAnchor.constraint(equalTo: todayButton.trailingAnchor, constant: 20),
-            
+
             fromTimeButton.topAnchor.constraint(equalTo: todayButton.bottomAnchor, constant: 12),
             fromTimeButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            
+
             toTimeButton.topAnchor.constraint(equalTo: todayButton.bottomAnchor, constant: 12),
             toTimeButton.leadingAnchor.constraint(equalTo: fromTimeButton.trailingAnchor, constant: 20),
-            
+
             dateSeparator.topAnchor.constraint(equalTo: fromTimeButton.bottomAnchor, constant: 16),
             dateSeparator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             dateSeparator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            
+
             genderLabel.topAnchor.constraint(equalTo: dateSeparator.bottomAnchor, constant: 16),
             genderLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            
+
             mixGenderButton.topAnchor.constraint(equalTo: genderLabel.bottomAnchor, constant: 12),
             mixGenderButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            
+
             maleGenderButton.topAnchor.constraint(equalTo: genderLabel.bottomAnchor, constant: 12),
             maleGenderButton.leadingAnchor.constraint(equalTo: mixGenderButton.trailingAnchor, constant: 20),
-            
+
             femaleGenderButton.topAnchor.constraint(equalTo: genderLabel.bottomAnchor, constant: 12),
             femaleGenderButton.leadingAnchor.constraint(equalTo: maleGenderButton.trailingAnchor, constant: 20),
-            
+
             genderSeparator.topAnchor.constraint(equalTo: mixGenderButton.bottomAnchor, constant: 16),
             genderSeparator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             genderSeparator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            
+
             playerLevelLabel.topAnchor.constraint(equalTo: genderSeparator.bottomAnchor, constant: 16),
             playerLevelLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            
+
             lightLevelButton.topAnchor.constraint(equalTo: playerLevelLabel.bottomAnchor, constant: 12),
             lightLevelButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
 
@@ -264,34 +280,34 @@ final class NewGameView: BaseViewController {
 
             proLevelButton.centerYAnchor.constraint(equalTo: hardLevelButton.centerYAnchor),
             proLevelButton.leadingAnchor.constraint(equalTo: hardLevelButton.trailingAnchor, constant: 8),
-            
+
         ])
     }
-    
+
     private func setupActions() {
         backButton.addTarget(self, action: #selector(didTapBack), for: .touchUpInside)
     }
-    
+
     @objc private func didTapBack() {
         dismiss(animated: true)
     }
-    
+
     @objc private func placeButtonTapped() {
         print("Выбрано новое место")
     }
-    
+
     @objc private func dateButtonTapped() {
         print("Выбрано новая дата игры")
     }
-    
+
     @objc private func genderButtonTapped() {
         print("Выбран пол игроков")
     }
-    
+
     @objc private func levelButtonTapped() {
         print("Выбран уровень игроков")
     }
-    
+
     @objc private func getStartedTapped() {
         print("Создаем игру")
     }
