@@ -11,12 +11,28 @@ final class FindGameButton: UIButton {
 
     // MARK: - Private Properties
 
+    private enum Constants {
+        static let stackSpacing: CGFloat = 7
+        static let subTitleFontSize: CGFloat = 16
+        static let imageTop: CGFloat = 64
+        static let imageLeading: CGFloat = 60
+        static let imageWidth: CGFloat = 122
+        static let imageHeight: CGFloat = 37
+        static let gamesAvailableTop: CGFloat = 8
+        static let gamesAvailableBottom: CGFloat = -8
+        static let gamesAvailableTrailing: CGFloat = -8
+        static let gamesAvailableWidth: CGFloat = 150
+        static let vStackTop: CGFloat = 18
+        static let vStackLeading: CGFloat = 18
+        static let vStackTrailing: CGFloat = 8
+    }
+
     private var activeBackgroundEffect: UIView?
 
     private lazy var vStackView: UIStackView = {
         let view = UIStackView(arrangedSubviews: [buttonTitleLabel, buttonSubTitleLabel])
         view.axis = .vertical
-        view.spacing = 7
+        view.spacing = Constants.stackSpacing
         view.isUserInteractionEnabled = false
         return view
     }()
@@ -28,7 +44,7 @@ final class FindGameButton: UIButton {
 
     private lazy var buttonSubTitleLabel: UILabel = {
         let view = UILabel()
-        view.font = AppFont.Hero.regular(size: 16)
+        view.font = AppFont.Hero.regular(size: Constants.subTitleFontSize)
         view.textColor = AppColor.Text.primary
         view.text = String(localized: .homeNearYou)
         return view
@@ -122,27 +138,36 @@ final class FindGameButton: UIButton {
 
     private func setupConstraintsButtonImageView() {
         NSLayoutConstraint.activate([
-            buttonImageView.topAnchor.constraint(equalTo: topAnchor, constant: 64),
-            buttonImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 60),
-            buttonImageView.widthAnchor.constraint(equalToConstant: 122),
-            buttonImageView.heightAnchor.constraint(equalToConstant: 37)
+            buttonImageView.topAnchor.constraint(equalTo: topAnchor, constant: Constants.imageTop),
+            buttonImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.imageLeading),
+            buttonImageView.widthAnchor.constraint(equalToConstant: Constants.imageWidth),
+            buttonImageView.heightAnchor.constraint(equalToConstant: Constants.imageHeight)
         ])
     }
 
     private func setupConstraintsGamesAvailableView() {
         NSLayoutConstraint.activate([
-            gamesAvailableView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
-            gamesAvailableView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
-            gamesAvailableView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
-            gamesAvailableView.widthAnchor.constraint(equalToConstant: 150)
+            gamesAvailableView.topAnchor.constraint(equalTo: topAnchor, constant: Constants.gamesAvailableTop),
+            gamesAvailableView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: Constants.gamesAvailableBottom),
+            gamesAvailableView.trailingAnchor.constraint(
+                equalTo: trailingAnchor,
+                constant: Constants.gamesAvailableTrailing
+            ),
+            gamesAvailableView.widthAnchor.constraint(equalToConstant: Constants.gamesAvailableWidth)
         ])
     }
 
     private func setupConstraintsVStackView() {
         NSLayoutConstraint.activate([
-            vStackView.topAnchor.constraint(equalTo: topAnchor, constant: 18),
-            vStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 18),
-            vStackView.trailingAnchor.constraint(equalTo: gamesAvailableView.leadingAnchor, constant: 8)
+            vStackView.topAnchor.constraint(equalTo: topAnchor, constant: Constants.vStackTop),
+            vStackView.leadingAnchor.constraint(
+                equalTo: leadingAnchor,
+                constant: Constants.vStackLeading
+            ),
+            vStackView.trailingAnchor.constraint(
+                equalTo: gamesAvailableView.leadingAnchor,
+                constant: Constants.vStackTrailing
+            )
         ])
     }
 }

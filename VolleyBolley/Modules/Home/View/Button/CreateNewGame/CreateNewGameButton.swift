@@ -19,10 +19,16 @@ final class CreateNewGameButton: UIButton {
 
     private var activeBackgroundEffect: UIView?
 
+    private enum Constants {
+        static let stackSpacing: CGFloat = 18
+        static let contentInsets = UIEdgeInsets(top: 18, left: 18, bottom: 18, right: 18)
+        static let backgroundSubviewIndex: Int = 0
+    }
+
     private lazy var vStackView: UIStackView = {
         let view = UIStackView(arrangedSubviews: [buttonTitleLabel, hStackView])
         view.axis = .vertical
-        view.spacing = 18
+        view.spacing = Constants.stackSpacing
         view.isUserInteractionEnabled = false
         return view
     }()
@@ -31,7 +37,7 @@ final class CreateNewGameButton: UIButton {
         let view = UIStackView(arrangedSubviews: [locationTitleView, weatherView])
         view.axis = .horizontal
         view.distribution = .fillProportionally
-        view.spacing = 18
+        view.spacing = Constants.stackSpacing
         return view
     }()
 
@@ -90,7 +96,7 @@ final class CreateNewGameButton: UIButton {
             newEffect.cornerRadius = style.cornerRadius
             if activeBackgroundEffect !== newEffect {
                 activeBackgroundEffect?.removeFromSuperview()
-                insertSubview(newEffect, at: 0)
+                insertSubview(newEffect, at: Constants.backgroundSubviewIndex)
                 activeBackgroundEffect = newEffect
             }
         } else {
@@ -104,7 +110,7 @@ final class CreateNewGameButton: UIButton {
     private func setupLayout() {
         addSubview(vStackView)
 
-        vStackView.pinToSuperviewEdges(insets: .init(top: 18, left: 18, bottom: 18, right: 18))
+        vStackView.pinToSuperviewEdges(insets: Constants.contentInsets)
     }
 
     private func configuration(for state: UIControl.State) -> UIButton.Configuration {
