@@ -1586,7 +1586,6 @@
         }
       }
     },
-
     "sketchButton.createTourney" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1688,6 +1687,7 @@
           }
         }
       }
+    },
     "Skilled, play often, tournaments experience" : {
 
     },
@@ -1779,6 +1779,7 @@
           }
         }
       }
+    },
     "Update" : {
       "localizations" : {
         "ru" : {
