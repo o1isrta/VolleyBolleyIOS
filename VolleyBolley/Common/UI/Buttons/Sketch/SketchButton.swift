@@ -47,12 +47,12 @@ enum SketchButtonType: CaseIterable {
 
     var title: String {
         switch self {
-        case .createTourney: return "Create a tourney"
-        case .donate: return "Donate"
-        case .invitePlayers: return "Invite players"
-        case .shareLink: return "Share link"
-        case .sendInvites: return "Send invites"
-        case .saveGame: return "Save game"
+        case .createTourney: return String(localized: "sketchButton.createTourney")
+        case .donate: return String(localized: "sketchButton.donate")
+        case .invitePlayers: return String(localized: "sketchButton.invitePlayers")
+        case .shareLink: return String(localized: "sketchButton.shareLink")
+        case .sendInvites: return String(localized: "sketchButton.sendInvites")
+        case .saveGame: return String(localized: "sketchButton.saveGame")
         }
     }
 
