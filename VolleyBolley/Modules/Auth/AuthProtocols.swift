@@ -14,17 +14,14 @@ protocol AuthViewProtocol: AnyObject {
 protocol AuthPresenterProtocol: AnyObject {
     func phoneButtonTapped()
     func googleButtonTapped()
-    func facebookButtonTapped()
 }
 
 protocol AuthInteractorProtocol: AnyObject {
     func authWithGoogle()
-    func authWithFacebook()
 }
 
 protocol AuthInteractorOutputProtocol: AnyObject {
     func didAuthWithGoogleSuccess()
-    func didAuthWithFacebookSuccess()
 }
 
 protocol AuthRouterProtocol: AnyObject {
