@@ -13,7 +13,6 @@ final class ProfileAssembly: Assembly {
         container.register(ProfileViewController.self) { resolver in
 
             guard
-                let usersRepository = resolver.resolve(UsersRepositoryProtocol.self),
                 let imageLoader = resolver.resolve(ImageLoadingServiceProtocol.self)
             else {
                 fatalError("Error: Failed to register ProfileViewController")
@@ -22,7 +21,6 @@ final class ProfileAssembly: Assembly {
             let router = ProfileRouter()
 
             let interactor = ProfileInteractor(
-                usersRepository: usersRepository,
                 imageLoader: imageLoader
             )
 
