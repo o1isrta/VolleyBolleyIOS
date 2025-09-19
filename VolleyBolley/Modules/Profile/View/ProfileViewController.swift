@@ -206,7 +206,8 @@ extension ProfileViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        print("Tapped: \(menuItems[indexPath.row].title)")
+        let item = menuItems[indexPath.row]
+        presenter.didSelectMenuItem(item)
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -221,6 +222,7 @@ struct ProfileViewControllerPreview: UIViewControllerRepresentable {
     class StubPresenter: ProfilePresenterProtocol {
         weak var view: ProfileViewProtocol?
         func viewDidLoad() {}
+        func didSelectMenuItem(_ item: ProfileMenuItem) {}
     }
 
     func makeUIViewController(context: Context) -> some UIViewController {
