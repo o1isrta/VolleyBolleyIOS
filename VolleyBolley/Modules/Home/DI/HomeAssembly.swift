@@ -11,18 +11,16 @@ final class HomeAssembly: Assembly {
 
     func assemble(container: Container) {
         container.register(HomeViewController.self) { resolver in
-
             guard
-                let usersRepository = resolver.resolve(UsersRepositoryProtocol.self),
-                let imageLoader = resolver.resolve(ImageLoadingServiceProtocol.self)
+                let imageLoader = resolver.resolve(ImageLoadingServiceProtocol.self),
+                let mapFactory = resolver.resolve(MapModuleFactoryProtocol.self)
             else {
                 fatalError("Error: Failed to register HomeViewController")
             }
 
-            let router = HomeRouter()
+            let router = HomeRouter(mapFactory: mapFactory)
 
             let interactor = HomeInteractor(
-                usersRepository: usersRepository,
                 imageLoader: imageLoader
             )
 
