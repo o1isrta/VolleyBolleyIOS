@@ -90,7 +90,7 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
 		config.imagePlacement = .leading
 		config.imagePadding = 0
 		config.baseForegroundColor = AppColor.Background.screen
-		config.background.backgroundColor = .white // TODO:
+		config.background.backgroundColor = AppColor.Background.primary
 		config.background.cornerRadius = 12
 		let button = UIButton(configuration: config)
 		return button
