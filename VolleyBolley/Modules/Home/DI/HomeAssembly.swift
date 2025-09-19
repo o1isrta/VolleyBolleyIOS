@@ -13,7 +13,6 @@ final class HomeAssembly: Assembly {
         container.register(HomeViewController.self) { resolver in
 
             guard
-                let usersRepository = resolver.resolve(UsersRepositoryProtocol.self),
                 let imageLoader = resolver.resolve(ImageLoadingServiceProtocol.self)
             else {
                 fatalError("Error: Failed to register HomeViewController")
@@ -22,7 +21,6 @@ final class HomeAssembly: Assembly {
             let router = HomeRouter()
 
             let interactor = HomeInteractor(
-                usersRepository: usersRepository,
                 imageLoader: imageLoader
             )
 
