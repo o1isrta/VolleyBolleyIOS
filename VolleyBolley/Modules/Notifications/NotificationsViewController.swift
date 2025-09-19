@@ -52,12 +52,12 @@ final class NotificationsViewController: BaseViewController {
 		setupUI()
 		setupTableViewContentSizeObserver()
         presenter?.viewDidLoad()
+		setupNotificationObservers()
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		// Notify navbar about view appearance for state synchronization
-		navBar.viewWillAppear()
+		navBar.updateNotifications(false)
 	}
 }
 
@@ -101,6 +101,15 @@ private extension NotificationsViewController {
 		tableViewHeightConstraint?.isActive = true
 	}
 
+	func setupNotificationObservers() {
+		let notification = NavBarNotification(isArrived: false)
+		NotificationCenter.default.post(
+			name: NotificationConstants.NavBar.newNotificationArrived,
+			object: self,
+			userInfo: notification.userInfo
+		)
+	}
+
 	func setupTableViewContentSizeObserver() {
 		tableViewContentSizeObserver = tableView.observe(
 			\.contentSize,
@@ -124,6 +133,7 @@ extension NotificationsViewController: NotificationsViewControllerProtocol {
 
 	func displayNotifications(_ notifications: [NotificationCardViewModel]) {
 		self.notifications = notifications
+		navBar.updateNotifications(false)
 		tableView.reloadData()
 	}
 

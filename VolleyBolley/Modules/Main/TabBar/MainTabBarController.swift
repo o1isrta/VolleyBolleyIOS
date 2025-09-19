@@ -78,12 +78,6 @@ final class MainTabBarController: UIViewController {
 
         currentTab = tab
         tabBar.updateSelection(index: tab.rawValue)
-		// This ensures state synchronization when navigating between tabs
-		NotificationCenter.default.post(
-			name: .tabDidChanged,
-			object: nil,
-			userInfo: ["selectedIndex": tab.rawValue]
-		)
     }
 
     // MARK: - Layout setup

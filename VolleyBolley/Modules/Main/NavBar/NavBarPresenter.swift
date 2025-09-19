@@ -29,7 +29,6 @@ final class NavBarPresenter: NavBarPresenterProtocol {
 	// MARK: - Private Properties
 
 	private var currentViewModel: NavBarViewModel?
-	private var hasNewNotifications: Bool = false
 	private var notificationData: [NotificationCardViewModel] = []
 
 	// MARK: - Public Methods
@@ -41,13 +40,6 @@ final class NavBarPresenter: NavBarPresenterProtocol {
 	func notificationButtonTapped() {
 		// Fetch notifications from interactor before navigation
 		interactor?.fetchNotifications()
-		// Clear the notification badge after navigation
-		if hasNewNotifications {
-			hasNewNotifications = false
-			view?.updateNotifications(hasNewNotifications)
-			// Also update the business logic state
-			interactor?.markNotificationsAsRead()
-		}
 	}
 
 	func refreshUserData() {
@@ -71,20 +63,20 @@ extension NavBarPresenter: NavBarInteractorOutputProtocol {
 		view?.configure(with: viewModel)
 	}
 
-	func didUpdateNotificationStatus(_ hasNewNotifications: Bool) {
-		self.hasNewNotifications = hasNewNotifications
-		view?.updateNotifications(hasNewNotifications)
-	}
-
 	func didUpdateNotifications(_ notifications: [NotificationCardViewModel]) {
-		guard notificationData != notifications else {return }
+		guard notificationData != notifications else {
+			view?.updateNotifications(false)
+			return
+		}
 		notificationData = notifications
+		view?.updateNotifications(true)
 		router?.updateNotificationsVC(with: notifications)
 	}
 
 	func didFetchNotifications(_ notifications: [NotificationCardViewModel]) {
 		notificationData = notifications
 		router?.showNotifications(with: notifications)
+		view?.updateNotifications(false)
 	}
 
 	func didFailToFetchUserData(with error: Error) {
