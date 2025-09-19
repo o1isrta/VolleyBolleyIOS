@@ -311,6 +311,12 @@
             "state" : "translated",
             "value" : "Level"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Уровень"
+          }
         }
       }
     },
@@ -321,6 +327,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%d players"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d игроков"
           }
         }
       }
@@ -333,6 +345,12 @@
             "state" : "translated",
             "value" : "%@ per person"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ за человека"
+          }
         }
       }
     },
@@ -343,6 +361,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "private game"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "приватная игра"
           }
         }
       }
@@ -355,6 +379,12 @@
             "state" : "translated",
             "value" : "Starts on %@"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Начинается %@"
+          }
         }
       }
     },
@@ -365,6 +395,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Starts today"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Начинается сегодня"
           }
         }
       }
@@ -377,6 +413,12 @@
             "state" : "translated",
             "value" : "Starts tomorrow"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Начинается завтра"
+          }
         }
       }
     },
@@ -387,6 +429,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%d teams"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d команд"
           }
         }
       }
@@ -1376,6 +1424,12 @@
             "state" : "translated",
             "value" : "Create a tourney"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Создать турнир"
+          }
         }
       }
     },
@@ -1386,6 +1440,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Donate"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поддержать"
           }
         }
       }
@@ -1398,6 +1458,12 @@
             "state" : "translated",
             "value" : "Invite players"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пригласить игроков"
+          }
         }
       }
     },
@@ -1408,6 +1474,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Save game"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сохранить игру"
           }
         }
       }
@@ -1420,6 +1492,12 @@
             "state" : "translated",
             "value" : "Send invites"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отправить приглашения"
+          }
         }
       }
     },
@@ -1430,6 +1508,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Share link"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поделиться ссылкой"
           }
         }
       }
