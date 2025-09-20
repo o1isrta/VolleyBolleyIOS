@@ -8,33 +8,29 @@
 import UIKit
 
 protocol NewGameViewProtocol: AnyObject {
-//    func updateCountries(_ countries: [String])
+    func updateDate(_ date: String)
+    func updatePlace(_ place: String)
 }
 
 protocol NewGamePresenterProtocol: AnyObject {
-//    var countries: [String] { get }
-//    var cities: [String] { get }
-//
-//    func viewDidLoad()
-//    func didTapLevelInfo()
-//    func didTapGetStarted(name: String, surname: String, gender: String)
+    func viewDidLoad()
+    func didTapChangePlace()
+    func didTapPickDate()
+    func didSelectGender(_ gender: Gender)
+    func didSelectLevel(_ level: PlayerLevel)
+    func didTapNextStep(message: String,
+                        from: Date,
+                        to: Date)
 }
 
 protocol NewGameInteractorProtocol: AnyObject {
-//    var presenter: UserRegInteractorOutputProtocol? { get set }
-//
-//    func fetchCountries()
-//    func registerUser(name: String, surname: String, gender: String)
+    func saveGame(_ game: GameEntity)
 }
 
 protocol NewGameInteractorOutputProtocol: AnyObject {
-//    func didFetchCountries(_ countries: [String])
-//    func registrationDidSucceed()
-//    func registrationDidFail(error: Error)
+    func gameSaved()
 }
 
 protocol NewGameRouterProtocol: AnyObject {
-//    static func assembleModule() -> UIViewController
-//    func showLevelInfoScreen()
-//    func navigateToNextScreen()
+    func navigateToNextStep(with game: GameEntity)
 }

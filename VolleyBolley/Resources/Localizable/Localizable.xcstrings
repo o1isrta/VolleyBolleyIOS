@@ -130,6 +130,9 @@
         }
       }
     },
+    "Change" : {
+
+    },
     "CHOOSE THIS COURT" : {
       "comment" : "\"CHOOSE THIS COURT\" button",
       "localizations" : {
@@ -329,6 +332,9 @@
           }
         }
       }
+    },
+    "Create a game" : {
+
     },
     "customAlertView.button.done" : {
       "comment" : "Custom Alert",
@@ -574,6 +580,9 @@
           }
         }
       }
+    },
+    "Date" : {
+
     },
     "Date of birth" : {
       "localizations" : {
@@ -975,6 +984,9 @@
         }
       }
     },
+    "Man" : {
+
+    },
     "Map" : {
       "comment" : "Segment Control",
       "localizations" : {
@@ -985,6 +997,9 @@
           }
         }
       }
+    },
+    "Mix" : {
+
     },
     "My games" : {
       "comment" : "Tab bar item title",
@@ -1320,6 +1335,15 @@
         }
       }
     },
+    "Pick date" : {
+
+    },
+    "Place" : {
+
+    },
+    "Player level" : {
+
+    },
     "Players" : {
       "comment" : "Profile",
       "localizations" : {
@@ -1480,6 +1504,9 @@
         }
       }
     },
+    "Today" : {
+
+    },
     "tomorrow_label" : {
       "comment" : "Game",
       "extractionState" : "manual",
@@ -1595,6 +1622,9 @@
         }
       }
     },
+    "Women" : {
+
+    },
     "Your city" : {
       "localizations" : {
         "ru" : {
@@ -1614,6 +1644,9 @@
           }
         }
       }
+    },
+    "Your message" : {
+
     },
     "Your phone number" : {
 
