@@ -10,6 +10,7 @@ import Foundation
 protocol TokenStorageProtocol {
 	var accessToken: String? { get set }
 	var refreshToken: String? { get set }
+	func clearAllTokens()
 }
 
 final class TokenStorage: TokenStorageProtocol {
@@ -17,15 +18,14 @@ final class TokenStorage: TokenStorageProtocol {
 	static let shared = TokenStorage()
 	private init() {}
 
-	// TODO: need save to keychain
+	@KeychainStored(key: "access_token")
+	var accessToken: String?
 
-	var accessToken: String? {
-		get { UserDefaults.standard.string(forKey: "access_token") }
-		set { UserDefaults.standard.set(newValue, forKey: "access_token") }
-	}
+	@KeychainStored(key: "refresh_token")
+	var refreshToken: String?
 
-	var refreshToken: String? {
-		get { UserDefaults.standard.string(forKey: "refresh_token") }
-		set { UserDefaults.standard.set(newValue, forKey: "refresh_token") }
+	func clearAllTokens() {
+		accessToken = nil
+		refreshToken = nil
 	}
 }
