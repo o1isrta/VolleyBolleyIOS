@@ -11,6 +11,9 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
 
     var presenter: UserRegPresenterProtocol?
 
+    private lazy var navigationBarView = CustomNavBarView()
+    private lazy var mainTabBarController = MainTabBarController()
+
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.backgroundColor = AppColor.Background.screen
@@ -19,9 +22,14 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
         return scrollView
     }()
 
+    private lazy var contentBackground: GlassmorphismView = {
+        let view = GlassmorphismView()
+        return view
+    }()
+
     private lazy var contentView: UIView = {
         let contentView = UIView()
-        contentView.backgroundColor = AppColor.Background.blur
+        contentView.backgroundColor = .clear
         contentView.layer.cornerRadius = 32
         contentView.layer.masksToBounds = true
         contentView.translatesAutoresizingMaskIntoConstraints = false
@@ -178,11 +186,25 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
 
     private func setupScrollView() {
         view.addSubview(scrollView)
+        view.addSubview(navigationBarView)
+        navigationBarView.translatesAutoresizingMaskIntoConstraints = false
+
+        addChild(mainTabBarController)
+        view.addSubview(mainTabBarController.view)
+        mainTabBarController.didMove(toParent: self)
+        mainTabBarController.view.translatesAutoresizingMaskIntoConstraints = false
+
         scrollView.addSubview(contentView)
+        scrollView.addSubview(contentBackground)
         scrollView.addSubview(getStartedButton)
 
         NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            navigationBarView.topAnchor.constraint(equalTo: view.topAnchor),
+            navigationBarView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            navigationBarView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            navigationBarView.heightAnchor.constraint(equalToConstant: 106),
+
+            scrollView.topAnchor.constraint(equalTo: navigationBarView.bottomAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -192,9 +214,19 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
             contentView.trailingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.trailingAnchor, constant: -8),
             contentView.bottomAnchor.constraint(equalTo: scrollView.frameLayoutGuide.bottomAnchor, constant: -8),
 
+            contentBackground.topAnchor.constraint(equalTo: scrollView.frameLayoutGuide.topAnchor, constant: 8),
+            contentBackground.leadingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.leadingAnchor, constant: 8),
+            contentBackground.trailingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.trailingAnchor, constant: -8),
+            contentBackground.bottomAnchor.constraint(equalTo: scrollView.frameLayoutGuide.bottomAnchor, constant: -8),
+
             getStartedButton.topAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
             getStartedButton.leadingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.leadingAnchor, constant: 8),
             getStartedButton.trailingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.trailingAnchor, constant: -8),
+
+            mainTabBarController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            mainTabBarController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            mainTabBarController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            mainTabBarController.view.heightAnchor.constraint(equalToConstant: 81)
         ])
     }
 
