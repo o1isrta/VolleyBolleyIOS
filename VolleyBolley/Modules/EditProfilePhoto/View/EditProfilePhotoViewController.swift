@@ -6,10 +6,7 @@
 //
 
 import UIKit
-
-protocol EditProfilePhotoViewControllerProtocol: AnyObject {
-
-}
+import SwiftUI
 
 final class EditProfilePhotoViewController: BaseViewController {
 
@@ -24,12 +21,19 @@ final class EditProfilePhotoViewController: BaseViewController {
 
     // MARK: - Private Properties
 
-    private let presenter: EditProfilePhotoPresenterProtocol
+    //    private let presenter: EditProfilePhotoPresenterProtocol
+    var presenter: EditProfilePhotoPresenterProtocol?
+    var router: EditProfilePhotoRouterProtocol?
 
-    private let scrollView = UIScrollView()
     private let contentView = UIView()
     private lazy var glassmorphismView = GlassmorphismView()
-    private var photoActionTableView = PhotoActionsTableView()
+    private lazy var photoActionTableView: PhotoActionsTableView = {
+        let tableView = PhotoActionsTableView()
+        tableView.didSelectAction = { [weak self] index in
+            self?.presenter?.didSelectAction(at: index)
+        }
+        return tableView
+    }()
 
     private lazy var screenTitle = CustomTitle(
         text: String(localized: "Change photo"),
@@ -70,24 +74,32 @@ final class EditProfilePhotoViewController: BaseViewController {
         return button
     }()
 
+    private let loadingIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .large)
+        indicator.hidesWhenStopped = true
+        indicator.color = .white
+        return indicator
+    }()
+
     // MARK: - Initializers
 
-    init(presenter: EditProfilePhotoPresenterProtocol) {
-        self.presenter = presenter
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    //    init(presenter: EditProfilePhotoPresenterProtocol) {
+    //        self.presenter = presenter
+    //        super.init(nibName: nil, bundle: nil)
+    //    }
+    //
+    //    @available(*, unavailable)
+    //    required init?(coder: NSCoder) {
+    //        fatalError("init(coder:) has not been implemented")
+    //    }
 
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-        presenter.viewDidLoad()
+        //        router.delegate = self
+        presenter?.viewDidLoad()
     }
 }
 
@@ -97,18 +109,20 @@ private extension EditProfilePhotoViewController {
     @objc
     func backButtonTapped() {
         print("in backButtonTapped function")
-        presenter.backButtonTapped()
+        presenter?.backButtonTapped()
     }
 
     @objc
     func saveButtonTapped() {
         print("Save Button Tapped")
+        presenter?.saveButtonTapped()
     }
 
     func setupView() {
         setupGlassmorphismView()
         setupSubviews()
         setupConstraints()
+        setupLoadingIndicator()
     }
 
     private func setupGlassmorphismView() {
@@ -118,22 +132,21 @@ private extension EditProfilePhotoViewController {
     }
 
     private func setupSubviews() {
-//        [backButton, screenTitle, scrollView, profilePhotoView].forEach {
         [backButton, screenTitle, profilePhotoView, pencilView, photoActionTableView, saveButton].forEach {
             glassmorphismView.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
-
-//        scrollView.addSubview(contentView)
-//        contentView.translatesAutoresizingMaskIntoConstraints = false
-
-//        contentView.addSubview(profilePhotoView)
-//        contentView.backgroundColor = .clear
-//        profilePhotoView.translatesAutoresizingMaskIntoConstraints = false
-
-//        contentView.addSubview(dataStackView)
-//        dataStackView.translatesAutoresizingMaskIntoConstraints = false
     }
+
+    private func setupLoadingIndicator() {
+        view.addSubview(loadingIndicator)
+        loadingIndicator.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            loadingIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loadingIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+    }
+
 
     private func setupConstraints() {
         NSLayoutConstraint.activate([
@@ -160,7 +173,6 @@ private extension EditProfilePhotoViewController {
             photoActionTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             photoActionTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             photoActionTableView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            photoActionTableView.widthAnchor.constraint(equalToConstant: 280),
             photoActionTableView.heightAnchor.constraint(equalToConstant: 180),
             saveButton.topAnchor.constraint(equalTo: photoActionTableView.bottomAnchor, constant: 16),
             saveButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
@@ -170,28 +182,117 @@ private extension EditProfilePhotoViewController {
     }
 }
 
-#if DEBUG
-import SwiftUI
+//extension EditProfilePhotoViewController: PhotoActionsTableViewDelegate {
+//    func photoActionsTableView(_ tableView: PhotoActionsTableView, didSelectImage image: UIImage) {
+//        updateProfileImage(image)
+//    }
+//
+//    internal func updateProfileImage(_ image: UIImage) {
+//        print("in updateProfileImage")
+//        DispatchQueue.main.async {
+//            print("Получено изображение: \(image)")
+//            self.profilePhotoView.image = image
+//            UIView.transition(with: self.profilePhotoView,
+//                              duration: 0.3,
+//                              options: .transitionCrossDissolve,
+//                              animations: {
+//                self.profilePhotoView.image = image
+//            },
+//                              completion: nil)
+//        }
+//    }
+//}
 
-struct  EditProfilePhotoViewControllerPreview: UIViewControllerRepresentable {
-    class StubPresenter: EditProfilePhotoPresenterProtocol {
-        weak var view: EditProfilePhotoViewControllerProtocol?
-        func viewDidLoad() {}
-        func backButtonTapped() {}
+extension EditProfilePhotoViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true)
+
+        guard let image = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage else {
+            router?.showErrorAlert(message: "Failed to get image from camera")
+            return
+        }
+
+        updateProfileImage(image)
     }
 
-    func makeUIViewController(context: Context) -> some UIViewController {
-        let presenter = StubPresenter()
-        return EditProfilePhotoViewController(presenter: presenter)
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
     }
-
-    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {}
 }
 
-struct PersonalDataViewController_Previews: PreviewProvider {
-    static var previews: some View {
-        EditProfilePhotoViewControllerPreview()
-            .edgesIgnoringSafeArea(.all)
+// MARK: - EditProfilePhotoViewProtocol
+extension EditProfilePhotoViewController: EditProfilePhotoViewControllerProtocol {
+
+    func updateProfileImage(_ image: UIImage) {
+        print("in updateProfileImage")
+        DispatchQueue.main.async {
+            print("Получено изображение: \(image)")
+            self.profilePhotoView.image = image
+            self.profilePhotoView.contentMode = .scaleAspectFill
+            UIView.transition(with: self.profilePhotoView,
+                              duration: 0.3,
+                              options: .transitionCrossDissolve,
+                              animations: {
+                self.profilePhotoView.image = image
+            },
+                              completion: nil)
+        }
     }
+
+    //    func updateProfileImage(_ image: UIImage?) {
+    //        DispatchQueue.main.async {
+    //            self.profilePhotoView.image = image ?? UIImage.imgPerson
+    //            self.profilePhotoView.contentMode = .scaleAspectFill
+    //        }
+    //    }
+
+    func showLoading(_ isLoading: Bool) {
+        DispatchQueue.main.async {
+            isLoading ? self.loadingIndicator.startAnimating() : self.loadingIndicator.stopAnimating()
+            self.view.isUserInteractionEnabled = !isLoading
+        }
+    }
+
+    func showError(message: String) {
+        DispatchQueue.main.async {
+            self.router?.showErrorAlert(message: message)
+        }
+    }
+}
+
+//#if DEBUG
+//struct  EditProfilePhotoViewControllerPreview: UIViewControllerRepresentable {
+//    class StubPresenter: EditProfilePhotoPresenterProtocol {
+//        weak var view: EditProfilePhotoViewControllerProtocol?
+//        func viewDidLoad() {}
+//        func backButtonTapped() {}
+//        func saveButtonTapped() {}
+//        func didSelectAction(at: Int) {}
+//    }
+//
+//    func makeUIViewController(context: Context) -> some UIViewController {
+//        let presenter = StubPresenter()
+//        return EditProfilePhotoViewController(presenter: presenter)
+////        return EditProfilePhotoViewController()
+//    }
+//
+//    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {}
+//}
+//
+//struct PersonalDataViewController_Previews: PreviewProvider {
+//    static var previews: some View {
+//        EditProfilePhotoViewControllerPreview()
+//            .edgesIgnoringSafeArea(.all)
+//    }
+//}
+//#endif
+
+
+#if DEBUG
+@available(iOS 17.0, *)
+#Preview {
+    EditProfilePhotoViewController()
 }
 #endif

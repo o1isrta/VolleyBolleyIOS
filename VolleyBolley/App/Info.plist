@@ -31,5 +31,13 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Для отображения ближайших спортивных площадок на карте</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>We need access to your photo library to let you choose a profile picture</string>
+
+    <key>NSCameraUsageDescription</key>
+    <string>We need access to your camera to take a profile picture</string>
+
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>We need access to save photos to your library</string>
 </dict>
 </plist>

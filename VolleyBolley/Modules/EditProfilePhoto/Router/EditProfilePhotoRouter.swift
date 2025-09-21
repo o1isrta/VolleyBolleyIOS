@@ -7,28 +7,72 @@
 
 import UIKit
 
-protocol EditProfilePhotoRouterProtocol: AnyObject {
-    func attachViewController(_ view: UIViewController)
-    func navigateBack(from view: EditProfilePhotoViewControllerProtocol?)
-}
-
 final class EditProfilePhotoRouter: EditProfilePhotoRouterProtocol {
 
     // MARK: - Public Properties
 
     weak var viewController: UIViewController?
+    weak var view: EditProfilePhotoViewControllerProtocol?
+    //    weak var delegate: EditProfilePhotoViewControllerProtocol?
+    var currentImage = UIImage()
+
+    // MARK: - Initializers
+
+    init(view: EditProfilePhotoViewControllerProtocol) {
+        self.view = view
+    }
 
     // MARK: - Public Methods
+
+    func showPhotoLibrary() {
+        print("showPhotoLibrary Router")
+        guard let viewController = viewController else { return }
+        let profilePhotoPickerVC = ProfilePhotoPickerVC()
+        profilePhotoPickerVC.delegate = self
+        profilePhotoPickerVC.modalPresentationStyle = .fullScreen
+        viewController.present(profilePhotoPickerVC, animated: true)
+    }
+
+    func showCamera() {
+        print("showCamera Router")
+
+        guard let viewController = viewController else { return }
+
+        guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
+            showErrorAlert(message: "Camera is not available on this device")
+            return
+        }
+
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .camera
+        imagePicker.delegate = viewController as? (UIImagePickerControllerDelegate & UINavigationControllerDelegate)
+        imagePicker.allowsEditing = true
+        viewController.present(imagePicker, animated: true)
+    }
 
     func attachViewController(_ view: UIViewController) {
         viewController = view
     }
 
-    func navigateBack(from view: EditProfilePhotoViewControllerProtocol?) {
-        if let viewController = viewController {
-            viewController.navigationController?.popViewController(animated: true)
-        } else if let view = view as? UIViewController {
-            view.navigationController?.popViewController(animated: true)
-        }
+    func navigateBack() {
+        viewController?.navigationController?.popViewController(animated: true)
+    }
+
+    func showErrorAlert(message: String) {
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        viewController?.present(alert, animated: true)
+    }
+}
+
+
+extension EditProfilePhotoRouter: ProfilePhotoPickerVCDelegate {
+    func photoPickerDidSelectImage(_ image: UIImage) {
+        print("Выбрано изображение: \(image)")
+        view?.updateProfileImage(image)
+    }
+
+    func photoPickerDidCancel() {
+        print("Выбор фото отменен")
     }
 }

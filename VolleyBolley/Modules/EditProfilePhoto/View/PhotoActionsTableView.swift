@@ -10,12 +10,14 @@ import SwiftUI
 
 final class PhotoActionsTableView: UIView {
 
+    var didSelectAction: ((Int) -> Void)?
+    //    weak var delegate: PhotoActionsTableViewDelegate?
+
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.backgroundColor = .systemBackground
         tableView.layer.cornerRadius = 32
         tableView.layer.masksToBounds = true
-//        tableView.separatorStyle = .none
         tableView.isScrollEnabled = false
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         tableView.separatorColor = .separator
@@ -74,8 +76,20 @@ extension PhotoActionsTableView: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         // Handle selection
+        didSelectAction?(indexPath.row)
     }
 }
+
+//extension PhotoActionsTableView: ProfilePhotoPickerVCDelegate {
+//    func photoPickerDidSelectImage(_ image: UIImage) {
+//        //        print("Выбрано изображение: \(image)")
+//        delegate?.photoActionsTableView(self, didSelectImage: image)
+//    }
+//
+//    func photoPickerDidCancel() {
+//        print("Выбор фото отменен")
+//    }
+//}
 
 class ActionCell: UITableViewCell {
     func configure(iconName: String, title: String) {
@@ -95,13 +109,6 @@ struct PhotoActionsTableViewPreview: UIViewRepresentable {
 
     func makeUIView(context: Context) -> PhotoActionsTableView {
         PhotoActionsTableView()
-        //        let view = PhotoActionsTableView()
-        //        view.translatesAutoresizingMaskIntoConstraints = false
-        //        NSLayoutConstraint.activate([
-        //            view.widthAnchor.constraint(equalToConstant: 280),
-        //            view.heightAnchor.constraint(equalToConstant: 180)
-        //        ])
-        //        return view
     }
 
     func updateUIView(_ uiViewController: PhotoActionsTableView, context: Context) {}
@@ -110,5 +117,4 @@ struct PhotoActionsTableViewPreview: UIViewRepresentable {
 
 #Preview {
     PhotoActionsTableViewPreview()
-    //            .frame(width: 300, height: 100)
 }
