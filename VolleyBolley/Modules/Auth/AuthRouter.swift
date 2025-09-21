@@ -5,23 +5,24 @@
 //  Created by Олег Козырев
 //
 
+import Swinject
 import UIKit
 
 final class AuthRouter: AuthRouterProtocol {
 
     weak var viewController: UIViewController?
-    weak var coordinator: AppRouter?
+    weak var router: AppRouter?
 
     init(viewController: UIViewController, coordinator: AppRouter?) {
         self.viewController = viewController
-        self.coordinator = coordinator
+        self.router = coordinator
     }
 
     func showPhoneAuth() {
-        // TODO: Сделать переход к окну авторизации через телефон
+        router?.pushPhoneAuth()
     }
 
     func showUserRegScreen() {
-        coordinator?.showUserReg()
+        router?.pushUserReg()
     }
 }

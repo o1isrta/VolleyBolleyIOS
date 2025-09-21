@@ -1,7 +1,11 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "" : {
+
+    },
     "  Continue with Facebook" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -47,6 +51,9 @@
         }
       }
     },
+    "+ With the country code" : {
+
+    },
     "About" : {
       "comment" : "Profile",
       "localizations" : {
@@ -54,6 +61,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "О приложении"
+          }
+        }
+      }
+    },
+    "About levels" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Информация об уровнях игроков"
           }
         }
       }
@@ -66,6 +83,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ДОБАВИТЬ ВЫБРАННОЕ"
+          }
+        }
+      }
+    },
+    "After each game, teammates can rate your level.\nOnce you receive 6 ratings, your level may change:\n  • 5+ positive ratings → promoted one step\n  • 5+ negative ratings → demoted one step\n  • Mixed feedback → level stays the same" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "После каждой игры товарищи по команде могут оценить ваш уровень.\nПосле получения 6 оценок ваш уровень может измениться:\n  • 5+ положительных оценок → повышение на одну ступень\n  • 5+ отрицательных оценок → понижение на одну ступень\n  • Неоднозначные отзывы → уровень остаётся прежним"
           }
         }
       }
@@ -588,6 +615,18 @@
         }
       }
     },
+    "Designed by" : {
+      "comment" : "DesignedByLabelAboutView",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Дизайн"
+          }
+        }
+      }
+    },
     "DETAILS" : {
       "comment" : "\"Details\" button",
       "localizations" : {
@@ -595,6 +634,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ПОДРОБНЕЕ"
+          }
+        }
+      }
+    },
+    "Developed by" : {
+      "comment" : "DevelopedByLabelAboutView",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Разработка"
           }
         }
       }
@@ -746,6 +797,58 @@
         }
       }
     },
+    "Earn 10 points from higher-level players within the last 60 days.\nThe higher the evaluator’s level, the more weight their rating carries." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Заработайте 10 очков от игроков более высокого уровня за последние 60 дней. Чем выше уровень оценщика, тем больший вес имеет его рейтинг."
+          }
+        }
+      }
+    },
+    "Elite level, official championships experience" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elite level, official championships experience"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Элитный уровень, опыт участия в официальных чемпионатах"
+          }
+        }
+      }
+    },
+    "Enter the 6-digit code" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter the 6-digit code"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Введите 6-значный код"
+          }
+        }
+      }
+    },
+    "Fair Play Policy" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Политика честной игры"
+          }
+        }
+      }
+    },
     "FAQ" : {
       "comment" : "Profile",
       "localizations" : {
@@ -778,6 +881,18 @@
         }
       }
     },
+    "Founder" : {
+      "comment" : "FounderLabelAboutView",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Основатель"
+          }
+        }
+      }
+    },
     "Game host" : {
       "comment" : "Header of Game Description",
       "localizations" : {
@@ -800,6 +915,9 @@
         }
       }
     },
+    "Get new code" : {
+
+    },
     "GET STARTED" : {
       "localizations" : {
         "ru" : {
@@ -810,6 +928,12 @@
         }
       }
     },
+    "Invalid code" : {
+
+    },
+    "Know rules, still learning" : {
+
+    },
     "Level" : {
       "comment" : "User info / Game Description",
       "localizations" : {
@@ -817,6 +941,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Уровень"
+          }
+        }
+      }
+    },
+    "Levels can drop due to:" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Уровень может упасть из-за:"
           }
         }
       }
@@ -895,6 +1029,9 @@
           }
         }
       }
+    },
+    "New to the game" : {
+
     },
     "NEXT STEP" : {
       "comment" : "Next button",
@@ -1206,6 +1343,16 @@
         }
       }
     },
+    "Post-Game Ratings" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Рейтинги после игры"
+          }
+        }
+      }
+    },
     "Private game" : {
       "comment" : "Game",
       "localizations" : {
@@ -1213,6 +1360,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Частная игра"
+          }
+        }
+      }
+    },
+    "Ratings (6 within 60 days, 5+ down = demotion)\nInactivity:\n• 90 days = minus 1 step\n• 180 days = reset to lowest level in current category" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Рейтинги (6 в течение 60 дней, 5+ вниз = понижение)\nБездействие:\n• 90 дней = минус 1 ступень\n• 180 дней = сброс до самого низкого уровня в текущей категории"
+          }
+        }
+      }
+    },
+    "Registration" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Регистрация"
           }
         }
       }
@@ -1266,6 +1433,9 @@
         }
       }
     },
+    "SEND CODE" : {
+
+    },
     "Sign up\nwith\na social\nmedia" : {
       "localizations" : {
         "ru" : {
@@ -1275,6 +1445,9 @@
           }
         }
       }
+    },
+    "Skilled, play often, tournaments experience" : {
+
     },
     "Support" : {
       "comment" : "Profile",
@@ -1309,6 +1482,16 @@
         }
       }
     },
+    "To find the right games and teammates, choose your current skill level:\nOptions:\n  • Light (L1–L3) – Beginner\n  • Medium (M1–M3) – Confident amateur\n  • Hard (H1–H3) – Advanced\n  • Pro (P1–P3) – Professional\nThe higher the number, the higher the skill. Your level may change later based on player ratings." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Чтобы найти подходящие игры и товарищей по команде, выберите свой текущий уровень мастерства:\nВарианты:\n  • Низкий (L1–L3) — Новичок\n  • Средний (M1–M3) — Уверенный любитель\n  • Сложный (H1–H3) — Продвинутый\n  • Профессиональный (P1–P3) — Профессиональный\nЧем выше число, тем выше мастерство. Ваш уровень может измениться позже в зависимости от рейтинга игрока."
+          }
+        }
+      }
+    },
     "tomorrow_label" : {
       "comment" : "Game",
       "extractionState" : "manual",
@@ -1338,12 +1521,45 @@
         }
       }
     },
+    "Update" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Обновить"
+          }
+        }
+      }
+    },
+    "VERIFY" : {
+
+    },
     "VOLLEYBOLLEY" : {
       "localizations" : {
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "VOLLEYBOLLEY"
+          }
+        }
+      }
+    },
+    "Want to move to the next category?" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Хотите перейти в следующую категорию?"
+          }
+        }
+      }
+    },
+    "We ensure a fair system:\n• Ratings are anonymous\n• Max 2 ratings from the same player in 60 days\n• Light has minimal impact on Hard and Pro levels\n• Pro levels are harder to reach\nPlay fair — your level will speak for itself." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Мы гарантируем честную систему:\n• Рейтинги анонимны\n• Максимум 2 рейтинга от одного игрока за 60 дней\n• Уровень Light минимально влияет на уровни Hard и Pro\n• Уровень Pro сложнее достичь\nИграйте честно — ваш уровень будет говорить сам за себя."
           }
         }
       }
@@ -1410,6 +1626,9 @@
           }
         }
       }
+    },
+    "Your phone number" : {
+
     },
     "ОК" : {
       "localizations" : {

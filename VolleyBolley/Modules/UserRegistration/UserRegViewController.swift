@@ -8,13 +8,12 @@
 import UIKit
 
 final class UserRegViewController: UIViewController, UITextFieldDelegate {
+
     var presenter: UserRegPresenterProtocol?
 
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
-        scrollView.backgroundColor = AppColor.Background.blur
-        scrollView.layer.cornerRadius = 32
-        scrollView.layer.masksToBounds = true
+        scrollView.backgroundColor = AppColor.Background.screen
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.showsVerticalScrollIndicator = false
         return scrollView
@@ -22,28 +21,31 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
 
     private lazy var contentView: UIView = {
         let contentView = UIView()
+        contentView.backgroundColor = AppColor.Background.blur
+        contentView.layer.cornerRadius = 32
+        contentView.layer.masksToBounds = true
         contentView.translatesAutoresizingMaskIntoConstraints = false
         return contentView
     }()
 
     private lazy var titleLabel = CustomTitle(text: String(localized: "registration_title"), isLarge: true)
-
     private lazy var nameLabel = CustomLabel(text: String(localized: "Name"), isBold: true)
     private lazy var nameTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "Anton"// TODO String(localized:)
+        textField.placeholder = String(localized: "Name")
         textField.backgroundColor = AppColor.Border.primary
         textField.layer.cornerRadius = 16
         textField.textColor = AppColor.Text.placeHolder
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.setLeftPaddingPoints(16)
+        textField.addTarget(self, action: #selector(nameTextFieldDidChange), for: .editingChanged)
         return textField
     }()
 
     private lazy var surnameLabel = CustomLabel(text: String(localized: "Surname"), isBold: true)
     private lazy var surnameTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "Ivanov"// TODO String(localized:)
+        textField.placeholder = String(localized: "Surname")
         textField.backgroundColor = AppColor.Border.primary
         textField.layer.cornerRadius = 16
         textField.textColor = AppColor.Text.placeHolder
@@ -99,7 +101,7 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
         return button
     }()
     private lazy var lightLevelButton = PickButton(
-		title: String(localized: "common.light").capitalized(with: .current),
+        title: String(localized: "common.light").capitalized(with: .current),
         isSelected: true,
         target: self,
         action: #selector(levelButtonTapped(_:))
@@ -133,7 +135,7 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
 
     private lazy var getStartedButton = NextStepButton(
         title: String(localized: "GET STARTED"),
-        isActive: true,
+        isActive: false,
         target: self,
         action: #selector(getStartedTapped)
     )
@@ -150,7 +152,6 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = AppColor.Background.screen
 
         let countries = presenter?.countries ?? []
         countryList = LocationPickerView(items: countries, placeholder: String(localized: "Choose your country"))
@@ -166,7 +167,7 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
         setupActions()
 
         presenter?.viewDidLoad()
-
+        updateGetStartedButtonState()
         view.layoutIfNeeded()
     }
 
@@ -174,19 +175,18 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
 
-        let safeArea = view.safeAreaLayoutGuide
-
         NSLayoutConstraint.activate([
-            scrollView.frameLayoutGuide.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 8),
-            scrollView.frameLayoutGuide.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 8),
-            scrollView.frameLayoutGuide.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -8),
-            scrollView.frameLayoutGuide.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
 
-            contentView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
-            contentView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
-            contentView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
+            contentView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor, constant: 8),
+            contentView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor, constant: 8),
+            contentView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor, constant: -8),
             contentView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
-            contentView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor)
+
+            contentView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor, constant: -16)
         ])
     }
 
@@ -342,6 +342,15 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
         presenter?.didTapGetStarted(name: name, surname: surname, gender: gender)
     }
 
+    @objc private func nameTextFieldDidChange() {
+            updateGetStartedButtonState()
+        }
+
+    private func updateGetStartedButtonState() {
+           let hasName = !(nameTextField.text ?? "").isEmpty
+           getStartedButton.setActive(hasName)
+       }
+
     func textField(
         _ textField: UITextField,
         shouldChangeCharactersIn range: NSRange,
@@ -353,60 +362,8 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
         guard let stringRange = Range(range, in: currentText) else { return false }
         let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
 
-        let digitsOnly = updatedText.replacingOccurrences(of: "[^0-9]", with: "", options: .regularExpression)
-
-        if digitsOnly.count > 8 {
+        guard let formattedText = updatedText.formattedBirthdayOrNil() else {
             return false
-        }
-
-        var formattedText = ""
-        let dayEnd = min(2, digitsOnly.count)
-        if dayEnd > 0 {
-            let day = String(digitsOnly.prefix(dayEnd))
-            formattedText += day
-            if dayEnd == 2 {
-                formattedText += " / "
-            }
-        }
-
-        let monthStart = 2
-        let monthEnd = min(4, digitsOnly.count)
-        if monthEnd > monthStart {
-            let startIdx = digitsOnly.index(digitsOnly.startIndex, offsetBy: monthStart)
-            let endIdx = digitsOnly.index(digitsOnly.startIndex, offsetBy: monthEnd)
-            let month = String(digitsOnly[startIdx..<endIdx])
-            formattedText += month
-            if monthEnd == 4 {
-                formattedText += " / "
-            }
-        }
-
-        let yearStart = 4
-        if digitsOnly.count > yearStart {
-            let startIdx = digitsOnly.index(digitsOnly.startIndex, offsetBy: yearStart)
-            let year = String(digitsOnly[startIdx...])
-            formattedText += year
-        }
-
-        if digitsOnly.count >= 2 {
-            if let dayInt = Int(digitsOnly.prefix(2)), dayInt < 1 || dayInt > 31 {
-                return false
-            }
-        }
-        if digitsOnly.count >= 4 {
-            let monthRange = digitsOnly.index(digitsOnly.startIndex, offsetBy: 2)..<digitsOnly.index(digitsOnly.startIndex, offsetBy: 4)
-            if let monthInt = Int(digitsOnly[monthRange]), monthInt < 1 || monthInt > 12 {
-                return false
-            }
-        }
-        if digitsOnly.count == 8 {
-            let yearRange = digitsOnly.index(digitsOnly.startIndex, offsetBy: 4)..<digitsOnly.index(digitsOnly.startIndex, offsetBy: 8)
-            if let yearInt = Int(digitsOnly[yearRange]) {
-                let currentYear = Calendar.current.component(.year, from: Date())
-                if yearInt > currentYear {
-                    return false
-                }
-            }
         }
 
         textField.text = formattedText
