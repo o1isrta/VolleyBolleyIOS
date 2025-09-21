@@ -5,7 +5,7 @@
 //  Created by Valery Zvonarev on 10.09.2025.
 //
 
-import Foundation
+import UIKit
 
 final class EditProfilePhotoPresenter: EditProfilePhotoPresenterProtocol {
 
@@ -31,18 +31,20 @@ final class EditProfilePhotoPresenter: EditProfilePhotoPresenterProtocol {
     // MARK: - Public Methods
 
     func viewDidLoad() {
-        print("in viewDidLoad - Presenter")
         interactor.loadData()
     }
 
     func didSelectAction(at index: Int) {
-        switch index {
+        switch index
+        {
             case 0: // Choose from Gallery
+                view?.showLoading(true)
                 router.showPhotoLibrary()
             case 1: // Take photo
+                view?.showLoading(true)
                 router.showCamera()
             case 2: // Delete photo
-                    //                view?.showLoading(true)
+                view?.showLoading(true)
                 interactor.deleteProfilePhoto()
             default:
                 break
@@ -50,12 +52,10 @@ final class EditProfilePhotoPresenter: EditProfilePhotoPresenterProtocol {
     }
 
     func backButtonTapped() {
-        print("in Back button tapped - Presenter")
         router.navigateBack()
     }
 
-    func saveButtonTapped() {
-        print("in Save button tapped - Presenter")
-        //        router.navigateBack(from: view)
+    func saveButtonTapped(image: UIImage) {
+        interactor.saveProfilePhoto(image: image)
     }
 }

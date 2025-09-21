@@ -9,17 +9,19 @@ import UIKit
 
 protocol EditProfilePhotoViewControllerProtocol: AnyObject {
     func updateProfileImage(_ image: UIImage)
+    func showLoading(_ isLoading: Bool)
 }
 
 protocol EditProfilePhotoPresenterProtocol: AnyObject {
     func viewDidLoad()
     func backButtonTapped()
-    func saveButtonTapped()
+    func saveButtonTapped(image: UIImage)
     func didSelectAction(at: Int)
 }
 
 protocol EditProfilePhotoInteractorProtocol: AnyObject {
     func loadData()
+    func saveProfilePhoto(image: UIImage)
     func deleteProfilePhoto()
 }
 
@@ -38,4 +40,5 @@ protocol EditProfilePhotoRouterProtocol: AnyObject {
 protocol ProfilePhotoPickerVCDelegate: AnyObject {
     func photoPickerDidSelectImage(_ image: UIImage)
     func photoPickerDidCancel()
+    func photoPickerDidFailWithError(error: String)
 }

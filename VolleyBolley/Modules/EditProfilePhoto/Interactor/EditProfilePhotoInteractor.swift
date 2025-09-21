@@ -18,12 +18,15 @@ final class EditProfilePhotoInteractor: EditProfilePhotoInteractorProtocol {
 
     func loadData() {
         // Заглушка: загрузка фото из бэкенда
-        print("Personal data loaded")
+        // print("Profile photo uploaded from server")
+    }
+
+    func saveProfilePhoto(image: UIImage) {
+        // Заглушка - сохранение фото профиля на бэкенд
+        // print("Profile photo downloaded to server")
     }
 
     func deleteProfilePhoto() {
-        print("deleteProfilePhoto Interactor")
-        //        let image = UIImage(systemName: "person.circle.fill") ?? UIImage()
         let image = UIImage.Icon.profile
         view?.updateProfileImage(image)
     }

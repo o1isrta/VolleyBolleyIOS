@@ -5,13 +5,12 @@
 //  Created by Valery Zvonarev on 11.09.2025.
 //
 
-import UIKit
 import SwiftUI
+import UIKit
 
 final class PhotoActionsTableView: UIView {
 
     var didSelectAction: ((Int) -> Void)?
-    //    weak var delegate: PhotoActionsTableViewDelegate?
 
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
@@ -80,17 +79,7 @@ extension PhotoActionsTableView: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
-//extension PhotoActionsTableView: ProfilePhotoPickerVCDelegate {
-//    func photoPickerDidSelectImage(_ image: UIImage) {
-//        //        print("Выбрано изображение: \(image)")
-//        delegate?.photoActionsTableView(self, didSelectImage: image)
-//    }
-//
-//    func photoPickerDidCancel() {
-//        print("Выбор фото отменен")
-//    }
-//}
-
+// MARK: ActionCell, custom cell class
 class ActionCell: UITableViewCell {
     func configure(iconName: String, title: String) {
         var content = defaultContentConfiguration()
@@ -113,7 +102,6 @@ struct PhotoActionsTableViewPreview: UIViewRepresentable {
 
     func updateUIView(_ uiViewController: PhotoActionsTableView, context: Context) {}
 }
-
 
 #Preview {
     PhotoActionsTableViewPreview()

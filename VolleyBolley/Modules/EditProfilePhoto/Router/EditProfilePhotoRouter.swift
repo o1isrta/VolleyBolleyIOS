@@ -13,7 +13,6 @@ final class EditProfilePhotoRouter: EditProfilePhotoRouterProtocol {
 
     weak var viewController: UIViewController?
     weak var view: EditProfilePhotoViewControllerProtocol?
-    //    weak var delegate: EditProfilePhotoViewControllerProtocol?
     var currentImage = UIImage()
 
     // MARK: - Initializers
@@ -25,7 +24,6 @@ final class EditProfilePhotoRouter: EditProfilePhotoRouterProtocol {
     // MARK: - Public Methods
 
     func showPhotoLibrary() {
-        print("showPhotoLibrary Router")
         guard let viewController = viewController else { return }
         let profilePhotoPickerVC = ProfilePhotoPickerVC()
         profilePhotoPickerVC.delegate = self
@@ -34,8 +32,6 @@ final class EditProfilePhotoRouter: EditProfilePhotoRouterProtocol {
     }
 
     func showCamera() {
-        print("showCamera Router")
-
         guard let viewController = viewController else { return }
 
         guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
@@ -65,14 +61,17 @@ final class EditProfilePhotoRouter: EditProfilePhotoRouterProtocol {
     }
 }
 
-
 extension EditProfilePhotoRouter: ProfilePhotoPickerVCDelegate {
     func photoPickerDidSelectImage(_ image: UIImage) {
-        print("Выбрано изображение: \(image)")
         view?.updateProfileImage(image)
     }
 
     func photoPickerDidCancel() {
+        // действия при отмене выбора фото, если нужно
         print("Выбор фото отменен")
+    }
+
+    func photoPickerDidFailWithError(error: String) {
+        showErrorAlert(message: error)
     }
 }

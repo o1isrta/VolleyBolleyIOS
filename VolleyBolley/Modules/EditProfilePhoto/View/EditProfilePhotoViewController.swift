@@ -5,8 +5,8 @@
 //  Created by Valery Zvonarev on 10.09.2025.
 //
 
-import UIKit
 import SwiftUI
+import UIKit
 
 final class EditProfilePhotoViewController: BaseViewController {
 
@@ -19,12 +19,13 @@ final class EditProfilePhotoViewController: BaseViewController {
         static let backButtonTopInset: CGFloat = 14
     }
 
-    // MARK: - Private Properties
+    // MARK: - Public Properties
 
-    //    private let presenter: EditProfilePhotoPresenterProtocol
     var presenter: EditProfilePhotoPresenterProtocol?
     var router: EditProfilePhotoRouterProtocol?
 
+    // MARK: - Private Properties
+    private var currentImage = UIImage()
     private let contentView = UIView()
     private lazy var glassmorphismView = GlassmorphismView()
     private lazy var photoActionTableView: PhotoActionsTableView = {
@@ -81,24 +82,11 @@ final class EditProfilePhotoViewController: BaseViewController {
         return indicator
     }()
 
-    // MARK: - Initializers
-
-    //    init(presenter: EditProfilePhotoPresenterProtocol) {
-    //        self.presenter = presenter
-    //        super.init(nibName: nil, bundle: nil)
-    //    }
-    //
-    //    @available(*, unavailable)
-    //    required init?(coder: NSCoder) {
-    //        fatalError("init(coder:) has not been implemented")
-    //    }
-
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-        //        router.delegate = self
         presenter?.viewDidLoad()
     }
 }
@@ -108,14 +96,13 @@ private extension EditProfilePhotoViewController {
 
     @objc
     func backButtonTapped() {
-        print("in backButtonTapped function")
         presenter?.backButtonTapped()
     }
 
     @objc
     func saveButtonTapped() {
-        print("Save Button Tapped")
-        presenter?.saveButtonTapped()
+        guard let image = profilePhotoView.image else { return }
+        presenter?.saveButtonTapped(image: image)
     }
 
     func setupView() {
@@ -142,25 +129,29 @@ private extension EditProfilePhotoViewController {
         view.addSubview(loadingIndicator)
         loadingIndicator.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            loadingIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            loadingIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            loadingIndicator.centerXAnchor.constraint(equalTo: profilePhotoView.centerXAnchor),
+            loadingIndicator.centerYAnchor.constraint(equalTo: profilePhotoView.centerYAnchor)
+//            loadingIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+//            loadingIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
-
 
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             glassmorphismView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            glassmorphismView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: LayoutConstants.mainIndent),
-            glassmorphismView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -LayoutConstants.mainIndent),
-            glassmorphismView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -LayoutConstants.tabBarHeight),
-
-            backButton.topAnchor.constraint(equalTo: glassmorphismView.topAnchor, constant: LayoutConstants.backButtonTopInset),
-            backButton.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor, constant: LayoutConstants.mainSpacing / 2),
-
+            glassmorphismView.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                                       constant: LayoutConstants.mainIndent),
+            glassmorphismView.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+                                                        constant: -LayoutConstants.mainIndent),
+            glassmorphismView.bottomAnchor.constraint(equalTo: view.bottomAnchor,
+                                                      constant: -LayoutConstants.tabBarHeight),
+            backButton.topAnchor.constraint(equalTo: glassmorphismView.topAnchor,
+                                            constant: LayoutConstants.backButtonTopInset),
+            backButton.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor,
+                                                constant: LayoutConstants.mainSpacing / 2),
             screenTitle.centerXAnchor.constraint(equalTo: glassmorphismView.centerXAnchor),
-            screenTitle.topAnchor.constraint(equalTo: glassmorphismView.topAnchor, constant: LayoutConstants.mainSpacing),
-
+            screenTitle.topAnchor.constraint(equalTo: glassmorphismView.topAnchor,
+                                             constant: LayoutConstants.mainSpacing),
             profilePhotoView.centerXAnchor.constraint(equalTo: glassmorphismView.centerXAnchor),
             profilePhotoView.topAnchor.constraint(equalTo: screenTitle.bottomAnchor, constant: 16),
             profilePhotoView.widthAnchor.constraint(equalToConstant: 122),
@@ -182,53 +173,31 @@ private extension EditProfilePhotoViewController {
     }
 }
 
-//extension EditProfilePhotoViewController: PhotoActionsTableViewDelegate {
-//    func photoActionsTableView(_ tableView: PhotoActionsTableView, didSelectImage image: UIImage) {
-//        updateProfileImage(image)
-//    }
-//
-//    internal func updateProfileImage(_ image: UIImage) {
-//        print("in updateProfileImage")
-//        DispatchQueue.main.async {
-//            print("Получено изображение: \(image)")
-//            self.profilePhotoView.image = image
-//            UIView.transition(with: self.profilePhotoView,
-//                              duration: 0.3,
-//                              options: .transitionCrossDissolve,
-//                              animations: {
-//                self.profilePhotoView.image = image
-//            },
-//                              completion: nil)
-//        }
-//    }
-//}
-
+// MARK: - UIImagePickerControllerDelegate, UINavigationControllerDelegate
 extension EditProfilePhotoViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     func imagePickerController(_ picker: UIImagePickerController,
-                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         picker.dismiss(animated: true)
 
         guard let image = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage else {
             router?.showErrorAlert(message: "Failed to get image from camera")
             return
         }
-
         updateProfileImage(image)
     }
 
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true)
+        showLoading(false)
     }
 }
 
-// MARK: - EditProfilePhotoViewProtocol
+// MARK: - EditProfilePhotoViewControllerProtocol
 extension EditProfilePhotoViewController: EditProfilePhotoViewControllerProtocol {
 
     func updateProfileImage(_ image: UIImage) {
-        print("in updateProfileImage")
         DispatchQueue.main.async {
-            print("Получено изображение: \(image)")
             self.profilePhotoView.image = image
             self.profilePhotoView.contentMode = .scaleAspectFill
             UIView.transition(with: self.profilePhotoView,
@@ -238,15 +207,9 @@ extension EditProfilePhotoViewController: EditProfilePhotoViewControllerProtocol
                 self.profilePhotoView.image = image
             },
                               completion: nil)
+            self.showLoading(false)
         }
     }
-
-    //    func updateProfileImage(_ image: UIImage?) {
-    //        DispatchQueue.main.async {
-    //            self.profilePhotoView.image = image ?? UIImage.imgPerson
-    //            self.profilePhotoView.contentMode = .scaleAspectFill
-    //        }
-    //    }
 
     func showLoading(_ isLoading: Bool) {
         DispatchQueue.main.async {
@@ -261,34 +224,6 @@ extension EditProfilePhotoViewController: EditProfilePhotoViewControllerProtocol
         }
     }
 }
-
-//#if DEBUG
-//struct  EditProfilePhotoViewControllerPreview: UIViewControllerRepresentable {
-//    class StubPresenter: EditProfilePhotoPresenterProtocol {
-//        weak var view: EditProfilePhotoViewControllerProtocol?
-//        func viewDidLoad() {}
-//        func backButtonTapped() {}
-//        func saveButtonTapped() {}
-//        func didSelectAction(at: Int) {}
-//    }
-//
-//    func makeUIViewController(context: Context) -> some UIViewController {
-//        let presenter = StubPresenter()
-//        return EditProfilePhotoViewController(presenter: presenter)
-////        return EditProfilePhotoViewController()
-//    }
-//
-//    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {}
-//}
-//
-//struct PersonalDataViewController_Previews: PreviewProvider {
-//    static var previews: some View {
-//        EditProfilePhotoViewControllerPreview()
-//            .edgesIgnoringSafeArea(.all)
-//    }
-//}
-//#endif
-
 
 #if DEBUG
 @available(iOS 17.0, *)

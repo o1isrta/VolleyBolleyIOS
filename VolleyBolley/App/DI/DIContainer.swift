@@ -74,7 +74,8 @@ final class DIContainer {
                 ProfileAssembly(),
 				NotificationsAssembly(),
 				PaywallAssembly(),
-				PersonalDataAssembly()
+				PersonalDataAssembly(),
+                EditPhotoAssembly()
             ]
         )
     }
