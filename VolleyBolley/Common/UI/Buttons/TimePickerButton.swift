@@ -152,7 +152,7 @@ final class TimePickerButton: UIButton {
         let datePicker = UIDatePicker()
         datePicker.datePickerMode = .time
         datePicker.preferredDatePickerStyle = .wheels
-        datePicker.locale = AppLocale.posix
+		datePicker.locale = AppConstants.AppLocale.posix
         datePicker.date = time ?? Date()
 
         alert.view.addSubviews(datePicker)
