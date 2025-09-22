@@ -51,6 +51,11 @@ protocol TokenStorageProtocol {
 /// All values are automatically persisted to or deleted from Keychain — no manual save/load required.
 final class TokenStorage: TokenStorageProtocol {
 
+	private enum Constants: String {
+		case accessToken = "access_token"
+		case refreshToken = "refresh_token"
+	}
+
 	/// Shared singleton instance.
 	static let shared = TokenStorage()
 
@@ -58,11 +63,11 @@ final class TokenStorage: TokenStorageProtocol {
 	private init() {}
 
 	/// Access token persisted securely in Keychain under key "access_token".
-	@KeychainStored(key: "access_token")
+	@KeychainStored(key: Constants.accessToken.rawValue)
 	var accessToken: String?
 
 	/// Refresh token persisted securely in Keychain under key "refresh_token".
-	@KeychainStored(key: "refresh_token")
+	@KeychainStored(key: Constants.refreshToken.rawValue)
 	var refreshToken: String?
 
 	/// Removes all stored tokens by setting them to `nil`.
