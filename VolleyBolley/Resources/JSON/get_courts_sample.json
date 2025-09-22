@@ -1,0 +1,168 @@
+[
+    {
+        "court_id": 101,
+        "price_description": "200฿/60min\n300฿/120min",
+        "description": "Best place in Phuket to play Beachvolleyball.",
+        "contact_list": [
+            {
+                "contact_type": "PHONE",
+                "contact": "+66 872 567 608"
+            },
+            {
+                "contact_type": "EMAIL",
+                "contact": "info@phuket-court.com"
+            }
+        ],
+        "photo_url": "https://github.com/xcode73/myapp-mocks/blob/main/VolleyBolley/Images/Venues/beach_volleyball/img1.png?raw=true",
+        "tags": [
+            "10 courts",
+            "Outdoor",
+            "Lights"
+        ],
+        "court_location": {
+            "latitude": 7.84590,
+            "longitude": 98.29348,
+            "court_name": "Karon Beach Club",
+            "location_name": "Patak Rd, Mueang Phuket"
+        }
+    },
+    {
+        "court_id": 102,
+        "price_description": "150฿/60min",
+        "description": "Both locals and tourists play",
+        "contact_list": [
+            {
+                "contact_type": "PHONE",
+                "contact": "+66 959 590 273"
+            }
+        ],
+        "photo_url": "https://github.com/xcode73/myapp-mocks/blob/main/VolleyBolley/Images/Venues/beachka/img1.png?raw=true",
+        "tags": [
+            "2 courts",
+            "Indoor"
+        ],
+        "court_location": {
+            "latitude": 12.90704,
+            "longitude": 100.86010,
+            "court_name": "BeachKa Volley",
+            "location_name": "Pattaya City, Chon Buri 20150"
+        }
+    },
+    {
+        "court_id": 103,
+        "price_description": "150฿/60min",
+        "description": "Sports club",
+        "contact_list": [
+            {
+                "contact_type": "PHONE",
+                "contact": "+66 959 590 273"
+            }
+        ],
+        "photo_url": "https://github.com/xcode73/myapp-mocks/blob/main/VolleyBolley/Images/Venues/beachka/img1.png?raw=true",
+        "tags": [
+            "4 courts",
+            "Outdoor"
+        ],
+        "court_location": {
+            "latitude": 7.81266,
+            "longitude": 98.32824,
+            "court_name": "Phuket Sports and Tennis Club",
+            "location_name": "Soi Suksan 2, Rawai, Phuket"
+        }
+    },
+    {
+        "court_id": 104,
+        "price_description": "$20/hour",
+        "description": "Sports complex",
+        "contact_list": [
+            {
+                "contact_type": "PHONE",
+                "contact": "+66 100 590 273"
+            }
+        ],
+        "photo_url": "https://github.com/xcode73/myapp-mocks/blob/main/VolleyBolley/Images/Venues/beachka/img1.png?raw=true",
+        "tags": [
+            "4 courts",
+            "Outdoor"
+        ],
+        "court_location": {
+            "latitude": 7.89564,
+            "longitude": 98.35159,
+            "court_name": "Sports Complex PSU Phuket",
+            "location_name": "Kathu, Kathu District"
+        }
+    },
+    {
+        "court_id": 105,
+        "price_description": "$15/hour",
+        "description": "Beach volleyball court.",
+        "contact_list": [
+            {
+                "contact_type": "PHONE",
+                "contact": "+66 888 590 888"
+            }
+        ],
+        "photo_url": "https://github.com/xcode73/myapp-mocks/blob/main/VolleyBolley/Images/Venues/beachka/img1.png?raw=true",
+        "tags": [
+            "4 courts",
+            "Outdoor",
+            "Seasonal",
+            "Lights"
+        ],
+        "court_location": {
+            "latitude": 7.81538,
+            "longitude": 98.38523,
+            "court_name": "Khao Khad Beach",
+            "location_name": "Soi Ao-Yon Khaokhad, Wichit, Mueang Phuket District"
+        }
+    },
+    {
+        "court_id": 106,
+        "price_description": "$25/hour",
+        "description": "Modern indoor court with air conditioning and equipment rental.",
+        "contact_list": [
+            {
+                "contact_type": "PHONE",
+                "contact": "+66 333 590 333"
+            }
+        ],
+        "photo_url": "https://github.com/xcode73/myapp-mocks/blob/main/VolleyBolley/Images/Venues/beachka/img1.png?raw=true",
+        "tags": [
+            "4 courts",
+            "Outdoor",
+            "Seasonal"
+        ],
+        "court_location": {
+            "latitude": 7.950054,
+            "longitude": 98.28018,
+            "court_name": "Volleyball",
+            "location_name": "Na Hat Road, Kamala, Kathu District"
+        }
+    },
+    {
+        "court_id": 107,
+        "price_description": "$25/hour",
+        "description": "Modern indoor court with air conditioning and equipment rental.",
+        "contact_list": [
+            {
+                "contact_type": "PHONE",
+                "contact": "+66 222 590 222"
+            }
+        ],
+        "photo_url": "https://github.com/xcode73/myapp-mocks/blob/main/VolleyBolley/Images/Venues/beachka/img1.png?raw=true",
+        "tags": [
+            "4 courts",
+            "Outdoor",
+            "Seasonal",
+            "Lights",
+            "Spa",
+            "Alcohol"
+        ],
+        "court_location": {
+            "latitude": 8.06338,
+            "longitude": 98.91761,
+            "court_name": "Outdoor Volleyball Court",
+            "location_name": "Pak Nam, Mueang Krabi District"
+        }
+    }
+]

@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol MyGamesViewProtocol: AnyObject {
+protocol MyGamesViewProtocol: AnyObject where Self: UIViewController {
     func showGreeting(_ message: String)
     func displayNavBar(viewModel: NavBarViewModel)
     func displayError(message: String)

@@ -9,6 +9,10 @@ import Foundation
 
 protocol HomePresenterProtocol: AnyObject {
     func viewDidLoad()
+    func didTapCreateNewGame()
+    func didTapFindGame()
+    func didTapCreateTourney()
+    func didTapDonate()
 }
 
 final class HomePresenter: HomePresenterProtocol {
@@ -35,20 +39,55 @@ final class HomePresenter: HomePresenterProtocol {
     // MARK: - Public Methods
 
     func viewDidLoad() {
-        let message = interactor.fetchGreeting()
-        view?.showGreeting(message)
+        Task { [weak self] in
+            await self?.loadInitialData()
+        }
+    }
 
-        interactor.loadUserData { [weak self] result in
-            guard let self else { return }
+    func didTapCreateNewGame() {
+        router.showMapForCreateNewGame()
+    }
 
-            switch result {
-            case .success(let (user, avatarImage)):
-                let viewModel = NavBarViewModel(user: user, avatarImage: avatarImage)
-                self.view?.displayNavBar(viewModel: viewModel)
+    func didTapFindGame() {
+        router.showMapForFindGame()
+    }
 
-            case .failure(let error):
-                self.view?.displayError(message: error.localizedDescription)
+    func didTapCreateTourney() {
+        router.showMapForCreateTourney()
+    }
+
+    func didTapDonate() {
+        router.showDonate()
+    }
+
+    // MARK: - Private Methods
+
+    private func loadInitialData() async {
+        await loadCourtAndWeather()
+    }
+
+    private func loadCourtAndWeather() async {
+        do {
+            let courtWithWeather = try await interactor.loadNearestCourtWithWeather()
+
+            let courtSummaryViewModel = LocationTitleViewModel(
+                title: courtWithWeather.court?.name ?? "",
+                location: courtWithWeather.court?.address ?? ""
+            )
+
+            if let weather = courtWithWeather.weather {
+                let weatherVM = WeatherViewModel(weather: weather)
+                view?.displayCreateNewGameButton(
+                    state: .withLocationAndWeather(location: courtSummaryViewModel, weather: weatherVM)
+                )
+            } else {
+                view?.displayCreateNewGameButton(
+                    state: .withLocationOnly(location: courtSummaryViewModel)
+                )
             }
+        } catch {
+            print(error.localizedDescription)
+            view?.displayCreateNewGameButton(state: .locationRestricted)
         }
     }
 }

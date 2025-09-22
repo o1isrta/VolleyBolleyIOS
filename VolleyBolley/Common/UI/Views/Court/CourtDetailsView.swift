@@ -10,13 +10,13 @@ import UIKit
 // MARK: - CourtDetailsViewModel
 
 struct CourtDetailsViewModel {
-	let court: CourtModel
+	let court: Court
 	let distance: String
 	let doneButtonData: ButtonDataModel
 	let detailsButtonData: ButtonDataModel?
 
 	init(
-		court: CourtModel,
+		court: Court,
 		distance: String,
 		doneButtonData: ButtonDataModel,
 		detailsButtonData: ButtonDataModel? = nil
@@ -31,7 +31,7 @@ struct CourtDetailsViewModel {
 // MARK: - GameDetailsViewModel
 
 struct GameDetailsViewModel {
-	let court: CourtModel
+	let court: Court
 	let distance: String
 	let game: GameModel
 	let hostType: HostType
@@ -39,7 +39,7 @@ struct GameDetailsViewModel {
 	let detailsButtonData: ButtonDataModel?
 
 	init(
-		court: CourtModel,
+		court: Court,
 		distance: String,
 		game: GameModel,
 		hostType: HostType,
@@ -90,8 +90,8 @@ class CourtDetailsView: GlassmorphismView {
 
 	func configure(with model: CourtDetailsViewModel) {
 		let courtTitleViewModel = CourtTitleViewModel(
-			title: model.court.location.courtName,
-			location: model.court.location.locationName,
+			title: model.court.name,
+			location: model.court.address,
 			distance: model.distance
 		)
 		courtTitleView.configure(with: courtTitleViewModel)
@@ -106,8 +106,8 @@ class CourtDetailsView: GlassmorphismView {
 
 	func configure(with model: GameDetailsViewModel) {
 		let courtTitleViewModel = CourtTitleViewModel(
-			title: model.court.location.courtName,
-			location: model.court.location.locationName,
+			title: model.court.name,
+			location: model.court.address,
 			distance: model.distance
 		)
 		courtTitleView.configure(with: courtTitleViewModel)
@@ -150,55 +150,55 @@ private extension CourtDetailsView {
 	}
 }
 
-#if DEBUG
-import SwiftUI
-@available(iOS 17.0, *)
-#Preview("Game") {
-	UIViewPreview {
-		let view = CourtDetailsView()
-		let court = CourtModel.mockData
-		let game = GameModel.mockData
-
-		let model = GameDetailsViewModel(
-			court: CourtModel.mockData,
-			distance: String(localized: "Nearest"),
-			game: GameModel.mockData,
-			hostType: .game,
-			doneButtonData: ButtonDataModel(
-				title: String(localized: "CHOOSE THIS GAME"),
-				action: { print("aaaaaaa") }
-				),
-			detailsButtonData: ButtonDataModel(
-				title: String(localized: "DETAILS"),
-				action: { print("bbbbbbb") }
-			)
-		)
-		view.configure(with: model)
-		return view
-	}
-	.frame(width: .infinity, height: 509)
-	.padding()
-}
-
-#Preview("Court") {
-	UIViewPreview {
-		let view = CourtDetailsView()
-		let model = CourtDetailsViewModel(
-			court: CourtModel.mockData,
-			distance: String(localized: "Nearest"),
-			doneButtonData: ButtonDataModel(
-				title: String(localized: "CHOOSE THIS GAME"),
-				action: { print("aaaaaaa") }
-				),
-			detailsButtonData: ButtonDataModel(
-				title: String(localized: "DETAILS"),
-				action: { print("bbbbbbb") }
-			)
-		)
-		view.configure(with: model)
-		return view
-	}
-	.frame(width: .infinity, height: 472)
-	.padding()
-}
-#endif
+//#if DEBUG
+//import SwiftUI
+//@available(iOS 17.0, *)
+//#Preview("Game") {
+//	UIViewPreview {
+//		let view = CourtDetailsView()
+//		let court = Court.mockData
+//		let game = GameModel.mockData
+//
+//		let model = GameDetailsViewModel(
+//			court: Court.mockData,
+//			distance: String(localized: "Nearest"),
+//			game: GameModel.mockData,
+//			hostType: .game,
+//			doneButtonData: ButtonDataModel(
+//				title: String(localized: "CHOOSE THIS GAME"),
+//				action: { print("aaaaaaa") }
+//				),
+//			detailsButtonData: ButtonDataModel(
+//				title: String(localized: "DETAILS"),
+//				action: { print("bbbbbbb") }
+//			)
+//		)
+//		view.configure(with: model)
+//		return view
+//	}
+//	.frame(width: .infinity, height: 509)
+//	.padding()
+//}
+//
+//#Preview("Court") {
+//	UIViewPreview {
+//		let view = CourtDetailsView()
+//		let model = CourtDetailsViewModel(
+//			court: Court.mockData,
+//			distance: String(localized: "Nearest"),
+//			doneButtonData: ButtonDataModel(
+//				title: String(localized: "CHOOSE THIS GAME"),
+//				action: { print("aaaaaaa") }
+//				),
+//			detailsButtonData: ButtonDataModel(
+//				title: String(localized: "DETAILS"),
+//				action: { print("bbbbbbb") }
+//			)
+//		)
+//		view.configure(with: model)
+//		return view
+//	}
+//	.frame(width: .infinity, height: 472)
+//	.padding()
+//}
+//#endif

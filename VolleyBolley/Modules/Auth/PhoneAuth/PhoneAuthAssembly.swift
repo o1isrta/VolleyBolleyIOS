@@ -17,7 +17,6 @@ final class PhoneAuthAssembly: Assembly {
 
             let router = PhoneAuthRouter(
                 viewController: phoneAuthVC,
-                resolver: resolver,
                 coordinator: appRouter
             )
 

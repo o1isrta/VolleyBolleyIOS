@@ -99,72 +99,72 @@ private extension CourtBottomView {
 	}
 }
 
-#if DEBUG
-import SwiftUI
-@available(iOS 17.0, *)
-#Preview {
-	VStack {
-		UIViewPreview {
-			let view = CourtBottomView()
-			let court = CourtModel.mockData
-			let model = CourtBottomViewModel(
-				courtName: court.location.courtName,
-				locationName: court.location.locationName,
-				distance: String(localized: "Nearest"),
-				doneButtonData: ButtonDataModel(
-					title: String(localized: "CHOOSE THIS GAME"),
-					action: { print("aaaaaaa") }
-				),
-				detailsButtonData: ButtonDataModel(
-					title: String(localized: "DETAILS"),
-					action: { print("bbbbbbb") }
-				)
-			)
-			view.configure(with: model)
-			return view
-		}
-		.frame(width: .infinity, height: 136)
-		.padding()
-
-		UIViewPreview {
-			let view = CourtBottomView()
-			let court = CourtModel.mockData
-			let model = CourtBottomViewModel(
-				courtName: court.location.courtName,
-				locationName: court.location.locationName,
-				distance: "",
-				doneButtonData: ButtonDataModel(
-					title: String(localized: "CHOOSE THIS GAME"),
-					action: { print("aaaaaaa") }
-				),
-				detailsButtonData: ButtonDataModel(
-					title: String(localized: "DETAILS"),
-					action: { print("bbbbbbb") }
-				)
-			)
-			view.configure(with: model)
-			return view
-		}
-		.frame(width: .infinity, height: 136)
-		.padding()
-
-		UIViewPreview {
-			let view = CourtBottomView()
-			let court = CourtModel.mockData
-			let model = CourtBottomViewModel(
-				courtName: court.location.courtName,
-				locationName: court.location.locationName,
-				distance: "",
-				doneButtonData: ButtonDataModel(
-					title: String(localized: "CHOOSE THIS GAME"),
-					action: { print("aaaaaaa") }
-				)
-			)
-			view.configure(with: model)
-			return view
-		}
-		.frame(width: .infinity, height: 136)
-		.padding()
-	}
-}
-#endif
+//#if DEBUG
+//import SwiftUI
+//@available(iOS 17.0, *)
+//#Preview {
+//	VStack {
+//		UIViewPreview {
+//			let view = CourtBottomView()
+//			let court = Court.mockData
+//			let model = CourtBottomViewModel(
+//				courtName: court.location.courtName,
+//				locationName: court.location.locationName,
+//				distance: String(localized: "Nearest"),
+//				doneButtonData: ButtonDataModel(
+//					title: String(localized: "CHOOSE THIS GAME"),
+//					action: { print("aaaaaaa") }
+//				),
+//				detailsButtonData: ButtonDataModel(
+//					title: String(localized: "DETAILS"),
+//					action: { print("bbbbbbb") }
+//				)
+//			)
+//			view.configure(with: model)
+//			return view
+//		}
+//		.frame(width: .infinity, height: 136)
+//		.padding()
+//
+//		UIViewPreview {
+//			let view = CourtBottomView()
+//			let court = Court.mockData
+//			let model = CourtBottomViewModel(
+//				courtName: court.location.courtName,
+//				locationName: court.location.locationName,
+//				distance: "",
+//				doneButtonData: ButtonDataModel(
+//					title: String(localized: "CHOOSE THIS GAME"),
+//					action: { print("aaaaaaa") }
+//				),
+//				detailsButtonData: ButtonDataModel(
+//					title: String(localized: "DETAILS"),
+//					action: { print("bbbbbbb") }
+//				)
+//			)
+//			view.configure(with: model)
+//			return view
+//		}
+//		.frame(width: .infinity, height: 136)
+//		.padding()
+//
+//		UIViewPreview {
+//			let view = CourtBottomView()
+//			let court = Court.mockData
+//			let model = CourtBottomViewModel(
+//				courtName: court.location.courtName,
+//				locationName: court.location.locationName,
+//				distance: "",
+//				doneButtonData: ButtonDataModel(
+//					title: String(localized: "CHOOSE THIS GAME"),
+//					action: { print("aaaaaaa") }
+//				)
+//			)
+//			view.configure(with: model)
+//			return view
+//		}
+//		.frame(width: .infinity, height: 136)
+//		.padding()
+//	}
+//}
+//#endif

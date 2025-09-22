@@ -8,7 +8,8 @@
 import UIKit
 
 protocol MapRouterProtocol: AnyObject {
-	func showList(from view: MapViewController, courts: [CourtModel], selected: CourtModel?)
+	func showList(from view: MapViewController, courts: [Court], selected: Court?)
+    func goBackToHome()
 }
 
 final class MapRouter: MapRouterProtocol {
@@ -31,16 +32,20 @@ final class MapRouter: MapRouterProtocol {
 
 	func showList(
 		from mapViewController: MapViewController,
-		courts: [CourtModel],
-		selected: CourtModel?
+		courts: [Court],
+		selected: Court?
 	) {
-		let listVC = CourtListViewController(courts: courts, selected: selected)
-		mapViewController.addChild(listVC)
-		listVC.view.frame = mapViewController.view.bounds
-		mapViewController.view.addSubview(listVC.view)
-		listVC.didMove(toParent: mapViewController)
-		listVC.view.isHidden = false
-		self.listVC = listVC
-		mapViewController.listView = listVC.view
+//		let listVC = CourtListViewController(courts: courts, selected: selected)
+//		mapViewController.addChild(listVC)
+//		listVC.view.frame = mapViewController.view.bounds
+//		mapViewController.view.addSubview(listVC.view)
+//		listVC.didMove(toParent: mapViewController)
+//		listVC.view.isHidden = false
+//		self.listVC = listVC
+//		mapViewController.listView = listVC.view
 	}
+
+    func goBackToHome() {
+        viewController?.navigationController?.popViewController(animated: true)
+    }
 }

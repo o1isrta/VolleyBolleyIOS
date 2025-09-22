@@ -11,7 +11,7 @@ import UIKit
 
 struct CourtImageViewModel {
 	let imageURL: URL?
-	let tags: [String]
+	let tags: [String]?
 }
 
 final class CourtImageView: UIView {
@@ -51,9 +51,9 @@ final class CourtImageView: UIView {
 	// MARK: - Public Methods
 
 	func configure(with model: CourtImageViewModel) {
-//		if let url = model.imageUrl {
+//		if let url = model.photoURL {
 //			// Здесь можно добавить асинхронную загрузку изображения
-//			courtImageView.image = model.imageUrl
+//			courtImageView.image = model.photoURL
 //		}
 		// TODO
 		courtImageView.image = UIImage(named: "court")
@@ -61,7 +61,7 @@ final class CourtImageView: UIView {
 		tagStackView.arrangedSubviews.forEach {
 			$0.removeFromSuperview()
 		}
-		model.tags.forEach {
+        model.tags?.forEach {
 			let tagLabel = UILabel()
 			tagLabel.font = AppFont.Hero.regular(size: 16)
 			tagLabel.textColor = AppColor.Text.primary

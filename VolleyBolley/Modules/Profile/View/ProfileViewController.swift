@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol ProfileViewProtocol: AnyObject {
+protocol ProfileViewProtocol: AnyObject where Self: UIViewController {
     func showGreeting(_ message: String)
     func displayNavBar(viewModel: NavBarViewModel)
     func displayError(message: String)

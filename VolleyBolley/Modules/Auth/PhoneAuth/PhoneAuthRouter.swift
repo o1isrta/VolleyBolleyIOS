@@ -10,12 +10,10 @@ import UIKit
 final class PhoneAuthRouter: PhoneAuthRouterProtocol {
 
     weak var viewController: UIViewController?
-    private let resolver: Resolver
     weak var coordinator: AppRouter?
 
-    init(viewController: UIViewController, resolver: Resolver, coordinator: AppRouter?) {
+    init(viewController: UIViewController, coordinator: AppRouter?) {
         self.viewController = viewController
-        self.resolver = resolver
         self.coordinator = coordinator
     }
 

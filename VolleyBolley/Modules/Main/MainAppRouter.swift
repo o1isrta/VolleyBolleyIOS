@@ -29,15 +29,15 @@ final class MainAppRouter: MainAppRouterProtocol {
     func start() -> UIViewController {
         let tabBarController = MainTabBarController()
 
-        guard let home = resolver.resolve(HomeViewController.self) else {
+        guard let home = resolver.resolve(HomeViewProtocol.self) else {
             fatalError("HomeViewController dependency could not be resolved.")
         }
 
-        guard let games = resolver.resolve(MyGamesViewController.self) else {
+        guard let games = resolver.resolve(MyGamesViewProtocol.self) else {
             fatalError("MyGamesViewController dependency could not be resolved.")
         }
 
-        guard let profile = resolver.resolve(ProfileViewController.self) else {
+        guard let profile = resolver.resolve(ProfileViewProtocol.self) else {
             fatalError("ProfileViewController dependency could not be resolved.")
         }
 

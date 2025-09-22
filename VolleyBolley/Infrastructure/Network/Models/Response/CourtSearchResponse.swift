@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct CourtSearchResponse: Codable {
-	let courts: [CourtDTO]
-}
+//struct CourtSearchResponse: Codable {
+//	let courts: [CourtDTO]
+//}

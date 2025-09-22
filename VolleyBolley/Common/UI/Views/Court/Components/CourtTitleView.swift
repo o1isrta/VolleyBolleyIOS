@@ -88,80 +88,80 @@ private extension CourtTitleView {
 	}
 }
 
-#if DEBUG
-import SwiftUI
-@available(iOS 17.0, *)
-#Preview {
-	ZStack {
-		Color(cgColor: AppColor.Background.screen.cgColor)
-
-		VStack {
-			UIViewPreview {
-				let view = CourtTitleView(type: .icon)
-				let court = CourtModel.mockData
-				let model = CourtTitleViewModel(
-					title: court.location.courtName,
-					location: court.location.locationName,
-					distance: "Nearest"
-				)
-				view.configure(with: model)
-				return view
-			}
-			.frame(width: .infinity, height: 36)
-			.padding()
-
-			Divider()
-				.background(Color(.systemGray5))
-
-			UIViewPreview {
-				let view = CourtTitleView(type: .icon)
-				let court = CourtModel.mockData
-				let model = CourtTitleViewModel(
-					title: court.location.courtName,
-					location: court.location.locationName,
-					distance: "2 km"
-				)
-				view.configure(with: model)
-				return view
-			}
-			.frame(width: .infinity, height: 36)
-			.padding()
-
-			Divider()
-				.background(Color(.systemGray5))
-
-			UIViewPreview {
-				let view = CourtTitleView(type: .none)
-				let court = CourtModel.mockData
-				let model = CourtTitleViewModel(
-					title: court.location.courtName,
-					location: court.location.locationName,
-					distance: ""
-				)
-				view.configure(with: model)
-				return view
-			}
-			.frame(width: .infinity, height: 36)
-			.padding()
-
-			Divider()
-				.background(Color(.systemGray5))
-
-			UIViewPreview {
-				let view = CourtTitleView(type: .none)
-				let court = CourtModel.mockData
-				let model = CourtTitleViewModel(
-					title: court.location.courtName,
-					location: court.location.locationName,
-					distance: "Nearest"
-				)
-				view.configure(with: model)
-				return view
-			}
-			.frame(width: .infinity, height: 36)
-			.padding()
-		}
-	}
-	.ignoresSafeArea()
-}
-#endif
+//#if DEBUG
+//import SwiftUI
+//@available(iOS 17.0, *)
+//#Preview {
+//	ZStack {
+//		Color(cgColor: AppColor.Background.screen.cgColor)
+//
+//		VStack {
+//			UIViewPreview {
+//				let view = CourtTitleView(type: .icon)
+//				let court = Court.mockData
+//				let model = CourtTitleViewModel(
+//					title: court.location.courtName,
+//					location: court.location.locationName,
+//					distance: "Nearest"
+//				)
+//				view.configure(with: model)
+//				return view
+//			}
+//			.frame(width: .infinity, height: 36)
+//			.padding()
+//
+//			Divider()
+//				.background(Color(.systemGray5))
+//
+//			UIViewPreview {
+//				let view = CourtTitleView(type: .icon)
+//				let court = Court.mockData
+//				let model = CourtTitleViewModel(
+//					title: court.location.courtName,
+//					location: court.location.locationName,
+//					distance: "2 km"
+//				)
+//				view.configure(with: model)
+//				return view
+//			}
+//			.frame(width: .infinity, height: 36)
+//			.padding()
+//
+//			Divider()
+//				.background(Color(.systemGray5))
+//
+//			UIViewPreview {
+//				let view = CourtTitleView(type: .none)
+//				let court = Court.mockData
+//				let model = CourtTitleViewModel(
+//					title: court.location.courtName,
+//					location: court.location.locationName,
+//					distance: ""
+//				)
+//				view.configure(with: model)
+//				return view
+//			}
+//			.frame(width: .infinity, height: 36)
+//			.padding()
+//
+//			Divider()
+//				.background(Color(.systemGray5))
+//
+//			UIViewPreview {
+//				let view = CourtTitleView(type: .none)
+//				let court = Court.mockData
+//				let model = CourtTitleViewModel(
+//					title: court.location.courtName,
+//					location: court.location.locationName,
+//					distance: "Nearest"
+//				)
+//				view.configure(with: model)
+//				return view
+//			}
+//			.frame(width: .infinity, height: 36)
+//			.padding()
+//		}
+//	}
+//	.ignoresSafeArea()
+//}
+//#endif

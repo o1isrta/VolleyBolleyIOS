@@ -10,27 +10,23 @@ import Swinject
 final class HomeAssembly: Assembly {
 
     func assemble(container: Container) {
-        container.register(HomeViewController.self) { resolver in
-
+        container.register(HomeViewProtocol.self) { resolver in
             guard
-                let usersRepository = resolver.resolve(UsersRepositoryProtocol.self),
-                let imageLoader = resolver.resolve(ImageLoadingServiceProtocol.self)
+                let locationRepository = resolver.resolve(LocationRepositoryProtocol.self),
+                let courtsRepository = resolver.resolve(CourtsRepositoryProtocol.self),
+                let findNearestCourtUseCase = resolver.resolve(FindNearestCourtUseCaseProtocol.self),
+                let mapFactory = resolver.resolve(MapModuleFactoryProtocol.self)
             else {
                 fatalError("Error: Failed to register HomeViewController")
             }
 
-            let router = HomeRouter()
-
             let interactor = HomeInteractor(
-                usersRepository: usersRepository,
-                imageLoader: imageLoader
+                locationRepository: locationRepository,
+                courtsRepository: courtsRepository,
+                findNearestCourtUseCase: findNearestCourtUseCase
             )
-
-            let presenter = HomePresenter(
-                interactor: interactor,
-                router: router
-            )
-
+            let router = HomeRouter(mapFactory: mapFactory)
+            let presenter = HomePresenter(interactor: interactor, router: router)
             let view = HomeViewController(presenter: presenter)
 
             router.attachViewController(view)

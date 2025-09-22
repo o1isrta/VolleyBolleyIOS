@@ -8,51 +8,41 @@
 import UIKit
 
 protocol HomeInteractorProtocol: AnyObject {
-    func fetchGreeting() -> String
-    func loadUserData(completion: @escaping (Result<(User, UIImage?), Error>) -> Void)
+    func loadNearestCourtWithWeather() async throws -> NearestCourtWithWeather
 }
 
 final class HomeInteractor: HomeInteractorProtocol {
 
     // MARK: - Private Properties
 
-    private let usersRepository: UsersRepositoryProtocol
-    private let imageLoader: ImageLoadingServiceProtocol
+    private let locationRepository: LocationRepositoryProtocol
+    private let courtsRepository: CourtsRepositoryProtocol
+    private let findNearestCourtUseCase: FindNearestCourtUseCaseProtocol
 
     // MARK: - Initializers
 
     init(
-        usersRepository: UsersRepositoryProtocol,
-        imageLoader: ImageLoadingServiceProtocol
+        locationRepository: LocationRepositoryProtocol,
+        courtsRepository: CourtsRepositoryProtocol,
+        findNearestCourtUseCase: FindNearestCourtUseCaseProtocol
     ) {
-        self.usersRepository = usersRepository
-        self.imageLoader = imageLoader
+        self.locationRepository = locationRepository
+        self.courtsRepository = courtsRepository
+        self.findNearestCourtUseCase = findNearestCourtUseCase
     }
 
     // MARK: - Public Methods
 
-    func fetchGreeting() -> String {
-        return "Home Module"
-    }
+    func loadNearestCourtWithWeather() async throws -> NearestCourtWithWeather {
+        let playerLocation = try await locationRepository.getPlayerLocation(forceUpdate: false)
+        let courts = try await courtsRepository.getCourts(forceRefresh: false)
 
-    func loadUserData(completion: @escaping (Result<(User, UIImage?), Error>) -> Void) {
-        usersRepository.getCurrentUser { [weak self] result in
-            guard let self = self else { return }
+        let nearestCourt = findNearestCourtUseCase.execute(
+            userLocation: playerLocation, courts: courts
+        )
 
-            switch result {
-            case .success(let user):
-                guard let avatarURL = user.avatarURL else {
-                    completion(.success((user, nil)))
-                    return
-                }
+        let nearestCourtWithWeather = NearestCourtWithWeather(court: nearestCourt, weather: nil)
 
-                self.imageLoader.loadImage(from: avatarURL) { image in
-                    completion(.success((user, image)))
-                }
-
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+        return nearestCourtWithWeather
     }
 }

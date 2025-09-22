@@ -10,12 +10,12 @@ import UIKit
 // MARK: - CourtAndGameViewModel
 
 struct CourtViewModel {
-	let court: CourtModel
+	let court: Court
 	let doneButtonData: ButtonDataModel
 	let detailsButtonData: ButtonDataModel?
 
 	init(
-		court: CourtModel,
+		court: Court,
 		doneButtonData: ButtonDataModel,
 		detailsButtonData: ButtonDataModel? = nil
 	) {
@@ -28,14 +28,14 @@ struct CourtViewModel {
 // MARK: - GameViewModel
 
 struct GameViewModel {
-	let court: CourtModel
+	let court: Court
 	let game: GameModel
 	let hostType: HostType
 	let doneButtonData: ButtonDataModel
 	let detailsButtonData: ButtonDataModel?
 
 	init(
-		court: CourtModel,
+		court: Court,
 		game: GameModel,
 		hostType: HostType,
 		doneButtonData: ButtonDataModel,
@@ -86,15 +86,15 @@ final class CourtAndGameView: UIView {
 		descriptionView.addArrangedSubview(courtDescriptionView)
 
 		let courtImageViewModel = CourtImageViewModel(
-			imageURL: model.court.imageUrl,
-			tags: model.court.tagList
+			imageURL: model.court.photoURL,
+			tags: model.court.tags
 		)
 		courtImageView.configure(with: courtImageViewModel)
 
 		let courtDescriptionModel = CourtDescriptionViewModel(
-			price: model.court.price,
-			description: model.court.description,
-			contact: model.court.contacts?[0].value
+			price: model.court.pricingInfo,
+			description: model.court.details,
+            contact: model.court.contacts[0].phone
 		)
 		courtDescriptionView.configure(with: courtDescriptionModel)
 
@@ -109,8 +109,8 @@ final class CourtAndGameView: UIView {
 		descriptionView.addArrangedSubview(gameDescriptionView)
 
 		let courtImageViewModel = CourtImageViewModel(
-			imageURL: model.court.imageUrl,
-			tags: model.court.tagList
+			imageURL: model.court.photoURL,
+			tags: model.court.tags
 		)
 		courtImageView.configure(with: courtImageViewModel)
 
@@ -166,51 +166,51 @@ private extension CourtAndGameView {
 	}
 }
 
-#if DEBUG
-import SwiftUI
-@available(iOS 17.0, *)
-
-#Preview("Game") {
-	UIViewPreview {
-		let view = CourtAndGameView()
-		let model = GameViewModel(
-			court: CourtModel.mockData,
-			game: GameModel.mockData,
-			hostType: .game,
-			doneButtonData: ButtonDataModel(
-				title: String(localized: "CHOOSE THIS GAME"),
-				action: { print("aaaaaaa") }
-			),
-			detailsButtonData: ButtonDataModel(
-				title: String(localized: "DETAILS"),
-				action: { print("bbbbbbb") }
-			)
-		)
-		view.configure(with: model)
-		return view
-	}
-	.padding()
-	.frame(width: .infinity, height: 473)
-	.background(Color(cgColor: AppColor.Background.screen.cgColor))
-	.padding()
-}
-
-#Preview("Court") {
-	UIViewPreview {
-		let view = CourtAndGameView()
-		let model = CourtViewModel(
-			court: CourtModel.mockData,
-			doneButtonData: ButtonDataModel(
-				title: String(localized: "CHOOSE THIS COURT"),
-				action: { print("aaaaaaa") }
-			)
-		)
-		view.configure(with: model)
-		return view
-	}
-	.padding()
-	.frame(width: .infinity, height: 416)
-	.background(Color(cgColor: AppColor.Background.screen.cgColor))
-	.padding()
-}
-#endif
+//#if DEBUG
+//import SwiftUI
+//@available(iOS 17.0, *)
+//
+//#Preview("Game") {
+//	UIViewPreview {
+//		let view = CourtAndGameView()
+//		let model = GameViewModel(
+//			court: Court.mockData,
+//			game: GameModel.mockData,
+//			hostType: .game,
+//			doneButtonData: ButtonDataModel(
+//				title: String(localized: "CHOOSE THIS GAME"),
+//				action: { print("aaaaaaa") }
+//			),
+//			detailsButtonData: ButtonDataModel(
+//				title: String(localized: "DETAILS"),
+//				action: { print("bbbbbbb") }
+//			)
+//		)
+//		view.configure(with: model)
+//		return view
+//	}
+//	.padding()
+//	.frame(width: .infinity, height: 473)
+//	.background(Color(cgColor: AppColor.Background.screen.cgColor))
+//	.padding()
+//}
+//
+//#Preview("Court") {
+//	UIViewPreview {
+//		let view = CourtAndGameView()
+//		let model = CourtViewModel(
+//			court: Court.mockData,
+//			doneButtonData: ButtonDataModel(
+//				title: String(localized: "CHOOSE THIS COURT"),
+//				action: { print("aaaaaaa") }
+//			)
+//		)
+//		view.configure(with: model)
+//		return view
+//	}
+//	.padding()
+//	.frame(width: .infinity, height: 416)
+//	.background(Color(cgColor: AppColor.Background.screen.cgColor))
+//	.padding()
+//}
+//#endif

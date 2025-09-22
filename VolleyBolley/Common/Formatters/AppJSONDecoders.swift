@@ -8,11 +8,28 @@
 import Foundation
 
 enum AppJSONDecoders {
-    /// Декодер для работы с API (snake_case + ISO8601 даты)
+
     static let server: JSONDecoder = {
         let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        decoder.dateDecodingStrategy = .formatted(AppDateFormatters.serverDateOnly)
+
+        decoder.dateDecodingStrategy = .custom { decoder -> Date in
+            let container = try decoder.singleValueContainer()
+            let dateStr = try container.decode(String.self)
+
+            if let date = AppDateFormatters.apiDateOnly.date(from: dateStr) {
+                return date
+            }
+
+            if let date = AppDateFormatters.serverDateOnly.date(from: dateStr) {
+                return date
+            }
+
+            throw DecodingError.dataCorruptedError(
+                in: container,
+                debugDescription: "Invalid date format: \(dateStr)"
+            )
+        }
+
         return decoder
     }()
 }

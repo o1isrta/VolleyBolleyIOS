@@ -20,19 +20,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     ) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
-        NetworkEnvironment.current = AppEnvironment.fromPlist()
-
         let window = UIWindow(windowScene: windowScene)
         self.window = window
 
         DIContainer.initialize(window: window)
+        let resolver = DIContainer.shared.resolver
 
-        guard let appRouter = DIContainer.shared.resolver.resolve(AppRouter.self) else {
-            assertionFailure("Failed to resolve AppRouter from DIContainer")
+        guard let appRouter = resolver.resolve(AppRouter.self) else {
+            assertionFailure("Failed to resolve AppRouter")
             return
         }
-        self.appRouter = appRouter
 
+        self.appRouter = appRouter
         appRouter.start()
 
         window.makeKeyAndVisible()
