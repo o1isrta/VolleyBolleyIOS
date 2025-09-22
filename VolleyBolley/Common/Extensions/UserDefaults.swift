@@ -10,10 +10,10 @@ import Foundation
 extension UserDefaults {
     var isOnboardingShown: Bool {
         get {
-            bool(forKey: UserDefaultsKeys.onboardingShown)
+			bool(forKey: AppConstants.UserDefaults.Keys.onboardingShown)
         }
         set {
-            set(newValue, forKey: UserDefaultsKeys.onboardingShown)
+            set(newValue, forKey: AppConstants.UserDefaults.Keys.onboardingShown)
             synchronize()
         }
     }
