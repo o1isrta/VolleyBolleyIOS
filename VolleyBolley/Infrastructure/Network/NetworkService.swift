@@ -172,7 +172,7 @@ private extension NetworkService {
 		execute()
 	}
 
-	private func request<T: Codable>(
+	private func request<T: Decodable>(
 		_ target: DataAPI,
 		completion: @escaping (Result<T, Error>) -> Void
 	) {

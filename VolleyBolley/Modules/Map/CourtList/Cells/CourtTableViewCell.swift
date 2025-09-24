@@ -68,7 +68,7 @@ final class CourtTableViewCell: UITableViewCell {
 		distanceView.isHidden = false
 
 		let locationTitleViewModel = LocationTitleViewModel(
-			title: court.location.courtName,
+            title: court.location.courtName,
 			location: court.location.locationName
 		)
 		locationTitleView.configure(with: locationTitleViewModel)

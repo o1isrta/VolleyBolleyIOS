@@ -81,7 +81,7 @@ final class AuthViewController: UIViewController, AuthViewProtocol {
     }()
 
     private lazy var backgroundImageView: UIImageView = {
-        let imageView = UIImageView(image: .auth)
+        let imageView = UIImageView(image: UIImage.Image.auth)
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
