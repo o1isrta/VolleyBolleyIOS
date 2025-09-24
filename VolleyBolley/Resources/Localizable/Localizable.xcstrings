@@ -4,17 +4,6 @@
     "" : {
 
     },
-    "  Continue with Facebook" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "  Продолжить с Facebook"
-          }
-        }
-      }
-    },
     "  Continue with Google" : {
       "localizations" : {
         "ru" : {
@@ -71,18 +60,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Информация об уровнях игроков"
-          }
-        }
-      }
-    },
-    "ADD SELECTED" : {
-      "comment" : "Game",
-      "extractionState" : "stale",
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ДОБАВИТЬ ВЫБРАННОЕ"
           }
         }
       }
@@ -298,6 +275,42 @@
         }
       }
     },
+    "commonCreateTourney" : {
+      "comment" : "CreateTourney button title",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create a tourney"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Создать турнир"
+          }
+        }
+      }
+    },
+    "commonDonate" : {
+      "comment" : "DonateButton title",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Donate"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поддержать"
+          }
+        }
+      }
+    },
     "Contacts: " : {
       "comment" : "Court Details",
       "localizations" : {
@@ -330,24 +343,6 @@
         }
       }
     },
-    "customAlertView.button.done" : {
-      "comment" : "Custom Alert",
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "DONE"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ГОТОВО"
-          }
-        }
-      }
-    },
     "customAlertView.button.enable" : {
       "comment" : "Custom Alert",
       "localizations" : {
@@ -365,42 +360,6 @@
         }
       }
     },
-    "customAlertView.button.no" : {
-      "comment" : "Custom Alert",
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "NO"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "НЕТ"
-          }
-        }
-      }
-    },
-    "customAlertView.button.rate" : {
-      "comment" : "Custom Alert",
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "RATE PLAYERS"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ОЦЕНИТЕ ИГРОКОВ"
-          }
-        }
-      }
-    },
     "customAlertView.button.skip" : {
       "comment" : "Custom Alert",
       "localizations" : {
@@ -414,78 +373,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ПРОПУСТИТЬ"
-          }
-        }
-      }
-    },
-    "customAlertView.button.yes" : {
-      "comment" : "Custom Alert",
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "YES"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ДА"
-          }
-        }
-      }
-    },
-    "customAlertView.message.invitesSent" : {
-      "comment" : "Custom Alert",
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Invites have been successfully sent to players!"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Приглашения успешно отправлены игрокам!"
-          }
-        }
-      }
-    },
-    "customAlertView.message.logout" : {
-      "comment" : "Custom Alert",
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Are you sure you want to log out of your account?"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Вы уверены, что хотите выйти из своей учетной записи?"
-          }
-        }
-      }
-    },
-    "customAlertView.message.noInternet" : {
-      "comment" : "Custom Alert",
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "You're offline. Check your internet connection and try again."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Вы не в сети. Проверьте подключение к интернету и повторите попытку."
           }
         }
       }
@@ -912,6 +799,78 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "НАЧАТЬ"
+          }
+        }
+      }
+    },
+    "homeCreateNewGame" : {
+      "comment" : "Home screen CreateNewGame button title",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create a new game"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Создать новую игру"
+          }
+        }
+      }
+    },
+    "homeFindGame" : {
+      "comment" : "Home screen FindGame button title",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Find a game"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Найти игру"
+          }
+        }
+      }
+    },
+    "homeGamesAvailable" : {
+      "comment" : "Home screen FindGame button games available",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "games available"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "доступные игры"
+          }
+        }
+      }
+    },
+    "homeNearYou" : {
+      "comment" : "Home screen FindGame button sub title",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Near you"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Рядом"
           }
         }
       }

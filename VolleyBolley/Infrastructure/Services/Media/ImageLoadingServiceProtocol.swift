@@ -8,5 +8,5 @@
 import UIKit
 
 protocol ImageLoadingServiceProtocol {
-    func loadImage(from url: URL, completion: @escaping (UIImage?) -> Void)
+    func loadImage(from url: URL) async throws -> UIImage?
 }

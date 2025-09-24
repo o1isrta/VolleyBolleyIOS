@@ -47,7 +47,7 @@ final class ProgressHub: UIView {
     }()
 
     private let ballImageView: UIImageView = {
-        let imageView = UIImageView(image: .players)
+        let imageView = UIImageView(image: UIImage.Icon.players)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
         return imageView
@@ -103,7 +103,7 @@ final class ProgressHub: UIView {
 
         containerView.layer.addSublayer(gradientLayer)
 
-        if let image = UIImage.players.cgImage {
+        if let image = UIImage.Icon.players.cgImage {
             maskLayer.contents = image
             maskLayer.contentsGravity = .resizeAspect
             gradientLayer.mask = maskLayer

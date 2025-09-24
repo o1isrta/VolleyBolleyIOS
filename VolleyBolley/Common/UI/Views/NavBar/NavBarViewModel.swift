@@ -10,11 +10,11 @@ import UIKit
 struct NavBarViewModel {
     let displayName: String
     let avatarImage: UIImage?
-    let level: UserLevel
+    let level: PlayerLevel
 
-    init(user: User, avatarImage: UIImage?) {
-        self.displayName = user.firstName
+    init(player: Player, avatarImage: UIImage?) {
+        self.displayName = player.firstName
         self.avatarImage = avatarImage
-        self.level = user.level
+        self.level = player.level
     }
 }

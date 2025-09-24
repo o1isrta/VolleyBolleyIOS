@@ -8,51 +8,38 @@
 import UIKit
 
 protocol HomeInteractorProtocol: AnyObject {
-    func fetchGreeting() -> String
-    func loadUserData(completion: @escaping (Result<(User, UIImage?), Error>) -> Void)
+    func loadNearestCourtWithWeather() -> NearestCourtWithWeather
+    func loadTotalCountOfUpcomingGamesAndTournaments() -> Int
 }
 
 final class HomeInteractor: HomeInteractorProtocol {
 
-    // MARK: - Private Properties
+    func loadNearestCourtWithWeather() -> NearestCourtWithWeather {
+        // TODO: - remove mock data
+        let nearestCourt = CourtModel(
+            id: 1,
+            price: "",
+            description: "",
+            contacts: [],
+            imageUrl: nil,
+            tagList: [],
+            location: LocationModel(
+                latitude: 0,
+                longitude: 0,
+                courtName: "Karon Beach Club",
+                locationName: "Patak Rd, Mueang Phuket"
+            )
+        )
 
-    private let usersRepository: UsersRepositoryProtocol
-    private let imageLoader: ImageLoadingServiceProtocol
+        let weather = AppWeather(temperature: 26.0, condition: .partlyCloudy)
 
-    // MARK: - Initializers
+        let nearestCourtWithWeather = NearestCourtWithWeather(court: nearestCourt, weather: weather)
 
-    init(
-        usersRepository: UsersRepositoryProtocol,
-        imageLoader: ImageLoadingServiceProtocol
-    ) {
-        self.usersRepository = usersRepository
-        self.imageLoader = imageLoader
+        return nearestCourtWithWeather
     }
 
-    // MARK: - Public Methods
-
-    func fetchGreeting() -> String {
-        return "Home Module"
-    }
-
-    func loadUserData(completion: @escaping (Result<(User, UIImage?), Error>) -> Void) {
-        usersRepository.getCurrentUser { [weak self] result in
-            guard let self = self else { return }
-
-            switch result {
-            case .success(let user):
-                guard let avatarURL = user.avatarURL else {
-                    completion(.success((user, nil)))
-                    return
-                }
-
-                self.imageLoader.loadImage(from: avatarURL) { image in
-                    completion(.success((user, image)))
-                }
-
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+    func loadTotalCountOfUpcomingGamesAndTournaments() -> Int {
+        // TODO: - remove mock data
+        12
     }
 }
