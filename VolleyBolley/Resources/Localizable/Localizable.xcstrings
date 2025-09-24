@@ -1,17 +1,6 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "  Continue with Google" : {
-      "comment" : "Registration",
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "  Продолжить c Google"
-          }
-        }
-      }
-    },
     "%@ %@" : {
       "localizations" : {
         "en" : {
@@ -339,6 +328,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Контакты: "
+          }
+        }
+      }
+    },
+    "Continue with Google" : {
+      "comment" : "Registration",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Продолжить c Google"
           }
         }
       }
