@@ -14,9 +14,7 @@ extension String {
     func formattedBirthdayOrNil() -> String? {
         let digitsOnly = self.replacingOccurrences(of: "[^0-9]", with: "", options: .regularExpression)
 
-        if digitsOnly.count > 8 {
-            return nil
-        }
+        if digitsOnly.count > 8 { return nil }
 
         var formattedText = ""
         let dayEnd = min(2, digitsOnly.count)

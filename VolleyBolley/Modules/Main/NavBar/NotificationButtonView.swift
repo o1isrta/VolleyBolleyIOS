@@ -7,7 +7,17 @@
 
 import UIKit
 
+// MARK: - NotificationButtonDelegate
+
+protocol NotificationButtonDelegate: AnyObject {
+	func notificationButtonDidTap()
+}
+
 final class NotificationButtonView: UIView {
+
+	// MARK: - Public Properties
+
+	weak var delegate: NotificationButtonDelegate?
 
 	// MARK: - Private Properties
 
@@ -74,10 +84,9 @@ final class NotificationButtonView: UIView {
 private extension NotificationButtonView {
 
 	@objc func notificationButtonTapped() {
-		if isNewNotifications {
-			isNewNotifications.toggle()
-			hasNewNotifications(isNewNotifications)
-		}
+		// Always notify delegate about the tap for navigation
+		// The delegate (presenter) will handle state management
+		delegate?.notificationButtonDidTap()
 	}
 
 	func setupUI() {

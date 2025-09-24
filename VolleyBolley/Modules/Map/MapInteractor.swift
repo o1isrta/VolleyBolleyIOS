@@ -23,25 +23,25 @@ final class MapInteractor: MapInteractorProtocol {
 
     func fetchCourts(completion: @escaping ([CourtModel]) -> Void) {
         // TODO: for tests
-//        let query = "Karon"
-//        networkService.searchCourts(query: query) { result in
-//            switch result {
-//            case .success(let response):
-//                let courts = response.courts.map{ $0.toDomain() }
-//                completion([])
-//            case .failure(let error):
-//                completion([])
-//            }
-//        }
-        // TODO: for tests
-        networkService.getCountryList { result in
+        let query = "Karon"
+        networkService.searchCourts(query: query) { result in
             switch result {
             case .success(let response):
+                let courts = response.courts.map{ $0.toDomain() }
                 completion([])
             case .failure(let error):
                 completion([])
             }
         }
+        // TODO: for tests
+//        networkService.getCountryList { result in
+//            switch result {
+//            case .success(let response):
+//                completion([])
+//            case .failure(let error):
+//                completion([])
+//            }
+//        }
 
         let courts = CourtModel.mockDataArray
         completion(courts)

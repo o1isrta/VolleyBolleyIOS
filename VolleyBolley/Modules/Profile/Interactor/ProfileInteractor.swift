@@ -8,8 +8,6 @@
 import UIKit
 
 protocol ProfileInteractorProtocol: AnyObject {
-    func fetchGreeting() -> String
-    func loadUserData(completion: @escaping (Result<(Player, UIImage?), Error>) -> Void)
 }
 
 final class ProfileInteractor: ProfileInteractorProtocol {
@@ -28,9 +26,4 @@ final class ProfileInteractor: ProfileInteractorProtocol {
 
     // MARK: - Public Methods
 
-    func fetchGreeting() -> String {
-        return "Profile Module"
-    }
-
-    func loadUserData(completion: @escaping (Result<(Player, UIImage?), Error>) -> Void) {}
 }

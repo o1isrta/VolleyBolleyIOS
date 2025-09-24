@@ -243,26 +243,9 @@ struct PopupBannerViewRepresentable: UIViewRepresentable {
 struct PopupBannerViewControllerRepresentable: UIViewControllerRepresentable {
 
     func makeUIViewController(context: Context) -> UIViewController {
-        let viewController = UIViewController()
-        viewController.view.backgroundColor = AppColor.Background.screen
-
-        let navBar = CustomNavBarView()
-
-        navBar.configure(
-            with: NavBarViewModel(
-                player: Player(
-                    firstName: "Artem",
-                    lastName: "Ivanov",
-                    gender: "MALE",
-                    dateOfBirth: Date(),
-                    level: .light,
-                    countryID: 0,
-                    cityID: 0,
-                    avatarURL: nil
-                ),
-                avatarImage: UIImage(resource: .imgPerson)
-            )
-        )
+		let viewController = BaseViewController()
+		// Configure navbar with mock data
+		viewController.navBar.configure(with: NavBarViewModel.mockDefault)
 
         let button = UIButton(type: .system)
         button.setTitle("Show Banner", for: .normal)
@@ -271,17 +254,12 @@ struct PopupBannerViewControllerRepresentable: UIViewControllerRepresentable {
             banner.onTap = {
                 print("tap")
             }
-            banner.show(in: viewController.view, under: navBar)
+            banner.show(in: viewController.view, under: viewController.navBar)
         }, for: .touchUpInside)
 
-        viewController.view.addSubviews(navBar, button)
+        viewController.view.addSubviews(button)
 
         NSLayoutConstraint.activate([
-            navBar.topAnchor.constraint(equalTo: viewController.view.topAnchor),
-            navBar.leadingAnchor.constraint(equalTo: viewController.view.leadingAnchor),
-            navBar.trailingAnchor.constraint(equalTo: viewController.view.trailingAnchor),
-            navBar.heightAnchor.constraint(equalToConstant: 106),
-
             button.centerXAnchor.constraint(equalTo: viewController.view.centerXAnchor),
             button.centerYAnchor.constraint(equalTo: viewController.view.centerYAnchor)
         ])
