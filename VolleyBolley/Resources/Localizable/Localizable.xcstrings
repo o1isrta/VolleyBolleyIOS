@@ -1768,6 +1768,7 @@
       }
     },
     "Your country" : {
+      "comment" : "Registration",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
