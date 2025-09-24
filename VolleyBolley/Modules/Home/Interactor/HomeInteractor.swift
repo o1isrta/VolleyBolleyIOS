@@ -15,6 +15,7 @@ protocol HomeInteractorProtocol: AnyObject {
 final class HomeInteractor: HomeInteractorProtocol {
 
     func loadNearestCourtWithWeather() -> NearestCourtWithWeather {
+        // TODO: - remove mock data
         let nearestCourt = CourtModel(
             id: 1,
             price: "",
@@ -38,6 +39,7 @@ final class HomeInteractor: HomeInteractorProtocol {
     }
 
     func loadTotalCountOfUpcomingGamesAndTournaments() -> Int {
+        // TODO: - remove mock data
         12
     }
 }
