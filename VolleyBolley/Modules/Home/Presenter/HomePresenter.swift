@@ -9,6 +9,10 @@ import Foundation
 
 protocol HomePresenterProtocol: AnyObject {
     func viewDidLoad()
+    func didTapCreateNewGame()
+    func didTapFindGame()
+    func didTapCreateTourney()
+    func didTapDonate()
 }
 
 final class HomePresenter: HomePresenterProtocol {
@@ -35,7 +39,53 @@ final class HomePresenter: HomePresenterProtocol {
     // MARK: - Public Methods
 
     func viewDidLoad() {
-        let message = interactor.fetchGreeting()
-        view?.showGreeting(message)
+        loadInitialData()
+    }
+
+    func didTapCreateNewGame() {
+        router.showMapForCreateNewGame()
+    }
+
+    func didTapFindGame() {
+        router.showMapForFindGame()
+    }
+
+    func didTapCreateTourney() {
+        router.showMapForCreateTourney()
+    }
+
+    func didTapDonate() {
+        router.showDonate()
+    }
+
+    // MARK: - Private Methods
+
+    private func loadInitialData() {
+        loadCourtAndWeather()
+        loadNearbyGamesCount()
+    }
+
+    private func loadCourtAndWeather() {
+        let courtWithWeather = interactor.loadNearestCourtWithWeather()
+        let locationVM = LocationTitleViewModel(
+            title: courtWithWeather.court.location.courtName,
+            location: courtWithWeather.court.location.locationName
+        )
+
+        if let weather = courtWithWeather.weather {
+            let weatherVM = WeatherViewModel(weather: weather)
+            view?.displayCreateNewGameButton(
+                state: .withLocationAndWeather(location: locationVM, weather: weatherVM)
+            )
+        } else {
+            view?.displayCreateNewGameButton(
+                state: .withLocationOnly(location: locationVM)
+            )
+        }
+    }
+
+    private func loadNearbyGamesCount() {
+        let nearbyGamesCount = interactor.loadTotalCountOfUpcomingGamesAndTournaments()
+        view?.displayFindGameButton(gamesCount: nearbyGamesCount)
     }
 }

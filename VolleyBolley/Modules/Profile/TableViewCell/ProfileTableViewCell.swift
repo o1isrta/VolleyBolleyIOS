@@ -51,8 +51,8 @@ final class MenuCell: UITableViewCell {
 
     // MARK: - Public Method
 
-    func configure(iconName: String, title: String, isLast: Bool) {
-        iconView.image = UIImage(named: iconName)
+	func configure(icon: UIImage, title: String, isLast: Bool) {
+        iconView.image = icon
         titleLabel.text = title
         separatorLine.isHidden = isLast
     }

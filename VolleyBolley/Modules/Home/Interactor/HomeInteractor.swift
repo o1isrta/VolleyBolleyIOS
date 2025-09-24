@@ -8,29 +8,38 @@
 import UIKit
 
 protocol HomeInteractorProtocol: AnyObject {
-    func fetchGreeting() -> String
-    func loadUserData(completion: @escaping (Result<(User, UIImage?), Error>) -> Void)
+    func loadNearestCourtWithWeather() -> NearestCourtWithWeather
+    func loadTotalCountOfUpcomingGamesAndTournaments() -> Int
 }
 
 final class HomeInteractor: HomeInteractorProtocol {
 
-    // MARK: - Private Properties
+    func loadNearestCourtWithWeather() -> NearestCourtWithWeather {
+        // TODO: - remove mock data
+        let nearestCourt = CourtModel(
+            id: 1,
+            price: "",
+            description: "",
+            contacts: [],
+            imageUrl: nil,
+            tagList: [],
+            location: LocationModel(
+                latitude: 0,
+                longitude: 0,
+                courtName: "Karon Beach Club",
+                locationName: "Patak Rd, Mueang Phuket"
+            )
+        )
 
-    private let imageLoader: ImageLoadingServiceProtocol
+        let weather = AppWeather(temperature: 26.0, condition: .partlyCloudy)
 
-    // MARK: - Initializers
+        let nearestCourtWithWeather = NearestCourtWithWeather(court: nearestCourt, weather: weather)
 
-    init(
-        imageLoader: ImageLoadingServiceProtocol
-    ) {
-        self.imageLoader = imageLoader
+        return nearestCourtWithWeather
     }
 
-    // MARK: - Public Methods
-
-    func fetchGreeting() -> String {
-        return "Home Module"
+    func loadTotalCountOfUpcomingGamesAndTournaments() -> Int {
+        // TODO: - remove mock data
+        12
     }
-
-    func loadUserData(completion: @escaping (Result<(User, UIImage?), Error>) -> Void) {}
 }

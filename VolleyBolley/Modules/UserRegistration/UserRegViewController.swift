@@ -28,7 +28,7 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
 		return contentView
 	}()
 
-	private lazy var titleLabel = CustomTitle(text: String(localized: "registration_title"), isLarge: true)
+	private lazy var titleLabel = CustomTitle(text: String(localized: "Registration"), isLarge: true)
 	private lazy var nameLabel = CustomLabel(text: String(localized: "Name"), isBold: true)
 	private lazy var nameTextField: UITextField = {
 		let textField = UITextField()

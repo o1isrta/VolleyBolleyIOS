@@ -32,6 +32,16 @@ final class MapViewController: BaseViewController, MapViewProtocol {
 	private var selectedCourt: CourtModel?
 	private var listVC: CourtListViewController?
 
+    private lazy var backButton: UtilityButton = {
+        let view = UtilityButton(style: .small)
+        view.setImage(.chevronBackward, for: .normal)
+        view.tintColor = AppColor.Icon.inverted
+        view.addAction(UIAction { [weak self] _ in
+            self?.presenter.didTapBackButton()
+        }, for: .touchUpInside)
+        return view
+    }()
+
 	// MARK: - Initializers
 
 	init(presenter: MapPresenterProtocol) {
@@ -213,7 +223,8 @@ private extension MapViewController {
 		view.addSubviews(
 			mapView,
 			segmentedControl,
-			bottomView
+            bottomView,
+            backButton
 		)
 		let popupBottonInset: CGFloat = -55
 
@@ -221,6 +232,9 @@ private extension MapViewController {
 			segmentedControl.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 8),
 			segmentedControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 			segmentedControl.widthAnchor.constraint(equalToConstant: 200),
+
+			backButton.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 8),
+            backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
 
 			mapView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
 			mapView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -266,7 +280,9 @@ private extension MapViewController {
 
 	func segmentChanged() {
 		let showList = segmentedControl.selectedSegmentIndex == 1
+		backButton.tintColor = AppColor.Icon.inverted
 		if showList {
+			backButton.tintColor = AppColor.Icon.primary
 			router?.showList(from: self, courts: courts, selected: nearestCourt)
 		}
 		mapView.isHidden = showList

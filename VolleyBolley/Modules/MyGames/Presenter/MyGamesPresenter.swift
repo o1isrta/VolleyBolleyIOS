@@ -30,7 +30,5 @@ final class MyGamesPresenter: MyGamesPresenterProtocol {
     // MARK: - Public Methods
 
     func viewDidLoad() {
-        let message = interactor.fetchGreeting()
-        view?.showGreeting(message)
     }
 }
