@@ -23,8 +23,8 @@ final class MainTabBarController: UIViewController {
         return view
     }()
 
-    private lazy var tabBar: CustomTabBarView = {
-        let view = CustomTabBarView(items: TabBarItem.allCases)
+    private lazy var tabBar: MainTabBarView = {
+        let view = MainTabBarView(items: TabBarItem.allCases)
         view.delegate = self
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -117,10 +117,10 @@ final class MainTabBarController: UIViewController {
     }
 }
 
-// MARK: - CustomTabBarViewDelegate
+// MARK: - MainTabBarViewDelegate
 
-extension MainTabBarController: CustomTabBarViewDelegate {
-    func customTabBarView(_ tabBarView: CustomTabBarView, didSelectItemAt index: Int) {
+extension MainTabBarController: MainTabBarViewDelegate {
+    func customTabBarView(_ tabBarView: MainTabBarView, didSelectItemAt index: Int) {
         guard let item = TabBarItem(rawValue: index) else { return }
         switchToViewController(at: item)
     }

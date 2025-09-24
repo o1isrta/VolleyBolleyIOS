@@ -33,7 +33,7 @@ final class GamesAvailableView: UIView {
         let label = UILabel()
         label.font = AppFont.Hero.bold(size: Constants.titleFontSize)
         label.textColor = AppColor.Text.inverted
-        label.text = String(localized: .homeGamesAvailable)
+        label.text = String(localized: "homeGamesAvailable")
         return label
     }()
 

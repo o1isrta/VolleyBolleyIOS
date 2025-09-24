@@ -8,6 +8,7 @@
 import UIKit
 
 protocol NotificationsViewControllerProtocol: AnyObject {
+	var presenter: NotificationsPresenterProtocol? { get }
 	func displayNotifications(_ notifications: [NotificationCardViewModel])
 	func displayEmptyState()
 }
@@ -51,6 +52,12 @@ final class NotificationsViewController: BaseViewController {
 		setupUI()
 		setupTableViewContentSizeObserver()
         presenter?.viewDidLoad()
+		setupNotificationObservers()
+	}
+
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		navBar.updateNotifications(false)
 	}
 }
 
@@ -74,7 +81,7 @@ private extension NotificationsViewController {
 		let mainSpacing: CGFloat = 20
 
 		NSLayoutConstraint.activate([
-			glassmorphismView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: mainIndent),
+			glassmorphismView.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: mainIndent),
 			glassmorphismView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: mainIndent),
 			glassmorphismView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -mainIndent),
 			glassmorphismView.bottomAnchor.constraint(equalTo: tableView.bottomAnchor, constant: mainIndent),
@@ -94,6 +101,15 @@ private extension NotificationsViewController {
 		tableViewHeightConstraint?.isActive = true
 	}
 
+	func setupNotificationObservers() {
+		let notification = NavBarNotification(isArrived: false)
+		NotificationCenter.default.post(
+			name: NotificationConstants.NavBar.newNotificationArrived,
+			object: self,
+			userInfo: notification.userInfo
+		)
+	}
+
 	func setupTableViewContentSizeObserver() {
 		tableViewContentSizeObserver = tableView.observe(
 			\.contentSize,
@@ -104,7 +120,7 @@ private extension NotificationsViewController {
 				let newSize = change.newValue
 			else { return }
 			// Limiting the max height to preserve scrolling
-			let maxHeight = UIScreen.main.bounds.height - 200
+			let maxHeight = UIScreen.main.bounds.height - 268
 			let newHeight = min(newSize.height, maxHeight)
 			self.tableViewHeightConstraint?.constant = newHeight
 		}
@@ -117,6 +133,7 @@ extension NotificationsViewController: NotificationsViewControllerProtocol {
 
 	func displayNotifications(_ notifications: [NotificationCardViewModel]) {
 		self.notifications = notifications
+		navBar.updateNotifications(false)
 		tableView.reloadData()
 	}
 

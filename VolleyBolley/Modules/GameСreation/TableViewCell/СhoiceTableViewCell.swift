@@ -29,7 +29,7 @@ final class PlayerCell: UITableViewCell {
 
     private lazy var starButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "no_star"), for: .normal)
+		button.setImage(UIImage.Icon.noStar, for: .normal)
         button.addTarget(self, action: #selector(didTapStar), for: .touchUpInside)
         return button
     }()
@@ -53,7 +53,7 @@ final class PlayerCell: UITableViewCell {
 
     private lazy var checkmarkButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "empty"), for: .normal)
+		button.setImage(UIImage.Icon.empty, for: .normal)
         button.addTarget(self, action: #selector(didTapCheckmark), for: .touchUpInside)
         return button
     }()
@@ -105,8 +105,8 @@ final class PlayerCell: UITableViewCell {
     // MARK: - Private Method
 
     private func updateUI() {
-        starButton.setImage(UIImage(named: isFavorite ? "star" : "no_star"), for: .normal)
-        checkmarkButton.setImage(UIImage(named: isChecked ? "filled" : "empty"), for: .normal)
+		starButton.setImage(isFavorite ? UIImage.Icon.star : UIImage.Icon.noStar, for: .normal)
+		checkmarkButton.setImage(isChecked ? UIImage.Icon.filled : UIImage.Icon.empty, for: .normal)
     }
 
     @objc private func didTapStar() {

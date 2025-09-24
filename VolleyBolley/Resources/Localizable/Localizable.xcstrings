@@ -1,19 +1,6 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "" : {
-
-    },
-    "  Continue with Google" : {
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "  Продолжить c Google"
-          }
-        }
-      }
-    },
     "%@ %@" : {
       "localizations" : {
         "en" : {
@@ -41,7 +28,15 @@
       }
     },
     "+ With the country code" : {
-
+      "comment" : "Registration",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "+ С кодом страны"
+          }
+        }
+      }
     },
     "About" : {
       "comment" : "Profile",
@@ -55,6 +50,7 @@
       }
     },
     "About levels" : {
+      "comment" : "Registration",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -64,7 +60,19 @@
         }
       }
     },
+    "ADD SELECTED" : {
+      "comment" : "Game",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ДОБАВИТЬ ВЫБРАННЫХ"
+          }
+        }
+      }
+    },
     "After each game, teammates can rate your level.\nOnce you receive 6 ratings, your level may change:\n  • 5+ positive ratings → promoted one step\n  • 5+ negative ratings → demoted one step\n  • Mixed feedback → level stays the same" : {
+      "comment" : "FAQ",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -130,6 +138,7 @@
       }
     },
     "Choose your city" : {
+      "comment" : "Registration",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -140,6 +149,7 @@
       }
     },
     "Choose your country" : {
+      "comment" : "Registration",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -322,7 +332,19 @@
         }
       }
     },
+    "Continue with Google" : {
+      "comment" : "Registration",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Продолжить c Google"
+          }
+        }
+      }
+    },
     "Continue with phone number" : {
+      "comment" : "Registration",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -339,6 +361,24 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Стоимость корта: "
+          }
+        }
+      }
+    },
+    "customAlertView.button.done" : {
+      "comment" : "Custom Alert",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DONE"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ГОТОВО"
           }
         }
       }
@@ -360,6 +400,42 @@
         }
       }
     },
+    "customAlertView.button.no" : {
+      "comment" : "Custom Alert",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "NO"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "НЕТ"
+          }
+        }
+      }
+    },
+    "customAlertView.button.rate" : {
+      "comment" : "Custom Alert",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "RATE PLAYERS"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ОЦЕНИТЕ ИГРОКОВ"
+          }
+        }
+      }
+    },
     "customAlertView.button.skip" : {
       "comment" : "Custom Alert",
       "localizations" : {
@@ -373,6 +449,78 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ПРОПУСТИТЬ"
+          }
+        }
+      }
+    },
+    "customAlertView.button.yes" : {
+      "comment" : "Custom Alert",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "YES"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ДА"
+          }
+        }
+      }
+    },
+    "customAlertView.message.invitesSent" : {
+      "comment" : "Custom Alert",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invites have been successfully sent to players!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Приглашения успешно отправлены игрокам!"
+          }
+        }
+      }
+    },
+    "customAlertView.message.logout" : {
+      "comment" : "Custom Alert",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to log out of your account?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы уверены, что хотите выйти из своей учетной записи?"
+          }
+        }
+      }
+    },
+    "customAlertView.message.noInternet" : {
+      "comment" : "Custom Alert",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You're offline. Check your internet connection and try again."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы не в сети. Проверьте подключение к интернету и повторите попытку."
           }
         }
       }
@@ -463,6 +611,7 @@
       }
     },
     "Date of birth" : {
+      "comment" : "Registration",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -673,6 +822,7 @@
       }
     },
     "Earn 10 points from higher-level players within the last 60 days.\nThe higher the evaluator’s level, the more weight their rating carries." : {
+      "comment" : "FAQ",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -683,6 +833,7 @@
       }
     },
     "Elite level, official championships experience" : {
+      "comment" : "Registration / Level description popup",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -699,6 +850,7 @@
       }
     },
     "Enter the 6-digit code" : {
+      "comment" : "Registration",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -715,6 +867,7 @@
       }
     },
     "Fair Play Policy" : {
+      "comment" : "FAQ",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -791,9 +944,18 @@
       }
     },
     "Get new code" : {
-
+      "comment" : "Registration",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Получить новый код"
+          }
+        }
+      }
     },
     "GET STARTED" : {
+      "comment" : "Registration",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -876,10 +1038,26 @@
       }
     },
     "Invalid code" : {
-
+      "comment" : "Registration",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Неверный код"
+          }
+        }
+      }
     },
     "Know rules, still learning" : {
-
+      "comment" : "Registration / Level description popup",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Знаю правила, всё ещё учусь"
+          }
+        }
+      }
     },
     "Level" : {
       "comment" : "User info / Game Description",
@@ -893,6 +1071,7 @@
       }
     },
     "Levels can drop due to:" : {
+      "comment" : "Registration / Level description popup",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -978,7 +1157,15 @@
       }
     },
     "New to the game" : {
-
+      "comment" : "Registration / Level description popup",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Новичок в игре"
+          }
+        }
+      }
     },
     "NEXT STEP" : {
       "comment" : "Next button",
@@ -1291,6 +1478,7 @@
       }
     },
     "Post-Game Ratings" : {
+      "comment" : "FAQ",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1312,6 +1500,7 @@
       }
     },
     "Ratings (6 within 60 days, 5+ down = demotion)\nInactivity:\n• 90 days = minus 1 step\n• 180 days = reset to lowest level in current category" : {
+      "comment" : "FAQ",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1322,23 +1511,8 @@
       }
     },
     "Registration" : {
+      "comment" : "Registration",
       "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Регистрация"
-          }
-        }
-      }
-    },
-    "registration_title" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Registration"
-          }
-        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1381,7 +1555,15 @@
       }
     },
     "SEND CODE" : {
-
+      "comment" : "Registration",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ОТПРАВИТЬ КОД"
+          }
+        }
+      }
     },
     "Sign up\nwith\na social\nmedia" : {
       "localizations" : {
@@ -1394,7 +1576,14 @@
       }
     },
     "Skilled, play often, tournaments experience" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Опытный, часто играю, опыт участия в турнирах"
+          }
+        }
+      }
     },
     "Support" : {
       "comment" : "Profile",
@@ -1430,6 +1619,7 @@
       }
     },
     "To find the right games and teammates, choose your current skill level:\nOptions:\n  • Light (L1–L3) – Beginner\n  • Medium (M1–M3) – Confident amateur\n  • Hard (H1–H3) – Advanced\n  • Pro (P1–P3) – Professional\nThe higher the number, the higher the skill. Your level may change later based on player ratings." : {
+      "comment" : "FAQ",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1479,7 +1669,15 @@
       }
     },
     "VERIFY" : {
-
+      "comment" : "Registration",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ПРОВЕРИТЬ"
+          }
+        }
+      }
     },
     "VOLLEYBOLLEY" : {
       "localizations" : {
@@ -1492,6 +1690,7 @@
       }
     },
     "Want to move to the next category?" : {
+      "comment" : "FAQ",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1502,6 +1701,7 @@
       }
     },
     "We ensure a fair system:\n• Ratings are anonymous\n• Max 2 ratings from the same player in 60 days\n• Light has minimal impact on Hard and Pro levels\n• Pro levels are harder to reach\nPlay fair — your level will speak for itself." : {
+      "comment" : "FAQ",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1528,6 +1728,7 @@
       }
     },
     "welcome_title" : {
+      "comment" : "Registration",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1555,6 +1756,7 @@
       }
     },
     "Your city" : {
+      "comment" : "Registration",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1565,6 +1767,7 @@
       }
     },
     "Your country" : {
+      "comment" : "Registration",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1575,7 +1778,15 @@
       }
     },
     "Your phone number" : {
-
+      "comment" : "Registration",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ваш номер телефона"
+          }
+        }
+      }
     },
     "ОК" : {
       "localizations" : {
