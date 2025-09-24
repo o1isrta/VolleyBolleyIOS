@@ -36,7 +36,7 @@ final class NetworkService: NetworkServiceProtocol {
 
     func fetchCourts() async throws -> [CourtDTO] {
         do {
-            return try await provider.asyncRequest(
+            return try await provider.asyncRequestDecodable(
                 .getCourts,
                 type: [CourtDTO].self,
                 decoder: AppJSONDecoders.server

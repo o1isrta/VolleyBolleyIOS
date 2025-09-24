@@ -50,7 +50,7 @@ final class HomeInteractor: HomeInteractorProtocol {
     }
 
     func loadTotalCountOfUpcomingGamesAndTournaments() -> Int {
-        // TODO: - remove mock data
+        // TODO: - remove mock courts count
         12
     }
 }

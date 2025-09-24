@@ -14,6 +14,8 @@ protocol MapViewProtocol: AnyObject {
     func displayNearestCourt(court: Court?)
 }
 
+// TODO: - refactor
+
 final class MapViewController: BaseViewController, MapViewProtocol {
 
 	// MARK: - Public Properties
@@ -79,7 +81,6 @@ final class MapViewController: BaseViewController, MapViewProtocol {
         print("🏐 Nearest court: \(court?.name ?? "nil") \(court?.address ?? "nil")")
     }
 
-    // TODO: - refactor
 	func showCourts(_ courts: [Court], nearest: Court?) {
 //		self.courts = courts
 //		nearestCourt = nearest
@@ -165,7 +166,6 @@ extension MapViewController: MKMapViewDelegate {
 		return annotationView
 	}
 
-    // TODO: - refactor
 	func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
 //		guard let annotation = view.annotation else { return }
 
@@ -298,7 +298,6 @@ private extension MapViewController {
 		}
 	}
 
-    // TODO: - refactor
 	func segmentChanged() {
 		let showList = segmentedControl.selectedSegmentIndex == 1
 //		if showList {
@@ -310,14 +309,12 @@ private extension MapViewController {
 		popupView.isHidden = true
 	}
 
-    // TODO: - refactor
 	func isNearestCourt(_ court: Court) -> Bool {
         true
 		// court == nearestCourt
 	}
 
 	private func chooseCourtAction() {
-		// TODO: add action for court selection
 		print("Choose this Court")
 	}
 

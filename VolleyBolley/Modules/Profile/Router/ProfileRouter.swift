@@ -21,7 +21,6 @@ final class ProfileRouter: ProfileRouterProtocol {
     }
 
     func showPersonalData() {
-        // TODO: - 111
         guard let personalDataVC = DIContainer.shared.resolver.resolve(PersonalDataViewController.self) else {
             fatalError("PersonalDataViewController не зарегистрирован")
         }

@@ -8,6 +8,8 @@
 import CoreLocation
 import UIKit
 
+// TODO: - refactor
+
 final class CourtListViewController: UIViewController {
 
 	// MARK: - Private Properties
@@ -85,7 +87,6 @@ final class CourtListViewController: UIViewController {
 extension CourtListViewController: CourtListViewProtocol {
 
 	func showCourts(_ courts: [(court: Court, distance: Double)]) {
-		// TODO: -
 		print("📱 ListViewController: Updating courts with distances")
 		for (index, court) in courtList.enumerated() {
             print("📱 Court \(index + 1): '\(court.court.name)' - \(court.distance) km")
@@ -167,7 +168,6 @@ extension CourtListViewController: UITableViewDataSource {
 
 extension CourtListViewController: CLLocationManagerDelegate {
 
-    // TODO: - refactor
 	func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 		print("📍 LocationManager: Got location update")
 		if let location = locations.first {
@@ -177,7 +177,6 @@ extension CourtListViewController: CLLocationManagerDelegate {
 		// presenter.updateDistancesForCourts(initialCourts, userLocation: locations.first)
 	}
 
-    // TODO: - refactor
 	func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
 		print("❌ LocationManager: Failed to get location - \(error.localizedDescription)")
 		// Detailed error handling
@@ -188,7 +187,7 @@ extension CourtListViewController: CLLocationManagerDelegate {
 				// For testing we use a test location (New York)
 				let testLocation = CLLocation(latitude: 40.7589, longitude: -73.9851)
 				print("📍 Используем тестовую локацию: \(testLocation.coordinate.latitude), \(testLocation.coordinate.longitude)")
-				//presenter.updateDistancesForCourts(initialCourts, userLocation: testLocation)
+				// presenter.updateDistancesForCourts(initialCourts, userLocation: testLocation)
 				return
 			case .locationUnknown:
 				print("❌ Локация временно недоступна")
@@ -202,7 +201,6 @@ extension CourtListViewController: CLLocationManagerDelegate {
 		// presenter.updateDistancesForCourts(initialCourts, userLocation: nil)
 	}
 
-    // TODO: - refactor
 	func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
 		print("📍 LocationManager: Authorization status changed to \(status.rawValue)")
 		switch status {
@@ -274,7 +272,6 @@ private extension CourtListViewController {
 		tableViewHeightConstraint?.isActive = true
 	}
 
-    // TODO: - refactor
 	func setupLocation() {
 		locationManager.delegate = self
 		locationManager.desiredAccuracy = kCLLocationAccuracyBest

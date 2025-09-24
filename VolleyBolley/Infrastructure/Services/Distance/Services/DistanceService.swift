@@ -40,7 +40,7 @@
 //		court: Court,
 //		distance: Double
 //	)] {
-//		print("🔍 DistanceService: Calculating distances for \(courts.count) courts") // TODO
+//		print("🔍 DistanceService: Calculating distances for \(courts.count) courts")
 //		print("📍 User location: \(userLocation.coordinate.latitude), \(userLocation.coordinate.longitude)")
 //
 //		return courts.map { court in
@@ -51,7 +51,7 @@
 //					longitude: court.location.longitude
 //				)
 //			)
-//			print("🏀 Court '\(court.location.courtName)': \(distance) km") // TODO
+//			print("🏀 Court '\(court.location.courtName)': \(distance) km")
 //			return (court: court, distance: distance)
 //		}
 //	}
