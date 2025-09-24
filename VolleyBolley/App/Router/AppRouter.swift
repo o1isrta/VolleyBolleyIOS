@@ -43,8 +43,9 @@ final class AppRouter {
         // TODO: Переписать через userSessionService
         if UserDefaults.standard.isOnboardingShown {
             switch environment {
+                // TODO: - change to showAuthorization() when user registration is ready
             case .staging, .mock: showMainApp()
-            case .production: showMainApp() //showAuthorization()
+            case .production: showAuthorization()
             }
         } else {
             showOnboarding()

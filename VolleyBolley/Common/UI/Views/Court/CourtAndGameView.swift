@@ -166,11 +166,13 @@ private extension CourtAndGameView {
 	}
 }
 
-//#if DEBUG
-//import SwiftUI
-//@available(iOS 17.0, *)
+// TODO: - refactor Preview
+
+// #if DEBUG
+// import SwiftUI
+// @available(iOS 17.0, *)
 //
-//#Preview("Game") {
+// #Preview("Game") {
 //	UIViewPreview {
 //		let view = CourtAndGameView()
 //		let model = GameViewModel(
@@ -193,9 +195,9 @@ private extension CourtAndGameView {
 //	.frame(width: .infinity, height: 473)
 //	.background(Color(cgColor: AppColor.Background.screen.cgColor))
 //	.padding()
-//}
+// }
 //
-//#Preview("Court") {
+// #Preview("Court") {
 //	UIViewPreview {
 //		let view = CourtAndGameView()
 //		let model = CourtViewModel(
@@ -212,5 +214,5 @@ private extension CourtAndGameView {
 //	.frame(width: .infinity, height: 416)
 //	.background(Color(cgColor: AppColor.Background.screen.cgColor))
 //	.padding()
-//}
-//#endif
+// }
+// #endif

@@ -88,10 +88,12 @@ private extension CourtTitleView {
 	}
 }
 
-//#if DEBUG
-//import SwiftUI
-//@available(iOS 17.0, *)
-//#Preview {
+// TODO: - refactor Preview
+
+// #if DEBUG
+// import SwiftUI
+// @available(iOS 17.0, *)
+// #Preview {
 //	ZStack {
 //		Color(cgColor: AppColor.Background.screen.cgColor)
 //
@@ -163,5 +165,5 @@ private extension CourtTitleView {
 //		}
 //	}
 //	.ignoresSafeArea()
-//}
-//#endif
+// }
+// #endif

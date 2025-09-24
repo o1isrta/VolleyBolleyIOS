@@ -167,15 +167,17 @@ extension CourtListViewController: UITableViewDataSource {
 
 extension CourtListViewController: CLLocationManagerDelegate {
 
+    // TODO: - refactor
 	func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-		print("📍 LocationManager: Got location update")// TODO
+		print("📍 LocationManager: Got location update")
 		if let location = locations.first {
 			print("📍 Location: \(location.coordinate.latitude), \(location.coordinate.longitude)")
 		}
 		// Use initial courts for distance calculation
-		//presenter.updateDistancesForCourts(initialCourts, userLocation: locations.first)
+		// presenter.updateDistancesForCourts(initialCourts, userLocation: locations.first)
 	}
 
+    // TODO: - refactor
 	func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
 		print("❌ LocationManager: Failed to get location - \(error.localizedDescription)")
 		// Detailed error handling
@@ -197,9 +199,10 @@ extension CourtListViewController: CLLocationManagerDelegate {
 			}
 		}
 		// Use initial courts for distance calculation
-		//presenter.updateDistancesForCourts(initialCourts, userLocation: nil)
+		// presenter.updateDistancesForCourts(initialCourts, userLocation: nil)
 	}
 
+    // TODO: - refactor
 	func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
 		print("📍 LocationManager: Authorization status changed to \(status.rawValue)")
 		switch status {
@@ -208,12 +211,12 @@ extension CourtListViewController: CLLocationManagerDelegate {
 			locationManager.requestLocation()
 		case .denied, .restricted:
 			print("❌ Доступ к геолокации запрещен")
-			//presenter.updateDistancesForCourts(initialCourts, userLocation: nil)
+			// presenter.updateDistancesForCourts(initialCourts, userLocation: nil)
 		case .notDetermined:
 			print("📍 Статус авторизации не определен")
 		@unknown default:
 			print("❌ Неизвестный статус авторизации")
-			//presenter.updateDistancesForCourts(initialCourts, userLocation: nil)
+			// presenter.updateDistancesForCourts(initialCourts, userLocation: nil)
 		}
 	}
 }
@@ -271,6 +274,7 @@ private extension CourtListViewController {
 		tableViewHeightConstraint?.isActive = true
 	}
 
+    // TODO: - refactor
 	func setupLocation() {
 		locationManager.delegate = self
 		locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -286,10 +290,10 @@ private extension CourtListViewController {
 		case .denied, .restricted:
 			print("❌ Доступ к геолокации запрещен пользователем")
 			// Показываем корты без расстояний
-			//presenter.updateDistancesForCourts(initialCourts, userLocation: nil)
+			// presenter.updateDistancesForCourts(initialCourts, userLocation: nil)
 		@unknown default:
 			print("❌ Неизвестный статус авторизации геолокации")
-			//presenter.updateDistancesForCourts(initialCourts, userLocation: nil)
+			// presenter.updateDistancesForCourts(initialCourts, userLocation: nil)
 		}
 	}
 

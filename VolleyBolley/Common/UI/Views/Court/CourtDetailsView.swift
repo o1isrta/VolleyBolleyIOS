@@ -150,10 +150,12 @@ private extension CourtDetailsView {
 	}
 }
 
-//#if DEBUG
-//import SwiftUI
-//@available(iOS 17.0, *)
-//#Preview("Game") {
+// TODO: - refactor Preview
+
+// #if DEBUG
+// import SwiftUI
+// @available(iOS 17.0, *)
+// #Preview("Game") {
 //	UIViewPreview {
 //		let view = CourtDetailsView()
 //		let court = Court.mockData
@@ -178,9 +180,9 @@ private extension CourtDetailsView {
 //	}
 //	.frame(width: .infinity, height: 509)
 //	.padding()
-//}
+// }
 //
-//#Preview("Court") {
+// #Preview("Court") {
 //	UIViewPreview {
 //		let view = CourtDetailsView()
 //		let model = CourtDetailsViewModel(
@@ -200,5 +202,5 @@ private extension CourtDetailsView {
 //	}
 //	.frame(width: .infinity, height: 472)
 //	.padding()
-//}
-//#endif
+// }
+// #endif

@@ -79,6 +79,7 @@ final class MapViewController: BaseViewController, MapViewProtocol {
         print("🏐 Nearest court: \(court?.name ?? "nil") \(court?.address ?? "nil")")
     }
 
+    // TODO: - refactor
 	func showCourts(_ courts: [Court], nearest: Court?) {
 //		self.courts = courts
 //		nearestCourt = nearest
@@ -164,8 +165,9 @@ extension MapViewController: MKMapViewDelegate {
 		return annotationView
 	}
 
+    // TODO: - refactor
 	func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-		guard let annotation = view.annotation else { return }
+//		guard let annotation = view.annotation else { return }
 
 //		if let court = courts.first(where: {
 //			$0.location.latitude == annotation.coordinate.latitude
@@ -296,6 +298,7 @@ private extension MapViewController {
 		}
 	}
 
+    // TODO: - refactor
 	func segmentChanged() {
 		let showList = segmentedControl.selectedSegmentIndex == 1
 //		if showList {
@@ -307,9 +310,10 @@ private extension MapViewController {
 		popupView.isHidden = true
 	}
 
+    // TODO: - refactor
 	func isNearestCourt(_ court: Court) -> Bool {
         true
-		//court == nearestCourt
+		// court == nearestCourt
 	}
 
 	private func chooseCourtAction() {

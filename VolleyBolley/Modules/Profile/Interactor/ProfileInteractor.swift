@@ -7,9 +7,7 @@
 
 import UIKit
 
-protocol ProfileInteractorProtocol: AnyObject {
-    func loadUserData(completion: @escaping (Result<(User, UIImage?), Error>) -> Void)
-}
+protocol ProfileInteractorProtocol: AnyObject {}
 
 final class ProfileInteractor: ProfileInteractorProtocol {
 
@@ -25,7 +23,4 @@ final class ProfileInteractor: ProfileInteractorProtocol {
         self.imageLoader = imageLoader
     }
 
-    // MARK: - Public Methods
-
-    func loadUserData(completion: @escaping (Result<(User, UIImage?), Error>) -> Void) {}
 }

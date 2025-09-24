@@ -7,9 +7,7 @@
 
 import UIKit
 
-protocol MyGamesInteractorProtocol: AnyObject {
-    func loadUserData(completion: @escaping (Result<(User, UIImage?), Error>) -> Void)
-}
+protocol MyGamesInteractorProtocol: AnyObject {}
 
 final class MyGamesInteractor: MyGamesInteractorProtocol {
 
@@ -24,8 +22,4 @@ final class MyGamesInteractor: MyGamesInteractorProtocol {
     ) {
         self.imageLoader = imageLoader
     }
-
-    // MARK: - Public Methods
-
-    func loadUserData(completion: @escaping (Result<(User, UIImage?), Error>) -> Void) {}
 }

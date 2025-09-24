@@ -154,8 +154,7 @@ final class GameDescriptionView: UIView {
 			(model.gameGender, AppFont.Hero.regular(size: 16))
 		])
 
-		// TODO
-//		userAvatarView.configure(with: model.hostAvatarURL)
+        // TODO: - refactor
 		userAvatarView.configure(with: UIImage(named: "img-person"))
 		userNameLabel.text = model.hostName
 		userLevelLabel.text = model.hostLevel

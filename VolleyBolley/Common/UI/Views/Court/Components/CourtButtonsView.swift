@@ -112,10 +112,12 @@ private extension CourtButtonsView {
 	}
 }
 
-//#if DEBUG
-//import SwiftUI
-//@available(iOS 17.0, *)
-//#Preview {
+// TODO: - refactor Preview
+
+// #if DEBUG
+// import SwiftUI
+// @available(iOS 17.0, *)
+// #Preview {
 //	VStack {
 //		UIViewPreview {
 //			let view = CourtBottomView()
@@ -157,5 +159,5 @@ private extension CourtButtonsView {
 //		.frame(width: .infinity, height: 136)
 //		.padding()
 //	}
-//}
-//#endif
+// }
+// #endif

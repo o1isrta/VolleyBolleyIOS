@@ -59,7 +59,8 @@ final class NetworkService: NetworkServiceProtocol {
 		request(.getCountryList, completion: completion)
 	}
 
-	/// Search Courts (GET, with auth)
+    // TODO: - refactor
+//	/// Search Courts (GET, with auth)
 //	func searchCourts(
 //		query: String,
 //		completion: @escaping (Result<Court, Error>) -> Void
@@ -158,7 +159,7 @@ private extension NetworkService {
 		execute()
 	}
 
-	private func request<T: Codable>(
+	private func request<T: Decodable>(
 		_ target: DataAPI,
 		completion: @escaping (Result<T, Error>) -> Void
 	) {

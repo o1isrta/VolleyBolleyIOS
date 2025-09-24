@@ -51,11 +51,8 @@ final class CourtImageView: UIView {
 	// MARK: - Public Methods
 
 	func configure(with model: CourtImageViewModel) {
-//		if let url = model.photoURL {
-//			// Здесь можно добавить асинхронную загрузку изображения
-//			courtImageView.image = model.photoURL
-//		}
-		// TODO
+        // TODO: - refactor
+
 		courtImageView.image = UIImage(named: "court")
 
 		tagStackView.arrangedSubviews.forEach {

@@ -7,6 +7,8 @@
 
 import Foundation
 
-//struct CourtSearchResponse: Codable {
+// TODO: - refactor
+
+// struct CourtSearchResponse: Codable {
 //	let courts: [CourtDTO]
-//}
+// }

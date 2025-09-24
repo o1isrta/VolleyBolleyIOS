@@ -11,6 +11,16 @@ final class DigitIconView: UIView {
 
     // MARK: - Private Properties
 
+    private enum Constants {
+        static let contentInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        static let digitSpacing: CGFloat = 0
+        /// show plus for numbers greater than this
+        static let maxDisplayableNumber: Int = 99
+        /// numbers >= this are two-digit
+        static let minTwoDigitNumber: Int = 10
+        static let digitContentMode: UIView.ContentMode = .scaleAspectFit
+    }
+
     private var digitImageViews: [UIImageView] = []
 
     private let digitIcons: [UIImage] = [
@@ -31,12 +41,13 @@ final class DigitIconView: UIView {
         view.axis = .horizontal
         view.alignment = .center
         view.distribution = .fillProportionally
+        view.spacing = Constants.digitSpacing
         return view
     }()
 
     private let plusImageView: UIImageView = {
         let view = UIImageView()
-        view.image = .plus // UIImage.Icon.invitePlayers
+        view.image = .plus
         view.tintColor = AppColor.Icon.inverted
         view.isHidden = true
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -63,10 +74,10 @@ final class DigitIconView: UIView {
         let digits: [Int]
         let showPlus: Bool
 
-        if number > 99 {
+        if number > Constants.maxDisplayableNumber {
             digits = [9, 9]
             showPlus = true
-        } else if number >= 10 {
+        } else if number >= Constants.minTwoDigitNumber {
             digits = String(number).compactMap { Int(String($0)) }
             showPlus = false
         } else {
@@ -76,7 +87,7 @@ final class DigitIconView: UIView {
 
         for digit in digits {
             let imageView = UIImageView()
-            imageView.contentMode = .scaleAspectFit
+            imageView.contentMode = Constants.digitContentMode
             imageView.image = digitIcons[digit]
             imageView.tintColor = AppColor.Icon.inverted
             stackView.addArrangedSubview(imageView)
@@ -90,7 +101,7 @@ final class DigitIconView: UIView {
     private func setupView() {
         addSubviews(plusImageView, stackView)
 
-        stackView.pinToSuperviewEdges(insets: .init(top: 0, left: 10, bottom: 0, right: 10))
+        stackView.pinToSuperviewEdges(insets: Constants.contentInsets)
         setupConstraintsPlusImageView()
     }
 

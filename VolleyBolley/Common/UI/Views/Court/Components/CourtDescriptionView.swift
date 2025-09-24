@@ -106,10 +106,12 @@ private extension CourtDescriptionView {
 	}
 }
 
-//#if DEBUG
-//import SwiftUI
-//@available(iOS 17.0, *)
-//#Preview {
+// TODO: - refactor Preview
+
+// #if DEBUG
+// import SwiftUI
+// @available(iOS 17.0, *)
+// #Preview {
 //	UIViewPreview {
 //		let view = CourtDescriptionView()
 //		let courtModel = Court.mockData
@@ -124,5 +126,5 @@ private extension CourtDescriptionView {
 //	.frame(width: .infinity, height: 111)
 //	.background(Color(cgColor: AppColor.Background.screen.cgColor))
 //	.padding()
-//}
-//#endif
+// }
+// #endif

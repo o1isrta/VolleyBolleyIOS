@@ -9,6 +9,7 @@ import UIKit
 
 protocol HomeInteractorProtocol: AnyObject {
     func loadNearestCourtWithWeather() async throws -> NearestCourtWithWeather
+    func loadTotalCountOfUpcomingGamesAndTournaments() -> Int
 }
 
 final class HomeInteractor: HomeInteractorProtocol {
@@ -36,13 +37,20 @@ final class HomeInteractor: HomeInteractorProtocol {
     func loadNearestCourtWithWeather() async throws -> NearestCourtWithWeather {
         let playerLocation = try await locationRepository.getPlayerLocation(forceUpdate: false)
         let courts = try await courtsRepository.getCourts(forceRefresh: false)
+        // TODO: - remove mock weather
+        let weather = AppWeather(temperature: 26.0, condition: .partlyCloudy)
 
         let nearestCourt = findNearestCourtUseCase.execute(
             userLocation: playerLocation, courts: courts
         )
 
-        let nearestCourtWithWeather = NearestCourtWithWeather(court: nearestCourt, weather: nil)
+        let nearestCourtWithWeather = NearestCourtWithWeather(court: nearestCourt, weather: weather)
 
         return nearestCourtWithWeather
+    }
+
+    func loadTotalCountOfUpcomingGamesAndTournaments() -> Int {
+        // TODO: - remove mock data
+        12
     }
 }

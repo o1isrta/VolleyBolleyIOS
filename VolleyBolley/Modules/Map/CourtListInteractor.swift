@@ -46,6 +46,7 @@ final class CourtListInteractor: CourtListInteractorProtocol {
 		calculateDistancesForCourts(courts, userLocation: userLocation, completion: completion)
 	}
 
+    // TODO: - refactor
 	func calculateDistancesForCourts(
 		_ courts: [Court],
 		userLocation: CLLocation?,

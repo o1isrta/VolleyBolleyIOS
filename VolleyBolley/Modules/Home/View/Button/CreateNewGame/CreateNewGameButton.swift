@@ -19,10 +19,16 @@ final class CreateNewGameButton: UIButton {
 
     private var activeBackgroundEffect: UIView?
 
+    private enum Constants {
+        static let stackSpacing: CGFloat = 18
+        static let contentInsets = UIEdgeInsets(top: 18, left: 18, bottom: 18, right: 18)
+        static let backgroundSubviewIndex: Int = 0
+    }
+
     private lazy var vStackView: UIStackView = {
         let view = UIStackView(arrangedSubviews: [buttonTitleLabel, hStackView])
         view.axis = .vertical
-        view.spacing = 18
+        view.spacing = Constants.stackSpacing
         view.isUserInteractionEnabled = false
         return view
     }()
@@ -31,17 +37,14 @@ final class CreateNewGameButton: UIButton {
         let view = UIStackView(arrangedSubviews: [locationTitleView, weatherView])
         view.axis = .horizontal
         view.distribution = .fillProportionally
-        view.spacing = 18
+        view.spacing = Constants.stackSpacing
         return view
     }()
 
-    private lazy var buttonTitleLabel: UILabel = {
-        let view = UILabel()
-        view.font = AppFont.ActayWide.bold(size: 24)
-        view.textColor = AppColor.Text.primary
-        view.text = "Create a new game"
-        return view
-    }()
+    private lazy var buttonTitleLabel: CustomTitle = CustomTitle(
+        text: String(localized: .homeCreateNewGame),
+        isLarge: true
+    )
 
     private lazy var locationTitleView: LocationTitleView = {
         let view = LocationTitleView(type: .icon)
@@ -56,15 +59,13 @@ final class CreateNewGameButton: UIButton {
     init() {
         super.init(frame: .zero)
         setupLayout()
-        self.configuration = UIButton.Configuration.filled()
-        self.configurationUpdateHandler = { [weak self] button in
-            guard let self else { return }
-            button.configuration = self.configuration(for: button.state)
-        }
+        self.configuration = UIButton.Configuration.plain()
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     // MARK: - Public Methods
 
@@ -95,7 +96,7 @@ final class CreateNewGameButton: UIButton {
             newEffect.cornerRadius = style.cornerRadius
             if activeBackgroundEffect !== newEffect {
                 activeBackgroundEffect?.removeFromSuperview()
-                insertSubview(newEffect, at: 0)
+                insertSubview(newEffect, at: Constants.backgroundSubviewIndex)
                 activeBackgroundEffect = newEffect
             }
         } else {
@@ -109,7 +110,7 @@ final class CreateNewGameButton: UIButton {
     private func setupLayout() {
         addSubview(vStackView)
 
-        vStackView.pinToSuperviewEdges(insets: .init(top: 18, left: 18, bottom: 18, right: 18))
+        vStackView.pinToSuperviewEdges(insets: Constants.contentInsets)
     }
 
     private func configuration(for state: UIControl.State) -> UIButton.Configuration {

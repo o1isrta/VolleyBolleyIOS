@@ -7,8 +7,10 @@
 
 import UIKit
 
+@MainActor
 protocol HomeViewProtocol: AnyObject where Self: UIViewController {
     func displayCreateNewGameButton(state: CreateNewGameButtonState)
+    func displayFindGameButton(gamesCount: Int)
 }
 
 final class HomeViewController: BaseViewController, HomeViewProtocol {
@@ -19,10 +21,19 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
     private var createNewGameCourtId: Int?
 
     private enum Constants {
+        static let backgroundTop: CGFloat = 90
         static let verticalStackSpacing: CGFloat = 8
         static let horizontalStackSpacing: CGFloat = 8
         static let contentInsets = UIEdgeInsets(top: 284, left: 8, bottom: 100, right: 8)
     }
+
+    private lazy var backgroundImageView: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage.Image.homeBackground
+        view.contentMode = .topLeft
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
 
     private lazy var mainStackView: UIStackView = {
         let view = UIStackView(arrangedSubviews: [topStackView, bottomStackView])
@@ -34,9 +45,10 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
 
     private lazy var topStackView: UIStackView = {
         let view = UIStackView(arrangedSubviews: [createNewGameButton, findGameButton])
-        view.axis = .horizontal
+        view.axis = .vertical
         view.distribution = .fillEqually
-        view.spacing = Constants.horizontalStackSpacing
+        view.spacing = Constants.verticalStackSpacing
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
@@ -45,21 +57,20 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
         view.axis = .horizontal
         view.spacing = Constants.horizontalStackSpacing
         view.distribution = .fillEqually
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
-    private lazy var createNewGameButton: SketchButton = {
-        let view = SketchButton()
-        view.setTitle("Create a game", for: .normal)
+    private lazy var createNewGameButton: CreateNewGameButton = {
+        let view = CreateNewGameButton()
         view.addAction(UIAction { [weak self] _ in
              self?.presenter.didTapCreateNewGame()
         }, for: .touchUpInside)
         return view
     }()
 
-    private lazy var findGameButton: SketchButton = {
-        let view = SketchButton()
-        view.setTitle("Find a game", for: .normal)
+    private lazy var findGameButton: FindGameButton = {
+        let view = FindGameButton()
         view.addAction(UIAction { [weak self] _ in
              self?.presenter.didTapFindGame()
         }, for: .touchUpInside)
@@ -69,7 +80,7 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
     private lazy var createTourneyButton: SketchButton = {
         let view = SketchButton()
         view.isSelected = true
-        view.setTitle("Create a tourney", for: .normal)
+        view.setTitle(String(localized: .commonCreateTourney), for: .normal)
         view.setImage(UIImage.Icon.createTourney, for: .normal)
         view.addAction(UIAction { [weak self] _ in
              self?.presenter.didTapCreateTourney()
@@ -79,7 +90,7 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
 
     private lazy var donateButton: SketchButton = {
         let view = SketchButton()
-        view.setTitle("Donate", for: .normal)
+        view.setTitle(String(localized: .commonDonate), for: .normal)
         view.setImage(UIImage.Icon.donate, for: .normal)
         view.addAction(UIAction { [weak self] _ in
             self?.presenter.didTapDonate()
@@ -111,14 +122,30 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
     // MARK: - Public Methods
 
     func displayCreateNewGameButton(state: CreateNewGameButtonState) {
-        print("🏀 displayCreateNewGameButton: \(state)")
+        createNewGameButton.configure(state: state)
+    }
+
+    func displayFindGameButton(gamesCount: Int) {
+        findGameButton.configure(with: gamesCount)
     }
 
     // MARK: - Private Methods
 
     private func setupView() {
+        view.addSubview(backgroundImageView)
         view.addSubview(mainStackView)
 
         mainStackView.pinToSuperviewEdges(insets: Constants.contentInsets)
+        setupConstraintsBackgroundImageView()
+    }
+
+    // MARK: - Constraints
+
+    private func setupConstraintsBackgroundImageView() {
+        NSLayoutConstraint.activate([
+            backgroundImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: Constants.backgroundTop),
+            backgroundImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            backgroundImageView.widthAnchor.constraint(equalTo: view.widthAnchor)
+        ])
     }
 }

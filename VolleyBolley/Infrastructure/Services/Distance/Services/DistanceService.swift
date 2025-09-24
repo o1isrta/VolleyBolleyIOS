@@ -5,10 +5,12 @@
 //  Created by Roman Romanov on 08.07.2025.
 //
 
-//import CoreLocation
-//import Foundation
+// TODO: - refactor
+
+// import CoreLocation
+// import Foundation
 //
-//protocol DistanceServiceProtocol {
+// protocol DistanceServiceProtocol {
 //	func calculateDistance(from userLocation: CLLocation, to coordinate: CLLocationCoordinate2D) -> Double
 //	func calculateDistances(
 //		from userLocation: CLLocation,
@@ -17,9 +19,9 @@
 //		court: Court,
 //		distance: Double
 //	)]
-//}
+// }
 //
-//class DistanceService: DistanceServiceProtocol {
+// class DistanceService: DistanceServiceProtocol {
 //	func calculateDistance(
 //		from userLocation: CLLocation,
 //		to coordinate: CLLocationCoordinate2D
@@ -53,4 +55,4 @@
 //			return (court: court, distance: distance)
 //		}
 //	}
-//}
+// }

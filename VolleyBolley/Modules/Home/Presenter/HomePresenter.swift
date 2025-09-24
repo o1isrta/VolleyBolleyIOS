@@ -7,6 +7,7 @@
 
 import Foundation
 
+@MainActor
 protocol HomePresenterProtocol: AnyObject {
     func viewDidLoad()
     func didTapCreateNewGame()
@@ -15,6 +16,7 @@ protocol HomePresenterProtocol: AnyObject {
     func didTapDonate()
 }
 
+@MainActor
 final class HomePresenter: HomePresenterProtocol {
 
     // MARK: - Public Properties
@@ -64,6 +66,7 @@ final class HomePresenter: HomePresenterProtocol {
 
     private func loadInitialData() async {
         await loadCourtAndWeather()
+        loadNearbyGamesCount()
     }
 
     private func loadCourtAndWeather() async {
@@ -89,5 +92,10 @@ final class HomePresenter: HomePresenterProtocol {
             print(error.localizedDescription)
             view?.displayCreateNewGameButton(state: .locationRestricted)
         }
+    }
+
+    private func loadNearbyGamesCount() {
+        let nearbyGamesCount = interactor.loadTotalCountOfUpcomingGamesAndTournaments()
+        view?.displayFindGameButton(gamesCount: nearbyGamesCount)
     }
 }

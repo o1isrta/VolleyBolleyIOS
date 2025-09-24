@@ -17,8 +17,15 @@ protocol HomeRouterProtocol: AnyObject {
 
 final class HomeRouter: HomeRouterProtocol {
 
+    // MARK: - Public Properties
+
     weak var viewController: UIViewController?
+
+    // MARK: - Private Properties
+
     private let mapFactory: MapModuleFactoryProtocol
+
+    // MARK: - Initializers
 
     init(mapFactory: MapModuleFactoryProtocol) {
         self.mapFactory = mapFactory
