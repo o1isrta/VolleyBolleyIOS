@@ -8,7 +8,7 @@
 import Foundation
 
 protocol UsersRepositoryProtocol {
-    func getCurrentUser(completion: @escaping (Result<User, Error>) -> Void)
+    func getCurrentUser(completion: @escaping (Result<Player, Error>) -> Void)
 }
 
 final class UsersRepository: UsersRepositoryProtocol {
@@ -22,7 +22,7 @@ final class UsersRepository: UsersRepositoryProtocol {
 
     // MARK: - Public Methods
 
-    func getCurrentUser(completion: @escaping (Result<User, Error>) -> Void) {
+    func getCurrentUser(completion: @escaping (Result<Player, Error>) -> Void) {
         service.fetchCurrentUser { result in
             switch result {
             case .success(let dto):

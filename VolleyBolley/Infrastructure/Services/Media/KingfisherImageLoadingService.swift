@@ -10,14 +10,16 @@ import UIKit
 
 final class KingfisherImageLoadingService: ImageLoadingServiceProtocol {
 
-    func loadImage(from url: URL, completion: @escaping (UIImage?) -> Void) {
-        let resource = KF.ImageResource(downloadURL: url)
-        KingfisherManager.shared.retrieveImage(with: resource) { result in
-            switch result {
-            case .success(let value):
-                completion(value.image)
-            case .failure:
-                completion(nil)
+    func loadImage(from url: URL) async throws -> UIImage? {
+        try await withCheckedThrowingContinuation { continuation in
+            let resource = KF.ImageResource(downloadURL: url)
+            KingfisherManager.shared.retrieveImage(with: resource) { result in
+                switch result {
+                case .success(let value):
+                    continuation.resume(returning: value.image)
+                case .failure(let error):
+                    continuation.resume(throwing: error)
+                }
             }
         }
     }

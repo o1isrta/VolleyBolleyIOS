@@ -20,15 +20,15 @@ enum ProfileMenuItem: CaseIterable {
     case about
     case logOut
 
-    var icon: String {
+	var icon: UIImage {
         switch self {
-        case .players: return "players"
-        case .personal: return "personal"
-        case .fluentPayment: return "fluent_payment"
-        case .support: return "support"
-        case .faq: return "tooltip"
-        case .about: return "about"
-        case .logOut: return "log_out"
+		case .players: return UIImage.Icon.players
+		case .personal: return UIImage.Icon.personal
+		case .fluentPayment: return UIImage.Icon.fluentPayment
+		case .support: return UIImage.Icon.support
+		case .faq: return UIImage.Icon.tooltip
+		case .about: return UIImage.Icon.about
+		case .logOut: return UIImage.Icon.logOut
         }
     }
 
@@ -150,7 +150,11 @@ extension ProfileViewController: UITableViewDataSource {
         }
         let item = menuItems[indexPath.row]
         let isLast = indexPath.row == menuItems.count - 1
-        cell.configure(iconName: item.icon, title: item.title, isLast: isLast)
+		cell.configure(
+				icon: item.icon,
+				title: item.title,
+				isLast: isLast
+			)
         return cell
     }
 }

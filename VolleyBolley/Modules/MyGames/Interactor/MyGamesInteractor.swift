@@ -8,20 +8,24 @@
 import UIKit
 
 protocol MyGamesInteractorProtocol: AnyObject {
-    func fetchGreeting() -> String
+    func loadUserData(completion: @escaping (Result<(Player, UIImage?), Error>) -> Void)
 }
 
 final class MyGamesInteractor: MyGamesInteractorProtocol {
 
     // MARK: - Private Properties
 
+    private let imageLoader: ImageLoadingServiceProtocol
+
     // MARK: - Initializers
 
-    init() { }
+    init(
+        imageLoader: ImageLoadingServiceProtocol
+    ) {
+        self.imageLoader = imageLoader
+    }
 
     // MARK: - Public Methods
 
-    func fetchGreeting() -> String {
-        return "My Games Module"
-    }
+    func loadUserData(completion: @escaping (Result<(Player, UIImage?), Error>) -> Void) {}
 }

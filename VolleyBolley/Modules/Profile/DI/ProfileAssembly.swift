@@ -11,7 +11,6 @@ final class ProfileAssembly: Assembly {
 
     func assemble(container: Container) {
         container.register(ProfileViewController.self) { resolver in
-
             guard
                 let imageLoader = resolver.resolve(ImageLoadingServiceProtocol.self)
             else {

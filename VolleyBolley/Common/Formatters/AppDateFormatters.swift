@@ -8,7 +8,7 @@
 import Foundation
 
 enum AppDateFormatters {
-    /// Для работы с сервером (парсинг и сериализация)
+
     static let serverDateOnly: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
@@ -33,7 +33,7 @@ enum AppDateFormatters {
         formatter.timeStyle = .short
         return formatter
     }()
-    
+
     static let time12Hour: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "h:mm a"

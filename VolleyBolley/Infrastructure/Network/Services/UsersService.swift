@@ -9,7 +9,7 @@ import Foundation
 import Moya
 
 protocol UsersServiceProtocol {
-    func fetchCurrentUser(completion: @escaping (Result<UserDTO, Error>) -> Void)
+    func fetchCurrentUser(completion: @escaping (Result<PlayerDTO, Error>) -> Void)
 }
 
 @available(*, deprecated, message: "Use NetworkService instead")
@@ -27,7 +27,7 @@ final class UsersService: UsersServiceProtocol {
 
     // MARK: - Public Methods
 
-    func fetchCurrentUser(completion: @escaping (Result<UserDTO, Error>) -> Void) {
+    func fetchCurrentUser(completion: @escaping (Result<PlayerDTO, Error>) -> Void) {
         provider.request(.getCurrentUser) { result in
             do {
                 let response = try result.get()
@@ -36,7 +36,7 @@ final class UsersService: UsersServiceProtocol {
                     throw MoyaError.statusCode(response)
                 }
 
-                let dto = try AppJSONDecoders.server.decode(UserDTO.self, from: response.data)
+                let dto = try AppJSONDecoders.server.decode(PlayerDTO.self, from: response.data)
                 completion(.success(dto))
             } catch {
 #if DEBUG

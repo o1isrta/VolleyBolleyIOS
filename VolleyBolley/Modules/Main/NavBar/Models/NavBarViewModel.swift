@@ -10,12 +10,12 @@ import UIKit
 struct NavBarViewModel {
     let displayName: String
     let avatarImage: UIImage?
-    let level: UserLevel
+    let level: PlayerLevel
 
-    init(user: User, avatarImage: UIImage?) {
-        self.displayName = user.firstName
+    init(player: Player, avatarImage: UIImage?) {
+        self.displayName = player.firstName
         self.avatarImage = avatarImage
-        self.level = user.level
+        self.level = player.level
     }
 }
 
@@ -23,20 +23,9 @@ struct NavBarViewModel {
 
 extension NavBarViewModel {
 
-    static var mockDefault: NavBarViewModel {
+	static var mockDefault: NavBarViewModel {
 		NavBarViewModel(
-			user: User(
-				firstName: "Artem",
-				lastName: "Ivanov",
-				gender: 0,
-				paymentID: 0,
-				paymentAccount: "",
-				dateOfBirth: Date(),
-				level: UserLevel(rawValue: 0),
-				countryID: 0,
-				cityID: 0,
-				avatarURL: nil
-			),
+			player: Player.mockDefault,
 			avatarImage: UIImage(resource: .imgPerson)
 		)
     }

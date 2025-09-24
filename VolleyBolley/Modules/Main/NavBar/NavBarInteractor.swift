@@ -31,7 +31,7 @@ final class NavBarInteractor: NavBarInteractorInputProtocol {
 
 	// MARK: - Private Properties
 
-	private var currentUser: User?
+	private var currentUser: Player?
 	private var notificationData: [NotificationCardViewModel] = []
 
 	// MARK: - Public Methods
@@ -41,23 +41,9 @@ final class NavBarInteractor: NavBarInteractorInputProtocol {
 		DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
 			guard let self else { return }
 
-			let mockUser = User(
-				firstName: "Artem",
-				lastName: "Ivanov",
-				gender: 0,
-				paymentID: 0,
-				paymentAccount: "",
-				dateOfBirth: Date(),
-				level: UserLevel(rawValue: 1), // Slightly different from mock to show it's "fetched"
-				countryID: 0,
-				cityID: 0,
-				avatarURL: nil
-			)
+			let mockUser = Player.mockDefault
 			self.currentUser = mockUser
-			let viewModel = NavBarViewModel(
-				user: mockUser,
-				avatarImage: UIImage(resource: .imgPerson)
-			)
+			let viewModel = NavBarViewModel.mockDefault
 
 			self.presenter?.didFetchUserData(viewModel)
 		}
