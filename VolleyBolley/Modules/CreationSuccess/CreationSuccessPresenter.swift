@@ -132,15 +132,15 @@ final class CreationSuccessPresenter: CreationSuccessPresenterProtocol {
 
         var details: String
         if let gameInfo = info as? GameCreationInfo {
-            var desc = String(
+            var description = String(
                 format: String(localized: "creation.players"),
                 gameInfo.maximumPlayers
             )
-            desc = "\(gameInfo.gender.capitalizingFirstLetter()) · \(desc)"
+            description = "\(gameInfo.gender.capitalizingFirstLetter()) · \(description)"
             if gameInfo.isPrivate {
-                desc += " · " + String(localized: "creation.privateGame")
+                description += " · " + String(localized: "creation.privateGame")
             }
-            details = desc
+            details = description
         } else if let tourneyInfo = info as? TourneyCreationInfo {
             details = String(
                 format: String(localized: "creation.teams"),

@@ -27,7 +27,7 @@ final class CreationSuccessRouter: CreationSuccessRouterProtocol {
     // MARK: - Internal Methods
 
     func closeScreen() {
-        viewController?.navigationController?.popToRootViewController(animated: true)
+        viewController?.navigationController?.popViewController(animated: true)
     }
 
     func openShareSheet(with text: String) {
