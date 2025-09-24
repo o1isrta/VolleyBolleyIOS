@@ -1,18 +1,8 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "  Continue with Facebook" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "  Продолжить с Facebook"
-          }
-        }
-      }
-    },
     "  Continue with Google" : {
+      "comment" : "Registration",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -93,6 +83,7 @@
       }
     },
     "After each game, teammates can rate your level.\nOnce you receive 6 ratings, your level may change:\n  • 5+ positive ratings → promoted one step\n  • 5+ negative ratings → demoted one step\n  • Mixed feedback → level stays the same" : {
+      "comment" : "FAQ",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -842,6 +833,7 @@
       }
     },
     "Elite level, official championships experience" : {
+      "comment" : "Registration / Level description popup",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -875,6 +867,7 @@
       }
     },
     "Fair Play Policy" : {
+      "comment" : "FAQ",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1056,6 +1049,7 @@
       }
     },
     "Know rules, still learning" : {
+      "comment" : "Registration / Level description popup",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1077,6 +1071,7 @@
       }
     },
     "Levels can drop due to:" : {
+      "comment" : "Registration / Level description popup",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1162,6 +1157,7 @@
       }
     },
     "New to the game" : {
+      "comment" : "Registration / Level description popup",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1482,6 +1478,7 @@
       }
     },
     "Post-Game Ratings" : {
+      "comment" : "FAQ",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1503,6 +1500,7 @@
       }
     },
     "Ratings (6 within 60 days, 5+ down = demotion)\nInactivity:\n• 90 days = minus 1 step\n• 180 days = reset to lowest level in current category" : {
+      "comment" : "FAQ",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1692,6 +1690,7 @@
       }
     },
     "Want to move to the next category?" : {
+      "comment" : "FAQ",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
