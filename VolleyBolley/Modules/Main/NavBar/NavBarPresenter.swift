@@ -2,7 +2,7 @@
 //  NavBarPresenter.swift
 //  VolleyBolley
 //
-//  Created by Qoder on 16.09.2025.
+//  Created by Roman Romanov on 16.09.2025.
 //
 
 import Foundation
@@ -13,9 +13,7 @@ protocol NavBarPresenterProtocol: AnyObject {
 	var router: NavBarRouterProtocol? { get set }
 
 	func viewIsReady()
-	func viewWillAppear()
 	func notificationButtonTapped()
-	func refreshUserData()
 }
 
 final class NavBarPresenter: NavBarPresenterProtocol {
@@ -41,17 +39,6 @@ final class NavBarPresenter: NavBarPresenterProtocol {
 		// Fetch notifications from interactor before navigation
 		interactor?.fetchNotifications()
 	}
-
-	func refreshUserData() {
-		interactor?.fetchUserData()
-		interactor?.checkNotificationStatus()
-	}
-
-	func viewWillAppear() {
-		// Refresh notification status when view appears
-		// This ensures state synchronization when navigating between screens
-		interactor?.checkNotificationStatus()
-	}
 }
 
 // MARK: - NavBarInteractorOutputProtocol
@@ -63,30 +50,14 @@ extension NavBarPresenter: NavBarInteractorOutputProtocol {
 		view?.configure(with: viewModel)
 	}
 
-	func didUpdateNotifications(_ notifications: [NotificationCardViewModel]) {
-		guard notificationData != notifications else {
-			view?.updateNotifications(false)
-			return
-		}
-		notificationData = notifications
-		view?.updateNotifications(true)
-		router?.updateNotificationsVC(with: notifications)
-	}
-
 	func didFetchNotifications(_ notifications: [NotificationCardViewModel]) {
 		notificationData = notifications
 		router?.showNotifications(with: notifications)
-		view?.updateNotifications(false)
 	}
 
 	func didFailToFetchUserData(with error: Error) {
-		// TODO: fail data needed
-		guard let mockViewModel = currentViewModel else {
-			let mockViewModel = NavBarViewModel.mockDefault
-			currentViewModel = mockViewModel
-			view?.configure(with: mockViewModel)
-			return
-		}
-		view?.configure(with: mockViewModel)
+		// TODO: fail data needed, show alert may be
+		print("fail data recieved")
+//		view?.configure(with: error)
 	}
 }
