@@ -130,9 +130,6 @@
         }
       }
     },
-    "Change" : {
-
-    },
     "CHOOSE THIS COURT" : {
       "comment" : "\"CHOOSE THIS COURT\" button",
       "localizations" : {
@@ -890,6 +887,9 @@
         }
       }
     },
+    "Game duration" : {
+
+    },
     "Game host" : {
       "comment" : "Header of Game Description",
       "localizations" : {
@@ -929,6 +929,9 @@
 
     },
     "Know rules, still learning" : {
+
+    },
+    "Leave a note for players..." : {
 
     },
     "Level" : {

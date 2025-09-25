@@ -57,7 +57,7 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
 
     private lazy var messageTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "Leave a note for players..."// TODO String(localized:)
+        textField.placeholder = String(localized: "Leave a note for players...")
         textField.attributedPlaceholder = NSAttributedString(
             string: "Leave a note for players...",
             attributes: [
@@ -85,28 +85,40 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
     private lazy var messageSeparator = CustomSeparator()
 
     private lazy var placeLabel = CustomLabel(text: String(localized: "Place"), isBold: true)
-    private lazy var placeButton = PickButton(
-        title: String(localized: "Change"),
-        isSelected: true,
-        target: self,
-        action: #selector(placeButtonTapped)
-    )
+    private lazy var placeButton: GreenButton = {
+        let button = GreenButton()
+        button.setTitle(String(localized: "Place"), for: .normal)
+        button.isSelected = true
+        button.addTarget(self, action: #selector(placeButtonTapped), for: .touchUpInside)
+        return button
+    }()
     private lazy var placeSeparator = CustomSeparator()
 
     private lazy var dateLabel = CustomLabel(text: String(localized: "Date"), isBold: true)
-    private lazy var todayButton = PickButton(
-        title: String(localized: "Today").capitalized(with: .current),
-        isSelected: true,
-        target: self,
-        action: #selector(dateButtonTapped)
-    )
 
-    private lazy var pickDateButton = PickButton(
-        title: String(localized: "Pick date").capitalized(with: .current),
-        isSelected: false,
-        target: self,
-        action: #selector(dateButtonTapped)
-    )
+    private lazy var todayButton: GreenButton = {
+        let button = GreenButton()
+        button.setTitle(String(localized: "Today"), for: .normal)
+        button.isSelected = true
+        button.addTarget(self, action: #selector(dateButtonTapped), for: .touchUpInside)
+        return button
+    }()
+
+    private lazy var pickDateButton: GreenButton = {
+        let button = GreenButton()
+        button.setTitle(String(localized: "Pick date") + " → ", for: .normal)
+        button.addTarget(self, action: #selector(dateButtonTapped), for: .touchUpInside)
+        return button
+    }()
+
+    private lazy var gameDurationLabel: UILabel = {
+        let label = UILabel()
+        label.text = String(localized: "Game duration")
+        label.font = AppFont.Hero.regular(size: 16)
+        label.textColor = AppColor.Text.primary
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
 
     private lazy var fromTimeButton = TimePickerButton()
     private lazy var toTimeButton = TimePickerButton()
@@ -114,26 +126,27 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
     private lazy var dateSeparator = CustomSeparator()
 
     private lazy var genderLabel = CustomLabel(text: String(localized: "Gender"), isBold: true)
-    private lazy var mixGenderButton = PickButton(
-        title: String(localized: "Mix").capitalized(with: .current),
-        isSelected: true,
-        target: self,
-        action: #selector(genderButtonTapped)
-    )
-    private lazy var maleGenderButton = PickButton(
-        title: String(localized: "Man").capitalized(with: .current),
-        isSelected: false,
-        target: self,
-        action: #selector(genderButtonTapped)
-    )
+    private lazy var mixGenderButton: GreenButton = {
+        let button = GreenButton()
+        button.setTitle(String(localized: "Mix"), for: .normal)
+        button.isSelected = true
+        button.addTarget(self, action: #selector(genderButtonTapped), for: .touchUpInside)
+        return button
+    }()
 
-    private lazy var femaleGenderButton = PickButton(
-        title: String(localized: "Women").capitalized(with: .current),
-        isSelected: false,
-        target: self,
-        action: #selector(genderButtonTapped)
-    )
+    private lazy var maleGenderButton: GreenButton = {
+        let button = GreenButton()
+        button.setTitle(String(localized: "Man"), for: .normal)
+        button.addTarget(self, action: #selector(genderButtonTapped), for: .touchUpInside)
+        return button
+    }()
 
+    private lazy var femaleGenderButton: GreenButton = {
+        let button = GreenButton()
+        button.setTitle(String(localized: "Women"), for: .normal)
+        button.addTarget(self, action: #selector(genderButtonTapped), for: .touchUpInside)
+        return button
+    }()
     private lazy var genderSeparator = CustomSeparator()
 
     private lazy var playerLevelLabel = CustomLabel(text: String(localized: "Player level"), isBold: true)
@@ -214,10 +227,10 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
             contentView.trailingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.trailingAnchor, constant: -8),
             contentView.bottomAnchor.constraint(equalTo: scrollView.frameLayoutGuide.bottomAnchor, constant: -8),
 
-            contentBackground.topAnchor.constraint(equalTo: scrollView.frameLayoutGuide.topAnchor, constant: 8),
-            contentBackground.leadingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.leadingAnchor, constant: 8),
-            contentBackground.trailingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.trailingAnchor, constant: -8),
-            contentBackground.bottomAnchor.constraint(equalTo: scrollView.frameLayoutGuide.bottomAnchor, constant: -8),
+            contentBackground.topAnchor.constraint(equalTo: contentView.topAnchor),
+            contentBackground.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            contentBackground.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            contentBackground.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
 
             getStartedButton.topAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
             getStartedButton.leadingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.leadingAnchor, constant: 8),
@@ -233,7 +246,7 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
     private func setupUI() {
         [backButton, titleLabel, yourMessageTitle, messageTextView, messageSeparator,
          placeLabel, placeButton, placeSeparator, dateLabel, todayButton, pickDateButton,
-         fromTimeButton, toTimeButton, dateSeparator, genderLabel, mixGenderButton, maleGenderButton,
+         gameDurationLabel,fromTimeButton, toTimeButton, dateSeparator, genderLabel, mixGenderButton, maleGenderButton,
          femaleGenderButton, genderSeparator, playerLevelLabel, lightLevelButton, mediumLevelButton, hardLevelButton,
          proLevelButton
         ]
@@ -281,10 +294,13 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
             pickDateButton.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 12),
             pickDateButton.leadingAnchor.constraint(equalTo: todayButton.trailingAnchor, constant: 20),
 
-            fromTimeButton.topAnchor.constraint(equalTo: todayButton.bottomAnchor, constant: 12),
+            gameDurationLabel.topAnchor.constraint(equalTo: todayButton.bottomAnchor, constant: 12),
+            gameDurationLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+
+            fromTimeButton.topAnchor.constraint(equalTo: gameDurationLabel.bottomAnchor, constant: 12),
             fromTimeButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
 
-            toTimeButton.topAnchor.constraint(equalTo: todayButton.bottomAnchor, constant: 12),
+            toTimeButton.topAnchor.constraint(equalTo: gameDurationLabel.bottomAnchor, constant: 12),
             toTimeButton.leadingAnchor.constraint(equalTo: fromTimeButton.trailingAnchor, constant: 20),
 
             dateSeparator.topAnchor.constraint(equalTo: fromTimeButton.bottomAnchor, constant: 16),
