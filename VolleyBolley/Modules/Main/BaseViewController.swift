@@ -22,7 +22,7 @@ class BaseViewController: UIViewController {
 
 	// MARK: - Public Properties
 
-	lazy var navBar: CustomNavBarView = {
+	private(set) lazy var navBar: CustomNavBarView = {
 		return NavBarAssembly.createModule(with: self)
 	}()
 
