@@ -1420,6 +1420,17 @@
         }
       }
     },
+    "paywall.managePlayersButton" : {
+      "comment" : "Paywall screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Manage players"
+          }
+        }
+      }
+    },
     "paywall.paymentDescription" : {
       "comment" : "Paywall screen",
       "localizations" : {

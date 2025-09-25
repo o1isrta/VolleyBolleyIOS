@@ -63,7 +63,7 @@ enum AppDateFormatters {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
         formatter.timeStyle = .none
-        formatter.locale = AppLocale.posix
+        formatter.locale = AppConstants.AppLocale.posix
         formatter.timeZone = .current
         return formatter
     }()

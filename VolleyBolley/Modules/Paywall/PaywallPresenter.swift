@@ -68,6 +68,11 @@ final class PaywallPresenter: PaywallPresenterProtocol {
 		view?.updatePrivacyState(isPublic: isPublicGameSelected)
 	}
 
+    func managePlayersButtonTapped() {
+        isPublicGameSelected = false
+        view?.updatePrivacyState(isPublic: isPublicGameSelected)
+    }
+
 	func addPaymentButtonTapped() {
 		// TODO: need to add payment account to profile
 		guard let accountNumber = interactor.getAccountNumber() else {

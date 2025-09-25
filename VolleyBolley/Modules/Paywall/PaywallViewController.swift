@@ -26,6 +26,14 @@ final class PaywallViewController: BaseViewController {
 
 	// MARK: - Private Properties
 
+    // TODO: remove it in the future
+    private var playersMock: [String] = [
+        "Polina Vasilieva",
+        "Kristina Popova",
+        "Anton Ivanov",
+        "Aleksandr Abramov"
+    ]
+
 	private let mainSpacing: CGFloat = 20
 	private let internalSpacing: CGFloat = 12
 
@@ -88,6 +96,38 @@ final class PaywallViewController: BaseViewController {
 		stack.isLayoutMarginsRelativeArrangement = true
 		return stack
 	}()
+
+    private lazy var tableView: UITableView = {
+        let tableView = IntrinsicTableView()
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
+        tableView.isScrollEnabled = false
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(
+            PaywallPlayerCell.self,
+            forCellReuseIdentifier: PaywallPlayerCell.paywallplayerCellidentifier
+        )
+        return tableView
+    }()
+    private lazy var managePlayersButton: GreenButton = {
+        let button = GreenButton()
+        button.setTitle(String(localized: "paywall.managePlayersButton"), for: .normal)
+        button.addTarget(self, action: #selector(managePlayersButtonTapped), for: .touchUpInside)
+        return button
+    }()
+
+    private lazy var playersTableStackView: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [
+            tableView,
+            managePlayersButton
+        ])
+        stack.axis = .vertical
+        stack.distribution = .fill
+        stack.alignment = .fill
+        stack.spacing = 24
+        return stack
+    }()
 
 	private lazy var privacyStackView: UIStackView = {
 		let stack = UIStackView(arrangedSubviews: [
@@ -190,6 +230,7 @@ final class PaywallViewController: BaseViewController {
 		let stack = UIStackView(arrangedSubviews: [
 			playersStackView,
 			privacyStackView,
+            playersTableStackView,
 			separator,
 			paymentStackView,
 			saveGameButton
@@ -237,6 +278,8 @@ private extension PaywallViewController {
 
 			playersCounter.heightAnchor.constraint(equalToConstant: 39),
 
+            managePlayersButton.trailingAnchor.constraint(equalTo: glassmorphismView.trailingAnchor, constant: -163),
+
 			amountStackView.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor),
 			amountStackView.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor),
 			amountStackView.heightAnchor.constraint(equalToConstant: 52),
@@ -271,6 +314,11 @@ private extension PaywallViewController {
 		priceView.resignActive()
 		presenter?.privacyPrivateButtonTapped()
 	}
+
+    @objc func managePlayersButtonTapped() {
+        priceView.resignActive()
+        presenter?.privacyPrivateButtonTapped()
+    }
 
 	@objc func handleTapOutside(_ gesture: UITapGestureRecognizer) {
 		if !priceView.frame.contains(gesture.location(in: view)) {
@@ -320,6 +368,56 @@ extension PaywallViewController: PaywallViewProtocol {
 	func updatePaymentDescription(text: String) {
 		paymentDescription.text = text
 	}
+}
+
+// MARK: - UITableViewDataSource
+
+extension PaywallViewController: UITableViewDataSource {
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return playersMock.count
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: PaywallPlayerCell.paywallplayerCellidentifier,
+            for: indexPath) as? PaywallPlayerCell else {
+            return UITableViewCell()
+        }
+
+        let playerName = playersMock[indexPath.section]
+        cell.configure(with: PaywallPlayerCellModel(name: playerName))
+        cell.onDelete = { [weak self] in
+            guard let self = self else { return }
+            self.playersMock.remove(at: indexPath.section)
+            self.tableView.deleteSections([indexPath.section], with: .automatic)
+        }
+
+        return cell
+    }
+}
+
+// MARK: - UITableViewDelegate
+
+extension PaywallViewController: UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 23
+    }
+
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return section == playersMock.count - 1 ? 0 : 24
+    }
+
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let view = UIView()
+        view.backgroundColor = .clear
+        return view
+    }
 }
 
 // MARK: - Preview
