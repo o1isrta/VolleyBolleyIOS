@@ -42,6 +42,15 @@ final class NotificationsViewController: BaseViewController {
 		tableView.dataSource = self
 		tableView.showsVerticalScrollIndicator = false
 		tableView.register(NotificationCell.self, forCellReuseIdentifier: NotificationCell.reuseIdentifier)
+		// Add pull-to-refresh
+		let refreshControl = UIRefreshControl()
+		refreshControl.addTarget(
+			self,
+			action: #selector(handlePullToRefresh(_:)),
+			for: .valueChanged
+		)
+		tableView.refreshControl = refreshControl
+
 		return tableView
 	}()
 
@@ -52,12 +61,16 @@ final class NotificationsViewController: BaseViewController {
 		setupUI()
 		setupTableViewContentSizeObserver()
         presenter?.viewDidLoad()
-		setupNotificationObservers()
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		navBar.updateNotifications(false)
+		presenter?.viewWillAppear()
+	}
+	
+	override func viewDidDisappear(_ animated: Bool) {
+		super.viewDidDisappear(animated)
+		presenter?.viewDidDisappear()
 	}
 }
 
@@ -67,6 +80,10 @@ private extension NotificationsViewController {
 
 	@objc func backButtonTapped() {
 		presenter?.backButtonTapped()
+	}
+
+	@objc func handlePullToRefresh(_ refreshControl: UIRefreshControl) {
+		presenter?.refreshNotifications()
 	}
 
 	func setupUI() {
@@ -101,15 +118,6 @@ private extension NotificationsViewController {
 		tableViewHeightConstraint?.isActive = true
 	}
 
-	func setupNotificationObservers() {
-		let notification = NavBarNotification(isArrived: false)
-		NotificationCenter.default.post(
-			name: NotificationConstants.NavBar.newNotificationArrived,
-			object: self,
-			userInfo: notification.userInfo
-		)
-	}
-
 	func setupTableViewContentSizeObserver() {
 		tableViewContentSizeObserver = tableView.observe(
 			\.contentSize,
@@ -133,13 +141,20 @@ extension NotificationsViewController: NotificationsViewControllerProtocol {
 
 	func displayNotifications(_ notifications: [NotificationCardViewModel]) {
 		self.notifications = notifications
-		navBar.updateNotifications(false)
-		tableView.reloadData()
+		reloadTableView()
 	}
 
 	func displayEmptyState() {
 		self.notifications = []
+		reloadTableView()
+	}
+
+	private func reloadTableView() {
 		tableView.reloadData()
+		// End refresh control if it's currently refreshing
+		if let refreshControl = tableView.refreshControl, refreshControl.isRefreshing {
+			refreshControl.endRefreshing()
+		}
 	}
 }
 
