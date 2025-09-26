@@ -54,7 +54,7 @@ extension NotificationsInteractor: NotificationsInteractorInputProtocol {
 		notificationManager.checkNotificationsNow()
 	}
 
-	/// Mark notifications as read through the service/
+	/// Mark notifications as read through the service
 	func markNotificationsAsRead() {
 		notificationManager.markNotificationsAsRead()
 	}
