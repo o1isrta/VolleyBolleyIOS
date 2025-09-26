@@ -8,27 +8,39 @@
 import UIKit
 
 protocol HomeInteractorProtocol: AnyObject {
-    func loadNearestCourtWithWeather() -> NearestCourtWithWeather
+    func loadNearestCourtWithWeather() async throws -> NearestCourtWithWeather
     func loadTotalCountOfUpcomingGamesAndTournaments() -> Int
 }
 
 final class HomeInteractor: HomeInteractorProtocol {
 
-    func loadNearestCourtWithWeather() -> NearestCourtWithWeather {
+    // MARK: - Private Properties
+
+    private let locationRepository: LocationRepositoryProtocol
+
+    // MARK: - Initializers
+
+    init(
+        locationRepository: LocationRepositoryProtocol,
+    ) {
+        self.locationRepository = locationRepository
+    }
+
+    func loadNearestCourtWithWeather() async throws -> NearestCourtWithWeather {
         // TODO: - remove mock data
-        let nearestCourt = CourtModel(
+        let playerLocation = try await locationRepository.getPlayerLocation(forceUpdate: false, timeout: 10)
+        print("✅ Player location: \(playerLocation)")
+
+        let nearestCourt = Court(
             id: 1,
-            price: "",
-            description: "",
-            contacts: [],
-            imageUrl: nil,
-            tagList: [],
-            location: LocationModel(
-                latitude: 0,
-                longitude: 0,
-                courtName: "Karon Beach Club",
-                locationName: "Patak Rd, Mueang Phuket"
-            )
+            name: "Karon Beach Club",
+            details: "",
+            address: "Patak Rd, Mueang Phuket",
+            coordinates: Coordinates(latitude: 8.0000, longitude: 98.0000),
+            pricingInfo: "",
+            photoURL: nil,
+            tags: [],
+            contacts: []
         )
 
         let weather = AppWeather(temperature: 26.0, condition: .partlyCloudy)

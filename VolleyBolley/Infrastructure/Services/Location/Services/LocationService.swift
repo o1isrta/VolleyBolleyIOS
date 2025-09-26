@@ -16,7 +16,7 @@ final class LocationService: NSObject, LocationServiceProtocol, CLLocationManage
 
     private(set) var lastKnownLocation: CLLocation?
 
-    // MARK: - Init
+    // MARK: - Initializers
 
     override init() {
         super.init()
@@ -27,7 +27,6 @@ final class LocationService: NSObject, LocationServiceProtocol, CLLocationManage
     // MARK: - Public Methods
 
     func requestLocation(forceUpdate: Bool = false, timeout: TimeInterval = 10) async throws -> CLLocation {
-        // Вернём кеш если можно
         if !forceUpdate,
            let cached = lastKnownLocation,
            locationManager.authorizationStatus == .authorizedWhenInUse ||
@@ -36,7 +35,6 @@ final class LocationService: NSObject, LocationServiceProtocol, CLLocationManage
         }
 
         return try await withThrowingTaskGroup(of: CLLocation.self) { group in
-            // Запрос на локацию
             group.addTask { [weak self] in
                 try await withCheckedThrowingContinuation { continuation in
                     self?.continuations.append(continuation)
@@ -44,18 +42,15 @@ final class LocationService: NSObject, LocationServiceProtocol, CLLocationManage
                 }
             }
 
-            // Таймаут
             group.addTask {
                 try await Task.sleep(nanoseconds: UInt64(timeout * 1_000_000_000))
-                throw LocationError.timeout
+                throw CoreLocationError.timeout
             }
 
-            // Вернём первый успешный результат
             guard let result = try await group.next() else {
-                throw LocationError.failed
+                throw CoreLocationError.failed
             }
 
-            // Отменим остальные задачи (например, таймаут, если location уже пришла)
             group.cancelAll()
             return result
         }
@@ -65,7 +60,7 @@ final class LocationService: NSObject, LocationServiceProtocol, CLLocationManage
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.first else {
-            resolveAll(.failure(LocationError.notFound))
+            resolveAll(.failure(CoreLocationError.notFound))
             return
         }
 
@@ -75,7 +70,7 @@ final class LocationService: NSObject, LocationServiceProtocol, CLLocationManage
 
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         let clError = error as? CLError
-        let mapped: LocationError
+        let mapped: CoreLocationError
 
         switch clError?.code {
         case .locationUnknown:
@@ -102,11 +97,11 @@ final class LocationService: NSObject, LocationServiceProtocol, CLLocationManage
         case .authorizedWhenInUse, .authorizedAlways:
             locationManager.requestLocation()
         case .denied:
-            resolveAll(.failure(LocationError.denied))
+            resolveAll(.failure(CoreLocationError.denied))
         case .restricted:
-            resolveAll(.failure(LocationError.restricted))
+            resolveAll(.failure(CoreLocationError.restricted))
         @unknown default:
-            resolveAll(.failure(LocationError.failed))
+            resolveAll(.failure(CoreLocationError.failed))
         }
     }
 

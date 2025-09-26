@@ -10,7 +10,6 @@ import CoreLocation
 final class MockLocationService: LocationServiceProtocol {
 
     var lastKnownLocation: CLLocation?
-
     private let mockedLocation: CLLocation
 
     init(
