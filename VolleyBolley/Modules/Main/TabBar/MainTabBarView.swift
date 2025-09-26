@@ -1,5 +1,5 @@
 //
-//  CustomTabBarView.swift
+//  MainTabBarView.swift
 //  VolleyBolley
 //
 //  Created by Nikolai Eremenko on 14.07.2025.
@@ -7,17 +7,17 @@
 
 import UIKit
 
-protocol CustomTabBarViewDelegate: AnyObject {
+protocol MainTabBarViewDelegate: AnyObject {
     /// Called when a tab item is selected.
-    func customTabBarView(_ tabBarView: CustomTabBarView, didSelectItemAt index: Int)
+    func customTabBarView(_ tabBarView: MainTabBarView, didSelectItemAt index: Int)
 }
 
-final class CustomTabBarView: UIView {
+final class MainTabBarView: UIView {
 
     // MARK: - Public Properties
 
     /// Delegate to notify about tab selection changes.
-    weak var delegate: CustomTabBarViewDelegate?
+    weak var delegate: MainTabBarViewDelegate?
 
     // MARK: - Private Properties
 

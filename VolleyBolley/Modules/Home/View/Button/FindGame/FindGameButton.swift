@@ -38,7 +38,7 @@ final class FindGameButton: UIButton {
     }()
 
     private lazy var buttonTitleLabel: CustomTitle = CustomTitle(
-        text: String(localized: .homeFindGame),
+        text: String(localized: "homeFindGame"),
         isLarge: true
     )
 
@@ -46,7 +46,7 @@ final class FindGameButton: UIButton {
         let view = UILabel()
         view.font = AppFont.Hero.regular(size: Constants.subTitleFontSize)
         view.textColor = AppColor.Text.primary
-        view.text = String(localized: .homeNearYou)
+        view.text = String(localized: "homeNearYou")
         return view
     }()
 

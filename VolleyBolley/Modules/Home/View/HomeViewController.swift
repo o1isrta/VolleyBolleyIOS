@@ -78,9 +78,9 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
     }()
 
     private lazy var createTourneyButton: SketchButton = {
-        let view = SketchButton()
+        let view = SketchButton(type: .createTourney)
         view.isSelected = true
-        view.setTitle(String(localized: .commonCreateTourney), for: .normal)
+        view.setTitle(String(localized: "commonCreateTourney"), for: .normal)
         view.setImage(UIImage.Icon.createTourney, for: .normal)
         view.addAction(UIAction { [weak self] _ in
              self?.presenter.didTapCreateTourney()
@@ -89,8 +89,8 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
     }()
 
     private lazy var donateButton: SketchButton = {
-        let view = SketchButton()
-        view.setTitle(String(localized: .commonDonate), for: .normal)
+        let view = SketchButton(type: .donate)
+        view.setTitle(String(localized: "commonDonate"), for: .normal)
         view.setImage(UIImage.Icon.donate, for: .normal)
         view.addAction(UIAction { [weak self] _ in
             self?.presenter.didTapDonate()
@@ -106,9 +106,7 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder: NSCoder) { nil }
 
     // MARK: - Lifecycle
 

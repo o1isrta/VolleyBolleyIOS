@@ -124,8 +124,7 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
          errorLabel,
          getNewCodeButton,
          verifyButton]
-            .forEach
-            { containerView.addSubview($0) }
+            .forEach { containerView.addSubview($0) }
 
         errorLabelHeightConstraint = errorLabel.heightAnchor.constraint(equalToConstant: 17)
         errorLabelHeightConstraint?.isActive = true

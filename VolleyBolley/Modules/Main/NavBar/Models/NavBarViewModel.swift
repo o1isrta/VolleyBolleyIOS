@@ -18,3 +18,15 @@ struct NavBarViewModel {
         self.level = player.level
     }
 }
+
+// MARK: - Mock Data
+
+extension NavBarViewModel {
+
+	static var mockDefault: NavBarViewModel {
+		NavBarViewModel(
+			player: Player.mockDefault,
+			avatarImage: UIImage(resource: .imgPerson)
+		)
+    }
+}

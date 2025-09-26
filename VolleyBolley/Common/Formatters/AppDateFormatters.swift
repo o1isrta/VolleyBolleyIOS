@@ -58,4 +58,13 @@ enum AppDateFormatters {
 		formatter.dateFormat = "h:mm a"
 		return formatter
 	}()
+
+    static let onlyDate: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .none
+        formatter.locale = AppConstants.AppLocale.posix
+        formatter.timeZone = .current
+        return formatter
+    }()
 }

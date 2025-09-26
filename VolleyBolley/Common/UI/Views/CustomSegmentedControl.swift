@@ -127,7 +127,8 @@ private extension CustomSegmentedControl {
 			stackView.topAnchor.constraint(equalTo: self.topAnchor),
 			stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
 			stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-			stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
+			stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+			stackView.heightAnchor.constraint(equalToConstant: 36)
 		])
 	}
 

@@ -58,9 +58,7 @@ final class CourtListViewController: UIViewController {
 	}
 
 	@available(*, unavailable)
-	required init?(coder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
-	}
+	required init?(coder: NSCoder) { nil }
 
 	// MARK: - Public Methods
 
@@ -96,6 +94,13 @@ extension CourtListViewController: UITableViewDelegate {
 		let realIndex = isRealIndex(row: indexPath.row)
 		expandedIndex = expandedIndex == realIndex ? nil : realIndex
 		tableView.reloadData()
+		// scroll to details
+		if
+			expandedIndex != nil
+			&& indexPath.row + 1 < tableView.numberOfRows(inSection: indexPath.section) {
+			let expandedIndexPath = IndexPath(row: indexPath.row + 1, section: indexPath.section)
+			tableView.scrollToRow(at: expandedIndexPath, at: .bottom, animated: true)
+		}
 	}
 
 	private func isRealIndex(row: Int) -> Int {
@@ -225,7 +230,7 @@ private extension CourtListViewController {
 				let newSize = change.newValue
 			else { return }
 			// Limiting the max height to preserve scrolling
-			let maxHeight = UIScreen.main.bounds.height - 200
+			let maxHeight = UIScreen.main.bounds.height - 315
 			let newHeight = min(newSize.height, maxHeight)
 			self.tableViewHeightConstraint?.constant = newHeight
 		}
@@ -240,7 +245,7 @@ private extension CourtListViewController {
 	}
 
 	func setupUI() {
-		view.backgroundColor = .clear
+		view.backgroundColor = AppColor.Background.clear
 		view.addSubviews(glassmorphismView, searchField, tableView)
 
 		let mainIndent: CGFloat = 20
