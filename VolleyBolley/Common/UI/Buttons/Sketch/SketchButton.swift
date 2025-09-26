@@ -35,7 +35,46 @@ import UIKit
 ///
 /// - Note: This button is designed for a fixed size and may require adaptation for
 ///   accessibility or dynamic layout requirements.
-///   
+///
+
+enum SketchButtonType: CaseIterable {
+    case createTourney
+    case donate
+    case invitePlayers
+    case shareLink
+    case sendInvites
+    case saveGame
+
+    var title: String {
+        switch self {
+        case .createTourney: return String(localized: "sketchButton.createTourney")
+        case .donate: return String(localized: "sketchButton.donate")
+        case .invitePlayers: return String(localized: "sketchButton.invitePlayers")
+        case .shareLink: return String(localized: "sketchButton.shareLink")
+        case .sendInvites: return String(localized: "sketchButton.sendInvites")
+        case .saveGame: return String(localized: "sketchButton.saveGame")
+        }
+    }
+
+    var image: UIImage? {
+        switch self {
+        case .createTourney: return UIImage.Icon.createTourney
+        case .donate: return UIImage.Icon.donate
+        case .invitePlayers: return UIImage.Icon.invitePlayers
+        case .shareLink: return UIImage.Icon.share
+        case .sendInvites: return UIImage.Icon.sendInvites
+        case .saveGame: return UIImage.Icon.saveGame
+        }
+    }
+}
+
+private struct ImageLayout {
+    let widthMultiplier: CGFloat
+    let heightMultiplier: CGFloat
+    let trailingOffset: CGFloat
+    let bottomOffset: CGFloat
+}
+
 final class SketchButton: UIButton {
 
     // MARK: - Private Properties
@@ -54,19 +93,27 @@ final class SketchButton: UIButton {
 
     private lazy var actionImageView: UIImageView = {
         let view = UIImageView()
-        view.contentMode = .scaleAspectFit
+        view.contentMode = .scaleAspectFill
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
     private var activeBackgroundEffect: UIView?
+    private let type: SketchButtonType
 
     // MARK: - Initializers
 
-    init() {
+    init(type: SketchButtonType, isSelected: Bool = false) {
+        self.type = type
         super.init(frame: .zero)
 
+        clipsToBounds = true
+
         setupActionLayout()
+
+        setTitle(type.title, for: .normal)
+        setImage(type.image, for: .normal)
+        self.isSelected = isSelected
 
         self.configuration = UIButton.Configuration.filled()
 
@@ -74,18 +121,6 @@ final class SketchButton: UIButton {
             guard let self else { return }
             button.configuration = self.configuration(for: button.state)
         }
-    }
-
-    convenience init(
-        title: String,
-        image: UIImage?,
-        isSelected: Bool = false
-    ) {
-        self.init()
-
-        setTitle(title, for: .normal)
-        setImage(image, for: .normal)
-        self.isSelected = isSelected
     }
 
     @available(*, unavailable)
@@ -186,12 +221,33 @@ final class SketchButton: UIButton {
     }
 
     private func setupConstraintsActionImageView() {
+        let layout = type.imageLayout
+
         NSLayoutConstraint.activate([
-            actionImageView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            actionImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            actionImageView.heightAnchor.constraint(equalToConstant: 130),
-            actionImageView.widthAnchor.constraint(equalToConstant: 130)
+            actionImageView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: layout.widthMultiplier),
+            actionImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: layout.heightMultiplier),
+            actionImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: layout.trailingOffset),
+            actionImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: layout.bottomOffset)
         ])
+    }
+}
+
+private extension SketchButtonType {
+    var imageLayout: ImageLayout {
+        switch self {
+        case .createTourney:
+            return .init(widthMultiplier: 1, heightMultiplier: 1, trailingOffset: 30, bottomOffset: 30)
+        case .donate:
+            return .init(widthMultiplier: 0.75, heightMultiplier: 0.75, trailingOffset: 10, bottomOffset: -10)
+        case .invitePlayers:
+            return .init(widthMultiplier: 0.9, heightMultiplier: 0.76, trailingOffset: 28, bottomOffset: 20)
+        case .shareLink:
+            return .init(widthMultiplier: 0.63, heightMultiplier: 0.5, trailingOffset: -26, bottomOffset: -28)
+        case .sendInvites:
+            return .init(widthMultiplier: 0.75, heightMultiplier: 0.5, trailingOffset: -7, bottomOffset: -7)
+        case .saveGame:
+            return .init(widthMultiplier: 0.6, heightMultiplier: 0.6, trailingOffset: -22, bottomOffset: 8)
+        }
     }
 }
 

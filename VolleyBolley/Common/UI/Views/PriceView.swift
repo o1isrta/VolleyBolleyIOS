@@ -215,11 +215,11 @@ class ViewController: BaseViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		let customTextField = PriceView(frame: CGRect(x: 50, y: 100, width: 75, height: 30))
+		let customTextField = PriceView(frame: CGRect(x: 50, y: 150, width: 75, height: 30))
 		customTextField.text = "$100.00"
 		view.addSubview(customTextField)
 
-		let customTextField2 = PriceView(frame: CGRect(x: 50, y: 150, width: 75, height: 30))
+		let customTextField2 = PriceView(frame: CGRect(x: 50, y: 200, width: 75, height: 30))
 		view.addSubview(customTextField2)
 	}
 }

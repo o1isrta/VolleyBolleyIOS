@@ -1,8 +1,26 @@
 import UIKit
 
+protocol NavBarViewProtocol: AnyObject {
+	var presenter: NavBarPresenterProtocol? { get set }
+
+	func configure(with viewModel: NavBarViewModel)
+	func updateNotifications(_ hasNewNotifications: Bool)
+	func setViewController(_ viewController: UIViewController?)
+	func viewWillAppear()
+}
+
 final class CustomNavBarView: UIView {
 
+	// MARK: - Public Properties
+
+	var presenter: NavBarPresenterProtocol?
+
+	// MARK: - Private Properties
+
+	private weak var parentViewController: UIViewController?
+
 	private enum Constants {
+		static let viewHeight: CGFloat = 106
 		static let avatarSize: CGFloat = 46
 		static let avatarLeading: CGFloat = 8
 		static let avatarBottom: CGFloat = -8
@@ -18,8 +36,6 @@ final class CustomNavBarView: UIView {
 		static let levelViewBottom: CGFloat = -8
 	}
 
-	// MARK: - Private Properties
-
 	private lazy var avatarImageView = AvatarImageView()
 	private lazy var levelView = LevelBadgeView()
 	private lazy var nameLabel = CustomTitle(text: "")
@@ -31,10 +47,19 @@ final class CustomNavBarView: UIView {
 		super.init(frame: .zero)
 		setupView()
 		setupLayout()
+		// Set delegate for notification button
+		notificationButtonView.delegate = self
 	}
 
 	@available(*, unavailable)
 	required init?(coder: NSCoder) { nil }
+
+	override func didMoveToSuperview() {
+		super.didMoveToSuperview()
+		if superview != nil {
+			notifyPresenterIfReady()
+		}
+	}
 
 	// MARK: - Public Methods
 
@@ -43,15 +68,28 @@ final class CustomNavBarView: UIView {
 		nameLabel.text = viewModel.displayName.capitalized
 		levelView.configure(with: viewModel.level)
 	}
-
-	func hasNewNotifications(_ hasNewNotifications: Bool) {
-		notificationButtonView.hasNewNotifications(hasNewNotifications)
-	}
 }
 
 // MARK: - Private Methods
 
 private extension CustomNavBarView {
+
+	// MARK: - VIPER Integration
+
+	func setupVIPERIfNeeded() {
+		guard presenter == nil else { return }
+		// Auto-configure VIPER if not already set up
+		let navBarView = NavBarAssembly.createModule(with: parentViewController)
+		self.presenter = navBarView.presenter
+	}
+
+	func notifyPresenterIfReady() {
+		guard let presenter = presenter else {
+			setupVIPERIfNeeded()
+			return
+		}
+		presenter.viewIsReady()
+	}
 
 	func setupView() {
 		backgroundColor = AppColor.Background.navBar
@@ -70,6 +108,7 @@ private extension CustomNavBarView {
 	// MARK: - Layout Setup
 
 	func setupLayout() {
+		heightAnchor.constraint(equalToConstant: Constants.viewHeight).isActive = true
 		setupConstraintsAvatarImageView()
 		setupConstraintsNameLabel()
 		setupConstraintsNotificationButtonView()
@@ -118,6 +157,32 @@ private extension CustomNavBarView {
 	}
 }
 
+// MARK: - NavBarViewProtocol
+
+extension CustomNavBarView: NavBarViewProtocol {
+
+	func updateNotifications(_ hasNewNotifications: Bool) {
+		notificationButtonView.hasNewNotifications(hasNewNotifications)
+	}
+
+	func setViewController(_ viewController: UIViewController?) {
+		self.parentViewController = viewController
+	}
+
+	func viewWillAppear() {
+		presenter?.viewWillAppear()
+	}
+}
+
+// MARK: - NotificationButtonDelegate
+
+extension CustomNavBarView: NotificationButtonDelegate {
+
+	func notificationButtonDidTap() {
+		presenter?.notificationButtonTapped()
+	}
+}
+
 // MARK: - Preview
 
 #if DEBUG
@@ -125,8 +190,8 @@ import SwiftUI
 @available(iOS 17.0, *)
 #Preview {
 	UIViewPreview {
-		let view = CustomNavBarView()
-		view.hasNewNotifications(true)
+		let view = NavBarAssembly.createModule(with: nil)
+		view.updateNotifications(true)
 		return view
 	}
 	.frame(width: .infinity, height: 68)
@@ -134,7 +199,7 @@ import SwiftUI
 	.padding()
 
 	UIViewPreview {
-		let view = CustomNavBarView()
+		let view = NavBarAssembly.createModule(with: nil)
 		return view
 	}
 	.frame(width: .infinity, height: 68)

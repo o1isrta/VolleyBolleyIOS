@@ -50,9 +50,7 @@ final class MapViewController: BaseViewController, MapViewProtocol {
 	}
 
 	@available(*, unavailable)
-	required init?(coder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
-	}
+	required init?(coder: NSCoder) { nil }
 
 	// MARK: - Public Methods
 
@@ -228,19 +226,17 @@ private extension MapViewController {
             bottomView,
             backButton
 		)
-
-		let popupBottonInset: CGFloat = -8
+		let popupBottonInset: CGFloat = -55
 
 		NSLayoutConstraint.activate([
-			segmentedControl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
+			segmentedControl.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 8),
 			segmentedControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 			segmentedControl.widthAnchor.constraint(equalToConstant: 200),
-			segmentedControl.heightAnchor.constraint(equalToConstant: 36),
 
-            backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+			backButton.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 8),
             backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
 
-			mapView.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 8),
+			mapView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
 			mapView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
 			mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
 			mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -284,7 +280,9 @@ private extension MapViewController {
 
 	func segmentChanged() {
 		let showList = segmentedControl.selectedSegmentIndex == 1
+		backButton.tintColor = AppColor.Icon.inverted
 		if showList {
+			backButton.tintColor = AppColor.Icon.primary
 			router?.showList(from: self, courts: courts, selected: nearestCourt)
 		}
 		mapView.isHidden = showList

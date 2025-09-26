@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct NotificationCardViewModel {
+struct NotificationCardViewModel: Equatable {
 	let title: String
 	let message: String
 	let date: String

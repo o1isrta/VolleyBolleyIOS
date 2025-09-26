@@ -42,7 +42,7 @@ final class CreateNewGameButton: UIButton {
     }()
 
     private lazy var buttonTitleLabel: CustomTitle = CustomTitle(
-        text: String(localized: .homeCreateNewGame),
+        text: String(localized: "homeCreateNewGame"),
         isLarge: true
     )
 
