@@ -16,9 +16,9 @@ final class LocationAssembly: Assembly {
             }
 
             switch environment {
-            case .staging, .mock:
+            case .mock:
                 return MockLocationService()
-            case .production:
+            case .production, .staging:
                 return LocationService()
             }
         }
