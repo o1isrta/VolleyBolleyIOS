@@ -21,7 +21,7 @@ final class HomeInteractor: HomeInteractorProtocol {
     // MARK: - Initializers
 
     init(
-        locationRepository: LocationRepositoryProtocol,
+        locationRepository: LocationRepositoryProtocol
     ) {
         self.locationRepository = locationRepository
     }
