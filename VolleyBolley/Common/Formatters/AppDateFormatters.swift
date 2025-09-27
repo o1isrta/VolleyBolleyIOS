@@ -12,7 +12,7 @@ enum AppDateFormatters {
     static let serverDateOnly: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
-        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.locale = AppConstants.AppLocale.posix
         formatter.timeZone = TimeZone(secondsFromGMT: 0)
         return formatter
     }()
@@ -20,7 +20,7 @@ enum AppDateFormatters {
 	static let apiDateOnly: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm"
-        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.locale = AppConstants.AppLocale.posix
         formatter.timeZone = TimeZone(secondsFromGMT: 0)
         return formatter
     }()
@@ -39,13 +39,13 @@ enum AppDateFormatters {
         formatter.dateFormat = "h:mm a"
         formatter.amSymbol = "AM"
         formatter.pmSymbol = "PM"
-        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.locale = AppConstants.AppLocale.posix
         return formatter
     }()
 
 	static let dateWithTime: DateFormatter = {
 		let formatter = DateFormatter()
-		formatter.locale = Locale(identifier: "en_US")
+		formatter.locale = AppConstants.AppLocale.posix
 		formatter.timeZone = .current
 		formatter.dateFormat = "d MMMM, h:mm"
 		return formatter
@@ -54,7 +54,7 @@ enum AppDateFormatters {
 	static let time: DateFormatter = {
 		let formatter = DateFormatter()
 		formatter.timeZone = .current
-		formatter.locale = Locale(identifier: "en_US")
+		formatter.locale = AppConstants.AppLocale.posix
 		formatter.dateFormat = "h:mm a"
 		return formatter
 	}()
@@ -63,7 +63,7 @@ enum AppDateFormatters {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
         formatter.timeStyle = .none
-        formatter.locale = AppLocale.posix
+		formatter.locale = AppConstants.AppLocale.posix
         formatter.timeZone = .current
         return formatter
     }()

@@ -219,9 +219,7 @@ final class PersonalDataViewController: UIViewController {
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder: NSCoder) { nil }
 
     // MARK: - Lifecycle
 
@@ -238,6 +236,7 @@ final class PersonalDataViewController: UIViewController {
         cityList?.delegate = self
 
         setupView()
+		hideKeyboardWhenTappedAround()
         presenter.viewDidLoad()
     }
 }
