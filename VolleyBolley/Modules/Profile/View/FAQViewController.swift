@@ -9,7 +9,6 @@ import UIKit
 
 protocol FAQViewProtocol: AnyObject {
     func showGreeting(_ message: String)
-    func displayNavBar(viewModel: NavBarViewModel)
     func displayError(message: String)
 }
 
@@ -88,9 +87,6 @@ final class FAQViewController: BaseViewController, СhoicePlayersViewProtocol {
 
     private var faqItems: [FAQItem] = FAQItem.allCases
 
-    private lazy var navigationBarView = CustomNavBarView()
-    private lazy var mainTabBarController = MainTabBarController()
-
     private lazy var buttonBack: UtilityButton = {
         let button = UtilityButton(style: .large)
         button.setImage(.chevronBackward, for: .normal)
@@ -117,9 +113,10 @@ final class FAQViewController: BaseViewController, СhoicePlayersViewProtocol {
 
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
-        tableView.backgroundColor = .clear
+		tableView.backgroundColor = AppColor.Background.clear
         tableView.separatorStyle = .none
         tableView.isScrollEnabled = true
+		tableView.showsVerticalScrollIndicator = false
         tableView.dataSource = self
         tableView.register(FAQCell.self, forCellReuseIdentifier: FAQCell.faqId)
         return tableView
@@ -133,9 +130,7 @@ final class FAQViewController: BaseViewController, СhoicePlayersViewProtocol {
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder: NSCoder) { nil }
 
     // MARK: - Lifecycle
 
@@ -150,10 +145,6 @@ final class FAQViewController: BaseViewController, СhoicePlayersViewProtocol {
         label.text = message
     }
 
-    func displayNavBar(viewModel: NavBarViewModel) {
-        navigationBarView.configure(with: viewModel)
-    }
-
     func displayError(message: String) {
         print(message)
     }
@@ -164,35 +155,28 @@ final class FAQViewController: BaseViewController, СhoicePlayersViewProtocol {
 private extension FAQViewController {
 
     func setupUI() {
-        [navigationBarView, label, background, buttonBack, titleLabel, tableView].forEach {
-            view.addSubview($0)
-            $0.translatesAutoresizingMaskIntoConstraints = false
-        }
-
-        addChild(mainTabBarController)
-        view.addSubview(mainTabBarController.view)
-        mainTabBarController.didMove(toParent: self)
-        mainTabBarController.view.translatesAutoresizingMaskIntoConstraints = false
+		view.addSubviews(
+			label,
+			background,
+			buttonBack,
+			titleLabel,
+			tableView
+		)
     }
 
     func setupView() {
         setupUI()
 
         NSLayoutConstraint.activate([
-            navigationBarView.topAnchor.constraint(equalTo: view.topAnchor),
-            navigationBarView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            navigationBarView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            navigationBarView.heightAnchor.constraint(equalToConstant: 106),
-
             label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
 
-            background.topAnchor.constraint(equalTo: navigationBarView.bottomAnchor, constant: 8),
+			background.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 8),
             background.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
             background.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
-            background.bottomAnchor.constraint(equalTo: mainTabBarController.view.topAnchor, constant: -8),
+			background.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -55),
 
-            buttonBack.topAnchor.constraint(equalTo: navigationBarView.bottomAnchor, constant: 20),
+            buttonBack.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 20),
             buttonBack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 28),
 
             titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -201,12 +185,7 @@ private extension FAQViewController {
             tableView.topAnchor.constraint(equalTo: background.topAnchor, constant: 60),
             tableView.leadingAnchor.constraint(equalTo: background.leadingAnchor, constant: 20),
             tableView.trailingAnchor.constraint(equalTo: background.trailingAnchor, constant: -20),
-            tableView.bottomAnchor.constraint(equalTo: background.bottomAnchor, constant: -20),
-
-            mainTabBarController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            mainTabBarController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            mainTabBarController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            mainTabBarController.view.heightAnchor.constraint(equalToConstant: 81)
+            tableView.bottomAnchor.constraint(equalTo: background.bottomAnchor, constant: -20)
         ])
     }
 }
@@ -230,28 +209,16 @@ extension FAQViewController: UITableViewDataSource {
     }
 }
 
+// MARK: - Preview
+
 #if DEBUG
-import SwiftUI
-
-struct FAQViewControllerPreview: UIViewControllerRepresentable {
-    class StubPresenter: FAQViewProtocol {
-        func showGreeting(_ message: String) {}
-        func displayNavBar(viewModel: NavBarViewModel) {}
-        func displayError(message: String) {}
-    }
-
-    func makeUIViewController(context: Context) -> some UIViewController {
-        let presenter = StubPresenter()
-        return FAQViewController(presenter: presenter)
-    }
-
-    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {}
-}
-
-struct FAQViewController_Previews: PreviewProvider {
-    static var previews: some View {
-        FAQViewControllerPreview()
-            .edgesIgnoringSafeArea(.all)
-    }
+@available(iOS 17.0, *)
+#Preview {
+	class StubPresenter: FAQViewProtocol {
+		func showGreeting(_ message: String) {}
+		func displayError(message: String) {}
+	}
+	let presenter = StubPresenter()
+	return FAQViewController(presenter: presenter)
 }
 #endif

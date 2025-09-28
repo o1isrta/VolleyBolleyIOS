@@ -1,30 +1,6 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "" : {
-
-    },
-    "  Continue with Facebook" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "  Продолжить с Facebook"
-          }
-        }
-      }
-    },
-    "  Continue with Google" : {
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "  Продолжить c Google"
-          }
-        }
-      }
-    },
     "%@ %@" : {
       "localizations" : {
         "en" : {
@@ -52,7 +28,15 @@
       }
     },
     "+ With the country code" : {
-
+      "comment" : "Registration",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "+ С кодом страны"
+          }
+        }
+      }
     },
     "About" : {
       "comment" : "Profile",
@@ -66,6 +50,7 @@
       }
     },
     "About levels" : {
+      "comment" : "Registration",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -77,17 +62,17 @@
     },
     "ADD SELECTED" : {
       "comment" : "Game",
-      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ДОБАВИТЬ ВЫБРАННОЕ"
+            "value" : "ДОБАВИТЬ ВЫБРАННЫХ"
           }
         }
       }
     },
     "After each game, teammates can rate your level.\nOnce you receive 6 ratings, your level may change:\n  • 5+ positive ratings → promoted one step\n  • 5+ negative ratings → demoted one step\n  • Mixed feedback → level stays the same" : {
+      "comment" : "FAQ",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -176,6 +161,7 @@
       }
     },
     "Choose your city" : {
+      "comment" : "Registration",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -186,6 +172,7 @@
       }
     },
     "Choose your country" : {
+      "comment" : "Registration",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -321,6 +308,42 @@
         }
       }
     },
+    "commonCreateTourney" : {
+      "comment" : "CreateTourney button title",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create a tourney"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Создать турнир"
+          }
+        }
+      }
+    },
+    "commonDonate" : {
+      "comment" : "DonateButton title",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Donate"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поддержать"
+          }
+        }
+      }
+    },
     "Contacts: " : {
       "comment" : "Court Details",
       "localizations" : {
@@ -332,7 +355,19 @@
         }
       }
     },
+    "Continue with Google" : {
+      "comment" : "Registration",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Продолжить c Google"
+          }
+        }
+      }
+    },
     "Continue with phone number" : {
+      "comment" : "Registration",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -353,9 +388,144 @@
         }
       }
     },
+    "creation.level" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Level"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Уровень"
+          }
+        }
+      }
+    },
+    "creation.players" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d players"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d игроков"
+          }
+        }
+      }
+    },
+    "creation.price" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ per person"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ за человека"
+          }
+        }
+      }
+    },
+    "creation.privateGame" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "private game"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "приватная игра"
+          }
+        }
+      }
+    },
+    "creation.starts.on" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Starts on %@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Начинается %@"
+          }
+        }
+      }
+    },
+    "creation.starts.today" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Starts today"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Начинается сегодня"
+          }
+        }
+      }
+    },
+    "creation.starts.tomorrow" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Starts tomorrow"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Начинается завтра"
+          }
+        }
+      }
+    },
+    "creation.teams" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d teams"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d команд"
+          }
+        }
+      }
+    },
     "customAlertView.button.done" : {
       "comment" : "Custom Alert",
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -599,6 +769,7 @@
       }
     },
     "Date of birth" : {
+      "comment" : "Registration",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -820,6 +991,7 @@
       }
     },
     "Earn 10 points from higher-level players within the last 60 days.\nThe higher the evaluator’s level, the more weight their rating carries." : {
+      "comment" : "FAQ",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -830,6 +1002,7 @@
       }
     },
     "Elite level, official championships experience" : {
+      "comment" : "Registration / Level description popup",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -846,6 +1019,7 @@
       }
     },
     "Enter the 6-digit code" : {
+      "comment" : "Registration",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -862,6 +1036,7 @@
       }
     },
     "Fair Play Policy" : {
+      "comment" : "FAQ",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -926,6 +1101,23 @@
         }
       }
     },
+    "game.created" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game created"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Игра создана"
+          }
+        }
+      }
+    },
     "Gender" : {
       "comment" : "User info / Game Description",
       "localizations" : {
@@ -938,9 +1130,18 @@
       }
     },
     "Get new code" : {
-
+      "comment" : "Registration",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Получить новый код"
+          }
+        }
+      }
     },
     "GET STARTED" : {
+      "comment" : "Registration",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -950,11 +1151,99 @@
         }
       }
     },
+    "homeCreateNewGame" : {
+      "comment" : "Home screen CreateNewGame button title",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create a new game"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Создать новую игру"
+          }
+        }
+      }
+    },
+    "homeFindGame" : {
+      "comment" : "Home screen FindGame button title",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Find a game"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Найти игру"
+          }
+        }
+      }
+    },
+    "homeGamesAvailable" : {
+      "comment" : "Home screen FindGame button games available",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "games available"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "доступные игры"
+          }
+        }
+      }
+    },
+    "homeNearYou" : {
+      "comment" : "Home screen FindGame button sub title",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Near you"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Рядом"
+          }
+        }
+      }
+    },
     "Invalid code" : {
-
+      "comment" : "Registration",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Неверный код"
+          }
+        }
+      }
     },
     "Know rules, still learning" : {
-
+      "comment" : "Registration / Level description popup",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Знаю правила, всё ещё учусь"
+          }
+        }
+      }
     },
     "Level" : {
       "comment" : "User info / Game Description",
@@ -968,6 +1257,7 @@
       }
     },
     "Levels can drop due to:" : {
+      "comment" : "Registration / Level description popup",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1053,7 +1343,15 @@
       }
     },
     "New to the game" : {
-
+      "comment" : "Registration / Level description popup",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Новичок в игре"
+          }
+        }
+      }
     },
     "NEXT STEP" : {
       "comment" : "Next button",
@@ -1366,6 +1664,7 @@
       }
     },
     "Post-Game Ratings" : {
+      "comment" : "FAQ",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1387,6 +1686,7 @@
       }
     },
     "Ratings (6 within 60 days, 5+ down = demotion)\nInactivity:\n• 90 days = minus 1 step\n• 180 days = reset to lowest level in current category" : {
+      "comment" : "FAQ",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1397,6 +1697,7 @@
       }
     },
     "Registration" : {
+      "comment" : "Registration",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1406,6 +1707,7 @@
         }
       }
     },
+<<<<<<< HEAD
     "registration_title" : {
       "localizations" : {
         "en" : {
@@ -1433,6 +1735,8 @@
         }
       }
     },
+=======
+>>>>>>> develop
     "Search" : {
       "comment" : "Search placeholder on court list",
       "localizations" : {
@@ -1467,7 +1771,15 @@
       }
     },
     "SEND CODE" : {
-
+      "comment" : "Registration",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ОТПРАВИТЬ КОД"
+          }
+        }
+      }
     },
     "Sign up\nwith\na social\nmedia" : {
       "localizations" : {
@@ -1479,8 +1791,117 @@
         }
       }
     },
+    "sketchButton.createTourney" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create a tourney"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Создать турнир"
+          }
+        }
+      }
+    },
+    "sketchButton.donate" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Donate"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поддержать"
+          }
+        }
+      }
+    },
+    "sketchButton.invitePlayers" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invite players"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пригласить игроков"
+          }
+        }
+      }
+    },
+    "sketchButton.saveGame" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save game"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сохранить игру"
+          }
+        }
+      }
+    },
+    "sketchButton.sendInvites" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send invites"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отправить приглашения"
+          }
+        }
+      }
+    },
+    "sketchButton.shareLink" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Share link"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поделиться ссылкой"
+          }
+        }
+      }
+    },
     "Skilled, play often, tournaments experience" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Опытный, часто играю, опыт участия в турнирах"
+          }
+        }
+      }
     },
     "Support" : {
       "comment" : "Profile",
@@ -1527,6 +1948,7 @@
       }
     },
     "To find the right games and teammates, choose your current skill level:\nOptions:\n  • Light (L1–L3) – Beginner\n  • Medium (M1–M3) – Confident amateur\n  • Hard (H1–H3) – Advanced\n  • Pro (P1–P3) – Professional\nThe higher the number, the higher the skill. Your level may change later based on player ratings." : {
+      "comment" : "FAQ",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1565,6 +1987,23 @@
         }
       }
     },
+    "tourney.created" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Torney created"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Турнир создан"
+          }
+        }
+      }
+    },
     "Update" : {
       "localizations" : {
         "ru" : {
@@ -1576,7 +2015,15 @@
       }
     },
     "VERIFY" : {
-
+      "comment" : "Registration",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ПРОВЕРИТЬ"
+          }
+        }
+      }
     },
     "VOLLEYBOLLEY" : {
       "localizations" : {
@@ -1589,6 +2036,7 @@
       }
     },
     "Want to move to the next category?" : {
+      "comment" : "FAQ",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1599,6 +2047,7 @@
       }
     },
     "We ensure a fair system:\n• Ratings are anonymous\n• Max 2 ratings from the same player in 60 days\n• Light has minimal impact on Hard and Pro levels\n• Pro levels are harder to reach\nPlay fair — your level will speak for itself." : {
+      "comment" : "FAQ",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1625,6 +2074,7 @@
       }
     },
     "welcome_title" : {
+      "comment" : "Registration",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1652,6 +2102,7 @@
       }
     },
     "Your city" : {
+      "comment" : "Registration",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1662,6 +2113,7 @@
       }
     },
     "Your country" : {
+      "comment" : "Registration",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1672,7 +2124,15 @@
       }
     },
     "Your phone number" : {
-
+      "comment" : "Registration",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ваш номер телефона"
+          }
+        }
+      }
     },
     "ОК" : {
       "localizations" : {

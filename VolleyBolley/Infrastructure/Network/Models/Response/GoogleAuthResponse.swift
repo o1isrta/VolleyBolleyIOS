@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct GoogleAuthResponse: Codable {
+struct GoogleAuthResponse: Decodable {
 	let accessToken: String
 	let refreshToken: String
 	let player: PlayerDTO

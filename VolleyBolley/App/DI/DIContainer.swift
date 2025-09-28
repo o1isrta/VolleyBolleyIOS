@@ -57,7 +57,6 @@ final class DIContainer {
     init(window: UIWindow) {
         assembler = Assembler(
             [
-                SharedServicesAssembly(),
                 NetworkAssembly(),
                 MediaServicesAssembly(),
                 AppAssembly(window: window),
@@ -72,10 +71,17 @@ final class DIContainer {
                 MapAssembly(),
                 MyGamesAssembly(),
                 ProfileAssembly(),
+<<<<<<< HEAD
 				NotificationsAssembly(),
 				PaywallAssembly(),
 				PersonalDataAssembly(),
                 EditPhotoAssembly()
+=======
+                NotificationsAssembly(),
+                PaywallAssembly(),
+                CreationSuccessAssembly(),
+                PersonalDataAssembly()
+>>>>>>> develop
             ]
         )
     }

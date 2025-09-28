@@ -8,31 +8,92 @@
 import UIKit
 
 protocol HomeViewProtocol: AnyObject {
-    func showGreeting(_ message: String)
-    func displayNavBar(viewModel: NavBarViewModel)
-    func displayError(message: String)
-}
-
-extension HomeViewController: CalendarComponentDelegate {
-	func didSelectDate(_ date: Date) {
-		updateDateLabel(with: date)
-	}
+    func displayCreateNewGameButton(state: CreateNewGameButtonState)
+    func displayFindGameButton(gamesCount: Int)
 }
 
 final class HomeViewController: BaseViewController, HomeViewProtocol {
 
     // MARK: - Private Properties
 
-	private lazy var calendarComponent: CalendarComponentProtocol = CalendarComponent(delegate: self)
-
     private let presenter: HomePresenterProtocol
+    private var createNewGameCourtId: Int?
 
-    private lazy var navigationBarView = CustomNavBarView()
+    private enum Constants {
+        static let backgroundTop: CGFloat = 90
+        static let verticalStackSpacing: CGFloat = 8
+        static let horizontalStackSpacing: CGFloat = 8
+        static let contentInsets = UIEdgeInsets(top: 284, left: 8, bottom: 100, right: 8)
+    }
 
-    private lazy var label: UILabel = {
-        let view = UILabel()
-        view.textAlignment = .center
-        view.font = AppFont.Quantex.regular(size: 16)
+    private lazy var backgroundImageView: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage.Image.homeBackground
+        view.contentMode = .topLeft
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
+    private lazy var mainStackView: UIStackView = {
+        let view = UIStackView(arrangedSubviews: [topStackView, bottomStackView])
+        view.axis = .vertical
+        view.spacing = Constants.verticalStackSpacing
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
+    private lazy var topStackView: UIStackView = {
+        let view = UIStackView(arrangedSubviews: [createNewGameButton, findGameButton])
+        view.axis = .vertical
+        view.distribution = .fillEqually
+        view.spacing = Constants.verticalStackSpacing
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
+    private lazy var bottomStackView: UIStackView = {
+        let view = UIStackView(arrangedSubviews: [createTourneyButton, donateButton])
+        view.axis = .horizontal
+        view.spacing = Constants.horizontalStackSpacing
+        view.distribution = .fillEqually
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
+    private lazy var createNewGameButton: CreateNewGameButton = {
+        let view = CreateNewGameButton()
+        view.addAction(UIAction { [weak self] _ in
+             self?.presenter.didTapCreateNewGame()
+        }, for: .touchUpInside)
+        return view
+    }()
+
+    private lazy var findGameButton: FindGameButton = {
+        let view = FindGameButton()
+        view.addAction(UIAction { [weak self] _ in
+             self?.presenter.didTapFindGame()
+        }, for: .touchUpInside)
+        return view
+    }()
+
+    private lazy var createTourneyButton: SketchButton = {
+        let view = SketchButton()
+        view.isSelected = true
+        view.setTitle(String(localized: "commonCreateTourney"), for: .normal)
+        view.setImage(UIImage.Icon.createTourney, for: .normal)
+        view.addAction(UIAction { [weak self] _ in
+             self?.presenter.didTapCreateTourney()
+        }, for: .touchUpInside)
+        return view
+    }()
+
+    private lazy var donateButton: SketchButton = {
+        let view = SketchButton()
+        view.setTitle(String(localized: "commonDonate"), for: .normal)
+        view.setImage(UIImage.Icon.donate, for: .normal)
+        view.addAction(UIAction { [weak self] _ in
+            self?.presenter.didTapDonate()
+        }, for: .touchUpInside)
         return view
     }()
 
@@ -44,9 +105,7 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder: NSCoder) { nil }
 
     // MARK: - Lifecycle
 
@@ -59,87 +118,31 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
 
     // MARK: - Public Methods
 
-    func showGreeting(_ message: String) {
-        label.text = message
+    func displayCreateNewGameButton(state: CreateNewGameButtonState) {
+        createNewGameButton.configure(state: state)
     }
 
-    func displayNavBar(viewModel: NavBarViewModel) {
-        navigationBarView.configure(with: viewModel)
-    }
-
-    func displayError(message: String) {
-        print(message)
+    func displayFindGameButton(gamesCount: Int) {
+        findGameButton.configure(with: gamesCount)
     }
 
     // MARK: - Private Methods
 
     private func setupView() {
-        view.addSubview(navigationBarView)
-        view.addSubview(label)
-        setupLayout()
-    }
+        view.addSubview(backgroundImageView)
+        view.addSubview(mainStackView)
 
-    private func setupLayout() {
-        setupConstraintsNavBar()
-        setupConstraintsLabel()
-
-		setupCalendar()
+        mainStackView.pinToSuperviewEdges(insets: Constants.contentInsets)
+        setupConstraintsBackgroundImageView()
     }
 
     // MARK: - Constraints
 
-    private func setupConstraintsNavBar() {
-        navigationBarView.translatesAutoresizingMaskIntoConstraints = false
-
+    private func setupConstraintsBackgroundImageView() {
         NSLayoutConstraint.activate([
-            navigationBarView.topAnchor.constraint(equalTo: view.topAnchor),
-            navigationBarView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            navigationBarView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            navigationBarView.heightAnchor.constraint(equalToConstant: 106)
+            backgroundImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: Constants.backgroundTop),
+            backgroundImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            backgroundImageView.widthAnchor.constraint(equalTo: view.widthAnchor)
         ])
     }
-
-    private func setupConstraintsLabel() {
-        label.translatesAutoresizingMaskIntoConstraints = false
-
-        NSLayoutConstraint.activate([
-            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ])
-    }
-
-	private func setupCalendar() {
-		let calendarVC = calendarComponent.createCalendarViewController()
-		addChild(calendarVC)
-		view.addSubviews(calendarVC.view)
-		calendarVC.didMove(toParent: self)
-
-		NSLayoutConstraint.activate([
-			calendarVC.view.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 10),
-			calendarVC.view.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-			calendarVC.view.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-			calendarVC.view.widthAnchor.constraint(equalToConstant: 319),
-			calendarVC.view.heightAnchor.constraint(equalToConstant: 350)
-		])
-	}
-
-	private func updateDateLabel(with date: Date) {
-		let formatter = DateFormatter()
-		formatter.dateStyle = .full
-		formatter.timeStyle = .none
-		label.text = "Выбранная дата: \(formatter.string(from: date))"
-	}
 }
-
-// MARK: - Preview
-#if DEBUG
-import SwiftUI
-
-@available(iOS 17.0, *)
-#Preview {
-    UIViewControllerPreview {
-        HomeModulePreviewBuilder.build()
-    }
-    .edgesIgnoringSafeArea(.all)
-}
-#endif
