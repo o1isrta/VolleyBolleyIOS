@@ -11,8 +11,8 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
 
     var presenter: UserRegPresenterProtocol?
 
-    private lazy var navigationBarView = CustomNavBarView()
-    private lazy var mainTabBarController = MainTabBarController()
+    //    private lazy var navigationBarView = CustomNavBarView()
+    //    private lazy var mainTabBarController = MainTabBarController()
 
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -87,11 +87,56 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
     private lazy var placeLabel = CustomLabel(text: String(localized: "Place"), isBold: true)
     private lazy var placeButton: GreenButton = {
         let button = GreenButton()
-        button.setTitle(String(localized: "Place"), for: .normal)
+        button.setTitle(String(localized: "Change"), for: .normal)
         button.isSelected = true
         button.addTarget(self, action: #selector(placeButtonTapped), for: .touchUpInside)
         return button
     }()
+
+    private lazy var locationContainerView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
+    private lazy var locationIcon: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(systemName: "location.fill")
+        imageView.tintColor = AppColor.Icon.primary
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+
+    private lazy var locationName: UILabel = {
+        let label = UILabel()
+        label.text = "Karon Beach Club"
+        label.font = AppFont.Hero.regular(size: 16)
+        label.textColor = AppColor.Text.primary
+        label.numberOfLines = 1
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
+    private lazy var locationAddress: UILabel = {
+        let label = UILabel()
+        label.text = "Patak Rd, Mueang Phuket"
+        label.font = AppFont.Hero.light(size: 14)
+        label.textColor = AppColor.Text.primary
+        label.numberOfLines = 1
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
+    private lazy var locationStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.alignment = .leading
+        stackView.spacing = 4
+        stackView.distribution = .fillProportionally
+        return stackView
+    }()
+
     private lazy var placeSeparator = CustomSeparator()
 
     private lazy var dateLabel = CustomLabel(text: String(localized: "Date"), isBold: true)
@@ -114,6 +159,24 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
     private lazy var gameDurationLabel: UILabel = {
         let label = UILabel()
         label.text = String(localized: "Game duration")
+        label.font = AppFont.Hero.regular(size: 16)
+        label.textColor = AppColor.Text.primary
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
+    private lazy var fromTimeLabel: UILabel = {
+        let label = UILabel()
+        label.text = String(localized: "from")
+        label.font = AppFont.Hero.regular(size: 16)
+        label.textColor = AppColor.Text.primary
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
+    private lazy var toTimeLabel: UILabel = {
+        let label = UILabel()
+        label.text = String(localized: "to")
         label.font = AppFont.Hero.regular(size: 16)
         label.textColor = AppColor.Text.primary
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -151,37 +214,42 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
 
     private lazy var playerLevelLabel = CustomLabel(text: String(localized: "Player level"), isBold: true)
 
-    private lazy var lightLevelButton = PickButton(
-        title: String(localized: "common.light").capitalized(with: .current),
-        isSelected: true,
-        target: self,
-        action: #selector(levelButtonTapped)
-    )
-    private lazy var mediumLevelButton = PickButton(
-        title: String(localized: "common.medium").capitalized(with: .current),
-        isSelected: false,
-        target: self,
-        action: #selector(levelButtonTapped)
-    )
-    private lazy var hardLevelButton = PickButton(
-        title: String(localized: "common.hard").capitalized(with: .current),
-        isSelected: false,
-        target: self,
-        action: #selector(levelButtonTapped)
-    )
-    private lazy var proLevelButton = PickButton(
-        title: String(localized: "common.pro").capitalized(with: .current),
-        isSelected: false,
-        target: self,
-        action: #selector(levelButtonTapped)
-    )
+    private lazy var lightLevelButton: GreenButton = {
+        let button = GreenButton()
+        button.setTitle(String(localized: "common.light"), for: .normal)
+        button.isSelected = true
+        button.addTarget(self, action: #selector(levelButtonTapped), for: .touchUpInside)
+        return button
+    }()
 
-    private lazy var getStartedButton = NextStepButton(
-        title: String(localized: "GET STARTED"),
-        isActive: false,
-        target: self,
-        action: #selector(getStartedTapped)
-    )
+    private lazy var mediumLevelButton: GreenButton = {
+        let button = GreenButton()
+        button.setTitle(String(localized: "common.medium"), for: .normal)
+        button.isSelected = true
+        button.addTarget(self, action: #selector(levelButtonTapped), for: .touchUpInside)
+        return button
+    }()
+
+    private lazy var hardLevelButton: GreenButton = {
+        let button = GreenButton()
+        button.setTitle(String(localized: "common.hard"), for: .normal)
+        button.isSelected = true
+        button.addTarget(self, action: #selector(levelButtonTapped), for: .touchUpInside)
+        return button
+    }()
+
+    private lazy var proLevelButton: GreenButton = {
+        let button = GreenButton()
+        button.setTitle(String(localized: "common.pro"), for: .normal)
+        button.addTarget(self, action: #selector(levelButtonTapped), for: .touchUpInside)
+        return button
+    }()
+
+    private lazy var getStartedButton: YellowButton = {
+        let button = YellowButton(title: String(localized: "GET STARTED"))
+        button.isEnabled = false
+        return button
+    }()
 
     private var selectedGender: String? = String(localized: "Mix")
     private var selectedLevel: String? = String(localized: "common.light").capitalized(with: .current)
@@ -199,28 +267,31 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
 
     private func setupScrollView() {
         view.addSubview(scrollView)
-        view.addSubview(navigationBarView)
-        navigationBarView.translatesAutoresizingMaskIntoConstraints = false
+        //        view.addSubview(navigationBarView)
+        //        navigationBarView.translatesAutoresizingMaskIntoConstraints = false
 
-        addChild(mainTabBarController)
-        view.addSubview(mainTabBarController.view)
-        mainTabBarController.didMove(toParent: self)
-        mainTabBarController.view.translatesAutoresizingMaskIntoConstraints = false
+        //        addChild(mainTabBarController)
+        //        view.addSubview(mainTabBarController.view)
+        //        mainTabBarController.didMove(toParent: self)
+        //        mainTabBarController.view.translatesAutoresizingMaskIntoConstraints = false
 
         scrollView.addSubview(contentView)
         scrollView.addSubview(contentBackground)
         scrollView.addSubview(getStartedButton)
 
-        NSLayoutConstraint.activate([
-            navigationBarView.topAnchor.constraint(equalTo: view.topAnchor),
-            navigationBarView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            navigationBarView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            navigationBarView.heightAnchor.constraint(equalToConstant: 106),
+        getStartedButton.translatesAutoresizingMaskIntoConstraints = false
 
-            scrollView.topAnchor.constraint(equalTo: navigationBarView.bottomAnchor),
+        NSLayoutConstraint.activate([
+            //            navigationBarView.topAnchor.constraint(equalTo: view.topAnchor),
+            //            navigationBarView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            //            navigationBarView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            //            navigationBarView.heightAnchor.constraint(equalToConstant: 106),
+
+            //            scrollView.topAnchor.constraint(equalTo: navigationBarView.bottomAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -8),
 
             contentView.topAnchor.constraint(equalTo: scrollView.frameLayoutGuide.topAnchor, constant: 8),
             contentView.leadingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.leadingAnchor, constant: 8),
@@ -232,18 +303,20 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
             contentBackground.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             contentBackground.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
 
-            getStartedButton.topAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
-            getStartedButton.leadingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.leadingAnchor, constant: 8),
-            getStartedButton.trailingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.trailingAnchor, constant: -8),
+            getStartedButton.topAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -40),
+            getStartedButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            getStartedButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
 
-            mainTabBarController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            mainTabBarController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            mainTabBarController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            mainTabBarController.view.heightAnchor.constraint(equalToConstant: 81)
+            //            mainTabBarController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            //            mainTabBarController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            //            mainTabBarController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            //            mainTabBarController.view.heightAnchor.constraint(equalToConstant: 81)
         ])
     }
 
     private func setupUI() {
+        locationViewSetup()
+
         [backButton, titleLabel, yourMessageTitle, messageTextView, messageSeparator,
          placeLabel, placeButton, placeSeparator, dateLabel, todayButton, pickDateButton,
          gameDurationLabel,fromTimeButton, toTimeButton, dateSeparator, genderLabel, mixGenderButton, maleGenderButton,
@@ -357,6 +430,32 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
         ])
     }
 
+    private func locationViewSetup() {
+        locationStackView.addArrangedSubview(locationName)
+        locationStackView.addArrangedSubview(locationAddress)
+
+        locationContainerView.addSubview(locationIcon)
+        locationContainerView.addSubview(locationStackView)
+
+        contentView.addSubview(locationContainerView)
+
+        NSLayoutConstraint.activate([
+            locationContainerView.topAnchor.constraint(equalTo: placeLabel.bottomAnchor, constant: 12),
+            locationContainerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            locationContainerView.trailingAnchor.constraint(lessThanOrEqualTo: placeButton.leadingAnchor, constant: -23),
+
+            locationIcon.leadingAnchor.constraint(equalTo: locationContainerView.leadingAnchor),
+            locationIcon.centerYAnchor.constraint(equalTo: locationContainerView.centerYAnchor),
+            locationIcon.widthAnchor.constraint(equalToConstant: 15),
+            locationIcon.heightAnchor.constraint(equalToConstant: 15),
+
+            locationStackView.leadingAnchor.constraint(equalTo: locationIcon.trailingAnchor, constant: 8),
+            locationStackView.trailingAnchor.constraint(equalTo: locationContainerView.trailingAnchor),
+            locationStackView.topAnchor.constraint(equalTo: locationContainerView.topAnchor),
+            locationStackView.bottomAnchor.constraint(equalTo: locationContainerView.bottomAnchor)
+        ])
+    }
+
     private func setupActions() {
         backButton.addTarget(self, action: #selector(didTapBack), for: .touchUpInside)
         messageTextField.addTarget(self, action: #selector(messageTextFieldChanged), for: .editingChanged)
@@ -374,14 +473,14 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
         print("Выбрано новая дата игры")
     }
 
-    @objc private func genderButtonTapped(_ sender: PickButton) {
+    @objc private func genderButtonTapped(_ sender: GreenButton) {
         print("Выбран пол игроков")
         [mixGenderButton, maleGenderButton, femaleGenderButton].forEach { $0.isSelected = false }
         sender.isSelected = true
         selectedGender = sender.title(for: .normal)
     }
 
-    @objc private func levelButtonTapped(_ sender: PickButton) {
+    @objc private func levelButtonTapped(_ sender: GreenButton) {
         print("Выбран уровень игроков")
         [lightLevelButton, mediumLevelButton, hardLevelButton, proLevelButton].forEach { $0.isSelected = false }
         sender.isSelected = true
@@ -395,7 +494,7 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
     @objc private func messageTextFieldChanged() {
         let text = messageTextField.text ?? ""
         messageLettersCounter.text = "\(text.count)/160"
-        getStartedButton.setActive(!text.isEmpty)
+        //        getStartedButton.setActive(!text.isEmpty)
     }
 
     func updateDate(_ date: String) {
