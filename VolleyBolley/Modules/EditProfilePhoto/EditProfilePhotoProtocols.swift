@@ -37,7 +37,7 @@ protocol EditProfilePhotoRouterProtocol: AnyObject {
     func showErrorAlert(message: String)
 }
 
-protocol ProfilePhotoPickerVCDelegate: AnyObject {
+protocol ProfilePhotoPickerViewControllerDelegate: AnyObject {
     func photoPickerDidSelectImage(_ image: UIImage)
     func photoPickerDidCancel()
     func photoPickerDidFailWithError(error: String)

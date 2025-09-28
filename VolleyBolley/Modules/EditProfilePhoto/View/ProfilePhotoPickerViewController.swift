@@ -1,5 +1,5 @@
 //
-//  ProfilePhotoPickerVC.swift
+//  ProfilePhotoPickerViewController.swift
 //  VolleyBolley
 //
 //  Created by Valery Zvonarev on 21.09.2025.
@@ -8,10 +8,10 @@
 import PhotosUI
 import UIKit
 
-final class ProfilePhotoPickerVC: UIViewController {
+final class ProfilePhotoPickerViewController: UIViewController {
 
     var currentImage = UIImage()
-    weak var delegate: ProfilePhotoPickerVCDelegate?
+    weak var delegate: ProfilePhotoPickerViewControllerDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +29,7 @@ final class ProfilePhotoPickerVC: UIViewController {
     }
 }
 
-extension ProfilePhotoPickerVC: PHPickerViewControllerDelegate {
+extension ProfilePhotoPickerViewController: PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         picker.dismiss(animated: true)
 

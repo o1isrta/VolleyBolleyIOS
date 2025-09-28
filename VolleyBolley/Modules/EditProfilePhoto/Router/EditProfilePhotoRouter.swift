@@ -25,10 +25,10 @@ final class EditProfilePhotoRouter: EditProfilePhotoRouterProtocol {
 
     func showPhotoLibrary() {
         guard let viewController = viewController else { return }
-        let profilePhotoPickerVC = ProfilePhotoPickerVC()
-        profilePhotoPickerVC.delegate = self
-        profilePhotoPickerVC.modalPresentationStyle = .fullScreen
-        viewController.present(profilePhotoPickerVC, animated: true)
+        let profilePhotoPickerViewController = ProfilePhotoPickerViewController()
+        profilePhotoPickerViewController.delegate = self
+        profilePhotoPickerViewController.modalPresentationStyle = .fullScreen
+        viewController.present(profilePhotoPickerViewController, animated: true)
     }
 
     func showCamera() {
@@ -59,9 +59,12 @@ final class EditProfilePhotoRouter: EditProfilePhotoRouterProtocol {
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         viewController?.present(alert, animated: true)
     }
+
+
+
 }
 
-extension EditProfilePhotoRouter: ProfilePhotoPickerVCDelegate {
+extension EditProfilePhotoRouter: ProfilePhotoPickerViewControllerDelegate {
     func photoPickerDidSelectImage(_ image: UIImage) {
         view?.updateProfileImage(image)
     }

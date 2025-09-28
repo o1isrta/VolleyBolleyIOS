@@ -142,6 +142,17 @@
         }
       }
     },
+    "Choose from Gallery" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выбрать из фотогалереи"
+          }
+        }
+      }
+    },
     "CHOOSE THIS COURT" : {
       "comment" : "\"CHOOSE THIS COURT\" button",
       "localizations" : {
@@ -611,6 +622,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "УДАЛИТЬ АККАУНТ"
+          }
+        }
+      }
+    },
+    "Delete photo" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удалить фото"
           }
         }
       }
@@ -1400,6 +1422,17 @@
         }
       }
     },
+    "SAVE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "СОХРАНИТЬ"
+          }
+        }
+      }
+    },
     "Search" : {
       "comment" : "Search placeholder on court list",
       "localizations" : {
@@ -1466,6 +1499,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Фамилия"
+          }
+        }
+      }
+    },
+    "Take photo" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сделать фото"
           }
         }
       }

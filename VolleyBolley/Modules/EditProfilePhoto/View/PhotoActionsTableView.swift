@@ -4,9 +4,18 @@
 //
 //  Created by Valery Zvonarev on 11.09.2025.
 //
-
+#if DEBUG
 import SwiftUI
+#endif
 import UIKit
+
+private enum PhotoActionsConstants {
+    static let actions: [(icon: String, title: String)] = [
+        ("photo", String(localized: "Choose from Gallery")),
+        ("camera", String(localized: "Take photo")),
+        ("trash", String(localized: "Delete photo"))
+    ]
+}
 
 final class PhotoActionsTableView: UIView {
 
@@ -25,12 +34,6 @@ final class PhotoActionsTableView: UIView {
         tableView.delegate = self
         return tableView
     }()
-
-    private let actions = [
-        ("photo", "Choose from Gallery"),
-        ("camera", "Take photo"),
-        ("trash", "Delete photo")
-    ]
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -56,14 +59,14 @@ final class PhotoActionsTableView: UIView {
 
 extension PhotoActionsTableView: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return actions.count
+        return PhotoActionsConstants.actions.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ActionCell", for: indexPath) as? ActionCell else {
             return UITableViewCell()
         }
-        let action = actions[indexPath.row]
+        let action = PhotoActionsConstants.actions[indexPath.row]
         cell.configure(iconName: action.0, title: action.1)
         return cell
     }

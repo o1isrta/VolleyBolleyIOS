@@ -7,6 +7,12 @@
 
 import UIKit
 
+enum PhotoAction: Int {
+    case chooseFromGallery = 0
+    case takePhoto = 1
+    case deletePhoto = 2
+}
+
 final class EditProfilePhotoPresenter: EditProfilePhotoPresenterProtocol {
 
     // MARK: - Public Properties
@@ -14,7 +20,6 @@ final class EditProfilePhotoPresenter: EditProfilePhotoPresenterProtocol {
     weak var view: EditProfilePhotoViewControllerProtocol?
     let interactor: EditProfilePhotoInteractorProtocol
     let router: EditProfilePhotoRouterProtocol
-    var testNum = 155
 
     // MARK: - Initializers
 
@@ -35,19 +40,18 @@ final class EditProfilePhotoPresenter: EditProfilePhotoPresenterProtocol {
     }
 
     func didSelectAction(at index: Int) {
-        switch index
-        {
-            case 0: // Choose from Gallery
+        guard let action = PhotoAction(rawValue: index) else { return }
+
+        switch action {
+            case .chooseFromGallery: // Choose from Gallery
                 view?.showLoading(true)
                 router.showPhotoLibrary()
-            case 1: // Take photo
+            case .takePhoto: // Take photo
                 view?.showLoading(true)
                 router.showCamera()
-            case 2: // Delete photo
+            case .deletePhoto: // Delete photo
                 view?.showLoading(true)
                 interactor.deleteProfilePhoto()
-            default:
-                break
         }
     }
 

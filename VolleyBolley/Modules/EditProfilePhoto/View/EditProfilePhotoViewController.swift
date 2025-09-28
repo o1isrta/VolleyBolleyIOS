@@ -4,8 +4,9 @@
 //
 //  Created by Valery Zvonarev on 10.09.2025.
 //
-
+#if DEBUG
 import SwiftUI
+#endif
 import UIKit
 
 final class EditProfilePhotoViewController: BaseViewController {
@@ -53,11 +54,11 @@ final class EditProfilePhotoViewController: BaseViewController {
         let image = UIImage.imgPerson
         let profilePhotoView = UIImageView(image: image)
         profilePhotoView.contentMode = .scaleAspectFill
-        profilePhotoView.backgroundColor = .clear
+        profilePhotoView.backgroundColor = AppColor.Background.clear
         profilePhotoView.clipsToBounds = true
         profilePhotoView.layer.cornerRadius = 61
         profilePhotoView.layer.borderWidth = 2
-        profilePhotoView.layer.borderColor = UIColor.white.cgColor
+        profilePhotoView.layer.borderColor = AppColor.Border.primary.cgColor
         return profilePhotoView
     }()
 
@@ -68,7 +69,8 @@ final class EditProfilePhotoViewController: BaseViewController {
     }()
 
     private lazy var saveButton: YellowButton = {
-        let button = YellowButton(title: "SAVE")
+//        let button = YellowButton(title: "SAVE")
+        let button = YellowButton(title: String(localized: "SAVE"))
         button.isSelected = true
         button.isEnabled = true
         button.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
@@ -78,7 +80,7 @@ final class EditProfilePhotoViewController: BaseViewController {
     private let loadingIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView(style: .large)
         indicator.hidesWhenStopped = true
-        indicator.color = .white
+        indicator.color = AppColor.Background.primary
         return indicator
     }()
 
@@ -131,8 +133,6 @@ private extension EditProfilePhotoViewController {
         NSLayoutConstraint.activate([
             loadingIndicator.centerXAnchor.constraint(equalTo: profilePhotoView.centerXAnchor),
             loadingIndicator.centerYAnchor.constraint(equalTo: profilePhotoView.centerYAnchor)
-//            loadingIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//            loadingIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
 
@@ -143,8 +143,9 @@ private extension EditProfilePhotoViewController {
                                                        constant: LayoutConstants.mainIndent),
             glassmorphismView.trailingAnchor.constraint(equalTo: view.trailingAnchor,
                                                         constant: -LayoutConstants.mainIndent),
-            glassmorphismView.bottomAnchor.constraint(equalTo: view.bottomAnchor,
-                                                      constant: -LayoutConstants.tabBarHeight),
+            glassmorphismView.heightAnchor.constraint(equalToConstant: 454),
+//            glassmorphismView.bottomAnchor.constraint(equalTo: view.bottomAnchor,
+//                                                      constant: -LayoutConstants.tabBarHeight),
             backButton.topAnchor.constraint(equalTo: glassmorphismView.topAnchor,
                                             constant: LayoutConstants.backButtonTopInset),
             backButton.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor,
