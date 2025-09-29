@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class PersonalDataViewController: UIViewController {
+final class PersonalDataViewController: BaseViewController {
 
     // MARK: - Constants
 
@@ -78,6 +78,9 @@ final class PersonalDataViewController: UIViewController {
         let stack = UIStackView(arrangedSubviews: [nameLabel, nameTextField])
         stack.axis = .vertical
         stack.spacing = Constants.mainIndent
+
+        nameLabel.setContentHuggingPriority(.required, for: .vertical)
+        nameLabel.setContentCompressionResistancePriority(.required, for: .vertical)
         return stack
     }()
 
@@ -91,6 +94,9 @@ final class PersonalDataViewController: UIViewController {
         let stack = UIStackView(arrangedSubviews: [surnameLabel, surnameTextField])
         stack.axis = .vertical
         stack.spacing = Constants.mainIndent
+
+        surnameLabel.setContentHuggingPriority(.required, for: .vertical)
+        surnameLabel.setContentCompressionResistancePriority(.required, for: .vertical)
         return stack
     }()
     private lazy var surnameSeparator = CustomSeparator()
@@ -131,6 +137,9 @@ final class PersonalDataViewController: UIViewController {
         let stack = UIStackView(arrangedSubviews: [genderLabel, genderButtonsStackView])
         stack.axis = .vertical
         stack.spacing = Constants.mainIndent
+
+        genderLabel.setContentHuggingPriority(.required, for: .vertical)
+        genderLabel.setContentCompressionResistancePriority(.required, for: .vertical)
         return stack
     }()
     private lazy var genderSeparator = CustomSeparator()
@@ -153,6 +162,9 @@ final class PersonalDataViewController: UIViewController {
         stack.axis = .vertical
         stack.alignment = .leading
         stack.spacing = Constants.mainIndent
+
+        birthdayLabel.setContentHuggingPriority(.required, for: .vertical)
+        birthdayLabel.setContentCompressionResistancePriority(.required, for: .vertical)
         return stack
     }()
     private let birthdaySeparator = CustomSeparator()
@@ -165,6 +177,9 @@ final class PersonalDataViewController: UIViewController {
         let stack = UIStackView(arrangedSubviews: [countryLabel, countryList ?? UIView()])
         stack.axis = .vertical
         stack.spacing = Constants.mainIndent
+
+        countryLabel.setContentHuggingPriority(.required, for: .vertical)
+        countryLabel.setContentCompressionResistancePriority(.required, for: .vertical)
         return stack
     }()
     private lazy var countrySeparator = CustomSeparator()
@@ -177,6 +192,9 @@ final class PersonalDataViewController: UIViewController {
         let stack = UIStackView(arrangedSubviews: [cityLabel, cityList ?? UIView()])
         stack.axis = .vertical
         stack.spacing = Constants.mainIndent
+
+        cityLabel.setContentHuggingPriority(.required, for: .vertical)
+        cityLabel.setContentCompressionResistancePriority(.required, for: .vertical)
         return stack
     }()
 
@@ -265,10 +283,10 @@ private extension PersonalDataViewController {
 
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            glassmorphismView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            glassmorphismView.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: Constants.mainIndent),
             glassmorphismView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.mainIndent),
             glassmorphismView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constants.mainIndent),
-            glassmorphismView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -Constants.tabBarHeight),
+            glassmorphismView.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor, constant: -Constants.tabBarHeight),
 
             backButton.topAnchor.constraint(equalTo: glassmorphismView.topAnchor, constant: Constants.backButtonTopInset),
             backButton.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor, constant: Constants.mediumIndent),
@@ -311,6 +329,13 @@ private extension PersonalDataViewController {
 
             updateButton.heightAnchor.constraint(equalToConstant: Constants.buttonHeight)
         ])
+
+        let minHeight = glassmorphismView.heightAnchor.constraint(
+            greaterThanOrEqualTo: scrollView.contentLayoutGuide.heightAnchor,
+            constant: screenTitle.intrinsicContentSize.height + (Constants.mainSpacing * 2)
+        )
+        minHeight.priority = .defaultHigh
+        minHeight.isActive = true
     }
 
     @objc
