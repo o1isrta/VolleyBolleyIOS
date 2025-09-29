@@ -55,7 +55,7 @@ final class PaywallPlayerCell: UITableViewCell {
 
     private lazy var containerView: UIView = {
         let view = UIView()
-        view.backgroundColor = .clear
+        view.backgroundColor = AppColor.Background.clear
         return view
     }()
 
@@ -63,31 +63,28 @@ final class PaywallPlayerCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        backgroundColor = .clear
+        backgroundColor = AppColor.Background.clear
         selectionStyle = .none
         setupView()
     }
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    @available(*, unavailable)
+    required init?(coder: NSCoder) { nil }
 
     // MARK: - Public Method
 
     func configure(with model: PaywallPlayerCellModel) {
         nameLabel.text = model.name
     }
-
-    // MARK: - Actions
-
-    @objc private func didTapDelete() {
-        onDelete?()
-    }
 }
 
 // MARK: - Private methods
 
 private extension PaywallPlayerCell {
+
+    @objc private func didTapDelete() {
+        onDelete?()
+    }
 
     func setupUI() {
         contentView.addSubview(containerView)

@@ -1428,6 +1428,12 @@
             "state" : "translated",
             "value" : "Manage players"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Управление игроками"
+          }
         }
       }
     },

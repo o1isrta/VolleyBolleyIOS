@@ -27,12 +27,7 @@ final class PaywallViewController: BaseViewController {
 	// MARK: - Private Properties
 
     // TODO: remove it in the future
-    private var playersMock: [String] = [
-        "Polina Vasilieva",
-        "Kristina Popova",
-        "Anton Ivanov",
-        "Aleksandr Abramov"
-    ]
+    private var playersMock: [String] = PlayersMock.players
 
 	private let mainSpacing: CGFloat = 20
 	private let internalSpacing: CGFloat = 12
@@ -99,7 +94,7 @@ final class PaywallViewController: BaseViewController {
 
     private lazy var tableView: UITableView = {
         let tableView = IntrinsicTableView()
-        tableView.backgroundColor = .clear
+        tableView.backgroundColor = AppColor.Background.clear
         tableView.separatorStyle = .none
         tableView.isScrollEnabled = false
         tableView.dataSource = self

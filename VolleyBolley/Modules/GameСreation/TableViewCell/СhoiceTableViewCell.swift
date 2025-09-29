@@ -89,9 +89,8 @@ final class PlayerCell: UITableViewCell {
         setupView()
     }
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    @available(*, unavailable)
+    required init?(coder: NSCoder) { nil }
 
     // MARK: - Public Method
 
