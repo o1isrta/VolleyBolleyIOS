@@ -282,11 +282,13 @@ private extension PersonalDataViewController {
     }
 
     func setupConstraints() {
+        let bottomIndent = Constants.tabBarHeight + Constants.mainIndent
+
         NSLayoutConstraint.activate([
             glassmorphismView.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: Constants.mainIndent),
             glassmorphismView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.mainIndent),
             glassmorphismView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constants.mainIndent),
-            glassmorphismView.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor, constant: -Constants.tabBarHeight),
+            glassmorphismView.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor, constant: -bottomIndent),
 
             backButton.topAnchor.constraint(equalTo: glassmorphismView.topAnchor, constant: Constants.backButtonTopInset),
             backButton.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor, constant: Constants.mediumIndent),
