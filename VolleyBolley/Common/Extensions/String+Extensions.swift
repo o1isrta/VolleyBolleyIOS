@@ -21,7 +21,7 @@ extension String {
         if dayEnd > 0 {
             let day = String(digitsOnly.prefix(dayEnd))
             formattedText += day
-            if dayEnd == 2 {
+            if digitsOnly.count > 2 {
                 formattedText += " / "
             }
         }
@@ -33,7 +33,7 @@ extension String {
             let endIdx = digitsOnly.index(digitsOnly.startIndex, offsetBy: monthEnd)
             let month = String(digitsOnly[startIdx..<endIdx])
             formattedText += month
-            if monthEnd == 4 {
+            if digitsOnly.count > 4 {
                 formattedText += " / "
             }
         }

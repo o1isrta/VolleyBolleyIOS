@@ -343,17 +343,11 @@ extension PersonalDataViewController: UITextFieldDelegate {
         replacementString string: String
     ) -> Bool {
         guard textField == birthdayTextField else { return true }
-
-        let currentText = textField.text ?? ""
-        guard let stringRange = Range(range, in: currentText) else { return false }
-        let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
-
-        guard let formattedText = updatedText.formattedBirthdayOrNil() else {
-            return false
-        }
-
-        textField.text = formattedText
-        return false
+        return textField.updateFormattedText(
+            range: range,
+            replacementString: string,
+            formatter: { $0.formattedBirthdayOrNil() }
+        )
     }
 }
 
