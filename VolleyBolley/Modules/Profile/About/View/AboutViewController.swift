@@ -37,7 +37,7 @@ final class AboutViewController: BaseViewController, AboutViewProtocol {
     private enum Constants {
         static let cornerRadius: CGFloat = 32
         static let buttonSize: CGFloat = 24
-        static let padding: CGFloat = 16
+        static let padding: CGFloat = 8
         static let topInset: CGFloat = 20
         static let titleFontSize: CGFloat = 24
         static let animationDuration: TimeInterval = 0.15
@@ -156,7 +156,7 @@ final class AboutViewController: BaseViewController, AboutViewProtocol {
 
         NSLayoutConstraint.activate([
             tableBackground.topAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.topAnchor,
+				equalTo: navBar.bottomAnchor,
                 constant: Constants.padding
             ),
             tableBackground.leadingAnchor.constraint(
@@ -190,7 +190,7 @@ final class AboutViewController: BaseViewController, AboutViewProtocol {
     }
 
     @objc private func backButtonTapped() {
-        dismiss(animated: true)
+		presenter.backButtonTapped()
     }
 }
 
@@ -252,6 +252,7 @@ struct AboutViewControllerPreview: UIViewControllerRepresentable {
             )
             view?.displayAboutInfo(aboutViewModel)
         }
+		func backButtonTapped() {}
     }
 
     func makeUIViewController(context: Context) -> some UIViewController {

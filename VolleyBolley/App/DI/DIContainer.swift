@@ -73,7 +73,8 @@ final class DIContainer {
                 ProfileAssembly(),
 				NotificationsAssembly(),
 				PaywallAssembly(),
-				PersonalDataAssembly()
+				PersonalDataAssembly(),
+				AboutAssembly()
             ]
         )
     }
