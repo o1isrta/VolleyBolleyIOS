@@ -87,18 +87,12 @@ final class PriceView: UIView {
 	}
 
 	@available(*, unavailable)
-	required init?(coder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
-	}
+	required init?(coder: NSCoder) { nil }
 
 	// MARK: - Public Methods
 
 	func becomeActive() {
 		textField.becomeFirstResponder()
-	}
-
-	func resignActive() {
-		textField.resignFirstResponder()
 	}
 
 	func getNumericValue() -> Double? {

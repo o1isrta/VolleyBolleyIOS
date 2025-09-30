@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class PersonalDataViewController: UIViewController {
+final class PersonalDataViewController: BaseViewController {
 
     // MARK: - Constants
 
@@ -219,15 +219,12 @@ final class PersonalDataViewController: UIViewController {
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder: NSCoder) { nil }
 
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = AppColor.Background.screen
 
         let countries = presenter.countries
         countryList = LocationPickerView(items: countries, placeholder: String(localized: "Choose your country"))
@@ -238,6 +235,7 @@ final class PersonalDataViewController: UIViewController {
         cityList?.delegate = self
 
         setupView()
+		hideKeyboardWhenTappedAround()
         presenter.viewDidLoad()
     }
 }
@@ -265,7 +263,7 @@ private extension PersonalDataViewController {
 
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            glassmorphismView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+			glassmorphismView.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: Constants.mainIndent),
             glassmorphismView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.mainIndent),
             glassmorphismView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constants.mainIndent),
             glassmorphismView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -Constants.tabBarHeight),
@@ -376,7 +374,7 @@ extension PersonalDataViewController: LocationPickerViewDelegate {
 #if DEBUG
 import SwiftUI
 
-struct  PersonalDataViewControllerPreview: UIViewControllerRepresentable {
+struct PersonalDataViewControllerPreview: UIViewControllerRepresentable {
     class StubPresenter: PersonalDataPresenterProtocol {
         let countries: [String] = ["Cyprus", "Thailand"]
         let cities: [String] = ["Koh Phangan", "Koh Samui"]
