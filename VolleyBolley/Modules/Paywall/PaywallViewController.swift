@@ -204,19 +204,14 @@ final class PaywallViewController: BaseViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		setupUI()
-		setupGesture()
 		presenter?.viewDidLoad()
+		hideKeyboardWhenTappedAround()
 	}
 }
 
 // MARK: - Private Methods
 
 private extension PaywallViewController {
-
-	func setupGesture() {
-		let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapOutside))
-		view.addGestureRecognizer(tapGesture)
-	}
 
 	func setupUI() {
 		view.addSubviews(
@@ -258,28 +253,18 @@ private extension PaywallViewController {
 	}
 
 	@objc func backButtonTapped() {
-		priceView.resignActive()
 		presenter?.backButtonTapped()
 	}
 
 	@objc func privacyPublicButtonTapped() {
-		priceView.resignActive()
 		presenter?.privacyPublicButtonTapped()
 	}
 
 	@objc func privacyPrivateButtonTapped() {
-		priceView.resignActive()
 		presenter?.privacyPrivateButtonTapped()
 	}
 
-	@objc func handleTapOutside(_ gesture: UITapGestureRecognizer) {
-		if !priceView.frame.contains(gesture.location(in: view)) {
-			priceView.resignActive()
-		}
-	}
-
 	@objc func saveGameButtonTapped() {
-		priceView.resignActive()
 		presenter?.updatePlayersCount(to: playersCounter.value)
 		presenter?.saveGameButtonTapped()
 	}
