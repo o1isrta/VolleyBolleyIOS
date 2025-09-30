@@ -60,6 +60,7 @@ final class MapViewController: BaseViewController, MapViewProtocol {
 		setupMap()
 		setupLocation()
 		setupActions()
+		hideKeyboardWhenTappedAround()
 	}
 
 	func showCourts(_ courts: [CourtModel], nearest: CourtModel?) {

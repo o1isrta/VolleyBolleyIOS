@@ -159,6 +159,7 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
 		setupSubviews()
 		setupConstraints()
 		setupActions()
+		hideKeyboardWhenTappedAround()
 
 		presenter?.viewDidLoad()
 		updateGetStartedButtonState()

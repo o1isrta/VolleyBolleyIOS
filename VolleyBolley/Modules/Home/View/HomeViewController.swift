@@ -77,7 +77,7 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
     }()
 
     private lazy var createTourneyButton: SketchButton = {
-        let view = SketchButton(type: .createTourney, isSelected: true)
+		let view = SketchButton(type: .createTourney, isSelected: true)
         view.addAction(UIAction { [weak self] _ in
              self?.presenter.didTapCreateTourney()
         }, for: .touchUpInside)
@@ -85,7 +85,7 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
     }()
 
     private lazy var donateButton: SketchButton = {
-        let view = SketchButton(type: .donate)
+		let view = SketchButton(type: .donate)
         view.addAction(UIAction { [weak self] _ in
             self?.presenter.didTapDonate()
         }, for: .touchUpInside)
