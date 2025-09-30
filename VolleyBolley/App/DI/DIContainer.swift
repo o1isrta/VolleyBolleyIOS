@@ -71,8 +71,9 @@ final class DIContainer {
                 MapAssembly(),
                 MyGamesAssembly(),
                 ProfileAssembly(),
-				NotificationsAssembly(),
-				PaywallAssembly(),
+                NotificationsAssembly(),
+                PaywallAssembly(),
+                CreationSuccessAssembly(),
 				PersonalDataAssembly(),
 				AboutAssembly()
             ]
