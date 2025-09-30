@@ -7,9 +7,10 @@
 
 import UIKit
 
+// swiftlint:disable type_body_length
 final class NewGameView: BaseViewController, NewGameViewProtocol {
 
-    var presenter: UserRegPresenterProtocol?
+    var presenter: NewGamePresenterProtocol?
 
     private lazy var navigationBarView = CustomNavBarView()
     private lazy var mainTabBarController = MainTabBarController()
@@ -266,13 +267,14 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        messageTextField.delegate = self
+        presenter?.viewDidLoad()
     }
 
     private func setupUI() {
         setupScrollView()
         setupLabelView()
         setupMessageTextField()
-        messageTextField.delegate = self
         setupLocationView()
         setupDateView()
         setupGenderView()
@@ -317,8 +319,8 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
             contentBackground.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
 
             getStartedButton.topAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 16),
-            getStartedButton.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor, constant: 16),
-            getStartedButton.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor, constant: -16),
+            getStartedButton.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor, constant: 8),
+            getStartedButton.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor, constant: -8),
             getStartedButton.heightAnchor.constraint(equalToConstant: 56),
             getStartedButton.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor, constant: -16),
 
@@ -342,7 +344,7 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
             backButton.heightAnchor.constraint(equalToConstant: 24),
 
             titleLabel.centerYAnchor.constraint(equalTo: backButton.centerYAnchor),
-            titleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            titleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
         ])
     }
 
@@ -380,7 +382,7 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
 
             messageSeparator.topAnchor.constraint(equalTo: messageTextView.bottomAnchor, constant: 16),
             messageSeparator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            messageSeparator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            messageSeparator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20)
         ])
     }
 
@@ -442,7 +444,7 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
             pickDateButton.leadingAnchor.constraint(equalTo: todayButton.trailingAnchor, constant: 20),
 
             gameDurationLabel.topAnchor.constraint(equalTo: todayButton.bottomAnchor, constant: 12),
-            gameDurationLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            gameDurationLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20)
         ])
 
         [fromTimeLabel, fromTimeButton, toTimeLabel, toTimeButton]
@@ -458,13 +460,13 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
 
             dateSeparator.topAnchor.constraint(equalTo: dateStackView.bottomAnchor, constant: 16),
             dateSeparator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            dateSeparator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            dateSeparator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20)
         ])
     }
 
     private func setupGenderView() {
         [genderLabel, mixGenderButton, maleGenderButton,
-         femaleGenderButton, genderSeparator,]
+         femaleGenderButton, genderSeparator]
             .forEach {
                 contentView.addSubviews($0)
             }
@@ -484,7 +486,7 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
 
             genderSeparator.topAnchor.constraint(equalTo: mixGenderButton.bottomAnchor, constant: 16),
             genderSeparator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            genderSeparator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            genderSeparator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20)
         ])
     }
 
@@ -509,72 +511,94 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
             hardLevelButton.leadingAnchor.constraint(equalTo: mediumLevelButton.trailingAnchor, constant: 8),
 
             proLevelButton.centerYAnchor.constraint(equalTo: hardLevelButton.centerYAnchor),
-            proLevelButton.leadingAnchor.constraint(equalTo: hardLevelButton.trailingAnchor, constant: 8),
+            proLevelButton.leadingAnchor.constraint(equalTo: hardLevelButton.trailingAnchor, constant: 8)
             ])
     }
 
     private func setupActions() {
         backButton.addTarget(self, action: #selector(didTapBack), for: .touchUpInside)
-                todayButton.addTarget(self, action: #selector(dateButtonTapped), for: .touchUpInside)
-                pickDateButton.addTarget(self, action: #selector(dateButtonTapped), for: .touchUpInside)
-                mixGenderButton.addTarget(self, action: #selector(genderButtonTapped), for: .touchUpInside)
-                maleGenderButton.addTarget(self, action: #selector(genderButtonTapped), for: .touchUpInside)
-                femaleGenderButton.addTarget(self, action: #selector(genderButtonTapped), for: .touchUpInside)
-                lightLevelButton.addTarget(self, action: #selector(levelButtonTapped), for: .touchUpInside)
-                mediumLevelButton.addTarget(self, action: #selector(levelButtonTapped), for: .touchUpInside)
-                hardLevelButton.addTarget(self, action: #selector(levelButtonTapped), for: .touchUpInside)
-                proLevelButton.addTarget(self, action: #selector(levelButtonTapped), for: .touchUpInside)
+        getStartedButton.addTarget(self, action: #selector(didTapGetStarted), for: .touchUpInside)
+        placeButton.addTarget(self, action: #selector(didTapPlace), for: .touchUpInside)
+        todayButton.addTarget(self, action: #selector(didTapDate), for: .touchUpInside)
+        pickDateButton.addTarget(self, action: #selector(didTapDate), for: .touchUpInside)
+        mixGenderButton.addTarget(self, action: #selector(didTapGender), for: .touchUpInside)
+        maleGenderButton.addTarget(self, action: #selector(didTapGender), for: .touchUpInside)
+        femaleGenderButton.addTarget(self, action: #selector(didTapGender), for: .touchUpInside)
+        lightLevelButton.addTarget(self, action: #selector(didTapLevel), for: .touchUpInside)
+        mediumLevelButton.addTarget(self, action: #selector(didTapLevel), for: .touchUpInside)
+        hardLevelButton.addTarget(self, action: #selector(didTapLevel), for: .touchUpInside)
+        proLevelButton.addTarget(self, action: #selector(didTapLevel), for: .touchUpInside)
     }
 
-    @objc private func didTapBack() {
-        dismiss(animated: true)
-    }
+    @objc private func didTapBack() { presenter?.didTapBack() }
+    @objc private func didTapGetStarted() { presenter?.didTapGetStarted() }
+    @objc private func didTapPlace() { presenter?.didSelectPlace() }
+    @objc private func didTapDate() { presenter?.didSelectDate() }
 
-    @objc private func placeButtonTapped() {
-        print("Выбрано новое место")
-    }
-
-    @objc private func dateButtonTapped() {
-        print("Выбрано новая дата игры")
-    }
-
-    @objc private func genderButtonTapped(_ sender: GreenButton) {
-        print("Выбран пол игроков")
+    @objc private func didTapGender(_ sender: GreenButton) {
         [mixGenderButton, maleGenderButton, femaleGenderButton].forEach { $0.isSelected = false }
         sender.isSelected = true
-        selectedGender = sender.title(for: .normal)
+        presenter?.didToggleGender(sender.title(for: .normal) ?? "")
     }
 
-    @objc private func levelButtonTapped(_ sender: GreenButton) {
+    @objc private func didTapLevel(_ sender: GreenButton) {
         sender.isSelected.toggle()
-        var selectedLevels: [String] = []
-        [lightLevelButton, mediumLevelButton, hardLevelButton, proLevelButton].forEach { button in
-            if button.isSelected, let title = button.title(for: .normal) {
-                selectedLevels.append(title)
-            }
+        presenter?.didToggleLevel(sender.title(for: .normal) ?? "")
+    }
+
+    func setGetStartedButton(enabled: Bool) {
+        getStartedButton.isEnabled = enabled
+    }
+
+    func updateMessageCount(_ count: Int) {
+        messageLettersCounter.text = "\(count)/160"
+    }
+
+    func updateSelectedLevels(_ titles: [String]) {
+        [lightLevelButton, mediumLevelButton, hardLevelButton, proLevelButton].forEach {
+            $0.isSelected = titles.contains($0.title(for: .normal) ?? "")
         }
-        selectedLevel = selectedLevels.joined(separator: ", ")
     }
 
-    @objc private func getStartedTapped() {
-        print("Создаем игру")
+    func updateSelectedGender(_ title: String?) {
+        [mixGenderButton, maleGenderButton, femaleGenderButton].forEach {
+            $0.isSelected = $0.title(for: .normal) == title
+        }
     }
 
-    @objc private func messageTextFieldChanged() {
-        let text = messageTextField.text ?? ""
-        messageLettersCounter.text = "\(text.count)/160"
-        getStartedButton.isEnabled = !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-        getStartedButton.isSelected = !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    func showPlaceholder(_ show: Bool) {
+        messagePlaceholderLabel.isHidden = !show
+    }
+
+    func updateSelectedDate(_ date: String?) {
+        // TODO: Функционал выбора даты игры
+    }
+
+    func updateSelectedPlace(_ place: String?) {
+        locationName.text = place ?? "Choose place"
+    }
+
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let currentText = textView.text ?? ""
+        guard let stringRange = Range(range, in: currentText) else { return false }
+        let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
+        return updatedText.count <= 160
     }
 }
 
-extension ViewController: UITextViewDelegate {
-    func textViewDidChange(_ textView: UITextView) {
-        messagePlaceholderLabel.isHidden = !textView.text.isEmpty
-        messageLettersCounter.text = "\(textView.text.count)/160"
+extension NewGameView: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        messagePlaceholderLabel.isHidden = true
+    }
 
-        getStartedButton.isEnabled = !textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-        getStartedButton.isSelected = !textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    func textViewDidEndEditing(_ textView: UITextView) {
+        messagePlaceholderLabel.isHidden = !textView.text.isEmpty
+    }
+
+    func textViewDidChange(_ textView: UITextView) {
+        messageLettersCounter.text = "\(textView.text.count)/160"
+        messagePlaceholderLabel.isHidden = !textView.text.isEmpty
+        presenter?.didChangeMessage(textView.text)
     }
 }
 

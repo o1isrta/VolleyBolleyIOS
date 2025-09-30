@@ -6,20 +6,10 @@
 //
 import Foundation
 
-enum Gender {
-    case mix, men, women
-}
-
-enum PlayerLevel {
-    case light, medium, hard, pro
-}
-
-struct GameEntity {
+struct NewGameData {
     let message: String
-    let place: String
-    let date: Date
-    let from: Date
-    let to: Date
-    let gender: Gender
-    let level: PlayerLevel
+    let levels: [String]
+    let gender: String?
+    let date: String?
+    let place: String?
 }
