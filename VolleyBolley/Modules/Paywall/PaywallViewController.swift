@@ -27,7 +27,7 @@ final class PaywallViewController: BaseViewController {
 	// MARK: - Private Properties
 
     // TODO: remove it in the future
-    private var playersMock: [String] = PlayersMock.players
+    private var playersMock: [Player] = PlayersMock.players
 
 	private let mainSpacing: CGFloat = 20
 	private let internalSpacing: CGFloat = 12
@@ -368,8 +368,8 @@ extension PaywallViewController: UITableViewDataSource {
             return UITableViewCell()
         }
 
-        let playerName = playersMock[indexPath.section]
-        cell.configure(with: PaywallPlayerCellModel(name: playerName))
+        let player = PlayersMock.players[indexPath.section]
+        cell.configure(with: PaywallPlayerCellModel(player: player))
         cell.onDelete = { [weak self] in
             guard let self = self else { return }
             self.playersMock.remove(at: indexPath.section)

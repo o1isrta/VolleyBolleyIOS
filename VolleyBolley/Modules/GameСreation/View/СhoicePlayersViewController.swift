@@ -17,7 +17,7 @@ final class СhoicePlayersViewController: BaseViewController, СhoicePlayersView
     // MARK: - Private Properties
 
 	// TODO: remove it in the future
-    private var playersMock: [String] = PlayersMock.players
+    private var playersMock: [Player] = PlayersMock.players
 
     private let presenter: СhoicePlayersViewProtocol
 
@@ -181,8 +181,9 @@ extension СhoicePlayersViewController: UITableViewDataSource {
             for: indexPath) as? PlayerCell else {
             return UITableViewCell()
         }
+        let player = playersMock[indexPath.section]
         cell.configure(with: PlayerCellModel(
-            name: playersMock[indexPath.section],
+            name: "\(player.firstName) \(player.lastName)",
             isFavorite: false,
             isSelected: false
         ))

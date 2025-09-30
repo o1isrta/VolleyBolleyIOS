@@ -8,7 +8,7 @@
 import UIKit
 
 struct PaywallPlayerCellModel {
-    let name: String
+    let player: Player
 }
 
 final class PaywallPlayerCell: UITableViewCell {
@@ -74,7 +74,8 @@ final class PaywallPlayerCell: UITableViewCell {
     // MARK: - Public Method
 
     func configure(with model: PaywallPlayerCellModel) {
-        nameLabel.text = model.name
+        let fullName = "\(model.player.firstName) \(model.player.lastName)"
+        nameLabel.text = "\(fullName) (\(model.player.level.title))"
     }
 }
 

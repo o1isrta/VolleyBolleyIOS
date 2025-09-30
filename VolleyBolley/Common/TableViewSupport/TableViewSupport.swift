@@ -8,6 +8,7 @@
 import UIKit
 
 final class IntrinsicTableView: UITableView {
+
     override var contentSize: CGSize {
         didSet { invalidateIntrinsicContentSize() }
     }
