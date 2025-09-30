@@ -1,5 +1,5 @@
 //
-//  СhoicePlayers.swift
+//  СhoicePlayersViewController.swift
 //  VolleyBolley
 //
 //  Created by Вадим on 21.08.2025.
@@ -101,6 +101,7 @@ final class СhoicePlayersViewController: BaseViewController, СhoicePlayersView
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+		hideKeyboardWhenTappedAround()
     }
 
     // MARK: - Public Methods
