@@ -158,7 +158,6 @@ private extension MainTabBarController {
 		if let notificationsVC = findNotificationsViewController(in: previousVC) {
 			// Call presenter?.viewDidDisappear() when switching away from the tab
 			notificationsVC.presenter?.viewDidDisappear()
-			print("MainTabBarController: Triggered viewDidDisappear for NotificationsViewController on tab switch")// TODO: -
 		}
 	}
 

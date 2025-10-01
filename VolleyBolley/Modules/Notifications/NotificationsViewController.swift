@@ -67,7 +67,7 @@ final class NotificationsViewController: BaseViewController {
 		super.viewWillAppear(animated)
 		presenter?.viewWillAppear()
 	}
-	
+
 	override func viewDidDisappear(_ animated: Bool) {
 		super.viewDidDisappear(animated)
 		presenter?.viewDidDisappear()
