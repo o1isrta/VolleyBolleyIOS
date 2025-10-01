@@ -19,7 +19,7 @@ struct FAQCellViewModel {
 	}
 }
 
-final class FAQCell: UITableViewCell {
+final class FAQTableViewCell: UITableViewCell {
 
 	static let faqId = "FAQCell"
 
