@@ -1,5 +1,5 @@
 //
-//  FAQCell.swift
+//  FAQTableViewCell.swift
 //  VolleyBolley
 //
 //  Created by Вадим on 02.09.2025.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct FAQCellViewModel {
+struct FAQTableViewCellViewModel {
 	let title: String
 	let description: String
 	let isLastItem: Bool
@@ -21,7 +21,7 @@ struct FAQCellViewModel {
 
 final class FAQTableViewCell: UITableViewCell {
 
-	static let faqId = "FAQCell"
+	static let faqId = "FAQTableViewCell"
 
 	// MARK: - Private Properties
 
@@ -62,7 +62,7 @@ final class FAQTableViewCell: UITableViewCell {
 
 	// MARK: - Public Method
 
-	func configure(with model: FAQCellViewModel) {
+	func configure(with model: FAQTableViewCellViewModel) {
 		titleLabel.text = model.title
 		subtitleLabel.text = model.description
 		separatorLine.isHidden = model.isLastItem
@@ -71,7 +71,7 @@ final class FAQTableViewCell: UITableViewCell {
 
 // MARK: - Private methods
 
-private extension FAQCell {
+private extension FAQTableViewCell {
 
 	func setupView() {
 		contentView.addSubviews(

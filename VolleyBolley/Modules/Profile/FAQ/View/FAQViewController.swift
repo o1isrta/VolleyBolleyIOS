@@ -41,7 +41,7 @@ final class FAQViewController: BaseViewController {
 		tableView.isScrollEnabled = true
 		tableView.showsVerticalScrollIndicator = false
 		tableView.dataSource = self
-		tableView.register(FAQCell.self, forCellReuseIdentifier: FAQCell.faqId)
+		tableView.register(FAQTableViewCell.self, forCellReuseIdentifier: FAQTableViewCell.faqId)
 		return tableView
 	}()
 
@@ -129,14 +129,14 @@ extension FAQViewController: UITableViewDataSource {
 	) -> UITableViewCell {
 		guard
 			let cell = tableView.dequeueReusableCell(
-				withIdentifier: FAQCell.faqId,
-				for: indexPath) as? FAQCell
+				withIdentifier: FAQTableViewCell.faqId,
+				for: indexPath) as? FAQTableViewCell
 		else {
 			return UITableViewCell()
 		}
 		let item = presenter.item(at: indexPath.row)
 		let isLastItem = indexPath.row == presenter.numberOfItems - 1
-		let model = FAQCellViewModel(
+		let model = FAQTableViewCellViewModel(
 			faqItem: item,
 			isLastItem: isLastItem
 		)
