@@ -1,5 +1,5 @@
 //
-//  FAQTableViewCell.swift
+//  FAQCell.swift
 //  VolleyBolley
 //
 //  Created by Вадим on 02.09.2025.
