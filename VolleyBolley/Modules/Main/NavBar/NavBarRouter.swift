@@ -2,7 +2,7 @@
 //  NavBarRouter.swift
 //  VolleyBolley
 //
-//  Created by Qoder on 16.09.2025.
+//  Created by Roman Romanov on 16.09.2025.
 //
 
 import UIKit
@@ -11,7 +11,6 @@ protocol NavBarRouterProtocol: AnyObject {
 	var viewController: UIViewController? { get set }
 
 	func showNotifications(with notifications: [NotificationCardViewModel])
-	func updateNotificationsVC(with notifications: [NotificationCardViewModel])
 }
 
 final class NavBarRouter: NavBarRouterProtocol {
@@ -37,19 +36,6 @@ final class NavBarRouter: NavBarRouterProtocol {
 			// If there's no navigation controller, present modally
 			notificationsViewController.modalPresentationStyle = .fullScreen
 			viewController.present(notificationsViewController, animated: true)
-		}
-	}
-
-	func updateNotificationsVC(with notifications: [NotificationCardViewModel]) {
-		guard let viewController else { return }
-		if let notificationsVC = viewController
-			.navigationController?
-			.viewControllers
-			.first(
-				where: {
-					$0 is NotificationsViewControllerProtocol
-				}) as? NotificationsViewControllerProtocol {
-			notificationsVC.displayNotifications(notifications)
 		}
 	}
 
