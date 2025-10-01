@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class PersonalDataViewController: UIViewController {
+final class PersonalDataViewController: BaseViewController {
 
     // MARK: - Constants
 
@@ -227,7 +227,6 @@ final class PersonalDataViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = AppColor.Background.screen
 
         let countries = presenter.countries
         countryList = LocationPickerView(items: countries, placeholder: String(localized: "Choose your country"))
@@ -238,6 +237,7 @@ final class PersonalDataViewController: UIViewController {
         cityList?.delegate = self
 
         setupView()
+		hideKeyboardWhenTappedAround()
         presenter.viewDidLoad()
     }
 }
@@ -266,77 +266,56 @@ private extension PersonalDataViewController {
     func setupConstraints() {
         NSLayoutConstraint.activate(
             [
-                glassmorphismView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+                glassmorphismView.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: Constants.mainIndent),
                 glassmorphismView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.mainIndent),
                 glassmorphismView.trailingAnchor.constraint(
                         equalTo: view.trailingAnchor,
                         constant: -Constants.mainIndent
                     ),
-                glassmorphismView.bottomAnchor.constraint(
-                    equalTo: view.bottomAnchor,
-                    constant: -Constants.tabBarHeight
-                ),
-
+                glassmorphismView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -Constants.tabBarHeight),
+                
                 backButton.topAnchor.constraint(
                         equalTo: glassmorphismView.topAnchor,
                         constant: Constants.backButtonTopInset
                     ),
-                backButton.leadingAnchor.constraint(
-                    equalTo: glassmorphismView.leadingAnchor,
-                    constant: Constants.mediumIndent
-                ),
-
+                backButton.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor, constant: Constants.mediumIndent),
+                
                 screenTitle.centerXAnchor.constraint(equalTo: glassmorphismView.centerXAnchor),
                 screenTitle.topAnchor.constraint(equalTo: glassmorphismView.topAnchor, constant: Constants.mainSpacing),
-
+                
                 scrollView.topAnchor.constraint(equalTo: screenTitle.bottomAnchor, constant: Constants.mediumSpacing),
                 scrollView.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor),
                 scrollView.trailingAnchor.constraint(equalTo: glassmorphismView.trailingAnchor),
                 scrollView.bottomAnchor.constraint(equalTo: glassmorphismView.bottomAnchor),
-
+                
                 contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
                 contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
                 contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
                 contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
                 contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-
+                
                 formStackView.topAnchor.constraint(equalTo: contentView.topAnchor),
-                formStackView.leadingAnchor.constraint(
-                    equalTo: contentView.leadingAnchor,
-                    constant: Constants.mainSpacing
-                ),
-                formStackView.trailingAnchor.constraint(
-                    equalTo: contentView.trailingAnchor,
-                    constant: -Constants.mainSpacing
-                ),
-                formStackView.bottomAnchor.constraint(
-                    equalTo: contentView.bottomAnchor,
-                    constant: -Constants.mainSpacing
-                ),
-
+                formStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.mainSpacing),
+                formStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constants.mainSpacing),
+                formStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Constants.mainSpacing),
+                
                 // Form Constraints
-
+                
                 profileContainerView.heightAnchor.constraint(equalToConstant: Constants.profileImageSize),
                 profileContainerView.widthAnchor.constraint(equalTo: formStackView.widthAnchor),
-
+                
                 profileImageView.widthAnchor.constraint(equalToConstant: Constants.profileImageSize),
                 profileImageView.heightAnchor.constraint(equalToConstant: Constants.profileImageSize),
                 profileImageView.centerXAnchor.constraint(equalTo: profileContainerView.centerXAnchor),
                 profileImageView.topAnchor.constraint(equalTo: profileContainerView.topAnchor),
-
+                
                 editButton.widthAnchor.constraint(equalToConstant: Constants.editButtonSize),
                 editButton.heightAnchor.constraint(equalToConstant: Constants.editButtonSize),
-                editButton.trailingAnchor.constraint(
-                    equalTo: profileImageView.trailingAnchor,
-                    constant: -Constants.mediumIndent
-                ),
-                editButton.bottomAnchor.constraint(
-                    equalTo: profileImageView.bottomAnchor,
-                    constant: -Constants.mainIndent
-                ),
-
+                editButton.trailingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: -Constants.mediumIndent),
+                editButton.bottomAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: -Constants.mainIndent),
+                
                 birthdayTextField.widthAnchor.constraint(equalToConstant: Constants.birthdayTextFieldWidth),
-
+                
                 updateButton.heightAnchor.constraint(equalToConstant: Constants.buttonHeight)
             ]
         )
@@ -405,7 +384,7 @@ extension PersonalDataViewController: LocationPickerViewDelegate {
 #if DEBUG
 import SwiftUI
 
-struct  PersonalDataViewControllerPreview: UIViewControllerRepresentable {
+struct PersonalDataViewControllerPreview: UIViewControllerRepresentable {
     class StubPresenter: PersonalDataPresenterProtocol {
         let countries: [String] = ["Cyprus", "Thailand"]
         let cities: [String] = ["Koh Phangan", "Koh Samui"]
