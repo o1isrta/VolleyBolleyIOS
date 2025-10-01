@@ -23,7 +23,9 @@ enum FeatureAssemblies {
             ProfileAssembly(),
             NotificationsAssembly(),
             PaywallAssembly(),
-            PersonalDataAssembly()
+            CreationSuccessAssembly(),
+            PersonalDataAssembly(),
+            AboutAssembly()
         ]
     }
 }

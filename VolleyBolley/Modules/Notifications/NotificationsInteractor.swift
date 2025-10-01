@@ -11,6 +11,10 @@ protocol NotificationsInteractorInputProtocol: AnyObject {
 	var presenter: NotificationsInteractorOutputProtocol? { get set }
 
 	func fetchNotifications()
+	func refreshNotifications()
+	func markNotificationsAsRead()
+	func startListeningForUpdates()
+	func stopListeningForUpdates()
 }
 
 protocol NotificationsInteractorOutputProtocol: AnyObject {
@@ -26,13 +30,12 @@ final class NotificationsInteractor {
 
 	// MARK: - Private Properties
 
-	// TODO: - for future
-	// private let notificationsService: NotificationsServiceProtocol
+	private let notificationManager = NotificationManager.shared
 
 	// MARK: - Initializer
 
-	init(/*notificationsService: NotificationsServiceProtocol*/) {
-		// self.notificationsService = notificationsService
+	deinit {
+		stopListeningForUpdates()
 	}
 }
 
@@ -40,9 +43,42 @@ final class NotificationsInteractor {
 
 extension NotificationsInteractor: NotificationsInteractorInputProtocol {
 
+	/// Get current notifications from NotificationManager
 	func fetchNotifications() {
-		// TODO: get data from network
-		let mockNotifications: [NotificationCardViewModel] = []
-		presenter?.didFetchNotifications(mockNotifications)
+		let notifications = notificationManager.getCurrentNotifications()
+		presenter?.didFetchNotifications(notifications)
+	}
+
+	/// Trigger fresh notification check
+	func refreshNotifications() {
+		notificationManager.checkNotificationsNow()
+	}
+
+	/// Mark notifications as read through the service
+	func markNotificationsAsRead() {
+		notificationManager.markNotificationsAsRead()
+	}
+
+	/// Register for data updates from NotificationManager
+	func startListeningForUpdates() {
+		notificationManager.addDataUpdateDelegate(self)
+	}
+
+	/// Unregister from data updates
+	func stopListeningForUpdates() {
+		notificationManager.removeDataUpdateDelegate(self)
+	}
+}
+
+// MARK: - NotificationDataUpdateDelegate
+
+extension NotificationsInteractor: NotificationDataUpdateDelegate {
+
+	/// Forward data updates to presenter
+	func notificationManager(
+		_ manager: NotificationManager,
+		didReceiveNotifications notifications: [NotificationCardViewModel]
+	) {
+		presenter?.didFetchNotifications(notifications)
 	}
 }

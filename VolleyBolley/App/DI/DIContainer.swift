@@ -9,6 +9,9 @@ import Swinject
 import UIKit
 
 final class DIContainer {
+
+    // MARK: - Public Properties
+
     let assembler: Assembler
     var resolver: Resolver { assembler.resolver }
 
@@ -35,6 +38,8 @@ final class DIContainer {
             ].flatMap { $0 }
         )
     }
+
+    // MARK: - Public Methods
 
     static func initialize(window: UIWindow) {
         precondition(_shared == nil, "DIContainer already initialized")
