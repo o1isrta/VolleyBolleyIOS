@@ -126,14 +126,10 @@ final class AboutViewController: BaseViewController, AboutViewProtocol {
         ]
 
         tableView.reloadData()
-        tableView.layoutIfNeeded()
-
+		tableView.layoutIfNeeded()
+		
         let topPart = Constants.topInset + Constants.buttonSize
         tableBackgroundHeightConstraint?.constant = topPart + tableView.contentSize.height
-
-        UIView.animate(withDuration: Constants.animationDuration) {
-            self.view.layoutIfNeeded()
-        }
     }
 
     // MARK: - Private Methods
