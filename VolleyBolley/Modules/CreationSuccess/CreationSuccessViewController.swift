@@ -144,7 +144,7 @@ final class CreationSuccessViewController: BaseViewController, CreationSuccessVi
                     constant: -Constants.containerInsets
                 ),
                 glassContainer.topAnchor.constraint(
-                    equalTo: view.safeAreaLayoutGuide.topAnchor,
+					equalTo: navBar.bottomAnchor,
                     constant: Constants.containerInsets
                 ),
                 glassContainer.heightAnchor.constraint(
@@ -187,6 +187,7 @@ final class CreationSuccessViewController: BaseViewController, CreationSuccessVi
 // MARK: - UITableViewDataSource
 
 extension CreationSuccessViewController: UITableViewDataSource {
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         presenter.numberOfItems
     }

@@ -105,6 +105,7 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
         setupUI()
         setupActions()
         startResendTimer()
+		hideKeyboardWhenTappedAround()
         presenter?.viewDidLoad()
     }
 

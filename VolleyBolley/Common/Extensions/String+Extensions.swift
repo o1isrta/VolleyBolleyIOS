@@ -9,6 +9,13 @@ import Foundation
 
 extension String {
 
+	func capitalizingFirstLetter() -> String {
+		guard let first = self.first else { return self }
+		let capitalizedFirst = String(first).uppercased()
+		let remaining = self.dropFirst().lowercased()
+		return capitalizedFirst + remaining
+	}
+
     /// Возвращает отформатированный текст в формате "DD / MM / YYYY" и проходит валидацию
     /// Возвращает `nil`, если строка некорректна (день, месяц, год)
     func formattedBirthdayOrNil() -> String? {
