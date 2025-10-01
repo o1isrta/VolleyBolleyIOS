@@ -117,16 +117,18 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
 
     private func setupUI() {
         view.addSubview(containerView)
-        [backButton,
+        [
+			backButton,
          titleLabel,
          codeLabel,
          codeTextField,
          resendLabel,
          errorLabel,
          getNewCodeButton,
-         verifyButton]
-            .forEach
-            { containerView.addSubview($0) }
+         verifyButton
+		].forEach {
+			containerView.addSubview($0)
+		}
 
         errorLabelHeightConstraint = errorLabel.heightAnchor.constraint(equalToConstant: 17)
         errorLabelHeightConstraint?.isActive = true

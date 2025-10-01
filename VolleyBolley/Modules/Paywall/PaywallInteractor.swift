@@ -25,16 +25,6 @@ final class PaywallInteractor: PaywallInteractorProtocol {
 
 	weak var presenter: PaywallInteractorOutputProtocol?
 
-	// MARK: - Private Properties
-
-	private let usersRepository: UsersRepositoryProtocol
-
-	// MARK: - Initializers
-
-	init(usersRepository: UsersRepositoryProtocol) {
-		self.usersRepository = usersRepository
-	}
-
 	// MARK: - Public Methods
 
 	func saveGame(price: Double, isPublic: Bool, playersCount: Int, accountNumber: String) {
