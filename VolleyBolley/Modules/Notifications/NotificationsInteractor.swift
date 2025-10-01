@@ -80,6 +80,5 @@ extension NotificationsInteractor: NotificationDataUpdateDelegate {
 		didReceiveNotifications notifications: [NotificationCardViewModel]
 	) {
 		presenter?.didFetchNotifications(notifications)
-		print("NotificationsInteractor: Received \(notifications.count) notifications from NotificationManager")// TODO: -
 	}
 }

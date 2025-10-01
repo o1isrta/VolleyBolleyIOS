@@ -34,7 +34,7 @@ final class NotificationService {
 	// MARK: - Private Properties
 
 	private var timer: Timer?
-	private let checkInterval: TimeInterval = 10 // 300 - 5 minutes // TODO: -
+	private let checkInterval: TimeInterval = AppConstants.Notifications.checkInterval
 	private var isActive: Bool = false
 
 	// MARK: - Singleton
@@ -66,8 +66,8 @@ final class NotificationService {
 	}
 
 	func checkNotifications() {
-		print("NotificationService: Checking for new notifications...")// TODO: -
 		// Simulate network request
+		// TODO: need real network request
 		DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
 			guard let self else { return }
 			// Getting notifications from server
@@ -82,7 +82,6 @@ final class NotificationService {
 			// Always notify delegate about notifications data (for screen updates)
 			self.delegate?.notificationService(self, didReceiveNotifications: self.currentNotifications)
 			self.delegate?.notificationService(self, didUpdateNotificationStatus: hasNew)
-			print("NotificationService: Notification status changed to: \(hasNew)")// TODO: -
 		}
 	}
 

@@ -55,41 +55,30 @@ final class NotificationManager {
 		delegates.append(WeakDelegate(delegate: delegate))
 		// Clean up nil references
 		cleanupDelegates()
-
-		print("NotificationManager: Added delegate \(type(of: delegate))")// TODO: -
 	}
 
 	func removeDelegate(_ delegate: NotificationManagerDelegate) {
 		delegates.removeAll { $0.delegate === delegate }
 		cleanupDelegates()
-		print("NotificationManager: Removed delegate \(type(of: delegate))")// TODO: -
 	}
 
 	func addDataUpdateDelegate(_ delegate: NotificationDataUpdateDelegate) {
 		// Remove any existing reference to avoid duplicates
 		removeDataUpdateDelegate(delegate)
-
 		// Add new delegate
 		dataUpdateDelegates.append(WeakDataUpdateDelegate(delegate: delegate))
-
 		// Clean up nil references
 		cleanupDataUpdateDelegates()
-
 		// Immediately provide current notifications to the new delegate
 		let currentNotifications = notificationService.currentNotifications
 		if !currentNotifications.isEmpty {
 			delegate.notificationManager(self, didReceiveNotifications: currentNotifications)
-			print("NotificationManager: Provided \(currentNotifications.count) existing notifications to new delegate")// TODO: -
 		}
-
-		print("NotificationManager: Added data update delegate \(type(of: delegate))")// TODO: -
 	}
 
 	func removeDataUpdateDelegate(_ delegate: NotificationDataUpdateDelegate) {
 		dataUpdateDelegates.removeAll { $0.delegate === delegate }
 		cleanupDataUpdateDelegates()
-
-		print("NotificationManager: Removed data update delegate \(type(of: delegate))")// TODO: -
 	}
 
 	func startService() {
@@ -167,7 +156,6 @@ extension NotificationManager: NotificationServiceDelegate {
 	) {
 		// Handle notifications data - notify data update delegates
 		notifyDataUpdateDelegates(notifications: notifications)
-		print("NotificationManager: Received \(notifications.count) notifications")// TODO: -
 	}
 }
 
