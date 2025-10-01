@@ -97,9 +97,7 @@ final class AboutViewController: BaseViewController, AboutViewProtocol {
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder: NSCoder) { nil }
 
     // MARK: - Lifecycle
 
@@ -190,7 +188,7 @@ final class AboutViewController: BaseViewController, AboutViewProtocol {
     }
 
     @objc private func backButtonTapped() {
-        dismiss(animated: true)
+		presenter.backButtonTapped()
     }
 }
 
@@ -252,6 +250,7 @@ struct AboutViewControllerPreview: UIViewControllerRepresentable {
             )
             view?.displayAboutInfo(aboutViewModel)
         }
+		func backButtonTapped() {}
     }
 
     func makeUIViewController(context: Context) -> some UIViewController {
