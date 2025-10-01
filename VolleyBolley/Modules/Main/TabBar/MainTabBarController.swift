@@ -9,119 +9,203 @@ import UIKit
 
 final class MainTabBarController: UIViewController {
 
-    // MARK: - Private Properties
+	// MARK: - Private Properties
 
-    private var currentTab: TabBarItem = .home
+	private var currentTab: TabBarItem = .home
 
-    // MARK: - UI Components
+	private let notificationManager = NotificationManager.shared
 
-    private var viewControllers: [TabBarItem: UIViewController] = [:]
+	// MARK: - UI Components
 
-    private lazy var containerView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+	private var viewControllers: [TabBarItem: UIViewController] = [:]
 
-    private lazy var tabBar: MainTabBarView = {
-        let view = MainTabBarView(items: TabBarItem.allCases)
-        view.delegate = self
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+	private lazy var containerView: UIView = {
+		let view = UIView()
+		view.translatesAutoresizingMaskIntoConstraints = false
+		return view
+	}()
 
-    // MARK: - Lifecycle
+	private lazy var tabBar: MainTabBarView = {
+		let view = MainTabBarView(items: TabBarItem.allCases)
+		view.delegate = self
+		view.translatesAutoresizingMaskIntoConstraints = false
+		return view
+	}()
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+	// MARK: - Lifecycle
 
-        setupView()
-        setupLayout()
-        setupChildViewControllers()
-    }
+	override func viewDidLoad() {
+		super.viewDidLoad()
 
-    func setViewControllers(_ viewControllers: [TabBarItem: UIViewController]) {
-        for child in children {
-            child.willMove(toParent: nil)
-            child.view.removeFromSuperview()
-            child.removeFromParent()
-        }
-        self.viewControllers = viewControllers
-    }
+		setupView()
+		setupLayout()
+		setupChildViewControllers()
+		setupNotificationService()
+	}
 
-    // MARK: - Setup
+	func setViewControllers(_ viewControllers: [TabBarItem: UIViewController]) {
+		for child in children {
+			child.willMove(toParent: nil)
+			child.view.removeFromSuperview()
+			child.removeFromParent()
+		}
+		self.viewControllers = viewControllers
+	}
 
-    private func setupView() {
-        view.addSubview(containerView)
-        view.addSubview(tabBar)
-    }
+	deinit {
+		NotificationCenter.default.removeObserver(self)
+		notificationManager.stopService()
+	}
 
-    private func setupChildViewControllers() {
-        for (tab, viewController) in viewControllers {
-            addChild(viewController)
-            containerView.addSubview(viewController.view)
-            viewController.view.translatesAutoresizingMaskIntoConstraints = false
-            setupConstraintsForChild(viewController)
-            viewController.didMove(toParent: self)
-            viewController.view.isHidden = (tab != currentTab)
-        }
-    }
+	// MARK: - Setup
 
-    // MARK: - Navigation
+	private func setupView() {
+		view.addSubview(containerView)
+		view.addSubview(tabBar)
+	}
 
-    private func switchToViewController(at tab: TabBarItem) {
-        guard let selectedVC = viewControllers[tab] else { return }
-        let previousVC = viewControllers[currentTab]
+	private func setupNotificationService() {
+		// Start the notification manager service
+		notificationManager.startService()
+		// Setup app lifecycle observers for the service
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(appDidEnterBackground),
+			name: UIApplication.didEnterBackgroundNotification,
+			object: nil
+		)
 
-        previousVC?.view.isHidden = true
-        selectedVC.view.isHidden = false
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(appWillEnterForeground),
+			name: UIApplication.willEnterForegroundNotification,
+			object: nil
+		)
+	}
 
-        currentTab = tab
-        tabBar.updateSelection(index: tab.rawValue)
-    }
+	private func setupChildViewControllers() {
+		for (tab, viewController) in viewControllers {
+			addChild(viewController)
+			containerView.addSubview(viewController.view)
+			viewController.view.translatesAutoresizingMaskIntoConstraints = false
+			setupConstraintsForChild(viewController)
+			viewController.didMove(toParent: self)
+			viewController.view.isHidden = (tab != currentTab)
+		}
+	}
 
-    // MARK: - Layout setup
+	// MARK: - Navigation
 
-    private func setupLayout() {
-        setupConstraintsContainerView()
-        setupConstraintsTabBar()
-    }
+	private func switchToViewController(at tab: TabBarItem) {
+		guard let selectedVC = viewControllers[tab] else { return }
+		let previousVC = viewControllers[currentTab]
+		// Check if we're switching away from a tab that has NotificationsViewController presented
+		handleNotificationsViewControllerOnTabSwitch(previousVC: previousVC)
 
-    // MARK: - Constraints
+		previousVC?.view.isHidden = true
+		selectedVC.view.isHidden = false
 
-    private func setupConstraintsTabBar() {
-        NSLayoutConstraint.activate([
-            tabBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tabBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tabBar.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            tabBar.heightAnchor.constraint(equalToConstant: 81)
-        ])
-    }
+		currentTab = tab
+		tabBar.updateSelection(index: tab.rawValue)
+	}
 
-    private func setupConstraintsContainerView() {
-        NSLayoutConstraint.activate([
-            containerView.topAnchor.constraint(equalTo: view.topAnchor),
-            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
-    }
+	// MARK: - Layout setup
 
-    private func setupConstraintsForChild(_ selectedVC: UIViewController) {
-        NSLayoutConstraint.activate([
-            selectedVC.view.topAnchor.constraint(equalTo: containerView.topAnchor),
-            selectedVC.view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-            selectedVC.view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-            selectedVC.view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
-        ])
-    }
+	private func setupLayout() {
+		setupConstraintsContainerView()
+		setupConstraintsTabBar()
+	}
+
+	// MARK: - Constraints
+
+	private func setupConstraintsTabBar() {
+		NSLayoutConstraint.activate([
+			tabBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+			tabBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+			tabBar.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+			tabBar.heightAnchor.constraint(equalToConstant: 81)
+		])
+	}
+
+	private func setupConstraintsContainerView() {
+		NSLayoutConstraint.activate([
+			containerView.topAnchor.constraint(equalTo: view.topAnchor),
+			containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+			containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+			containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+		])
+	}
+
+	private func setupConstraintsForChild(_ selectedVC: UIViewController) {
+		NSLayoutConstraint.activate([
+			selectedVC.view.topAnchor.constraint(equalTo: containerView.topAnchor),
+			selectedVC.view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+			selectedVC.view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+			selectedVC.view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+		])
+	}
+}
+
+// MARK: - App Lifecycle
+
+private extension MainTabBarController {
+
+	// MARK: - NotificationsViewController Handling
+
+	func handleNotificationsViewControllerOnTabSwitch(previousVC: UIViewController?) {
+		guard let previousVC else { return }
+		// Check if NotificationsViewController is presented from the previous tab
+		if let notificationsVC = findNotificationsViewController(in: previousVC) {
+			// Call presenter?.viewDidDisappear() when switching away from the tab
+			notificationsVC.presenter?.viewDidDisappear()
+		}
+	}
+
+	func findNotificationsViewController(in viewController: UIViewController) -> NotificationsViewController? {
+		// Check if the view controller itself is NotificationsViewController
+		if let notificationsVC = viewController as? NotificationsViewController {
+			return notificationsVC
+		}
+		// Check navigation stack if view controller has navigation controller
+		if let navigationController = viewController as? UINavigationController {
+			for vc in navigationController.viewControllers {
+				if let notificationsVC = vc as? NotificationsViewController {
+					return notificationsVC
+				}
+			}
+		}
+		// Check if NotificationsViewController is presented modally
+		if let presentedVC = viewController.presentedViewController {
+			if let notificationsVC = presentedVC as? NotificationsViewController {
+				return notificationsVC
+			}
+			// Recursively check presented view controllers
+			return findNotificationsViewController(in: presentedVC)
+		}
+		// Check child view controllers
+		for childVC in viewController.children {
+			if let notificationsVC = findNotificationsViewController(in: childVC) {
+				return notificationsVC
+			}
+		}
+
+		return nil
+	}
+
+	@objc func appDidEnterBackground() {
+		notificationManager.stopService()
+	}
+
+	@objc func appWillEnterForeground() {
+		notificationManager.startService()
+	}
 }
 
 // MARK: - MainTabBarViewDelegate
 
 extension MainTabBarController: MainTabBarViewDelegate {
-    func customTabBarView(_ tabBarView: MainTabBarView, didSelectItemAt index: Int) {
-        guard let item = TabBarItem(rawValue: index) else { return }
-        switchToViewController(at: item)
-    }
+	func customTabBarView(_ tabBarView: MainTabBarView, didSelectItemAt index: Int) {
+		guard let item = TabBarItem(rawValue: index) else { return }
+		switchToViewController(at: item)
+	}
 }
