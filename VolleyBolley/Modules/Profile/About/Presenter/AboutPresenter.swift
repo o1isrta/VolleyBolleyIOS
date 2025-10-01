@@ -9,6 +9,7 @@
 
 protocol AboutPresenterProtocol: AnyObject {
     func viewDidLoad()
+	func backButtonTapped()
 }
 
 // MARK: - AboutPresenter
@@ -39,4 +40,8 @@ final class AboutPresenter: AboutPresenterProtocol {
         )
         view?.displayAboutInfo(viewModel)
     }
+
+	func backButtonTapped() {
+		router.navigateBack()
+	}
 }

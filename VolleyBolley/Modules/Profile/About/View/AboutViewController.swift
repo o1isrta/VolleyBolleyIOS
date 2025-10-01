@@ -190,7 +190,7 @@ final class AboutViewController: BaseViewController, AboutViewProtocol {
     }
 
     @objc private func backButtonTapped() {
-        dismiss(animated: true)
+		presenter.backButtonTapped()
     }
 }
 
@@ -252,6 +252,7 @@ struct AboutViewControllerPreview: UIViewControllerRepresentable {
             )
             view?.displayAboutInfo(aboutViewModel)
         }
+		func backButtonTapped() {}
     }
 
     func makeUIViewController(context: Context) -> some UIViewController {
