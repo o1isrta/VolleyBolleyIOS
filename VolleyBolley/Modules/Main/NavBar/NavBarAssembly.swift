@@ -2,7 +2,7 @@
 //  NavBarAssembly.swift
 //  VolleyBolley
 //
-//  Created by Qoder on 16.09.2025.
+//  Created by Roman Romanov on 16.09.2025.
 //
 
 import Swinject

@@ -88,7 +88,7 @@ final class FAQViewController: BaseViewController, СhoicePlayersViewProtocol {
     private var faqItems: [FAQItem] = FAQItem.allCases
 
     private lazy var buttonBack: UtilityButton = {
-        let button = UtilityButton(style: .large)
+		let button = UtilityButton(style: .small)
         button.setImage(.chevronBackward, for: .normal)
         button.tintColor = AppColor.Icon.primary
         return button

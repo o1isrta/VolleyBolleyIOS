@@ -12,12 +12,8 @@ final class PaywallAssembly: Assembly {
 
 	func assemble(container: Container) {
 		container.register(PaywallViewController.self) { resolver in
-			guard let usersRepository = resolver.resolve(UsersRepositoryProtocol.self) else {
-				fatalError("Error: Failed to register PaywallViewController")
-			}
-
 			let paywallVC = PaywallViewController()
-			let interactor = PaywallInteractor(usersRepository: usersRepository)
+			let interactor = PaywallInteractor()
 			let router = PaywallRouter(viewController: paywallVC)
 			let presenter = PaywallPresenter(interactor: interactor, router: router)
 
