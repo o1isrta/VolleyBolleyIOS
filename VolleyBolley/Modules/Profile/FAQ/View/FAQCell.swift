@@ -7,6 +7,18 @@
 
 import UIKit
 
+struct FAQCellViewModel {
+	let title: String
+	let description: String
+	let isLastItem: Bool
+
+	init(faqItem: FAQItem, isLastItem: Bool) {
+		self.title = faqItem.title
+		self.description = faqItem.subtitle
+		self.isLastItem = isLastItem
+	}
+}
+
 final class FAQCell: UITableViewCell {
 
 	static let faqId = "FAQCell"
@@ -50,10 +62,10 @@ final class FAQCell: UITableViewCell {
 
 	// MARK: - Public Method
 
-	func configure(with item: FAQItem, isLast: Bool) {
-		titleLabel.text = item.title
-		subtitleLabel.text = item.subtitle
-		separatorLine.isHidden = isLast
+	func configure(with model: FAQCellViewModel) {
+		titleLabel.text = model.title
+		subtitleLabel.text = model.description
+		separatorLine.isHidden = model.isLastItem
 	}
 }
 
@@ -61,16 +73,11 @@ final class FAQCell: UITableViewCell {
 
 private extension FAQCell {
 
-	func setupUI() {
-		[stack, separatorLine].forEach {
-			contentView.addSubview($0)
-			$0.translatesAutoresizingMaskIntoConstraints = false
-		}
-	}
-
 	func setupView() {
-		setupUI()
-
+		contentView.addSubviews(
+			stack,
+			separatorLine
+		)
 		NSLayoutConstraint.activate([
 			stack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
 			stack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),

@@ -135,8 +135,12 @@ extension FAQViewController: UITableViewDataSource {
 			return UITableViewCell()
 		}
 		let item = presenter.item(at: indexPath.row)
-		let isLast = indexPath.row == presenter.numberOfItems - 1
-		cell.configure(with: item, isLast: isLast)
+		let isLastItem = indexPath.row == presenter.numberOfItems - 1
+		let model = FAQCellViewModel(
+			faqItem: item,
+			isLastItem: isLastItem
+		)
+		cell.configure(with: model)
 		return cell
 	}
 }
