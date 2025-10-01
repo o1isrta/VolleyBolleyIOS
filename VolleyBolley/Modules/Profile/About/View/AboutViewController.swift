@@ -40,7 +40,6 @@ final class AboutViewController: BaseViewController, AboutViewProtocol {
         static let padding: CGFloat = 8
         static let topInset: CGFloat = 20
         static let titleFontSize: CGFloat = 24
-        static let animationDuration: TimeInterval = 0.15
         static let initialTableHeight: CGFloat = 240
     }
 
@@ -127,7 +126,7 @@ final class AboutViewController: BaseViewController, AboutViewProtocol {
 
         tableView.reloadData()
 		tableView.layoutIfNeeded()
-		
+
         let topPart = Constants.topInset + Constants.buttonSize
         tableBackgroundHeightConstraint?.constant = topPart + tableView.contentSize.height
     }
