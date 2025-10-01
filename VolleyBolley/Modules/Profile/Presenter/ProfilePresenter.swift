@@ -38,6 +38,8 @@ final class ProfilePresenter: ProfilePresenterProtocol {
         switch item {
         case .personal:
             router.showPersonalData()
+        case .faq:
+            router.showFAQ()
         default:
             break
         }
