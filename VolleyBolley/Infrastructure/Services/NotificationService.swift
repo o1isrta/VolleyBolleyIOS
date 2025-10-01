@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import UIKit
 
 // MARK: - NotificationServiceDelegate
 
@@ -88,7 +87,7 @@ final class NotificationService {
 	func markNotificationsAsRead() {
 		guard hasNewNotifications else { return }
 		hasNewNotifications = false
-		delegate?.notificationService(self, didUpdateNotificationStatus: false)
+		delegate?.notificationService(self, didUpdateNotificationStatus: hasNewNotifications)
 	}
 
 	// MARK: - Private Methods
