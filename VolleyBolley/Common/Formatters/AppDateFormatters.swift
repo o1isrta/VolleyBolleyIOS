@@ -67,12 +67,4 @@ enum AppDateFormatters {
 		formatter.timeZone = .current
 		return formatter
 	}()
-
-	static let onlyNumbersDate: DateFormatter = {
-		let formatter = DateFormatter()
-		formatter.timeZone = .current
-		formatter.locale = AppConstants.AppLocale.posix
-		formatter.dateFormat = "dd.MM.yyyy"
-		return formatter
-	}()
 }
