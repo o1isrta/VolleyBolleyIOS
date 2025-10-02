@@ -19,7 +19,7 @@ struct NotificationCardViewModel: Equatable {
 	) {
 		self.title = title
 		self.message = message
-		self.date = date.formatted(date: .numeric, time: .omitted)
+		self.date = AppDateFormatters.onlyDate.string(from: date)
 	}
 
 	static var mockDataArray = [
