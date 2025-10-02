@@ -9,14 +9,19 @@ import Foundation
 
 extension String {
 
+	func capitalizingFirstLetter() -> String {
+		guard let first = self.first else { return self }
+		let capitalizedFirst = String(first).uppercased()
+		let remaining = self.dropFirst().lowercased()
+		return capitalizedFirst + remaining
+	}
+
     /// Возвращает отформатированный текст в формате "DD / MM / YYYY" и проходит валидацию
     /// Возвращает `nil`, если строка некорректна (день, месяц, год)
     func formattedBirthdayOrNil() -> String? {
         let digitsOnly = self.replacingOccurrences(of: "[^0-9]", with: "", options: .regularExpression)
 
-        if digitsOnly.count > 8 {
-            return nil
-        }
+        if digitsOnly.count > 8 { return nil }
 
         var formattedText = ""
         let dayEnd = min(2, digitsOnly.count)

@@ -7,21 +7,17 @@
 
 import Foundation
 
-extension UserDTO {
-    func toDomain() -> User {
-        let parsedURL = URL(string: avatarUrl)
-
-        return User(
+extension PlayerDTO {
+    func toDomain() -> Player {
+        Player(
             firstName: firstName,
             lastName: lastName,
             gender: gender,
-            paymentID: paymentId,
-            paymentAccount: paymentAccount,
             dateOfBirth: dateOfBirth,
-            level: UserLevel(rawValue: self.level),
+            level: level,
             countryID: countryId,
             cityID: cityId,
-            avatarURL: parsedURL
+            avatarURL: avatar
         )
     }
 }

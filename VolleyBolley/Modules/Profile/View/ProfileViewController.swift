@@ -8,8 +8,6 @@
 import UIKit
 
 protocol ProfileViewProtocol: AnyObject {
-    func showGreeting(_ message: String)
-    func displayNavBar(viewModel: NavBarViewModel)
     func displayError(message: String)
 }
 
@@ -22,15 +20,15 @@ enum ProfileMenuItem: CaseIterable {
     case about
     case logOut
 
-    var icon: String {
+	var icon: UIImage {
         switch self {
-        case .players: return "players"
-        case .personal: return "personal"
-        case .fluentPayment: return "fluent_payment"
-        case .support: return "support"
-        case .faq: return "tooltip"
-        case .about: return "about"
-        case .logOut: return "log_out"
+		case .players: return UIImage.Icon.players
+		case .personal: return UIImage.Icon.personal
+		case .fluentPayment: return UIImage.Icon.fluentPayment
+		case .support: return UIImage.Icon.support
+		case .faq: return UIImage.Icon.tooltip
+		case .about: return UIImage.Icon.about
+		case .logOut: return UIImage.Icon.logOut
         }
     }
 
@@ -47,28 +45,14 @@ enum ProfileMenuItem: CaseIterable {
     }
 }
 
-final class ProfileViewController: BaseViewController, ProfileViewProtocol {
+final class ProfileViewController: BaseViewController {
 
     // MARK: - Private Properties
 
     private let presenter: ProfilePresenterProtocol
-
-    private lazy var navigationBarView = CustomNavBarView()
-    private lazy var mainTabBarController = MainTabBarController()
-
     private lazy var menuItems = ProfileMenuItem.allCases
 
-    private lazy var label: UILabel = {
-        let view = UILabel()
-        view.textAlignment = .center
-        view.font = AppFont.Quantex.regular(size: 16)
-        return view
-    }()
-
-    private lazy var tableBackground: GlassmorphismView = {
-        let view = GlassmorphismView()
-        return view
-    }()
+    private lazy var tableBackground = GlassmorphismView()
 
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -98,9 +82,7 @@ final class ProfileViewController: BaseViewController, ProfileViewProtocol {
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder: NSCoder) { nil }
 
     // MARK: - Lifecycle
 
@@ -109,20 +91,15 @@ final class ProfileViewController: BaseViewController, ProfileViewProtocol {
         setupView()
         presenter.viewDidLoad()
     }
+}
 
-    // MARK: - Public Methods
+// MARK: - Public Methods
 
-    func showGreeting(_ message: String) {
-        label.text = message
-    }
+extension ProfileViewController: ProfileViewProtocol {
 
-    func displayNavBar(viewModel: NavBarViewModel) {
-        navigationBarView.configure(with: viewModel)
-    }
-
-    func displayError(message: String) {
-        print(message)
-    }
+	func displayError(message: String) {
+		print(message)
+	}
 }
 
 // MARK: - Private methods
@@ -130,51 +107,29 @@ final class ProfileViewController: BaseViewController, ProfileViewProtocol {
 private extension ProfileViewController {
 
     func setupUI() {
-        [navigationBarView, label, deleteButton].forEach {
-            view.addSubview($0)
-            $0.translatesAutoresizingMaskIntoConstraints = false
-        }
-
-        [tableBackground, tableView].forEach {
-            view.addSubview($0)
-            $0.translatesAutoresizingMaskIntoConstraints = false
-        }
-
-        addChild(mainTabBarController)
-        view.addSubview(mainTabBarController.view)
-        mainTabBarController.didMove(toParent: self)
-        mainTabBarController.view.translatesAutoresizingMaskIntoConstraints = false
+		view.addSubviews(
+			deleteButton,
+			tableBackground,
+			tableView
+		)
     }
 
     func setupView() {
         setupUI()
 
         NSLayoutConstraint.activate([
-            navigationBarView.topAnchor.constraint(equalTo: view.topAnchor),
-            navigationBarView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            navigationBarView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            navigationBarView.heightAnchor.constraint(equalToConstant: 106),
-
-            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-
-            tableBackground.topAnchor.constraint(equalTo: navigationBarView.bottomAnchor, constant: 8),
+			tableBackground.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 8),
             tableBackground.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
             tableBackground.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
             tableBackground.heightAnchor.constraint(equalToConstant: 400),
 
-            tableView.topAnchor.constraint(equalTo: navigationBarView.bottomAnchor, constant: 8),
+            tableView.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 8),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
             tableView.heightAnchor.constraint(equalToConstant: 400),
 
             deleteButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 28),
-            deleteButton.bottomAnchor.constraint(equalTo: mainTabBarController.view.topAnchor, constant: -20),
-
-            mainTabBarController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            mainTabBarController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            mainTabBarController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            mainTabBarController.view.heightAnchor.constraint(equalToConstant: 81)
+			deleteButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -60)
         ])
     }
 }
@@ -195,7 +150,11 @@ extension ProfileViewController: UITableViewDataSource {
         }
         let item = menuItems[indexPath.row]
         let isLast = indexPath.row == menuItems.count - 1
-        cell.configure(iconName: item.icon, title: item.title, isLast: isLast)
+		cell.configure(
+				icon: item.icon,
+				title: item.title,
+				isLast: isLast
+			)
         return cell
     }
 }
@@ -216,27 +175,30 @@ extension ProfileViewController: UITableViewDelegate {
 }
 
 #if DEBUG
+
+// MARK: - Preview
+
 import SwiftUI
 
 struct ProfileViewControllerPreview: UIViewControllerRepresentable {
-    class StubPresenter: ProfilePresenterProtocol {
-        weak var view: ProfileViewProtocol?
-        func viewDidLoad() {}
-        func didSelectMenuItem(_ item: ProfileMenuItem) {}
-    }
+	class StubPresenter: ProfilePresenterProtocol {
+		weak var view: ProfileViewProtocol?
+		func viewDidLoad() {}
+		func didSelectMenuItem(_ item: ProfileMenuItem) {}
+	}
 
-    func makeUIViewController(context: Context) -> some UIViewController {
-        let presenter = StubPresenter()
-        return ProfileViewController(presenter: presenter)
-    }
+	func makeUIViewController(context: Context) -> some UIViewController {
+		let presenter = StubPresenter()
+		return ProfileViewController(presenter: presenter)
+	}
 
-    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {}
+	func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {}
 }
 
 struct ProfileViewController_Previews: PreviewProvider {
-    static var previews: some View {
-        ProfileViewControllerPreview()
-            .edgesIgnoringSafeArea(.all)
-    }
+	static var previews: some View {
+		ProfileViewControllerPreview()
+			.edgesIgnoringSafeArea(.all)
+	}
 }
 #endif

@@ -10,6 +10,7 @@ import Foundation
 
 protocol MapPresenterProtocol: AnyObject {
 	func viewDidLoad(userLocation: CLLocation?)
+    func didTapBackButton()
 }
 
 protocol MapViewProtocol: AnyObject {
@@ -59,4 +60,8 @@ final class MapPresenter: MapPresenterProtocol {
 			self?.view?.showCourts(courts, nearest: nearest)
 		}
 	}
+
+    func didTapBackButton() {
+        router.goBackToHome()
+    }
 }

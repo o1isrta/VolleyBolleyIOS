@@ -90,7 +90,7 @@ class GlassmorphismView: UIView {
     // MARK: - Private Properties
 
     private let blurView = UIVisualEffectView()
-    private let animator = UIViewPropertyAnimator(duration: 0, curve: .linear)
+    private var animator = UIViewPropertyAnimator(duration: 0, curve: .linear)
     private var animatorFractionComplete: CGFloat = 0.2
 
     private var innerShadowLayer: CAShapeLayer?
@@ -103,16 +103,22 @@ class GlassmorphismView: UIView {
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder: NSCoder) { nil }
 
     /// Выполняет первоначальную настройку всех компонентов glassmorphism эффекта
     private func initialize() {
         backgroundColor = .clear
         setupBlurView()
         apply(.standard)
+		resetAnimator()
     }
+
+	/// Сбрасывает и пересоздает аниматор
+	private func resetAnimator() {
+		animator.stopAnimation(true)
+		animator = UIViewPropertyAnimator(duration: 0, curve: .linear)
+		animator.fractionComplete = animatorFractionComplete
+	}
 
     /// Настраивает UIVisualEffectView для создания blur эффекта
     private func setupBlurView() {
@@ -150,7 +156,7 @@ class GlassmorphismView: UIView {
 
     func setTheme(_ theme: Theme) {
         blurView.effect = nil
-        animator.stopAnimation(true)
+		resetAnimator()
 
         animator.addAnimations { [weak self] in
             guard let self else { return }
@@ -160,27 +166,9 @@ class GlassmorphismView: UIView {
         animator.fractionComplete = animatorFractionComplete
     }
 
-	/// Сбрасывает вид гласморфизма в чистое состояние, удаляя накопленные слои.
 	/// Этот метод следует вызывать при повторном использовании ячеек, чтобы предотвратить накопление слоев.
     func resetForReuse() {
-		// Полностью удаляем слой внутренней тени
-        innerShadowLayer?.removeFromSuperlayer()
-        innerShadowLayer = nil
-        // Сбрасываем свойства слоя
-        layer.masksToBounds = false
-        // Удаляем все потерянные экземпляры CAShapeLayer, которые могли накопиться
-        layer.sublayers?.forEach { sublayer in
-            if sublayer is CAShapeLayer {
-                sublayer.removeFromSuperlayer()
-            }
-        }
-        // Останавливаем и сбрасываем animator если необходимо
-        if animator.state != .inactive {
-            animator.stopAnimation(true)
-        }
-        // Сбрасываем состояние blurView
-        blurView.effect = nil
-        animatorFractionComplete = 0.2
+		resetAnimator()
     }
 
     // MARK: - Private Methods
@@ -236,10 +224,8 @@ class GlassmorphismView: UIView {
     }
 
     deinit {
-        if animator.state != .inactive {
-            animator.stopAnimation(false)
-            animator.finishAnimation(at: .current)
-        }
+		animator.stopAnimation(false)
+		animator.finishAnimation(at: .current)
     }
 
     // MARK: - UIView Overrides
@@ -249,13 +235,13 @@ class GlassmorphismView: UIView {
 
         blurView.frame = bounds
 
-        if let shadowLayer = innerShadowLayer {
-            shadowLayer.frame = bounds
-            let expandedRect = bounds.insetBy(dx: -innerShadowRadius * 2, dy: -innerShadowRadius * 2)
-            let outerPath = UIBezierPath(roundedRect: expandedRect, cornerRadius: cornerRadius + innerShadowRadius * 2)
-            let innerPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius).reversing()
-            outerPath.append(innerPath)
-            shadowLayer.path = outerPath.cgPath
-        }
+		guard let shadowLayer = innerShadowLayer, shadowLayer.superlayer != nil else { return }
+
+		shadowLayer.frame = bounds
+		let expandedRect = bounds.insetBy(dx: -innerShadowRadius * 2, dy: -innerShadowRadius * 2)
+		let outerPath = UIBezierPath(roundedRect: expandedRect, cornerRadius: cornerRadius + innerShadowRadius * 2)
+		let innerPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius).reversing()
+		outerPath.append(innerPath)
+		shadowLayer.path = outerPath.cgPath
     }
 }

@@ -204,19 +204,14 @@ final class PaywallViewController: BaseViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		setupUI()
-		setupGesture()
 		presenter?.viewDidLoad()
+		hideKeyboardWhenTappedAround()
 	}
 }
 
 // MARK: - Private Methods
 
 private extension PaywallViewController {
-
-	func setupGesture() {
-		let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapOutside))
-		view.addGestureRecognizer(tapGesture)
-	}
 
 	func setupUI() {
 		view.addSubviews(
@@ -246,7 +241,7 @@ private extension PaywallViewController {
 
 			saveGameButton.heightAnchor.constraint(equalToConstant: 44),
 
-			glassmorphismView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
+			glassmorphismView.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 8),
 			glassmorphismView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 8),
 			glassmorphismView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -8),
 			glassmorphismView.bottomAnchor.constraint(equalTo: mainStackView.bottomAnchor, constant: mainSpacing),
@@ -258,28 +253,18 @@ private extension PaywallViewController {
 	}
 
 	@objc func backButtonTapped() {
-		priceView.resignActive()
 		presenter?.backButtonTapped()
 	}
 
 	@objc func privacyPublicButtonTapped() {
-		priceView.resignActive()
 		presenter?.privacyPublicButtonTapped()
 	}
 
 	@objc func privacyPrivateButtonTapped() {
-		priceView.resignActive()
 		presenter?.privacyPrivateButtonTapped()
 	}
 
-	@objc func handleTapOutside(_ gesture: UITapGestureRecognizer) {
-		if !priceView.frame.contains(gesture.location(in: view)) {
-			priceView.resignActive()
-		}
-	}
-
 	@objc func saveGameButtonTapped() {
-		priceView.resignActive()
 		presenter?.updatePlayersCount(to: playersCounter.value)
 		presenter?.saveGameButtonTapped()
 	}
@@ -321,3 +306,12 @@ extension PaywallViewController: PaywallViewProtocol {
 		paymentDescription.text = text
 	}
 }
+
+// MARK: - Preview
+
+#if DEBUG
+@available(iOS 17.0, *)
+#Preview {
+	PaywallViewController()
+}
+#endif

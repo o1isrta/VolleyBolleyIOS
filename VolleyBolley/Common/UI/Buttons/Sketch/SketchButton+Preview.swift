@@ -53,43 +53,22 @@ final class SketchButtonPreviewVC: UIViewController {
     private func setupFirstRow(in stack: UIStackView) {
         let row = makeRow()
         stack.addArrangedSubview(row)
-        row.addArrangedSubview(makeButton(
-            title: "Create a tourney",
-            image: UIImage.Icon.createTourney,
-            selected: true
-        ))
-        row.addArrangedSubview(makeButton(
-            title: "Donate",
-            image: UIImage.Icon.donate
-        ))
+        row.addArrangedSubview(makeButton(type: .createTourney, selected: true))
+        row.addArrangedSubview(makeButton(type: .donate))
     }
 
     private func setupSecondRow(in stack: UIStackView) {
         let row = makeRow()
         stack.addArrangedSubview(row)
-        row.addArrangedSubview(makeButton(
-            title: "Invite players",
-            image: UIImage.Icon.invitePlayers,
-            selected: true
-        ))
-        row.addArrangedSubview(makeButton(
-            title: "Share link",
-            image: UIImage.Icon.share
-        ))
+        row.addArrangedSubview(makeButton(type: .invitePlayers, selected: true))
+        row.addArrangedSubview(makeButton(type: .shareLink))
     }
 
     private func setupThirdRow(in stack: UIStackView) {
         let row = makeRow()
         stack.addArrangedSubview(row)
-        row.addArrangedSubview(makeButton(
-            title: "Send invites",
-            image: UIImage.Icon.sendInvites,
-            selected: true
-        ))
-        row.addArrangedSubview(makeButton(
-            title: "Save game",
-            image: UIImage.Icon.saveGame
-        ))
+        row.addArrangedSubview(makeButton(type: .sendInvites, selected: true))
+        row.addArrangedSubview(makeButton(type: .saveGame))
     }
 
     private func makeRow() -> UIStackView {
@@ -100,19 +79,18 @@ final class SketchButtonPreviewVC: UIViewController {
         return row
     }
 
-    private func makeButton(
-        title: String,
-        image: UIImage? = nil,
-        selected: Bool = false
-    ) -> SketchButton {
-        let button = SketchButton()
-        button.isSelected = selected
-        button.setTitle(title, for: .normal)
-        button.setImage(image, for: .normal)
+    private func makeButton(type: SketchButtonType, selected: Bool = false) -> SketchButton {
+        let button = SketchButton(type: type, isSelected: selected)
         button.addAction(UIAction { _ in
             button.isSelected.toggle()
         }, for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            button.widthAnchor.constraint(equalToConstant: 175),
+            button.heightAnchor.constraint(equalToConstant: 180)
+        ])
         return button
+
     }
 }
 

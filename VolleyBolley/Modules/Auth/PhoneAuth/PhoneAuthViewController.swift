@@ -66,6 +66,7 @@ final class PhoneAuthViewController: UIViewController {
         view.backgroundColor = AppColor.Background.screen
         setupUI()
         setupActions()
+		hideKeyboardWhenTappedAround()
     }
 
     override func viewDidAppear(_ animated: Bool) {

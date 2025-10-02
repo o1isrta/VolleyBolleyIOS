@@ -47,14 +47,11 @@ final class AuthViewController: UIViewController, AuthViewProtocol {
 
     private lazy var googleAuthButton: UIButton = {
         let button = UIButton()
-        button.setTitle(String(localized: "  Continue with Google"), for: .normal)
+        button.setTitle("  " + String(localized: "Continue with Google"), for: .normal)
         button.titleLabel?.font = AppFont.Hero.bold(size: 18)
         button.setTitleColor(AppColor.Text.inverted, for: .normal)
         button.backgroundColor = AppColor.Background.primary
-
-        if let googleIcon = UIImage(named: "google") {
-            button.setImage(googleIcon, for: .normal)
-        }
+		button.setImage(UIImage.Icon.google, for: .normal)
 
         button.layer.cornerRadius = 16
         button.clipsToBounds = true
@@ -81,7 +78,7 @@ final class AuthViewController: UIViewController, AuthViewProtocol {
     }()
 
     private lazy var backgroundImageView: UIImageView = {
-        let imageView = UIImageView(image: .auth)
+        let imageView = UIImageView(image: UIImage.Image.auth)
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()

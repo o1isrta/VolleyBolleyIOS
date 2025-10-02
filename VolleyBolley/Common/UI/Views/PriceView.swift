@@ -87,18 +87,12 @@ final class PriceView: UIView {
 	}
 
 	@available(*, unavailable)
-	required init?(coder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
-	}
+	required init?(coder: NSCoder) { nil }
 
 	// MARK: - Public Methods
 
 	func becomeActive() {
 		textField.becomeFirstResponder()
-	}
-
-	func resignActive() {
-		textField.resignFirstResponder()
 	}
 
 	func getNumericValue() -> Double? {
@@ -215,11 +209,11 @@ class ViewController: BaseViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		let customTextField = PriceView(frame: CGRect(x: 50, y: 100, width: 75, height: 30))
+		let customTextField = PriceView(frame: CGRect(x: 50, y: 150, width: 75, height: 30))
 		customTextField.text = "$100.00"
 		view.addSubview(customTextField)
 
-		let customTextField2 = PriceView(frame: CGRect(x: 50, y: 150, width: 75, height: 30))
+		let customTextField2 = PriceView(frame: CGRect(x: 50, y: 200, width: 75, height: 30))
 		view.addSubview(customTextField2)
 	}
 }

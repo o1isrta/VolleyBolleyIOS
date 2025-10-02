@@ -51,7 +51,7 @@ final class PopupBannerView: UIView {
 
     /// Иконка приглашения.
     private lazy var inviteImageView: UIImageView = {
-        let image = UIImage(resource: .invite).withRenderingMode(.alwaysTemplate)
+        let image = UIImage.Icon.invite.withRenderingMode(.alwaysTemplate)
         let imageView = UIImageView(image: image)
         imageView.contentMode = .scaleAspectFit
         imageView.tintColor = AppColor.Icon.inverted
@@ -61,7 +61,7 @@ final class PopupBannerView: UIView {
 
     /// Иконка стрелки.
     private lazy var arrowImageView: UIImageView = {
-        let image = UIImage(resource: .arrow).withRenderingMode(.alwaysTemplate)
+        let image = UIImage.Icon.arrow.withRenderingMode(.alwaysTemplate)
         let imageView = UIImageView(image: image)
         imageView.contentMode = .scaleAspectFit
         imageView.tintColor = AppColor.Icon.inverted
@@ -243,28 +243,9 @@ struct PopupBannerViewRepresentable: UIViewRepresentable {
 struct PopupBannerViewControllerRepresentable: UIViewControllerRepresentable {
 
     func makeUIViewController(context: Context) -> UIViewController {
-        let viewController = UIViewController()
-        viewController.view.backgroundColor = AppColor.Background.screen
-
-        let navBar = CustomNavBarView()
-
-        navBar.configure(
-            with: NavBarViewModel(
-                user: User(
-                    firstName: "Artem",
-                    lastName: "Ivanov",
-                    gender: 0,
-                    paymentID: 0,
-                    paymentAccount: "",
-                    dateOfBirth: Date(),
-                    level: UserLevel(rawValue: 0),
-                    countryID: 0,
-                    cityID: 0,
-                    avatarURL: nil
-                ),
-                avatarImage: UIImage(resource: .imgPerson)
-            )
-        )
+		let viewController = BaseViewController()
+		// Configure navbar with mock data
+		viewController.navBar.configure(with: NavBarViewModel.mockDefault)
 
         let button = UIButton(type: .system)
         button.setTitle("Show Banner", for: .normal)
@@ -273,17 +254,12 @@ struct PopupBannerViewControllerRepresentable: UIViewControllerRepresentable {
             banner.onTap = {
                 print("tap")
             }
-            banner.show(in: viewController.view, under: navBar)
+            banner.show(in: viewController.view, under: viewController.navBar)
         }, for: .touchUpInside)
 
-        viewController.view.addSubviews(navBar, button)
+        viewController.view.addSubviews(button)
 
         NSLayoutConstraint.activate([
-            navBar.topAnchor.constraint(equalTo: viewController.view.topAnchor),
-            navBar.leadingAnchor.constraint(equalTo: viewController.view.leadingAnchor),
-            navBar.trailingAnchor.constraint(equalTo: viewController.view.trailingAnchor),
-            navBar.heightAnchor.constraint(equalToConstant: 106),
-
             button.centerXAnchor.constraint(equalTo: viewController.view.centerXAnchor),
             button.centerYAnchor.constraint(equalTo: viewController.view.centerYAnchor)
         ])

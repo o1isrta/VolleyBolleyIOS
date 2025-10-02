@@ -8,6 +8,7 @@
 import UIKit
 
 protocol NotificationsViewControllerProtocol: AnyObject {
+	var presenter: NotificationsPresenterProtocol? { get }
 	func displayNotifications(_ notifications: [NotificationCardViewModel])
 	func displayEmptyState()
 }
@@ -41,6 +42,15 @@ final class NotificationsViewController: BaseViewController {
 		tableView.dataSource = self
 		tableView.showsVerticalScrollIndicator = false
 		tableView.register(NotificationCell.self, forCellReuseIdentifier: NotificationCell.reuseIdentifier)
+		// Add pull-to-refresh
+		let refreshControl = UIRefreshControl()
+		refreshControl.addTarget(
+			self,
+			action: #selector(handlePullToRefresh(_:)),
+			for: .valueChanged
+		)
+		tableView.refreshControl = refreshControl
+
 		return tableView
 	}()
 
@@ -52,6 +62,16 @@ final class NotificationsViewController: BaseViewController {
 		setupTableViewContentSizeObserver()
         presenter?.viewDidLoad()
 	}
+
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		presenter?.viewWillAppear()
+	}
+
+	override func viewDidDisappear(_ animated: Bool) {
+		super.viewDidDisappear(animated)
+		presenter?.viewDidDisappear()
+	}
 }
 
 // MARK: - Private Methods
@@ -60,6 +80,10 @@ private extension NotificationsViewController {
 
 	@objc func backButtonTapped() {
 		presenter?.backButtonTapped()
+	}
+
+	@objc func handlePullToRefresh(_ refreshControl: UIRefreshControl) {
+		presenter?.refreshNotifications()
 	}
 
 	func setupUI() {
@@ -74,7 +98,7 @@ private extension NotificationsViewController {
 		let mainSpacing: CGFloat = 20
 
 		NSLayoutConstraint.activate([
-			glassmorphismView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: mainIndent),
+			glassmorphismView.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: mainIndent),
 			glassmorphismView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: mainIndent),
 			glassmorphismView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -mainIndent),
 			glassmorphismView.bottomAnchor.constraint(equalTo: tableView.bottomAnchor, constant: mainIndent),
@@ -104,7 +128,7 @@ private extension NotificationsViewController {
 				let newSize = change.newValue
 			else { return }
 			// Limiting the max height to preserve scrolling
-			let maxHeight = UIScreen.main.bounds.height - 200
+			let maxHeight = UIScreen.main.bounds.height - 268
 			let newHeight = min(newSize.height, maxHeight)
 			self.tableViewHeightConstraint?.constant = newHeight
 		}
@@ -117,12 +141,20 @@ extension NotificationsViewController: NotificationsViewControllerProtocol {
 
 	func displayNotifications(_ notifications: [NotificationCardViewModel]) {
 		self.notifications = notifications
-		tableView.reloadData()
+		reloadTableView()
 	}
 
 	func displayEmptyState() {
 		self.notifications = []
+		reloadTableView()
+	}
+
+	private func reloadTableView() {
 		tableView.reloadData()
+		// End refresh control if it's currently refreshing
+		if let refreshControl = tableView.refreshControl, refreshControl.isRefreshing {
+			refreshControl.endRefreshing()
+		}
 	}
 }
 
