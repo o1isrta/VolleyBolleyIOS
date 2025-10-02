@@ -34,7 +34,7 @@ struct NotificationCardViewModel: Equatable {
 			date: Date()
 		),
 		NotificationCardViewModel(
-			title: "Removed from tourney from yor calendar",
+			title: "Tourney removed from your calendar",
 			message: "12 September, 2:00-8:00 pm. You can create new tourney",
 			date: Date()
 		)
