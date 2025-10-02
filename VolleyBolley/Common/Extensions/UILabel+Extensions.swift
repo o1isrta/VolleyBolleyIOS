@@ -37,4 +37,9 @@ extension UILabel {
 		let gradientLayer = CALayer.makeGradientTextMask(for: self, textLayerAlignmentMode: textLayerAlignmentMode)
 		layer.addSublayer(gradientLayer)
 	}
+
+    func setRequiredPriorities() {
+        setContentHuggingPriority(.required, for: .vertical)
+        setContentCompressionResistancePriority(.required, for: .vertical)
+    }
 }
