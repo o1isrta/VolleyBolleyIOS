@@ -75,6 +75,8 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
         textView.font = AppFont.Hero.regular(size: 16)
         textView.textAlignment = .left
         textView.isScrollEnabled = true
+        textView.isEditable = true
+        textView.isUserInteractionEnabled = true
         textView.layer.cornerRadius = 16
         textView.layer.borderColor = AppColor.Border.primary.cgColor
         textView.translatesAutoresizingMaskIntoConstraints = false
@@ -171,7 +173,7 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
     private lazy var pickDateButton: GreenButton = {
         let button = GreenButton(imagePlacement: .trailing)
         button.setTitle(String(localized: "Pick date"), for: .normal)
-        button.setImage(.arrow, for: .normal)
+        button.setImage(.arrowForward, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -293,7 +295,6 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
         view.addSubview(navigationBarView)
         navigationBarView.translatesAutoresizingMaskIntoConstraints = false
 
-        //        view.addSubview(scrollView)
         view.addSubview(contentView)
         addChild(mainTabBarController)
         view.addSubview(mainTabBarController.view)
@@ -545,7 +546,9 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
 
     @objc private func didTapBack() { presenter?.didTapBack() }
     @objc private func didTapGetStarted() { presenter?.didTapGetStarted() }
-    @objc private func didTapPlace() { presenter?.didSelectPlace() }
+    @objc private func didTapPlace() {
+        // TODO: Добавить выбор места проведения игры
+    }
 
     @objc private func didTapDate(_ sender: GreenButton) {
         if sender == todayButton {
@@ -572,6 +575,7 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
 
     func setGetStartedButton(enabled: Bool) {
         getStartedButton.isEnabled = enabled
+        getStartedButton.isSelected = enabled
     }
 
     func updateMessageCount(_ count: Int) {
@@ -579,15 +583,13 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
     }
 
     func updateSelectedLevels(_ titles: [String]) {
-        [lightLevelButton, mediumLevelButton, hardLevelButton, proLevelButton].forEach {
-            $0.isSelected = titles.contains($0.title(for: .normal) ?? "")
-        }
+        [lightLevelButton, mediumLevelButton, hardLevelButton, proLevelButton].forEach
+        { $0.isSelected = titles.contains($0.title(for: .normal) ?? "") }
     }
 
     func updateSelectedGender(_ title: String?) {
-        [mixGenderButton, maleGenderButton, femaleGenderButton].forEach {
-            $0.isSelected = $0.title(for: .normal) == title
-        }
+        [mixGenderButton, maleGenderButton, femaleGenderButton].forEach
+        { $0.isSelected = $0.title(for: .normal) == title }
     }
 
     func showPlaceholder(_ show: Bool) {

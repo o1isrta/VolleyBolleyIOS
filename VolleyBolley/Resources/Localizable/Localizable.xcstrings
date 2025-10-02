@@ -115,6 +115,9 @@
         }
       }
     },
+    "Change" : {
+
+    },
     "CHOOSE THIS COURT" : {
       "comment" : "\"CHOOSE THIS COURT\" button",
       "localizations" : {
@@ -364,6 +367,9 @@
           }
         }
       }
+    },
+    "Create a game" : {
+
     },
     "creation.level" : {
       "extractionState" : "manual",
@@ -1058,6 +1064,9 @@
           }
         }
       }
+    },
+    "from" : {
+
     },
     "Game duration" : {
 
@@ -1895,6 +1904,9 @@
           }
         }
       }
+    },
+    "to" : {
+
     },
     "To find the right games and teammates, choose your current skill level:\nOptions:\n  • Light (L1–L3) – Beginner\n  • Medium (M1–M3) – Confident amateur\n  • Hard (H1–H3) – Advanced\n  • Pro (P1–P3) – Professional\nThe higher the number, the higher the skill. Your level may change later based on player ratings." : {
       "comment" : "FAQ",

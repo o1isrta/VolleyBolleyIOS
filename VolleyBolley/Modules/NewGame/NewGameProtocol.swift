@@ -23,8 +23,6 @@ protocol NewGamePresenterProtocol: AnyObject {
     func didChangeMessage(_ text: String)
     func didToggleLevel(_ title: String)
     func didToggleGender(_ title: String)
-    func didSelectDate()
-    func didSelectPlace()
     func didConfirmDate(_ date: Date)
     func didConfirmPlace(_ place: String)
     func didTapGetStarted()
@@ -59,7 +57,5 @@ protocol NewGameInteractorOutputProtocol: AnyObject {
 protocol NewGameRouterProtocol: AnyObject {
     var viewController: UIViewController? { get set }
     func routeToMain(with data: NewGameData?)
-    func showDatePicker(from: UIViewController?)
-    func showPlacePicker(from: UIViewController?)
     func dismiss()
 }

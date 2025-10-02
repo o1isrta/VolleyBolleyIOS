@@ -75,7 +75,8 @@ final class DIContainer {
                 PaywallAssembly(),
                 CreationSuccessAssembly(),
 				PersonalDataAssembly(),
-				AboutAssembly()
+				AboutAssembly(),
+                NewGameAssembly()
             ]
         )
     }

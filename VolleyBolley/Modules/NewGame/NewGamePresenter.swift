@@ -44,14 +44,6 @@ final class NewGamePresenter: NewGamePresenterProtocol {
         view?.updateSelectedGender(interactor.getSelectedGender())
     }
 
-    func didSelectDate() {
-        router.showDatePicker(from: view as? UIViewController)
-    }
-
-    func didSelectPlace() {
-        router.showPlacePicker(from: view as? UIViewController)
-    }
-
     func didConfirmDate(_ date: Date) {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
@@ -66,8 +58,7 @@ final class NewGamePresenter: NewGamePresenterProtocol {
     }
 
     func didTapGetStarted() {
-        let data = interactor.buildGameData()
-        router.routeToMain(with: data)
+       // TODO: Добавить переход на следующий экран
     }
 
     func didTapBack() {
@@ -85,7 +76,6 @@ final class NewGamePresenter: NewGamePresenterProtocol {
             view?.updateSelectedDate(dateString)
         } else if title == "Pick date" {
             view?.updateDateSelection(todaySelected: false)
-            didSelectDate()
         }
     }
 }
