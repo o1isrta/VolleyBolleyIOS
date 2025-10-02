@@ -20,7 +20,6 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
         view.backgroundColor = AppColor.Background.blur
         view.layer.cornerRadius = 32
         view.clipsToBounds = true
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
@@ -28,7 +27,6 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
         let button = UtilityButton(style: .small)
         button.setImage(.chevronBackward, for: .normal)
         button.tintColor = AppColor.Icon.primary
-        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
 
@@ -48,7 +46,6 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
         textField.layer.borderColor = AppColor.Border.primary.cgColor
         textField.backgroundColor = .systemBackground
         textField.textColor = AppColor.Text.placeHolder
-        textField.translatesAutoresizingMaskIntoConstraints = false
         textField.addTarget(self, action: #selector(codeDidChange), for: .editingChanged)
 
         let attributed = NSAttributedString(
@@ -66,7 +63,6 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
         let errorLabel = CustomLabel(text: "", isBold: true)
         errorLabel.font = AppFont.Hero.light(size: 14)
         errorLabel.isHidden = true
-        errorLabel.translatesAutoresizingMaskIntoConstraints = false
         return errorLabel
     }()
 
@@ -74,7 +70,6 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
         let button = UIButton(type: .system)
         button.setTitle(String(localized: "Get new code"), for: .normal)
         button.titleLabel?.font = AppFont.Hero.regular(size: 14)
-        button.translatesAutoresizingMaskIntoConstraints = false
         button.isHidden = true
         return button
     }()
@@ -82,7 +77,6 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
     private lazy var verifyButton: YellowButton = {
         let button = YellowButton(title: String(localized: "VERIFY"))
         button.isEnabled = false
-        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
 
@@ -116,19 +110,17 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
     }
 
     private func setupUI() {
-        view.addSubview(containerView)
-        [
+		view.addSubviews(containerView)
+		containerView.addSubviews(
 			backButton,
-         titleLabel,
-         codeLabel,
-         codeTextField,
-         resendLabel,
-         errorLabel,
-         getNewCodeButton,
-         verifyButton
-		].forEach {
-			containerView.addSubview($0)
-		}
+			titleLabel,
+			codeLabel,
+			codeTextField,
+			resendLabel,
+			errorLabel,
+			getNewCodeButton,
+			verifyButton
+		)
 
         errorLabelHeightConstraint = errorLabel.heightAnchor.constraint(equalToConstant: 17)
         errorLabelHeightConstraint?.isActive = true
