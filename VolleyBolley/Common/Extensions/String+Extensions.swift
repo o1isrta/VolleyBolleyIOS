@@ -16,65 +16,66 @@ extension String {
 		return capitalizedFirst + remaining
 	}
 
-    /// Возвращает отформатированный текст в формате "DD / MM / YYYY" и проходит валидацию
-    /// Возвращает `nil`, если строка некорректна (день, месяц, год)
+    /// Возвращает отформатированный текст в виде
+    /// "DD / MM / YYYY", если дата валидна.
+    /// Возвращает `nil`, если день, месяц или год некорректны.
     func formattedBirthdayOrNil() -> String? {
-        let digitsOnly = self.replacingOccurrences(of: "[^0-9]", with: "", options: .regularExpression)
+        let digitsOnly = replacingOccurrences(
+            of: "[^0-9]",
+            with: "",
+            options: .regularExpression
+        )
 
-        if digitsOnly.count > 8 { return nil }
+        guard digitsOnly.count <= 8 else { return nil }
 
         var formattedText = ""
-        let dayEnd = min(2, digitsOnly.count)
-        if dayEnd > 0 {
-            let day = String(digitsOnly.prefix(dayEnd))
-            formattedText += day
-            if digitsOnly.count > 2 {
-                formattedText += " / "
-            }
+
+        if digitsOnly.count > 0 {
+            formattedText += String(digitsOnly.prefix(2))
+            if digitsOnly.count > 2 { formattedText += " / " }
         }
 
-        let monthStart = 2
-        let monthEnd = min(4, digitsOnly.count)
-        if monthEnd > monthStart {
-            let startIdx = digitsOnly.index(digitsOnly.startIndex, offsetBy: monthStart)
-            let endIdx = digitsOnly.index(digitsOnly.startIndex, offsetBy: monthEnd)
-            let month = String(digitsOnly[startIdx..<endIdx])
-            formattedText += month
-            if digitsOnly.count > 4 {
-                formattedText += " / "
-            }
+        if digitsOnly.count > 2 {
+            formattedText += String(digitsOnly.dropFirst(2).prefix(2))
+            if digitsOnly.count > 4 { formattedText += " / " }
         }
 
-        let yearStart = 4
-        if digitsOnly.count > yearStart {
-            let startIdx = digitsOnly.index(digitsOnly.startIndex, offsetBy: yearStart)
-            let year = String(digitsOnly[startIdx...])
-            formattedText += year
+        if digitsOnly.count > 4 {
+            formattedText += String(digitsOnly.dropFirst(4))
         }
 
-        if digitsOnly.count >= 2 {
-            if let dayInt = Int(digitsOnly.prefix(2)), dayInt < 1 || dayInt > 31 {
-                return nil
-            }
-        }
-
-        if digitsOnly.count >= 4 {
-            let monthRange = digitsOnly.index(digitsOnly.startIndex, offsetBy: 2)..<digitsOnly.index(digitsOnly.startIndex, offsetBy: 4)
-            if let monthInt = Int(digitsOnly[monthRange]), monthInt < 1 || monthInt > 12 {
-                return nil
-            }
-        }
-
-        if digitsOnly.count == 8 {
-            let yearRange = digitsOnly.index(digitsOnly.startIndex, offsetBy: 4)..<digitsOnly.index(digitsOnly.startIndex, offsetBy: 8)
-            if let yearInt = Int(digitsOnly[yearRange]) {
-                let currentYear = Calendar.current.component(.year, from: Date())
-                if yearInt > currentYear {
-                    return nil
-                }
-            }
-        }
+        guard isValidDay(digitsOnly),
+              isValidMonth(digitsOnly),
+              isValidYear(digitsOnly) else { return nil }
 
         return formattedText
+    }
+
+    // MARK: - Private Methods
+
+    /// Проверяет, что день в диапазоне 1...31
+    private func isValidDay(_ digits: String) -> Bool {
+        guard digits.count >= 2,
+              let dayInt = Int(digits.prefix(2)) else { return true }
+        return (1...31).contains(dayInt)
+    }
+
+    /// Проверяет, что месяц в диапазоне 1...12
+    private func isValidMonth(_ digits: String) -> Bool {
+        guard digits.count >= 4 else { return true }
+        let start = digits.index(digits.startIndex, offsetBy: 2)
+        let end = digits.index(digits.startIndex, offsetBy: 4)
+        guard let monthInt = Int(digits[start..<end]) else { return true }
+        return (1...12).contains(monthInt)
+    }
+
+    /// Проверяет, что год не в будущем
+    private func isValidYear(_ digits: String) -> Bool {
+        guard digits.count == 8 else { return true }
+        let start = digits.index(digits.startIndex, offsetBy: 4)
+        let end = digits.index(digits.startIndex, offsetBy: 8)
+        guard let yearInt = Int(digits[start..<end]) else { return true }
+        let currentYear = Calendar.current.component(.year, from: Date())
+        return yearInt <= currentYear
     }
 }
