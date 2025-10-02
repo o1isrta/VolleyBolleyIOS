@@ -13,8 +13,9 @@ protocol NewGameViewProtocol: AnyObject {
     func updateSelectedLevels(_ titles: [String])
     func updateSelectedGender(_ title: String?)
     func showPlaceholder(_ show: Bool)
-    func updateSelectedDate(_ date: String?)
+    func updateDateSelection(todaySelected: Bool)
     func updateSelectedPlace(_ place: String?)
+    func updateSelectedDate(_ date: String?)
 }
 
 protocol NewGamePresenterProtocol: AnyObject {
@@ -28,6 +29,7 @@ protocol NewGamePresenterProtocol: AnyObject {
     func didConfirmPlace(_ place: String)
     func didTapGetStarted()
     func didTapBack()
+    func didSelectDateButton(_ title: String)
 }
 
 protocol NewGameInteractorProtocol: AnyObject {

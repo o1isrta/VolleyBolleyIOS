@@ -24,6 +24,7 @@ final class NewGamePresenter: NewGamePresenterProtocol {
     func viewDidLoad() {
         view?.setGetStartedButton(enabled: false)
         view?.showPlaceholder(true)
+        view?.updateDateSelection(todaySelected: true)
     }
 
     func didChangeMessage(_ text: String) {
@@ -71,5 +72,20 @@ final class NewGamePresenter: NewGamePresenterProtocol {
 
     func didTapBack() {
         router.dismiss()
+    }
+
+    func didSelectDateButton(_ title: String) {
+        if title == "Today" {
+            view?.updateDateSelection(todaySelected: true)
+            let today = Date()
+            let formatter = DateFormatter()
+            formatter.dateStyle = .medium
+            let dateString = formatter.string(from: today)
+            interactor.setDate(dateString)
+            view?.updateSelectedDate(dateString)
+        } else if title == "Pick date" {
+            view?.updateDateSelection(todaySelected: false)
+            didSelectDate()
+        }
     }
 }

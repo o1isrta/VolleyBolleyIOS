@@ -119,8 +119,8 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
 
     private lazy var locationIcon: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "location.fill")
-        imageView.tintColor = AppColor.Icon.primary
+        imageView.image = UIImage(systemName: "location.fill")?.withRenderingMode(.alwaysTemplate)
+        imageView.tintColor = AppColor.Icon.location
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -169,8 +169,9 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
     }()
 
     private lazy var pickDateButton: GreenButton = {
-        let button = GreenButton()
-        button.setTitle(String(localized: "Pick date") + " → ", for: .normal)
+        let button = GreenButton(imagePlacement: .trailing)
+        button.setTitle(String(localized: "Pick date"), for: .normal)
+        button.setImage(.arrow, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -523,7 +524,7 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
             getStartedButton.bottomAnchor.constraint(equalTo: scrollContentView.bottomAnchor, constant: -20),
             getStartedButton.leadingAnchor.constraint(equalTo: scrollContentView.leadingAnchor, constant: 20),
             getStartedButton.trailingAnchor.constraint(equalTo: scrollContentView.trailingAnchor, constant: -20),
-            getStartedButton.heightAnchor.constraint(equalToConstant: 56),
+            getStartedButton.heightAnchor.constraint(equalToConstant: 56)
             ])
     }
 
@@ -545,7 +546,18 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
     @objc private func didTapBack() { presenter?.didTapBack() }
     @objc private func didTapGetStarted() { presenter?.didTapGetStarted() }
     @objc private func didTapPlace() { presenter?.didSelectPlace() }
-    @objc private func didTapDate() { presenter?.didSelectDate() }
+
+    @objc private func didTapDate(_ sender: GreenButton) {
+        if sender == todayButton {
+            todayButton.isSelected = true
+            pickDateButton.isSelected = false
+            presenter?.didSelectDateButton("Today")
+        } else if sender == pickDateButton {
+            pickDateButton.isSelected = true
+            todayButton.isSelected = false
+            presenter?.didSelectDateButton("Pick date")
+        }
+    }
 
     @objc private func didTapGender(_ sender: GreenButton) {
         [mixGenderButton, maleGenderButton, femaleGenderButton].forEach { $0.isSelected = false }
@@ -584,6 +596,11 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
 
     func updateSelectedDate(_ date: String?) {
         // TODO: Функционал выбора даты игры
+    }
+
+    func updateDateSelection(todaySelected: Bool) {
+        todayButton.isSelected = todaySelected
+        pickDateButton.isSelected = !todaySelected
     }
 
     func updateSelectedPlace(_ place: String?) {
