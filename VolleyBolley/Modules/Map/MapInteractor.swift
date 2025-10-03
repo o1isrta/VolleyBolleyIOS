@@ -27,7 +27,7 @@ final class MapInteractor: MapInteractorProtocol {
         networkService.searchCourts(query: query) { result in
             switch result {
             case .success(let response):
-                let courts = response.courts.map{ $0.toDomain() }
+                let courts = response.courts.map { $0.toDomain() }
                 completion([])
             case .failure(let error):
                 completion([])

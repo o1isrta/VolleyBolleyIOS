@@ -20,4 +20,3 @@ struct GameCreationInfo: CreationInfo {
     let maximumPlayers: Int
     let isPrivate: Bool
 }
-

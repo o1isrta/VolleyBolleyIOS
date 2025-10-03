@@ -11,7 +11,7 @@ import Swinject
 final class PaywallAssembly: Assembly {
 
 	func assemble(container: Container) {
-		container.register(PaywallViewController.self) { resolver in
+		container.register(PaywallViewController.self) { _ in
 			let paywallVC = PaywallViewController()
 			let interactor = PaywallInteractor()
 			let router = PaywallRouter(viewController: paywallVC)
