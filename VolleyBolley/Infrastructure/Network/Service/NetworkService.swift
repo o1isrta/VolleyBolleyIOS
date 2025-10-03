@@ -8,32 +8,6 @@
 import Foundation
 import Moya
 
-protocol NetworkServiceProtocol {
-	func googleAuth(
-		code: String,
-		completion: @escaping (Result<GoogleAuthResponse, Error>) -> Void
-	)
-	func getCountryList(completion: @escaping (Result<CountryListResponse, Error>) -> Void)
-	func searchCourts(
-		query: String,
-		completion: @escaping (Result<CourtSearchResponse, Error>) -> Void
-	)
-	func invitePlayers(
-		gameID: Int,
-		playerIDs: [Int],
-		completion: @escaping (Result<InvitePlayersResponse, Error>) -> Void
-	)
-	func updateAvatar(
-		avatar: String?,
-		completion: @escaping (Result<UpdateAvatarResponse, Error>) -> Void
-	)
-	func updatePlayerProfile(
-		with newData: PlayerDTO,
-		completion: @escaping (Result<Void, Error>) -> Void
-	)
-	func deletePlayer(completion: @escaping (Result<Void, Error>) -> Void)
-}
-
 final class NetworkService: NetworkServiceProtocol {
 
 	// MARK: - Private Properties

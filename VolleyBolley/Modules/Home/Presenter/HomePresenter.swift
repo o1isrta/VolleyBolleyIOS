@@ -7,6 +7,7 @@
 
 import Foundation
 
+@MainActor
 protocol HomePresenterProtocol: AnyObject {
     func viewDidLoad()
     func didTapCreateNewGame()
@@ -15,6 +16,7 @@ protocol HomePresenterProtocol: AnyObject {
     func didTapDonate()
 }
 
+@MainActor
 final class HomePresenter: HomePresenterProtocol {
 
     // MARK: - Public Properties
@@ -39,7 +41,9 @@ final class HomePresenter: HomePresenterProtocol {
     // MARK: - Public Methods
 
     func viewDidLoad() {
-        loadInitialData()
+        Task { [weak self] in
+            await self?.loadInitialData()
+        }
     }
 
     func didTapCreateNewGame() {
@@ -60,27 +64,29 @@ final class HomePresenter: HomePresenterProtocol {
 
     // MARK: - Private Methods
 
-    private func loadInitialData() {
-        loadCourtAndWeather()
+    private func loadInitialData() async {
+        await loadCourtAndWeather()
         loadNearbyGamesCount()
     }
 
-    private func loadCourtAndWeather() {
-        let courtWithWeather = interactor.loadNearestCourtWithWeather()
-        let locationVM = LocationTitleViewModel(
-            title: courtWithWeather.court.location.courtName,
-            location: courtWithWeather.court.location.locationName
-        )
+    private func loadCourtAndWeather() async {
+        do {
+            let courtWithWeather = try await interactor.loadNearestCourtWithWeather()
 
-        if let weather = courtWithWeather.weather {
-            let weatherVM = WeatherViewModel(weather: weather)
-            view?.displayCreateNewGameButton(
-                state: .withLocationAndWeather(location: locationVM, weather: weatherVM)
+            let courtSummaryViewModel = LocationTitleViewModel(
+                title: courtWithWeather.court.name,
+                location: courtWithWeather.court.address
             )
-        } else {
+            let weatherViewModel = WeatherViewModel(weather: courtWithWeather.weather)
+
             view?.displayCreateNewGameButton(
-                state: .withLocationOnly(location: locationVM)
+                state: .withCourtAndWeather(court: courtSummaryViewModel, weather: weatherViewModel)
             )
+        } catch let error as LocationError {
+            print("⚠️ Location error: \(error)")
+            view?.displayCreateNewGameButton(state: .locationRestricted)
+        } catch {
+            print("⚠️ Unknown error: \(error)")
         }
     }
 

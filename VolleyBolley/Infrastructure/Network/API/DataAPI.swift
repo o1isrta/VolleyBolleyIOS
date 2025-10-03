@@ -21,9 +21,10 @@ enum DataAPI {
 
 extension DataAPI: TargetType {
 
-	var baseURL: URL {
-		return NetworkEnvironment.current.baseURL
-	}
+    // NOTE: baseURL is unused, actual value is overridden in MoyaProvider's endpointClosure
+    var baseURL: URL {
+        preconditionFailure("baseURL must not be used directly; it's overridden in endpointClosure")
+    }
 
 	var path: String {
 		switch self {
