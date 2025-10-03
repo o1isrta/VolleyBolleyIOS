@@ -7,6 +7,7 @@
 
 import UIKit
 
+@MainActor
 protocol HomeViewProtocol: AnyObject {
     func displayCreateNewGameButton(state: CreateNewGameButtonState)
     func displayFindGameButton(gamesCount: Int)
