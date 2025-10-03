@@ -20,8 +20,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     ) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
-        NetworkEnvironment.current = AppEnvironment.fromPlist()
-
         let window = UIWindow(windowScene: windowScene)
         self.window = window
 
@@ -31,8 +29,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             assertionFailure("Failed to resolve AppRouter from DIContainer")
             return
         }
-        self.appRouter = appRouter
 
+        self.appRouter = appRouter
         appRouter.start()
 
         window.makeKeyAndVisible()

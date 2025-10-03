@@ -14,16 +14,6 @@ protocol CreationSuccessInteractorProtocol {
 
 final class CreationSuccessInteractor: CreationSuccessInteractorProtocol {
 
-    // MARK: - Private Properties
-
-    private let usersRepository: UsersRepositoryProtocol
-
-    // MARK: - Initializers
-
-    init(usersRepository: UsersRepositoryProtocol) {
-        self.usersRepository = usersRepository
-    }
-
     // MARK: - Internal Methods
 
     func fetchCreationInfo(completion: @escaping (Result<CreationInfo, Error>) -> Void) {

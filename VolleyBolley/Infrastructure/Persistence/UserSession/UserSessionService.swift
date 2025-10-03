@@ -7,19 +7,9 @@
 
 import Foundation
 
-protocol UserSessionServiceProtocol {
-    var isOnboardingShown: Bool { get }
-    var isAuthorized: Bool { get }
-    func markOnboardingAsShown()
-    func markUserAuthorized()
-}
+final class UserSessionService: UserSessionServiceProtocol {
 
-final class DefaultUserSessionService: UserSessionServiceProtocol {
-    private let storage: SettingsStorageProtocol
-
-    init(storage: SettingsStorageProtocol) {
-        self.storage = storage
-    }
+    // MARK: - Public properties
 
     var isOnboardingShown: Bool {
         let value = storage.bool(forKey: "onboarding_shown")
@@ -32,6 +22,18 @@ final class DefaultUserSessionService: UserSessionServiceProtocol {
 
         return value
     }
+
+    // MARK: - Private properties
+
+    private let storage: SettingsStorageProtocol
+
+    // MARK: - Initializers
+
+    init(storage: SettingsStorageProtocol) {
+        self.storage = storage
+    }
+
+    // MARK: - Public methods
 
     func markOnboardingAsShown() {
         storage.set(true, forKey: "onboarding_shown")
