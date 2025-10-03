@@ -40,7 +40,6 @@ final class AboutViewController: BaseViewController, AboutViewProtocol {
         static let padding: CGFloat = 8
         static let topInset: CGFloat = 20
         static let titleFontSize: CGFloat = 24
-        static let animationDuration: TimeInterval = 0.15
         static let initialTableHeight: CGFloat = 240
     }
 
@@ -97,9 +96,7 @@ final class AboutViewController: BaseViewController, AboutViewProtocol {
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder: NSCoder) { nil }
 
     // MARK: - Lifecycle
 
@@ -128,14 +125,10 @@ final class AboutViewController: BaseViewController, AboutViewProtocol {
         ]
 
         tableView.reloadData()
-        tableView.layoutIfNeeded()
+		tableView.layoutIfNeeded()
 
         let topPart = Constants.topInset + Constants.buttonSize
         tableBackgroundHeightConstraint?.constant = topPart + tableView.contentSize.height
-
-        UIView.animate(withDuration: Constants.animationDuration) {
-            self.view.layoutIfNeeded()
-        }
     }
 
     // MARK: - Private Methods

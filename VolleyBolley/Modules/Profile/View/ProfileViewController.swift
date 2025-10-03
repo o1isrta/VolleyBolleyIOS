@@ -20,17 +20,17 @@ enum ProfileMenuItem: CaseIterable {
     case about
     case logOut
 
-    var icon: UIImage {
-        switch self {
-        case .players: return UIImage.Icon.players
-        case .personal: return UIImage.Icon.personal
-        case .fluentPayment: return UIImage.Icon.fluentPayment
-        case .support: return UIImage.Icon.support
-        case .faq: return UIImage.Icon.tooltip
-        case .about: return UIImage.Icon.about
-        case .logOut: return UIImage.Icon.logOut
-        }
-    }
+	var icon: UIImage {
+		switch self {
+		case .players: return UIImage.Icon.players
+		case .personal: return UIImage.Icon.personal
+		case .fluentPayment: return UIImage.Icon.fluentPayment
+		case .support: return UIImage.Icon.support
+		case .faq: return UIImage.Icon.tooltip
+		case .about: return UIImage.Icon.about
+		case .logOut: return UIImage.Icon.logOut
+		}
+	}
 
     var title: String {
         switch self {
