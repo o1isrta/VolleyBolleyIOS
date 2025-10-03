@@ -168,8 +168,8 @@ private extension MainTabBarController {
 		}
 		// Check navigation stack if view controller has navigation controller
 		if let navigationController = viewController as? UINavigationController {
-			for vc in navigationController.viewControllers {
-				if let notificationsVC = vc as? NotificationsViewController {
+			for navigationVC in navigationController.viewControllers {
+				if let notificationsVC = navigationVC as? NotificationsViewController {
 					return notificationsVC
 				}
 			}

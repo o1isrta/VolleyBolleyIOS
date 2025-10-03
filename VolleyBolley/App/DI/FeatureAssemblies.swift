@@ -25,6 +25,7 @@ enum FeatureAssemblies {
             PaywallAssembly(),
             CreationSuccessAssembly(),
             PersonalDataAssembly(),
+			FAQAssembly(),
             AboutAssembly()
         ]
     }
