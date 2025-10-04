@@ -113,7 +113,7 @@ final class CreationSuccessInfoCell: UITableViewCell {
             mainStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
 
             iconImageView.heightAnchor.constraint(equalToConstant: Constants.iconSize),
-            iconImageView.widthAnchor.constraint(equalToConstant: Constants.iconSize),
+            iconImageView.widthAnchor.constraint(equalToConstant: Constants.iconSize)
         ])
     }
 }
