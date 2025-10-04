@@ -80,7 +80,7 @@ final class LevelInfoViewController: UIViewController {
 		let levelsStack = UIStackView()
 		levelsStack.axis = .vertical
 		levelsStack.alignment = .fill
-		levelsStack.spacing = 21.73
+		levelsStack.spacing = 20
 
 		let levelTitles = [
 			String(localized: "common.light").capitalized(with: .current) + ":",
