@@ -21,7 +21,7 @@ struct NotificationCardViewModel: Equatable {
 		self.message = message
 		self.date = AppDateFormatters.onlyDate.string(from: date)
 	}
-
+	// TODO: mock data
 	static var mockDataArray = [
 		NotificationCardViewModel(
 			title: "New invite",
