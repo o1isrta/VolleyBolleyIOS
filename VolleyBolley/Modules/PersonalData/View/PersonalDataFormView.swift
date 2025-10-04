@@ -24,14 +24,6 @@ final class PersonalDataFormView: UIStackView {
 
     // MARK: - Public Properties
 
-    lazy var profileContainerView = UIView()
-    lazy var profileImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage.Icon.profile
-        imageView.contentMode = .scaleAspectFit
-        imageView.clipsToBounds = true
-        return imageView
-    }()
     lazy var editButton: UIButton = {
         let button = UIButton(type: .system)
         let pencilImage = UIImage.Icon.pencil.withRenderingMode(.alwaysOriginal)
@@ -40,13 +32,63 @@ final class PersonalDataFormView: UIStackView {
         return button
     }()
 
-    // Name field
+    lazy var maleButton: GreenButton = {
+        let button = GreenButton()
+        button.setTitle(String(localized: "Male"), for: .normal)
+        button.isSelected = true
+        return button
+    }()
 
-    lazy var nameLabel = CustomLabel(text: String(localized: "Name"), isBold: true)
-    lazy var nameTextField = CustomTextField(
+    lazy var femaleButton: GreenButton = {
+        let button = GreenButton()
+        button.setTitle(String(localized: "Female"), for: .normal)
+        button.isSelected = false
+        return button
+    }()
+
+    lazy var birthdayTextField: CustomTextField = {
+        let field = CustomTextField(
+            placeholder: "__ / __ / ____",
+            alignment: .center,
+            keyboardType: .numberPad,
+            leftPadding: Constants.birthdayTextFieldLeftPadding
+        )
+        return field
+    }()
+
+    lazy var countryList = LocationPickerView(
+        items: [],
+        placeholder: String(localized: "Choose your country")
+    )
+
+    lazy var cityList = LocationPickerView(
+        items: [],
+        placeholder: String(localized: "Choose your city")
+    )
+
+    lazy var updateButton: YellowButton = {
+        let button = YellowButton()
+        button.isSelected = true
+        button.setTitle(String(localized: "Update").uppercased(), for: .normal)
+        return button
+    }()
+
+    // MARK: - Private Properties
+
+    private lazy var profileContainerView = UIView()
+    private lazy var profileImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage.Icon.profile
+        imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = true
+        return imageView
+    }()
+
+    private lazy var nameLabel = CustomLabel(text: String(localized: "Name"), isBold: true)
+    private lazy var nameTextField = CustomTextField(
         placeholder: String(localized: "Name")
     )
-    lazy var nameStackView: UIStackView = {
+    private lazy var nameStackView: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [nameLabel, nameTextField])
         stack.axis = .vertical
         stack.spacing = Constants.mainIndent
@@ -54,37 +96,21 @@ final class PersonalDataFormView: UIStackView {
         return stack
     }()
 
-    // Surname field
-
-    lazy var surnameLabel = CustomLabel(text: String(localized: "Surname"), isBold: true)
-    lazy var surnameTextField = CustomTextField(
+    private lazy var surnameLabel = CustomLabel(text: String(localized: "Surname"), isBold: true)
+    private lazy var surnameTextField = CustomTextField(
         placeholder: String(localized: "Surname")
     )
-    lazy var surnameStackView: UIStackView = {
+    private lazy var surnameStackView: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [surnameLabel, surnameTextField])
         stack.axis = .vertical
         stack.spacing = Constants.mainIndent
         surnameLabel.setRequiredPriorities()
         return stack
     }()
-    lazy var surnameSeparator = CustomSeparator()
+    private lazy var surnameSeparator = CustomSeparator()
 
-    // Gender field
-
-    lazy var genderLabel = CustomLabel(text: String(localized: "Gender"), isBold: true)
-    lazy var maleButton: GreenButton = {
-        let button = GreenButton()
-        button.setTitle(String(localized: "Male"), for: .normal)
-        button.isSelected = true
-        return button
-    }()
-    lazy var femaleButton: GreenButton = {
-        let button = GreenButton()
-        button.setTitle(String(localized: "Female"), for: .normal)
-        button.isSelected = false
-        return button
-    }()
-    lazy var genderButtonsStackView: UIStackView = {
+    private lazy var genderLabel = CustomLabel(text: String(localized: "Gender"), isBold: true)
+    private lazy var genderButtonsStackView: UIStackView = {
         let spacer = UIView()
         spacer.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         let stack = UIStackView(arrangedSubviews: [
@@ -99,28 +125,17 @@ final class PersonalDataFormView: UIStackView {
         stack.isLayoutMarginsRelativeArrangement = true
         return stack
     }()
-    lazy var genderStackView: UIStackView = {
+    private lazy var genderStackView: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [genderLabel, genderButtonsStackView])
         stack.axis = .vertical
         stack.spacing = Constants.mainIndent
         genderLabel.setRequiredPriorities()
         return stack
     }()
-    lazy var genderSeparator = CustomSeparator()
+    private lazy var genderSeparator = CustomSeparator()
 
-    // Birthday field
-
-    lazy var birthdayLabel = CustomLabel(text: String(localized: "Date of birth"), isBold: true)
-    lazy var birthdayTextField: CustomTextField = {
-        let field = CustomTextField(
-            placeholder: "__ / __ / ____",
-            alignment: .center,
-            keyboardType: .numberPad,
-            leftPadding: Constants.birthdayTextFieldLeftPadding
-        )
-        return field
-    }()
-    lazy var birthdayStackView: UIStackView = {
+    private lazy var birthdayLabel = CustomLabel(text: String(localized: "Date of birth"), isBold: true)
+    private lazy var birthdayStackView: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [birthdayLabel, birthdayTextField])
         stack.axis = .vertical
         stack.alignment = .leading
@@ -128,44 +143,25 @@ final class PersonalDataFormView: UIStackView {
         birthdayLabel.setRequiredPriorities()
         return stack
     }()
-    lazy var birthdaySeparator = CustomSeparator()
+    private lazy var birthdaySeparator = CustomSeparator()
 
-    // Country field
-
-    lazy var countryLabel = CustomLabel(text: String(localized: "Your country"), isBold: true)
-    lazy var countryList = LocationPickerView(
-        items: [],
-        placeholder: String(localized: "Choose your country")
-    )
-    lazy var countryStackView: UIStackView = {
+    private lazy var countryLabel = CustomLabel(text: String(localized: "Your country"), isBold: true)
+    private lazy var countryStackView: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [countryLabel, countryList])
         stack.axis = .vertical
         stack.spacing = Constants.mainIndent
         countryLabel.setRequiredPriorities()
         return stack
     }()
-    lazy var countrySeparator = CustomSeparator()
+    private lazy var countrySeparator = CustomSeparator()
 
-    // City field
-
-    lazy var cityLabel = CustomLabel(text: String(localized: "Your city"), isBold: true)
-    lazy var cityList = LocationPickerView(
-        items: [],
-        placeholder: String(localized: "Choose your city")
-    )
-    lazy var cityStackView: UIStackView = {
+    private lazy var cityLabel = CustomLabel(text: String(localized: "Your city"), isBold: true)
+    private lazy var cityStackView: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [cityLabel, cityList])
         stack.axis = .vertical
         stack.spacing = Constants.mainIndent
         cityLabel.setRequiredPriorities()
         return stack
-    }()
-
-    lazy var updateButton: YellowButton = {
-        let button = YellowButton()
-        button.isSelected = true
-        button.setTitle(String(localized: "Update").uppercased(), for: .normal)
-        return button
     }()
 
     // MARK: - Initializers
