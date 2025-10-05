@@ -13,7 +13,7 @@ import Foundation
 /// - Automatically limits array size to the specified limit
 /// - Saves data to UserDefaults between app launches
 /// - New elements are added to the beginning of the array, old ones are pushed out when limit is exceeded
-/// - Supports any types conforming to Codable and Equatable protocols
+/// - Supports any types conforming to Codable protocols
 ///
 /// ## Usage Example:
 /// ```swift
@@ -23,7 +23,7 @@ import Foundation
 /// }
 /// ```
 @propertyWrapper
-struct LimitedUserDefaultsArray<Value: Codable & Equatable> {
+struct LimitedUserDefaultsArray<Value: Codable> {
 
 	private let key: String
 	private let limit: Int
