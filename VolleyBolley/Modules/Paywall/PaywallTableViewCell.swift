@@ -76,7 +76,8 @@ final class PaywallPlayerCell: UITableViewCell {
     func configure(with model: PaywallPlayerCellModel) {
         let fullName = "\(model.player.firstName) \(model.player.lastName)"
         nameLabel.text = fullName
-        distanceView.configure(distance: model.player.level.title)
+        let levelSymbol = String(model.player.level.title).prefix(1).uppercased()
+        distanceView.configure(distance: levelSymbol)
     }
 }
 
