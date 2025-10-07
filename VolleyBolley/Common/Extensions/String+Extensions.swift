@@ -59,14 +59,26 @@ extension String {
         }
 
         if digitsOnly.count >= 4 {
-            let monthRange = digitsOnly.index(digitsOnly.startIndex, offsetBy: 2)..<digitsOnly.index(digitsOnly.startIndex, offsetBy: 4)
+            let monthRange = digitsOnly.index(
+                digitsOnly.startIndex,
+                offsetBy: 2
+            )..<digitsOnly.index(
+                digitsOnly.startIndex,
+                offsetBy: 4
+            )
             if let monthInt = Int(digitsOnly[monthRange]), monthInt < 1 || monthInt > 12 {
                 return nil
             }
         }
 
         if digitsOnly.count == 8 {
-            let yearRange = digitsOnly.index(digitsOnly.startIndex, offsetBy: 4)..<digitsOnly.index(digitsOnly.startIndex, offsetBy: 8)
+            let yearRange = digitsOnly.index(
+                digitsOnly.startIndex,
+                offsetBy: 4
+            )..<digitsOnly.index(
+                digitsOnly.startIndex,
+                offsetBy: 8
+            )
             if let yearInt = Int(digitsOnly[yearRange]) {
                 let currentYear = Calendar.current.component(.year, from: Date())
                 if yearInt > currentYear {

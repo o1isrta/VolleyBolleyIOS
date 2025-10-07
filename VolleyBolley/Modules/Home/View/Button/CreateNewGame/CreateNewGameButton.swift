@@ -9,8 +9,8 @@ import UIKit
 
 enum CreateNewGameButtonState {
     case locationRestricted
-    case withLocationAndWeather(location: LocationTitleViewModel, weather: WeatherViewModel)
-    case withLocationOnly(location: LocationTitleViewModel)
+    case withCourtAndWeather(court: LocationTitleViewModel, weather: WeatherViewModel)
+    case withCourtOnly(court: LocationTitleViewModel)
 }
 
 final class CreateNewGameButton: UIButton {
@@ -74,11 +74,11 @@ final class CreateNewGameButton: UIButton {
         case .locationRestricted:
             locationTitleView.isHidden = true
             weatherView.isHidden = true
-        case .withLocationOnly(let locationTitleViewModel):
+        case .withCourtOnly(let locationTitleViewModel):
             locationTitleView.isHidden = false
             locationTitleView.configure(with: locationTitleViewModel)
             weatherView.isHidden = true
-        case .withLocationAndWeather(let locationTitleViewModel, let weatherViewModel):
+        case .withCourtAndWeather(let locationTitleViewModel, let weatherViewModel):
             locationTitleView.isHidden = false
             locationTitleView.configure(with: locationTitleViewModel)
             weatherView.isHidden = false
@@ -162,8 +162,8 @@ final class CreateNewGameButton: UIButton {
 
     let previewStates: [CreateNewGameButtonState] = [
         .locationRestricted,
-        .withLocationOnly(location: shortCourt),
-        .withLocationAndWeather(location: shortCourt, weather: weatherViewModel)
+        .withCourtOnly(court: shortCourt),
+        .withCourtAndWeather(court: shortCourt, weather: weatherViewModel)
     ]
 
     for state in previewStates {

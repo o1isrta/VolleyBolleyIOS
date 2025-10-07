@@ -6,40 +6,44 @@
 //
 
 protocol ProfilePresenterProtocol: AnyObject {
-    func viewDidLoad()
-    func didSelectMenuItem(_ item: ProfileMenuItem)
+	func viewDidLoad()
+	func didSelectMenuItem(_ item: ProfileMenuItem)
 }
 
 final class ProfilePresenter: ProfilePresenterProtocol {
 
-    // MARK: - Public Properties
+	// MARK: - Public Properties
 
-    weak var view: ProfileViewProtocol?
-    let interactor: ProfileInteractorProtocol
-    let router: ProfileRouterProtocol
+	weak var view: ProfileViewProtocol?
+	let interactor: ProfileInteractorProtocol
+	let router: ProfileRouterProtocol
 
-    // MARK: - Initializers
+	// MARK: - Initializers
 
-    init(
-        interactor: ProfileInteractorProtocol,
-        router: ProfileRouterProtocol
-    ) {
-        self.interactor = interactor
-        self.router = router
-    }
+	init(
+		interactor: ProfileInteractorProtocol,
+		router: ProfileRouterProtocol
+	) {
+		self.interactor = interactor
+		self.router = router
+	}
 
-    // MARK: - Public Methods
+	// MARK: - Public Methods
 
-    func viewDidLoad() {
+	func viewDidLoad() {
 
-    }
+	}
 
-    func didSelectMenuItem(_ item: ProfileMenuItem) {
-        switch item {
-        case .personal:
-            router.showPersonalData()
-        default:
-            break
-        }
-    }
+	func didSelectMenuItem(_ item: ProfileMenuItem) {
+		switch item {
+		case .personal:
+			router.showPersonalData()
+		case .faq:
+			router.showFAQ()
+		case .about:
+			router.showAbout()
+		default:
+			break
+		}
+	}
 }
