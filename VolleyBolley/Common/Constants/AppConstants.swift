@@ -25,4 +25,8 @@ enum AppConstants {
 	enum Notifications {
 		static let checkInterval: TimeInterval = 300
 	}
+
+	enum Contacts {
+		static let email: String = "volleybolley.app@gmail.com"
+	}
 }
