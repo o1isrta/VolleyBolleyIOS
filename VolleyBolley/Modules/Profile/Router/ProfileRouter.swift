@@ -10,6 +10,7 @@ import UIKit
 protocol ProfileRouterProtocol: AnyObject {
     func attachViewController(_ view: UIViewController)
     func showPersonalData()
+    func showSupport()
     func showFAQ()
 	func showAbout()
 }
@@ -28,6 +29,14 @@ final class ProfileRouter: ProfileRouterProtocol {
         }
 
         viewController?.navigationController?.pushViewController(personalDataVC, animated: true)
+    }
+
+	func showSupport() {
+        guard let supportVC = DIContainer.shared.resolver.resolve(SupportViewController.self) else {
+            fatalError("SupportViewController не зарегистрирован")
+        }
+
+		viewController?.navigationController?.pushViewController(supportVC, animated: true)
     }
 
 	func showAbout() {
