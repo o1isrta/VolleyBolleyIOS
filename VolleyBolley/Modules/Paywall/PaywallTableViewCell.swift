@@ -1,38 +1,25 @@
 //
-//  СhoiceTableViewCell.swift
+//  PaywallTableViewCell.swift
 //  VolleyBolley
 //
-//  Created by Вадим on 23.08.2025.
+//  Created by Вадим on 25.09.2025.
 //
 
 import UIKit
 
-struct PlayerCellModel {
-    let name: String
-    let isFavorite: Bool
-    let isSelected: Bool
+struct PaywallPlayerCellModel {
+    let player: Player
 }
 
-final class PlayerCell: UITableViewCell {
+final class PaywallPlayerCell: UITableViewCell {
 
     // MARK: - Public Properties
 
-    static let playerCellidentifier = "PlayerCell"
+    static let paywallplayerCellidentifier = "PaywallPlayerCell"
 
-    var onFavoriteToggle: (() -> Void)?
-    var onCheckmarkToggle: (() -> Void)?
+    var onDelete: (() -> Void)?
 
     // MARK: - Private Properties
-
-    private var isFavorite: Bool = false
-    private var isChecked: Bool = false
-
-    private lazy var starButton: UIButton = {
-        let button = UIButton()
-		button.setImage(UIImage.Icon.noStar, for: .normal)
-        button.addTarget(self, action: #selector(didTapStar), for: .touchUpInside)
-        return button
-    }()
 
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
@@ -41,25 +28,17 @@ final class PlayerCell: UITableViewCell {
         return label
     }()
 
-    private lazy var leftStack: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [starButton, nameLabel])
-        stack.axis = .horizontal
-        stack.alignment = .center
-        stack.spacing = 8
-        return stack
-    }()
-
     private lazy var distanceView = DistanceView()
 
-    private lazy var checkmarkButton: UIButton = {
+    private lazy var deleteButton: UIButton = {
         let button = UIButton()
-		button.setImage(UIImage.Icon.empty, for: .normal)
-        button.addTarget(self, action: #selector(didTapCheckmark), for: .touchUpInside)
+        button.setImage(UIImage.Icon.delete, for: .normal)
+        button.addTarget(self, action: #selector(didTapDelete), for: .touchUpInside)
         return button
     }()
 
     private lazy var rightStack: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [distanceView, checkmarkButton])
+        let stack = UIStackView(arrangedSubviews: [distanceView, deleteButton])
         stack.axis = .horizontal
         stack.alignment = .center
         stack.spacing = 8
@@ -67,7 +46,7 @@ final class PlayerCell: UITableViewCell {
     }()
 
     private lazy var mainStack: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [leftStack, rightStack])
+        let stack = UIStackView(arrangedSubviews: [nameLabel, rightStack])
         stack.axis = .horizontal
         stack.alignment = .center
         stack.distribution = .equalSpacing
@@ -76,7 +55,7 @@ final class PlayerCell: UITableViewCell {
 
     private lazy var containerView: UIView = {
         let view = UIView()
-        view.backgroundColor = .clear
+        view.backgroundColor = AppColor.Background.clear
         return view
     }()
 
@@ -84,7 +63,7 @@ final class PlayerCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        backgroundColor = .clear
+        backgroundColor = AppColor.Background.clear
         selectionStyle = .none
         setupView()
     }
@@ -94,36 +73,21 @@ final class PlayerCell: UITableViewCell {
 
     // MARK: - Public Method
 
-    func configure(with model: PlayerCellModel) {
-        nameLabel.text = model.name
-        self.isFavorite = model.isFavorite
-        self.isChecked = model.isSelected
-        updateUI()
-    }
-
-    // MARK: - Private Method
-
-    private func updateUI() {
-		starButton.setImage(isFavorite ? UIImage.Icon.star : UIImage.Icon.noStar, for: .normal)
-		checkmarkButton.setImage(isChecked ? UIImage.Icon.filled : UIImage.Icon.empty, for: .normal)
-    }
-
-    @objc private func didTapStar() {
-        isFavorite.toggle()
-        updateUI()
-        onFavoriteToggle?()
-    }
-
-    @objc private func didTapCheckmark() {
-        isChecked.toggle()
-        updateUI()
-        onCheckmarkToggle?()
+    func configure(with model: PaywallPlayerCellModel) {
+        let fullName = "\(model.player.firstName) \(model.player.lastName)"
+        nameLabel.text = fullName
+        let levelSymbol = String(model.player.level.title).prefix(1).uppercased()
+        distanceView.configure(distance: levelSymbol)
     }
 }
 
 // MARK: - Private methods
 
-private extension PlayerCell {
+private extension PaywallPlayerCell {
+
+    @objc private func didTapDelete() {
+        onDelete?()
+    }
 
     func setupUI() {
         contentView.addSubview(containerView)

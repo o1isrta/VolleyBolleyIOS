@@ -17,12 +17,7 @@ final class СhoicePlayersViewController: BaseViewController, СhoicePlayersView
     // MARK: - Private Properties
 
 	// TODO: remove it in the future
-    private var playersMock: [String] = [
-        "Polina Vasilieva",
-        "Kristina Popova",
-        "Anton Ivanov",
-        "Aleksandr Abramov"
-    ]
+    private var playersMock: [Player] = PlayersMock.players
     private var favoritePlayers: Set<String> = []
 
     private let presenter: СhoicePlayersViewProtocol
@@ -186,26 +181,12 @@ extension СhoicePlayersViewController: UITableViewDataSource {
             for: indexPath) as? PlayerCell else {
             return UITableViewCell()
         }
-
-        let playerName = playersMock[indexPath.section]
-        let isFavorite = favoritePlayers.contains(playerName)
-
+        let player = playersMock[indexPath.section]
         cell.configure(with: PlayerCellModel(
-            name: playerName,
-            isFavorite: isFavorite,
+            name: "\(player.firstName) \(player.lastName)",
+            isFavorite: false,
             isSelected: false
         ))
-
-        cell.onFavoriteToggle = { [weak self] in
-            guard let self else { return }
-            if self.favoritePlayers.contains(playerName) {
-                self.favoritePlayers.remove(playerName)
-            } else {
-                self.favoritePlayers.insert(playerName)
-            }
-            print("Избранные: \(self.favoritePlayers)")
-        }
-
         return cell
     }
 }
