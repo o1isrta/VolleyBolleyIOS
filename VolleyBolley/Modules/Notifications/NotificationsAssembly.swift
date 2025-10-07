@@ -15,15 +15,17 @@ final class NotificationsAssembly: Assembly {
 		let interactor = NotificationsInteractor()
 		let router = NotificationsRouter()
 		let presenter = NotificationsPresenter()
-
-		presenter.didFetchNotifications(initialData)
-
+		// Connect VIPER components
 		view.presenter = presenter
 		presenter.view = view
 		presenter.interactor = interactor
 		presenter.router = router
 		interactor.presenter = presenter
 		router.viewController = view
+		// If we have initial data, provide it to presenter
+		if !initialData.isEmpty {
+			presenter.didFetchNotifications(initialData)
+		}
 
 		return view
 	}

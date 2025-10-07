@@ -30,6 +30,6 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Для отображения ближайших спортивных площадок на карте</string>
+	<string>VolleyBolley uses your location to help you discover nearby courts.</string>
 </dict>
 </plist>

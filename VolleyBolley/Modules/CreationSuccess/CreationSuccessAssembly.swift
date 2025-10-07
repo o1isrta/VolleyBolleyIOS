@@ -9,13 +9,10 @@ import Swinject
 
 final class CreationSuccessAssembly: Assembly {
     func assemble(container: Container) {
-        container.register(CreationSuccessViewController.self) { (resolver, type: CreationType) in
-            guard let usersRepository = resolver.resolve(UsersRepositoryProtocol.self) else {
-                fatalError("Error: Failed to register CreationSuccessViewController")
-            }
+        container.register(CreationSuccessViewController.self) { (_, type: CreationType) in
 
             let router = CreationSuccessRouter()
-            let interactor = CreationSuccessInteractor(usersRepository: usersRepository)
+            let interactor = CreationSuccessInteractor()
             let presenter = CreationSuccessPresenter(
                 interactor: interactor,
                 router: router,

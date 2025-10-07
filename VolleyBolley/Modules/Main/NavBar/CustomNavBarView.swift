@@ -6,7 +6,6 @@ protocol NavBarViewProtocol: AnyObject {
 	func configure(with viewModel: NavBarViewModel)
 	func updateNotifications(_ hasNewNotifications: Bool)
 	func setViewController(_ viewController: UIViewController?)
-	func viewWillAppear()
 }
 
 final class CustomNavBarView: UIView {
@@ -167,10 +166,6 @@ extension CustomNavBarView: NavBarViewProtocol {
 
 	func setViewController(_ viewController: UIViewController?) {
 		self.parentViewController = viewController
-	}
-
-	func viewWillAppear() {
-		presenter?.viewWillAppear()
 	}
 }
 

@@ -21,4 +21,8 @@ enum AppConstants {
 			static let onboardingShown = "onboardingShown"
 		}
 	}
+
+	enum Notifications {
+		static let checkInterval: TimeInterval = 300
+	}
 }
