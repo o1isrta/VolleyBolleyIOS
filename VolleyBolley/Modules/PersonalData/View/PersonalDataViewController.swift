@@ -32,6 +32,7 @@ final class PersonalDataViewController: BaseViewController {
     private var selectedGender: String? = String(localized: "Male")
     private var selectedCountry: String?
     private var selectedCity: String?
+    private var selectedBirthday: String?
 
     private lazy var screenTitle = CustomTitle(
         text: String(localized: "Personal data"),
@@ -60,27 +61,22 @@ final class PersonalDataViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupData()
         setupView()
-        setupActions()
+        setupFormView()
 		hideKeyboardWhenTappedAround()
         presenter.viewDidLoad()
+    }
+}
+
+extension PersonalDataViewController: PersonalDataViewProtocol {
+    func updateCountries(_ countries: [String]) {
+        formView.updateCountries(countries)
     }
 }
 
 // MARK: - Private methods
 
 private extension PersonalDataViewController {
-
-    func setupData() {
-        let countries = presenter.countries
-        let cities = presenter.cities
-
-        formView.countryList.updateItems(countries)
-        formView.cityList.updateItems(cities)
-        formView.countryList.delegate = self
-        formView.cityList.delegate = self
-    }
 
     func setupView() {
         setupSubviews()
@@ -92,6 +88,23 @@ private extension PersonalDataViewController {
         glassmorphismView.addSubviews(backButton, screenTitle, scrollView)
         scrollView.addSubviews(contentView)
         contentView.addSubviews(formView)
+    }
+
+    func setupFormView() {
+        let actions = UserFormActions(
+            onEditTapped: handleEditTapped,
+            onGenderChanged: handleGenderChanged,
+            onBirthdayChanged: handleBirthdayChanged,
+            onCountrySelected: handleCountrySelected,
+            onCitySelected: handleCitySelected,
+            onUpdateTapped: handleUpdateTapped
+        )
+
+        formView.configure(
+            countries: presenter.countries,
+            cities: presenter.cities,
+            actions: actions
+        )
     }
 
     func setupConstraints() {
@@ -155,65 +168,38 @@ private extension PersonalDataViewController {
         minHeight.isActive = true
     }
 
-    func setupActions() {
-        formView.editButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
-        formView.maleButton.addTarget(self, action: #selector(genderButtonTapped(_:)), for: .touchUpInside)
-        formView.femaleButton.addTarget(self, action: #selector(genderButtonTapped(_:)), for: .touchUpInside)
-        formView.updateButton.addTarget(self, action: #selector(updateButtonTapped(_:)), for: .touchUpInside)
+    // Form callbacks
 
-        formView.birthdayTextField.delegate = self
+    func handleEditTapped() {
+        editProfilePhoto()
+    }
+
+    func handleGenderChanged(_ gender: String) {
+        selectedGender = gender
+    }
+
+    func handleBirthdayChanged(_ birthday: String) {
+        selectedBirthday = birthday
+    }
+
+    func handleCountrySelected(_ country: String) {
+        selectedCountry = country
+    }
+
+    func handleCitySelected(_ city: String) {
+        selectedCity = city
+    }
+
+    func handleUpdateTapped() {
+        presenter.updateButtonTapped()
+    }
+
+    func editProfilePhoto() {
+        // TODO: Редактирование фото профиля
     }
 
     @objc
     func backButtonTapped() {
         presenter.backButtonTapped()
-    }
-
-    @objc
-    func editButtonTapped() {
-        // TODO: Редактирование фото профиля
-    }
-
-    @objc
-    func genderButtonTapped(_ sender: UIButton) {
-        [formView.maleButton, formView.femaleButton].forEach { $0.isSelected = false }
-        sender.isSelected = true
-        selectedGender = sender.title(for: .normal)
-    }
-
-    @objc
-    func updateButtonTapped(_ sender: UIButton) {
-        presenter.updateButtonTapped()
-    }
-}
-
-extension PersonalDataViewController: UITextFieldDelegate {
-    func textField(
-        _ textField: UITextField,
-        shouldChangeCharactersIn range: NSRange,
-        replacementString string: String
-    ) -> Bool {
-        guard textField == formView.birthdayTextField else { return true }
-        return textField.updateFormattedText(
-            range: range,
-            replacementString: string,
-            formatter: { $0.formattedBirthdayOrNil() }
-        )
-    }
-}
-
-extension PersonalDataViewController: PersonalDataViewProtocol {
-    func updateCountries(_ countries: [String]) {
-        formView.countryList.updateItems(countries)
-    }
-}
-
-extension PersonalDataViewController: LocationPickerViewDelegate {
-    func locationPickerView(_ pickerView: LocationPickerView, didSelectItem item: String) {
-        if pickerView == formView.countryList {
-            selectedCountry = item
-        } else if pickerView == formView.cityList {
-            selectedCity = item
-        }
     }
 }
