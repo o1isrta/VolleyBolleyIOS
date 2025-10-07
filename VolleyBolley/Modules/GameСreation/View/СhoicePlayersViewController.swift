@@ -182,11 +182,22 @@ extension СhoicePlayersViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         let player = playersMock[indexPath.section]
+        let fullName = "\(player.firstName) \(player.lastName)"
+        let isFavorite = favoritePlayers.contains(fullName)
         cell.configure(with: PlayerCellModel(
-            name: "\(player.firstName) \(player.lastName)",
-            isFavorite: false,
+            name: fullName,
+            isFavorite: isFavorite,
             isSelected: false
         ))
+        cell.onFavoriteToggle = { [weak self] in
+            guard let self else { return }
+            if self.favoritePlayers.contains(fullName) {
+                self.favoritePlayers.remove(fullName)
+            } else {
+                self.favoritePlayers.insert(fullName)
+            }
+            print("Избранные: \(self.favoritePlayers)")
+        }
         return cell
     }
 }
