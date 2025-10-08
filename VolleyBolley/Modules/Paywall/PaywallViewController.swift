@@ -367,7 +367,6 @@ extension PaywallViewController: UITableViewDataSource {
             for: indexPath) as? PaywallPlayerCell else {
             return UITableViewCell()
         }
-
         let player = PlayersMock.players[indexPath.section]
         cell.configure(with: PaywallPlayerCellModel(player: player))
         cell.onDelete = { [weak self] in
@@ -375,7 +374,6 @@ extension PaywallViewController: UITableViewDataSource {
             self.playersMock.remove(at: indexPath.section)
             self.tableView.deleteSections([indexPath.section], with: .automatic)
         }
-
         return cell
     }
 }

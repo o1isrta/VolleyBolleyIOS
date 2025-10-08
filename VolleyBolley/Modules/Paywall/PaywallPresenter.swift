@@ -20,6 +20,7 @@ protocol PaywallPresenterProtocol: AnyObject {
 	func saveGameButtonTapped()
 	func priceTextChanged(text: String?)
 	func updatePlayersCount(to count: Int)
+    func managePlayersButtonTapped()
 }
 
 final class PaywallPresenter: PaywallPresenterProtocol {
@@ -69,8 +70,7 @@ final class PaywallPresenter: PaywallPresenterProtocol {
 	}
 
     func managePlayersButtonTapped() {
-        isPublicGameSelected = false
-        view?.updatePrivacyState(isPublic: isPublicGameSelected)
+        print("Открыть экран управления игроками")
     }
 
 	func addPaymentButtonTapped() {
