@@ -19,7 +19,7 @@ final class SupportPresenter: SupportPresenterProtocol {
 
 	// MARK: - Public Properties
 
-    weak var view: SupportViewProtocol?
+    weak var view: SupportViewControllerProtocol?
     private let interactor: SupportInteractorProtocol
     private let router: SupportRouterProtocol
 

@@ -35,7 +35,6 @@ final class AboutViewController: BaseViewController, AboutViewProtocol {
     // MARK: - Constants
 
     private enum Constants {
-        static let cornerRadius: CGFloat = 32
         static let buttonSize: CGFloat = 24
         static let padding: CGFloat = 8
         static let topInset: CGFloat = 20
@@ -48,11 +47,7 @@ final class AboutViewController: BaseViewController, AboutViewProtocol {
     private let presenter: AboutPresenterProtocol
     private var items: [AboutItem] = []
 
-    private lazy var tableBackground: GlassmorphismView = {
-        let view = GlassmorphismView()
-        view.cornerRadius = Constants.cornerRadius
-        return view
-    }()
+    private lazy var tableBackground = GlassmorphismView()
 
     private lazy var titleLabel: CustomLabel = {
         let label = CustomLabel(text: String(localized: "About"), isBold: true)
@@ -75,7 +70,6 @@ final class AboutViewController: BaseViewController, AboutViewProtocol {
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = AppColor.Background.clear
-        tableView.layer.cornerRadius = Constants.cornerRadius
         tableView.separatorStyle = .none
         tableView.isScrollEnabled = false
         tableView.dataSource = self
