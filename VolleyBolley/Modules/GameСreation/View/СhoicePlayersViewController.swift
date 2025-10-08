@@ -18,6 +18,7 @@ final class СhoicePlayersViewController: BaseViewController, СhoicePlayersView
 
 	// TODO: remove it in the future
     private var playersMock: [Player] = PlayersMock.players
+    private var favoritePlayers: Set<String> = []
 
     private let presenter: СhoicePlayersViewProtocol
 
@@ -55,7 +56,7 @@ final class СhoicePlayersViewController: BaseViewController, СhoicePlayersView
     private lazy var background = GlassmorphismView()
 
     private lazy var tableView: UITableView = {
-        let tableView = UITableView()
+        let tableView = IntrinsicTableView()
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         tableView.isScrollEnabled = false
@@ -141,7 +142,7 @@ private extension СhoicePlayersViewController {
 			background.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 8),
             background.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
             background.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
-            background.heightAnchor.constraint(equalToConstant: 412),
+            background.bottomAnchor.constraint(equalTo: tableAndButtonStack.bottomAnchor, constant: 20),
 
 			buttonBack.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 20),
             buttonBack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 28),
@@ -157,8 +158,7 @@ private extension СhoicePlayersViewController {
 
             tableAndButtonStack.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 16),
             tableAndButtonStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 28),
-            tableAndButtonStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -28),
-            tableAndButtonStack.heightAnchor.constraint(equalToConstant: 232)
+            tableAndButtonStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -28)
         ])
     }
 }
@@ -182,11 +182,22 @@ extension СhoicePlayersViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         let player = playersMock[indexPath.section]
+        let fullName = "\(player.firstName) \(player.lastName)"
+        let isFavorite = favoritePlayers.contains(fullName)
         cell.configure(with: PlayerCellModel(
-            name: "\(player.firstName) \(player.lastName)",
-            isFavorite: false,
+            name: fullName,
+            isFavorite: isFavorite,
             isSelected: false
         ))
+        cell.onFavoriteToggle = { [weak self] in
+            guard let self else { return }
+            if self.favoritePlayers.contains(fullName) {
+                self.favoritePlayers.remove(fullName)
+            } else {
+                self.favoritePlayers.insert(fullName)
+            }
+            print("Избранные: \(self.favoritePlayers)")
+        }
         return cell
     }
 }
