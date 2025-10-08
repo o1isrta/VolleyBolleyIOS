@@ -5,16 +5,18 @@
 //  Created by Roman Romanov on 07.10.2025.
 //
 
-import MessageUI// TODO: -
+import MessageUI
 import UIKit
 
 // MARK: - SupportViewControllerProtocol
 
-protocol SupportViewControllerProtocol: AnyObject {}
+protocol SupportViewControllerProtocol: AnyObject {
+	func sendEmail()
+}
 
 // MARK: - SupportViewController
 
-final class SupportViewController: BaseViewController, SupportViewControllerProtocol {
+final class SupportViewController: BaseViewController {
 
 	// MARK: - Constants
 
@@ -69,17 +71,6 @@ final class SupportViewController: BaseViewController, SupportViewControllerProt
 	private lazy var customAlertView: CustomAlertView = {
 		let view = CustomAlertView()
 		view.isHidden = true
-		let model = CustomAlertModel(
-			message: String(localized: "emailToSupport.doNotConfigured"),
-			primaryButton: ButtonDataModel(
-				title: String(localized: "customAlertView.button.ok"),
-				action: {
-					print("aaaaaaa")
-					self.customAlertView.isHidden = true
-				}
-			)
-		)
-		view.configure(with: model)
 		return view
 	}()
 
@@ -101,11 +92,56 @@ final class SupportViewController: BaseViewController, SupportViewControllerProt
 		presenter.viewDidLoad()
 		setupTableViewContentSizeObserver()
 	}
+
+	override func viewDidLayoutSubviews() {
+		super.viewDidLayoutSubviews()
+		// ALWAYS raise the customAlertView above all other subviews
+		view.bringSubviewToFront(customAlertView)
+	}
+}
+
+// MARK: - SupportViewControllerProtocol
+
+extension SupportViewController: SupportViewControllerProtocol {
+
+	func sendEmail() {
+		guard MFMailComposeViewController.canSendMail() else {
+			let message = String(localized: "emailToSupport.doNotConfigured")
+			showAlert(with: message)
+			return
+		}
+		let mailComposer = MFMailComposeViewController()
+		mailComposer.mailComposeDelegate = self
+		mailComposer.setToRecipients([AppConstants.Contacts.email])
+		mailComposer.setSubject(String(localized: "emailToSupport.subject"))
+
+		let message = """
+			\(String(localized: "emailToSupport.greetings"))
+
+			\(String(localized: "emailToSupport.message")):
+			"""
+		let basicDiagnostics = DiagnosticsManager.generatePlainTextBody(with: message)
+
+		mailComposer.setMessageBody(basicDiagnostics, isHTML: false)
+		present(mailComposer, animated: true)
+	}
 }
 
 // MARK: - Private Methods
 
 private extension SupportViewController {
+
+	func showAlert(with message: String) {
+		customAlertView.isHidden = false
+		let model = CustomAlertModel(
+			message: message,
+			primaryButton: ButtonDataModel(
+				title: String(localized: "customAlertView.button.ok"),
+				action: { self.customAlertView.isHidden = true }
+			)
+		)
+		customAlertView.configure(with: model)
+	}
 
 	func setupTableViewContentSizeObserver() {
 		tableViewContentSizeObserver = tableView.observe(
@@ -169,8 +205,10 @@ private extension SupportViewController {
 			tableView.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor),
 			tableView.trailingAnchor.constraint(equalTo: glassmorphismView.trailingAnchor),
 
-			customAlertView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-			customAlertView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+			customAlertView.topAnchor.constraint(equalTo: view.topAnchor),
+			customAlertView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+			customAlertView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+			customAlertView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
 		])
 
 		tableViewHeightConstraint = tableView.heightAnchor.constraint(
@@ -181,29 +219,6 @@ private extension SupportViewController {
 
 	@objc func backButtonTapped() {
 		presenter.backButtonTapped()
-	}
-
-	private func sendEmail() {
-		guard MFMailComposeViewController.canSendMail() else {
-			// TODO: -
-			customAlertView.isHidden = false
-//			view.bringSubviewToFront(customAlertView)
-			return
-		}
-		let mailComposer = MFMailComposeViewController()
-		mailComposer.mailComposeDelegate = self
-		mailComposer.setToRecipients([AppConstants.Contacts.email])
-		mailComposer.setSubject(String(localized: "emailToSupport.subject"))
-
-		let message = """
-			\(String(localized: "emailToSupport.greetings"))
-
-			\(String(localized: "emailToSupport.message")):
-			"""
-		let basicDiagnostics = DiagnosticsManager.generatePlainTextBody(with: message)
-
-		mailComposer.setMessageBody(basicDiagnostics, isHTML: false)
-		present(mailComposer, animated: true)
 	}
 }
 
@@ -228,43 +243,10 @@ extension SupportViewController: UITableViewDataSource {
 		) as? SupportCell else {
 			return UITableViewCell()
 		}
-
 		let item = SupportItem.allCases[indexPath.row]
 		let isLast = indexPath.row == SupportItem.allCases.count - 1
 		cell.configure(with: item, isLast: isLast)
-
 		return cell
-	}
-
-	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		tableView.deselectRow(at: indexPath, animated: true)
-		let item = SupportItem.allCases[indexPath.row]
-		// TODO: -
-		switch indexPath.row {
-		case 0:
-			presenter.faqTapped()
-		case 1:
-			sendEmail()
-			//		case .faq:
-			//			navigationController?.pushViewController(FAQViewController(), animated: true)
-			//		case .website:
-			//			openWebsite()
-			//		}
-		default: break
-		}
-	}
-}
-
-// MARK: - MFMailComposeViewControllerDelegate
-extension SupportViewController: MFMailComposeViewControllerDelegate {
-
-	func mailComposeController(
-		_ controller: MFMailComposeViewController,
-		didFinishWith result: MFMailComposeResult,
-		error: Error?
-	) {
-		controller.dismiss(animated: true)
-		// Можно показать благодарность за обращение, если result == .sent // TODO: -
 	}
 }
 
@@ -274,9 +256,27 @@ extension SupportViewController: UITableViewDelegate {
 
 	func tableView(
 		_ tableView: UITableView,
-		heightForRowAt indexPath: IndexPath
-	) -> CGFloat {
-		UITableView.automaticDimension
+		didSelectRowAt indexPath: IndexPath
+	) {
+		tableView.deselectRow(at: indexPath, animated: true)
+		let item = SupportItem.allCases[indexPath.row]
+		presenter.didSelectSupportItem(item)
+	}
+}
+
+// MARK: - MFMailComposeViewControllerDelegate
+
+extension SupportViewController: MFMailComposeViewControllerDelegate {
+
+	func mailComposeController(
+		_ controller: MFMailComposeViewController,
+		didFinishWith result: MFMailComposeResult,
+		error: Error?
+	) {
+		controller.dismiss(animated: true)
+		guard result == .sent else { return }
+		let message = String(localized: "emailToSupport.succesfullySent")
+		showAlert(with: message)
 	}
 }
 
@@ -291,7 +291,7 @@ struct SupportViewControllerPreview: UIViewControllerRepresentable {
 		weak var view: SupportViewControllerProtocol?
 		func viewDidLoad() {}
 		func backButtonTapped() {}
-		func faqTapped() {}
+		func didSelectSupportItem(_ item: SupportItem) {}
 	}
 
 	func makeUIViewController(context: Context) -> some UIViewController {

@@ -1244,6 +1244,23 @@
         }
       }
     },
+    "emailToSupport.succesfullySent" : {
+      "comment" : "Diagnostics info",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Thank you for your inquiry! We will respond to you shortly."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Спасибо за обращение! Мы ответим вам в ближайшее время."
+          }
+        }
+      }
+    },
     "emailToSupport.systemName" : {
       "comment" : "Diagnostics info",
       "localizations" : {
