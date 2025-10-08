@@ -5,12 +5,14 @@
 //  Created by Roman Romanov on 07.10.2025.
 //
 
+import UIKit
+
 // MARK: - SupportPresenterProtocol
 
 protocol SupportPresenterProtocol: AnyObject {
     func viewDidLoad()
 	func backButtonTapped()
-	func faqTapped()
+	func didSelectSupportItem(_ item: SupportItem)
 }
 
 // MARK: - SupportPresenter
@@ -38,7 +40,18 @@ final class SupportPresenter: SupportPresenterProtocol {
 		router.navigateBack()
 	}
 
-	func faqTapped() {
-		router.showFAQ()
+	func didSelectSupportItem(_ item: SupportItem) {
+		switch item {
+		case .faq:
+			router.showFAQ()
+		case .linktree:
+			guard let url = URL(string: AppConstants.Contacts.linktreeURL) else { return }
+			UIApplication.shared.open(url)
+		case .contactUs:
+			view?.sendEmail()
+		case .whatsApp:
+			guard let url = URL(string: AppConstants.Contacts.whatsAppURL) else { return }
+			UIApplication.shared.open(url)
+		}
 	}
 }
