@@ -68,7 +68,7 @@ final class SupportCell: UITableViewCell {
 
     func configure(with item: SupportItem, isLast: Bool = false) {
         titleLabel.text = item.title
-        valueLabel.text = item.value
+		valueLabel.text = item.description
         separatorLine.isHidden = isLast
     }
 

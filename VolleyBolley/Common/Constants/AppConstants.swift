@@ -28,5 +28,7 @@ enum AppConstants {
 
 	enum Contacts {
 		static let email: String = "volleybolley.app@gmail.com"
+		static let linktreeURL: String = "https://linktr.ee/volleybolley.app"
+		static let whatsAppURL: String = "https://wa.me/message/LEFHH2AQMSE3D1"
 	}
 }

@@ -5,72 +5,33 @@
 //  Created by Roman Romanov on 07.10.2025.
 //
 
-import MessageUI
+import MessageUI// TODO: -
 import UIKit
 
-// MARK: - Protocol
+// MARK: - SupportViewControllerProtocol
 
-protocol SupportViewProtocol: AnyObject {
-	func displaySupportInfo(_ viewModel: SupportViewModel)
-}
+protocol SupportViewControllerProtocol: AnyObject {}
 
-// MARK: - ViewModel
+// MARK: - SupportViewController
 
-struct SupportViewModel {
-	let faq: String
-	let email: String
-}
-
-// MARK: - Item for Table
-
-struct SupportItem {
-	let title: String
-	let value: String
-}
-
-// MARK: - ViewController
-
-final class SupportViewController: BaseViewController {
+final class SupportViewController: BaseViewController, SupportViewControllerProtocol {
 
 	// MARK: - Constants
 
 	private enum Constants {
-		static let cornerRadius: CGFloat = 32
 		static let buttonSize: CGFloat = 24
 		static let padding: CGFloat = 8
+		static let tableTopInset: CGFloat = 4
 		static let topInset: CGFloat = 20
 		static let titleFontSize: CGFloat = 24
-		static let initialTableHeight: CGFloat = 240
+		static let initialTableHeight: CGFloat = 0
 	}
 
 	// MARK: - Private Properties
 
 	private let presenter: SupportPresenterProtocol
-	// TODO: -
-	private var items: [SupportItem] = [
-		SupportItem(
-			   title: String(localized: "support.faq"),
-			   value: String(localized: "support.faq.description")
-		   ),
-		   SupportItem(
-			   title: String(localized: "support.linktree"),
-			   value: String(localized: "support.linktree.description")//"https://linktr.ee/volleybolley.app"
-		   ),
-		   SupportItem(
-			   title: String(localized: "support.contactUs"),
-			   value: AppConstants.Contacts.email
-		   ),
-		   SupportItem(
-			   title: String(localized: "support.whatsApp"),
-			   value: String(localized: "support.whatsApp.description")//"https://wa.me/message/LEFHH2AQMSE3D1"
-		   )
-	   ]
 
-	private lazy var tableBackground: GlassmorphismView = {
-		let view = GlassmorphismView()
-		view.cornerRadius = Constants.cornerRadius
-		return view
-	}()
+	private lazy var glassmorphismView = GlassmorphismView()
 
 	private lazy var titleLabel: CustomLabel = {
 		let label = CustomLabel(text: String(localized: "Support"), isBold: true)
@@ -90,21 +51,37 @@ final class SupportViewController: BaseViewController {
 		return button
 	}()
 
+	private var tableViewHeightConstraint: NSLayoutConstraint?
+	private var tableViewContentSizeObserver: NSKeyValueObservation?
 	private lazy var tableView: UITableView = {
 		let tableView = UITableView()
 		tableView.backgroundColor = AppColor.Background.clear
-		tableView.layer.cornerRadius = Constants.cornerRadius
 		tableView.separatorStyle = .none
 		tableView.isScrollEnabled = false
 		tableView.dataSource = self
 		tableView.delegate = self
 		tableView.rowHeight = UITableView.automaticDimension
-		tableView.estimatedRowHeight = 44
+		tableView.estimatedRowHeight = 80
 		tableView.register(SupportCell.self, forCellReuseIdentifier: SupportCell.reuseIdentifier)
 		return tableView
 	}()
 
-	private var tableBackgroundHeightConstraint: NSLayoutConstraint?// TODO: -
+	private lazy var customAlertView: CustomAlertView = {
+		let view = CustomAlertView()
+		view.isHidden = true
+		let model = CustomAlertModel(
+			message: String(localized: "emailToSupport.doNotConfigured"),
+			primaryButton: ButtonDataModel(
+				title: String(localized: "customAlertView.button.ok"),
+				action: {
+					print("aaaaaaa")
+					self.customAlertView.isHidden = true
+				}
+			)
+		)
+		view.configure(with: model)
+		return view
+	}()
 
 	// MARK: - Initializers
 
@@ -122,6 +99,7 @@ final class SupportViewController: BaseViewController {
 		super.viewDidLoad()
 		setupView()
 		presenter.viewDidLoad()
+		setupTableViewContentSizeObserver()
 	}
 }
 
@@ -129,53 +107,76 @@ final class SupportViewController: BaseViewController {
 
 private extension SupportViewController {
 
+	func setupTableViewContentSizeObserver() {
+		tableViewContentSizeObserver = tableView.observe(
+			\.contentSize,
+			 options: [.new]
+		) { [weak self] _, change in
+			guard
+				let self,
+				let newSize = change.newValue
+			else { return }
+			// Limiting the max height to preserve scrolling
+			let maxHeight = UIScreen.main.bounds.height - 315
+			let newHeight = min(newSize.height, maxHeight)
+			self.tableViewHeightConstraint?.constant = newHeight
+		}
+	}
+
 	func setupView() {
-		view.addSubviews(tableBackground)
-
-		tableBackground.addSubviews(
-			backButton,
+		view.addSubviews(
+			glassmorphismView,
+			tableView,
 			titleLabel,
-			tableView
+			backButton,
+			customAlertView
 		)
-
-		tableBackgroundHeightConstraint = tableBackground.heightAnchor.constraint(
-			equalToConstant: Constants.initialTableHeight
-		)
-		tableBackgroundHeightConstraint?.isActive = true
-
 		NSLayoutConstraint.activate([
-			tableBackground.topAnchor.constraint(
+			glassmorphismView.topAnchor.constraint(
 				equalTo: navBar.bottomAnchor,
 				constant: Constants.padding
 			),
-			tableBackground.leadingAnchor.constraint(
+			glassmorphismView.leadingAnchor.constraint(
 				equalTo: view.leadingAnchor,
 				constant: Constants.padding
 			),
-			tableBackground.trailingAnchor.constraint(
+			glassmorphismView.trailingAnchor.constraint(
 				equalTo: view.trailingAnchor,
 				constant: -Constants.padding
 			),
+			glassmorphismView.bottomAnchor.constraint(
+				equalTo: tableView.bottomAnchor
+			),
 
 			backButton.topAnchor.constraint(
-				equalTo: tableBackground.topAnchor,
+				equalTo: glassmorphismView.topAnchor,
 				constant: Constants.topInset
 			),
 			backButton.leadingAnchor.constraint(
-				equalTo: tableBackground.leadingAnchor,
+				equalTo: glassmorphismView.leadingAnchor,
 				constant: Constants.topInset
 			),
 			backButton.heightAnchor.constraint(equalToConstant: Constants.buttonSize),
 			backButton.widthAnchor.constraint(equalToConstant: Constants.buttonSize),
 
-			titleLabel.centerXAnchor.constraint(equalTo: tableBackground.centerXAnchor),
+			titleLabel.centerXAnchor.constraint(equalTo: glassmorphismView.centerXAnchor),
 			titleLabel.centerYAnchor.constraint(equalTo: backButton.centerYAnchor),
 
-			tableView.topAnchor.constraint(equalTo: backButton.bottomAnchor),
-			tableView.leadingAnchor.constraint(equalTo: tableBackground.leadingAnchor),
-			tableView.trailingAnchor.constraint(equalTo: tableBackground.trailingAnchor),
-			tableView.bottomAnchor.constraint(equalTo: tableBackground.bottomAnchor)
+			tableView.topAnchor.constraint(
+				equalTo: backButton.bottomAnchor,
+				constant: Constants.tableTopInset
+			),
+			tableView.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor),
+			tableView.trailingAnchor.constraint(equalTo: glassmorphismView.trailingAnchor),
+
+			customAlertView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+			customAlertView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
 		])
+
+		tableViewHeightConstraint = tableView.heightAnchor.constraint(
+			equalToConstant: Constants.initialTableHeight
+		)
+		tableViewHeightConstraint?.isActive = true
 	}
 
 	@objc func backButtonTapped() {
@@ -185,7 +186,8 @@ private extension SupportViewController {
 	private func sendEmail() {
 		guard MFMailComposeViewController.canSendMail() else {
 			// TODO: -
-			print(String(localized: "emailToSupport.doNotConfigured"))
+			customAlertView.isHidden = false
+//			view.bringSubviewToFront(customAlertView)
 			return
 		}
 		let mailComposer = MFMailComposeViewController()
@@ -205,39 +207,6 @@ private extension SupportViewController {
 	}
 }
 
-// MARK: - SupportViewProtocol
-
-extension SupportViewController: SupportViewProtocol {
-
-	func displaySupportInfo(_ viewModel: SupportViewModel) {
-		// TODO: - 
-		items = [
-			SupportItem(
-				title: String(localized: "support.faq"),
-				value: String(localized: "support.faq.description")
-			),
-			SupportItem(
-				title: String(localized: "support.linktree"),
-				value: String(localized: "support.linktree.description")//"https://linktr.ee/volleybolley.app"
-			),
-			SupportItem(
-				title: String(localized: "support.contactUs"),
-				value: viewModel.email
-			),
-			SupportItem(
-				title: String(localized: "support.whatsApp"),
-				value: String(localized: "support.whatsApp.description")//"https://wa.me/message/LEFHH2AQMSE3D1"
-			)
-		]
-
-		tableView.reloadData()
-		tableView.layoutIfNeeded()
-
-		let topPart = Constants.topInset + Constants.buttonSize
-		tableBackgroundHeightConstraint?.constant = topPart + tableView.contentSize.height
-	}
-}
-
 // MARK: - UITableViewDataSource
 
 extension SupportViewController: UITableViewDataSource {
@@ -246,7 +215,7 @@ extension SupportViewController: UITableViewDataSource {
 		_ tableView: UITableView,
 		numberOfRowsInSection section: Int
 	) -> Int {
-		items.count
+		SupportItem.allCases.count
 	}
 
 	func tableView(
@@ -260,8 +229,8 @@ extension SupportViewController: UITableViewDataSource {
 			return UITableViewCell()
 		}
 
-		let item = items[indexPath.row]
-		let isLast = indexPath.row == items.count - 1
+		let item = SupportItem.allCases[indexPath.row]
+		let isLast = indexPath.row == SupportItem.allCases.count - 1
 		cell.configure(with: item, isLast: isLast)
 
 		return cell
@@ -269,7 +238,7 @@ extension SupportViewController: UITableViewDataSource {
 
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
-		let item = items[indexPath.row]
+		let item = SupportItem.allCases[indexPath.row]
 		// TODO: -
 		switch indexPath.row {
 		case 0:
@@ -319,14 +288,8 @@ import SwiftUI
 struct SupportViewControllerPreview: UIViewControllerRepresentable {
 
 	class StubPresenter: SupportPresenterProtocol {
-		weak var view: SupportViewProtocol?
-		func viewDidLoad() {
-			let supportViewModel = SupportViewModel(
-				faq: "The answer may already be here",
-				email: AppConstants.Contacts.email
-			)
-			view?.displaySupportInfo(supportViewModel)
-		}
+		weak var view: SupportViewControllerProtocol?
+		func viewDidLoad() {}
 		func backButtonTapped() {}
 		func faqTapped() {}
 	}

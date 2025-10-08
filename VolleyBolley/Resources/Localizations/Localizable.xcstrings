@@ -494,6 +494,23 @@
         }
       }
     },
+    "customAlertView.button.cancel" : {
+      "comment" : "Custom Alert",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отмена"
+          }
+        }
+      }
+    },
     "customAlertView.button.done" : {
       "comment" : "Custom Alert",
       "localizations" : {
@@ -530,7 +547,6 @@
     },
     "customAlertView.button.no" : {
       "comment" : "Custom Alert",
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -546,9 +562,25 @@
         }
       }
     },
+    "customAlertView.button.ok" : {
+      "comment" : "Custom Alert",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        }
+      }
+    },
     "customAlertView.button.rate" : {
       "comment" : "Custom Alert",
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -583,7 +615,6 @@
     },
     "customAlertView.button.yes" : {
       "comment" : "Custom Alert",
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -601,7 +632,6 @@
     },
     "customAlertView.message.invitesSent" : {
       "comment" : "Custom Alert",
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -619,7 +649,6 @@
     },
     "customAlertView.message.logout" : {
       "comment" : "Custom Alert",
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2456,16 +2485,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ваш номер телефона"
-          }
-        }
-      }
-    },
-    "ОК" : {
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OK"
           }
         }
       }
