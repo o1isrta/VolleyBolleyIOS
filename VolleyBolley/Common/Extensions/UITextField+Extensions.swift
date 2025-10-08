@@ -14,4 +14,35 @@ extension UITextField {
         self.leftView = paddingView
         self.leftViewMode = .always
     }
+
+    /// Ставит курсор в конец текста
+    func moveCursorToEnd() {
+        let endPosition = endOfDocument
+        selectedTextRange = textRange(from: endPosition, to: endPosition)
+    }
+
+    /// Обновляет текст с учётом форматирования и опционально двигает курсор в конец
+    func updateFormattedText(
+        range: NSRange,
+        replacementString string: String,
+        formatter: (String) -> String?,
+        forceCursorToEnd: Bool = true
+    ) -> Bool {
+        let currentText = text ?? ""
+        guard let stringRange = Range(range, in: currentText) else { return false }
+
+        let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
+
+        guard let formattedText = formatter(updatedText) else {
+            return false
+        }
+
+        text = formattedText
+
+        if forceCursorToEnd {
+            moveCursorToEnd()
+        }
+
+        return false
+    }
 }
