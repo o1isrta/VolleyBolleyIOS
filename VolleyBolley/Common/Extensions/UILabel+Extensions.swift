@@ -21,4 +21,9 @@ extension UILabel {
 
 		self.attributedText = attributedString
 	}
+
+    func setRequiredPriorities() {
+        setContentHuggingPriority(.required, for: .vertical)
+        setContentCompressionResistancePriority(.required, for: .vertical)
+    }
 }
