@@ -22,6 +22,9 @@ final class SupportRouter: SupportRouterProtocol {
     // MARK: - Public Properties
 
     weak var viewController: UIViewController?
+
+	// MARK: - Private Properties
+
 	private let faqViewController: () -> FAQViewController?
 
 	// MARK: - Initializers
