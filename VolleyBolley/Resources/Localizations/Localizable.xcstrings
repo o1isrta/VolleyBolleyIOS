@@ -547,6 +547,7 @@
     },
     "customAlertView.button.no" : {
       "comment" : "Custom Alert",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -581,6 +582,7 @@
     },
     "customAlertView.button.rate" : {
       "comment" : "Custom Alert",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -615,6 +617,7 @@
     },
     "customAlertView.button.yes" : {
       "comment" : "Custom Alert",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -632,6 +635,7 @@
     },
     "customAlertView.message.invitesSent" : {
       "comment" : "Custom Alert",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -649,6 +653,7 @@
     },
     "customAlertView.message.logout" : {
       "comment" : "Custom Alert",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

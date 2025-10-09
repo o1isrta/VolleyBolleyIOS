@@ -22,13 +22,14 @@ final class SupportPresenter: SupportPresenterProtocol {
 	// MARK: - Public Properties
 
     weak var view: SupportViewControllerProtocol?
-    private let interactor: SupportInteractorProtocol
+
+	// MARK: - Private Properties
+
     private let router: SupportRouterProtocol
 
     // MARK: - Initializers
 
-    init(interactor: SupportInteractorProtocol, router: SupportRouterProtocol) {
-        self.interactor = interactor
+    init(router: SupportRouterProtocol) {
         self.router = router
     }
 
