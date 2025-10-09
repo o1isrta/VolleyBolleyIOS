@@ -17,7 +17,17 @@ final class ProfileAssembly: Assembly {
                 fatalError("Error: Failed to register ProfileViewController")
             }
 
-            let router = ProfileRouter()
+			let personalDataViewController = { resolver.resolve(PersonalDataViewController.self) }
+			let supportViewController = { resolver.resolve(SupportViewController.self) }
+			let aboutViewController = { resolver.resolve(AboutViewController.self) }
+			let faqViewController = { resolver.resolve(FAQViewController.self) }
+
+			let router = ProfileRouter(
+				personalDataViewController: personalDataViewController,
+				supportViewController: supportViewController,
+				aboutViewController: aboutViewController,
+				faqViewController: faqViewController
+			)
 
             let interactor = ProfileInteractor(
                 imageLoader: imageLoader
