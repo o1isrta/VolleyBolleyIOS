@@ -44,9 +44,7 @@ final class SupportRouter: SupportRouterProtocol {
 	}
 
 	func showFAQ() {
-		guard let faqVC = faqViewController() else {
-			fatalError("FAQViewController could not be created")
-		}
+		guard let faqVC = faqViewController() else { fatalError("FAQViewController could not be created") }
 		viewController?.navigationController?.pushViewController(faqVC, animated: true)
 	}
 }
