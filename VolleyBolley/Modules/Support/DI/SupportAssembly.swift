@@ -10,8 +10,9 @@ import Swinject
 final class SupportAssembly: Assembly {
 
     func assemble(container: Container) {
-        container.register(SupportViewController.self) { _ in
-            let router = SupportRouter()
+        container.register(SupportViewController.self) { resolver in
+            let faqViewController = { resolver.resolve(FAQViewController.self) }
+            let router = SupportRouter(faqViewController: faqViewController)
             let presenter = SupportPresenter(
                 router: router
             )
