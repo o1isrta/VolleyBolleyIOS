@@ -22,6 +22,13 @@ final class SupportRouter: SupportRouterProtocol {
     // MARK: - Public Properties
 
     weak var viewController: UIViewController?
+	private let faqViewController: () -> FAQViewController?
+
+	// MARK: - Initializers
+
+	init(faqViewController: @escaping () -> FAQViewController?) {
+		self.faqViewController = faqViewController
+	}
 
 	// MARK: - Public Methods
 
@@ -34,10 +41,9 @@ final class SupportRouter: SupportRouterProtocol {
 	}
 
 	func showFAQ() {
-		guard let faqVC = DIContainer.shared.resolver.resolve(FAQViewController.self) else {
-			fatalError("FAQViewController не зарегистрирован")
+		guard let faqVC = faqViewController() else {
+			fatalError("FAQViewController could not be created")
 		}
-
 		viewController?.navigationController?.pushViewController(faqVC, animated: true)
 	}
 }
