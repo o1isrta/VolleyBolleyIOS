@@ -45,11 +45,9 @@ final class SupportViewController: BaseViewController {
 		let button = UtilityButton(style: .small)
 		button.setImage(.chevronBackward, for: .normal)
 		button.tintColor = AppColor.Icon.primary
-		button.addTarget(
-			self,
-			action: #selector(backButtonTapped),
-			for: .touchUpInside
-		)
+		button.addAction(UIAction { [weak self] _ in
+			self?.presenter.backButtonTapped()
+		}, for: .touchUpInside)
 		return button
 	}()
 
@@ -215,10 +213,6 @@ private extension SupportViewController {
 			equalToConstant: Constants.initialTableHeight
 		)
 		tableViewHeightConstraint?.isActive = true
-	}
-
-	@objc func backButtonTapped() {
-		presenter.backButtonTapped()
 	}
 }
 
