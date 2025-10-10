@@ -28,7 +28,8 @@ platform :ios do
       build_app(
         clean: true,
 	scheme: "VolleyBolley",
-	project: "./VolleyBolley.xcodeproj"
+	project: "./VolleyBolley.xcodeproj",
+	disable_package_plugin_validation: true
       )
     end
 end
