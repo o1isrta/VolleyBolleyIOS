@@ -28,9 +28,7 @@ platform :ios do
       build_app(
         clean: true,
 	scheme: "VolleyBolley",
-        devices: ["iPhone 16", "iPhone 16 Pro"],
-        skip_build: true,
-        build_for_testing: true 
+	project: "./VolleyBolley.xcodeproj"
       )
     end
 end
