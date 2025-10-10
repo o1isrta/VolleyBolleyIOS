@@ -38,11 +38,6 @@
 			path = VolleyBolley;
 			sourceTree = "<group>";
 		};
-		C992AB272E994D8F000347AF /* VolleyBolleyTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = VolleyBolleyTests;
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,7 +58,6 @@
 			isa = PBXGroup;
 			children = (
 				3CB112092E0B1FEF00EF5EC4 /* VolleyBolley */,
-				C992AB272E994D8F000347AF /* VolleyBolleyTests */,
 				3CB112082E0B1FEF00EF5EC4 /* Products */,
 			);
 			sourceTree = "<group>";
