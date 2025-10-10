@@ -29,7 +29,7 @@ platform :ios do
         clean: true,
 	scheme: "VolleyBolley",
 	project: "./VolleyBolley.xcodeproj",
-	disable_package_plugin_validation: true
+	xcargs: "-disablePackagePluginValidation"
       )
     end
 end
