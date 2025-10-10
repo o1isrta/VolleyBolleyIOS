@@ -25,7 +25,7 @@ end
 platform :ios do
     desc "Try to build project"
     lane :try_build do
-      scan(
+      build_app(
         clean: true,
 	scheme: "VolleyBolley",
         devices: ["iPhone 16", "iPhone 16 Pro"],
