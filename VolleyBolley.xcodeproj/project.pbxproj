@@ -12,8 +12,19 @@
 		910884042E27A010001078FF /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 910884032E27A010001078FF /* Moya */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		C992AB2A2E994D8F000347AF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3CB111FF2E0B1FEF00EF5EC4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3CB112062E0B1FEF00EF5EC4;
+			remoteInfo = VolleyBolley;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		3CB112072E0B1FEF00EF5EC4 /* VolleyBolley.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VolleyBolley.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C992AB262E994D8F000347AF /* VolleyBolleyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VolleyBolleyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -38,6 +49,11 @@
 			path = VolleyBolley;
 			sourceTree = "<group>";
 		};
+		C992AB272E994D8F000347AF /* VolleyBolleyTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = VolleyBolleyTests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +67,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C992AB232E994D8F000347AF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -58,6 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				3CB112092E0B1FEF00EF5EC4 /* VolleyBolley */,
+				C992AB272E994D8F000347AF /* VolleyBolleyTests */,
 				3CB112082E0B1FEF00EF5EC4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -66,6 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				3CB112072E0B1FEF00EF5EC4 /* VolleyBolley.app */,
+				C992AB262E994D8F000347AF /* VolleyBolleyTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -99,6 +124,29 @@
 			productReference = 3CB112072E0B1FEF00EF5EC4 /* VolleyBolley.app */;
 			productType = "com.apple.product-type.application";
 		};
+		C992AB252E994D8F000347AF /* VolleyBolleyTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C992AB2C2E994D90000347AF /* Build configuration list for PBXNativeTarget "VolleyBolleyTests" */;
+			buildPhases = (
+				C992AB222E994D8F000347AF /* Sources */,
+				C992AB232E994D8F000347AF /* Frameworks */,
+				C992AB242E994D8F000347AF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C992AB2B2E994D8F000347AF /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				C992AB272E994D8F000347AF /* VolleyBolleyTests */,
+			);
+			name = VolleyBolleyTests;
+			packageProductDependencies = (
+			);
+			productName = VolleyBolleyTests;
+			productReference = C992AB262E994D8F000347AF /* VolleyBolleyTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -111,6 +159,10 @@
 				TargetAttributes = {
 					3CB112062E0B1FEF00EF5EC4 = {
 						CreatedOnToolsVersion = 16.1;
+					};
+					C992AB252E994D8F000347AF = {
+						CreatedOnToolsVersion = 16.1;
+						TestTargetID = 3CB112062E0B1FEF00EF5EC4;
 					};
 				};
 			};
@@ -136,12 +188,20 @@
 			projectRoot = "";
 			targets = (
 				3CB112062E0B1FEF00EF5EC4 /* VolleyBolley */,
+				C992AB252E994D8F000347AF /* VolleyBolleyTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		3CB112052E0B1FEF00EF5EC4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C992AB242E994D8F000347AF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -158,12 +218,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C992AB222E994D8F000347AF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
 		91F7CA392E1099A500E1EA41 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			productRef = 91F7CA382E1099A500E1EA41 /* SwiftLintBuildToolPlugin */;
+		};
+		C992AB2B2E994D8F000347AF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3CB112062E0B1FEF00EF5EC4 /* VolleyBolley */;
+			targetProxy = C992AB2A2E994D8F000347AF /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -569,6 +641,78 @@
 			};
 			name = "Debug-Mock";
 		};
+		C992AB2D2E994D90000347AF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PYCAA238P6;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.superaydumov.VolleyBolleyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VolleyBolley.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/VolleyBolley";
+			};
+			name = Debug;
+		};
+		C992AB2E2E994D90000347AF /* Debug-Staging */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PYCAA238P6;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.superaydumov.VolleyBolleyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VolleyBolley.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/VolleyBolley";
+			};
+			name = "Debug-Staging";
+		};
+		C992AB2F2E994D90000347AF /* Debug-Mock */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PYCAA238P6;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.superaydumov.VolleyBolleyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VolleyBolley.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/VolleyBolley";
+			};
+			name = "Debug-Mock";
+		};
+		C992AB302E994D90000347AF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PYCAA238P6;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.superaydumov.VolleyBolleyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VolleyBolley.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/VolleyBolley";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -590,6 +734,17 @@
 				918ACACC2E28D3220017181C /* Debug-Staging */,
 				918ACACE2E28D8520017181C /* Debug-Mock */,
 				3CB1121C2E0B1FF000EF5EC4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C992AB2C2E994D90000347AF /* Build configuration list for PBXNativeTarget "VolleyBolleyTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C992AB2D2E994D90000347AF /* Debug */,
+				C992AB2E2E994D90000347AF /* Debug-Staging */,
+				C992AB2F2E994D90000347AF /* Debug-Mock */,
+				C992AB302E994D90000347AF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
