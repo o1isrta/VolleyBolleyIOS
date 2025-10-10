@@ -29,7 +29,7 @@ platform :ios do
         clean: true,
 	scheme: "VolleyBolley",
 	project: "./VolleyBolley.xcodeproj",
-	xcargs: "-skipPackagePluginValidation"
+	xcargs: "-skipPackagePluginValidation CODE_SIGNING_ALLOWED=NO CODE_SIGN_IDENTITY=\"\" CODE_SIGNING_REQUIRED=NO"
       )
     end
 end
