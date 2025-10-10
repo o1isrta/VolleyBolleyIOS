@@ -1,0 +1,19 @@
+# GitHub Action workflow file
+
+name: iOS Push
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+      - 'feature/**'
+      - 'bugfix/**'
+    paths-ignore:
+      - '.github/**'
+  workflow_dispatch:
+  
+jobs:
+  SwiftLint:
+    uses: ./.github/workflows/gha-swiftlint.yml
+# YAML file without @version due to using the local repository file
