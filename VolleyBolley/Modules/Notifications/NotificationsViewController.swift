@@ -163,7 +163,7 @@ extension NotificationsViewController: NotificationsViewControllerProtocol {
 extension NotificationsViewController: UITableViewDataSource {
 
 	func getRowsCount() -> Int {
-		if notifications.count == 0 {
+        if notifications.isEmpty {
 			return 1
 		}
 
@@ -179,7 +179,7 @@ extension NotificationsViewController: UITableViewDataSource {
 			withIdentifier: NotificationCell.reuseIdentifier,
 			for: indexPath
 		) as? NotificationCell {
-			if notifications.count == 0 {
+            if notifications.isEmpty {
 				cell.configureAsNoNotifications()
 			} else {
 				let item = notifications[indexPath.row]
@@ -194,22 +194,22 @@ extension NotificationsViewController: UITableViewDataSource {
 
 // MARK: - Preview
 
-#if DEBUG
-@available(iOS 17.0, *)
-#Preview("No") {
-	NotificationsAssembly.createModule(with: [])
-}
-@available(iOS 17.0, *)
-#Preview("Several") {
-	let model = NotificationCardViewModel.mockDataArray
-	NotificationsAssembly.createModule(with: model)
-}
-@available(iOS 17.0, *)
-#Preview("Multiple") {
-	let model = Array(
-		repeating: NotificationCardViewModel.mockDataArray,
-		count: 7
-	).flatMap { $0 }
-	NotificationsAssembly.createModule(with: model)
-}
-#endif
+//#if DEBUG
+//@available(iOS 17.0, *)
+//#Preview("No") {
+//	NotificationsAssembly.createModule(with: [])
+//}
+//@available(iOS 17.0, *)
+//#Preview("Several") {
+//	let model = NotificationCardViewModel.mockDataArray
+//	NotificationsAssembly.createModule(with: model)
+//}
+//@available(iOS 17.0, *)
+//#Preview("Multiple") {
+//	let model = Array(
+//		repeating: NotificationCardViewModel.mockDataArray,
+//		count: 7
+//	).flatMap { $0 }
+//	NotificationsAssembly.createModule(with: model)
+//}
+//#endif
