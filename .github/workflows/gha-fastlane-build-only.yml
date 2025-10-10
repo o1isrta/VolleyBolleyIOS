@@ -1,0 +1,15 @@
+# GitHub Action workflow file
+
+name: FastLane Try Build
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  build-for-pr:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v4.1.4
+    - run: fastlane try_build
+    - run: echo "::notice::${{ github.actor }} ran GitHub Action for Fastlane try_build (${{ job.status }})."

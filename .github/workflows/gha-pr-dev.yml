@@ -1,0 +1,28 @@
+ # GitHub Action workflow file
+
+name: iOS Pull Request (dev)
+
+on:
+  pull_request:
+    branches:
+      - 'feature/**'
+      - 'bugfix/**'
+      - develop
+    types:
+    - opened
+    - reopened
+#    - edited
+    - synchronize
+    paths-ignore:
+      - '.github/**'
+  workflow_dispatch:
+  
+jobs:
+  SwiftLint:
+    uses: ./.github/workflows/gha-swiftlint.yml
+# YAML file without @version due to using the local repository file
+
+  Fastlane:
+    needs: SwiftLint
+    uses: ./.github/workflows/gha-fastlane-build-only.yml
+#    secrets: inherit
