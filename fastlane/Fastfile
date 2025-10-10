@@ -27,6 +27,7 @@ platform :ios do
     lane :try_build do
       scan(
         clean: true,
+	scheme: "VolleyBolley",
         devices: ["iPhone 16", "iPhone 16 Pro"],
         skip_build: true,
         build_for_testing: true 
