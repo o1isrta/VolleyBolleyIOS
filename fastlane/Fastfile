@@ -25,11 +25,19 @@ end
 platform :ios do
     desc "Try to build project"
     lane :try_build do
-      build_app(
-        clean: true,
-	scheme: "VolleyBolley",
-	project: "./VolleyBolley.xcodeproj",
-	xcargs: "-skipPackagePluginValidation CODE_SIGNING_ALLOWED=NO CODE_SIGN_IDENTITY=\"\" CODE_SIGNING_REQUIRED=NO"
-      )
+    build_app(
+      clean: true,
+      scheme: "VolleyBolley",
+      project: "./VolleyBolley.xcodeproj",
+      export_method: "developer-id",
+      export_options: {
+        compileBitcode: false,
+        signingStyle: "manual",
+        provisioningProfiles: {},
+      },
+      xcargs: "-skipPackagePluginValidation CODE_SIGNING_ALLOWED=NO CODE_SIGN_IDENTITY=\"\" CODE_SIGNING_REQUIRED=NO",
+      skip_package_ipa: true,
+      skip_codesigning: true
+    )
     end
 end
