@@ -30,7 +30,7 @@ extension String {
 
         var formattedText = ""
 
-        if digitsOnly.count > 0 {
+        if !digitsOnly.isEmpty {
             formattedText += String(digitsOnly.prefix(2))
             if digitsOnly.count > 2 { formattedText += " / " }
         }
