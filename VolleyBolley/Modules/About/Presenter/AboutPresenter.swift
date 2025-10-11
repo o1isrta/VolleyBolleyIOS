@@ -8,7 +8,7 @@
 // MARK: - AboutPresenterProtocol
 
 protocol AboutPresenterProtocol: AnyObject {
-    func viewDidLoad()
+	func viewDidLoad()
 	func backButtonTapped()
 }
 
@@ -16,30 +16,36 @@ protocol AboutPresenterProtocol: AnyObject {
 
 final class AboutPresenter: AboutPresenterProtocol {
 
-    // MARK: - Dependencies
+	// MARK: - Public Properties
 
-    weak var view: AboutViewProtocol?
-    private let interactor: AboutInteractorProtocol
-    private let router: AboutRouterProtocol
+	weak var view: AboutViewProtocol?
 
-    // MARK: - Initializers
+	// MARK: - Private Properties
 
-    init(interactor: AboutInteractorProtocol, router: AboutRouterProtocol) {
-        self.interactor = interactor
-        self.router = router
-    }
+	private let interactor: AboutInteractorProtocol
+	private let router: AboutRouterProtocol
 
-    // MARK: - AboutPresenterProtocol
+	// MARK: - Initializers
 
-    func viewDidLoad() {
-        let info = interactor.fetchAboutInfo()
-        let viewModel = AboutViewModel(
-            founder: info.founder,
-            designers: info.designers,
-            developers: info.developers
-        )
-        view?.displayAboutInfo(viewModel)
-    }
+	init(interactor: AboutInteractorProtocol, router: AboutRouterProtocol) {
+		self.interactor = interactor
+		self.router = router
+	}
+
+	// MARK: - Public Methods
+
+	func viewDidLoad() {
+		let info = interactor.fetchAboutInfo()
+		let appInfo = interactor.getAppInfo()
+		let viewModel = AboutViewModel(
+			founder: info.founder,
+			designers: info.designers,
+			developers: info.developers,
+			appVersion: appInfo.appVersion,
+			appBuild: appInfo.appBuild
+		)
+		view?.displayAboutInfo(viewModel)
+	}
 
 	func backButtonTapped() {
 		router.navigateBack()
