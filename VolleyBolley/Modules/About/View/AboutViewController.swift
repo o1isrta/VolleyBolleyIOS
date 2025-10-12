@@ -14,13 +14,6 @@ protocol AboutViewProtocol: AnyObject {
 	func reloadData()
 }
 
-// MARK: - AboutItem
-
-struct AboutItem {
-	let title: String
-	let value: String
-}
-
 // MARK: - ViewController
 
 final class AboutViewController: BaseViewController {
