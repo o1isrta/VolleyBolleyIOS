@@ -8,7 +8,7 @@
 import Foundation
 
 extension Bundle {
-	
+
 	var appVersion: String {
 		return object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "N/A"
 	}
