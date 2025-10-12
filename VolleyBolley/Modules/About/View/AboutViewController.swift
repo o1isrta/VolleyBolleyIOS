@@ -16,11 +16,8 @@ protocol AboutViewProtocol: AnyObject {
 // MARK: - AboutViewModel
 
 struct AboutViewModel {
-	let founder: String
-	let designers: [String]
-	let developers: [String]
-	let appVersion: String
-	let appBuild: String
+	let items: [AboutItem]
+	let appVersionInfo: String
 }
 
 // MARK: - AboutItem
@@ -115,25 +112,9 @@ final class AboutViewController: BaseViewController {
 extension AboutViewController: AboutViewProtocol {
 
 	func displayAboutInfo(_ viewModel: AboutViewModel) {
-		items = [
-			AboutItem(
-				title: String(localized: "Founder"),
-				value: viewModel.founder
-			),
-			AboutItem(
-				title: String(localized: "Designed by"),
-				value: viewModel.designers.joined(separator: "\n")
-			),
-			AboutItem(
-				title: String(localized: "Developed by"),
-				value: viewModel.developers.joined(separator: "\n")
-			)
-		]
+		versionLabel.text = viewModel.appVersionInfo
+		items = viewModel.items
 		tableView.reloadData()
-
-		let appVersion = "\(String(localized: "Version")) \(viewModel.appVersion)"
-		let appAssembly = "\(String(localized: "Build")) \(viewModel.appBuild)"
-		versionLabel.text = "\(appVersion)  \(appAssembly)"
 	}
 }
 
@@ -250,23 +231,14 @@ extension AboutViewController: UITableViewDataSource {
 import SwiftUI
 
 struct AboutViewControllerPreview: UIViewControllerRepresentable {
-	class StubPresenter: AboutPresenterProtocol {
-		weak var view: AboutViewProtocol?
-		func viewDidLoad() {
-			let aboutViewModel = AboutViewModel(
-				founder: "Dmitrii Zverev",
-				designers: ["Malika Rozieva", "Yulia Zemlyanskaya"],
-				developers: ["Team VolleyBolley"],
-				appVersion: "1.0.0",
-				appBuild: "1"
-			)
-			view?.displayAboutInfo(aboutViewModel)
-		}
-		func backButtonTapped() {}
-	}
 
 	func makeUIViewController(context: Context) -> some UIViewController {
-		let presenter = StubPresenter()
+		let router = AboutRouter()
+		let interactor = AboutInteractor()
+		let presenter = AboutPresenter(
+			interactor: interactor,
+			router: router
+		)
 		let aboutView = AboutViewController(presenter: presenter)
 		presenter.view = aboutView
 		return aboutView
