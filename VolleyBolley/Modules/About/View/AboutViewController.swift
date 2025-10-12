@@ -158,9 +158,7 @@ private extension AboutViewController {
 				equalTo: view.trailingAnchor,
 				constant: -Constants.padding
 			),
-			glassmorphismView.bottomAnchor.constraint(
-				equalTo: tableView.bottomAnchor
-			),
+			glassmorphismView.bottomAnchor.constraint(equalTo: tableView.bottomAnchor),
 
 			backButton.topAnchor.constraint(
 				equalTo: glassmorphismView.topAnchor,
