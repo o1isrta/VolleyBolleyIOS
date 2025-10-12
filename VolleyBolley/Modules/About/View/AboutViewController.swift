@@ -10,14 +10,8 @@ import UIKit
 // MARK: - AboutViewProtocol
 
 protocol AboutViewProtocol: AnyObject {
-	func displayAboutInfo(_ viewModel: AboutViewModel)
-}
-
-// MARK: - AboutViewModel
-
-struct AboutViewModel {
-	let items: [AboutItem]
-	let appVersionInfo: String
+	func setupAppInfo(with appVersion: String)
+	func reloadData()
 }
 
 // MARK: - AboutItem
@@ -39,14 +33,17 @@ final class AboutViewController: BaseViewController {
 		static let tableTopInset: CGFloat = 4
 		static let topInset: CGFloat = 20
 		static let titleFontSize: CGFloat = 24
-		static let versionFontSize: CGFloat = 14
+
 		static let initialTableHeight: CGFloat = 0
+		static let tableMaxHeightAnchor: CGFloat = 355
+
+		static let versionFontSize: CGFloat = 14
+		static let versionBottomInset: CGFloat = -60
 	}
 
 	// MARK: - Private Properties
 
 	private let presenter: AboutPresenterProtocol
-	private var items: [AboutItem] = []
 
 	private lazy var glassmorphismView = GlassmorphismView()
 
@@ -111,9 +108,11 @@ final class AboutViewController: BaseViewController {
 
 extension AboutViewController: AboutViewProtocol {
 
-	func displayAboutInfo(_ viewModel: AboutViewModel) {
-		versionLabel.text = viewModel.appVersionInfo
-		items = viewModel.items
+	func setupAppInfo(with appVersion: String) {
+		versionLabel.text = appVersion
+	}
+
+	func reloadData() {
 		tableView.reloadData()
 	}
 }
@@ -132,7 +131,7 @@ private extension AboutViewController {
 				let newSize = change.newValue
 			else { return }
 			// Limiting the max height to preserve scrolling
-			let maxHeight = UIScreen.main.bounds.height - 355
+			let maxHeight = UIScreen.main.bounds.height - Constants.tableMaxHeightAnchor
 			let newHeight = min(newSize.height, maxHeight)
 			self.tableViewHeightConstraint?.constant = newHeight
 		}
@@ -185,7 +184,10 @@ private extension AboutViewController {
 			tableView.trailingAnchor.constraint(equalTo: glassmorphismView.trailingAnchor),
 
 			versionLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-			versionLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -60)
+			versionLabel.bottomAnchor.constraint(
+				equalTo: view.safeAreaLayoutGuide.bottomAnchor,
+				constant: Constants.versionBottomInset
+			)
 		])
 
 		tableViewHeightConstraint = tableView.heightAnchor.constraint(
@@ -203,7 +205,7 @@ extension AboutViewController: UITableViewDataSource {
 		_ tableView: UITableView,
 		numberOfRowsInSection section: Int
 	) -> Int {
-		items.count
+		presenter.getItemsCount()
 	}
 
 	func tableView(
@@ -217,8 +219,8 @@ extension AboutViewController: UITableViewDataSource {
 			return UITableViewCell()
 		}
 
-		let item = items[indexPath.row]
-		let isLast = indexPath.row == items.count - 1
+		let item = presenter.getItemData(index: indexPath.row)
+		let isLast = presenter.isLastItem(index: indexPath.row)
 		cell.configure(with: item, isLast: isLast)
 
 		return cell
