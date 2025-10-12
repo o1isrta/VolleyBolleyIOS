@@ -98,6 +98,7 @@ final class ProfileViewController: BaseViewController {
 extension ProfileViewController: ProfileViewProtocol {
 
 	func displayError(message: String) {
+		// TODO: 
 		print(message)
 	}
 }
@@ -123,7 +124,7 @@ private extension ProfileViewController {
             tableBackground.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
             tableBackground.heightAnchor.constraint(equalToConstant: 400),
 
-            tableView.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 8),
+            tableView.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 12),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
             tableView.heightAnchor.constraint(equalToConstant: 400),
