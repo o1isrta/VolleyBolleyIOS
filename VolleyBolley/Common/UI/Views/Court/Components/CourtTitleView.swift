@@ -32,10 +32,10 @@ final class CourtTitleView: UIView {
 	// MARK: - Private Properties
 
 	private var locationTitleView: LocationTitleView
-	private lazy var distanceView = DistanceView()
+	private lazy var badgeView = BadgeView()
 
 	private lazy var mainStackView: UIStackView = {
-		let stackView = UIStackView(arrangedSubviews: [locationTitleView, distanceView])
+		let stackView = UIStackView(arrangedSubviews: [locationTitleView, badgeView])
 		stackView.axis = .horizontal
 		stackView.distribution = .equalSpacing
 		stackView.alignment = .center
@@ -65,8 +65,8 @@ final class CourtTitleView: UIView {
 				location: model.location
 			)
 		)
-		distanceView.configure(distance: model.distance)
-		distanceView.isHidden = model.distance.isEmpty
+		badgeView.configure(distance: model.distance)
+		badgeView.isHidden = model.distance.isEmpty
 	}
 }
 

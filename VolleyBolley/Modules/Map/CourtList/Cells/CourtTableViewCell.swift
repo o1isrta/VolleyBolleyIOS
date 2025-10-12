@@ -16,7 +16,7 @@ final class CourtTableViewCell: UITableViewCell {
 	// MARK: - Private Properties
 
 	private lazy var mainStackView: UIStackView = {
-		let stackView = UIStackView(arrangedSubviews: [locationTitleView, distanceView])
+		let stackView = UIStackView(arrangedSubviews: [locationTitleView, badgeView])
 		stackView.axis = .horizontal
 		stackView.distribution = .equalSpacing
 		stackView.alignment = .center
@@ -25,7 +25,7 @@ final class CourtTableViewCell: UITableViewCell {
 	}()
 
 	private lazy var locationTitleView = LocationTitleView(type: .none)
-	private lazy var distanceView = DistanceView()
+	private lazy var badgeView = BadgeView()
 	private lazy var separator = CustomSeparator()
 
 	private lazy var noCourtsLabel: UILabel = {
@@ -55,7 +55,7 @@ final class CourtTableViewCell: UITableViewCell {
 		noCourtsLabel.isHidden = false
 		separator.isHidden = true
 		locationTitleView.isHidden = true
-		distanceView.isHidden = true
+		badgeView.isHidden = true
 	}
 
 	func configure(
@@ -65,7 +65,7 @@ final class CourtTableViewCell: UITableViewCell {
 	) {
 		noCourtsLabel.isHidden = true
 		locationTitleView.isHidden = false
-		distanceView.isHidden = false
+		badgeView.isHidden = false
 
 		let locationTitleViewModel = LocationTitleViewModel(
             title: court.location.courtName,
@@ -82,7 +82,7 @@ final class CourtTableViewCell: UITableViewCell {
 			distanceText = "—"
 		}
 
-		distanceView.configure(distance: distanceText)
+		badgeView.configure(distance: distanceText)
 		separator.isHidden = isLast
 	}
 }
