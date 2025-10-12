@@ -16,10 +16,7 @@ enum AppConstants {
 	}
 
 	enum UserDefaults {
-
-		enum Keys {
-			static let onboardingShown = "onboardingShown"
-		}
+		static let onboardingShown = "onboardingShown"
 	}
 
 	enum Notifications {
