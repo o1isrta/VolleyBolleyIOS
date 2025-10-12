@@ -61,6 +61,8 @@ final class AboutPresenter: AboutPresenterProtocol {
 	}
 }
 
+// MARK: - Private Methods
+
 private extension AboutPresenter {
 
 	func setupAboutInfo() {
