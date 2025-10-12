@@ -36,14 +36,27 @@ final class AboutPresenter: AboutPresenterProtocol {
 
 	func viewDidLoad() {
 		let info = interactor.fetchAboutInfo()
+		let items = [
+			AboutItem(
+				title: String(localized: "Founder"),
+				value: info.founder
+			),
+			AboutItem(
+				title: String(localized: "Designed by"),
+				value: info.designers.joined(separator: "\n")
+			),
+			AboutItem(
+				title: String(localized: "Developed by"),
+				value: info.developers.joined(separator: "\n")
+			)
+		]
+
 		let appInfo = interactor.getAppInfo()
-		let viewModel = AboutViewModel(
-			founder: info.founder,
-			designers: info.designers,
-			developers: info.developers,
-			appVersion: appInfo.appVersion,
-			appBuild: appInfo.appBuild
-		)
+		let appVersion = "\(String(localized: "Version")) \(appInfo.appVersion)"
+		let appAssembly = "\(String(localized: "Build")) \(appInfo.appBuild)"
+		let appVersionInfo = "\(appVersion)  \(appAssembly)"
+		let viewModel = AboutViewModel(items: items, appVersionInfo: appVersionInfo)
+
 		view?.displayAboutInfo(viewModel)
 	}
 
