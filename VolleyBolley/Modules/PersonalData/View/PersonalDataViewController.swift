@@ -139,16 +139,11 @@ private extension PersonalDataViewController {
             scrollView.bottomAnchor
                 .constraint(equalTo: glassmorphismView.bottomAnchor),
 
-            contentView.topAnchor
-                .constraint(equalTo: scrollView.topAnchor),
-            contentView.leadingAnchor
-                .constraint(equalTo: scrollView.leadingAnchor),
-            contentView.trailingAnchor
-                .constraint(equalTo: scrollView.trailingAnchor),
-            contentView.bottomAnchor
-                .constraint(equalTo: scrollView.bottomAnchor),
-            contentView.widthAnchor
-                .constraint(equalTo: scrollView.widthAnchor),
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
 
             formView.topAnchor
                 .constraint(equalTo: contentView.topAnchor),
@@ -157,7 +152,7 @@ private extension PersonalDataViewController {
             formView.trailingAnchor
                 .constraint(equalTo: contentView.trailingAnchor, constant: -Constants.mainSpacing),
             formView.bottomAnchor
-                .constraint(equalTo: contentView.bottomAnchor, constant: -Constants.mainSpacing),
+                .constraint(equalTo: contentView.bottomAnchor, constant: -Constants.mainSpacing)
         ])
 
         let minHeight = glassmorphismView.heightAnchor.constraint(
