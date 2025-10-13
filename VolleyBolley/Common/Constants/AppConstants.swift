@@ -19,6 +19,10 @@ enum AppConstants {
 
 		enum Keys {
 			static let onboardingShown = "onboardingShown"
+			static let authorized = "authorized"
+
+			static let currentNotifications = "currentNotifications"
+			static let hasNewNotifications = "hasNewNotifications"
 		}
 	}
 
