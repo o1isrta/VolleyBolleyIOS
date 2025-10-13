@@ -104,6 +104,14 @@ final class NotificationManager {
 		return notificationService.hasNewNotifications
 	}
 
+	func removeNotification(notification: NotificationCardViewModel) {
+		return notificationService.removeNotification(notification)
+	}
+
+	func removeAllNotification() {
+		return notificationService.clearAllNotifications()
+	}
+
 	// MARK: - Private Methods
 
 	private func setupService() {
