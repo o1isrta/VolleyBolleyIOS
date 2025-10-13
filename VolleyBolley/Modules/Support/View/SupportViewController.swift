@@ -87,7 +87,6 @@ final class SupportViewController: BaseViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		setupView()
-		presenter.viewDidLoad()
 		setupTableViewContentSizeObserver()
 	}
 
