@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct DiagnosticsManager {
+enum DiagnosticsManager {
 
 	// MARK: - Public Properties
 
