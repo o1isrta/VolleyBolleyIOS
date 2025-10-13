@@ -72,6 +72,11 @@ private extension BaseViewController {
 	func setupNotificationManager() {
 		// Register this BaseViewController with the notification manager
 		notificationManager.addDelegate(self)
+		// Get actual notifications status
+		if !(self is NotificationsViewController) {
+			let hasNewNotifications = notificationManager.hasNewNotifications()
+			navBar.updateNotifications(hasNewNotifications)
+		}
 	}
 }
 
