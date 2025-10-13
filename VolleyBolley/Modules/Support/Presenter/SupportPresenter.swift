@@ -10,7 +10,6 @@ import UIKit
 // MARK: - SupportPresenterProtocol
 
 protocol SupportPresenterProtocol: AnyObject {
-    func viewDidLoad()
 	func backButtonTapped()
 	func didSelectSupportItem(_ item: SupportItem)
 }
@@ -35,8 +34,6 @@ final class SupportPresenter: SupportPresenterProtocol {
 
 	// MARK: - Public Methods
 
-    func viewDidLoad() {}
-
 	func backButtonTapped() {
 		router.navigateBack()
 	}
@@ -46,13 +43,18 @@ final class SupportPresenter: SupportPresenterProtocol {
 		case .faq:
 			router.showFAQ()
 		case .linktree:
-			guard let url = URL(string: AppConstants.Contacts.linktreeURL) else { return }
-			UIApplication.shared.open(url)
+			openURL(AppConstants.Contacts.linktreeURL)
 		case .contactUs:
 			view?.sendEmail()
 		case .whatsApp:
-			guard let url = URL(string: AppConstants.Contacts.whatsAppURL) else { return }
-			UIApplication.shared.open(url)
+			openURL(AppConstants.Contacts.whatsAppURL)
 		}
+	}
+
+	// MARK: - Private Methods
+
+	private func openURL(_ url: String) {
+		guard let url = URL(string: url) else { return }
+		UIApplication.shared.open(url)
 	}
 }
