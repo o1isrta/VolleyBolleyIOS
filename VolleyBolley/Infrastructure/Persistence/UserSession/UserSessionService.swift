@@ -12,13 +12,13 @@ final class UserSessionService: UserSessionServiceProtocol {
     // MARK: - Public properties
 
     var isOnboardingShown: Bool {
-        let value = storage.bool(forKey: "onboarding_shown")
+		let value = storage.bool(forKey: AppConstants.UserDefaults.Keys.onboardingShown)
 
         return value
     }
 
     var isAuthorized: Bool {
-        let value = storage.bool(forKey: "authorized")
+		let value = storage.bool(forKey: AppConstants.UserDefaults.Keys.authorized)
 
         return value
     }
@@ -36,10 +36,10 @@ final class UserSessionService: UserSessionServiceProtocol {
     // MARK: - Public methods
 
     func markOnboardingAsShown() {
-        storage.set(true, forKey: "onboarding_shown")
+        storage.set(true, forKey: AppConstants.UserDefaults.Keys.onboardingShown)
     }
 
     func markUserAuthorized() {
-        storage.set(true, forKey: "authorized")
+        storage.set(true, forKey: AppConstants.UserDefaults.Keys.authorized)
     }
 }
