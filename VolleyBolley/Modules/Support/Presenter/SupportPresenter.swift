@@ -10,7 +10,6 @@ import UIKit
 // MARK: - SupportPresenterProtocol
 
 protocol SupportPresenterProtocol: AnyObject {
-    func viewDidLoad()
 	func backButtonTapped()
 	func didSelectSupportItem(_ item: SupportItem)
 }
@@ -34,8 +33,6 @@ final class SupportPresenter: SupportPresenterProtocol {
     }
 
 	// MARK: - Public Methods
-
-    func viewDidLoad() {}
 
 	func backButtonTapped() {
 		router.navigateBack()
