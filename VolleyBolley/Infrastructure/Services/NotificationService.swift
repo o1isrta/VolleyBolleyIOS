@@ -27,8 +27,50 @@ final class NotificationService {
 	// MARK: - Public Properties
 
 	weak var delegate: NotificationServiceDelegate?
-	private(set) var hasNewNotifications: Bool = false
-	private(set) var currentNotifications: [NotificationCardViewModel] = []
+
+	/// Indicates whether there are new notifications that haven't been viewed by the user.
+	///
+	/// ## Purpose:
+	/// - Tracks the read/unread state of notifications in the application
+	/// - Used to show badge indicators or highlight notification sections
+	/// - Persists between app launches to maintain state
+	///
+	/// ## Behavior:
+	/// - `true`: There are new, unread notifications available
+	/// - `false`: All notifications have been read or there are no notifications
+	///
+	/// ## Storage:
+	/// - Automatically persisted in UserDefaults under key "hasNewNotifications"
+	/// - Survives application termination and restart
+	/// - Synchronized across app sessions
+	///
+	/// ## Usage:
+	/// ```swift
+	/// // Check if there are new notifications
+	/// if notificationsManager.hasNewNotifications {
+	///     showNotificationBadge()
+	/// }
+	///
+	/// // Mark as having new notifications
+	/// notificationsManager.hasNewNotifications = true
+	///
+	/// // Mark all as read
+	/// notificationsManager.hasNewNotifications = false
+	/// ```
+	@UserDefaultsCodable(
+		key: AppConstants.UserDefaults.Keys.hasNewNotifications,
+		defaultValue: false
+	)
+	private(set) var hasNewNotifications: Bool
+
+	/// Array of current notifications with automatic saving to UserDefaults.
+	///
+	/// ## Features:
+	/// - Maximum capacity: 100 notifications by defaults
+	/// - Data is preserved between app launches
+	/// - Old notifications are automatically removed when limit is exceeded
+	@LimitedUserDefaultsArray(key: AppConstants.UserDefaults.Keys.currentNotifications)
+	private(set) var currentNotifications: [NotificationCardViewModel]
 
 	// MARK: - Private Properties
 
@@ -75,7 +117,7 @@ final class NotificationService {
 			let hasNew = !self.currentNotifications.contains(newNotifications)
 			// Update state
 			if hasNew {
-				self.currentNotifications.append(contentsOf: newNotifications)
+				self.addNotifications(newNotifications)
 			}
 			self.hasNewNotifications = hasNew
 			// Always notify delegate about notifications data (for screen updates)
@@ -90,9 +132,60 @@ final class NotificationService {
 		delegate?.notificationService(self, didUpdateNotificationStatus: hasNewNotifications)
 	}
 
-	// MARK: - Private Methods
+	/// Removes a specific notification from the list.
+	///
+	/// - Parameter notification: Notification to remove
+	///
+	/// ## Note:
+	/// Notifications are compared using Equatable protocol
+	///
+	/// ## Example:
+	/// ```swift
+	/// manager.removeNotification(notification)
+	/// ```
+	func removeNotification(_ notification: NotificationCardViewModel) {
+		currentNotifications = currentNotifications.filter { $0 != notification }
+	}
 
-	private func fetchNotificationsFromServer() -> [NotificationCardViewModel] {
+	/// Completely clears the notifications list.
+	///
+	/// ## Example:
+	/// ```swift
+	/// manager.clearAllNotifications()
+	/// ```
+	func clearAllNotifications() {
+		currentNotifications = []
+	}
+
+	deinit {
+		stopPeriodicCheck()
+	}
+}
+
+// MARK: - Private Methods
+
+private extension NotificationService {
+
+	/// Adds multiple notifications to the beginning of the list.
+	///
+	/// - Parameter notifications: Array of notifications to add
+	///
+	/// ## Note:
+	/// The order of notifications in the passed array is preserved when adding
+	///
+	/// ## Example:
+	/// ```swift
+	/// let notifications = [notification1, notification2, notification3]
+	/// manager.addNotifications(notifications)
+	/// ```
+	func addNotifications(_ notifications: [NotificationCardViewModel]) {
+		var allNotifications = currentNotifications
+		// Add to the beginning of the array (preserving order)
+		allNotifications.insert(contentsOf: notifications, at: 0)
+		currentNotifications = allNotifications
+	}
+
+	func fetchNotificationsFromServer() -> [NotificationCardViewModel] {
 		// TODO: - simulate a network request
 		var notifications: [NotificationCardViewModel] = []
 		// Simulate new notifications occasionally
@@ -105,10 +198,6 @@ final class NotificationService {
 		notifications.append(newNotification)
 
 		return notifications
-	}
-
-	deinit {
-		stopPeriodicCheck()
 	}
 }
 
