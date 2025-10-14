@@ -80,12 +80,6 @@ private extension BadgeView {
 		layer.cornerRadius = 10
 
 		addSubviews(distanceLabel)
-
-		NSLayoutConstraint.activate([
-			distanceLabel.topAnchor.constraint(equalTo: topAnchor, constant: 4),
-			distanceLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-			distanceLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
-			distanceLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -4)
-		])
+		distanceLabel.pinToSuperviewEdges(insets: .init(top: 4, left: 8, bottom: 4, right: 8))
 	}
 }
