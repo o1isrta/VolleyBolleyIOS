@@ -46,8 +46,8 @@ final class AboutInteractor: AboutInteractorProtocol {
 			"Danil Otmakhov",
 			"Demian Petropavlov",
 			"Egor Partenko",
-			"Kozyrev Oleg",
 			"Nikolai Eremenko",
+			"Oleg Kozyrev",
 			"Roman Romanov",
 			"Vadim Mikheev"
 		]
