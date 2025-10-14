@@ -164,25 +164,14 @@ extension MyGamesViewController: UITableViewDelegate {
 
 import SwiftUI
 
-struct MyGamesViewControllerPreview: UIViewControllerRepresentable {
+@available(iOS 17.0, *)
+#Preview {
+	let presenter = MyGamesPresenter(
+		interactor: MyGamesInteractor(),
+		router: MyGamesRouter()
+	)
+	let view = MyGamesViewController(presenter: presenter)
 
-	func makeUIViewController(context: Context) -> some UIViewController {
-		let router = MyGamesRouter()
-		let interactor = MyGamesInteractor()
-		let presenter = MyGamesPresenter(
-			interactor: interactor,
-			router: router
-		)
-		return MyGamesViewController(presenter: presenter)
-	}
-
-	func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {}
-}
-
-struct MyGamesViewController_Previews: PreviewProvider {
-	static var previews: some View {
-		MyGamesViewControllerPreview()
-			.edgesIgnoringSafeArea(.all)
-	}
+	return view
 }
 #endif
