@@ -104,6 +104,17 @@
         }
       }
     },
+    "Build" : {
+      "comment" : "App Info",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сборка"
+          }
+        }
+      }
+    },
     "Cancel" : {
       "comment" : "Cancel button",
       "localizations" : {
@@ -2398,6 +2409,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ПРОВЕРИТЬ"
+          }
+        }
+      }
+    },
+    "Version" : {
+      "comment" : "App Info",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Версия"
           }
         }
       }
