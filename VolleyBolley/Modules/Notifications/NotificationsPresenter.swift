@@ -44,6 +44,7 @@ final class NotificationsPresenter: NotificationsPresenterProtocol {
 		// Start listening for updates and fetch initial data
 		interactor?.startListeningForUpdates()
 		interactor?.fetchNotifications()
+		interactor?.markNotificationsAsRead()
 	}
 
 	func viewWillAppear() {

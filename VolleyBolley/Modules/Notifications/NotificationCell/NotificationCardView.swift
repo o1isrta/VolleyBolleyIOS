@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct NotificationCardViewModel: Equatable {
+struct NotificationCardViewModel: Equatable, Codable {
 	let title: String
 	let message: String
 	let date: String
@@ -19,9 +19,9 @@ struct NotificationCardViewModel: Equatable {
 	) {
 		self.title = title
 		self.message = message
-		self.date = date.formatted(date: .numeric, time: .omitted)
+		self.date = AppDateFormatters.onlyDate.string(from: date)
 	}
-
+	// TODO: mock data
 	static var mockDataArray = [
 		NotificationCardViewModel(
 			title: "New invite",
@@ -32,6 +32,11 @@ struct NotificationCardViewModel: Equatable {
 			title: "Removed from tourney",
 			message: "12 September, 2:00-8:00 pm",
 			date: Date()
+		),
+		NotificationCardViewModel(
+			title: "Tourney removed from your calendar",
+			message: "12 September, 2:00-8:00 pm. You can create new tourney",
+			date: Date()
 		)
 	]
 }
@@ -41,12 +46,18 @@ final class NotificationCardView: UIView {
 	// MARK: - Private Properties
 
 	private lazy var backgroundView = GlassmorphismView(configuration: .notification)
-	private lazy var titleLabel = CustomLabel(text: "", isBold: true)
+	private lazy var titleLabel: GradientLabel = {
+		let label = GradientLabel()
+		label.font = AppFont.Hero.bold(size: 16)
+		label.textColor = AppColor.Text.primary
+		label.numberOfLines = 0
+		return label
+	}()
 	private lazy var messageLabel = CustomLabel(text: "")
-	private lazy var textStackView: UIStackView = {
+	private lazy var mainStackView: UIStackView = {
 		let stackView = UIStackView(
 			arrangedSubviews: [
-				titleLabel,
+				textStackView,
 				messageLabel
 			]
 		)
@@ -63,17 +74,19 @@ final class NotificationCardView: UIView {
 		return label
 	}()
 
-	private lazy var mainStackView: UIStackView = {
+	private lazy var textStackView: UIStackView = {
+		titleLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+		dateLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
 		let stackView = UIStackView(
 			arrangedSubviews: [
-				textStackView,
+				titleLabel,
 				dateLabel
 			]
 		)
 		stackView.axis = .horizontal
-		stackView.distribution = .fillProportionally
+		stackView.distribution = .equalSpacing
 		stackView.alignment = .top
-		stackView.spacing = 10
+		stackView.spacing = 4
 		return stackView
 	}()
 
@@ -88,13 +101,6 @@ final class NotificationCardView: UIView {
 	required init?(coder: NSCoder) { nil }
 
 	// MARK: - Public Methods
-
-	override func layoutSubviews() {
-		super.layoutSubviews()
-		if titleLabel.layer.sublayers?.contains(where: { $0 is CAGradientLayer }) != true {
-			titleLabel.applyGradient()
-		}
-	}
 
 	func configure(with model: NotificationCardViewModel) {
 		backgroundView.resetForReuse()

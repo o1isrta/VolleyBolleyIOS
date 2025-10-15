@@ -15,14 +15,20 @@ enum AppConstants {
 		static let posix = Locale(identifier: "en_US_POSIX")
 	}
 
-	enum UserDefaults {
-
-		enum Keys {
-			static let onboardingShown = "onboardingShown"
-		}
+	enum UserDefaultsKeys {
+		static let onboardingShown = "onboardingShown"
+		static let authorized = "authorized"
+		static let currentNotifications = "currentNotifications"
+		static let hasNewNotifications = "hasNewNotifications"
 	}
 
 	enum Notifications {
 		static let checkInterval: TimeInterval = 300
+	}
+
+	enum Contacts {
+		static let email: String = "volleybolley.app@gmail.com"
+		static let linktreeURL: String = "https://linktr.ee/volleybolley.app"
+		static let whatsAppURL: String = "https://wa.me/message/LEFHH2AQMSE3D1"
 	}
 }

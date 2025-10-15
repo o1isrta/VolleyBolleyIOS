@@ -122,7 +122,7 @@ extension CourtListViewController: UITableViewDataSource {
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		// no courts found
-		if filteredCourts.count == 0 {
+        if filteredCourts.isEmpty {
 			if let cell = tableView.dequeueReusableCell(
 				withIdentifier: CourtTableViewCell.reuseIdentifier,
 				for: indexPath
@@ -237,7 +237,7 @@ private extension CourtListViewController {
 	}
 
 	func getRowsCount() -> Int {
-		if filteredCourts.count == 0 {
+        if filteredCourts.isEmpty {
 			return 1
 		}
 
