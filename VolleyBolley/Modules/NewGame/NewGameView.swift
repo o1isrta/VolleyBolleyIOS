@@ -7,7 +7,6 @@
 
 import UIKit
 
-// swiftlint:disable type_body_length
 final class NewGameView: BaseViewController, NewGameViewProtocol {
 
     var presenter: NewGamePresenterProtocol?
