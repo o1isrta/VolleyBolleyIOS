@@ -29,6 +29,7 @@ final class AboutViewController: BaseViewController {
 
 		static let initialTableHeight: CGFloat = 0
 		static let tableMaxHeightAnchor: CGFloat = 355
+		static let tableEstimatedRowHeight: CGFloat = 44
 
 		static let versionFontSize: CGFloat = 14
 		static let versionBottomInset: CGFloat = -60
@@ -65,7 +66,7 @@ final class AboutViewController: BaseViewController {
 		tableView.isScrollEnabled = false
 		tableView.dataSource = self
 		tableView.rowHeight = UITableView.automaticDimension
-		tableView.estimatedRowHeight = 44
+		tableView.estimatedRowHeight = Constants.tableEstimatedRowHeight
 		tableView.register(AboutCell.self, forCellReuseIdentifier: AboutCell.reuseIdentifier)
 		return tableView
 	}()
@@ -218,32 +219,20 @@ extension AboutViewController: UITableViewDataSource {
 	}
 }
 
+#if DEBUG
+
 // MARK: - Preview
 
-#if DEBUG
 import SwiftUI
 
-struct AboutViewControllerPreview: UIViewControllerRepresentable {
-
-	func makeUIViewController(context: Context) -> some UIViewController {
-		let router = AboutRouter()
-		let interactor = AboutInteractor()
-		let presenter = AboutPresenter(
-			interactor: interactor,
-			router: router
-		)
-		let aboutView = AboutViewController(presenter: presenter)
-		presenter.view = aboutView
-		return aboutView
-	}
-
-	func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {}
-}
-
-struct AboutViewController_Previews: PreviewProvider {
-	static var previews: some View {
-		AboutViewControllerPreview()
-			.edgesIgnoringSafeArea(.all)
-	}
+@available(iOS 17.0, *)
+#Preview {
+	let router = AboutRouter()
+	let presenter = AboutPresenter(
+		router: router
+	)
+	let aboutView = AboutViewController(presenter: presenter)
+	presenter.view = aboutView
+	return aboutView
 }
 #endif
