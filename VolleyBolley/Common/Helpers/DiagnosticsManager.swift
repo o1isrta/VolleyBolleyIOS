@@ -121,9 +121,9 @@ enum DiagnosticsManager {
 		func getValue() -> String {
 			switch self {
 			case .appVersion:
-				return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "N/A"
+				return Bundle.main.appVersion
 			case .buildNumber:
-				return Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "N/A"
+				return Bundle.main.appBuild
 			case .iosVersion:
 				return UIDevice.current.systemVersion
 			case .deviceModel:
