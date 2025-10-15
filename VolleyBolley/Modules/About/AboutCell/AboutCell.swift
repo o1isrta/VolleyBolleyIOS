@@ -7,88 +7,73 @@
 
 import UIKit
 
-// MARK: - Cell
-
 final class AboutCell: UITableViewCell {
 
-    // MARK: - Constants
+	// MARK: - Constants
 
-    static let reuseIdentifier = "AboutCell"
+	static let reuseIdentifier = "AboutCell"
 
-    private enum Constants {
-        static let horizontalInset: CGFloat = 20
-        static let verticalInset: CGFloat = 12
-        static let minHeight: CGFloat = 51
-        static let titleWidth: CGFloat = 120
-    }
+	private enum Constants {
+		static let horizontalInset: CGFloat = 20
+		static let verticalInset: CGFloat = 12
+		static let minHeight: CGFloat = 51
+		static let titleWidth: CGFloat = 120
 
-    // MARK: - Private Properties
+		static let fontSize: CGFloat = 16
+		static let textSpacing: CGFloat = 12
+	}
 
-    private let titleLabel = CustomLabel(text: "", isBold: true)
+	// MARK: - Private Properties
 
-    private let valueLabel: CustomLabel = {
-        let label = CustomLabel(text: "", isBold: false)
-        label.font = AppFont.Hero.regular(size: 16)
-        return label
-    }()
+	private let titleLabel: GradientLabel = {
+		let label = GradientLabel()
+		label.font = AppFont.Hero.bold(size: Constants.fontSize)
+		label.textColor = AppColor.Text.primary
+		label.numberOfLines = 0
+		return label
+	}()
 
-    private lazy var stack: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [titleLabel, valueLabel])
-        stack.axis = .horizontal
-        stack.alignment = .top
-        stack.spacing = 12
-        stack.distribution = .fill
-        return stack
-    }()
+	private let valueLabel: CustomLabel = {
+		let label = CustomLabel(text: "", isBold: false)
+		label.font = AppFont.Hero.regular(size: Constants.fontSize)
+		return label
+	}()
 
-    private var gradientLayer: CAGradientLayer?
+	private lazy var stack: UIStackView = {
+		let stack = UIStackView(arrangedSubviews: [titleLabel, valueLabel])
+		stack.axis = .horizontal
+		stack.alignment = .top
+		stack.spacing = Constants.textSpacing
+		stack.distribution = .fill
+		return stack
+	}()
 
-    private lazy var separatorLine = CustomSeparator()
+	private lazy var separatorLine = CustomSeparator()
 
-    // MARK: - Init
+	// MARK: - Init
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        backgroundColor = AppColor.Background.clear
-        selectionStyle = .none
-        setupView()
-    }
+	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+		super.init(style: style, reuseIdentifier: reuseIdentifier)
+		backgroundColor = AppColor.Background.clear
+		selectionStyle = .none
+		setupView()
+	}
 
 	@available(*, unavailable)
 	required init?(coder: NSCoder) { nil }
 
-    // MARK: - Configure
+	// MARK: - Configure
 
-    func configure(with item: AboutItem, isLast: Bool = false) {
-        titleLabel.text = item.title
-        valueLabel.text = item.value
-        separatorLine.isHidden = isLast
-        setNeedsLayout()
-    }
+	func configure(with item: AboutItem, isLast: Bool = false) {
+		titleLabel.text = item.title
+		valueLabel.text = item.value
+		separatorLine.isHidden = isLast
+	}
 
-    // MARK: - Layout
+	// MARK: - Private Methods
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
-
-        gradientLayer?.removeFromSuperlayer()
-        guard let text = titleLabel.text, !text.isEmpty else { return }
-
-        let gradient = CALayer.makeGradientTextMask(for: titleLabel)
-        gradient.frame = titleLabel.bounds
-
-        if let textLayer = gradient.mask as? CATextLayer {
-            textLayer.alignmentMode = .left
-        }
-
-        titleLabel.layer.addSublayer(gradient)
-        gradientLayer = gradient
-    }
-
-    // MARK: - Private Methods
-
-    private func setupView() {
-        contentView.addSubviews(
+	private func setupView() {
+		contentView.addSubviews(
 			stack,
 			separatorLine
 		)
@@ -125,5 +110,5 @@ final class AboutCell: UITableViewCell {
 				greaterThanOrEqualToConstant: Constants.minHeight
 			)
 		])
-    }
+	}
 }

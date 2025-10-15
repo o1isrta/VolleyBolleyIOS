@@ -10,7 +10,7 @@ import UIKit
 // MARK: - AboutRouterProtocol
 
 protocol AboutRouterProtocol: AnyObject {
-    func attachViewController(_ view: UIViewController)
+	func attachViewController(_ view: UIViewController)
 	func navigateBack()
 }
 
@@ -18,15 +18,15 @@ protocol AboutRouterProtocol: AnyObject {
 
 final class AboutRouter: AboutRouterProtocol {
 
-    // MARK: - Properties
+	// MARK: - Public Properties
 
-    weak var viewController: UIViewController?
+	weak var viewController: UIViewController?
 
-    // MARK: - AboutRouterProtocol
+	// MARK: - Public Methods
 
-    func attachViewController(_ view: UIViewController) {
-        viewController = view
-    }
+	func attachViewController(_ view: UIViewController) {
+		viewController = view
+	}
 
 	func navigateBack() {
 		viewController?.navigationController?.popViewController(animated: true)

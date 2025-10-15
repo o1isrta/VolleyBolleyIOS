@@ -104,6 +104,17 @@
         }
       }
     },
+    "Build" : {
+      "comment" : "App Info",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сборка"
+          }
+        }
+      }
+    },
     "Cancel" : {
       "comment" : "Cancel button",
       "localizations" : {
@@ -438,7 +449,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Начинается %@"
+            "value" : "Начинается в %@"
           }
         }
       }
@@ -494,6 +505,23 @@
         }
       }
     },
+    "customAlertView.button.cancel" : {
+      "comment" : "Custom Alert",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отмена"
+          }
+        }
+      }
+    },
     "customAlertView.button.done" : {
       "comment" : "Custom Alert",
       "localizations" : {
@@ -542,6 +570,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "НЕТ"
+          }
+        }
+      }
+    },
+    "customAlertView.button.ok" : {
+      "comment" : "Custom Alert",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
           }
         }
       }
@@ -973,6 +1018,312 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Элитный уровень, опыт участия в официальных чемпионатах"
+          }
+        }
+      }
+    },
+    "emailToSupport.appVersion" : {
+      "comment" : "Diagnostics info",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Application version"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Версия приложения"
+          }
+        }
+      }
+    },
+    "emailToSupport.buildNumber" : {
+      "comment" : "Diagnostics info",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Build number"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Номер сборки"
+          }
+        }
+      }
+    },
+    "emailToSupport.deviceInfo" : {
+      "comment" : "Diagnostics info",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DEVICE INFORMATION"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ИНФОРМАЦИЯ ОБ УСТРОЙСТВЕ"
+          }
+        }
+      }
+    },
+    "emailToSupport.deviceModel" : {
+      "comment" : "Diagnostics info",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Device model"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Модель устройства"
+          }
+        }
+      }
+    },
+    "emailToSupport.deviceName" : {
+      "comment" : "Diagnostics info",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Device name"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Имя устройства"
+          }
+        }
+      }
+    },
+    "emailToSupport.doNotConfigured" : {
+      "comment" : "Diagnostics info",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The device is not configured to send email"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Устройство не настроено для отправки email"
+          }
+        }
+      }
+    },
+    "emailToSupport.greetings" : {
+      "comment" : "Diagnostics info",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hello!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Здравствуйте!"
+          }
+        }
+      }
+    },
+    "emailToSupport.iosVersion" : {
+      "comment" : "Diagnostics info",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iOS version"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Версия iOS"
+          }
+        }
+      }
+    },
+    "emailToSupport.locale" : {
+      "comment" : "Diagnostics info",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Locale"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Локаль"
+          }
+        }
+      }
+    },
+    "emailToSupport.message" : {
+      "comment" : "Diagnostics info",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I have a question/suggestion"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "У меня есть вопрос/предложение"
+          }
+        }
+      }
+    },
+    "emailToSupport.report.end" : {
+      "comment" : "Diagnostics info",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "END OF REPORT"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "КОНЕЦ ОТЧЕТА"
+          }
+        }
+      }
+    },
+    "emailToSupport.report.start" : {
+      "comment" : "Diagnostics info",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DIAGNOSTIC REPORT"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ДИАГНОСТИЧЕСКИЙ ОТЧЕТ"
+          }
+        }
+      }
+    },
+    "emailToSupport.report.warning" : {
+      "comment" : "Diagnostics info",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please do not delete this information!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пожалуйста, не удаляйте эту информацию!"
+          }
+        }
+      }
+    },
+    "emailToSupport.subject" : {
+      "comment" : "Diagnostics info",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Support: Help with the application"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поддержка: Помощь с приложением"
+          }
+        }
+      }
+    },
+    "emailToSupport.succesfullySent" : {
+      "comment" : "Diagnostics info",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Thank you for your inquiry! We will respond to you shortly."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Спасибо за обращение! Мы ответим вам в ближайшее время."
+          }
+        }
+      }
+    },
+    "emailToSupport.systemName" : {
+      "comment" : "Diagnostics info",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Operating system"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Операционная система"
+          }
+        }
+      }
+    },
+    "emailToSupport.timestamp" : {
+      "comment" : "Diagnostics info",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Time zone"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Часовой пояс"
+          }
+        }
+      }
+    },
+    "emailToSupport.timeZone" : {
+      "comment" : "Diagnostics info",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dispatch time"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Время отправки"
           }
         }
       }
@@ -1928,6 +2279,125 @@
         }
       }
     },
+    "support.contactUs" : {
+      "comment" : "Support screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contact us"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Связаться с нами"
+          }
+        }
+      }
+    },
+    "support.faq" : {
+      "comment" : "Support screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "FAQ"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "FAQ"
+          }
+        }
+      }
+    },
+    "support.faq.description" : {
+      "comment" : "Support screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The answer may already be here"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ответ на ваш вопрос уже может быть здесь"
+          }
+        }
+      }
+    },
+    "support.linktree" : {
+      "comment" : "Support screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Linktree"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Linktree"
+          }
+        }
+      }
+    },
+    "support.linktree.description" : {
+      "comment" : "Support screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All our links in one place"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Все наши ссылки в одном месте"
+          }
+        }
+      }
+    },
+    "support.whatsApp" : {
+      "comment" : "Support screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WhatsApp"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WhatsApp"
+          }
+        }
+      }
+    },
+    "support.whatsApp.description" : {
+      "comment" : "Support screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "First aid is here"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Первая помощь здесь"
+          }
+        }
+      }
+    },
     "Surname" : {
       "localizations" : {
         "ru" : {
@@ -2024,6 +2494,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ПРОВЕРИТЬ"
+          }
+        }
+      }
+    },
+    "Version" : {
+      "comment" : "App Info",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Версия"
           }
         }
       }
@@ -2133,16 +2614,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ваш номер телефона"
-          }
-        }
-      }
-    },
-    "ОК" : {
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OK"
           }
         }
       }
