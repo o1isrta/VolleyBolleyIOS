@@ -58,7 +58,7 @@ final class NotificationService {
 	/// notificationsManager.hasNewNotifications = false
 	/// ```
 	@UserDefaultsCodable(
-		key: AppConstants.UserDefaults.Keys.hasNewNotifications,
+		key: AppConstants.UserDefaultsKeys.hasNewNotifications,
 		defaultValue: false
 	)
 	private(set) var hasNewNotifications: Bool
@@ -69,7 +69,7 @@ final class NotificationService {
 	/// - Maximum capacity: 100 notifications by defaults
 	/// - Data is preserved between app launches
 	/// - Old notifications are automatically removed when limit is exceeded
-	@LimitedUserDefaultsArray(key: AppConstants.UserDefaults.Keys.currentNotifications)
+	@LimitedUserDefaultsArray(key: AppConstants.UserDefaultsKeys.currentNotifications)
 	private(set) var currentNotifications: [NotificationCardViewModel]
 
 	// MARK: - Private Properties

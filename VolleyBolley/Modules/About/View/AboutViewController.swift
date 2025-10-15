@@ -7,261 +7,232 @@
 
 import UIKit
 
-// MARK: - Protocol
+// MARK: - AboutViewProtocol
 
 protocol AboutViewProtocol: AnyObject {
-    func displayAboutInfo(_ viewModel: AboutViewModel)
-}
-
-// MARK: - ViewModel
-
-struct AboutViewModel {
-    let founder: String
-    let designers: [String]
-    let developers: [String]
-}
-
-// MARK: - Item for Table
-
-struct AboutItem {
-    let title: String
-    let value: String
+	func setupAppInfo(with appVersion: String)
+	func reloadData()
 }
 
 // MARK: - ViewController
 
-final class AboutViewController: BaseViewController, AboutViewProtocol {
+final class AboutViewController: BaseViewController {
 
-    // MARK: - Constants
+	// MARK: - Constants
 
-    private enum Constants {
-        static let cornerRadius: CGFloat = 32
-        static let buttonSize: CGFloat = 24
-        static let padding: CGFloat = 8
-        static let topInset: CGFloat = 20
-        static let titleFontSize: CGFloat = 24
-        static let initialTableHeight: CGFloat = 240
-    }
+	private enum Constants {
+		static let buttonSize: CGFloat = 24
+		static let padding: CGFloat = 8
+		static let tableTopInset: CGFloat = 4
+		static let topInset: CGFloat = 20
+		static let titleFontSize: CGFloat = 24
 
-    // MARK: - Private Properties
+		static let initialTableHeight: CGFloat = 0
+		static let tableMaxHeightAnchor: CGFloat = 355
+		static let tableEstimatedRowHeight: CGFloat = 44
 
-    private let presenter: AboutPresenterProtocol
-    private var items: [AboutItem] = []
+		static let versionFontSize: CGFloat = 14
+		static let versionBottomInset: CGFloat = -60
+	}
 
-    private lazy var tableBackground: GlassmorphismView = {
-        let view = GlassmorphismView()
-        view.cornerRadius = Constants.cornerRadius
-        return view
-    }()
+	// MARK: - Private Properties
 
-    private lazy var titleLabel: CustomLabel = {
-        let label = CustomLabel(text: String(localized: "About"), isBold: true)
-        label.font = AppFont.ActayWide.bold(size: Constants.titleFontSize)
-        return label
-    }()
+	private let presenter: AboutPresenterProtocol
 
-    private lazy var backButton: UtilityButton = {
-        let button = UtilityButton(style: .small)
-        button.setImage(.chevronBackward, for: .normal)
-        button.tintColor = AppColor.Icon.primary
-        button.addTarget(
-            self,
-            action: #selector(backButtonTapped),
-            for: .touchUpInside
-        )
-        return button
-    }()
+	private lazy var glassmorphismView = GlassmorphismView()
 
-    private lazy var tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.backgroundColor = AppColor.Background.clear
-        tableView.layer.cornerRadius = Constants.cornerRadius
-        tableView.separatorStyle = .none
-        tableView.isScrollEnabled = false
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 44
-        tableView.register(AboutCell.self, forCellReuseIdentifier: AboutCell.reuseIdentifier)
-        return tableView
-    }()
+	private lazy var titleLabel: CustomLabel = {
+		let label = CustomLabel(text: String(localized: "About"), isBold: true)
+		label.font = AppFont.ActayWide.bold(size: Constants.titleFontSize)
+		return label
+	}()
 
-    private var tableBackgroundHeightConstraint: NSLayoutConstraint?
+	private lazy var backButton: UtilityButton = {
+		let button = UtilityButton(style: .small)
+		button.setImage(.chevronBackward, for: .normal)
+		button.tintColor = AppColor.Icon.primary
+		button.addAction(UIAction { [weak self] _ in
+			self?.presenter.backButtonTapped()
+		}, for: .touchUpInside)
+		return button
+	}()
 
-    // MARK: - Init
+	private var tableViewHeightConstraint: NSLayoutConstraint?
+	private var tableViewContentSizeObserver: NSKeyValueObservation?
+	private lazy var tableView: UITableView = {
+		let tableView = UITableView()
+		tableView.backgroundColor = AppColor.Background.clear
+		tableView.separatorStyle = .none
+		tableView.isScrollEnabled = false
+		tableView.dataSource = self
+		tableView.rowHeight = UITableView.automaticDimension
+		tableView.estimatedRowHeight = Constants.tableEstimatedRowHeight
+		tableView.register(AboutCell.self, forCellReuseIdentifier: AboutCell.reuseIdentifier)
+		return tableView
+	}()
 
-    init(presenter: AboutPresenterProtocol) {
-        self.presenter = presenter
-        super.init(nibName: nil, bundle: nil)
-    }
+	private lazy var versionLabel: UILabel = {
+		let label = UILabel()
+		label.textColor = AppColor.Text.primary
+		label.font = AppFont.Hero.light(size: Constants.versionFontSize)
+		return label
+	}()
 
-    @available(*, unavailable)
-    required init?(coder: NSCoder) { nil }
+	// MARK: - Initializers
 
-    // MARK: - Lifecycle
+	init(presenter: AboutPresenterProtocol) {
+		self.presenter = presenter
+		super.init(nibName: nil, bundle: nil)
+	}
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupView()
-        presenter.viewDidLoad()
-    }
+	@available(*, unavailable)
+	required init?(coder: NSCoder) { nil }
 
-    // MARK: - Public Methods
+	// MARK: - Lifecycle
 
-    func displayAboutInfo(_ viewModel: AboutViewModel) {
-        items = [
-            AboutItem(
-                title: String(localized: "Founder"),
-                value: viewModel.founder
-            ),
-            AboutItem(
-                title: String(localized: "Designed by"),
-                value: viewModel.designers.joined(separator: ", ")
-            ),
-            AboutItem(
-                title: String(localized: "Developed by"),
-                value: viewModel.developers.joined(separator: ", ")
-            )
-        ]
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		setupView()
+		presenter.viewDidLoad()
+		setupTableViewContentSizeObserver()
+	}
+}
 
-        tableView.reloadData()
-		tableView.layoutIfNeeded()
+// MARK: - AboutViewProtocol
 
-        let topPart = Constants.topInset + Constants.buttonSize
-        tableBackgroundHeightConstraint?.constant = topPart + tableView.contentSize.height
-    }
+extension AboutViewController: AboutViewProtocol {
 
-    // MARK: - Private Methods
+	func setupAppInfo(with appVersion: String) {
+		versionLabel.text = appVersion
+	}
 
-    private func setupView() {
-        view.addSubviews(tableBackground)
+	func reloadData() {
+		tableView.reloadData()
+	}
+}
 
-        tableBackground.addSubviews(
-            backButton,
-            titleLabel,
-            tableView
-        )
+// MARK: - Private Methods
 
-        tableBackgroundHeightConstraint = tableBackground.heightAnchor.constraint(
-            equalToConstant: Constants.initialTableHeight
-        )
-        tableBackgroundHeightConstraint?.isActive = true
+private extension AboutViewController {
 
-        NSLayoutConstraint.activate([
-            tableBackground.topAnchor.constraint(
+	func setupTableViewContentSizeObserver() {
+		tableViewContentSizeObserver = tableView.observe(
+			\.contentSize,
+			 options: [.new]
+		) { [weak self] _, change in
+			guard
+				let self,
+				let newSize = change.newValue
+			else { return }
+			// Limiting the max height to preserve scrolling
+			let maxHeight = UIScreen.main.bounds.height - Constants.tableMaxHeightAnchor
+			let newHeight = min(newSize.height, maxHeight)
+			self.tableViewHeightConstraint?.constant = newHeight
+		}
+	}
+
+	func setupView() {
+		view.addSubviews(
+			glassmorphismView,
+			backButton,
+			titleLabel,
+			tableView,
+			versionLabel
+		)
+		NSLayoutConstraint.activate([
+			glassmorphismView.topAnchor.constraint(
 				equalTo: navBar.bottomAnchor,
-                constant: Constants.padding
-            ),
-            tableBackground.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor,
-                constant: Constants.padding
-            ),
-            tableBackground.trailingAnchor.constraint(
-                equalTo: view.trailingAnchor,
-                constant: -Constants.padding
-            ),
+				constant: Constants.padding
+			),
+			glassmorphismView.leadingAnchor.constraint(
+				equalTo: view.leadingAnchor,
+				constant: Constants.padding
+			),
+			glassmorphismView.trailingAnchor.constraint(
+				equalTo: view.trailingAnchor,
+				constant: -Constants.padding
+			),
+			glassmorphismView.bottomAnchor.constraint(equalTo: tableView.bottomAnchor),
 
-            backButton.topAnchor.constraint(
-                equalTo: tableBackground.topAnchor,
-                constant: Constants.topInset
-            ),
-            backButton.leadingAnchor.constraint(
-                equalTo: tableBackground.leadingAnchor,
-                constant: Constants.topInset
-            ),
-            backButton.heightAnchor.constraint(equalToConstant: Constants.buttonSize),
-            backButton.widthAnchor.constraint(equalToConstant: Constants.buttonSize),
+			backButton.topAnchor.constraint(
+				equalTo: glassmorphismView.topAnchor,
+				constant: Constants.topInset
+			),
+			backButton.leadingAnchor.constraint(
+				equalTo: glassmorphismView.leadingAnchor,
+				constant: Constants.topInset
+			),
+			backButton.heightAnchor.constraint(equalToConstant: Constants.buttonSize),
+			backButton.widthAnchor.constraint(equalToConstant: Constants.buttonSize),
 
-            titleLabel.centerXAnchor.constraint(equalTo: tableBackground.centerXAnchor),
-            titleLabel.centerYAnchor.constraint(equalTo: backButton.centerYAnchor),
+			titleLabel.centerXAnchor.constraint(equalTo: glassmorphismView.centerXAnchor),
+			titleLabel.centerYAnchor.constraint(equalTo: backButton.centerYAnchor),
 
-            tableView.topAnchor.constraint(equalTo: backButton.bottomAnchor),
-            tableView.leadingAnchor.constraint(equalTo: tableBackground.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: tableBackground.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: tableBackground.bottomAnchor)
-        ])
-    }
+			tableView.topAnchor.constraint(
+				equalTo: backButton.bottomAnchor,
+				constant: Constants.tableTopInset
+			),
+			tableView.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor),
+			tableView.trailingAnchor.constraint(equalTo: glassmorphismView.trailingAnchor),
 
-    @objc private func backButtonTapped() {
-		presenter.backButtonTapped()
-    }
+			versionLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+			versionLabel.bottomAnchor.constraint(
+				equalTo: view.safeAreaLayoutGuide.bottomAnchor,
+				constant: Constants.versionBottomInset
+			)
+		])
+
+		tableViewHeightConstraint = tableView.heightAnchor.constraint(
+			equalToConstant: Constants.initialTableHeight
+		)
+		tableViewHeightConstraint?.isActive = true
+	}
 }
 
 // MARK: - UITableViewDataSource
 
 extension AboutViewController: UITableViewDataSource {
 
-    func tableView(
-        _ tableView: UITableView,
-        numberOfRowsInSection section: Int
-    ) -> Int {
-        items.count
-    }
+	func tableView(
+		_ tableView: UITableView,
+		numberOfRowsInSection section: Int
+	) -> Int {
+		presenter.getItemsCount()
+	}
 
-    func tableView(
-        _ tableView: UITableView,
-        cellForRowAt indexPath: IndexPath
-    ) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: AboutCell.reuseIdentifier,
-            for: indexPath
-        ) as? AboutCell else {
-            return UITableViewCell()
-        }
+	func tableView(
+		_ tableView: UITableView,
+		cellForRowAt indexPath: IndexPath
+	) -> UITableViewCell {
+		guard let cell = tableView.dequeueReusableCell(
+			withIdentifier: AboutCell.reuseIdentifier,
+			for: indexPath
+		) as? AboutCell else {
+			return UITableViewCell()
+		}
 
-        let item = items[indexPath.row]
-        let isLast = indexPath.row == items.count - 1
-        cell.configure(with: item, isLast: isLast)
+		let item = presenter.getItemData(index: indexPath.row)
+		let isLast = presenter.isLastItem(index: indexPath.row)
+		cell.configure(with: item, isLast: isLast)
 
-        return cell
-    }
+		return cell
+	}
 }
 
-// MARK: - UITableViewDelegate
-
-extension AboutViewController: UITableViewDelegate {
-
-    func tableView(
-        _ tableView: UITableView,
-        heightForRowAt indexPath: IndexPath
-    ) -> CGFloat {
-        UITableView.automaticDimension
-    }
-}
+#if DEBUG
 
 // MARK: - Preview
 
-#if DEBUG
 import SwiftUI
 
-struct AboutViewControllerPreview: UIViewControllerRepresentable {
-    class StubPresenter: AboutPresenterProtocol {
-        weak var view: AboutViewProtocol?
-        func viewDidLoad() {
-            let aboutViewModel = AboutViewModel(
-                founder: "Dmitrii Zverev",
-                designers: ["Malika Rozieva", "Zemlyanskaya Yulia"],
-                developers: []
-            )
-            view?.displayAboutInfo(aboutViewModel)
-        }
-		func backButtonTapped() {}
-    }
-
-    func makeUIViewController(context: Context) -> some UIViewController {
-        let presenter = StubPresenter()
-        let aboutView = AboutViewController(presenter: presenter)
-        presenter.view = aboutView
-        return aboutView
-    }
-
-    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {}
-}
-
-struct AboutViewController_Previews: PreviewProvider {
-    static var previews: some View {
-        AboutViewControllerPreview()
-            .edgesIgnoringSafeArea(.all)
-    }
+@available(iOS 17.0, *)
+#Preview {
+	let router = AboutRouter()
+	let presenter = AboutPresenter(
+		router: router
+	)
+	let aboutView = AboutViewController(presenter: presenter)
+	presenter.view = aboutView
+	return aboutView
 }
 #endif
