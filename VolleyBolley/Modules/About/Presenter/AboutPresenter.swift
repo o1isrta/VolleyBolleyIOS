@@ -5,6 +5,8 @@
 //  Created by Demain Petropavlov on 05.09.2025.
 //
 
+import Foundation
+
 // MARK: - AboutPresenterProtocol
 
 protocol AboutPresenterProtocol: AnyObject {
@@ -25,15 +27,13 @@ final class AboutPresenter: AboutPresenterProtocol {
 
 	// MARK: - Private Properties
 
-	private let interactor: AboutInteractorProtocol
 	private let router: AboutRouterProtocol
 
 	private var items: [AboutItem] = []
 
 	// MARK: - Initializers
 
-	init(interactor: AboutInteractorProtocol, router: AboutRouterProtocol) {
-		self.interactor = interactor
+	init(router: AboutRouterProtocol) {
 		self.router = router
 	}
 
@@ -65,29 +65,45 @@ final class AboutPresenter: AboutPresenterProtocol {
 
 private extension AboutPresenter {
 
+	enum Constants {
+		static let founder = "Dmitrii Zverev"
+		static let designers = [
+			"Malika Rozieva",
+			"Yulia Zemlyanskaya"
+		]
+		static let developers = [
+			"Anastasiia Evdokimovich",
+			"Danil Otmakhov",
+			"Demian Petropavlov",
+			"Egor Partenko",
+			"Nikolai Eremenko",
+			"Oleg Kozyrev",
+			"Roman Romanov",
+			"Vadim Mikheev"
+		]
+	}
+
 	func setupAboutInfo() {
-		let info = interactor.fetchAboutInfo()
 		items = [
 			AboutItem(
 				title: String(localized: "Founder"),
-				value: info.founder
+				value: Constants.founder
 			),
 			AboutItem(
 				title: String(localized: "Designed by"),
-				value: info.designers.joined(separator: "\n")
+				value: Constants.designers.joined(separator: "\n")
 			),
 			AboutItem(
 				title: String(localized: "Developed by"),
-				value: info.developers.joined(separator: "\n")
+				value: Constants.developers.joined(separator: "\n")
 			)
 		]
 		view?.reloadData()
 	}
 
 	func setupAppVersion() {
-		let appInfo = interactor.getAppInfo()
-		let appVersion = "\(String(localized: "Version")) \(appInfo.appVersion)"
-		let appAssembly = "\(String(localized: "Build")) \(appInfo.appBuild)"
+		let appVersion = "\(String(localized: "Version")) \(Bundle.main.appVersion)"
+		let appAssembly = "\(String(localized: "Build")) \(Bundle.main.appBuild)"
 		let appVersionInfo = "\(appVersion)  \(appAssembly)"
 		view?.setupAppInfo(with: appVersionInfo)
 	}
