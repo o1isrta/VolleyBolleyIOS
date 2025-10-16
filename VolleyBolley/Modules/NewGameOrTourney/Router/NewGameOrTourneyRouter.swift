@@ -1,5 +1,5 @@
 //
-//  NewGameAndTourneyRouter.swift
+//  NewGameOrTourneyRouter.swift
 //  VolleyBolley
 //
 //  Created by Roman Romanov on 16.10.2025.
@@ -7,11 +7,11 @@
 
 import UIKit
 
-protocol NewGameAndTourneyRouterProtocol: AnyObject {
+protocol NewGameOrTourneyRouterProtocol: AnyObject {
 	func navigateBack()
 }
 
-final class NewGameAndTourneyRouter: NewGameAndTourneyRouterProtocol {
+final class NewGameOrTourneyRouter: NewGameOrTourneyRouterProtocol {
 
 	// MARK: - Private Properties
 

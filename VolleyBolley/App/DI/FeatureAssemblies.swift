@@ -19,7 +19,7 @@ enum FeatureAssemblies {
             MainAssembly(),
             HomeAssembly(),
             MapAssembly(),
-			NewGameAndTourneyAssembly(),
+			NewGameOrTourneyAssembly(),
             MyGamesAssembly(),
             ProfileAssembly(),
             NotificationsAssembly(),
