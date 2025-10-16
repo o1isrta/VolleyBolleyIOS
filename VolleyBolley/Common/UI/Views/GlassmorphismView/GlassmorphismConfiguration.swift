@@ -35,6 +35,25 @@ struct GlassmorphismConfiguration {
         )
     }
 
+	static var message: GlassmorphismConfiguration {
+		GlassmorphismConfiguration(
+			cornerRadius: 16,
+			borderColor: AppColor.Glassmorphism.border.withAlphaComponent(0.15),
+			borderWidth: 1.0,
+			tintedBackgroundColor: AppColor.Background.blur,
+			blurIntensity: 0.2,
+			theme: .light,
+			outerShadowColor: AppColor.Glassmorphism.outerShadowColor,
+			outerShadowOpacity: 0.15,
+			outerShadowOffset: CGSize(width: 0, height: 8),
+			outerShadowRadius: 16,
+			innerShadowColor: AppColor.Glassmorphism.innerShadowColor,
+			innerShadowOpacity: 0.3,
+			innerShadowRadius: 18.0,
+			innerShadowOffset: CGSize(width: 0, height: -16)
+		)
+	}
+
     static var notification: GlassmorphismConfiguration {
         GlassmorphismConfiguration(
             cornerRadius: 16,
