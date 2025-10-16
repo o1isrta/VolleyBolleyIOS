@@ -10,8 +10,8 @@ import Swinject
 final class NewGameOrTourneyAssembly: Assembly {
 
 	func assemble(container: Container) {
-		container.register(NewGameOrTourneyController.self) { _ in
-			let newGameOrTourneyVC = NewGameOrTourneyController()
+		container.register(NewGameOrTourneyViewController.self) { _ in
+			let newGameOrTourneyVC = NewGameOrTourneyViewController()
 			let interactor = NewGameOrTourneyInteractor()
 			let router = NewGameOrTourneyRouter(viewController: newGameOrTourneyVC)
 			let presenter = NewGameOrTourneyPresenter(

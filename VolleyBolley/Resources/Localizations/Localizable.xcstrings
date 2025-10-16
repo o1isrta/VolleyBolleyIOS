@@ -115,6 +115,23 @@
         }
       }
     },
+    "button.next" : {
+      "comment" : "Next button",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "NEXT STEP"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ДАЛЬШЕ"
+          }
+        }
+      }
+    },
     "Cancel" : {
       "comment" : "Cancel button",
       "localizations" : {
@@ -1663,8 +1680,42 @@
         }
       }
     },
+    "newGameOrTourney.title.game" : {
+      "comment" : "Create a game / tourney screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create a game"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Создать игру"
+          }
+        }
+      }
+    },
+    "newGameOrTourney.title.tourney" : {
+      "comment" : "Create a game / tourney screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create a tourney"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Создать турнир"
+          }
+        }
+      }
+    },
     "NEXT STEP" : {
-      "comment" : "Next button",
+      "comment" : "Next button - удалить вместе с кнопкой",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
