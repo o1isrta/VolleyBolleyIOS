@@ -129,7 +129,7 @@ private extension NewGameOrTourneyPlaceCell {
 			),
 			separator.trailingAnchor.constraint(
 				equalTo: contentView.trailingAnchor,
-				constant: Constants.insetLarge
+				constant: -Constants.insetLarge
 			),
 			separator.bottomAnchor.constraint(
 				equalTo: contentView.bottomAnchor,
