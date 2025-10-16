@@ -8,7 +8,7 @@
 import Foundation
 
 protocol NewGameOrTourneyPresenterProtocol: AnyObject {
-	var view: NewGameOrTourneyControllerProtocol? { get set }
+	var view: NewGameOrTourneyViewControllerProtocol? { get set }
 	var interactor: NewGameOrTourneyInteractorProtocol { get }
 	var router: NewGameOrTourneyRouterProtocol { get }
 
@@ -20,7 +20,7 @@ final class NewGameOrTourneyPresenter: NewGameOrTourneyPresenterProtocol {
 
 	// MARK: - Public Properties
 
-	weak var view: NewGameOrTourneyControllerProtocol?
+	weak var view: NewGameOrTourneyViewControllerProtocol?
 
 	let interactor: NewGameOrTourneyInteractorProtocol
 	let router: NewGameOrTourneyRouterProtocol
@@ -36,6 +36,9 @@ final class NewGameOrTourneyPresenter: NewGameOrTourneyPresenterProtocol {
 	}
 
 	func viewDidLoad() {
+		let title = String(localized: "newGameOrTourney.title.tourney")
+//		let title = String(localized: "newGameOrTourney.title.game")
+		view?.setupTitle(with: title)
 	}
 
 	func backButtonTapped() {

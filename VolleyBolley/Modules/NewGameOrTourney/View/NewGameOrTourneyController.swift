@@ -7,17 +7,147 @@
 
 import UIKit
 
-protocol NewGameOrTourneyControllerProtocol: AnyObject {
+protocol NewGameOrTourneyViewControllerProtocol: AnyObject {
 	var presenter: NewGameOrTourneyPresenterProtocol? { get set }
+
+	func setupTitle(with title: String)
 }
 
-final class NewGameOrTourneyController: BaseViewController, NewGameOrTourneyControllerProtocol {
+final class NewGameOrTourneyViewController: BaseViewController, NewGameOrTourneyViewControllerProtocol {
 
 	// MARK: - Public Properties
 
 	var presenter: NewGameOrTourneyPresenterProtocol?
 
 	// MARK: - Private Properties
+
+	private let glassmorphismView = GlassmorphismView()
+
+	private lazy var titleLabel: CustomLabel = {
+		let label = CustomLabel(text: String(localized: "newGameOrTourney.title.game"), isBold: true)
+		label.font = AppFont.ActayWide.bold(size: Constants.titleFontSize)
+		return label
+	}()
+
+	private lazy var backButton: UtilityButton = {
+		let button = UtilityButton(style: .small)
+		button.setImage(.chevronBackward, for: .normal)
+		button.tintColor = AppColor.Icon.primary
+		button.addAction(UIAction { [weak self] _ in
+			self?.presenter?.backButtonTapped()
+		}, for: .touchUpInside)
+		return button
+	}()
+
+	private lazy var tableView: UITableView = {
+		let tableView = UITableView()
+		tableView.backgroundColor = AppColor.Background.clear
+		tableView.separatorStyle = .none
+		tableView.showsVerticalScrollIndicator = false
+//		tableView.dataSource = self
+//		tableView.delegate = self
+		tableView.rowHeight = UITableView.automaticDimension
+		tableView.estimatedRowHeight = 80
+//		tableView.register(SupportCell.self, forCellReuseIdentifier: SupportCell.reuseIdentifier)
+		return tableView
+	}()
+
+	private lazy var nextButton: YellowButton = {
+		let button = YellowButton(title: String(localized: "button.next"))
+		button.isEnabled = false
+		return button
+	}()
+
+	// MARK: - Public Methods
+
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		setupView()
+		presenter?.viewDidLoad()
+	}
+
+	func setupTitle(with title: String) {
+		titleLabel.text = title
+	}
+}
+
+private extension NewGameOrTourneyViewController {
+
+	enum Constants {
+		static let padding: CGFloat = 8
+		static let paddingDouble: CGFloat = 16
+
+		static let tableTopInset: CGFloat = 4
+
+		static let backButtonTopInset: CGFloat = 20
+		static let backButtonSize: CGFloat = 24
+
+		static let bottomInset: CGFloat = 63
+
+		static let titleFontSize: CGFloat = 24
+	}
+
+	func setupView() {
+		view.addSubviews(
+			glassmorphismView,
+			backButton,
+			titleLabel,
+			tableView,
+			nextButton
+		)
+		setupUI()
+	}
+
+	func setupUI() {
+		NSLayoutConstraint.activate([
+			glassmorphismView.topAnchor.constraint(
+				equalTo: navBar.bottomAnchor,
+				constant: Constants.padding
+			),
+			glassmorphismView.leadingAnchor.constraint(
+				equalTo: view.leadingAnchor,
+				constant: Constants.padding
+			),
+			glassmorphismView.trailingAnchor.constraint(
+				equalTo: view.trailingAnchor,
+				constant: -Constants.padding
+			),
+			glassmorphismView.bottomAnchor.constraint(
+				equalTo: nextButton.topAnchor,
+				constant: -Constants.paddingDouble
+			),
+			backButton.topAnchor.constraint(
+				equalTo: glassmorphismView.topAnchor,
+				constant: Constants.backButtonTopInset
+			),
+			backButton.leadingAnchor.constraint(
+				equalTo: glassmorphismView.leadingAnchor,
+				constant: Constants.backButtonTopInset
+			),
+			backButton.heightAnchor.constraint(equalToConstant: Constants.backButtonSize),
+			backButton.widthAnchor.constraint(equalToConstant: Constants.backButtonSize),
+			titleLabel.centerXAnchor.constraint(equalTo: glassmorphismView.centerXAnchor),
+			titleLabel.centerYAnchor.constraint(equalTo: backButton.centerYAnchor),
+
+			tableView.topAnchor.constraint(equalTo: backButton.bottomAnchor, constant: Constants.tableTopInset),
+			tableView.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor),
+			tableView.trailingAnchor.constraint(equalTo: glassmorphismView.trailingAnchor),
+			tableView.bottomAnchor.constraint(equalTo: glassmorphismView.bottomAnchor),
+
+			nextButton.leadingAnchor.constraint(
+				equalTo: view.leadingAnchor,
+				constant: Constants.padding
+			),
+			nextButton.trailingAnchor.constraint(
+				equalTo: view.trailingAnchor,
+				constant: -Constants.padding
+			),
+			nextButton.bottomAnchor.constraint(
+				equalTo: view.safeAreaLayoutGuide.bottomAnchor,
+				constant: -Constants.bottomInset
+			)
+		])
+	}
 }
 
 #if DEBUG
@@ -26,6 +156,6 @@ final class NewGameOrTourneyController: BaseViewController, NewGameOrTourneyCont
 
 @available(iOS 17.0, *)
 #Preview {
-	NewGameOrTourneyController()
+	NewGameOrTourneyViewController()
 }
 #endif
