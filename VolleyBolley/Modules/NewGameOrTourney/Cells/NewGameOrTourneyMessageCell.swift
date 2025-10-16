@@ -17,9 +17,8 @@ final class NewGameOrTourneyMessageCell: UITableViewCell {
 
 	// MARK: - Private Properties
 
-	private lazy var yourMessageTitle: CustomLabel = {
-//		let label = CustomLabel(text: String(localized: "Your message"), isBold: true)
-		let label = CustomLabel(text: "", isBold: true)
+	private lazy var titleLabel: CustomLabel = {
+		let label = CustomLabel(text: String(localized: "newGameOrTourney.message.title"), isBold: true)
 		label.font = AppFont.ActayWide.bold(size: Constants.titleFontSize)
 		label.textColor = AppColor.Text.primary
 		label.backgroundColor = AppColor.Background.clear
@@ -48,6 +47,11 @@ private extension NewGameOrTourneyMessageCell {
 	enum Constants {
 		static let maxMessageLength: Int = 160
 
+		static let inset: CGFloat = 16
+		static let insetLarge: CGFloat = 20
+
+		static let viewHeight: CGFloat = 106
+
 		static let titleFontSize: CGFloat = 20
 		static let messageFontSize: CGFloat = 16
 		static let counterFontSize: CGFloat = 14
@@ -64,24 +68,51 @@ private extension NewGameOrTourneyMessageCell {
 		selectionStyle = .none
 
 		contentView.addSubviews(
-			yourMessageTitle,
+			titleLabel,
 			messageView,
 			separator
 		)
 
 		NSLayoutConstraint.activate([
-			yourMessageTitle.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-			yourMessageTitle.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+			titleLabel.topAnchor.constraint(
+				equalTo: contentView.topAnchor,
+				constant: Constants.inset
+			),
+			titleLabel.leadingAnchor.constraint(
+				equalTo: contentView.leadingAnchor,
+				constant: Constants.insetLarge
+			),
 
-			messageView.topAnchor.constraint(equalTo: yourMessageTitle.bottomAnchor, constant: 16),
-			messageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-			messageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-			messageView.heightAnchor.constraint(equalToConstant: 106),
+			messageView.topAnchor.constraint(
+				equalTo: titleLabel.bottomAnchor,
+				constant: Constants.inset
+			),
+			messageView.leadingAnchor.constraint(
+				equalTo: contentView.leadingAnchor,
+				constant: Constants.insetLarge
+			),
+			messageView.trailingAnchor.constraint(
+				equalTo: contentView.trailingAnchor,
+				constant: -Constants.insetLarge
+			),
+			messageView.heightAnchor.constraint(equalToConstant: Constants.viewHeight),
 
-			separator.topAnchor.constraint(equalTo: messageView.bottomAnchor, constant: 16),
-			separator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-			separator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-			separator.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
+			separator.topAnchor.constraint(
+				equalTo: messageView.bottomAnchor,
+				constant: Constants.inset
+			),
+			separator.leadingAnchor.constraint(
+				equalTo: contentView.leadingAnchor,
+				constant: Constants.insetLarge
+			),
+			separator.trailingAnchor.constraint(
+				equalTo: contentView.trailingAnchor,
+				constant: -Constants.insetLarge
+			),
+			separator.bottomAnchor.constraint(
+				equalTo: contentView.bottomAnchor,
+				constant: -Constants.inset
+			)
 		])
 	}
 }

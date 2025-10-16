@@ -9,7 +9,6 @@ import UIKit
 
 protocol NewGameOrTourneyViewControllerProtocol: AnyObject {
 	var presenter: NewGameOrTourneyPresenterProtocol? { get set }
-
 	func setupTitle(with title: String)
 }
 
@@ -64,8 +63,10 @@ final class NewGameOrTourneyViewController: BaseViewController, NewGameOrTourney
 		tableView.estimatedRowHeight = Constants.tableEstimatedRowHeight
 		tableView.register(
 			NewGameOrTourneyMessageCell.self,
-			forCellReuseIdentifier: NewGameOrTourneyMessageCell.reuseIdentifier
-		)
+			forCellReuseIdentifier: NewGameOrTourneyMessageCell.reuseIdentifier)
+		tableView.register(
+			NewGameOrTourneyPlaceCell.self,
+			forCellReuseIdentifier: NewGameOrTourneyPlaceCell.reuseIdentifier)
 		return tableView
 	}()
 
@@ -160,7 +161,7 @@ private extension NewGameOrTourneyViewController {
 extension NewGameOrTourneyViewController: UITableViewDataSource {
 
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		1
+		2
 	}
 
 	func tableView(
@@ -168,16 +169,35 @@ extension NewGameOrTourneyViewController: UITableViewDataSource {
 		cellForRowAt indexPath: IndexPath
 	) -> UITableViewCell {
 		// cell with message
-		if let cell = tableView.dequeueReusableCell(
-			withIdentifier: NewGameOrTourneyMessageCell.reuseIdentifier,
-			for: indexPath
-		) as? NewGameOrTourneyMessageCell {
-			cell.onMessageChange = { [weak self] text in
-				print("Current message: \(text)")
+		switch indexPath.row {
+		case 0:
+			if let cell = tableView.dequeueReusableCell(
+				withIdentifier: NewGameOrTourneyMessageCell.reuseIdentifier,
+				for: indexPath
+			) as? NewGameOrTourneyMessageCell {
+				cell.onMessageChange = { [weak self] text in
+					print("Current message: \(text)")
+				}
+				return cell
 			}
-			return cell
+		case 1:
+			if let cell = tableView.dequeueReusableCell(
+				withIdentifier: NewGameOrTourneyPlaceCell.reuseIdentifier,
+				for: indexPath
+			) as? NewGameOrTourneyPlaceCell {
+				let shortCourt = LocationTitleViewModel(
+					title: "Karon Beach Club",
+					location: "Patak Rd, Mueang Phuket"
+				)
+				let callback = {
+					print("Callback")
+				}
+				cell.configure(with: shortCourt, callback: callback)
+				return cell
+			}
+		default:
+			return UITableViewCell()
 		}
-
 		return UITableViewCell()
 	}
 }
