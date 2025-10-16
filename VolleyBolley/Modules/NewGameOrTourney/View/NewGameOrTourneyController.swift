@@ -44,11 +44,13 @@ final class NewGameOrTourneyViewController: BaseViewController, NewGameOrTourney
 		tableView.backgroundColor = AppColor.Background.clear
 		tableView.separatorStyle = .none
 		tableView.showsVerticalScrollIndicator = false
-//		tableView.dataSource = self
-//		tableView.delegate = self
+		tableView.dataSource = self
 		tableView.rowHeight = UITableView.automaticDimension
 		tableView.estimatedRowHeight = 80
-//		tableView.register(SupportCell.self, forCellReuseIdentifier: SupportCell.reuseIdentifier)
+		tableView.register(
+			NewGameOrTourneyMessageCell.self,
+			forCellReuseIdentifier: NewGameOrTourneyMessageCell.reuseIdentifier
+		)
 		return tableView
 	}()
 
@@ -70,6 +72,8 @@ final class NewGameOrTourneyViewController: BaseViewController, NewGameOrTourney
 		titleLabel.text = title
 	}
 }
+
+// MARK: - Private Methods
 
 private extension NewGameOrTourneyViewController {
 
@@ -147,6 +151,30 @@ private extension NewGameOrTourneyViewController {
 				constant: -Constants.bottomInset
 			)
 		])
+	}
+}
+
+// MARK: - UITableViewDataSource
+
+extension NewGameOrTourneyViewController: UITableViewDataSource {
+
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		1
+	}
+
+	func tableView(
+		_ tableView: UITableView,
+		cellForRowAt indexPath: IndexPath
+	) -> UITableViewCell {
+		// cell with message
+		if let cell = tableView.dequeueReusableCell(
+			withIdentifier: NewGameOrTourneyMessageCell.reuseIdentifier,
+			for: indexPath
+		) as? NewGameOrTourneyMessageCell {
+			return cell
+		}
+
+		return UITableViewCell()
 	}
 }
 
