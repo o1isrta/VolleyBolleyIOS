@@ -21,6 +21,21 @@ final class NewGameOrTourneyViewController: BaseViewController, NewGameOrTourney
 
 	// MARK: - Private Properties
 
+	private	enum Constants {
+		static let padding: CGFloat = 8
+		static let paddingDouble: CGFloat = 16
+
+		static let tableTopInset: CGFloat = 4
+		static let tableEstimatedRowHeight: CGFloat = 80
+
+		static let backButtonTopInset: CGFloat = 20
+		static let backButtonSize: CGFloat = 24
+
+		static let bottomInset: CGFloat = 63
+
+		static let titleFontSize: CGFloat = 24
+	}
+
 	private let glassmorphismView = GlassmorphismView()
 
 	private lazy var titleLabel: CustomLabel = {
@@ -46,7 +61,7 @@ final class NewGameOrTourneyViewController: BaseViewController, NewGameOrTourney
 		tableView.showsVerticalScrollIndicator = false
 		tableView.dataSource = self
 		tableView.rowHeight = UITableView.automaticDimension
-		tableView.estimatedRowHeight = 80
+		tableView.estimatedRowHeight = Constants.tableEstimatedRowHeight
 		tableView.register(
 			NewGameOrTourneyMessageCell.self,
 			forCellReuseIdentifier: NewGameOrTourneyMessageCell.reuseIdentifier
@@ -76,20 +91,6 @@ final class NewGameOrTourneyViewController: BaseViewController, NewGameOrTourney
 // MARK: - Private Methods
 
 private extension NewGameOrTourneyViewController {
-
-	enum Constants {
-		static let padding: CGFloat = 8
-		static let paddingDouble: CGFloat = 16
-
-		static let tableTopInset: CGFloat = 4
-
-		static let backButtonTopInset: CGFloat = 20
-		static let backButtonSize: CGFloat = 24
-
-		static let bottomInset: CGFloat = 63
-
-		static let titleFontSize: CGFloat = 24
-	}
 
 	func setupView() {
 		view.addSubviews(
@@ -171,6 +172,9 @@ extension NewGameOrTourneyViewController: UITableViewDataSource {
 			withIdentifier: NewGameOrTourneyMessageCell.reuseIdentifier,
 			for: indexPath
 		) as? NewGameOrTourneyMessageCell {
+			cell.onMessageChange = { [weak self] text in
+				print("Current message: \(text)")
+			}
 			return cell
 		}
 
