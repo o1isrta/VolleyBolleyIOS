@@ -64,6 +64,9 @@ final class MessageView: UIView {
 	private enum Constants {
 		static let maxMessageLength: Int = 160
 
+		static let inset: CGFloat = 8
+		static let insetLarge: CGFloat = 16
+
 		static let titleFontSize: CGFloat = 20
 		static let messageFontSize: CGFloat = 16
 		static let counterFontSize: CGFloat = 14
@@ -129,8 +132,14 @@ private extension MessageView {
 		guard messageViewType == .withCounter else { return }
 		addSubviews(messageLettersCounter)
 		NSLayoutConstraint.activate([
-			messageLettersCounter.trailingAnchor.constraint(equalTo: messageContainerView.trailingAnchor, constant: -16),
-			messageLettersCounter.bottomAnchor.constraint(equalTo: messageContainerView.bottomAnchor, constant: -16)
+			messageLettersCounter.trailingAnchor.constraint(
+				equalTo: messageContainerView.trailingAnchor,
+				constant: -Constants.insetLarge
+			),
+			messageLettersCounter.bottomAnchor.constraint(
+				equalTo: messageContainerView.bottomAnchor,
+				constant: -Constants.insetLarge
+			)
 		])
 	}
 
@@ -147,13 +156,31 @@ private extension MessageView {
 			messageContainerView.trailingAnchor.constraint(equalTo: trailingAnchor),
 			messageContainerView.bottomAnchor.constraint(equalTo: bottomAnchor),
 
-			messageTextField.topAnchor.constraint(equalTo: messageContainerView.topAnchor, constant: 8),
-			messageTextField.leadingAnchor.constraint(equalTo: messageContainerView.leadingAnchor, constant: 16),
-			messageTextField.trailingAnchor.constraint(equalTo: messageContainerView.trailingAnchor, constant: -16),
-			messageTextField.bottomAnchor.constraint(equalTo: messageContainerView.bottomAnchor, constant: -8),
+			messageTextField.topAnchor.constraint(
+				equalTo: messageContainerView.topAnchor,
+				constant: Constants.inset
+			),
+			messageTextField.leadingAnchor.constraint(
+				equalTo: messageContainerView.leadingAnchor,
+				constant: Constants.insetLarge
+			),
+			messageTextField.trailingAnchor.constraint(
+				equalTo: messageContainerView.trailingAnchor,
+				constant: -Constants.insetLarge
+			),
+			messageTextField.bottomAnchor.constraint(
+				equalTo: messageContainerView.bottomAnchor,
+				constant: -Constants.inset
+			),
 
-			messagePlaceholderLabel.topAnchor.constraint(equalTo: messageContainerView.topAnchor, constant: 16),
-			messagePlaceholderLabel.leadingAnchor.constraint(equalTo: messageContainerView.leadingAnchor, constant: 16)
+			messagePlaceholderLabel.topAnchor.constraint(
+				equalTo: messageContainerView.topAnchor,
+				constant: Constants.insetLarge
+			),
+			messagePlaceholderLabel.leadingAnchor.constraint(
+				equalTo: messageContainerView.leadingAnchor,
+				constant: Constants.insetLarge
+			)
 		])
 	}
 }
