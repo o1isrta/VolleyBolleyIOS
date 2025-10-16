@@ -2,10 +2,22 @@
 //  Untitled.swift
 //  VolleyBolley
 //
-//  Created by Олег Кор on 25.07.2025.
+//  Created by Roman Romanov on 16.10.2025.
 //
 
 import UIKit
+
+protocol NewGamePresenterProtocol: AnyObject {
+	func viewDidLoad()
+	func didChangeMessage(_ text: String)
+	func didToggleLevel(_ title: String)
+	func didToggleGender(_ title: String)
+	func didConfirmDate(_ date: Date)
+	func didConfirmPlace(_ place: String)
+	func didTapGetStarted()
+	func didTapBack()
+	func didSelectDateButton(_ title: String)
+}
 
 final class NewGamePresenter: NewGamePresenterProtocol {
 

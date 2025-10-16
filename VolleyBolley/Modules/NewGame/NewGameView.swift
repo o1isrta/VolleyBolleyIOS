@@ -2,51 +2,48 @@
 //  NewGameView.swift
 //  VolleyBolley
 //
-//  Created by Олег Козырев on 24.07.2025.
+//  Created by Roman Romanov on 16.10.2025.
 //
 
 import UIKit
 
+protocol NewGameViewProtocol: AnyObject {
+	func setGetStartedButton(enabled: Bool)
+	func updateMessageCount(_ count: Int)
+	func updateSelectedLevels(_ titles: [String])
+	func updateSelectedGender(_ title: String?)
+	func showPlaceholder(_ show: Bool)
+	func updateDateSelection(todaySelected: Bool)
+	func updateSelectedPlace(_ place: String?)
+	func updateSelectedDate(_ date: String?)
+}
+
 final class NewGameView: BaseViewController, NewGameViewProtocol {
 
     var presenter: NewGamePresenterProtocol?
-
-    private lazy var navigationBarView = CustomNavBarView()
-    private lazy var mainTabBarController = MainTabBarController()
 
     private lazy var contentView: UIView = {
         let contentView = UIView()
         contentView.backgroundColor = .clear
         contentView.layer.cornerRadius = 32
         contentView.layer.masksToBounds = true
-        contentView.translatesAutoresizingMaskIntoConstraints = false
         return contentView
     }()
 
-    private lazy var contentBackground: GlassmorphismView = {
-        let view = GlassmorphismView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+    private lazy var contentBackground: GlassmorphismView = GlassmorphismView()
 
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.backgroundColor = .clear
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.showsVerticalScrollIndicator = false
         return scrollView
     }()
 
-    private let scrollContentView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+    private let scrollContentView: UIView = UIView()
 
     private lazy var getStartedButton: YellowButton = {
         let button = YellowButton(title: String(localized: "GET STARTED"))
         button.isEnabled = false
-        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
 
@@ -63,7 +60,6 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
         let view = UIView()
         view.backgroundColor = AppColor.Background.blur
         view.layer.cornerRadius = 16
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
@@ -78,7 +74,6 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
         textView.isUserInteractionEnabled = true
         textView.layer.cornerRadius = 16
         textView.layer.borderColor = AppColor.Border.primary.cgColor
-        textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()
 
@@ -87,7 +82,6 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
         label.text = String(localized: "Leave a note for players...")
         label.textColor = AppColor.Text.primary
         label.font = AppFont.Hero.light(size: 14)
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
@@ -97,7 +91,6 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
         counter.font = AppFont.Hero.light(size: 14)
         counter.textAlignment = .right
         counter.text = "0/160"
-        counter.translatesAutoresizingMaskIntoConstraints = false
         return counter
     }()
 
@@ -108,22 +101,16 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
         let button = GreenButton()
         button.setTitle(String(localized: "Change"), for: .normal)
         button.isSelected = true
-        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
 
-    private lazy var locationContainerView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+    private lazy var locationContainerView: UIView = UIView()
 
     private lazy var locationIcon: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "location.fill")?.withRenderingMode(.alwaysTemplate)
         imageView.tintColor = AppColor.Icon.location
         imageView.contentMode = .scaleAspectFit
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
 
@@ -133,7 +120,6 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
         label.font = AppFont.Hero.bold(size: 16)
         label.textColor = AppColor.Text.primary
         label.numberOfLines = 1
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
@@ -143,29 +129,28 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
         label.font = AppFont.Hero.light(size: 14)
         label.textColor = AppColor.Text.primary
         label.numberOfLines = 1
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
     private lazy var locationStackView: UIStackView = {
-        let stackView = UIStackView()
+		let stackView = UIStackView(arrangedSubviews: [
+			locationName,
+			locationAddress
+		])
         stackView.axis = .vertical
         stackView.alignment = .leading
         stackView.spacing = 4
         stackView.distribution = .fillProportionally
-        stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
 
     private lazy var placeSeparator = CustomSeparator()
-
     private lazy var dateLabel = CustomTitle(text: String(localized: "Date"), isLarge: false)
 
     private lazy var todayButton: GreenButton = {
         let button = GreenButton()
         button.setTitle(String(localized: "Today"), for: .normal)
         button.isSelected = true
-        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
 
@@ -173,7 +158,6 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
         let button = GreenButton(imagePlacement: .trailing)
         button.setTitle(String(localized: "Pick date"), for: .normal)
         button.setImage(.arrowForward, for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
 
@@ -182,7 +166,6 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
         label.text = String(localized: "Game duration")
         label.font = AppFont.Hero.regular(size: 16)
         label.textColor = AppColor.Text.primary
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
@@ -191,7 +174,6 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
         label.text = String(localized: "from")
         label.font = AppFont.Hero.regular(size: 16)
         label.textColor = AppColor.Text.primary
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     private lazy var fromTimeButton = TimePickerButton()
@@ -201,18 +183,18 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
         label.text = String(localized: "to")
         label.font = AppFont.Hero.regular(size: 16)
         label.textColor = AppColor.Text.primary
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     private lazy var toTimeButton = TimePickerButton()
 
     private lazy var dateStackView: UIStackView = {
-        let stackView = UIStackView()
+		let stackView = UIStackView(arrangedSubviews: [
+			fromTimeLabel, fromTimeButton, toTimeLabel, toTimeButton
+		])
         stackView.axis = .horizontal
         stackView.spacing = 8
         stackView.alignment = .center
         stackView.distribution = .fill
-        stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
 
@@ -291,29 +273,16 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
     }
 
     private func setupScrollView() {
-        view.addSubview(navigationBarView)
-        navigationBarView.translatesAutoresizingMaskIntoConstraints = false
-
-        view.addSubview(contentView)
-        addChild(mainTabBarController)
-        view.addSubview(mainTabBarController.view)
-        mainTabBarController.didMove(toParent: self)
-        mainTabBarController.view.translatesAutoresizingMaskIntoConstraints = false
-
-        contentView.addSubview(contentBackground)
-        contentBackground.addSubview(scrollView)
-        scrollView.addSubview(scrollContentView)
+        view.addSubviews(contentView)
+        contentView.addSubviews(contentBackground)
+        contentBackground.addSubviews(scrollView)
+        scrollView.addSubviews(scrollContentView)
 
         NSLayoutConstraint.activate([
-            navigationBarView.topAnchor.constraint(equalTo: view.topAnchor),
-            navigationBarView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            navigationBarView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            navigationBarView.heightAnchor.constraint(equalToConstant: 106),
-
-            contentView.topAnchor.constraint(equalTo: navigationBarView.bottomAnchor, constant: 8),
+			contentView.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 8),
             contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
             contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
-            contentView.bottomAnchor.constraint(equalTo: mainTabBarController.view.topAnchor, constant: -16),
+			contentView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -315),
 
             contentBackground.topAnchor.constraint(equalTo: contentView.topAnchor),
             contentBackground.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -329,21 +298,15 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
             scrollContentView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
             scrollContentView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
             scrollContentView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
-            scrollContentView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor),
-
-            mainTabBarController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            mainTabBarController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            mainTabBarController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            mainTabBarController.view.heightAnchor.constraint(equalToConstant: 81)
+            scrollContentView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor)
         ])
     }
 
     private func setupLabelView() {
-        [backButton, titleLabel]
-            .forEach {
-                scrollContentView.addSubviews($0)
-            }
-
+		scrollContentView.addSubviews(
+			backButton,
+			titleLabel
+		)
         NSLayoutConstraint.activate([
             backButton.topAnchor.constraint(equalTo: scrollContentView.topAnchor, constant: 20),
             backButton.leadingAnchor.constraint(equalTo: scrollContentView.leadingAnchor, constant: 20),
@@ -356,16 +319,16 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
     }
 
     private func setupMessageTextField() {
-        [yourMessageTitle, messageTextView, messageSeparator]
-            .forEach {
-                scrollContentView.addSubviews($0)
-            }
-
-        [messageTextField, messagePlaceholderLabel, messageLettersCounter]
-            .forEach {
-                messageTextView.addSubviews($0)
-            }
-
+		scrollContentView.addSubviews(
+			yourMessageTitle,
+			messageTextView,
+			messageSeparator
+		)
+		messageTextView.addSubviews(
+			messageTextField,
+			messagePlaceholderLabel,
+			messageLettersCounter
+		)
         NSLayoutConstraint.activate([
             yourMessageTitle.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16),
             yourMessageTitle.leadingAnchor.constraint(equalTo: scrollContentView.leadingAnchor, constant: 20),
@@ -394,17 +357,15 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
     }
 
     private func setupLocationView() {
-        [placeLabel, placeButton, placeSeparator]
-            .forEach {
-                scrollContentView.addSubviews($0)
-            }
-
-        locationStackView.addArrangedSubview(locationName)
-        locationStackView.addArrangedSubview(locationAddress)
-
-        locationContainerView.addSubview(locationIcon)
-        locationContainerView.addSubview(locationStackView)
-
+		scrollContentView.addSubviews(
+			placeLabel,
+			placeButton,
+			placeSeparator
+		)
+        locationContainerView.addSubviews(
+			locationIcon,
+			locationStackView
+		)
         scrollContentView.addSubview(locationContainerView)
 
         NSLayoutConstraint.activate([
@@ -435,11 +396,14 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
     }
 
     private func setupDateView() {
-        [dateLabel, todayButton, pickDateButton, gameDurationLabel, dateSeparator]
-            .forEach {
-                scrollContentView.addSubviews($0)
-            }
-
+		scrollContentView.addSubviews(
+			dateLabel,
+			todayButton,
+			pickDateButton,
+			gameDurationLabel,
+			dateSeparator,
+			dateStackView
+		)
         NSLayoutConstraint.activate([
             dateLabel.topAnchor.constraint(equalTo: placeSeparator.bottomAnchor, constant: 16),
             dateLabel.leadingAnchor.constraint(equalTo: scrollContentView.leadingAnchor, constant: 20),
@@ -454,13 +418,6 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
             gameDurationLabel.leadingAnchor.constraint(equalTo: scrollContentView.leadingAnchor, constant: 20)
         ])
 
-        [fromTimeLabel, fromTimeButton, toTimeLabel, toTimeButton]
-            .forEach {
-                dateStackView.addArrangedSubview($0)
-            }
-
-        scrollContentView.addSubview(dateStackView)
-
         NSLayoutConstraint.activate([
             dateStackView.topAnchor.constraint(equalTo: gameDurationLabel.bottomAnchor, constant: 8),
             dateStackView.leadingAnchor.constraint(equalTo: scrollContentView.leadingAnchor, constant: 20),
@@ -472,11 +429,13 @@ final class NewGameView: BaseViewController, NewGameViewProtocol {
     }
 
     private func setupGenderView() {
-        [genderLabel, mixGenderButton, maleGenderButton,
-         femaleGenderButton, genderSeparator]
-            .forEach {
-                scrollContentView.addSubviews($0)
-            }
+		scrollContentView.addSubviews(
+			genderLabel,
+			mixGenderButton,
+			maleGenderButton,
+			femaleGenderButton,
+			genderSeparator
+		)
 
         NSLayoutConstraint.activate([
             genderLabel.topAnchor.constraint(equalTo: dateSeparator.bottomAnchor, constant: 16),

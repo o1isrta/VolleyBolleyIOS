@@ -2,10 +2,16 @@
 //  NewGameRouter.swift
 //  VolleyBolley
 //
-//  Created by Олег Кор on 25.07.2025.
+//  Created by Roman Romanov on 16.10.2025.
 //
 
 import UIKit
+
+protocol NewGameRouterProtocol: AnyObject {
+	var viewController: UIViewController? { get set }
+	func routeToMain(with data: NewGameData?)
+	func dismiss()
+}
 
 final class NewGameRouter: NewGameRouterProtocol {
 

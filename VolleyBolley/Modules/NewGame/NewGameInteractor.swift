@@ -2,10 +2,34 @@
 //  NewGameInteractor.swift
 //  VolleyBolley
 //
-//  Created by Олег Кор on 25.07.2025.
+//  Created by Roman Romanov on 16.10.2025.
 //
 
 import Foundation
+
+protocol NewGameInteractorProtocol: AnyObject {
+	func validateMessage(_ text: String) -> Bool
+	func updateMessage(_ text: String)
+	func getMessageCount() -> Int
+
+	func toggleLevel(_ title: String)
+	func getSelectedLevels() -> [String]
+
+	func setGender(_ title: String)
+	func getSelectedGender() -> String?
+
+	func setDate(_ date: String)
+	func getSelectedDate() -> String?
+
+	func setPlace(_ place: String)
+	func getSelectedPlace() -> String?
+
+	func buildGameData() -> NewGameData
+}
+
+protocol NewGameInteractorOutputProtocol: AnyObject {
+	func gameSaved()
+}
 
 final class NewGameInteractor: NewGameInteractorProtocol {
 
