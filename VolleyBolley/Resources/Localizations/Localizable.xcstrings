@@ -1637,6 +1637,23 @@
         }
       }
     },
+    "messagePlaceholder" : {
+      "comment" : "Message view",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leave a note for players..."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Оставьте заметку для игроков..."
+          }
+        }
+      }
+    },
     "My games" : {
       "comment" : "Tab bar item title",
       "localizations" : {
