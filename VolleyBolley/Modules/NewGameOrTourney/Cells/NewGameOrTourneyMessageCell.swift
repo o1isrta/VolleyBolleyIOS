@@ -13,6 +13,8 @@ final class NewGameOrTourneyMessageCell: UITableViewCell {
 
 	static let reuseIdentifier = "NewGameOrTourneyMessageCell"
 
+	var onMessageChange: ((String) -> Void)?
+
 	// MARK: - Private Properties
 
 	private lazy var yourMessageTitle: CustomLabel = {
@@ -32,14 +34,11 @@ final class NewGameOrTourneyMessageCell: UITableViewCell {
 	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		setupUI()
+		setupCallback()
 	}
 
 	@available(*, unavailable)
 	required init?(coder: NSCoder) { nil }
-
-	func getMessageText() -> String {
-		messageView.getMessageText()
-	}
 }
 
 // MARK: - Private Properties
@@ -52,6 +51,12 @@ private extension NewGameOrTourneyMessageCell {
 		static let titleFontSize: CGFloat = 20
 		static let messageFontSize: CGFloat = 16
 		static let counterFontSize: CGFloat = 14
+	}
+
+	func setupCallback() {
+		messageView.onTextChange = { [weak self] text in
+			self?.onMessageChange?(text)
+		}
 	}
 
 	func setupUI() {
