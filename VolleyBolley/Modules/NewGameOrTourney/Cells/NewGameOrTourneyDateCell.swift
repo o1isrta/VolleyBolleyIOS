@@ -18,8 +18,6 @@ final class NewGameOrTourneyDateCell: UITableViewCell {
 	private var callback: (() -> Void)?
 
 	private enum Constants {
-		static let maxMessageLength: Int = 160
-
 		static let inset: CGFloat = 16
 		static let insetLitle: CGFloat = 8
 		static let insetMidle: CGFloat = 12
@@ -27,11 +25,8 @@ final class NewGameOrTourneyDateCell: UITableViewCell {
 
 		static let stackViewSpacing: CGFloat = 8
 
-		static let viewHeight: CGFloat = 36
-
 		static let titleFontSize: CGFloat = 20
 		static let textFontSize: CGFloat = 16
-		static let counterFontSize: CGFloat = 14
 	}
 
 	private lazy var titleLabel: CustomLabel = {
