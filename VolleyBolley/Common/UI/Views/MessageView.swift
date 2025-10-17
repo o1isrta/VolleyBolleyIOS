@@ -114,6 +114,11 @@ final class MessageView: UIView {
 
 	@available(*, unavailable)
 	required init?(coder: NSCoder) { nil }
+
+	override func layoutSubviews() {
+		messageContainerView.resetForReuse()
+		super.layoutSubviews()
+	}
 }
 
 // MARK: - Private Properties
