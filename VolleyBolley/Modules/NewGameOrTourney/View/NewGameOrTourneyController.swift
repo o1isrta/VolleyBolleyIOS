@@ -203,8 +203,11 @@ extension NewGameOrTourneyViewController: UITableViewDataSource {
 				withIdentifier: NewGameOrTourneyDateCell.reuseIdentifier,
 				for: indexPath
 			) as? NewGameOrTourneyDateCell {
-				let callback = {
-					print("Callback")
+				let callback: (Date, Bool) -> Void = { [weak self] date, reloadTable in
+					print("Callback \(date)")
+					if reloadTable {
+						self?.tableView.reloadData()
+					}
 				}
 				cell.configure(callback: callback)
 				return cell
