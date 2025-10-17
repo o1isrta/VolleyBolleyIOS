@@ -20,8 +20,6 @@ final class NewGameOrTourneyMessageCell: UITableViewCell {
 	private lazy var titleLabel: CustomLabel = {
 		let label = CustomLabel(text: String(localized: "newGameOrTourney.message.title"), isBold: true)
 		label.font = AppFont.ActayWide.bold(size: Constants.titleFontSize)
-		label.textColor = AppColor.Text.primary
-		label.backgroundColor = AppColor.Background.clear
 		return label
 	}()
 
@@ -40,7 +38,7 @@ final class NewGameOrTourneyMessageCell: UITableViewCell {
 	required init?(coder: NSCoder) { nil }
 }
 
-// MARK: - Private Properties
+// MARK: - Private Methods
 
 private extension NewGameOrTourneyMessageCell {
 
