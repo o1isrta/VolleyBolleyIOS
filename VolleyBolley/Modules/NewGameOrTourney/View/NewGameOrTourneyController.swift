@@ -67,6 +67,9 @@ final class NewGameOrTourneyViewController: BaseViewController, NewGameOrTourney
 		tableView.register(
 			NewGameOrTourneyPlaceCell.self,
 			forCellReuseIdentifier: NewGameOrTourneyPlaceCell.reuseIdentifier)
+		tableView.register(
+			NewGameOrTourneyDateCell.self,
+			forCellReuseIdentifier: NewGameOrTourneyDateCell.reuseIdentifier)
 		return tableView
 	}()
 
@@ -161,7 +164,7 @@ private extension NewGameOrTourneyViewController {
 extension NewGameOrTourneyViewController: UITableViewDataSource {
 
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		2
+		3
 	}
 
 	func tableView(
@@ -193,6 +196,17 @@ extension NewGameOrTourneyViewController: UITableViewDataSource {
 					print("Callback")
 				}
 				cell.configure(with: shortCourt, callback: callback)
+				return cell
+			}
+		case 2:
+			if let cell = tableView.dequeueReusableCell(
+				withIdentifier: NewGameOrTourneyDateCell.reuseIdentifier,
+				for: indexPath
+			) as? NewGameOrTourneyDateCell {
+				let callback = {
+					print("Callback")
+				}
+				cell.configure(callback: callback)
 				return cell
 			}
 		default:

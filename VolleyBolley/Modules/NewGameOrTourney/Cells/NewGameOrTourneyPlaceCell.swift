@@ -24,7 +24,7 @@ final class NewGameOrTourneyPlaceCell: UITableViewCell {
 		static let insetLitle: CGFloat = 8
 		static let insetLarge: CGFloat = 20
 
-		static let mainStackViewSpacing: CGFloat = 10
+		static let mainStackViewSpacing: CGFloat = 8
 
 		static let viewHeight: CGFloat = 36
 
@@ -36,8 +36,6 @@ final class NewGameOrTourneyPlaceCell: UITableViewCell {
 	private lazy var titleLabel: CustomLabel = {
 		let label = CustomLabel(text: String(localized: "newGameOrTourney.place.title"), isBold: true)
 		label.font = AppFont.ActayWide.bold(size: Constants.titleFontSize)
-		label.textColor = AppColor.Text.primary
-		label.backgroundColor = AppColor.Background.clear
 		return label
 	}()
 
@@ -77,13 +75,15 @@ final class NewGameOrTourneyPlaceCell: UITableViewCell {
 	@available(*, unavailable)
 	required init?(coder: NSCoder) { nil }
 
+	// MARK: - Public Methods
+
 	func configure(with model: LocationTitleViewModel, callback: (() -> Void)?) {
 		locationTitleView.configure(with: model)
 		self.callback = callback
 	}
 }
 
-// MARK: - Private Properties
+// MARK: - Private Methods
 
 private extension NewGameOrTourneyPlaceCell {
 

@@ -1697,6 +1697,91 @@
         }
       }
     },
+    "newGameOrTourney.date.pickDate" : {
+      "comment" : "Create a game / tourney screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pick date"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выбрать дату"
+          }
+        }
+      }
+    },
+    "newGameOrTourney.date.title" : {
+      "comment" : "Create a game / tourney screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Date"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Дата"
+          }
+        }
+      }
+    },
+    "newGameOrTourney.date.today" : {
+      "comment" : "Create a game / tourney screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Today"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сегодня"
+          }
+        }
+      }
+    },
+    "newGameOrTourney.from" : {
+      "comment" : "Create a game / tourney screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "from"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "с"
+          }
+        }
+      }
+    },
+    "newGameOrTourney.gameDuration" : {
+      "comment" : "Create a game / tourney screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game duration"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Продолжительность игры"
+          }
+        }
+      }
+    },
     "newGameOrTourney.message.title" : {
       "comment" : "Create a game / tourney screen",
       "localizations" : {
@@ -1778,6 +1863,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Создать турнир"
+          }
+        }
+      }
+    },
+    "newGameOrTourney.to" : {
+      "comment" : "Create a game / tourney screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "to"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "до"
           }
         }
       }
