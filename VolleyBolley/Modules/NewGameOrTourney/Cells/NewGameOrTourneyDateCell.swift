@@ -15,7 +15,10 @@ final class NewGameOrTourneyDateCell: UITableViewCell {
 
 	// MARK: - Private Properties
 
-	private var callback: (() -> Void)?
+	private var callback: ((Date, Bool) -> Void)?
+	private var selectedDate: Date = Date()
+	private var selectedStartTime: Date = Date()// TODO: -
+	private var selectedEndTime: Date = Date()// TODO: -
 
 	private enum Constants {
 		static let inset: CGFloat = 16
@@ -39,16 +42,23 @@ final class NewGameOrTourneyDateCell: UITableViewCell {
 		let button = GreenButton()
 		button.setTitle(String(localized: "newGameOrTourney.date.today"), for: .normal)
 		button.isSelected = true
+		button.addAction(UIAction { [weak self] _ in
+			self?.didDateChanged(isDateToday: true)
+		}, for: .touchUpInside)
 		return button
 	}()
 	private lazy var pickDateButton: GreenButton = {
 		let button = GreenButton(imagePlacement: .trailing)
 		button.setTitle(String(localized: "newGameOrTourney.date.pickDate"), for: .normal)
 		button.setImage(.arrowForward, for: .normal)
+		button.addAction(UIAction { [weak self] _ in
+			self?.didDateChanged(isDateToday: false)
+		}, for: .touchUpInside)
 		return button
 	}()
 	private lazy var dateHStackView: UIStackView = {
 		todayButton.setContentHuggingPriority(.required, for: .horizontal)
+		pickDateButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 		pickDateButton.setContentCompressionResistancePriority(.required, for: .horizontal)
 		let spacer = UIView()
 		spacer.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
@@ -62,8 +72,8 @@ final class NewGameOrTourneyDateCell: UITableViewCell {
 		stackView.spacing = Constants.stackViewSpacing
 		return stackView
 	}()
+	private lazy var calendarComponent: CalendarComponentProtocol = CalendarComponent(delegate: self)
 	private lazy var calendarView: UIView = {
-		let calendarComponent: CalendarComponentProtocol = CalendarComponent(delegate: self)
 		let calendarVC = calendarComponent.createCalendarViewController()
 		return calendarVC.view
 	}()
@@ -79,10 +89,9 @@ final class NewGameOrTourneyDateCell: UITableViewCell {
 
 	private lazy var gameDurationLabel: CustomLabel = {
 		let label = CustomLabel(text: String(localized: "newGameOrTourney.gameDuration"))
-		label.font = AppFont.Hero.regular(size: Constants.textFontSize)
+		label.font = AppFont.Hero.bold(size: Constants.textFontSize)
 		return label
 	}()
-
 	private lazy var fromTimeLabel: CustomLabel = {
 		let label = CustomLabel(text: String(localized: "newGameOrTourney.from"))
 		label.font = AppFont.Hero.regular(size: Constants.textFontSize)
@@ -123,7 +132,7 @@ final class NewGameOrTourneyDateCell: UITableViewCell {
 
 	// MARK: - Public Methods
 
-	func configure(callback: (() -> Void)?) {
+	func configure(callback: ((Date, Bool) -> Void)?) {
 		self.callback = callback
 	}
 }
@@ -132,12 +141,19 @@ final class NewGameOrTourneyDateCell: UITableViewCell {
 
 private extension NewGameOrTourneyDateCell {
 
+	func didDateChanged(isDateToday: Bool) {
+		calendarView.isHidden = isDateToday
+		todayButton.isSelected = isDateToday
+		pickDateButton.isSelected = !isDateToday
+		selectedDate = isDateToday ? Date() : calendarComponent.getSelectedDate()
+		callback?(selectedDate, true)
+	}
+
 	func setupUI() {
 		backgroundColor = AppColor.Background.clear
 		selectionStyle = .none
 		setupViews()
 		setupSeparator()
-		// TODO: -
 		calendarView.isHidden = true
 	}
 
@@ -170,7 +186,7 @@ private extension NewGameOrTourneyDateCell {
 
 			gameDurationLabel.topAnchor.constraint(
 				equalTo: dateVStackView.bottomAnchor,
-				constant: Constants.insetMidle
+				constant: Constants.insetLitle
 			),
 			gameDurationLabel.leadingAnchor.constraint(
 				equalTo: contentView.leadingAnchor,
@@ -220,7 +236,8 @@ private extension NewGameOrTourneyDateCell {
 extension NewGameOrTourneyDateCell: CalendarComponentDelegate {
 
 	func didSelectDate(_ date: Date) {
-		print("Selected date:", date)
+		selectedDate = date
+		callback?(selectedDate, false)
 	}
 }
 
