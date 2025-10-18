@@ -15,10 +15,12 @@ final class NewGameOrTourneyDateCell: UITableViewCell {
 
 	// MARK: - Private Properties
 
-	private var callback: ((Date, Bool) -> Void)?
+	private var callback: ((SelectedDateRange) -> Void)?
+	private var reloadTable: (() -> Void)?
+
 	private var selectedDate: Date = Date()
-	private var selectedStartTime: Date = Date()// TODO: -
-	private var selectedEndTime: Date = Date()// TODO: -
+	private var selectedStartTime: Date?
+	private var selectedEndTime: Date?
 
 	private enum Constants {
 		static let inset: CGFloat = 16
@@ -97,13 +99,29 @@ final class NewGameOrTourneyDateCell: UITableViewCell {
 		label.font = AppFont.Hero.regular(size: Constants.textFontSize)
 		return label
 	}()
-	private lazy var fromTimeButton = TimePickerButton()
+	private lazy var fromTimeButton: TimePickerButton = {
+		let button = TimePickerButton()
+		button.onTimeChange = { [weak self] time in
+			guard let self = self, let time = time else { return }
+			self.selectedStartTime = setTime(time)
+			self.updateTime()
+		}
+		return button
+	}()
 	private lazy var toTimeLabel: CustomLabel = {
 		let label = CustomLabel(text: String(localized: "newGameOrTourney.to"))
 		label.font = AppFont.Hero.regular(size: Constants.textFontSize)
 		return label
 	}()
-	private lazy var toTimeButton = TimePickerButton()
+	private lazy var toTimeButton: TimePickerButton = {
+		let button = TimePickerButton()
+		button.onTimeChange = { [weak self] time in
+			guard let self = self, let time = time else { return }
+			self.selectedEndTime = setTime(time)
+			self.updateTime()
+		}
+		return button
+	}()
 
 	private lazy var timeStackView: UIStackView = {
 		let stackView = UIStackView(arrangedSubviews: [
@@ -132,8 +150,12 @@ final class NewGameOrTourneyDateCell: UITableViewCell {
 
 	// MARK: - Public Methods
 
-	func configure(callback: ((Date, Bool) -> Void)?) {
+	func configure(
+		callback: ((SelectedDateRange) -> Void)?,
+		reloadTable: (() -> Void)?
+	) {
 		self.callback = callback
+		self.reloadTable = reloadTable
 	}
 }
 
@@ -141,12 +163,36 @@ final class NewGameOrTourneyDateCell: UITableViewCell {
 
 private extension NewGameOrTourneyDateCell {
 
+	func setTime(_ time: Date) -> Date {
+		let calendar = Calendar.current
+		let startOfDay = calendar.startOfDay(for: selectedDate)
+		let timeInterval = time.timeIntervalSince(calendar.startOfDay(for: time))
+		let time = startOfDay.addingTimeInterval(timeInterval)
+		return time
+	}
+
+	func updateTime() {
+		if let time = selectedStartTime {
+			selectedStartTime = setTime(time)
+		}
+		if let time = selectedEndTime {
+			selectedEndTime = setTime(time)
+		}
+		guard let selectedStartTime, let selectedEndTime else { return }
+		let range = SelectedDateRange(
+			startTime: selectedStartTime,
+			endTime: selectedEndTime
+		)
+		callback?(range)
+	}
+
 	func didDateChanged(isDateToday: Bool) {
 		calendarView.isHidden = isDateToday
 		todayButton.isSelected = isDateToday
 		pickDateButton.isSelected = !isDateToday
 		selectedDate = isDateToday ? Date() : calendarComponent.getSelectedDate()
-		callback?(selectedDate, true)
+		updateTime()
+		reloadTable?()
 	}
 
 	func setupUI() {
@@ -237,7 +283,7 @@ extension NewGameOrTourneyDateCell: CalendarComponentDelegate {
 
 	func didSelectDate(_ date: Date) {
 		selectedDate = date
-		callback?(selectedDate, false)
+		updateTime()
 	}
 }
 

@@ -25,6 +25,9 @@ final class TimePickerButton: UIButton {
         return CGSize(width: 89, height: 45)
     }
 
+    /// Обратный вызов, который вызывается при изменении времени
+    var onTimeChange: ((Date?) -> Void)?
+
     // MARK: - Private Properties
 
     /// Лейбл, отображающий время в формате "часы:минуты".
@@ -73,6 +76,8 @@ final class TimePickerButton: UIButton {
     private(set) var time: Date? {
         didSet {
             updateLabel()
+            // Уведомлять наблюдателей об изменении времени
+            onTimeChange?(time)
         }
     }
 
