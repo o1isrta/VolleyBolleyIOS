@@ -76,6 +76,9 @@ final class NewGameOrTourneyViewController: BaseViewController, NewGameOrTourney
 		tableView.register(
 			NewGameOrTourneyPlayerLevelCell.self,
 			forCellReuseIdentifier: NewGameOrTourneyPlayerLevelCell.reuseIdentifier)
+		tableView.register(
+			NewGameOrTourneyTypeCell.self,
+			forCellReuseIdentifier: NewGameOrTourneyTypeCell.reuseIdentifier)
 		return tableView
 	}()
 
@@ -147,7 +150,10 @@ private extension NewGameOrTourneyViewController {
 			tableView.topAnchor.constraint(equalTo: backButton.bottomAnchor, constant: Constants.tableTopInset),
 			tableView.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor),
 			tableView.trailingAnchor.constraint(equalTo: glassmorphismView.trailingAnchor),
-			tableView.bottomAnchor.constraint(equalTo: glassmorphismView.bottomAnchor),
+			tableView.bottomAnchor.constraint(
+				equalTo: glassmorphismView.bottomAnchor,
+				constant: -Constants.paddingDouble
+			),
 
 			nextButton.leadingAnchor.constraint(
 				equalTo: view.leadingAnchor,
@@ -170,7 +176,7 @@ private extension NewGameOrTourneyViewController {
 extension NewGameOrTourneyViewController: UITableViewDataSource {
 
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		5
+		6
 	}
 
 	func tableView(
@@ -221,6 +227,20 @@ extension NewGameOrTourneyViewController: UITableViewDataSource {
 			}
 		case 3:
 			if let cell = tableView.dequeueReusableCell(
+				withIdentifier: NewGameOrTourneyTypeCell.reuseIdentifier,
+				for: indexPath
+			) as? NewGameOrTourneyTypeCell {
+				var tourneyType: TourneyType = .individual
+				print("Tourney Type: \(tourneyType)")
+				let callback: (TourneyType) -> Void = { newType in
+					tourneyType = newType
+					print("New tourney type: \(tourneyType)")
+				}
+				cell.configure(callback: callback)
+				return cell
+			}
+		case 4:
+			if let cell = tableView.dequeueReusableCell(
 				withIdentifier: NewGameOrTourneyGenderCell.reuseIdentifier,
 				for: indexPath
 			) as? NewGameOrTourneyGenderCell {
@@ -233,7 +253,7 @@ extension NewGameOrTourneyViewController: UITableViewDataSource {
 				cell.configure(callback: callback)
 				return cell
 			}
-		case 4:
+		case 5:
 			if let cell = tableView.dequeueReusableCell(
 				withIdentifier: NewGameOrTourneyPlayerLevelCell.reuseIdentifier,
 				for: indexPath

@@ -1,5 +1,5 @@
 //
-//  NewGameOrTourneyGenderCell.swift
+//  NewGameOrTourneyTypeCell.swift
 //  VolleyBolley
 //
 //  Created by Roman Romanov on 18.10.2025.
@@ -7,15 +7,15 @@
 
 import UIKit
 
-final class NewGameOrTourneyGenderCell: UITableViewCell {
+final class NewGameOrTourneyTypeCell: UITableViewCell {
 
 	// MARK: - Public Properties
 
-	static let reuseIdentifier = "NewGameOrTourneyGenderCell"
+	static let reuseIdentifier = "NewGameOrTourneyTypeCell"
 
 	// MARK: - Private Properties
 
-	private var callback: ((GameGenderType) -> Void)?
+	private var callback: ((TourneyType) -> Void)?
 
 	private enum Constants {
 		static let inset: CGFloat = 16
@@ -28,43 +28,33 @@ final class NewGameOrTourneyGenderCell: UITableViewCell {
 	}
 
 	private lazy var titleLabel: CustomLabel = {
-		let label = CustomLabel(text: String(localized: "gender.title"), isBold: true)
+		let label = CustomLabel(text: String(localized: "newGameOrTourney.tourneyType.title"), isBold: true)
 		label.font = AppFont.ActayWide.bold(size: Constants.titleFontSize)
 		return label
 	}()
-	private lazy var mixButton: GreenButton = {
+	private lazy var individualButton: GreenButton = {
 		let button = GreenButton()
-		button.setTitle(String(localized: "gender.mix"), for: .normal)
+		button.setTitle(String(localized: "newGameOrTourney.tourneyType.individual"), for: .normal)
 		button.isSelected = true
 		button.addAction(UIAction { [weak self] _ in
-			self?.didGenderChanged(to: .mix)
+			self?.didTourneyTypeChanged(to: .individual)
 		}, for: .touchUpInside)
 		return button
 	}()
-	private lazy var menButton: GreenButton = {
+	private lazy var teamButton: GreenButton = {
 		let button = GreenButton()
-		button.setTitle(String(localized: "gender.men"), for: .normal)
+		button.setTitle(String(localized: "newGameOrTourney.tourneyType.team"), for: .normal)
 		button.addAction(UIAction { [weak self] _ in
-			self?.didGenderChanged(to: .men)
-		}, for: .touchUpInside)
-		return button
-	}()
-	private lazy var womenButton: GreenButton = {
-		let button = GreenButton()
-		button.setTitle(String(localized: "gender.women"), for: .normal)
-		button.addAction(UIAction { [weak self] _ in
-			self?.didGenderChanged(to: .women)
+			self?.didTourneyTypeChanged(to: .team)
 		}, for: .touchUpInside)
 		return button
 	}()
 	private lazy var stackView: UIStackView = {
-		mixButton.setContentCompressionResistancePriority(.required, for: .horizontal)
-		menButton.setContentCompressionResistancePriority(.required, for: .horizontal)
-		womenButton.setContentCompressionResistancePriority(.required, for: .horizontal)
+		individualButton.setContentCompressionResistancePriority(.required, for: .horizontal)
+		teamButton.setContentCompressionResistancePriority(.required, for: .horizontal)
 		let stackView = UIStackView(arrangedSubviews: [
-			mixButton,
-			menButton,
-			womenButton
+			individualButton,
+			teamButton
 		])
 		stackView.axis = .horizontal
 		stackView.alignment = .center
@@ -79,7 +69,6 @@ final class NewGameOrTourneyGenderCell: UITableViewCell {
 	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		setupUI()
-		didGenderChanged(to: .mix)
 	}
 
 	@available(*, unavailable)
@@ -87,19 +76,18 @@ final class NewGameOrTourneyGenderCell: UITableViewCell {
 
 	// MARK: - Public Methods
 
-	func configure(callback: ((GameGenderType) -> Void)?) {
+	func configure(callback: ((TourneyType) -> Void)?) {
 		self.callback = callback
 	}
 }
 
 // MARK: - Private Methods
 
-private extension NewGameOrTourneyGenderCell {
+private extension NewGameOrTourneyTypeCell {
 
-	func didGenderChanged(to type: GameGenderType) {
-		mixButton.isSelected = type == .mix
-		menButton.isSelected = type == .men
-		womenButton.isSelected = type == .women
+	func didTourneyTypeChanged(to type: TourneyType) {
+		individualButton.isSelected = type == .individual
+		teamButton.isSelected = type == .team
 		callback?(type)
 	}
 
@@ -131,7 +119,7 @@ private extension NewGameOrTourneyGenderCell {
 				constant: Constants.insetLarge
 			),
 			stackView.trailingAnchor.constraint(
-				lessThanOrEqualTo: contentView.trailingAnchor,
+				equalTo: contentView.trailingAnchor,
 				constant: -Constants.insetLarge
 			)
 		])

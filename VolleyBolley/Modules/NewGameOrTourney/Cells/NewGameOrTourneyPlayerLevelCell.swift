@@ -65,7 +65,7 @@ final class NewGameOrTourneyPlayerLevelCell: UITableViewCell {
 		}, for: .touchUpInside)
 		return button
 	}()
-	private lazy var dateHStackView: UIStackView = {
+	private lazy var stackView: UIStackView = {
 		lightButton.setContentCompressionResistancePriority(.required, for: .horizontal)
 		mediumButton.setContentCompressionResistancePriority(.required, for: .horizontal)
 		hardButton.setContentCompressionResistancePriority(.required, for: .horizontal)
@@ -122,7 +122,7 @@ private extension NewGameOrTourneyPlayerLevelCell {
 	func setupViews() {
 		contentView.addSubviews(
 			titleLabel,
-			dateHStackView
+			stackView
 		)
 		NSLayoutConstraint.activate([
 			titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
@@ -131,15 +131,15 @@ private extension NewGameOrTourneyPlayerLevelCell {
 				constant: Constants.insetLarge
 			),
 
-			dateHStackView.topAnchor.constraint(
+			stackView.topAnchor.constraint(
 				equalTo: titleLabel.bottomAnchor,
 				constant: Constants.insetMidle
 			),
-			dateHStackView.leadingAnchor.constraint(
+			stackView.leadingAnchor.constraint(
 				equalTo: contentView.leadingAnchor,
 				constant: Constants.insetLarge
 			),
-			dateHStackView.trailingAnchor.constraint(
+			stackView.trailingAnchor.constraint(
 				lessThanOrEqualTo: contentView.trailingAnchor,
 				constant: -Constants.insetLarge
 			)
