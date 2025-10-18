@@ -70,6 +70,9 @@ final class NewGameOrTourneyViewController: BaseViewController, NewGameOrTourney
 		tableView.register(
 			NewGameOrTourneyDateCell.self,
 			forCellReuseIdentifier: NewGameOrTourneyDateCell.reuseIdentifier)
+		tableView.register(
+			NewGameOrTourneyGenderCell.self,
+			forCellReuseIdentifier: NewGameOrTourneyGenderCell.reuseIdentifier)
 		return tableView
 	}()
 
@@ -164,7 +167,7 @@ private extension NewGameOrTourneyViewController {
 extension NewGameOrTourneyViewController: UITableViewDataSource {
 
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		3
+		4
 	}
 
 	func tableView(
@@ -211,6 +214,20 @@ extension NewGameOrTourneyViewController: UITableViewDataSource {
 					self?.tableView.reloadData()
 				}
 				cell.configure(callback: callback, reloadTable: reloadTable)
+				return cell
+			}
+		case 3:
+			if let cell = tableView.dequeueReusableCell(
+				withIdentifier: NewGameOrTourneyGenderCell.reuseIdentifier,
+				for: indexPath
+			) as? NewGameOrTourneyGenderCell {
+				var gender: GameGenderType = .mix
+				print("Gender: \(gender)")
+				let callback: (GameGenderType) -> Void = { newGender in
+					gender = newGender
+					print("New gender: \(gender)")
+				}
+				cell.configure(callback: callback)
 				return cell
 			}
 		default:

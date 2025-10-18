@@ -1395,16 +1395,6 @@
         }
       }
     },
-    "Female" : {
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Женский"
-          }
-        }
-      }
-    },
     "Founder" : {
       "comment" : "FounderLabelAboutView",
       "extractionState" : "manual",
@@ -1445,13 +1435,104 @@
         }
       }
     },
-    "Gender" : {
-      "comment" : "User info / Game Description",
+    "gender.female" : {
+      "comment" : "Gender",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Female"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Женский"
+          }
+        }
+      }
+    },
+    "gender.male" : {
+      "comment" : "Gender",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Male"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Мужской"
+          }
+        }
+      }
+    },
+    "gender.men" : {
+      "comment" : "Gender",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Men"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Мужчины"
+          }
+        }
+      }
+    },
+    "gender.mix" : {
+      "comment" : "Gender",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mix"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Смешанный"
+          }
+        }
+      }
+    },
+    "gender.title" : {
+      "comment" : "Gender",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gender"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Пол"
+          }
+        }
+      }
+    },
+    "gender.women" : {
+      "comment" : "Gender",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Women"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Женщины"
           }
         }
       }
@@ -1612,16 +1693,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Выйти"
-          }
-        }
-      }
-    },
-    "Male" : {
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Мужской"
           }
         }
       }
