@@ -1904,6 +1904,23 @@
         }
       }
     },
+    "newGameOrTourney.playerLevel.title" : {
+      "comment" : "Create a game / tourney screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Player level"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Уровень игрока"
+          }
+        }
+      }
+    },
     "newGameOrTourney.title.game" : {
       "comment" : "Create a game / tourney screen",
       "localizations" : {
