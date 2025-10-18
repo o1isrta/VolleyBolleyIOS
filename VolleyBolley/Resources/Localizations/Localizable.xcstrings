@@ -1972,6 +1972,57 @@
         }
       }
     },
+    "newGameOrTourney.tourneyType.individual" : {
+      "comment" : "Create a game / tourney screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Individual"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Индивидуальный"
+          }
+        }
+      }
+    },
+    "newGameOrTourney.tourneyType.team" : {
+      "comment" : "Create a game / tourney screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Team"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Командный"
+          }
+        }
+      }
+    },
+    "newGameOrTourney.tourneyType.title" : {
+      "comment" : "Create a game / tourney screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tourney type"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тип турнира"
+          }
+        }
+      }
+    },
     "NEXT STEP" : {
       "comment" : "Next button - удалить вместе с кнопкой",
       "localizations" : {
