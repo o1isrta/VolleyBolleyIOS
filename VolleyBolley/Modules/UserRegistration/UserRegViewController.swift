@@ -53,15 +53,15 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
 	}()
 	private lazy var surnameSeparator = CustomSeparator()
 
-	private lazy var genderLabel = CustomLabel(text: String(localized: "Gender"), isBold: true)
+	private lazy var genderLabel = CustomLabel(text: String(localized: "gender.title"), isBold: true)
 	private lazy var maleButton = PickButton(
-		title: String(localized: "Male"),
+		title: String(localized: "gender.male"),
 		isSelected: true,
 		target: self,
 		action: #selector(genderButtonTapped(_:))
 	)
 	private lazy var femaleButton = PickButton(
-		title: String(localized: "Female"),
+		title: String(localized: "gender.female"),
 		isSelected: false,
 		target: self,
 		action: #selector(genderButtonTapped(_:))
@@ -134,7 +134,7 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
 		target: self,
 		action: #selector(getStartedTapped)
 	)
-	private var selectedGender: String? = String(localized: "Male")
+	private var selectedGender: String? = String(localized: "gender.male")
 	private var selectedLevel: String? = String(localized: "common.light").capitalized(with: .current)
 	private var selectedCountry: String?
 	private var selectedCity: String?
