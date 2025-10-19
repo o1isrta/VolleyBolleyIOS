@@ -175,17 +175,21 @@ private extension NewGameOrTourneyViewController {
 
 extension NewGameOrTourneyViewController: UITableViewDataSource {
 
-	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		6
+	func tableView(
+		_ tableView: UITableView,
+		numberOfRowsInSection section: Int
+	) -> Int {
+		presenter?.getICellsCount() ?? 0
 	}
 
 	func tableView(
 		_ tableView: UITableView,
 		cellForRowAt indexPath: IndexPath
 	) -> UITableViewCell {
-		// cell with message
-		switch indexPath.row {
-		case 0:
+		let gameType = presenter?.getCellType(index: indexPath.row)
+		// TODO: -
+		switch gameType {
+		case .message:
 			if let cell = tableView.dequeueReusableCell(
 				withIdentifier: NewGameOrTourneyMessageCell.reuseIdentifier,
 				for: indexPath
@@ -195,7 +199,7 @@ extension NewGameOrTourneyViewController: UITableViewDataSource {
 				}
 				return cell
 			}
-		case 1:
+		case .location:
 			if let cell = tableView.dequeueReusableCell(
 				withIdentifier: NewGameOrTourneyPlaceCell.reuseIdentifier,
 				for: indexPath
@@ -210,7 +214,7 @@ extension NewGameOrTourneyViewController: UITableViewDataSource {
 				cell.configure(with: shortCourt, changeLocationAction: changeLocationAction)
 				return cell
 			}
-		case 2:
+		case .date:
 			if let cell = tableView.dequeueReusableCell(
 				withIdentifier: NewGameOrTourneyDateCell.reuseIdentifier,
 				for: indexPath
@@ -219,13 +223,12 @@ extension NewGameOrTourneyViewController: UITableViewDataSource {
 					print("Callback \(date)")
 				}
 				let reloadTable: () -> Void = { [weak self] in
-					print("reloadTable")
 					self?.tableView.reloadData()
 				}
 				cell.configure(callback: callback, reloadTable: reloadTable)
 				return cell
 			}
-		case 3:
+		case .tourneyType:
 			if let cell = tableView.dequeueReusableCell(
 				withIdentifier: NewGameOrTourneyTypeCell.reuseIdentifier,
 				for: indexPath
@@ -236,7 +239,7 @@ extension NewGameOrTourneyViewController: UITableViewDataSource {
 				cell.configure(callback: callback)
 				return cell
 			}
-		case 4:
+		case .gender:
 			if let cell = tableView.dequeueReusableCell(
 				withIdentifier: NewGameOrTourneyGenderCell.reuseIdentifier,
 				for: indexPath
@@ -250,7 +253,7 @@ extension NewGameOrTourneyViewController: UITableViewDataSource {
 				cell.configure(callback: callback)
 				return cell
 			}
-		case 5:
+		case .playerLevels:
 			if let cell = tableView.dequeueReusableCell(
 				withIdentifier: NewGameOrTourneyPlayerLevelCell.reuseIdentifier,
 				for: indexPath
@@ -261,7 +264,7 @@ extension NewGameOrTourneyViewController: UITableViewDataSource {
 				cell.configure(callback: callback)
 				return cell
 			}
-		default:
+		case .none:
 			return UITableViewCell()
 		}
 		return UITableViewCell()
@@ -274,6 +277,6 @@ extension NewGameOrTourneyViewController: UITableViewDataSource {
 
 @available(iOS 17.0, *)
 #Preview {
-	NewGameOrTourneyViewController()
+	NewGameOrTourneyAssembly.createModule(with: nil)
 }
 #endif

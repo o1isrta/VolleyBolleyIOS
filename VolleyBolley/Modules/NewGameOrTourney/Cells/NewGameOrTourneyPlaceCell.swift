@@ -148,6 +148,6 @@ private extension NewGameOrTourneyPlaceCell {
 
 @available(iOS 17.0, *)
 #Preview {
-	NewGameOrTourneyViewController()
+	NewGameOrTourneyAssembly.createModule(with: nil)
 }
 #endif

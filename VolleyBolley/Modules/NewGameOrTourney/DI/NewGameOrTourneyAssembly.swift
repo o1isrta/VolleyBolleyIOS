@@ -6,8 +6,28 @@
 //
 
 import Swinject
+import UIKit
 
 final class NewGameOrTourneyAssembly: Assembly {
+
+	// MARK: - Factory Method
+
+	static func createModule(with parentViewController: UIViewController?) -> NewGameOrTourneyViewController {
+		let newGameOrTourneyVC = NewGameOrTourneyViewController()
+		let interactor = NewGameOrTourneyInteractor()
+		let router = NewGameOrTourneyRouter(viewController: newGameOrTourneyVC)
+		let presenter = NewGameOrTourneyPresenter(
+			interactor: interactor,
+			router: router
+		)
+		newGameOrTourneyVC.presenter = presenter
+		interactor.presenter = presenter
+		presenter.view = newGameOrTourneyVC
+
+		return newGameOrTourneyVC
+	}
+
+	// MARK: - Swinject Assembly
 
 	func assemble(container: Container) {
 		container.register(NewGameOrTourneyViewController.self) { _ in
