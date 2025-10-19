@@ -17,7 +17,10 @@ final class MapAssembly: Assembly {
                 fatalError("Error: Failed to register NetworkService")
             }
 
-			let router = MapRouter()
+			let newGameOrTourneyVC = { resolver.resolve(NewGameOrTourneyViewController.self) }
+			let router = MapRouter(
+				newGameOrTourneyVC: newGameOrTourneyVC
+			)
 			let interactor = MapInteractor(networkService: networkService)
 
 			let presenter = MapPresenter(
