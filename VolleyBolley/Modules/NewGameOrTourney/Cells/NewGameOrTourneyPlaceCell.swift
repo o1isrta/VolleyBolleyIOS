@@ -15,7 +15,7 @@ final class NewGameOrTourneyPlaceCell: UITableViewCell {
 
 	// MARK: - Private Properties
 
-	private var callback: (() -> Void)?
+	private var changeLocationAction: (() -> Void)?
 
 	private enum Constants {
 		static let maxMessageLength: Int = 160
@@ -46,7 +46,7 @@ final class NewGameOrTourneyPlaceCell: UITableViewCell {
 		button.setTitle(String(localized: "newGameOrTourney.place.change"), for: .normal)
 		button.isSelected = true
 		button.addAction(UIAction { [weak self] _ in
-			self?.callback?()
+			self?.changeLocationAction?()
 		}, for: .touchUpInside)
 		return button
 	}()
@@ -77,9 +77,12 @@ final class NewGameOrTourneyPlaceCell: UITableViewCell {
 
 	// MARK: - Public Methods
 
-	func configure(with model: LocationTitleViewModel, callback: (() -> Void)?) {
+	func configure(
+		with model: LocationTitleViewModel,
+		changeLocationAction: (() -> Void)?
+	) {
 		locationTitleView.configure(with: model)
-		self.callback = callback
+		self.changeLocationAction = changeLocationAction
 	}
 }
 

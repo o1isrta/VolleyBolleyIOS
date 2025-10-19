@@ -204,10 +204,10 @@ extension NewGameOrTourneyViewController: UITableViewDataSource {
 					title: "Karon Beach Club",
 					location: "Patak Rd, Mueang Phuket"
 				)
-				let callback = {
-					print("Callback")
+				let changeLocationAction = {
+					print("changeLocationAction")
 				}
-				cell.configure(with: shortCourt, callback: callback)
+				cell.configure(with: shortCourt, changeLocationAction: changeLocationAction)
 				return cell
 			}
 		case 2:
@@ -230,10 +230,7 @@ extension NewGameOrTourneyViewController: UITableViewDataSource {
 				withIdentifier: NewGameOrTourneyTypeCell.reuseIdentifier,
 				for: indexPath
 			) as? NewGameOrTourneyTypeCell {
-				var tourneyType: GameTourneyType = .individual
-				print("Tourney Type: \(tourneyType)")
-				let callback: (GameTourneyType) -> Void = { newType in
-					tourneyType = newType
+				let callback: (GameTourneyType) -> Void = { tourneyType in
 					print("New tourney type: \(tourneyType)")
 				}
 				cell.configure(callback: callback)
