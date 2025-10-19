@@ -16,6 +16,7 @@ protocol NewGameOrTourneyPresenterProtocol: AnyObject {
 	func viewDidLoad()
 	func backButtonTapped()
 	func nextButtonTapped()
+	func setupCreateGameWith(type: GameType, court: CourtModel)
 	func getICellsCount() -> Int
 	func getCellType(index: Int) -> GameCellType
 	func setupMessage(_ message: String)
@@ -36,8 +37,8 @@ final class NewGameOrTourneyPresenter: NewGameOrTourneyPresenterProtocol {
 
 	// MARK: - Private Properties
 
-	private let gameType: GameType = .game// TODO: -
-	private(set) var location: LocationTitleViewModel// TODO: -
+	private var gameType: GameType = .game
+	private(set) var location: LocationTitleViewModel = .init(title: "", location: "")
 
 	private var message: String?
 	private var dateRange: GameDateRange?
@@ -53,17 +54,20 @@ final class NewGameOrTourneyPresenter: NewGameOrTourneyPresenterProtocol {
 	) {
 		self.interactor = interactor
 		self.router = router
-		// TODO: -
-		location = LocationTitleViewModel(
-			title: "Karon Beach Club",
-			location: "Patak Rd, Mueang Phuket"
-		)
 	}
 
 	// MARK: - Public Methods
 
 	func viewDidLoad() {
 		view?.setupTitle(with: gameType.title)
+	}
+
+	func setupCreateGameWith(type: GameType, court: CourtModel) {
+		gameType = type
+		location = LocationTitleViewModel(
+			title: court.location.courtName,
+			location: court.location.locationName
+		)
 	}
 
 	func backButtonTapped() {

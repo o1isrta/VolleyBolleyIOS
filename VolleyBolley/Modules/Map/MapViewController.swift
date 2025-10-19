@@ -299,6 +299,8 @@ private extension MapViewController {
 	private func chooseCourtAction() {
 		// TODO: add action for court selection
 		print("Choose this Court")
+		guard let selectedCourt else { return }
+		presenter.didTapSelectCourtButton(create: .tourney, court: selectedCourt)
 	}
 
 	private func showDetailsAction() {
