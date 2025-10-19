@@ -10,6 +10,7 @@ import UIKit
 protocol NewGameOrTourneyViewControllerProtocol: AnyObject {
 	var presenter: NewGameOrTourneyPresenterProtocol? { get set }
 	func setupTitle(with title: String)
+	func allowNextStep(_ allow: Bool)
 }
 
 final class NewGameOrTourneyViewController: BaseViewController, NewGameOrTourneyViewControllerProtocol {
@@ -84,7 +85,11 @@ final class NewGameOrTourneyViewController: BaseViewController, NewGameOrTourney
 
 	private lazy var nextButton: YellowButton = {
 		let button = YellowButton(title: String(localized: "button.next"))
+		button.isSelected = true
 		button.isEnabled = false
+		button.addAction(UIAction { [weak self] _ in
+			self?.presenter?.nextButtonTapped()
+		}, for: .touchUpInside)
 		return button
 	}()
 
@@ -98,6 +103,10 @@ final class NewGameOrTourneyViewController: BaseViewController, NewGameOrTourney
 
 	func setupTitle(with title: String) {
 		titleLabel.text = title
+	}
+
+	func allowNextStep(_ allow: Bool) {
+		nextButton.isEnabled = allow
 	}
 }
 
@@ -182,6 +191,8 @@ extension NewGameOrTourneyViewController: UITableViewDataSource {
 		presenter?.getICellsCount() ?? 0
 	}
 
+	// swiftlint:disable cyclomatic_complexity
+	// swiftlint:disable function_body_length
 	func tableView(
 		_ tableView: UITableView,
 		cellForRowAt indexPath: IndexPath
@@ -203,7 +214,7 @@ extension NewGameOrTourneyViewController: UITableViewDataSource {
 				withIdentifier: NewGameOrTourneyPlaceCell.reuseIdentifier,
 				for: indexPath
 			) as? NewGameOrTourneyPlaceCell {
-				if let location = presenter?.getLocation() {
+				if let location = presenter?.location {
 					cell.configure(with: location) { [weak self] in
 						self?.presenter?.backButtonTapped()
 					}
@@ -258,6 +269,8 @@ extension NewGameOrTourneyViewController: UITableViewDataSource {
 		}
 		return UITableViewCell()
 	}
+	// swiftlint:enable cyclomatic_complexity
+	// swiftlint:enable function_body_length
 }
 
 #if DEBUG
