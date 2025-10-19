@@ -138,7 +138,9 @@ private extension NewGameOrTourneyPresenter {
 	func checkGeneralRequirements() -> Bool {
 		guard
 			let _ = dateRange,
-			!playerLevels.isEmpty
+			!playerLevels.isEmpty,
+			!location.title.isEmpty,
+			!location.location.isEmpty
 		else {
 			return false
 		}
