@@ -15,7 +15,7 @@ final class NewGameOrTourneyDateCell: UITableViewCell {
 
 	// MARK: - Private Properties
 
-	private var callback: ((SelectedDateRange) -> Void)?
+	private var callback: ((GameDateRange) -> Void)?
 	private var reloadTable: (() -> Void)?
 
 	private var selectedDate: Date = Date()
@@ -151,7 +151,7 @@ final class NewGameOrTourneyDateCell: UITableViewCell {
 	// MARK: - Public Methods
 
 	func configure(
-		callback: ((SelectedDateRange) -> Void)?,
+		callback: ((GameDateRange) -> Void)?,
 		reloadTable: (() -> Void)?
 	) {
 		self.callback = callback
@@ -179,7 +179,7 @@ private extension NewGameOrTourneyDateCell {
 			selectedEndTime = setTime(time)
 		}
 		guard let selectedStartTime, let selectedEndTime else { return }
-		let range = SelectedDateRange(
+		let range = GameDateRange(
 			startTime: selectedStartTime,
 			endTime: selectedEndTime
 		)

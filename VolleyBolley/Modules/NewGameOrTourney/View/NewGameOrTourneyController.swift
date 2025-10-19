@@ -215,7 +215,7 @@ extension NewGameOrTourneyViewController: UITableViewDataSource {
 				withIdentifier: NewGameOrTourneyDateCell.reuseIdentifier,
 				for: indexPath
 			) as? NewGameOrTourneyDateCell {
-				let callback: (SelectedDateRange) -> Void = { date in
+				let callback: (GameDateRange) -> Void = { date in
 					print("Callback \(date)")
 				}
 				let reloadTable: () -> Void = { [weak self] in
@@ -230,9 +230,9 @@ extension NewGameOrTourneyViewController: UITableViewDataSource {
 				withIdentifier: NewGameOrTourneyTypeCell.reuseIdentifier,
 				for: indexPath
 			) as? NewGameOrTourneyTypeCell {
-				var tourneyType: TourneyType = .individual
+				var tourneyType: GameTourneyType = .individual
 				print("Tourney Type: \(tourneyType)")
-				let callback: (TourneyType) -> Void = { newType in
+				let callback: (GameTourneyType) -> Void = { newType in
 					tourneyType = newType
 					print("New tourney type: \(tourneyType)")
 				}
