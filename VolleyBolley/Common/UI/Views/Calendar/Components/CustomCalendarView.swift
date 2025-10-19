@@ -252,6 +252,15 @@ private extension CustomCalendarView {
 						)
 					)
 					.frame(width: 42, height: 32)
+			} else if isToday && isCurrentMonth && !isPastDate {
+				RoundedRectangle(cornerRadius: 16)
+					.stroke(
+						LinearGradient(
+							gradient: Gradient(colors: AppGradient.greenLight.map {Color($0)}),
+							startPoint: .topLeading,
+							endPoint: .bottomTrailing
+						), lineWidth: 2)
+					.frame(width: 42, height: 32)
 			}
 		}
 	}
