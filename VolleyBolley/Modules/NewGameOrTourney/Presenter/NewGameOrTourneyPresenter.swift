@@ -75,7 +75,14 @@ final class NewGameOrTourneyPresenter: NewGameOrTourneyPresenterProtocol {
 			view?.allowNextStep(false)
 			return
 		}
-		print("router.nextButtonTapped()")// TODO: -
+		// TODO: - тут нужно собрать модель и отправить данные на следующий экран
+		print("router.nextButtonTapped()")
+		print("gameType", gameType)
+		print("message", message)
+		print("dateRange", dateRange)
+		print("tourneyType", tourneyType)
+		print("gender", gender)
+		print("playerLevels", playerLevels)
 	}
 
 	func getICellsCount() -> Int {
@@ -88,29 +95,24 @@ final class NewGameOrTourneyPresenter: NewGameOrTourneyPresenterProtocol {
 
 	func setupMessage(_ message: String) {
 		self.message = message
-		print("Current message: \(message)")// TODO: -
 	}
 
 	func setupDateRange(_ dateRange: GameDateRange) {
-		print("setupDateRange: \(dateRange)")// TODO: -
 		self.dateRange = dateRange
 		validateData()
 	}
 
 	func setupTourneyType(to tourneyType: GameTourneyType) {
-		print("setupTourneyType: \(tourneyType)")// TODO: -
 		self.tourneyType = tourneyType
 		validateData()
 	}
 
 	func setupGender(to gender: GameGenderType) {
-		print("setupGender: \(gender)")// TODO: -
 		self.gender = gender
 		validateData()
 	}
 
 	func setupPlayerLevels(to playerLevels: [PlayerLevel]) {
-		print("setupPlayerLevels: \(playerLevels)")// TODO: -
 		self.playerLevels = playerLevels
 		validateData()
 	}
