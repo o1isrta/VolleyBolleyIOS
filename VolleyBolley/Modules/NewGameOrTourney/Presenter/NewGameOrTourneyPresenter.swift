@@ -14,6 +14,8 @@ protocol NewGameOrTourneyPresenterProtocol: AnyObject {
 
 	func viewDidLoad()
 	func backButtonTapped()
+	func getICellsCount() -> Int
+	func getCellType(index: Int) -> GameCellType
 }
 
 final class NewGameOrTourneyPresenter: NewGameOrTourneyPresenterProtocol {
@@ -24,6 +26,10 @@ final class NewGameOrTourneyPresenter: NewGameOrTourneyPresenterProtocol {
 
 	let interactor: NewGameOrTourneyInteractorProtocol
 	let router: NewGameOrTourneyRouterProtocol
+
+	// MARK: - Private Properties
+
+	private let gameType: GameType = .game// TODO: -
 
 	// MARK: - Initializers
 
@@ -36,12 +42,18 @@ final class NewGameOrTourneyPresenter: NewGameOrTourneyPresenterProtocol {
 	}
 
 	func viewDidLoad() {
-		let title = String(localized: "newGameOrTourney.title.tourney")
-//		let title = String(localized: "newGameOrTourney.title.game")
-		view?.setupTitle(with: title)
+		view?.setupTitle(with: gameType.title)
 	}
 
 	func backButtonTapped() {
 		router.navigateBack()
+	}
+
+	func getICellsCount() -> Int {
+		gameType.cells.count
+	}
+
+	func getCellType(index: Int) -> GameCellType {
+		gameType.cells[index]
 	}
 }
