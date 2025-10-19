@@ -9,7 +9,6 @@ import Foundation
 
 protocol NewGameOrTourneyPresenterProtocol: AnyObject {
 	var view: NewGameOrTourneyViewControllerProtocol? { get set }
-	var interactor: NewGameOrTourneyInteractorProtocol { get }
 	var router: NewGameOrTourneyRouterProtocol { get }
 	var location: LocationTitleViewModel { get }
 
@@ -32,7 +31,6 @@ final class NewGameOrTourneyPresenter: NewGameOrTourneyPresenterProtocol {
 
 	weak var view: NewGameOrTourneyViewControllerProtocol?
 
-	let interactor: NewGameOrTourneyInteractorProtocol
 	let router: NewGameOrTourneyRouterProtocol
 
 	// MARK: - Private Properties
@@ -49,10 +47,8 @@ final class NewGameOrTourneyPresenter: NewGameOrTourneyPresenterProtocol {
 	// MARK: - Initializers
 
 	init(
-		interactor: NewGameOrTourneyInteractorProtocol,
 		router: NewGameOrTourneyRouterProtocol
 	) {
-		self.interactor = interactor
 		self.router = router
 	}
 
