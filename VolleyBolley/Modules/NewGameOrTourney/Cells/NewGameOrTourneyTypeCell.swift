@@ -35,7 +35,6 @@ final class NewGameOrTourneyTypeCell: UITableViewCell {
 	private lazy var individualButton: GreenButton = {
 		let button = GreenButton()
 		button.setTitle(String(localized: "newGameOrTourney.tourneyType.individual"), for: .normal)
-		button.isSelected = true
 		button.addAction(UIAction { [weak self] _ in
 			self?.didTourneyTypeChanged(to: .individual)
 		}, for: .touchUpInside)
