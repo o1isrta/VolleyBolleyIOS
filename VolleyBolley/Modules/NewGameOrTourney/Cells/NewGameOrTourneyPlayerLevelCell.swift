@@ -150,6 +150,10 @@ private extension NewGameOrTourneyPlayerLevelCell {
 			stackView.trailingAnchor.constraint(
 				lessThanOrEqualTo: contentView.trailingAnchor,
 				constant: -Constants.insetLarge
+			),
+			stackView.bottomAnchor.constraint(
+				equalTo: contentView.bottomAnchor,
+				constant: -Constants.inset
 			)
 		])
 	}

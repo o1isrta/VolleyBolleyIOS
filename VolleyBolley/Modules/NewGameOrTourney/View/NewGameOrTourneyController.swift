@@ -152,7 +152,7 @@ private extension NewGameOrTourneyViewController {
 			tableView.trailingAnchor.constraint(equalTo: glassmorphismView.trailingAnchor),
 			tableView.bottomAnchor.constraint(
 				equalTo: glassmorphismView.bottomAnchor,
-				constant: -Constants.paddingDouble
+				constant: -Constants.padding
 			),
 
 			nextButton.leadingAnchor.constraint(
