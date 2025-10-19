@@ -15,7 +15,8 @@ final class NewGameOrTourneyPlayerLevelCell: UITableViewCell {
 
 	// MARK: - Private Properties
 
-	private var callback: ((GamePlayerLevel) -> Void)?
+	private var callback: (([PlayerLevel]) -> Void)?
+	private var playerLevels: [PlayerLevel] = []
 
 	private enum Constants {
 		static let inset: CGFloat = 16
@@ -35,34 +36,33 @@ final class NewGameOrTourneyPlayerLevelCell: UITableViewCell {
 	private lazy var lightButton: GreenButton = {
 		let button = GreenButton()
 		button.setTitle(String(localized: "common.light"), for: .normal)
-		button.isSelected = true
-		button.addAction(UIAction { [weak self] _ in
-			self?.didLevelChanged(to: .light)
-		}, for: .touchUpInside)
+		setupToggleButton(button, level: .light) { [weak self] level in
+			self?.didLevelsChanged(with: level)
+		}
 		return button
 	}()
 	private lazy var mediumButton: GreenButton = {
 		let button = GreenButton()
 		button.setTitle(String(localized: "common.medium"), for: .normal)
-		button.addAction(UIAction { [weak self] _ in
-			self?.didLevelChanged(to: .medium)
-		}, for: .touchUpInside)
+		setupToggleButton(button, level: .medium) { [weak self] level in
+			self?.didLevelsChanged(with: level)
+		}
 		return button
 	}()
 	private lazy var hardButton: GreenButton = {
 		let button = GreenButton()
 		button.setTitle(String(localized: "common.hard"), for: .normal)
-		button.addAction(UIAction { [weak self] _ in
-			self?.didLevelChanged(to: .hard)
-		}, for: .touchUpInside)
+		setupToggleButton(button, level: .hard) { [weak self] level in
+			self?.didLevelsChanged(with: level)
+		}
 		return button
 	}()
 	private lazy var proButton: GreenButton = {
 		let button = GreenButton()
 		button.setTitle(String(localized: "common.pro"), for: .normal)
-		button.addAction(UIAction { [weak self] _ in
-			self?.didLevelChanged(to: .pro)
-		}, for: .touchUpInside)
+		setupToggleButton(button, level: .pro) { [weak self] level in
+			self?.didLevelsChanged(with: level)
+		}
 		return button
 	}()
 	private lazy var stackView: UIStackView = {
@@ -96,7 +96,7 @@ final class NewGameOrTourneyPlayerLevelCell: UITableViewCell {
 
 	// MARK: - Public Methods
 
-	func configure(callback: ((GamePlayerLevel) -> Void)?) {
+	func configure(callback: (([PlayerLevel]) -> Void)?) {
 		self.callback = callback
 	}
 }
@@ -105,12 +105,20 @@ final class NewGameOrTourneyPlayerLevelCell: UITableViewCell {
 
 private extension NewGameOrTourneyPlayerLevelCell {
 
-	func didLevelChanged(to type: GamePlayerLevel) {
-		lightButton.isSelected = type == .light
-		mediumButton.isSelected = type == .medium
-		hardButton.isSelected = type == .hard
-		proButton.isSelected = type == .pro
-		callback?(type)
+	func setupToggleButton(
+		_ button: UIButton,
+		level: PlayerLevel,
+		action: @escaping (PlayerLevel) -> Void
+	) {
+		button.addAction(UIAction { [weak self] _ in
+			button.isSelected.toggle()
+			self?.didLevelsChanged(with: level)
+		}, for: .touchUpInside)
+	}
+
+	func didLevelsChanged(with type: PlayerLevel) {
+		playerLevels.toggle(type)
+		callback?(playerLevels)
 	}
 
 	func setupUI() {

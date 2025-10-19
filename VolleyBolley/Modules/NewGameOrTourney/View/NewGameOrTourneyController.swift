@@ -258,11 +258,8 @@ extension NewGameOrTourneyViewController: UITableViewDataSource {
 				withIdentifier: NewGameOrTourneyPlayerLevelCell.reuseIdentifier,
 				for: indexPath
 			) as? NewGameOrTourneyPlayerLevelCell {
-				var playerLevel: GamePlayerLevel = .light
-				print("Player Level: \(playerLevel)")
-				let callback: (GamePlayerLevel) -> Void = { newLevel in
-					playerLevel = newLevel
-					print("New level: \(playerLevel)")
+				let callback: ([PlayerLevel]) -> Void = { levels in
+					print("New levels: \(levels)")
 				}
 				cell.configure(callback: callback)
 				return cell
