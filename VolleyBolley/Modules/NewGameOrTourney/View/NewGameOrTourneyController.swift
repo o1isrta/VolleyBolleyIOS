@@ -187,15 +187,14 @@ extension NewGameOrTourneyViewController: UITableViewDataSource {
 		cellForRowAt indexPath: IndexPath
 	) -> UITableViewCell {
 		let gameType = presenter?.getCellType(index: indexPath.row)
-		// TODO: -
 		switch gameType {
 		case .message:
 			if let cell = tableView.dequeueReusableCell(
 				withIdentifier: NewGameOrTourneyMessageCell.reuseIdentifier,
 				for: indexPath
 			) as? NewGameOrTourneyMessageCell {
-				cell.onMessageChange = { [weak self] text in
-					print("Current message: \(text)")
+				cell.onMessageChange = { [weak self] message in
+					self?.presenter?.setupMessage(message)
 				}
 				return cell
 			}
@@ -204,28 +203,24 @@ extension NewGameOrTourneyViewController: UITableViewDataSource {
 				withIdentifier: NewGameOrTourneyPlaceCell.reuseIdentifier,
 				for: indexPath
 			) as? NewGameOrTourneyPlaceCell {
-				let shortCourt = LocationTitleViewModel(
-					title: "Karon Beach Club",
-					location: "Patak Rd, Mueang Phuket"
-				)
-				let changeLocationAction = {
-					print("changeLocationAction")
+				if let location = presenter?.getLocation() {
+					cell.configure(with: location) { [weak self] in
+						self?.presenter?.backButtonTapped()
+					}
+					return cell
 				}
-				cell.configure(with: shortCourt, changeLocationAction: changeLocationAction)
-				return cell
 			}
 		case .date:
 			if let cell = tableView.dequeueReusableCell(
 				withIdentifier: NewGameOrTourneyDateCell.reuseIdentifier,
 				for: indexPath
 			) as? NewGameOrTourneyDateCell {
-				let callback: (GameDateRange) -> Void = { date in
-					print("Callback \(date)")
+				let callback: (GameDateRange) -> Void = { [weak self] dateRange in
+					self?.presenter?.setupDateRange(dateRange)
 				}
-				let reloadTable: () -> Void = { [weak self] in
+				cell.configure(callback: callback) { [weak self] in
 					self?.tableView.reloadData()
 				}
-				cell.configure(callback: callback, reloadTable: reloadTable)
 				return cell
 			}
 		case .tourneyType:
@@ -233,10 +228,9 @@ extension NewGameOrTourneyViewController: UITableViewDataSource {
 				withIdentifier: NewGameOrTourneyTypeCell.reuseIdentifier,
 				for: indexPath
 			) as? NewGameOrTourneyTypeCell {
-				let callback: (GameTourneyType) -> Void = { tourneyType in
-					print("New tourney type: \(tourneyType)")
+				cell.configure { [weak self] tourneyType in
+					self?.presenter?.setupTourneyType(to: tourneyType)
 				}
-				cell.configure(callback: callback)
 				return cell
 			}
 		case .gender:
@@ -244,13 +238,9 @@ extension NewGameOrTourneyViewController: UITableViewDataSource {
 				withIdentifier: NewGameOrTourneyGenderCell.reuseIdentifier,
 				for: indexPath
 			) as? NewGameOrTourneyGenderCell {
-				var gender: GameGenderType = .mix
-				print("Gender: \(gender)")
-				let callback: (GameGenderType) -> Void = { newGender in
-					gender = newGender
-					print("New gender: \(gender)")
+				cell.configure { [weak self] gender in
+					self?.presenter?.setupGender(to: gender)
 				}
-				cell.configure(callback: callback)
 				return cell
 			}
 		case .playerLevels:
@@ -258,10 +248,9 @@ extension NewGameOrTourneyViewController: UITableViewDataSource {
 				withIdentifier: NewGameOrTourneyPlayerLevelCell.reuseIdentifier,
 				for: indexPath
 			) as? NewGameOrTourneyPlayerLevelCell {
-				let callback: ([PlayerLevel]) -> Void = { levels in
-					print("New levels: \(levels)")
+				cell.configure { [weak self] levels in
+					self?.presenter?.setupPlayerLevels(to: levels)
 				}
-				cell.configure(callback: callback)
 				return cell
 			}
 		case .none:
