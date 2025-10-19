@@ -71,6 +71,10 @@ final class NewGameOrTourneyPresenter: NewGameOrTourneyPresenterProtocol {
 	}
 
 	func nextButtonTapped() {
+		guard checkData() else {
+			view?.allowNextStep(false)
+			return
+		}
 		print("router.nextButtonTapped()")// TODO: -
 	}
 
@@ -117,20 +121,35 @@ final class NewGameOrTourneyPresenter: NewGameOrTourneyPresenterProtocol {
 private extension NewGameOrTourneyPresenter {
 
 	func validateData() {
+		guard checkData() else {
+			view?.allowNextStep(false)
+			return
+		}
+		view?.allowNextStep(true)
+	}
+
+	func checkData() -> Bool {
+		guard checkGeneralRequirements() else { return false }
+		return checkTourneyRequirements()
+	}
+
+	func checkGeneralRequirements() -> Bool {
 		guard
 			let _ = dateRange,
 			!playerLevels.isEmpty
 		else {
-			view?.allowNextStep(false)
-			return
+			return false
 		}
 
+		return true
+	}
+
+	func checkTourneyRequirements() -> Bool {
 		if gameType == .tourney,
 		   tourneyType == nil {
-			view?.allowNextStep(false)
-			return
+			return false
 		}
 
-		view?.allowNextStep(true)
+		return true
 	}
 }
