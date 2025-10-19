@@ -11,13 +11,14 @@ protocol NewGameOrTourneyPresenterProtocol: AnyObject {
 	var view: NewGameOrTourneyViewControllerProtocol? { get set }
 	var interactor: NewGameOrTourneyInteractorProtocol { get }
 	var router: NewGameOrTourneyRouterProtocol { get }
+	var location: LocationTitleViewModel { get }
 
 	func viewDidLoad()
 	func backButtonTapped()
+	func nextButtonTapped()
 	func getICellsCount() -> Int
 	func getCellType(index: Int) -> GameCellType
 	func setupMessage(_ message: String)
-	func getLocation() -> LocationTitleViewModel
 	func setupDateRange(_ dateRange: GameDateRange)
 	func setupTourneyType(to tourneyType: GameTourneyType)
 	func setupGender(to gender: GameGenderType)
@@ -36,6 +37,7 @@ final class NewGameOrTourneyPresenter: NewGameOrTourneyPresenterProtocol {
 	// MARK: - Private Properties
 
 	private let gameType: GameType = .game// TODO: -
+	private(set) var location: LocationTitleViewModel// TODO: -
 
 	private var message: String?
 	private var dateRange: GameDateRange?
@@ -51,7 +53,14 @@ final class NewGameOrTourneyPresenter: NewGameOrTourneyPresenterProtocol {
 	) {
 		self.interactor = interactor
 		self.router = router
+		// TODO: -
+		location = LocationTitleViewModel(
+			title: "Karon Beach Club",
+			location: "Patak Rd, Mueang Phuket"
+		)
 	}
+
+	// MARK: - Public Methods
 
 	func viewDidLoad() {
 		view?.setupTitle(with: gameType.title)
@@ -59,6 +68,10 @@ final class NewGameOrTourneyPresenter: NewGameOrTourneyPresenterProtocol {
 
 	func backButtonTapped() {
 		router.navigateBack()
+	}
+
+	func nextButtonTapped() {
+		print("router.nextButtonTapped()")// TODO: -
 	}
 
 	func getICellsCount() -> Int {
@@ -74,31 +87,50 @@ final class NewGameOrTourneyPresenter: NewGameOrTourneyPresenterProtocol {
 		print("Current message: \(message)")// TODO: -
 	}
 
-	func getLocation() -> LocationTitleViewModel {
-		// TODO: -
-		LocationTitleViewModel(
-			title: "Karon Beach Club",
-			location: "Patak Rd, Mueang Phuket"
-		)
-	}
-
 	func setupDateRange(_ dateRange: GameDateRange) {
 		print("setupDateRange: \(dateRange)")// TODO: -
 		self.dateRange = dateRange
+		validateData()
 	}
 
 	func setupTourneyType(to tourneyType: GameTourneyType) {
 		print("setupTourneyType: \(tourneyType)")// TODO: -
 		self.tourneyType = tourneyType
+		validateData()
 	}
 
 	func setupGender(to gender: GameGenderType) {
 		print("setupGender: \(gender)")// TODO: -
 		self.gender = gender
+		validateData()
 	}
 
 	func setupPlayerLevels(to playerLevels: [PlayerLevel]) {
 		print("setupPlayerLevels: \(playerLevels)")// TODO: -
 		self.playerLevels = playerLevels
+		validateData()
+	}
+}
+
+// MARK: - Private Methods
+
+private extension NewGameOrTourneyPresenter {
+
+	func validateData() {
+		guard
+			let _ = dateRange,
+			!playerLevels.isEmpty
+		else {
+			view?.allowNextStep(false)
+			return
+		}
+
+		if gameType == .tourney,
+		   tourneyType == nil {
+			view?.allowNextStep(false)
+			return
+		}
+
+		view?.allowNextStep(true)
 	}
 }
