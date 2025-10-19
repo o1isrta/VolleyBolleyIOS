@@ -15,7 +15,7 @@ final class NewGameOrTourneyTypeCell: UITableViewCell {
 
 	// MARK: - Private Properties
 
-	private var callback: ((TourneyType) -> Void)?
+	private var callback: ((GameTourneyType) -> Void)?
 
 	private enum Constants {
 		static let inset: CGFloat = 16
@@ -76,7 +76,7 @@ final class NewGameOrTourneyTypeCell: UITableViewCell {
 
 	// MARK: - Public Methods
 
-	func configure(callback: ((TourneyType) -> Void)?) {
+	func configure(callback: ((GameTourneyType) -> Void)?) {
 		self.callback = callback
 	}
 }
@@ -85,7 +85,7 @@ final class NewGameOrTourneyTypeCell: UITableViewCell {
 
 private extension NewGameOrTourneyTypeCell {
 
-	func didTourneyTypeChanged(to type: TourneyType) {
+	func didTourneyTypeChanged(to type: GameTourneyType) {
 		individualButton.isSelected = type == .individual
 		teamButton.isSelected = type == .team
 		callback?(type)
