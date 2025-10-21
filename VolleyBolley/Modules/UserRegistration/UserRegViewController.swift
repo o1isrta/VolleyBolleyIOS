@@ -129,7 +129,7 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
 	private var cityList: LocationPickerView?
 
 	private lazy var getStartedButton = NextStepButton(
-		title: String(localized: "GET STARTED"),
+		title: String(localized: "button.getStarted"),
 		isActive: false,
 		target: self,
 		action: #selector(getStartedTapped)
