@@ -115,23 +115,6 @@
         }
       }
     },
-    "button.next" : {
-      "comment" : "Next button",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "NEXT STEP"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ДАЛЬШЕ"
-          }
-        }
-      }
-    },
     "button.getStarted" : {
       "comment" : "Registration / Onboarding",
       "localizations" : {
@@ -145,6 +128,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "НАЧАТЬ"
+          }
+        }
+      }
+    },
+    "button.next" : {
+      "comment" : "Next button",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "NEXT STEP"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ДАЛЬШЕ"
           }
         }
       }
@@ -2830,6 +2830,59 @@
         }
       }
     },
+    "The game duration cannot exceed %lld hour" : {
+      "comment" : "Game time validation error",
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "The game duration cannot exceed %lld hour"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "The game duration cannot exceed %lld hours"
+                }
+              }
+            }
+          }
+        },
+        "ru" : {
+          "variations" : {
+            "plural" : {
+              "few" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Продолжительность игры не может превышать %lld часов"
+                }
+              },
+              "many" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Продолжительность игры не может превышать %lld часов"
+                }
+              },
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Продолжительность игры не может превышать %lld часа"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Продолжительность игры не может превышать %lld часов"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "The game duration must be at least %lld hour" : {
       "comment" : "Game time validation error",
       "localizations" : {
@@ -2857,7 +2910,7 @@
               "few" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Продолжительность игры должна быть не менее %lld часа"
+                  "value" : "Продолжительность игры должна быть не менее %lld часов"
                 }
               },
               "many" : {
