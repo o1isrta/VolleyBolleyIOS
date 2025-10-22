@@ -192,24 +192,25 @@ extension NotificationsViewController: UITableViewDataSource {
 	}
 }
 
+#if DEBUG
+
 // MARK: - Preview
 
-//#if DEBUG
-//@available(iOS 17.0, *)
-//#Preview("No") {
-//	NotificationsAssembly.createModule(with: [])
-//}
-//@available(iOS 17.0, *)
-//#Preview("Several") {
-//	let model = NotificationCardViewModel.mockDataArray
-//	NotificationsAssembly.createModule(with: model)
-//}
-//@available(iOS 17.0, *)
-//#Preview("Multiple") {
-//	let model = Array(
-//		repeating: NotificationCardViewModel.mockDataArray,
-//		count: 7
-//	).flatMap { $0 }
-//	NotificationsAssembly.createModule(with: model)
-//}
-//#endif
+@available(iOS 17.0, *)
+#Preview("No") {
+	NotificationsAssembly.createModule(with: [])
+}
+@available(iOS 17.0, *)
+#Preview("Several") {
+	let model = NotificationCardViewModel.mockDataArray
+	NotificationsAssembly.createModule(with: model)
+}
+@available(iOS 17.0, *)
+#Preview("Multiple") {
+	let model = Array(
+		repeating: NotificationCardViewModel.mockDataArray,
+		count: 7
+	).flatMap { $0 }
+	NotificationsAssembly.createModule(with: model)
+}
+#endif
