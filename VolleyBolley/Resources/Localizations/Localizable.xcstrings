@@ -2683,6 +2683,81 @@
         }
       }
     },
+    "The beginning of the game cannot be in the past" : {
+      "comment" : "Game time validation error",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Начало игры не может быть в прошлом"
+          }
+        }
+      }
+    },
+    "The end of the game cannot be before the beginning" : {
+      "comment" : "Game time validation error",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Конец игры не может быть раньше начала"
+          }
+        }
+      }
+    },
+    "The game duration must be at least %lld hour" : {
+      "comment" : "Game time validation error",
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "The game duration must be at least %lld hour"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "The game duration must be at least %lld hours"
+                }
+              }
+            }
+          }
+        },
+        "ru" : {
+          "variations" : {
+            "plural" : {
+              "few" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Продолжительность игры должна быть не менее %lld часа"
+                }
+              },
+              "many" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Продолжительность игры должна быть не менее %lld часов"
+                }
+              },
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Продолжительность игры должна быть не менее %lld часа"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Продолжительность игры должна быть не менее %lld часов"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "time_to_label" : {
       "comment" : "Game",
       "extractionState" : "manual",
