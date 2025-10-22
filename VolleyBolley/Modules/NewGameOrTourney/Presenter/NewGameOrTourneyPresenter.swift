@@ -36,7 +36,14 @@ final class NewGameOrTourneyPresenter: NewGameOrTourneyPresenterProtocol {
 	// MARK: - Private Properties
 
 	private var gameType: GameType = .game
+	#if DEBUG
+	private(set) var location: LocationTitleViewModel = LocationTitleViewModel(
+		title: "Karon Beach Club",
+		location: "Patak Rd, Mueang Phuket"
+	)
+	#else
 	private(set) var location: LocationTitleViewModel = .init(title: "", location: "")
+	#endif
 
 	private var message: String?
 	private var dateRange: GameDateRange?
@@ -72,6 +79,11 @@ final class NewGameOrTourneyPresenter: NewGameOrTourneyPresenterProtocol {
 
 	func nextButtonTapped() {
 		guard checkData() else {
+			view?.allowNextStep(false)
+			return
+		}
+
+		guard validateGameDates() else {
 			view?.allowNextStep(false)
 			return
 		}
@@ -137,7 +149,7 @@ private extension NewGameOrTourneyPresenter {
 
 	func checkGeneralRequirements() -> Bool {
 		guard
-			let _ = dateRange,
+			let dateRange,
 			!playerLevels.isEmpty,
 			!location.title.isEmpty,
 			!location.location.isEmpty
@@ -155,5 +167,18 @@ private extension NewGameOrTourneyPresenter {
 		}
 
 		return true
+	}
+
+	func validateGameDates() -> Bool {
+		guard let dateRange else { return false }
+
+		do {
+			try GameTimeValidator.validate(start: dateRange.startTime, end: dateRange.endTime)
+			return true
+		} catch {
+			view?.showAlert(with: error.localizedDescription)
+		}
+
+		return false
 	}
 }

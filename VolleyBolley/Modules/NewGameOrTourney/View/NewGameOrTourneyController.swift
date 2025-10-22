@@ -11,6 +11,7 @@ protocol NewGameOrTourneyViewControllerProtocol: AnyObject {
 	var presenter: NewGameOrTourneyPresenterProtocol? { get set }
 	func setupTitle(with title: String)
 	func allowNextStep(_ allow: Bool)
+	func showAlert(with message: String)
 }
 
 final class NewGameOrTourneyViewController: BaseViewController, NewGameOrTourneyViewControllerProtocol {
@@ -93,6 +94,8 @@ final class NewGameOrTourneyViewController: BaseViewController, NewGameOrTourney
 		return button
 	}()
 
+	private lazy var customAlertView: CustomAlertView = CustomAlertView()
+
 	// MARK: - Public Methods
 
 	override func viewDidLoad() {
@@ -101,12 +104,30 @@ final class NewGameOrTourneyViewController: BaseViewController, NewGameOrTourney
 		presenter?.viewDidLoad()
 	}
 
+	override func viewDidLayoutSubviews() {
+		super.viewDidLayoutSubviews()
+		// ALWAYS raise the customAlertView above all other subviews
+		view.bringSubviewToFront(customAlertView)
+	}
+
 	func setupTitle(with title: String) {
 		titleLabel.text = title
 	}
 
 	func allowNextStep(_ allow: Bool) {
 		nextButton.isEnabled = allow
+	}
+
+	func showAlert(with message: String) {
+		customAlertView.isHidden = false
+		let model = CustomAlertModel(
+			message: message,
+			primaryButton: ButtonDataModel(
+				title: String(localized: "customAlertView.button.ok"),
+				action: { self.customAlertView.isHidden = true }
+			)
+		)
+		customAlertView.configure(with: model)
 	}
 }
 
@@ -120,12 +141,15 @@ private extension NewGameOrTourneyViewController {
 			backButton,
 			titleLabel,
 			tableView,
-			nextButton
+			nextButton,
+			customAlertView
 		)
 		setupUI()
 	}
 
 	func setupUI() {
+		customAlertView.pinToSuperviewEdges()
+
 		NSLayoutConstraint.activate([
 			glassmorphismView.topAnchor.constraint(
 				equalTo: navBar.bottomAnchor,

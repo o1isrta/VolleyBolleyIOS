@@ -66,11 +66,7 @@ final class SupportViewController: BaseViewController {
 		return tableView
 	}()
 
-	private lazy var customAlertView: CustomAlertView = {
-		let view = CustomAlertView()
-		view.isHidden = true
-		return view
-	}()
+	private lazy var customAlertView: CustomAlertView = CustomAlertView()
 
 	// MARK: - Initializers
 
@@ -164,6 +160,9 @@ private extension SupportViewController {
 			backButton,
 			customAlertView
 		)
+
+		customAlertView.pinToSuperviewEdges()
+
 		NSLayoutConstraint.activate([
 			glassmorphismView.topAnchor.constraint(
 				equalTo: navBar.bottomAnchor,
@@ -200,12 +199,7 @@ private extension SupportViewController {
 				constant: Constants.tableTopInset
 			),
 			tableView.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor),
-			tableView.trailingAnchor.constraint(equalTo: glassmorphismView.trailingAnchor),
-
-			customAlertView.topAnchor.constraint(equalTo: view.topAnchor),
-			customAlertView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-			customAlertView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-			customAlertView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+			tableView.trailingAnchor.constraint(equalTo: glassmorphismView.trailingAnchor)
 		])
 
 		tableViewHeightConstraint = tableView.heightAnchor.constraint(
