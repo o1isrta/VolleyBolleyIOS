@@ -40,8 +40,7 @@ final class AppRouter {
             fatalError("Error: Failed to resolve AppEnvironment")
         }
 
-        // TODO: Переписать через userSessionService
-        if UserDefaults.standard.isOnboardingShown {
+        if userSessionService.isOnboardingShown {
             switch environment {
                 // TODO: - change to showAuthorization() when user registration is ready
             case .staging, .mock: showMainApp()
