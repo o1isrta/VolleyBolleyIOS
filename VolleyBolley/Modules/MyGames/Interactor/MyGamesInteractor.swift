@@ -2,30 +2,39 @@
 //  MyGamesInteractor.swift
 //  VolleyBolley
 //
-//  Created by Nikolai Eremenko
+//  Created by Roman Romanov on 12.10.2025.
 //
 
 import UIKit
 
 protocol MyGamesInteractorProtocol: AnyObject {
-    func loadUserData(completion: @escaping (Result<(Player, UIImage?), Error>) -> Void)
+	func getInvitesCount() async -> Int
+	func getNextGameDate() async -> Date
 }
 
 final class MyGamesInteractor: MyGamesInteractorProtocol {
 
     // MARK: - Private Properties
 
-    private let imageLoader: ImageLoadingServiceProtocol
-
     // MARK: - Initializers
 
-    init(
-        imageLoader: ImageLoadingServiceProtocol
-    ) {
-        self.imageLoader = imageLoader
+    init() {
+		// TODO: - get games data from repo
     }
 
     // MARK: - Public Methods
 
-    func loadUserData(completion: @escaping (Result<(Player, UIImage?), Error>) -> Void) {}
+	func getInvitesCount() async -> Int {
+		try? await Task.sleep(for: .seconds(5))
+		// TODO:
+		print("get InvitesCount")
+		return 2
+	}
+
+	func getNextGameDate() async -> Date {
+		try? await Task.sleep(for: .seconds(3))
+		// TODO:
+		print("get NextGameDate")
+		return Date()
+	}
 }

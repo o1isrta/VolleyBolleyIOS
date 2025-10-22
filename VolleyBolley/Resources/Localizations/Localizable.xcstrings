@@ -1736,6 +1736,91 @@
         }
       }
     },
+    "myGames.Archive" : {
+      "comment" : "My Games",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Archive"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Архив"
+          }
+        }
+      }
+    },
+    "myGames.games" : {
+      "comment" : "My Games",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "My games"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Мои игры"
+          }
+        }
+      }
+    },
+    "myGames.invites" : {
+      "comment" : "My Games",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game invites"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Приглашения в игру"
+          }
+        }
+      }
+    },
+    "myGames.NextGame" : {
+      "comment" : "My Games",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next game"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Следующая игра"
+          }
+        }
+      }
+    },
+    "myGames.Upcoming" : {
+      "comment" : "My Games",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upcoming games"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Предстоящие игры"
+          }
+        }
+      }
+    },
     "Name" : {
       "localizations" : {
         "ru" : {
