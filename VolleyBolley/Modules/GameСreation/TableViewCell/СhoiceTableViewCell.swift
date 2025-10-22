@@ -49,7 +49,7 @@ final class PlayerCell: UITableViewCell {
         return stack
     }()
 
-    private lazy var distanceView = DistanceView()
+    private lazy var badgeView = BadgeView()
 
     private lazy var checkmarkButton: UIButton = {
         let button = UIButton()
@@ -59,7 +59,7 @@ final class PlayerCell: UITableViewCell {
     }()
 
     private lazy var rightStack: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [distanceView, checkmarkButton])
+        let stack = UIStackView(arrangedSubviews: [badgeView, checkmarkButton])
         stack.axis = .horizontal
         stack.alignment = .center
         stack.spacing = 8
@@ -138,8 +138,8 @@ private extension PlayerCell {
         setupUI()
 
         NSLayoutConstraint.activate([
-            distanceView.widthAnchor.constraint(equalToConstant: 30),
-            distanceView.heightAnchor.constraint(equalToConstant: 23),
+            badgeView.widthAnchor.constraint(equalToConstant: 30),
+            badgeView.heightAnchor.constraint(equalToConstant: 23),
 
             containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
