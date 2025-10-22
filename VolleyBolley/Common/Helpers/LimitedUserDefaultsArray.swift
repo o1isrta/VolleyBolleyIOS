@@ -47,8 +47,10 @@ struct LimitedUserDefaultsArray<Value: Codable> {
 
 	var wrappedValue: [Value] {
 		get {
-			guard let data = userDefaults.data(forKey: key),
-				  let array = try? JSONDecoder().decode([Value].self, from: data) else {
+			guard
+				let data = userDefaults.data(forKey: key),
+				let array = try? JSONDecoder().decode([Value].self, from: data)
+			else {
 				return []
 			}
 			return array
