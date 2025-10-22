@@ -7,222 +7,217 @@
 
 import UIKit
 
-/// Кнопка для выбора и отображения времени.
-/// Отображает время в формате "часы:минуты AM/PM".
+/// A button for selecting and displaying time.
+/// Displays time in "hours:minutes AM/PM" format.
 final class TimePickerButton: UIButton {
 
-    // MARK: - Constants
+	// MARK: - Constants
 
-    private enum Constants {
-        static let cornerRadius: CGFloat = 16
-        static let stackSpacing: CGFloat = 4
-    }
+	private enum Constants {
+		static let cornerRadius: CGFloat = 16
+		static let stackSpacing: CGFloat = 4
+	}
 
-    // MARK: - Public Properties
+	// MARK: - Public Properties
 
-    /// Базовый размер кнопки для автоматического layout.
-    override var intrinsicContentSize: CGSize {
-        return CGSize(width: 89, height: 45)
-    }
+	/// The intrinsic content size of the button for automatic layout.
+	override var intrinsicContentSize: CGSize {
+		return CGSize(width: 89, height: 45)
+	}
 
-    /// Обратный вызов, который вызывается при изменении времени
-    var onTimeChange: ((Date?) -> Void)?
+	/// A closure that is called whenever the selected time changes.
+	var onTimeChange: ((Date?) -> Void)?
 
-    // MARK: - Private Properties
+	// MARK: - Private Properties
 
-    /// Лейбл, отображающий время в формате "часы:минуты".
-    private lazy var timeLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = AppColor.Text.primary
-        label.font = AppFont.Hero.regular(size: 16)
-        label.isUserInteractionEnabled = false
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+	/// A label displaying the time in "hours:minutes" format.
+	private lazy var timeLabel: UILabel = {
+		let label = UILabel()
+		label.textColor = AppColor.Text.primary
+		label.font = AppFont.Hero.regular(size: 16)
+		label.isUserInteractionEnabled = false
+		return label
+	}()
 
-    /// Лейбл, отображающий период дня ("AM"/"PM").
-    private lazy var periodLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = AppColor.Text.primary
-        label.font = AppFont.Hero.regular(size: 14)
-        label.isUserInteractionEnabled = false
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+	/// A label displaying the time period ("AM"/"PM").
+	private lazy var periodLabel: UILabel = {
+		let label = UILabel()
+		label.textColor = AppColor.Text.primary
+		label.font = AppFont.Hero.regular(size: 14)
+		label.isUserInteractionEnabled = false
+		return label
+	}()
 
-    /// Горизонтальный стек для размещения лейблов времени и периода.
-    private lazy var labelStack: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [timeLabel, periodLabel])
-        stack.axis = .horizontal
-        stack.alignment = .center
-        stack.spacing = Constants.stackSpacing
-        stack.isUserInteractionEnabled = false
-        return stack
-    }()
+	/// A horizontal stack view that arranges the time and period labels.
+	private lazy var labelStack: UIStackView = {
+		let stack = UIStackView(arrangedSubviews: [timeLabel, periodLabel])
+		stack.axis = .horizontal
+		stack.alignment = .center
+		stack.spacing = Constants.stackSpacing
+		stack.isUserInteractionEnabled = false
+		return stack
+	}()
 
-    /// Подложка с эффектом glassmorphism.
-    private lazy var glassView: GlassmorphismView = {
-        let view = GlassmorphismView()
-        view.cornerRadius = Constants.cornerRadius
-        view.innerShadowRadius = 0
-        view.isUserInteractionEnabled = false
-        return view
-    }()
+	/// A background view with a glassmorphism effect.
+	private lazy var glassView: GlassmorphismView = {
+		let view = GlassmorphismView()
+		view.cornerRadius = Constants.cornerRadius
+		view.innerShadowRadius = 0
+		view.isUserInteractionEnabled = false
+		return view
+	}()
 
-    /// Текущее выбранное время.
-    ///
-    /// При изменении значения автоматически обновляет `timeLabel` и `periodLabel`.
-    /// Может быть `nil`, если пользователь ещё не выбрал время.
-    private(set) var time: Date? {
-        didSet {
-            updateLabel()
-            // Уведомлять наблюдателей об изменении времени
-            onTimeChange?(time)
-        }
-    }
+	/// The currently selected time.
+	///
+	/// When this value changes, `timeLabel` and `periodLabel` are automatically updated.
+	/// May be `nil` if the user hasn't selected a time yet.
+	///
+	/// Whenever the value changes, the `onTimeChange` closure is invoked (if set),
+	/// allowing external observers to react to time updates.
+	private(set) var time: Date? {
+		didSet {
+			updateLabel()
+			onTimeChange?(time)
+		}
+	}
 
-    // MARK: - Initializers
+	// MARK: - Initializers
 
-    /// Инициализатор кнопки.
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setup()
-        updateLabel()
-    }
+	/// Initializes the time picker button.
+	override init(frame: CGRect) {
+		super.init(frame: frame)
+		setup()
+		updateLabel()
+	}
 
-    @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+	@available(*, unavailable)
+	required init?(coder: NSCoder) { nil }
+}
 
-    // MARK: - Private Methods
+// MARK: - Private Methods
 
-    /// Настраивает иерархию представлений и констрейнты.
-    private func setup() {
-        layer.cornerRadius = Constants.cornerRadius
-        clipsToBounds = true
+private extension TimePickerButton {
 
-        addSubviews(glassView, labelStack)
-        sendSubviewToBack(glassView)
+	/// Configures the view hierarchy and constraints.
+	func setup() {
+		layer.cornerRadius = Constants.cornerRadius
+		clipsToBounds = true
 
-        NSLayoutConstraint.activate([
-            glassView.topAnchor.constraint(equalTo: topAnchor),
-            glassView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            glassView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            glassView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            labelStack.centerXAnchor.constraint(equalTo: centerXAnchor),
-            labelStack.centerYAnchor.constraint(equalTo: centerYAnchor)
-        ])
+		addSubviews(glassView, labelStack)
+		sendSubviewToBack(glassView)
 
-        addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-    }
+		NSLayoutConstraint.activate([
+			glassView.topAnchor.constraint(equalTo: topAnchor),
+			glassView.bottomAnchor.constraint(equalTo: bottomAnchor),
+			glassView.leadingAnchor.constraint(equalTo: leadingAnchor),
+			glassView.trailingAnchor.constraint(equalTo: trailingAnchor),
+			labelStack.centerXAnchor.constraint(equalTo: centerXAnchor),
+			labelStack.centerYAnchor.constraint(equalTo: centerYAnchor)
+		])
 
-    /// Обновляет текст лейблов `timeLabel` и `periodLabel` на основе текущего времени.
-    ///
-    /// Если `time` равно `nil`, отображает плейсхолдер "_:__ PM".
-    private func updateLabel() {
-        guard let time else {
-            timeLabel.text = "_:__"
-            periodLabel.text = "PM"
-            return
-        }
+		addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+	}
 
-        let fullTime = AppDateFormatters.time12Hour.string(from: time)
-        let components = fullTime.components(separatedBy: " ")
-        timeLabel.text = components.first ?? "_:__"
-        periodLabel.text = components.last ?? "PM"
-    }
+	/// Updates the text of `timeLabel` and `periodLabel` based on the current time.
+	///
+	/// If `time` is `nil`, displays a placeholder "_:__ PM".
+	func updateLabel() {
+		guard let time else {
+			timeLabel.text = "_:__"
+			periodLabel.text = "PM"
+			return
+		}
 
-    /// Обрабатывает нажатие на кнопку и показывает `UIDatePicker`.
-    @objc private func buttonTapped() {
-        showTimePicker()
-    }
+		let fullTime = AppDateFormatters.time12Hour.string(from: time)
+		let components = fullTime.components(separatedBy: " ")
+		timeLabel.text = components.first ?? "_:__"
+		periodLabel.text = components.last ?? "PM"
+	}
 
-    /// Показывает алерт с системным `UIDatePicker` для выбора времени.
-    private func showTimePicker() {
-        guard let topController = topMostController() else { return }
+	/// Handles button tap and presents a `UIDatePicker`.
+	@objc private func buttonTapped() {
+		showTimePicker()
+	}
 
-        let alert = setupAlert()
-        topController.present(alert, animated: true)
-    }
+	/// Presents an alert with a system `UIDatePicker` for time selection.
+	func showTimePicker() {
+		guard let topController = topMostController() else { return }
 
-    /// Создаёт и настраивает алерт с системным `UIDatePicker` в режиме выбора времени.
-    ///
-    /// Алерт содержит действия "Cancel" и "OK". При подтверждении выбранное время сохраняется в свойство `time`.
-    ///
-    /// - Returns: Настроенный `UIAlertController` с добавленным `UIDatePicker`.
-    private func setupAlert() -> UIAlertController {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+		let alert = setupAlert()
+		topController.present(alert, animated: true)
+	}
 
-        let datePicker = UIDatePicker()
-        datePicker.datePickerMode = .time
-        datePicker.preferredDatePickerStyle = .wheels
+	/// Creates and configures an alert containing a system `UIDatePicker` in time mode.
+	///
+	/// The alert includes "Cancel" and "OK" actions. Upon confirmation, the selected time
+	/// is stored in the `time` property.
+	///
+	/// - Returns: A configured `UIAlertController` with an embedded `UIDatePicker`.
+	func setupAlert() -> UIAlertController {
+		let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+
+		let datePicker = UIDatePicker()
+		datePicker.datePickerMode = .time
+		datePicker.preferredDatePickerStyle = .wheels
 		datePicker.locale = AppConstants.AppLocale.posix
-        datePicker.date = time ?? Date()
+		datePicker.date = time ?? Date()
 
-        alert.view.addSubviews(datePicker)
+		alert.view.addSubviews(datePicker)
 
-        NSLayoutConstraint.activate([
-            datePicker.topAnchor.constraint(equalTo: alert.view.topAnchor, constant: 8),
-            datePicker.leadingAnchor.constraint(equalTo: alert.view.leadingAnchor, constant: 8),
-            datePicker.trailingAnchor.constraint(equalTo: alert.view.trailingAnchor, constant: -8),
-            datePicker.bottomAnchor.constraint(equalTo: alert.view.bottomAnchor, constant: -44)
-        ])
+		NSLayoutConstraint.activate([
+			datePicker.topAnchor.constraint(equalTo: alert.view.topAnchor, constant: 8),
+			datePicker.leadingAnchor.constraint(equalTo: alert.view.leadingAnchor, constant: 8),
+			datePicker.trailingAnchor.constraint(equalTo: alert.view.trailingAnchor, constant: -8),
+			datePicker.bottomAnchor.constraint(equalTo: alert.view.bottomAnchor, constant: -44)
+		])
 
-        alert.addAction(UIAlertAction(
-            title: String(localized: "customAlertView.button.cancel"),
-            style: .cancel
-        ))
+		alert.addAction(UIAlertAction(
+			title: String(localized: "customAlertView.button.cancel"),
+			style: .cancel
+		))
 
-        alert.addAction(UIAlertAction(
-            title: String(localized: "customAlertView.button.ok"),
-            style: .default,
-            handler: { [weak self] _ in
-                self?.time = datePicker.date
-            }
-        ))
+		alert.addAction(UIAlertAction(
+			title: String(localized: "customAlertView.button.ok"),
+			style: .default,
+			handler: { [weak self] _ in
+				self?.time = datePicker.date
+			}
+		))
 
-        return alert
-    }
+		return alert
+	}
 
-    /// Возвращает верхний контроллер в текущем окне приложения.
-    private func topMostController() -> UIViewController? {
-        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-              let keyWindow = windowScene.windows.first(where: { $0.isKeyWindow }),
-              var topController = keyWindow.rootViewController else {
-            return nil
-        }
+	/// Returns the topmost view controller in the current window scene.
+	func topMostController() -> UIViewController? {
+		guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+			  let keyWindow = windowScene.windows.first(where: { $0.isKeyWindow }),
+			  var topController = keyWindow.rootViewController else {
+			return nil
+		}
 
-        while let presentedViewController = topController.presentedViewController {
-            topController = presentedViewController
-        }
-        return topController
-    }
+		while let presentedViewController = topController.presentedViewController {
+			topController = presentedViewController
+		}
+		return topController
+	}
 
 }
 
+#if DEBUG
+
 // MARK: - Preview
 
-#if DEBUG
 import SwiftUI
 
 @available(iOS 17.0, *)
 #Preview {
-    ZStack {
-        Color(uiColor: AppColor.Background.screen)
-            .ignoresSafeArea()
-        UIViewRepresentableTimePickerButton()
-            .frame(width: 89, height: 45)
-    }
-}
-
-struct UIViewRepresentableTimePickerButton: UIViewRepresentable {
-
-    func makeUIView(context: Context) -> TimePickerButton {
-        let button = TimePickerButton()
-        return button
-    }
-
-    func updateUIView(_ uiView: TimePickerButton, context: Context) {}
+	ZStack {
+		Color(uiColor: AppColor.Background.screen)
+			.ignoresSafeArea()
+		UIViewPreview {
+			TimePickerButton()
+		}
+		.frame(width: 89, height: 45)
+	}
 }
 #endif
