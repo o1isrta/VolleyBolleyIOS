@@ -1,5 +1,5 @@
 //
-//  MessageView.swift
+//  CustomNoteView.swift
 //  VolleyBolley
 //
 //  Created by Roman Romanov on 16.10.2025.
@@ -8,7 +8,7 @@
 import UIKit
 
 /// Represents the display style of the message input view.
-enum MessageViewType {
+enum CustomNoteViewType {
 	/// Displays a character counter in the bottom-right corner.
 	case withCounter
 	/// Does not display a character counter.
@@ -28,25 +28,25 @@ enum MessageViewType {
 /// ### Usage Example:
 /// ```swift
 /// // In your view controller:
-/// let messageInputView = MessageView(type: .withCounter)
+/// let customNoteView = CustomNoteView(type: .withCounter)
 /// messageInputView.translatesAutoresizingMaskIntoConstraints = false
 /// view.addSubview(messageInputView)
 ///
 /// NSLayoutConstraint.activate([
-///     messageInputView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-///     messageInputView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-///     messageInputView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-///     messageInputView.heightAnchor.constraint(equalToConstant: 120)
+///     customNoteView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+///     customNoteView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+///     customNoteView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+///     customNoteView.heightAnchor.constraint(equalToConstant: 120)
 /// ])
 ///
 /// // Observe real-time text changes
-/// messageInputView.onTextChange = { [weak self] text in
+/// customNoteView.onTextChange = { [weak self] text in
 ///     print("Current message: \(text)")
 ///     // Example: Enable send button only if message is not empty
 ///     self?.sendButton.isEnabled = !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
 /// }
 /// ```
-final class MessageView: UIView {
+final class CustomNoteView: UIView {
 
 	// MARK: - Public Properties
 
@@ -58,7 +58,7 @@ final class MessageView: UIView {
 
 	// MARK: - Private Properties
 
-	private let messageViewType: MessageViewType
+	private let customNoteViewType: CustomNoteViewType
 	private let maxMessageLength: Int
 
 	private enum Constants {
@@ -103,8 +103,8 @@ final class MessageView: UIView {
 
 	// MARK: - Initializers
 
-	init(type: MessageViewType, maxMessageLength: Int = Constants.maxMessageLength) {
-		self.messageViewType = type
+	init(type: CustomNoteViewType, maxMessageLength: Int = Constants.maxMessageLength) {
+		self.customNoteViewType = type
 		self.maxMessageLength = maxMessageLength
 		super.init(frame: .zero)
 		setupUI()
@@ -123,18 +123,18 @@ final class MessageView: UIView {
 
 // MARK: - Private Properties
 
-private extension MessageView {
+private extension CustomNoteView {
 
 	func updateMessageCount(_ count: Int) {
 		messageLettersCounter.text = "\(count)/\(maxMessageLength)"
 	}
 
-	func showPlaceholder(_ show: Bool) {
+	func isPlaceholderVisible(_ show: Bool) {
 		messagePlaceholderLabel.isHidden = show
 	}
 
 	func setupCounter() {
-		guard messageViewType == .withCounter else { return }
+		guard customNoteViewType == .withCounter else { return }
 		addSubviews(messageLettersCounter)
 		NSLayoutConstraint.activate([
 			messageLettersCounter.trailingAnchor.constraint(
@@ -192,7 +192,7 @@ private extension MessageView {
 
 // MARK: - UITextViewDelegate
 
-extension MessageView: UITextViewDelegate {
+extension CustomNoteView: UITextViewDelegate {
 
 	func textView(
 		_ textView: UITextView,
@@ -206,18 +206,18 @@ extension MessageView: UITextViewDelegate {
 	}
 
 	func textViewDidBeginEditing(_ textView: UITextView) {
-		showPlaceholder(true)
+		isPlaceholderVisible(true)
 	}
 
 	func textViewDidEndEditing(_ textView: UITextView) {
-		showPlaceholder(!textView.text.isEmpty)
+		isPlaceholderVisible(!textView.text.isEmpty)
 	}
 
 	func textViewDidChange(_ textView: UITextView) {
-		showPlaceholder(!textView.text.isEmpty)
+		isPlaceholderVisible(!textView.text.isEmpty)
 
 		guard
-			messageViewType == .withCounter,
+			customNoteViewType == .withCounter,
 			let text = textView.text
 		else { return }
 
@@ -231,7 +231,7 @@ import SwiftUI
 @available(iOS 17.0, *)
 #Preview {
 	UIViewPreview {
-		let view = MessageView(type: .withCounter)
+		let view = CustomNoteView(type: .withCounter)
 		return view
 	}
 	.frame(width: .infinity, height: 106)
@@ -239,7 +239,7 @@ import SwiftUI
 	.padding()
 
 	UIViewPreview {
-		let view = MessageView(type: .noCounter)
+		let view = CustomNoteView(type: .noCounter)
 		return view
 	}
 	.frame(width: .infinity, height: 89)

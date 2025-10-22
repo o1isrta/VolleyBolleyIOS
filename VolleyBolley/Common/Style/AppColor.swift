@@ -33,6 +33,7 @@ enum AppColor {
         // badge
         static let badgeDefault = steelBlue
         static let badgeSelected = mutedTeal
+		static let badgeHighlighted = orange
         static let levelBadgeLight = blue
         static let levelBadgeMedium = green
         static let levelBadgeHard = orange
