@@ -149,7 +149,7 @@ private extension NewGameOrTourneyPresenter {
 
 	func checkGeneralRequirements() -> Bool {
 		guard
-			let dateRange,
+			let _ = dateRange,
 			!playerLevels.isEmpty,
 			!location.title.isEmpty,
 			!location.location.isEmpty
@@ -173,7 +173,7 @@ private extension NewGameOrTourneyPresenter {
 		guard let dateRange else { return false }
 
 		do {
-			try GameTimeValidator.validate(start: dateRange.startTime, end: dateRange.endTime)
+			try GameTimeValidator.validate(gameType: gameType, start: dateRange.startTime, end: dateRange.endTime)
 			return true
 		} catch {
 			view?.showAlert(with: error.localizedDescription)

@@ -28,9 +28,10 @@ enum AppConstants {
 
 	enum Game {
 		static let minimumDurationHours: Double = 1.0
+		static let maximumDurationHours: Double = 4.0
 		static let minPlayers = 4
 		static let minTeams = 3
-		static let maxTeamsAndPlayersValue = 24 
+		static let maxTeamsAndPlayersValue = 24
 	}
 
 	enum Contacts {

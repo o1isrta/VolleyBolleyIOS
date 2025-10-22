@@ -35,7 +35,7 @@ final class NewGameOrTourneyPlayerLevelCell: UITableViewCell {
 	}()
 	private lazy var lightButton: GreenButton = {
 		let button = GreenButton()
-		button.setTitle(String(localized: "common.light"), for: .normal)
+		button.setTitle(String(localized: "common.light").capitalized, for: .normal)
 		setupToggleButton(button, level: .light) { [weak self] level in
 			self?.didLevelsChanged(with: level)
 		}
@@ -43,7 +43,7 @@ final class NewGameOrTourneyPlayerLevelCell: UITableViewCell {
 	}()
 	private lazy var mediumButton: GreenButton = {
 		let button = GreenButton()
-		button.setTitle(String(localized: "common.medium"), for: .normal)
+		button.setTitle(String(localized: "common.medium").capitalized, for: .normal)
 		setupToggleButton(button, level: .medium) { [weak self] level in
 			self?.didLevelsChanged(with: level)
 		}
@@ -51,7 +51,7 @@ final class NewGameOrTourneyPlayerLevelCell: UITableViewCell {
 	}()
 	private lazy var hardButton: GreenButton = {
 		let button = GreenButton()
-		button.setTitle(String(localized: "common.hard"), for: .normal)
+		button.setTitle(String(localized: "common.hard").capitalized, for: .normal)
 		setupToggleButton(button, level: .hard) { [weak self] level in
 			self?.didLevelsChanged(with: level)
 		}
@@ -59,13 +59,17 @@ final class NewGameOrTourneyPlayerLevelCell: UITableViewCell {
 	}()
 	private lazy var proButton: GreenButton = {
 		let button = GreenButton()
-		button.setTitle(String(localized: "common.pro"), for: .normal)
+		button.setTitle(String(localized: "common.pro").capitalized, for: .normal)
 		setupToggleButton(button, level: .pro) { [weak self] level in
 			self?.didLevelsChanged(with: level)
 		}
 		return button
 	}()
 	private lazy var stackView: UIStackView = {
+		lightButton.setContentHuggingPriority(.required, for: .horizontal)
+		mediumButton.setContentHuggingPriority(.required, for: .horizontal)
+		hardButton.setContentHuggingPriority(.required, for: .horizontal)
+		proButton.setContentHuggingPriority(.required, for: .horizontal)
 		lightButton.setContentCompressionResistancePriority(.required, for: .horizontal)
 		mediumButton.setContentCompressionResistancePriority(.required, for: .horizontal)
 		hardButton.setContentCompressionResistancePriority(.required, for: .horizontal)

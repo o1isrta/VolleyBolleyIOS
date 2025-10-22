@@ -11,6 +11,7 @@ enum GameValidationError: Error, LocalizedError {
 	case endBeforeStart
 	case startInPast
 	case durationTooShort(minimumHours: Double)
+	case durationTooLong(maximumHours: Double)
 
 	var errorDescription: String? {
 		switch self {
@@ -19,7 +20,11 @@ enum GameValidationError: Error, LocalizedError {
 		case .startInPast:
 			return String(localized: "The beginning of the game cannot be in the past")
 		case .durationTooShort(let hours):
-			return String(localized: "The game duration must be at least \(Int(hours)) hour")
+			let hourCount = Int(hours)
+			return String(localized: "The game duration must be at least \(hourCount) hour")
+		case .durationTooLong(let hours):
+			let hourCount = Int(hours)
+			return String(localized: "The game duration cannot exceed \(hourCount) hour")
 		}
 	}
 }
@@ -28,11 +33,13 @@ struct GameTimeValidator {
 	let startDate: Date
 	let endDate: Date
 	let minimumDuration: TimeInterval
+	let maximumDuration: TimeInterval?
 
-	init(startDate: Date, endDate: Date) {
+	init(gameType: GameType, startDate: Date, endDate: Date) {
 		self.startDate = startDate
 		self.endDate = endDate
 		self.minimumDuration = AppConstants.Game.minimumDurationHours * 3600
+		self.maximumDuration = gameType == .game ? AppConstants.Game.maximumDurationHours * 3600 : nil
 	}
 
 	func validate() throws {
@@ -45,20 +52,26 @@ struct GameTimeValidator {
 		}
 
 		let duration = endDate.timeIntervalSince(startDate)
+
 		guard duration >= minimumDuration else {
 			throw GameValidationError.durationTooShort(minimumHours: minimumDuration / 3600)
+		}
+
+		if let maxDuration = maximumDuration,
+			duration > maxDuration {
+			throw GameValidationError.durationTooLong(maximumHours: maxDuration / 3600)
 		}
 	}
 }
 
 extension GameTimeValidator {
 
-	static func validate(start: Date, end: Date) throws {
-		try Self(startDate: start, endDate: end)
+	static func validate(gameType: GameType, start: Date, end: Date) throws {
+		try Self(gameType: gameType, startDate: start, endDate: end)
 			.validate()
 	}
 
-	static func quickCheck(start: Date, end: Date) -> Bool {
-		(try? validate(start: start, end: end)) != nil
+	static func quickCheck(gameType: GameType, start: Date, end: Date) -> Bool {
+		(try? validate(gameType: gameType, start: start, end: end)) != nil
 	}
 }
