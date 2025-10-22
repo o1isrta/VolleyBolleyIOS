@@ -23,7 +23,7 @@ final class NewGameOrTourneyMessageCell: UITableViewCell {
 		return label
 	}()
 
-	private lazy var messageView: MessageView = MessageView(type: .withCounter)
+	private lazy var customNoteView: CustomNoteView = CustomNoteView(type: .withCounter)
 	private lazy var separator = CustomSeparator()
 
 	// MARK: - Initializers
@@ -56,7 +56,7 @@ private extension NewGameOrTourneyMessageCell {
 	}
 
 	func setupCallback() {
-		messageView.onTextChange = { [weak self] text in
+		customNoteView.onTextChange = { [weak self] text in
 			self?.onMessageChange?(text)
 		}
 	}
@@ -67,7 +67,7 @@ private extension NewGameOrTourneyMessageCell {
 
 		contentView.addSubviews(
 			titleLabel,
-			messageView,
+			customNoteView,
 			separator
 		)
 
@@ -81,22 +81,22 @@ private extension NewGameOrTourneyMessageCell {
 				constant: Constants.insetLarge
 			),
 
-			messageView.topAnchor.constraint(
+			customNoteView.topAnchor.constraint(
 				equalTo: titleLabel.bottomAnchor,
 				constant: Constants.inset
 			),
-			messageView.leadingAnchor.constraint(
+			customNoteView.leadingAnchor.constraint(
 				equalTo: contentView.leadingAnchor,
 				constant: Constants.insetLarge
 			),
-			messageView.trailingAnchor.constraint(
+			customNoteView.trailingAnchor.constraint(
 				equalTo: contentView.trailingAnchor,
 				constant: -Constants.insetLarge
 			),
-			messageView.heightAnchor.constraint(equalToConstant: Constants.viewHeight),
+			customNoteView.heightAnchor.constraint(equalToConstant: Constants.viewHeight),
 
 			separator.topAnchor.constraint(
-				equalTo: messageView.bottomAnchor,
+				equalTo: customNoteView.bottomAnchor,
 				constant: Constants.inset
 			),
 			separator.leadingAnchor.constraint(
