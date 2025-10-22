@@ -9,37 +9,21 @@ import Foundation
 
 final class UserSessionService: UserSessionServiceProtocol {
 
-    // MARK: - Public properties
+	// MARK: - Public properties
 
-    var isOnboardingShown: Bool {
-		let value = storage.bool(forKey: AppConstants.UserDefaultsKeys.onboardingShown)
+	@UserDefaultsCodable(key: AppConstants.UserDefaultsKeys.onboardingShown, defaultValue: false)
+	private(set) var isOnboardingShown: Bool
 
-        return value
-    }
+	@UserDefaultsCodable(key: AppConstants.UserDefaultsKeys.authorized, defaultValue: false)
+	private(set) var isAuthorized: Bool
 
-    var isAuthorized: Bool {
-		let value = storage.bool(forKey: AppConstants.UserDefaultsKeys.authorized)
+	// MARK: - Public methods
 
-        return value
-    }
+	func markOnboardingAsShown() {
+		isOnboardingShown = true
+	}
 
-    // MARK: - Private properties
-
-    private let storage: SettingsStorageProtocol
-
-    // MARK: - Initializers
-
-    init(storage: SettingsStorageProtocol) {
-        self.storage = storage
-    }
-
-    // MARK: - Public methods
-
-    func markOnboardingAsShown() {
-        storage.set(true, forKey: AppConstants.UserDefaultsKeys.onboardingShown)
-    }
-
-    func markUserAuthorized() {
-        storage.set(true, forKey: AppConstants.UserDefaultsKeys.authorized)
-    }
+	func markUserAuthorized() {
+		isAuthorized = true
+	}
 }
