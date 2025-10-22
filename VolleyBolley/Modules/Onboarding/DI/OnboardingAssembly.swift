@@ -11,11 +11,14 @@ final class OnboardingAssembly: Assembly {
 
 	func assemble(container: Container) {
 		container.register(OnboardingViewController.self) { resolver in
-			let userSessionService = resolver.resolve(UserSessionServiceProtocol.self)!
-			let interactor = OnboardingInteractor(userSessionService: userSessionService)
-
-			let appRouter = resolver.resolve(AppRouter.self)!
+			guard
+				let userSessionService = resolver.resolve(UserSessionServiceProtocol.self),
+				let appRouter = resolver.resolve(AppRouter.self)
+			else {
+				fatalError("Error: Failed to resolve dependencies for OnboardingViewController")
+			}
 			let onboardingVC = OnboardingViewController()
+			let interactor = OnboardingInteractor(userSessionService: userSessionService)
 			let router = OnboardingRouter(
 				viewController: onboardingVC,
 				router: appRouter
