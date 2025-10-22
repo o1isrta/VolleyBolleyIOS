@@ -132,6 +132,23 @@
         }
       }
     },
+    "button.getStarted" : {
+      "comment" : "Registration / Onboarding",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GET STARTED"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "НАЧАТЬ"
+          }
+        }
+      }
+    },
     "Cancel" : {
       "comment" : "Cancel button",
       "localizations" : {
@@ -1548,17 +1565,6 @@
         }
       }
     },
-    "GET STARTED" : {
-      "comment" : "Registration",
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "НАЧАТЬ"
-          }
-        }
-      }
-    },
     "homeCreateNewGame" : {
       "comment" : "Home screen CreateNewGame button title",
       "extractionState" : "manual",
@@ -2160,6 +2166,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Уведомления"
+          }
+        }
+      }
+    },
+    "onboarding.description" : {
+      "comment" : "Onboarding",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This app helps you find beach volleyball games and match with players at your skill level."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Это приложение поможет вам найти матчи по пляжному волейболу и подобрать себе соперников соответствующего уровня мастерства."
+          }
+        }
+      }
+    },
+    "onboarding.title" : {
+      "comment" : "Onboarding",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Welcome!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добро пожаловать!"
           }
         }
       }
@@ -2944,16 +2984,6 @@
         }
       }
     },
-    "VOLLEYBOLLEY" : {
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "VOLLEYBOLLEY"
-          }
-        }
-      }
-    },
     "Want to move to the next category?" : {
       "comment" : "FAQ",
       "localizations" : {
@@ -2972,39 +3002,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Мы гарантируем честную систему:\n• Рейтинги анонимны\n• Максимум 2 рейтинга от одного игрока за 60 дней\n• Уровень Light минимально влияет на уровни Hard и Pro\n• Уровень Pro сложнее достичь\nИграйте честно — ваш уровень будет говорить сам за себя."
-          }
-        }
-      }
-    },
-    "welcome_description" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "This app helps you find beach volleyball games and match with players at your skill level."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Это приложение поможет вам найти матчи по пляжному волейболу и подобрать себе соперников соответствующего уровня мастерства."
-          }
-        }
-      }
-    },
-    "welcome_title" : {
-      "comment" : "Registration",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Welcome!"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Добро пожаловать!"
           }
         }
       }
