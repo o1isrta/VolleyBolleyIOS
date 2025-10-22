@@ -215,8 +215,6 @@ extension NewGameOrTourneyViewController: UITableViewDataSource {
 		presenter?.getICellsCount() ?? 0
 	}
 
-	// swiftlint:disable cyclomatic_complexity
-	// swiftlint:disable function_body_length
 	func tableView(
 		_ tableView: UITableView,
 		cellForRowAt indexPath: IndexPath
@@ -224,77 +222,111 @@ extension NewGameOrTourneyViewController: UITableViewDataSource {
 		let gameType = presenter?.getCellType(index: indexPath.row)
 		switch gameType {
 		case .message:
-			if let cell = tableView.dequeueReusableCell(
-				withIdentifier: NewGameOrTourneyMessageCell.reuseIdentifier,
-				for: indexPath
-			) as? NewGameOrTourneyMessageCell {
-				cell.onMessageChange = { [weak self] message in
-					self?.presenter?.setupMessage(message)
-				}
-				return cell
-			}
+			return makeMessageCell(for: indexPath)
 		case .location:
-			if let cell = tableView.dequeueReusableCell(
-				withIdentifier: NewGameOrTourneyPlaceCell.reuseIdentifier,
-				for: indexPath
-			) as? NewGameOrTourneyPlaceCell {
-				if let location = presenter?.location {
-					cell.configure(with: location) { [weak self] in
-						self?.presenter?.backButtonTapped()
-					}
-					return cell
-				}
-			}
+			return makeLocationCell(for: indexPath)
 		case .date:
-			if let cell = tableView.dequeueReusableCell(
-				withIdentifier: NewGameOrTourneyDateCell.reuseIdentifier,
-				for: indexPath
-			) as? NewGameOrTourneyDateCell {
-				let callback: (GameDateRange) -> Void = { [weak self] dateRange in
-					self?.presenter?.setupDateRange(dateRange)
-				}
-				cell.configure(callback: callback) { [weak self] in
-					self?.tableView.reloadData()
-				}
-				return cell
-			}
+			return makeDateCell(for: indexPath)
 		case .tourneyType:
-			if let cell = tableView.dequeueReusableCell(
-				withIdentifier: NewGameOrTourneyTypeCell.reuseIdentifier,
-				for: indexPath
-			) as? NewGameOrTourneyTypeCell {
-				cell.configure { [weak self] tourneyType in
-					self?.presenter?.setupTourneyType(to: tourneyType)
-				}
-				return cell
-			}
+			return makeTourneyTypeCell(for: indexPath)
 		case .gender:
-			if let cell = tableView.dequeueReusableCell(
-				withIdentifier: NewGameOrTourneyGenderCell.reuseIdentifier,
-				for: indexPath
-			) as? NewGameOrTourneyGenderCell {
-				cell.configure { [weak self] gender in
-					self?.presenter?.setupGender(to: gender)
-				}
-				return cell
-			}
+			return makeGenderCell(for: indexPath)
 		case .playerLevels:
-			if let cell = tableView.dequeueReusableCell(
-				withIdentifier: NewGameOrTourneyPlayerLevelCell.reuseIdentifier,
-				for: indexPath
-			) as? NewGameOrTourneyPlayerLevelCell {
-				cell.configure { [weak self] levels in
-					self?.presenter?.setupPlayerLevels(to: levels)
-				}
-				return cell
-			}
+			return makePlayerLevelsCell(for: indexPath)
 		case .none:
 			return UITableViewCell()
 		}
-		return UITableViewCell()
 	}
-	// swiftlint:enable cyclomatic_complexity
-	// swiftlint:enable function_body_length
+
+	func makeMessageCell(for indexPath: IndexPath) -> UITableViewCell {
+		guard let cell = tableView.dequeueReusableCell(
+			withIdentifier: NewGameOrTourneyMessageCell.reuseIdentifier,
+			for: indexPath
+		) as? NewGameOrTourneyMessageCell else {
+			return UITableViewCell()
+		}
+
+		cell.onMessageChange = { [weak self] message in
+			self?.presenter?.setupMessage(message)
+		}
+		return cell
+	}
+
+	func makeLocationCell(for indexPath: IndexPath) -> UITableViewCell {
+		guard let cell = tableView.dequeueReusableCell(
+			withIdentifier: NewGameOrTourneyPlaceCell.reuseIdentifier,
+			for: indexPath
+		) as? NewGameOrTourneyPlaceCell else {
+			return UITableViewCell()
+		}
+
+		if let location = presenter?.location {
+			cell.configure(with: location) { [weak self] in
+				self?.presenter?.backButtonTapped()
+			}
+		}
+		return cell
+	}
+
+	func makeDateCell(for indexPath: IndexPath) -> UITableViewCell {
+		guard let cell = tableView.dequeueReusableCell(
+			withIdentifier: NewGameOrTourneyDateCell.reuseIdentifier,
+			for: indexPath
+		) as? NewGameOrTourneyDateCell else {
+			return UITableViewCell()
+		}
+
+		let callback: (GameDateRange) -> Void = { [weak self] dateRange in
+			self?.presenter?.setupDateRange(dateRange)
+		}
+
+		cell.configure(callback: callback) { [weak self] in
+			self?.tableView.reloadData()
+		}
+		return cell
+	}
+
+	func makeTourneyTypeCell(for indexPath: IndexPath) -> UITableViewCell {
+		guard let cell = tableView.dequeueReusableCell(
+			withIdentifier: NewGameOrTourneyTypeCell.reuseIdentifier,
+			for: indexPath
+		) as? NewGameOrTourneyTypeCell else {
+			return UITableViewCell()
+		}
+
+		cell.configure { [weak self] tourneyType in
+			self?.presenter?.setupTourneyType(to: tourneyType)
+		}
+		return cell
+	}
+
+	func makeGenderCell(for indexPath: IndexPath) -> UITableViewCell {
+		guard let cell = tableView.dequeueReusableCell(
+			withIdentifier: NewGameOrTourneyGenderCell.reuseIdentifier,
+			for: indexPath
+		) as? NewGameOrTourneyGenderCell else {
+			return UITableViewCell()
+		}
+
+		cell.configure { [weak self] gender in
+			self?.presenter?.setupGender(to: gender)
+		}
+		return cell
+	}
+
+	func makePlayerLevelsCell(for indexPath: IndexPath) -> UITableViewCell {
+		guard let cell = tableView.dequeueReusableCell(
+			withIdentifier: NewGameOrTourneyPlayerLevelCell.reuseIdentifier,
+			for: indexPath
+		) as? NewGameOrTourneyPlayerLevelCell else {
+			return UITableViewCell()
+		}
+
+		cell.configure { [weak self] levels in
+			self?.presenter?.setupPlayerLevels(to: levels)
+		}
+		return cell
+	}
 }
 
 #if DEBUG
