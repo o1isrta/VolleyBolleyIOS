@@ -24,7 +24,9 @@ enum SketchButtonStateStyle {
         switch self {
         case .normal:
             return SketchButtonStyle(
-                backgroundEffectProvider: { AppEffect.glass() }
+				backgroundEffectProvider: {
+					AppEffect.glass()
+				}
             )
         case .selected:
             return SketchButtonStyle(
@@ -34,7 +36,9 @@ enum SketchButtonStateStyle {
         case .highlightedNormal:
             return SketchButtonStyle(
                 backgroundColor: AppColor.Background.buttonSketchSelected,
-                backgroundEffectProvider: { AppEffect.glassHightLighted() }
+				backgroundEffectProvider: {
+					AppEffect.glassHightLighted()
+				}
             )
         case .highlightedSelected:
             return SketchButtonStyle(
