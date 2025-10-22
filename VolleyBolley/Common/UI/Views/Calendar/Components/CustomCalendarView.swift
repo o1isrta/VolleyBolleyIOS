@@ -244,16 +244,22 @@ private extension CustomCalendarView {
 		Group {
 			if isSelected {
 				RoundedRectangle(cornerRadius: 16)
-					.fill(
-						LinearGradient(
-							gradient: Gradient(colors: AppGradient.greenLight.map {Color($0)}),
-							startPoint: .topLeading,
-							endPoint: .bottomTrailing
-						)
-					)
+					.fill(gradient)
+					.frame(width: 42, height: 32)
+			} else if isToday && isCurrentMonth && !isPastDate {
+				RoundedRectangle(cornerRadius: 16)
+					.stroke(gradient, lineWidth: 2)
 					.frame(width: 42, height: 32)
 			}
 		}
+	}
+
+	var gradient: LinearGradient {
+		LinearGradient(
+			gradient: Gradient(colors: AppGradient.greenLight.map {Color($0)}),
+			startPoint: .top,
+			endPoint: .bottom
+		)
 	}
 
 	func getDayForegroundColor(
