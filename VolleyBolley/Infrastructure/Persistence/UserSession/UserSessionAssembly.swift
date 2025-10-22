@@ -8,14 +8,10 @@
 import Swinject
 
 final class UserSessionAssembly: Assembly {
-    func assemble(container: Container) {
-        container.register(UserSessionServiceProtocol.self) { resolver in
-            guard let storage = resolver.resolve(SettingsStorageProtocol.self) else {
-                fatalError("Failed to resolve SettingsStorageProtocol")
-            }
-
-            return UserSessionService(storage: storage)
-        }
-        .inObjectScope(.container)
-    }
+	func assemble(container: Container) {
+		container.register(UserSessionServiceProtocol.self) { _ in
+			return UserSessionService()
+		}
+		.inObjectScope(.container)
+	}
 }

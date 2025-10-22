@@ -156,8 +156,6 @@ import SwiftUI
 #Preview("Game") {
 	UIViewPreview {
 		let view = CourtDetailsView()
-		let court = CourtModel.mockData
-		let game = GameModel.mockData
 
 		let model = GameDetailsViewModel(
 			court: CourtModel.mockData,

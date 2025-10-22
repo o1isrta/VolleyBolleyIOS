@@ -1,5 +1,5 @@
 //
-//  OnboardingView.swift
+//  OnboardingViewController.swift
 //  VolleyBolley
 //
 //  Created by Олег Козырев on 12.07.2025.
@@ -7,13 +7,19 @@
 
 import UIKit
 
-final class OnboardingViewController: UIViewController {
+protocol OnboardingViewProtocol: AnyObject {}
+
+final class OnboardingViewController: UIViewController, OnboardingViewProtocol {
+
+	// MARK: - Public Properties
 
 	var presenter: OnboardingPresenterProtocol?
 
+	// MARK: - Private Properties
+
 	private lazy var titleLabel: UILabel = {
 		let label = UILabel()
-		label.text = String(localized: "welcome_title")
+		label.text = String(localized: "onboarding.title")
 		label.font = AppFont.ActayWide.bold(size: 36)
 		label.textColor = AppColor.Text.primary
 		label.textAlignment = .left
@@ -22,7 +28,7 @@ final class OnboardingViewController: UIViewController {
 
 	private lazy var descriptionLabel: UILabel = {
 		let label = UILabel()
-		label.text = String(localized: "welcome_description")
+		label.text = String(localized: "onboarding.description")
 		label.font = AppFont.Hero.regular(size: 20)
 		label.textColor = AppColor.Text.primary
 		label.numberOfLines = 0
@@ -38,18 +44,21 @@ final class OnboardingViewController: UIViewController {
 
 	private lazy var appNameLabel: UILabel = {
 		let label = UILabel()
-		label.text = String(localized: "VOLLEYBOLLEY")
+		label.text = "VOLLEYBOLLEY"
 		label.font = AppFont.ActayWide.bold(size: 36)
 		label.textColor = AppColor.Text.primary
 		return label
 	}()
 
-	private lazy var getStartedButton: UIButton = NextStepButton(
-		title: String(localized: "GET STARTED"),
-		isActive: true,
-		target: self,
-		action: #selector(getStartedTapped)
-	)
+	private lazy var getStartedButton: YellowButton = {
+		let button = YellowButton()
+		button.isSelected = true
+		button.setTitle(String(localized: "button.getStarted"), for: .normal)
+		button.addAction(UIAction { [weak self] _ in
+			self?.presenter?.getStartedButtonTapped()
+		}, for: .touchUpInside)
+		return button
+	}()
 
 	private lazy var backgroundImageView: UIImageView = {
 		let imageView = UIImageView(image: UIImage.Image.launch)
@@ -58,24 +67,31 @@ final class OnboardingViewController: UIViewController {
 		return imageView
 	}()
 
+	// MARK: - Public Methods
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		setupUI()
 		setupConstraints()
 	}
+}
 
-	private func setupUI() {
-		[backgroundImageView,
-		 titleLabel,
-		 descriptionLabel,
-		 logoImageView,
-		 appNameLabel,
-		 getStartedButton].forEach {
-			view.addSubviews($0)
-		}
+// MARK: - Private Methods
+
+private extension OnboardingViewController {
+
+	func setupUI() {
+		view.addSubviews(
+			backgroundImageView,
+			titleLabel,
+			descriptionLabel,
+			logoImageView,
+			appNameLabel,
+			getStartedButton
+		)
 	}
 
-	private func setupConstraints() {
+	func setupConstraints() {
 		NSLayoutConstraint.activate([
 			backgroundImageView.topAnchor.constraint(equalTo: view.topAnchor),
 			backgroundImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -103,20 +119,12 @@ final class OnboardingViewController: UIViewController {
 			getStartedButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
 		])
 	}
-
-	@objc private func getStartedTapped() {
-		presenter?.getStartedButtonTapped()
-		print("Кнопка нажата")
-	}
 }
 
-extension OnboardingViewController: OnboardingViewProtocol {
-
-}
+#if DEBUG
 
 // MARK: - Preview
 
-#if DEBUG
 @available(iOS 17.0, *)
 #Preview {
 	OnboardingViewController()
