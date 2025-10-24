@@ -2,7 +2,7 @@
 //  MyGamesAssembly.swift
 //  VolleyBolley
 //
-//  Created by Nikolai Eremenko
+//  Created by Roman Romanov on 12.10.2025.
 //
 
 import Swinject
@@ -11,16 +11,8 @@ final class MyGamesAssembly: Assembly {
 
     func assemble(container: Container) {
         container.register(MyGamesViewController.self) { resolver in
-			guard
-				let imageLoader = resolver.resolve(ImageLoadingServiceProtocol.self)
-			else {
-				fatalError("Error: Failed to register MyGamesViewController")
-			}
-
 			let router = MyGamesRouter()
-			let interactor = MyGamesInteractor(
-				imageLoader: imageLoader
-			)
+			let interactor = MyGamesInteractor()
             let presenter = MyGamesPresenter(
                 interactor: interactor,
                 router: router

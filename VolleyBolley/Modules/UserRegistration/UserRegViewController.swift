@@ -129,7 +129,7 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
 	private var cityList: LocationPickerView?
 
 	private lazy var getStartedButton = NextStepButton(
-		title: String(localized: "GET STARTED"),
+		title: String(localized: "button.getStarted"),
 		isActive: false,
 		target: self,
 		action: #selector(getStartedTapped)
@@ -159,6 +159,7 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
 		setupSubviews()
 		setupConstraints()
 		setupActions()
+		hideKeyboardWhenTappedAround()
 
 		presenter?.viewDidLoad()
 		updateGetStartedButtonState()
@@ -347,18 +348,12 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
 		shouldChangeCharactersIn range: NSRange,
 		replacementString string: String
 	) -> Bool {
-		guard textField == birthdayTextField else { return true }
-
-		let currentText = textField.text ?? ""
-		guard let stringRange = Range(range, in: currentText) else { return false }
-		let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
-
-		guard let formattedText = updatedText.formattedBirthdayOrNil() else {
-			return false
-		}
-
-		textField.text = formattedText
-		return false
+        guard textField == birthdayTextField else { return true }
+        return textField.updateFormattedText(
+            range: range,
+            replacementString: string,
+            formatter: { $0.formattedBirthdayOrNil() }
+        )
 	}
 }
 

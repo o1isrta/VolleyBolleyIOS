@@ -21,7 +21,7 @@ enum ProfileMenuItem: CaseIterable {
     case logOut
 
 	var icon: UIImage {
-        switch self {
+		switch self {
 		case .players: return UIImage.Icon.players
 		case .personal: return UIImage.Icon.personal
 		case .fluentPayment: return UIImage.Icon.fluentPayment
@@ -29,8 +29,8 @@ enum ProfileMenuItem: CaseIterable {
 		case .faq: return UIImage.Icon.tooltip
 		case .about: return UIImage.Icon.about
 		case .logOut: return UIImage.Icon.logOut
-        }
-    }
+		}
+	}
 
     var title: String {
         switch self {
@@ -98,6 +98,7 @@ final class ProfileViewController: BaseViewController {
 extension ProfileViewController: ProfileViewProtocol {
 
 	func displayError(message: String) {
+		// TODO: 
 		print(message)
 	}
 }
@@ -123,7 +124,7 @@ private extension ProfileViewController {
             tableBackground.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
             tableBackground.heightAnchor.constraint(equalToConstant: 400),
 
-            tableView.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 8),
+            tableView.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 12),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
             tableView.heightAnchor.constraint(equalToConstant: 400),

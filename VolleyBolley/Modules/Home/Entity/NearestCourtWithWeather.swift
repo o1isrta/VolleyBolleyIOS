@@ -6,6 +6,6 @@
 //
 
 struct NearestCourtWithWeather {
-    let court: CourtModel
-    let weather: AppWeather?
+    let court: Court
+    let weather: AppWeather
 }

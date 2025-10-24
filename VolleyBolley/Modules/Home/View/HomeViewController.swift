@@ -7,6 +7,7 @@
 
 import UIKit
 
+@MainActor
 protocol HomeViewProtocol: AnyObject {
     func displayCreateNewGameButton(state: CreateNewGameButtonState)
     func displayFindGameButton(gamesCount: Int)
@@ -77,10 +78,7 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
     }()
 
     private lazy var createTourneyButton: SketchButton = {
-        let view = SketchButton()
-        view.isSelected = true
-        view.setTitle(String(localized: "commonCreateTourney"), for: .normal)
-        view.setImage(UIImage.Icon.createTourney, for: .normal)
+		let view = SketchButton(type: .createTourney, isSelected: true)
         view.addAction(UIAction { [weak self] _ in
              self?.presenter.didTapCreateTourney()
         }, for: .touchUpInside)
@@ -88,9 +86,7 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
     }()
 
     private lazy var donateButton: SketchButton = {
-        let view = SketchButton()
-        view.setTitle(String(localized: "commonDonate"), for: .normal)
-        view.setImage(UIImage.Icon.donate, for: .normal)
+		let view = SketchButton(type: .donate)
         view.addAction(UIAction { [weak self] _ in
             self?.presenter.didTapDonate()
         }, for: .touchUpInside)

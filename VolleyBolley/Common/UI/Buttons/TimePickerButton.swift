@@ -165,12 +165,12 @@ final class TimePickerButton: UIButton {
         ])
 
         alert.addAction(UIAlertAction(
-            title: NSLocalizedString("Cancel", comment: ""),
+            title: String(localized: "customAlertView.button.cancel"),
             style: .cancel
         ))
 
         alert.addAction(UIAlertAction(
-            title: NSLocalizedString("ОК", comment: ""),
+            title: String(localized: "customAlertView.button.ok"),
             style: .default,
             handler: { [weak self] _ in
                 self?.time = datePicker.date

@@ -20,6 +20,7 @@ protocol DistanceServiceProtocol {
 }
 
 class DistanceService: DistanceServiceProtocol {
+
 	func calculateDistance(
 		from userLocation: CLLocation,
 		to coordinate: CLLocationCoordinate2D

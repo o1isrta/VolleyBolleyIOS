@@ -13,7 +13,10 @@ protocol NotificationsPresenterProtocol: AnyObject {
 	var router: NotificationsRouterProtocol? { get set }
 
 	func viewDidLoad()
+	func viewWillAppear()
+	func viewDidDisappear()
 	func backButtonTapped()
+	func refreshNotifications()
 }
 
 final class NotificationsPresenter: NotificationsPresenterProtocol {
@@ -28,18 +31,39 @@ final class NotificationsPresenter: NotificationsPresenterProtocol {
 
 	private var notifications: [NotificationCardViewModel] = []
 
+	// MARK: - Deinit
+
+	deinit {
+		// Stop listening for updates when presenter is deallocated
+		interactor?.stopListeningForUpdates()
+	}
+
 	// MARK: - Public Methods
 
 	func viewDidLoad() {
-		if !notifications.isEmpty {
-			view?.displayNotifications(notifications)
-		} else {
-			interactor?.fetchNotifications()
-		}
+		// Start listening for updates and fetch initial data
+		interactor?.startListeningForUpdates()
+		interactor?.fetchNotifications()
+		interactor?.markNotificationsAsRead()
+	}
+
+	func viewWillAppear() {
+		// Optionally refresh data when view appears
+		interactor?.fetchNotifications()
+	}
+
+	func viewDidDisappear() {
+		// Mark notifications as read
+		interactor?.markNotificationsAsRead()
 	}
 
 	func backButtonTapped() {
 		router?.navigateBack(from: view)
+	}
+
+	func refreshNotifications() {
+		// Trigger fresh data fetch from interactor
+		interactor?.refreshNotifications()
 	}
 }
 

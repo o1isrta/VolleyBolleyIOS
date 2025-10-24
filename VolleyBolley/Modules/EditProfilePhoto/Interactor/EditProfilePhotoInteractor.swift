@@ -31,4 +31,3 @@ final class EditProfilePhotoInteractor: EditProfilePhotoInteractorProtocol {
         view?.updateProfileImage(image)
     }
 }
-

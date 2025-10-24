@@ -13,7 +13,7 @@ import UIKit
 /// It sets the default background color and
 /// configures the navigation bar to be hidden. Subclasses can override or extend these behaviors
 /// as needed.
-/// 
+///
 /// - Important: This class automatically hides the navigation bar
 /// and sets the screen background color using `AppColor.Background.screen`.
 ///
@@ -22,17 +22,19 @@ class BaseViewController: UIViewController {
 
 	// MARK: - Public Properties
 
-	lazy var navBar: CustomNavBarView = {
+	private(set) lazy var navBar: CustomNavBarView = {
 		return NavBarAssembly.createModule(with: self)
 	}()
+
+	// MARK: - Private Properties
+
+	private let notificationManager = NotificationManager.shared
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.backgroundColor = AppColor.Background.screen
 		setupCustomNavigationBar()
-		setupNotifications()
-		// Notify navbar about view appearance for state synchronization
-		navBar.viewWillAppear()
+		setupNotificationManager()
 	}
 
 	// MARK: - Public Methods
@@ -47,29 +49,16 @@ class BaseViewController: UIViewController {
 		// ALWAYS raise the navbar above all other subviews
 		view.bringSubviewToFront(navBar)
 	}
+
+	deinit {
+		// Remove self from notification manager when deallocated
+		notificationManager.removeDelegate(self)
+	}
 }
 
 // MARK: - Private Methods
 
 private extension BaseViewController {
-
-	func setupNotifications() {
-		// This ensures state synchronization when navigating between tabs
-		NotificationCenter.default.addObserver(
-			self,
-			selector: #selector(handleNewNotification(_:)),
-			name: NotificationConstants.NavBar.newNotificationArrived,
-			object: nil
-		)
-	}
-
-	@objc func handleNewNotification(_ notification: Notification) {
-		guard let userInfo = notification.userInfo else { return }
-
-		if let navBarNotification = NavBarNotification(userInfo: userInfo) {
-			navBar.updateNotifications(navBarNotification.isArrived)
-		}
-	}
 
 	func setupCustomNavigationBar() {
 		view.addSubviews(navBar)
@@ -78,6 +67,31 @@ private extension BaseViewController {
 			navBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
 			navBar.trailingAnchor.constraint(equalTo: view.trailingAnchor)
 		])
+	}
+
+	func setupNotificationManager() {
+		// Register this BaseViewController with the notification manager
+		notificationManager.addDelegate(self)
+		// Get actual notifications status
+		if !(self is NotificationsViewController) {
+			let hasNewNotifications = notificationManager.hasNewNotifications()
+			navBar.updateNotifications(hasNewNotifications)
+		}
+	}
+}
+
+// MARK: - NotificationManagerDelegate
+
+extension BaseViewController: NotificationManagerDelegate {
+
+	func notificationManager(_ manager: NotificationManager, didUpdateNotificationStatus hasNewNotifications: Bool) {
+		// Check if the current view controller is NotificationsViewController
+		// If it is, don't update navBar to avoid unnecessary UI changes
+		if self is NotificationsViewController {
+			return
+		}
+		// Update the navBar through the delegate method as requested
+		navBar.updateNotifications(hasNewNotifications)
 	}
 }
 
