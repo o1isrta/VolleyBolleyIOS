@@ -326,3 +326,25 @@ private extension PersonalDataFormView {
         onUpdateTapped?()
     }
 }
+
+#if DEBUG
+
+// MARK: - Preview
+
+import SwiftUI
+
+@available(iOS 17.0, *)
+#Preview {
+	let router = PersonalDataRouter()
+	let interactor = PersonalDataInteractor()
+	let presenter = PersonalDataPresenter(
+		interactor: interactor,
+		router: router
+	)
+	let view = PersonalDataViewController(presenter: presenter)
+	presenter.view = view
+	router.attachViewController(view)
+
+	return view
+}
+#endif

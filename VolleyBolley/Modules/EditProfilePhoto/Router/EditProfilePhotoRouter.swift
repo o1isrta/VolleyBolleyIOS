@@ -59,9 +59,6 @@ final class EditProfilePhotoRouter: EditProfilePhotoRouterProtocol {
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         viewController?.present(alert, animated: true)
     }
-
-
-
 }
 
 extension EditProfilePhotoRouter: ProfilePhotoPickerViewControllerDelegate {
