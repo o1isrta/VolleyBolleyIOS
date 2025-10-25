@@ -32,13 +32,7 @@ final class PersonalDataFormView: UIStackView {
     private var onUpdateTapped: (() -> Void)?
 
     private lazy var profileContainerView = UIView()
-    private lazy var profileImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage.Icon.profile
-        imageView.contentMode = .scaleAspectFit
-        imageView.clipsToBounds = true
-        return imageView
-    }()
+	private lazy var profileImageView = AvatarImageView()
     private lazy var editButton: UIButton = {
         let button = UIButton(type: .system)
         let pencilImage = UIImage.Icon.pencil.withRenderingMode(.alwaysOriginal)
