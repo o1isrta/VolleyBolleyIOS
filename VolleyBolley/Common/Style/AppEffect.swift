@@ -13,6 +13,10 @@ enum AppEffect {
         static let alert = semiTransparentGray
     }
 
+	enum Table {
+		static let cellWhiteSelected = tableCellWhiteSelected
+	}
+
     static func glass() -> GlassmorphismView {
         let view = GlassmorphismView()
         view.isUserInteractionEnabled = false
@@ -29,4 +33,5 @@ enum AppEffect {
 
 private extension AppEffect {
     static let semiTransparentGray = AppColor.Background.alert.withAlphaComponent(0.3)
+	static let tableCellWhiteSelected = AppColor.Table.cellWhiteSelected.withAlphaComponent(0.3)
 }
