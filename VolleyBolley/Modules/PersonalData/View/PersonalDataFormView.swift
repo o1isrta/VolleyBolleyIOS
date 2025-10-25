@@ -24,7 +24,7 @@ final class PersonalDataFormView: UIStackView {
 
     // MARK: - Private Properties
 
-    private var onEditTapped: (() -> Void)?
+	private var onEditTapped: ((UIImage?) -> Void)?
     private var onGenderChanged: ((String) -> Void)?
     private var onBirthdayChanged: ((String) -> Void)?
     private var onCountrySelected: ((String) -> Void)?
@@ -185,11 +185,15 @@ final class PersonalDataFormView: UIStackView {
 
     // MARK: - Public Methods
 
-    func configure(
-        countries: [String],
-        cities: [String],
-        actions: UserFormActions
-    ) {
+	func configure(
+		userData: UIImage?,
+		countries: [String],
+		cities: [String],
+		actions: UserFormActions
+	) {
+		if let userData {
+			profileImageView.image = userData
+		}
         countryList.updateItems(countries)
         cityList.updateItems(cities)
 
@@ -213,9 +217,16 @@ final class PersonalDataFormView: UIStackView {
     func updateCountries(_ countries: [String]) {
         countryList.updateItems(countries)
     }
+
+	func updateUserData(_ image: UIImage) {
+		profileImageView.image = image
+    }
 }
 
+// MARK: - UITextFieldDelegate
+
 extension PersonalDataFormView: UITextFieldDelegate {
+
     func textField(
         _ textField: UITextField,
         shouldChangeCharactersIn range: NSRange,
@@ -229,6 +240,8 @@ extension PersonalDataFormView: UITextFieldDelegate {
         )
     }
 }
+
+// MARK: - LocationPickerViewDelegate
 
 extension PersonalDataFormView: LocationPickerViewDelegate {
     func locationPickerView(_ pickerView: LocationPickerView, didSelectItem item: String) {
@@ -305,7 +318,7 @@ private extension PersonalDataFormView {
     }
 
     @objc func editButtonTapped() {
-        onEditTapped?()
+		onEditTapped?(profileImageView.image ?? nil)
     }
 
     @objc func genderButtonTapped(_ sender: UIButton) {
@@ -329,7 +342,7 @@ import SwiftUI
 
 @available(iOS 17.0, *)
 #Preview {
-	let router = PersonalDataRouter()
+	let router = PersonalDataRouter(editProfilePhotoViewController: { nil })
 	let interactor = PersonalDataInteractor()
 	let presenter = PersonalDataPresenter(
 		interactor: interactor,

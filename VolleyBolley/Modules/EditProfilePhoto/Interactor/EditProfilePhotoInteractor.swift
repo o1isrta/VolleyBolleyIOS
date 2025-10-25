@@ -8,23 +8,19 @@
 import UIKit
 
 protocol EditProfilePhotoInteractorProtocol: AnyObject {
-	func saveProfilePhoto(image: UIImage)
-	func deleteProfilePhoto()
+	func saveProfilePhoto(image: UIImage?)
 }
 
 final class EditProfilePhotoInteractor: EditProfilePhotoInteractorProtocol {
+
+	weak var presenter: EditProfilePhotoPresenterProtocol?
 
 	init() {
 		// TODO: - тут нетворк сервис инитим
 	}
 
-	func saveProfilePhoto(image: UIImage) {
+	func saveProfilePhoto(image: UIImage?) {
 		// TODO: - сохранение фото профиля на бэкенд
 		print("Profile photo downloaded to server")
-	}
-
-	func deleteProfilePhoto() {
-		// TODO: - удаление фото профиля с бэкенда
-		print("Profile photo removed from server")
 	}
 }

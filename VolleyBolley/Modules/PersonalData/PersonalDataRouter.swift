@@ -9,9 +9,18 @@ import UIKit
 
 final class PersonalDataRouter: PersonalDataRouterProtocol {
 
-    // MARK: - Public Properties
+    // MARK: - Private Properties
 
-    weak var viewController: UIViewController?
+	private let editProfilePhotoViewController: () -> EditProfilePhotoViewController?
+	private weak var viewController: UIViewController?
+
+	// MARK: - Initializers
+
+	init(
+		editProfilePhotoViewController: @escaping () -> EditProfilePhotoViewController?
+	) {
+		self.editProfilePhotoViewController = editProfilePhotoViewController
+	}
 
     // MARK: - Public Methods
 
@@ -22,4 +31,14 @@ final class PersonalDataRouter: PersonalDataRouterProtocol {
     func navigateBack() {
         viewController?.navigationController?.popViewController(animated: true)
     }
+
+	func showEditProfilePhoto(with image: UIImage?) {
+		guard
+			let editProfilePhotoVC = editProfilePhotoViewController()
+		else {
+			fatalError("EditProfilePhotoViewController could not be created")
+		}
+		editProfilePhotoVC.presenter?.setupProfilePhoto(with: image)
+		viewController?.navigationController?.pushViewController(editProfilePhotoVC, animated: true)
+	}
 }

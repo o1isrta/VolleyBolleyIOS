@@ -8,6 +8,7 @@
 import UIKit
 
 protocol EditProfilePhotoViewControllerProtocol: AnyObject {
+	var presenter: EditProfilePhotoPresenterProtocol? { get set }
 	func updateProfileImage(_ image: UIImage)
 	func showLoading(_ isLoading: Bool)
 	func showAlert(with message: String)
@@ -63,7 +64,7 @@ final class EditProfilePhotoViewController: BaseViewController {
 		button.isSelected = true
 		button.isEnabled = true
 		button.addAction(UIAction { [weak self] _ in
-			guard let image = self?.profilePhotoView.image else { return }
+			let image = self?.profilePhotoView.image
 			self?.presenter?.saveButtonTapped(image: image)
 		}, for: .touchUpInside)
 		return button
@@ -97,7 +98,6 @@ final class EditProfilePhotoViewController: BaseViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		setupView()
-		presenter?.viewDidLoad()
 	}
 
 	private lazy var customAlertView: CustomAlertView = {

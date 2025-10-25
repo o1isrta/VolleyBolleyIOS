@@ -5,10 +5,10 @@
 //  Created by Anastasia Evdokimovich on 07.10.2025.
 //
 
-import Foundation
+import UIKit
 
 struct UserFormActions {
-    let onEditTapped: () -> Void
+	let onEditTapped: (UIImage?) -> Void
     let onGenderChanged: (String) -> Void
     let onBirthdayChanged: (String) -> Void
     let onCountrySelected: (String) -> Void
