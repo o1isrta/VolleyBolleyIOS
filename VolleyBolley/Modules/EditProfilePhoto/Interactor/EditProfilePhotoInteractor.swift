@@ -14,10 +14,8 @@ protocol EditProfilePhotoInteractorProtocol: AnyObject {
 
 final class EditProfilePhotoInteractor: EditProfilePhotoInteractorProtocol {
 
-	weak var presenter: EditProfilePhotoInteractorProtocol?
-
 	init() {
-		// тут нетворк сервис инитим
+		// TODO: - тут нетворк сервис инитим
 	}
 
 	func saveProfilePhoto(image: UIImage) {

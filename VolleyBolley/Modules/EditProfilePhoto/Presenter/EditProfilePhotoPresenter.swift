@@ -47,9 +47,13 @@ final class EditProfilePhotoPresenter: EditProfilePhotoPresenterProtocol {
 	func didSelectAction(_ action: PhotoAction) {
 		switch action {
 		case .chooseFromGallery:
-			showPhotoLibrary()
+			router.showPhotoLibrary(delegate: self)
 		case .takePhoto:
-			showCamera()
+			do {
+				try router.showCamera()
+			} catch let error {
+				view?.showAlert(with: error.localizedDescription)
+			}
 			view?.showLoading(false)
 		case .deletePhoto:
 			interactor.deleteProfilePhoto()
@@ -66,46 +70,17 @@ final class EditProfilePhotoPresenter: EditProfilePhotoPresenterProtocol {
 	}
 }
 
+// MARK: - Private Methods
+
 private extension EditProfilePhotoPresenter {
 
 	func setupDefaultProfilePhoto() {
 		let image = UIImage.Icon.profile
 		view?.updateProfileImage(image)
 	}
-
-	// TODO: -
-	func showPhotoLibrary() {
-		guard let viewController = view as? UIViewController else { return }
-		let profilePhotoPickerViewController = LibraryPhotoPickerService()
-		profilePhotoPickerViewController.delegate = self
-		profilePhotoPickerViewController.modalPresentationStyle = .fullScreen
-		viewController.present(profilePhotoPickerViewController, animated: true)
-	}
-
-	// TODO: -
-	func showCamera() {
-		guard let viewController = view as? UIViewController else { return }
-
-		guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
-			showErrorAlert(message: PhotoPickerError.cameraUnavailable.localizedDescription)
-			return
-		}
-
-		let imagePicker = UIImagePickerController()
-		imagePicker.sourceType = .camera
-		imagePicker.delegate = viewController as? (UIImagePickerControllerDelegate & UINavigationControllerDelegate)
-		imagePicker.allowsEditing = true
-		viewController.present(imagePicker, animated: true)
-	}
-
-	// TODO: -
-	func showErrorAlert(message: String) {
-		guard let viewController = view as? UIViewController else { return }
-		let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-		alert.addAction(UIAlertAction(title: "OK", style: .default))
-		viewController.present(alert, animated: true)
-	}
 }
+
+// MARK: - LibraryPhotoPickerServiceDelegate
 
 extension EditProfilePhotoPresenter: LibraryPhotoPickerServiceDelegate {
 
@@ -114,14 +89,11 @@ extension EditProfilePhotoPresenter: LibraryPhotoPickerServiceDelegate {
 	}
 
 	func photoPickerDidCancel() {
-		// действия при отмене выбора фото, если нужно
-		print("Выбор фото отменен")
 		view?.showLoading(false)
 	}
 
 	func photoPickerDidFailWithError(_ error: Error) {
-		print("ErrorAlert")
 		view?.showLoading(false)
-		showErrorAlert(message: error.localizedDescription)
+		view?.showAlert(with: error.localizedDescription)
 	}
 }

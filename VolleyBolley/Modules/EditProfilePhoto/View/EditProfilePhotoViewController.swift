@@ -10,6 +10,7 @@ import UIKit
 protocol EditProfilePhotoViewControllerProtocol: AnyObject {
 	func updateProfileImage(_ image: UIImage)
 	func showLoading(_ isLoading: Bool)
+	func showAlert(with message: String)
 }
 
 final class EditProfilePhotoViewController: BaseViewController {
@@ -98,6 +99,18 @@ final class EditProfilePhotoViewController: BaseViewController {
 		setupView()
 		presenter?.viewDidLoad()
 	}
+
+	private lazy var customAlertView: CustomAlertView = {
+		let view = CustomAlertView()
+		view.isHidden = true// TODO: remove it in the future
+		return view
+	}()
+
+	override func viewDidLayoutSubviews() {
+		super.viewDidLayoutSubviews()
+		// ALWAYS raise the customAlertView above all other subviews
+		view.bringSubviewToFront(customAlertView)
+	}
 }
 
 // MARK: - Private Methods
@@ -111,7 +124,10 @@ private extension EditProfilePhotoViewController {
 	}
 
 	func setupViews() {
-		view.addSubviews(glassmorphismView)
+		view.addSubviews(
+			glassmorphismView,
+			customAlertView
+		)
 		glassmorphismView.addSubviews(
 			backButton,
 			screenTitle,
@@ -128,6 +144,7 @@ private extension EditProfilePhotoViewController {
 	}
 
 	func setupConstraints() {
+		customAlertView.pinToSuperviewEdges()
 		NSLayoutConstraint.activate([
 			glassmorphismView.topAnchor.constraint(
 				equalTo: navBar.bottomAnchor,
@@ -191,7 +208,7 @@ extension EditProfilePhotoViewController: UIImagePickerControllerDelegate {
 		picker.dismiss(animated: true)
 
 		guard let image = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage else {
-//			router?.showErrorAlert(message: "Failed to get image from camera")// TODO: -
+			showAlert(with: PhotoPickerError.failedCameraLoadImage.localizedDescription)
 			return
 		}
 		updateProfileImage(image)
@@ -230,11 +247,16 @@ extension EditProfilePhotoViewController: EditProfilePhotoViewControllerProtocol
 		}
 	}
 
-	func showError(message: String) {
-		DispatchQueue.main.async {
-//			self.router?.showErrorAlert(message: message)// TODO:
-			self.showLoading(false)
-		}
+	func showAlert(with message: String) {
+		customAlertView.isHidden = false
+		let model = CustomAlertModel(
+			message: message,
+			primaryButton: ButtonDataModel(
+				title: String(localized: "customAlertView.button.ok"),
+				action: { self.customAlertView.isHidden = true }
+			)
+		)
+		customAlertView.configure(with: model)
 	}
 }
 
