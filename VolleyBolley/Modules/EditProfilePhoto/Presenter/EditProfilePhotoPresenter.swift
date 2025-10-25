@@ -2,7 +2,7 @@
 //  EditProfilePhotoPresenter.swift
 //  VolleyBolley
 //
-//  Created by Valery Zvonarev on 10.09.2025.
+//  Created by Roman Romanov on 25.10.2025.
 //
 
 import UIKit
@@ -11,6 +11,13 @@ enum PhotoAction: Int {
 	case chooseFromGallery = 0
 	case takePhoto = 1
 	case deletePhoto = 2
+}
+
+protocol EditProfilePhotoPresenterProtocol: AnyObject {
+	func viewDidLoad()
+	func backButtonTapped()
+	func saveButtonTapped(image: UIImage)
+	func didSelectAction(at: Int)
 }
 
 final class EditProfilePhotoPresenter: EditProfilePhotoPresenterProtocol {

@@ -2,10 +2,18 @@
 //  EditProfilePhotoRouter.swift
 //  VolleyBolley
 //
-//  Created by Valery Zvonarev on 10.09.2025.
+//  Created by Roman Romanov on 25.10.2025.
 //
 
 import UIKit
+
+protocol EditProfilePhotoRouterProtocol: AnyObject {
+	func attachViewController(_ view: UIViewController)
+	func navigateBack()
+	func showPhotoLibrary()
+	func showCamera()
+	func showErrorAlert(message: String)
+}
 
 final class EditProfilePhotoRouter: EditProfilePhotoRouterProtocol {
 

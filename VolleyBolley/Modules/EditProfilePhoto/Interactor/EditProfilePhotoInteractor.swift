@@ -2,10 +2,20 @@
 //  EditProfilePhotoInteractor.swift
 //  VolleyBolley
 //
-//  Created by Valery Zvonarev on 10.09.2025.
+//  Created by Roman Romanov on 25.10.2025.
 //
 
 import UIKit
+
+protocol EditProfilePhotoInteractorProtocol: AnyObject {
+	func loadData()
+	func saveProfilePhoto(image: UIImage)
+	func deleteProfilePhoto()
+}
+
+protocol EditProfilePhotoInteractorOutputProtocol: AnyObject {
+	func saveProfilePhoto()
+}
 
 final class EditProfilePhotoInteractor: EditProfilePhotoInteractorProtocol {
 

@@ -1,13 +1,13 @@
 //
-//  EditPhotoAssembly.swift
+//  EditProfilePhotoAssembly.swift
 //  VolleyBolley
 //
-//  Created by Valery Zvonarev on 21.09.2025.
+//  Created by Roman Romanov on 25.10.2025.
 //
 
 import Swinject
 
-final class EditPhotoAssembly: Assembly {
+final class EditProfilePhotoAssembly: Assembly {
 
     func assemble(container: Container) {
         container.register(EditProfilePhotoViewController.self) { _ in
