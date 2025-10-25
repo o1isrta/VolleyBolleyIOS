@@ -21,6 +21,6 @@ final class EditProfilePhotoInteractor: EditProfilePhotoInteractorProtocol {
 
 	func saveProfilePhoto(image: UIImage?) {
 		// TODO: - сохранение фото профиля на бэкенд
-		print("Profile photo downloaded to server")
+		print("Profile photo loaded to server")
 	}
 }
