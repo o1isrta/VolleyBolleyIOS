@@ -125,6 +125,12 @@ final class EditProfilePhotoActionsTableViewCell: UITableViewCell {
 	func configure(model: PhotoAction) {
 		var content = defaultContentConfiguration()
 		let config = UIImage.SymbolConfiguration(pointSize: 16, weight: .medium)
+		backgroundColor = AppColor.Background.primary
+
+		let selectedView = UIView()
+		selectedView.backgroundColor = AppEffect.Table.cellWhiteSelected
+		selectedBackgroundView = selectedView
+
 		content.image = UIImage(systemName: model.icon, withConfiguration: config)
 		content.imageProperties.tintColor = AppColor.Text.inverted
 		content.text = model.title
@@ -145,6 +151,18 @@ import SwiftUI
 
 @available(iOS 17.0, *)
 #Preview {
-	EditProfilePhotoViewController()
+	let view = EditProfilePhotoViewController()
+	let router = EditProfilePhotoRouter()
+	let interactor = EditProfilePhotoInteractor()
+	let presenter = EditProfilePhotoPresenter(
+		view: view,
+		interactor: interactor,
+		router: router
+	)
+	view.presenter = presenter
+	interactor.presenter = presenter
+	router.attachViewController(view)
+
+	return view
 }
 #endif

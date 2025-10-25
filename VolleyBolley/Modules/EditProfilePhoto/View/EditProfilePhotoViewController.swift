@@ -268,6 +268,18 @@ import SwiftUI
 
 @available(iOS 17.0, *)
 #Preview {
-	EditProfilePhotoViewController()
+	let view = EditProfilePhotoViewController()
+	let router = EditProfilePhotoRouter()
+	let interactor = EditProfilePhotoInteractor()
+	let presenter = EditProfilePhotoPresenter(
+		view: view,
+		interactor: interactor,
+		router: router
+	)
+	view.presenter = presenter
+	interactor.presenter = presenter
+	router.attachViewController(view)
+
+	return view
 }
 #endif

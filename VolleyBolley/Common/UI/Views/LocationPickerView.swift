@@ -241,6 +241,9 @@ class LocationPickerView: UIView, UITableViewDelegate, UITableViewDataSource {
         cell.textLabel?.text = items[indexPath.row]
         cell.textLabel?.textColor = AppColor.Text.placeHolder
         cell.backgroundColor = AppColor.Background.primary
+		let selectedView = UIView()
+		selectedView.backgroundColor = AppEffect.Table.cellWhiteSelected
+		cell.selectedBackgroundView = selectedView
         return cell
     }
 
