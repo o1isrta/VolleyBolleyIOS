@@ -7,17 +7,11 @@
 
 import UIKit
 
-enum PhotoAction: Int {
-	case chooseFromGallery = 0
-	case takePhoto = 1
-	case deletePhoto = 2
-}
-
 protocol EditProfilePhotoPresenterProtocol: AnyObject {
 	func viewDidLoad()
 	func backButtonTapped()
 	func saveButtonTapped(image: UIImage)
-	func didSelectAction(at: Int)
+	func didSelectAction(_ action: PhotoAction)
 }
 
 final class EditProfilePhotoPresenter: EditProfilePhotoPresenterProtocol {
@@ -46,17 +40,15 @@ final class EditProfilePhotoPresenter: EditProfilePhotoPresenterProtocol {
 		interactor.loadData()
 	}
 
-	func didSelectAction(at index: Int) {
-		guard let action = PhotoAction(rawValue: index) else { return }
-
+	func didSelectAction(_ action: PhotoAction) {
 		switch action {
-		case .chooseFromGallery: // Choose from Gallery
+		case .chooseFromGallery:
 			view?.showLoading(true)
 			router.showPhotoLibrary()
-		case .takePhoto: // Take photo
+		case .takePhoto:
 			view?.showLoading(true)
 			router.showCamera()
-		case .deletePhoto: // Delete photo
+		case .deletePhoto:
 			view?.showLoading(true)
 			interactor.deleteProfilePhoto()
 		}

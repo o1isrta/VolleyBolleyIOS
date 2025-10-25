@@ -132,6 +132,23 @@
         }
       }
     },
+    "button.save" : {
+      "comment" : "Edit Profile Photo screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SAVE"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "СОХРАНИТЬ"
+          }
+        }
+      }
+    },
     "Cancel" : {
       "comment" : "Cancel button",
       "localizations" : {
@@ -1052,6 +1069,74 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Заработайте 10 очков от игроков более высокого уровня за последние 60 дней. Чем выше уровень оценщика, тем больший вес имеет его рейтинг."
+          }
+        }
+      }
+    },
+    "editProfilePhoto.action.chooseFromGallery" : {
+      "comment" : "Edit Profile Photo screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose from Gallery"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выбрать из галереи"
+          }
+        }
+      }
+    },
+    "editProfilePhoto.action.deletePhoto" : {
+      "comment" : "Edit Profile Photo screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete photo"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удалить фото"
+          }
+        }
+      }
+    },
+    "editProfilePhoto.action.takePhoto" : {
+      "comment" : "Edit Profile Photo screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Take photo"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сделать фото"
+          }
+        }
+      }
+    },
+    "editProfilePhoto.title" : {
+      "comment" : "Edit Profile Photo screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Change photo"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Изменить фото"
           }
         }
       }
@@ -2189,16 +2274,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Регистрация"
-          }
-        }
-      }
-    },
-    "SAVE" : {
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "СОХРАНИТЬ"
           }
         }
       }

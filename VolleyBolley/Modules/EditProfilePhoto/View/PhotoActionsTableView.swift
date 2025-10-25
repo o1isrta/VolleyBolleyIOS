@@ -7,39 +7,38 @@
 
 import UIKit
 
-private enum PhotoActionsConstants {
-    static let actions: [(icon: String, title: String)] = [
-        ("photo", String(localized: "Choose from Gallery")),
-        ("camera", String(localized: "Take photo")),
-        ("trash", String(localized: "Delete photo"))
-    ]
-}
-
 final class PhotoActionsTableView: UIView {
 
-    var didSelectAction: ((Int) -> Void)?
+	// MARK: - Public Properties
 
-    private lazy var tableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .plain)
-        tableView.layer.cornerRadius = 32
-        tableView.layer.masksToBounds = true
-        tableView.isScrollEnabled = false
-        tableView.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+	var didSelectAction: ((Int) -> Void)?
+
+	// MARK: - Private Properties
+
+	private lazy var tableView: UITableView = {
+		let tableView = UITableView(frame: .zero, style: .plain)
+		tableView.layer.cornerRadius = 32
+		tableView.layer.masksToBounds = true
+		tableView.isScrollEnabled = false
+		tableView.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
 		tableView.separatorColor = AppColor.Border.separator
-		tableView.register(ActionsTableViewCell.self,
+		tableView.register(
+			ActionsTableViewCell.self,
 			forCellReuseIdentifier: ActionsTableViewCell.reuseIdentifier
 		)
-        tableView.dataSource = self
-        tableView.delegate = self
-        return tableView
-    }()
+		tableView.dataSource = self
+		tableView.delegate = self
+		return tableView
+	}()
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupView()
-    }
+	// MARK: - Initializers
 
-    required init?(coder: NSCoder) { nil }
+	override init(frame: CGRect) {
+		super.init(frame: frame)
+		setupView()
+	}
+
+	required init?(coder: NSCoder) { nil }
 }
 
 // MARK: - Private Methods
@@ -65,13 +64,15 @@ extension PhotoActionsTableView: UITableViewDelegate {
 		_ tableView: UITableView,
 		cellForRowAt indexPath: IndexPath
 	) -> UITableViewCell {
-		guard let cell = tableView.dequeueReusableCell(
-			withIdentifier: ActionsTableViewCell.reuseIdentifier,
-			for: indexPath) as? ActionsTableViewCell else {
+		guard
+			let cell = tableView.dequeueReusableCell(
+				withIdentifier: ActionsTableViewCell.reuseIdentifier,
+				for: indexPath) as? ActionsTableViewCell,
+			let action = PhotoAction(rawValue: indexPath.row)
+		else {
 			return UITableViewCell()
 		}
-		let action = PhotoActionsConstants.actions[indexPath.row]
-		cell.configure(iconName: action.0, title: action.1)
+		cell.configure(model: action)
 		return cell
 	}
 }
@@ -84,26 +85,29 @@ extension PhotoActionsTableView: UITableViewDataSource {
 		_ tableView: UITableView,
 		numberOfRowsInSection section: Int
 	) -> Int {
-        return PhotoActionsConstants.actions.count
-    }
+		return PhotoAction.allCases.count
+	}
 
 	func tableView(
 		_ tableView: UITableView,
 		heightForRowAt indexPath: IndexPath
 	) -> CGFloat {
-        return 56
-    }
+		return 58
+	}
 
 	func tableView(
 		_ tableView: UITableView,
 		didSelectRowAt indexPath: IndexPath
 	) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        // Handle selection
-        didSelectAction?(indexPath.row)
-    }
+		tableView.deselectRow(at: indexPath, animated: true)
+		didSelectAction?(indexPath.row)
+	}
 
-	func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+	func tableView(
+		_ tableView: UITableView,
+		willDisplay cell: UITableViewCell,
+		forRowAt indexPath: IndexPath
+	) {
 		let isLastCell = indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1
 
 		if isLastCell {
@@ -118,19 +122,19 @@ final class ActionsTableViewCell: UITableViewCell {
 
 	static let reuseIdentifier = "ActionsTableViewCell"
 
-    func configure(iconName: String, title: String) {
-        var content = defaultContentConfiguration()
+	func configure(model: PhotoAction) {
+		var content = defaultContentConfiguration()
 		let config = UIImage.SymbolConfiguration(pointSize: 16, weight: .medium)
-        content.image = UIImage(systemName: iconName, withConfiguration: config)
-        content.imageProperties.tintColor = AppColor.Text.inverted
-        content.text = title
+		content.image = UIImage(systemName: model.icon, withConfiguration: config)
+		content.imageProperties.tintColor = AppColor.Text.inverted
+		content.text = model.title
 		content.textProperties.font = AppFont.Hero.regular(size: 16)
-        content.textProperties.color = AppColor.Text.inverted
-        contentConfiguration = content
+		content.textProperties.color = AppColor.Text.inverted
+		contentConfiguration = content
 
 		layoutMargins = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
 		preservesSuperviewLayoutMargins = false
-    }
+	}
 }
 
 #if DEBUG
