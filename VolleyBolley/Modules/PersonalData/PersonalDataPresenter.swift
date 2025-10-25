@@ -5,12 +5,13 @@
 //  Created by Anastasia Evdokimovich on 01.09.2025.
 //
 
-import Foundation
+import UIKit
 
 final class PersonalDataPresenter: PersonalDataPresenterProtocol {
 
     // MARK: - Public Properties
 
+    var userData: UIImage?
     var countries = ["Cyprus", "Thailand"]
     let cities = ["Koh Phangan", "Koh Samui"]
 
@@ -32,6 +33,7 @@ final class PersonalDataPresenter: PersonalDataPresenterProtocol {
 
     func viewDidLoad() {
         interactor.fetchCountries()
+		interactor.fetchUserData()
     }
 
     func backButtonTapped() {
@@ -41,11 +43,22 @@ final class PersonalDataPresenter: PersonalDataPresenterProtocol {
     func updateButtonTapped() {
         // TODO: Обновление профиля
     }
+
+	func editProfilePhoto(image: UIImage?) {
+		router.showEditProfilePhoto(with: image)
+	}
 }
 
 extension PersonalDataPresenter: PersonalDataInteractorOutputProtocol {
+
     func didFetchCountries(_ countries: [String]) {
         self.countries = countries
         view?.updateCountries(countries)
+    }
+
+	// TODO: - draft
+	func didFetchUserData(image: UIImage) {
+		self.userData = image
+        view?.updateUserData(image)
     }
 }

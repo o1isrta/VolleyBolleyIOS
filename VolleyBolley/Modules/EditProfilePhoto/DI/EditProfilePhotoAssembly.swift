@@ -20,6 +20,7 @@ final class EditProfilePhotoAssembly: Assembly {
 				router: router
 			)
 			view.presenter = presenter
+			interactor.presenter = presenter
 			router.attachViewController(view)
 
 			return view

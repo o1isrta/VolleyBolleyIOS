@@ -17,4 +17,11 @@ final class PersonalDataInteractor: PersonalDataInteractorProtocol {
             self.presenter?.didFetchCountries(mockCountries)
         }
     }
+
+	func fetchUserData() {
+		let image = UIImage.imgPerson
+		DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+			self.presenter?.didFetchUserData(image: image)
+		}
+	}
 }

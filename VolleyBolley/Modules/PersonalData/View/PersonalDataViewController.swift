@@ -69,9 +69,14 @@ final class PersonalDataViewController: BaseViewController {
 }
 
 extension PersonalDataViewController: PersonalDataViewProtocol {
+
     func updateCountries(_ countries: [String]) {
         formView.updateCountries(countries)
     }
+
+	func updateUserData(_ image: UIImage) {
+		formView.updateUserData(image)
+	}
 }
 
 // MARK: - Private methods
@@ -101,7 +106,8 @@ private extension PersonalDataViewController {
         )
 
         formView.configure(
-            countries: presenter.countries,
+			userData: presenter.userData,
+			countries: presenter.countries,
             cities: presenter.cities,
             actions: actions
         )
@@ -165,8 +171,8 @@ private extension PersonalDataViewController {
 
     // Form callbacks
 
-    func handleEditTapped() {
-        editProfilePhoto()
+	func handleEditTapped(_ image: UIImage?) {
+		presenter.editProfilePhoto(image: image)
     }
 
     func handleGenderChanged(_ gender: String) {
@@ -189,10 +195,6 @@ private extension PersonalDataViewController {
         presenter.updateButtonTapped()
     }
 
-    func editProfilePhoto() {
-        // TODO: Редактирование фото профиля
-    }
-
     @objc
     func backButtonTapped() {
         presenter.backButtonTapped()
@@ -207,7 +209,7 @@ import SwiftUI
 
 @available(iOS 17.0, *)
 #Preview {
-	let router = PersonalDataRouter()
+	let router = PersonalDataRouter(editProfilePhotoViewController: { nil })
 	let interactor = PersonalDataInteractor()
 	let presenter = PersonalDataPresenter(
 		interactor: interactor,

@@ -8,10 +8,10 @@
 import UIKit
 
 protocol EditProfilePhotoPresenterProtocol: AnyObject {
-	func viewDidLoad()
 	func backButtonTapped()
-	func saveButtonTapped(image: UIImage)
+	func saveButtonTapped(image: UIImage?)
 	func didSelectAction(_ action: PhotoAction)
+	func setupProfilePhoto(with image: UIImage?)
 }
 
 final class EditProfilePhotoPresenter: EditProfilePhotoPresenterProtocol {
@@ -36,14 +36,6 @@ final class EditProfilePhotoPresenter: EditProfilePhotoPresenterProtocol {
 
 	// MARK: - Public Methods
 
-	func viewDidLoad() {
-		// TODO: - тут просто получаем фото с предыдущего экрана или из глобального хранилища User
-		DispatchQueue.main.asyncAfter(deadline: .now() + 5) { [weak self] in
-			self?.view?.updateProfileImage(UIImage.imgPerson)
-			print("setup image")
-		}
-	}
-
 	func didSelectAction(_ action: PhotoAction) {
 		switch action {
 		case .chooseFromGallery:
@@ -56,8 +48,7 @@ final class EditProfilePhotoPresenter: EditProfilePhotoPresenterProtocol {
 			}
 			view?.showLoading(false)
 		case .deletePhoto:
-			interactor.deleteProfilePhoto()
-			setupDefaultProfilePhoto()
+			setupProfilePhoto(with: nil)
 		}
 	}
 
@@ -65,8 +56,16 @@ final class EditProfilePhotoPresenter: EditProfilePhotoPresenterProtocol {
 		router.navigateBack()
 	}
 
-	func saveButtonTapped(image: UIImage) {
+	func saveButtonTapped(image: UIImage?) {
 		interactor.saveProfilePhoto(image: image)
+	}
+
+	func setupProfilePhoto(with image: UIImage?) {
+		guard let image else {
+			setupDefaultProfilePhoto()
+			return
+		}
+		view?.updateProfileImage(image)
 	}
 }
 
