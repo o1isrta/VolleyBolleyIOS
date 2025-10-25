@@ -2223,6 +2223,57 @@
         }
       }
     },
+    "photoPicker.cameraUnavailable" : {
+      "comment" : "LibraryPhotoPickerService / UIImagePicker errors",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Camera is not available on this device"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Камера недоступна на этом устройстве"
+          }
+        }
+      }
+    },
+    "photoPicker.failedCameraLoadImage" : {
+      "comment" : "LibraryPhotoPickerService / UIImagePicker errors",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to get image from camera"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось получить изображение с камеры"
+          }
+        }
+      }
+    },
+    "photoPicker.failedLibraryLoadImage" : {
+      "comment" : "LibraryPhotoPickerService / UIImagePicker errors",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to load image from photo library"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось загрузить изображение из фотобиблиотеки"
+          }
+        }
+      }
+    },
     "Players" : {
       "comment" : "Profile",
       "localizations" : {

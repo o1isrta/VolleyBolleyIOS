@@ -17,7 +17,6 @@ final class EditProfilePhotoViewController: BaseViewController {
 	// MARK: - Public Properties
 
 	var presenter: EditProfilePhotoPresenterProtocol?
-	var router: EditProfilePhotoRouterProtocol?// TODO: -
 
 	// MARK: - Private Properties
 
@@ -193,7 +192,7 @@ extension EditProfilePhotoViewController: UIImagePickerControllerDelegate {
 		picker.dismiss(animated: true)
 
 		guard let image = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage else {
-			router?.showErrorAlert(message: "Failed to get image from camera")
+//			router?.showErrorAlert(message: "Failed to get image from camera")// TODO: -
 			return
 		}
 		updateProfileImage(image)
@@ -225,14 +224,17 @@ extension EditProfilePhotoViewController: EditProfilePhotoViewControllerProtocol
 
 	func showLoading(_ isLoading: Bool) {
 		DispatchQueue.main.async {
-			isLoading ? self.loadingIndicator.startAnimating() : self.loadingIndicator.stopAnimating()
+			isLoading
+				? self.loadingIndicator.startAnimating()
+				: self.loadingIndicator.stopAnimating()
 			self.view.isUserInteractionEnabled = !isLoading
 		}
 	}
 
 	func showError(message: String) {
 		DispatchQueue.main.async {
-			self.router?.showErrorAlert(message: message)
+//			self.router?.showErrorAlert(message: message)// TODO:
+			self.showLoading(false)
 		}
 	}
 }

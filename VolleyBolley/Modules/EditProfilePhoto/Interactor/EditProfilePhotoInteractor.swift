@@ -20,10 +20,9 @@ protocol EditProfilePhotoInteractorOutputProtocol: AnyObject {
 final class EditProfilePhotoInteractor: EditProfilePhotoInteractorProtocol {
 
 	weak var presenter: EditProfilePhotoInteractorProtocol?
-	weak var view: EditProfilePhotoViewControllerProtocol?
 
-	init(view: EditProfilePhotoViewControllerProtocol) {
-		self.view = view
+	init() {
+		// тут нетворк сервис инитим
 	}
 
 	func loadData() {
@@ -37,7 +36,7 @@ final class EditProfilePhotoInteractor: EditProfilePhotoInteractorProtocol {
 	}
 
 	func deleteProfilePhoto() {
-		let image = UIImage.Icon.profile
-		view?.updateProfileImage(image)
+		// отправили запрос
+		print("отправили запрос на удаление фото")
 	}
 }
