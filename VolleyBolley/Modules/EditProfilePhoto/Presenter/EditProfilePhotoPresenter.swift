@@ -48,9 +48,12 @@ final class EditProfilePhotoPresenter: EditProfilePhotoPresenterProtocol {
 		case .takePhoto:
 			view?.showLoading(true)
 			router.showCamera()
+			view?.showLoading(false)
 		case .deletePhoto:
 			view?.showLoading(true)
 			interactor.deleteProfilePhoto()
+			let image = UIImage.Icon.profile
+			view?.updateProfileImage(image)
 		}
 	}
 

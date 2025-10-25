@@ -17,6 +17,8 @@ protocol EditProfilePhotoRouterProtocol: AnyObject {
 
 final class EditProfilePhotoRouter: EditProfilePhotoRouterProtocol {
 
+	// TODO: - WTF ???
+
 	// MARK: - Public Properties
 
 	weak var viewController: UIViewController?
@@ -33,7 +35,7 @@ final class EditProfilePhotoRouter: EditProfilePhotoRouterProtocol {
 
 	func showPhotoLibrary() {
 		guard let viewController = viewController else { return }
-		let profilePhotoPickerViewController = ProfilePhotoPickerViewController()
+		let profilePhotoPickerViewController = LibraryPhotoPickerService()
 		profilePhotoPickerViewController.delegate = self
 		profilePhotoPickerViewController.modalPresentationStyle = .fullScreen
 		viewController.present(profilePhotoPickerViewController, animated: true)
@@ -43,7 +45,7 @@ final class EditProfilePhotoRouter: EditProfilePhotoRouterProtocol {
 		guard let viewController = viewController else { return }
 
 		guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
-			showErrorAlert(message: "Camera is not available on this device")
+			showErrorAlert(message: PhotoPickerError.cameraUnavailable.localizedDescription)
 			return
 		}
 
@@ -69,7 +71,7 @@ final class EditProfilePhotoRouter: EditProfilePhotoRouterProtocol {
 	}
 }
 
-extension EditProfilePhotoRouter: ProfilePhotoPickerViewControllerDelegate {
+extension EditProfilePhotoRouter: LibraryPhotoPickerServiceDelegate {
 	func photoPickerDidSelectImage(_ image: UIImage) {
 		view?.updateProfileImage(image)
 	}
@@ -77,9 +79,12 @@ extension EditProfilePhotoRouter: ProfilePhotoPickerViewControllerDelegate {
 	func photoPickerDidCancel() {
 		// действия при отмене выбора фото, если нужно
 		print("Выбор фото отменен")
+		view?.showLoading(false)
 	}
 
-	func photoPickerDidFailWithError(error: String) {
-		showErrorAlert(message: error)
+	func photoPickerDidFailWithError(_ error: Error) {
+		showErrorAlert(message: error.localizedDescription)
+		print("ErrorAlert")
+		view?.showLoading(false)
 	}
 }
