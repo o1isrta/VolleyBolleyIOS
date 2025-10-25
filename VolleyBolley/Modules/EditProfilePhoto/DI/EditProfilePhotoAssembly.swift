@@ -12,7 +12,7 @@ final class EditProfilePhotoAssembly: Assembly {
 	func assemble(container: Container) {
 		container.register(EditProfilePhotoViewController.self) { _ in
 			let view = EditProfilePhotoViewController()
-			let router = EditProfilePhotoRouter(view: view)
+			let router = EditProfilePhotoRouter()
 			let interactor = EditProfilePhotoInteractor()
 			let presenter = EditProfilePhotoPresenter(
 				view: view,
