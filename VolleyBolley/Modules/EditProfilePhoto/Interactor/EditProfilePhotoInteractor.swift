@@ -26,17 +26,18 @@ final class EditProfilePhotoInteractor: EditProfilePhotoInteractorProtocol {
 	}
 
 	func loadData() {
+		// TODO: - надо ли? получаем фото прямо из профиля, грузим тоже в профиле, тут чисто показываем текущую установленную
 		// Заглушка: загрузка фото из бэкенда
 		// print("Profile photo uploaded from server")
 	}
 
 	func saveProfilePhoto(image: UIImage) {
-		// Заглушка - сохранение фото профиля на бэкенд
-		// print("Profile photo downloaded to server")
+		// TODO: - сохранение фото профиля на бэкенд
+		print("Profile photo downloaded to server")
 	}
 
 	func deleteProfilePhoto() {
-		// отправили запрос
-		print("отправили запрос на удаление фото")
+		// TODO: - удаление фото профиля с бэкенда
+		print("Profile photo removed from server")
 	}
 }
