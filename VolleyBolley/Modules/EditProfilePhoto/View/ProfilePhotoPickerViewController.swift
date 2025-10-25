@@ -8,11 +8,6 @@
 import PhotosUI
 import UIKit
 
-protocol EditProfilePhotoViewControllerProtocol: AnyObject {
-	func updateProfileImage(_ image: UIImage)
-	func showLoading(_ isLoading: Bool)
-}
-
 protocol ProfilePhotoPickerViewControllerDelegate: AnyObject {
 	func photoPickerDidSelectImage(_ image: UIImage)
 	func photoPickerDidCancel()

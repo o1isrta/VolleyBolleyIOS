@@ -7,6 +7,11 @@
 
 import UIKit
 
+protocol EditProfilePhotoViewControllerProtocol: AnyObject {
+	func updateProfileImage(_ image: UIImage)
+	func showLoading(_ isLoading: Bool)
+}
+
 final class EditProfilePhotoViewController: BaseViewController {
 
 	// MARK: - Public Properties
