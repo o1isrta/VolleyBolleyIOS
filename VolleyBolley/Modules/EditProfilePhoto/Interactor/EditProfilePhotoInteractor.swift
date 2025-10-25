@@ -8,7 +8,6 @@
 import UIKit
 
 protocol EditProfilePhotoInteractorProtocol: AnyObject {
-	func loadData()
 	func saveProfilePhoto(image: UIImage)
 	func deleteProfilePhoto()
 }
@@ -19,12 +18,6 @@ final class EditProfilePhotoInteractor: EditProfilePhotoInteractorProtocol {
 
 	init() {
 		// тут нетворк сервис инитим
-	}
-
-	func loadData() {
-		// TODO: - надо ли? получаем фото прямо из профиля, грузим тоже в профиле, тут чисто показываем текущую установленную
-		// Заглушка: загрузка фото из бэкенда
-		// print("Profile photo uploaded from server")
 	}
 
 	func saveProfilePhoto(image: UIImage) {

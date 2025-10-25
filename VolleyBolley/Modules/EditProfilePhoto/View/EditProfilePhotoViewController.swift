@@ -52,6 +52,7 @@ final class EditProfilePhotoViewController: BaseViewController {
 		let tableView = PhotoActionsTableView()
 		tableView.didSelectAction = { [weak self] index in
 			guard let action = PhotoAction(rawValue: index) else { return }
+			self?.showLoading(true)
 			self?.presenter?.didSelectAction(action)
 		}
 		return tableView
@@ -96,8 +97,6 @@ final class EditProfilePhotoViewController: BaseViewController {
 		super.viewDidLoad()
 		setupView()
 		presenter?.viewDidLoad()
-		// TODO: -
-		profilePhotoView.configure(with: UIImage.imgPerson)
 	}
 }
 
