@@ -48,8 +48,8 @@ final class EditProfilePhotoViewController: BaseViewController {
 	}()
 
 	private lazy var profilePhotoView = AvatarImageView()
-	private lazy var photoActionTableView: PhotoActionsTableView = {
-		let tableView = PhotoActionsTableView()
+	private lazy var photoActionTableView: EditProfilePhotoActionsTableView = {
+		let tableView = EditProfilePhotoActionsTableView()
 		tableView.didSelectAction = { [weak self] index in
 			guard let action = PhotoAction(rawValue: index) else { return }
 			self?.showLoading(true)
