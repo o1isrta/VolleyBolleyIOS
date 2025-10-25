@@ -199,7 +199,7 @@ private extension EditProfilePhotoViewController {
 
 // MARK: - UIImagePickerControllerDelegate
 
-extension EditProfilePhotoViewController: UIImagePickerControllerDelegate {
+extension EditProfilePhotoViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
 	func imagePickerController(
 		_ picker: UIImagePickerController,
