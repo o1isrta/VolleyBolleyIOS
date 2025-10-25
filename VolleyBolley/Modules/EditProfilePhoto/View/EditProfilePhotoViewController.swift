@@ -12,7 +12,7 @@ final class EditProfilePhotoViewController: BaseViewController {
 	// MARK: - Public Properties
 
 	var presenter: EditProfilePhotoPresenterProtocol?
-	var router: EditProfilePhotoRouterProtocol?
+	var router: EditProfilePhotoRouterProtocol?// TODO: -
 
 	// MARK: - Private Properties
 
@@ -23,27 +23,16 @@ final class EditProfilePhotoViewController: BaseViewController {
 		static let backButtonTopInset: CGFloat = 14
 
 		static let profilePhotoSize: CGFloat = 122
-		static let photoActionTableViewHeight: CGFloat = 176
+		static let photoActionTableViewHeight: CGFloat = 174
 		static let glassmorphismViewHeight: CGFloat = 454
 		static let saveButtonHeight: CGFloat = 44
 	}
 
-	private var currentImage = UIImage()
-	private let contentView = UIView()
 	private lazy var glassmorphismView = GlassmorphismView()
-	private lazy var photoActionTableView: PhotoActionsTableView = {
-		let tableView = PhotoActionsTableView()
-		tableView.didSelectAction = { [weak self] index in
-			self?.presenter?.didSelectAction(at: index)
-		}
-		return tableView
-	}()
-
 	private lazy var screenTitle = CustomTitle(
-		text: String(localized: "Change photo"),
+		text: String(localized: "editProfilePhoto.title"),
 		isLarge: true
 	)
-
 	private lazy var backButton: UtilityButton = {
 		let button = UtilityButton(style: .small)
 		button.setImage(.chevronBackward, for: .normal)
@@ -55,9 +44,16 @@ final class EditProfilePhotoViewController: BaseViewController {
 	}()
 
 	private lazy var profilePhotoView = AvatarImageView()
-
+	private lazy var photoActionTableView: PhotoActionsTableView = {
+		let tableView = PhotoActionsTableView()
+		tableView.didSelectAction = { [weak self] index in
+			guard let action = PhotoAction(rawValue: index) else { return }
+			self?.presenter?.didSelectAction(action)
+		}
+		return tableView
+	}()
 	private lazy var saveButton: YellowButton = {
-		let button = YellowButton(title: String(localized: "SAVE"))
+		let button = YellowButton(title: String(localized: "button.save"))
 		button.isSelected = true
 		button.isEnabled = true
 		button.addAction(UIAction { [weak self] _ in
@@ -65,6 +61,22 @@ final class EditProfilePhotoViewController: BaseViewController {
 			self?.presenter?.saveButtonTapped(image: image)
 		}, for: .touchUpInside)
 		return button
+	}()
+
+	private lazy var mainStack: UIStackView = {
+		profilePhotoView.setContentHuggingPriority(.required, for: .horizontal)
+		profilePhotoView.setContentHuggingPriority(.required, for: .vertical)
+		profilePhotoView.setContentCompressionResistancePriority(.required, for: .horizontal)
+		profilePhotoView.setContentCompressionResistancePriority(.required, for: .vertical)
+		let stack = UIStackView(arrangedSubviews: [
+			profilePhotoView,
+			photoActionTableView,
+			saveButton
+		])
+		stack.axis = .vertical
+		stack.alignment = .center
+		stack.spacing = LayoutConstants.mediumIndent
+		return stack
 	}()
 
 	private let loadingIndicator: UIActivityIndicatorView = {
@@ -90,23 +102,17 @@ final class EditProfilePhotoViewController: BaseViewController {
 private extension EditProfilePhotoViewController {
 
 	func setupView() {
-		setupGlassmorphismView()
-		setupSubviews()
+		setupViews()
 		setupConstraints()
 		setupLoadingIndicator()
 	}
 
-	func setupGlassmorphismView() {
+	func setupViews() {
 		view.addSubviews(glassmorphismView)
-	}
-
-	func setupSubviews() {
 		glassmorphismView.addSubviews(
 			backButton,
 			screenTitle,
-			profilePhotoView,
-			photoActionTableView,
-			saveButton
+			mainStack
 		)
 	}
 
@@ -144,38 +150,29 @@ private extension EditProfilePhotoViewController {
 				equalTo: glassmorphismView.topAnchor,
 				constant: LayoutConstants.mainSpacing),
 
-			profilePhotoView.centerXAnchor.constraint(
-				equalTo: glassmorphismView.centerXAnchor),
-			profilePhotoView.topAnchor.constraint(
-				equalTo: screenTitle.bottomAnchor,
-				constant: LayoutConstants.mediumIndent),
 			profilePhotoView.widthAnchor.constraint(
 				equalToConstant: LayoutConstants.profilePhotoSize),
 			profilePhotoView.heightAnchor.constraint(
 				equalToConstant: LayoutConstants.profilePhotoSize),
 
-			photoActionTableView.topAnchor.constraint(
-				equalTo: profilePhotoView.bottomAnchor,
+			mainStack.topAnchor.constraint(
+				equalTo: screenTitle.bottomAnchor,
 				constant: LayoutConstants.mediumIndent),
-			photoActionTableView.leadingAnchor.constraint(
+			mainStack.leadingAnchor.constraint(
 				equalTo: glassmorphismView.leadingAnchor,
 				constant: LayoutConstants.mainSpacing),
-			photoActionTableView.trailingAnchor.constraint(
+			mainStack.trailingAnchor.constraint(
 				equalTo: glassmorphismView.trailingAnchor, constant: -LayoutConstants.mainSpacing),
+
 			photoActionTableView.heightAnchor.constraint(
 				equalToConstant: LayoutConstants.photoActionTableViewHeight),
+			photoActionTableView.leadingAnchor.constraint(equalTo: mainStack.leadingAnchor),
+			photoActionTableView.trailingAnchor.constraint(equalTo: mainStack.trailingAnchor),
 
-			saveButton.topAnchor.constraint(
-				equalTo: photoActionTableView.bottomAnchor,
-				constant: LayoutConstants.mediumIndent),
-			saveButton.leadingAnchor.constraint(
-				equalTo: glassmorphismView.leadingAnchor,
-				constant: LayoutConstants.mainSpacing),
-			saveButton.trailingAnchor.constraint(
-				equalTo: glassmorphismView.trailingAnchor,
-				constant: -LayoutConstants.mainSpacing),
 			saveButton.heightAnchor.constraint(
-				equalToConstant: LayoutConstants.saveButtonHeight)
+				equalToConstant: LayoutConstants.saveButtonHeight),
+			saveButton.leadingAnchor.constraint(equalTo: mainStack.leadingAnchor),
+			saveButton.trailingAnchor.constraint(equalTo: mainStack.trailingAnchor)
 		])
 	}
 }
