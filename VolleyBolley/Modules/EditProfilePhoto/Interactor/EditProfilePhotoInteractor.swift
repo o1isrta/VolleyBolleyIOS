@@ -13,10 +13,6 @@ protocol EditProfilePhotoInteractorProtocol: AnyObject {
 	func deleteProfilePhoto()
 }
 
-protocol EditProfilePhotoInteractorOutputProtocol: AnyObject {
-	func saveProfilePhoto()
-}
-
 final class EditProfilePhotoInteractor: EditProfilePhotoInteractorProtocol {
 
 	weak var presenter: EditProfilePhotoInteractorProtocol?
