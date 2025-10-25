@@ -10,7 +10,7 @@ import UIKit
 protocol EditProfilePhotoViewControllerProtocol: AnyObject {
 	var presenter: EditProfilePhotoPresenterProtocol? { get set }
 	func updateProfileImage(_ image: UIImage)
-	func showLoading(_ isLoading: Bool)
+	func isLoadingIndicatorVisible(_ isLoading: Bool)
 	func showAlert(with message: String)
 }
 
@@ -54,7 +54,7 @@ final class EditProfilePhotoViewController: BaseViewController {
 		let tableView = EditProfilePhotoActionsTableView()
 		tableView.didSelectAction = { [weak self] index in
 			guard let action = PhotoAction(rawValue: index) else { return }
-			self?.showLoading(true)
+			self?.isLoadingIndicatorVisible(true)
 			self?.presenter?.didSelectAction(action)
 		}
 		return tableView
@@ -216,7 +216,7 @@ extension EditProfilePhotoViewController: UIImagePickerControllerDelegate, UINav
 
 	func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
 		picker.dismiss(animated: true)
-		showLoading(false)
+		isLoadingIndicatorVisible(false)
 	}
 }
 
@@ -234,11 +234,11 @@ extension EditProfilePhotoViewController: EditProfilePhotoViewControllerProtocol
 							  animations: {
 				self.profilePhotoView.image = image
 			}, completion: nil)
-			self.showLoading(false)
+			self.isLoadingIndicatorVisible(false)
 		}
 	}
 
-	func showLoading(_ isLoading: Bool) {
+	func isLoadingIndicatorVisible(_ isLoading: Bool) {
 		DispatchQueue.main.async {
 			isLoading
 				? self.loadingIndicator.startAnimating()

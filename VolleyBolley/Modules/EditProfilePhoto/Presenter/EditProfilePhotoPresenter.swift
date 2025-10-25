@@ -46,7 +46,7 @@ final class EditProfilePhotoPresenter: EditProfilePhotoPresenterProtocol {
 			} catch let error {
 				view?.showAlert(with: error.localizedDescription)
 			}
-			view?.showLoading(false)
+			view?.isLoadingIndicatorVisible(false)
 		case .deletePhoto:
 			setupProfilePhoto(with: nil)
 		}
@@ -88,11 +88,11 @@ extension EditProfilePhotoPresenter: LibraryPhotoPickerServiceDelegate {
 	}
 
 	func photoPickerDidCancel() {
-		view?.showLoading(false)
+		view?.isLoadingIndicatorVisible(false)
 	}
 
 	func photoPickerDidFailWithError(_ error: Error) {
-		view?.showLoading(false)
+		view?.isLoadingIndicatorVisible(false)
 		view?.showAlert(with: error.localizedDescription)
 	}
 }
