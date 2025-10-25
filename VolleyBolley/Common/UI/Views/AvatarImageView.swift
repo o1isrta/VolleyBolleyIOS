@@ -9,8 +9,9 @@ import UIKit
 
 final class AvatarImageView: UIImageView {
 
+	// MARK: - Private Properties
+
     private enum Constants {
-        static let cornerRadius: CGFloat = 23
         static let borderWidth: CGFloat = 1
     }
 
@@ -30,7 +31,13 @@ final class AvatarImageView: UIImageView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: - Public Method
+	// MARK: - Public Method
+
+	override func layoutSubviews() {
+		super.layoutSubviews()
+		layer.cornerRadius = min(bounds.width, bounds.height) / 2
+		clipsToBounds = true
+	}
 
     func configure(with image: UIImage?) {
         guard let image else { return }
@@ -42,11 +49,9 @@ final class AvatarImageView: UIImageView {
 
     private func setupView() {
         contentMode = .scaleAspectFill
-        layer.cornerRadius = Constants.cornerRadius
         layer.borderWidth = Constants.borderWidth
         layer.borderColor = AppColor.Border.primary.cgColor
-        clipsToBounds = true
-        image = UIImage(systemName: "person.circle.fill")
+        image = UIImage.Icon.profile
         backgroundColor = AppColor.Background.primary
         tintColor = AppColor.Icon.avatar
     }

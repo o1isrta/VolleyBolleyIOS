@@ -2,7 +2,7 @@
 //  EditProfilePhotoViewController.swift
 //  VolleyBolley
 //
-//  Created by Valery Zvonarev on 10.09.2025.
+//  Created by Roman Romanov on 25.10.2025.
 //
 
 import UIKit
@@ -54,23 +54,7 @@ final class EditProfilePhotoViewController: BaseViewController {
 		return button
 	}()
 
-	private lazy var profilePhotoView: UIImageView = {
-		let image = UIImage.imgPerson
-		let profilePhotoView = UIImageView(image: image)
-		profilePhotoView.contentMode = .scaleAspectFill
-		profilePhotoView.backgroundColor = AppColor.Background.clear
-		profilePhotoView.clipsToBounds = true
-		profilePhotoView.layer.cornerRadius = 61
-		profilePhotoView.layer.borderWidth = 2
-		profilePhotoView.layer.borderColor = AppColor.Border.primary.cgColor
-		return profilePhotoView
-	}()
-
-	private lazy var pencilView: UIImageView = {
-		let image = UIImage.editPencil
-		let pencilView = UIImageView(image: image)
-		return pencilView
-	}()
+	private lazy var profilePhotoView = AvatarImageView()
 
 	private lazy var saveButton: YellowButton = {
 		let button = YellowButton(title: String(localized: "SAVE"))
@@ -90,16 +74,19 @@ final class EditProfilePhotoViewController: BaseViewController {
 		return indicator
 	}()
 
-	// MARK: - Lifecycle
+	// MARK: - Public Methods
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		setupView()
 		presenter?.viewDidLoad()
+		// TODO: -
+		profilePhotoView.configure(with: UIImage.imgPerson)
 	}
 }
 
-// MARK: - Private methods
+// MARK: - Private Methods
+
 private extension EditProfilePhotoViewController {
 
 	func setupView() {
@@ -109,22 +96,21 @@ private extension EditProfilePhotoViewController {
 		setupLoadingIndicator()
 	}
 
-	private func setupGlassmorphismView() {
+	func setupGlassmorphismView() {
 		view.addSubviews(glassmorphismView)
 	}
 
-	private func setupSubviews() {
+	func setupSubviews() {
 		glassmorphismView.addSubviews(
 			backButton,
 			screenTitle,
 			profilePhotoView,
-			pencilView,
 			photoActionTableView,
 			saveButton
 		)
 	}
 
-	private func setupLoadingIndicator() {
+	func setupLoadingIndicator() {
 		view.addSubviews(loadingIndicator)
 		NSLayoutConstraint.activate([
 			loadingIndicator.centerXAnchor.constraint(equalTo: profilePhotoView.centerXAnchor),
@@ -132,7 +118,7 @@ private extension EditProfilePhotoViewController {
 		])
 	}
 
-	private func setupConstraints() {
+	func setupConstraints() {
 		NSLayoutConstraint.activate([
 			glassmorphismView.topAnchor.constraint(
 				equalTo: navBar.bottomAnchor,
@@ -158,17 +144,15 @@ private extension EditProfilePhotoViewController {
 				equalTo: glassmorphismView.topAnchor,
 				constant: LayoutConstants.mainSpacing),
 
-			profilePhotoView.centerXAnchor.constraint(equalTo: glassmorphismView.centerXAnchor),
-			profilePhotoView.topAnchor.constraint(equalTo: screenTitle.bottomAnchor, constant: LayoutConstants.mediumIndent),
+			profilePhotoView.centerXAnchor.constraint(
+				equalTo: glassmorphismView.centerXAnchor),
+			profilePhotoView.topAnchor.constraint(
+				equalTo: screenTitle.bottomAnchor,
+				constant: LayoutConstants.mediumIndent),
 			profilePhotoView.widthAnchor.constraint(
 				equalToConstant: LayoutConstants.profilePhotoSize),
 			profilePhotoView.heightAnchor.constraint(
 				equalToConstant: LayoutConstants.profilePhotoSize),
-
-			pencilView.leadingAnchor.constraint(equalTo: profilePhotoView.leadingAnchor, constant: 87.09),
-			pencilView.trailingAnchor.constraint(equalTo: profilePhotoView.trailingAnchor, constant: -10.09),
-			pencilView.topAnchor.constraint(equalTo: profilePhotoView.topAnchor, constant: 91.39),
-			pencilView.bottomAnchor.constraint(equalTo: profilePhotoView.bottomAnchor, constant: -5.78),
 
 			photoActionTableView.topAnchor.constraint(
 				equalTo: profilePhotoView.bottomAnchor,
