@@ -1,5 +1,5 @@
 //
-//  PhotoActionsTableView.swift
+//  EditProfilePhotoActionsTableView.swift
 //  VolleyBolley
 //
 //  Created by Roman Romanov on 25.10.2025.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class PhotoActionsTableView: UIView {
+final class EditProfilePhotoActionsTableView: UIView {
 
 	// MARK: - Public Properties
 
@@ -23,8 +23,8 @@ final class PhotoActionsTableView: UIView {
 		tableView.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
 		tableView.separatorColor = AppColor.Border.separator
 		tableView.register(
-			ActionsTableViewCell.self,
-			forCellReuseIdentifier: ActionsTableViewCell.reuseIdentifier
+			EditProfilePhotoActionsTableViewCell.self,
+			forCellReuseIdentifier: EditProfilePhotoActionsTableViewCell.reuseIdentifier
 		)
 		tableView.dataSource = self
 		tableView.delegate = self
@@ -43,7 +43,7 @@ final class PhotoActionsTableView: UIView {
 
 // MARK: - Private Methods
 
-private extension PhotoActionsTableView {
+private extension EditProfilePhotoActionsTableView {
 
 	func setupView() {
 		addSubviews(tableView)
@@ -58,7 +58,7 @@ private extension PhotoActionsTableView {
 
 // MARK: - UITableViewDelegate
 
-extension PhotoActionsTableView: UITableViewDelegate {
+extension EditProfilePhotoActionsTableView: UITableViewDelegate {
 
 	func tableView(
 		_ tableView: UITableView,
@@ -66,8 +66,8 @@ extension PhotoActionsTableView: UITableViewDelegate {
 	) -> UITableViewCell {
 		guard
 			let cell = tableView.dequeueReusableCell(
-				withIdentifier: ActionsTableViewCell.reuseIdentifier,
-				for: indexPath) as? ActionsTableViewCell,
+				withIdentifier: EditProfilePhotoActionsTableViewCell.reuseIdentifier,
+				for: indexPath) as? EditProfilePhotoActionsTableViewCell,
 			let action = PhotoAction(rawValue: indexPath.row)
 		else {
 			return UITableViewCell()
@@ -79,7 +79,7 @@ extension PhotoActionsTableView: UITableViewDelegate {
 
 // MARK: - UITableViewDataSource
 
-extension PhotoActionsTableView: UITableViewDataSource {
+extension EditProfilePhotoActionsTableView: UITableViewDataSource {
 
 	func tableView(
 		_ tableView: UITableView,
@@ -116,11 +116,11 @@ extension PhotoActionsTableView: UITableViewDataSource {
 	}
 }
 
-// MARK: - ActionsTableViewCell
+// MARK: - EditProfilePhotoActionsTableViewCell
 
-final class ActionsTableViewCell: UITableViewCell {
+final class EditProfilePhotoActionsTableViewCell: UITableViewCell {
 
-	static let reuseIdentifier = "ActionsTableViewCell"
+	static let reuseIdentifier = "EditProfilePhotoActionsTableViewCell"
 
 	func configure(model: PhotoAction) {
 		var content = defaultContentConfiguration()
