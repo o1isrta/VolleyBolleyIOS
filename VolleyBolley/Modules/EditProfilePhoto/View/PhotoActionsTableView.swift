@@ -2,7 +2,7 @@
 //  PhotoActionsTableView.swift
 //  VolleyBolley
 //
-//  Created by Valery Zvonarev on 11.09.2025.
+//  Created by Roman Romanov on 25.10.2025.
 //
 
 import UIKit
@@ -40,16 +40,21 @@ final class PhotoActionsTableView: UIView {
     }
 
     required init?(coder: NSCoder) { nil }
+}
 
-    private func setupView() {
-        addSubviews(tableView)
-        NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: topAnchor),
-            tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: bottomAnchor)
-        ])
-    }
+// MARK: - Private Methods
+
+private extension PhotoActionsTableView {
+
+	func setupView() {
+		addSubviews(tableView)
+		NSLayoutConstraint.activate([
+			tableView.topAnchor.constraint(equalTo: topAnchor),
+			tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
+			tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
+			tableView.bottomAnchor.constraint(equalTo: bottomAnchor)
+		])
+	}
 }
 
 // MARK: - UITableViewDelegate

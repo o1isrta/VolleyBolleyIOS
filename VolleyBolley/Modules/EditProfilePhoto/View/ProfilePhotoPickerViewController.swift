@@ -2,11 +2,22 @@
 //  ProfilePhotoPickerViewController.swift
 //  VolleyBolley
 //
-//  Created by Valery Zvonarev on 21.09.2025.
+//  Created by Roman Romanov on 25.10.2025.
 //
 
 import PhotosUI
 import UIKit
+
+protocol EditProfilePhotoViewControllerProtocol: AnyObject {
+	func updateProfileImage(_ image: UIImage)
+	func showLoading(_ isLoading: Bool)
+}
+
+protocol ProfilePhotoPickerViewControllerDelegate: AnyObject {
+	func photoPickerDidSelectImage(_ image: UIImage)
+	func photoPickerDidCancel()
+	func photoPickerDidFailWithError(error: String)
+}
 
 final class ProfilePhotoPickerViewController: UIViewController {
 
@@ -30,6 +41,7 @@ final class ProfilePhotoPickerViewController: UIViewController {
 }
 
 extension ProfilePhotoPickerViewController: PHPickerViewControllerDelegate {
+
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         picker.dismiss(animated: true)
 
