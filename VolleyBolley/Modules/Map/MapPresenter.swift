@@ -67,6 +67,6 @@ final class MapPresenter: MapPresenterProtocol {
     }
 
 	func didTapSelectCourtButton(create: GameType, court: CourtModel) {
-		router.goToCreateGameOtTourney(type: create, court: court)
+		router.goToCreateGameOrTourney(type: create, court: court)
     }
 }

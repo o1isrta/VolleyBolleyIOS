@@ -20,7 +20,7 @@ final class NewGameOrTourneyPlayerLevelCell: UITableViewCell {
 
 	private enum Constants {
 		static let inset: CGFloat = 16
-		static let insetMidle: CGFloat = 12
+		static let insetMiddle: CGFloat = 12
 		static let insetLarge: CGFloat = 20
 
 		static let stackViewSpacing: CGFloat = 8
@@ -33,6 +33,7 @@ final class NewGameOrTourneyPlayerLevelCell: UITableViewCell {
 		label.font = AppFont.ActayWide.bold(size: Constants.titleFontSize)
 		return label
 	}()
+
 	private lazy var lightButton: GreenButton = {
 		let button = GreenButton()
 		button.setTitle(String(localized: "common.light").capitalized, for: .normal)
@@ -41,6 +42,7 @@ final class NewGameOrTourneyPlayerLevelCell: UITableViewCell {
 		}
 		return button
 	}()
+
 	private lazy var mediumButton: GreenButton = {
 		let button = GreenButton()
 		button.setTitle(String(localized: "common.medium").capitalized, for: .normal)
@@ -49,6 +51,7 @@ final class NewGameOrTourneyPlayerLevelCell: UITableViewCell {
 		}
 		return button
 	}()
+
 	private lazy var hardButton: GreenButton = {
 		let button = GreenButton()
 		button.setTitle(String(localized: "common.hard").capitalized, for: .normal)
@@ -57,6 +60,7 @@ final class NewGameOrTourneyPlayerLevelCell: UITableViewCell {
 		}
 		return button
 	}()
+
 	private lazy var proButton: GreenButton = {
 		let button = GreenButton()
 		button.setTitle(String(localized: "common.pro").capitalized, for: .normal)
@@ -65,6 +69,7 @@ final class NewGameOrTourneyPlayerLevelCell: UITableViewCell {
 		}
 		return button
 	}()
+
 	private lazy var stackView: UIStackView = {
 		lightButton.setContentHuggingPriority(.required, for: .horizontal)
 		mediumButton.setContentHuggingPriority(.required, for: .horizontal)
@@ -145,7 +150,7 @@ private extension NewGameOrTourneyPlayerLevelCell {
 
 			stackView.topAnchor.constraint(
 				equalTo: titleLabel.bottomAnchor,
-				constant: Constants.insetMidle
+				constant: Constants.insetMiddle
 			),
 			stackView.leadingAnchor.constraint(
 				equalTo: contentView.leadingAnchor,
