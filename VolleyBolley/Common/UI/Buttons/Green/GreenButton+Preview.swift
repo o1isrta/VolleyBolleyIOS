@@ -66,9 +66,9 @@ final class GreenButtonPreviewVC: UIViewController {
     private func setupGenderRow(in stack: UIStackView) {
         let row = makeRow(distribution: .fillProportionally)
         stack.addArrangedSubview(row)
-        row.addArrangedSubview(makeButton(title: "Mix", selected: true))
-        row.addArrangedSubview(makeButton(title: "Men"))
-        row.addArrangedSubview(makeButton(title: "Women"))
+        row.addArrangedSubview(makeButton(title: "gender.mix", selected: true))
+        row.addArrangedSubview(makeButton(title: "gender.men"))
+        row.addArrangedSubview(makeButton(title: "gender.women"))
     }
 
     private func setupDateRow(in stack: UIStackView) {

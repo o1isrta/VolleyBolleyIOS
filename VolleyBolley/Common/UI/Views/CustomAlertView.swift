@@ -122,12 +122,11 @@ final class CustomAlertView: UIView {
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 		setupUI()
+		isHidden = true
 	}
 
 	@available(*, unavailable)
-	required init?(coder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
-	}
+	required init?(coder: NSCoder) { nil }
 
 	// MARK: - Public Methods
 
@@ -219,6 +218,7 @@ import SwiftUI
 #Preview("Notifications") {
 	UIViewPreview {
 		let view = CustomAlertView()
+		view.isHidden = false
 		let model = CustomAlertModel(
 			title: String(localized: "customAlertView.title.notification"),
 			message: String(localized: "customAlertView.message.notification"),
@@ -240,6 +240,7 @@ import SwiftUI
 #Preview("Exit") {
 	UIViewPreview {
 		let view = CustomAlertView()
+		view.isHidden = false
 		let model = CustomAlertModel(
 			message: String(localized: "customAlertView.message.logout"),
 			primaryButton: ButtonDataModel(
@@ -260,6 +261,7 @@ import SwiftUI
 #Preview("Invite") {
 	UIViewPreview {
 		let view = CustomAlertView()
+		view.isHidden = false
 		let model = CustomAlertModel(
 			message: String(localized: "customAlertView.message.invitesSent"),
 			primaryButton: ButtonDataModel(
@@ -276,6 +278,7 @@ import SwiftUI
 #Preview("Rating") {
 	UIViewPreview {
 		let view = CustomAlertView()
+		view.isHidden = false
 		let model = CustomAlertModel(
 			message: "The game on October 6 has ended. Would you like to rate the players?",
 			primaryButton: ButtonDataModel(
