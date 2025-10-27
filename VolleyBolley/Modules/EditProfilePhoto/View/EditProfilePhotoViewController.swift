@@ -100,11 +100,7 @@ final class EditProfilePhotoViewController: BaseViewController {
 		setupView()
 	}
 
-	private lazy var customAlertView: CustomAlertView = {
-		let view = CustomAlertView()
-		view.isHidden = true// TODO: remove it in the future
-		return view
-	}()
+	private lazy var customAlertView: CustomAlertView = CustomAlertView()
 
 	override func viewDidLayoutSubviews() {
 		super.viewDidLayoutSubviews()

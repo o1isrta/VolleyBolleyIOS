@@ -29,7 +29,7 @@ final class PersonalDataViewController: BaseViewController {
     private lazy var glassmorphismView = GlassmorphismView()
     private lazy var formView = PersonalDataFormView()
 
-    private var selectedGender: String? = String(localized: "Male")
+    private var selectedGender: String? = String(localized: "gender.male")
     private var selectedCountry: String?
     private var selectedCity: String?
     private var selectedBirthday: String?

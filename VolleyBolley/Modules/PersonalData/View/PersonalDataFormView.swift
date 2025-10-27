@@ -72,16 +72,16 @@ final class PersonalDataFormView: UIStackView {
 
     // Gender field
 
-    private lazy var genderLabel = CustomLabel(text: String(localized: "Gender"), isBold: true)
+    private lazy var genderLabel = CustomLabel(text: String(localized: "gender.title"), isBold: true)
     private lazy var maleButton: GreenButton = {
         let button = GreenButton()
-        button.setTitle(String(localized: "Male"), for: .normal)
+        button.setTitle(String(localized: "gender.male"), for: .normal)
         button.isSelected = true
         return button
     }()
     private lazy var femaleButton: GreenButton = {
         let button = GreenButton()
-        button.setTitle(String(localized: "Female"), for: .normal)
+        button.setTitle(String(localized: "gender.female"), for: .normal)
         button.isSelected = false
         return button
     }()

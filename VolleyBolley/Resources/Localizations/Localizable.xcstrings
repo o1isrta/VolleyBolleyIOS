@@ -132,6 +132,23 @@
         }
       }
     },
+    "button.next" : {
+      "comment" : "Next button",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "NEXT STEP"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ДАЛЬШЕ"
+          }
+        }
+      }
+    },
     "button.save" : {
       "comment" : "Edit Profile Photo screen",
       "localizations" : {
@@ -1514,16 +1531,6 @@
         }
       }
     },
-    "Female" : {
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Женский"
-          }
-        }
-      }
-    },
     "Founder" : {
       "comment" : "FounderLabelAboutView",
       "extractionState" : "manual",
@@ -1564,13 +1571,104 @@
         }
       }
     },
-    "Gender" : {
-      "comment" : "User info / Game Description",
+    "gender.female" : {
+      "comment" : "Gender",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Female"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Женский"
+          }
+        }
+      }
+    },
+    "gender.male" : {
+      "comment" : "Gender",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Male"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Мужской"
+          }
+        }
+      }
+    },
+    "gender.men" : {
+      "comment" : "Gender",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Men"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Мужчины"
+          }
+        }
+      }
+    },
+    "gender.mix" : {
+      "comment" : "Gender",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mix"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Смешанный"
+          }
+        }
+      }
+    },
+    "gender.title" : {
+      "comment" : "Gender",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gender"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Пол"
+          }
+        }
+      }
+    },
+    "gender.women" : {
+      "comment" : "Gender",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Women"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Женщины"
           }
         }
       }
@@ -1720,16 +1818,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Выйти"
-          }
-        }
-      }
-    },
-    "Male" : {
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Мужской"
           }
         }
       }
@@ -1890,8 +1978,263 @@
         }
       }
     },
+    "newGameOrTourney.date.pickDate" : {
+      "comment" : "Create a game / tourney screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pick date"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выбрать дату"
+          }
+        }
+      }
+    },
+    "newGameOrTourney.date.title" : {
+      "comment" : "Create a game / tourney screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Date"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Дата"
+          }
+        }
+      }
+    },
+    "newGameOrTourney.date.today" : {
+      "comment" : "Create a game / tourney screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Today"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сегодня"
+          }
+        }
+      }
+    },
+    "newGameOrTourney.from" : {
+      "comment" : "Create a game / tourney screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "from"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "с"
+          }
+        }
+      }
+    },
+    "newGameOrTourney.gameDuration" : {
+      "comment" : "Create a game / tourney screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game duration"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Продолжительность игры"
+          }
+        }
+      }
+    },
+    "newGameOrTourney.message.title" : {
+      "comment" : "Create a game / tourney screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your message"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Твое сообщение"
+          }
+        }
+      }
+    },
+    "newGameOrTourney.place.change" : {
+      "comment" : "Create a game / tourney screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Change"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Изменить"
+          }
+        }
+      }
+    },
+    "newGameOrTourney.place.title" : {
+      "comment" : "Create a game / tourney screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Place"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Место"
+          }
+        }
+      }
+    },
+    "newGameOrTourney.playerLevel.title" : {
+      "comment" : "Create a game / tourney screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Player level"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Уровень игрока"
+          }
+        }
+      }
+    },
+    "newGameOrTourney.title.game" : {
+      "comment" : "Create a game / tourney screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create a game"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Создать игру"
+          }
+        }
+      }
+    },
+    "newGameOrTourney.title.tourney" : {
+      "comment" : "Create a game / tourney screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create a tourney"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Создать турнир"
+          }
+        }
+      }
+    },
+    "newGameOrTourney.to" : {
+      "comment" : "Create a game / tourney screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "to"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "до"
+          }
+        }
+      }
+    },
+    "newGameOrTourney.tourneyType.individual" : {
+      "comment" : "Create a game / tourney screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Individual"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Индивидуальный"
+          }
+        }
+      }
+    },
+    "newGameOrTourney.tourneyType.team" : {
+      "comment" : "Create a game / tourney screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Team"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Командный"
+          }
+        }
+      }
+    },
+    "newGameOrTourney.tourneyType.title" : {
+      "comment" : "Create a game / tourney screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tourney type"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тип турнира"
+          }
+        }
+      }
+    },
     "NEXT STEP" : {
-      "comment" : "Next button",
+      "comment" : "Next button - удалить вместе с кнопкой",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -2635,13 +2978,130 @@
         }
       }
     },
-    "Take photo" : {
-      "extractionState" : "manual",
+    "The beginning of the game cannot be in the past" : {
+      "comment" : "Game time validation error",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Сделать фото"
+            "value" : "Начало игры не может быть в прошлом"
+          }
+        }
+      }
+    },
+    "The end of the game cannot be before the beginning" : {
+      "comment" : "Game time validation error",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Конец игры не может быть раньше начала"
+          }
+        }
+      }
+    },
+    "The game duration cannot exceed %lld hour" : {
+      "comment" : "Game time validation error",
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "The game duration cannot exceed %lld hour"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "The game duration cannot exceed %lld hours"
+                }
+              }
+            }
+          }
+        },
+        "ru" : {
+          "variations" : {
+            "plural" : {
+              "few" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Продолжительность игры не может превышать %lld часов"
+                }
+              },
+              "many" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Продолжительность игры не может превышать %lld часов"
+                }
+              },
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Продолжительность игры не может превышать %lld часа"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Продолжительность игры не может превышать %lld часов"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "The game duration must be at least %lld hour" : {
+      "comment" : "Game time validation error",
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "The game duration must be at least %lld hour"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "The game duration must be at least %lld hours"
+                }
+              }
+            }
+          }
+        },
+        "ru" : {
+          "variations" : {
+            "plural" : {
+              "few" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Продолжительность игры должна быть не менее %lld часов"
+                }
+              },
+              "many" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Продолжительность игры должна быть не менее %lld часов"
+                }
+              },
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Продолжительность игры должна быть не менее %lld часа"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Продолжительность игры должна быть не менее %lld часов"
+                }
+              }
+            }
           }
         }
       }
