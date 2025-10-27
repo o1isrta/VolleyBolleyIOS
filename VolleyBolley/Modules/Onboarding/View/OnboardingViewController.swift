@@ -23,6 +23,8 @@ final class OnboardingViewController: UIViewController, OnboardingViewProtocol {
 		label.font = AppFont.ActayWide.bold(size: 36)
 		label.textColor = AppColor.Text.primary
 		label.textAlignment = .left
+		label.adjustsFontSizeToFitWidth = true
+		label.minimumScaleFactor = 0.5
 		return label
 	}()
 
@@ -100,6 +102,7 @@ private extension OnboardingViewController {
 
 			titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40),
 			titleLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 26),
+			titleLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -26),
 
 			descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 17),
 			descriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 26),
