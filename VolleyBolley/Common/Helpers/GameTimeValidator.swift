@@ -38,8 +38,8 @@ struct GameTimeValidator {
 	init(gameType: GameType, startDate: Date, endDate: Date) {
 		self.startDate = startDate
 		self.endDate = endDate
-		self.minimumDuration = AppConstants.Game.minimumDurationHours * 3600
-		self.maximumDuration = gameType == .game ? AppConstants.Game.maximumDurationHours * 3600 : nil
+		self.minimumDuration = AppConstants.Game.minimumDurationHours * .hour
+		self.maximumDuration = gameType == .game ? AppConstants.Game.maximumDurationHours * .hour : nil
 	}
 
 	func validate() throws {
@@ -54,12 +54,12 @@ struct GameTimeValidator {
 		let duration = endDate.timeIntervalSince(startDate)
 
 		guard duration >= minimumDuration else {
-			throw GameValidationError.durationTooShort(minimumHours: minimumDuration / 3600)
+			throw GameValidationError.durationTooShort(minimumHours: minimumDuration / .hour)
 		}
 
 		if let maxDuration = maximumDuration,
 			duration > maxDuration {
-			throw GameValidationError.durationTooLong(maximumHours: maxDuration / 3600)
+			throw GameValidationError.durationTooLong(maximumHours: maxDuration / .hour)
 		}
 	}
 }
