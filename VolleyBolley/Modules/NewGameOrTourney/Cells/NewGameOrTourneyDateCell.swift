@@ -24,8 +24,8 @@ final class NewGameOrTourneyDateCell: UITableViewCell {
 
 	private enum Constants {
 		static let inset: CGFloat = 16
-		static let insetLitle: CGFloat = 8
-		static let insetMidle: CGFloat = 12
+		static let insetLittle: CGFloat = 8
+		static let insetMiddle: CGFloat = 12
 		static let insetLarge: CGFloat = 20
 
 		static let stackViewSpacing: CGFloat = 8
@@ -49,6 +49,7 @@ final class NewGameOrTourneyDateCell: UITableViewCell {
 		}, for: .touchUpInside)
 		return button
 	}()
+
 	private lazy var pickDateButton: GreenButton = {
 		let button = GreenButton(imagePlacement: .trailing)
 		button.setTitle(String(localized: "newGameOrTourney.date.pickDate"), for: .normal)
@@ -58,6 +59,7 @@ final class NewGameOrTourneyDateCell: UITableViewCell {
 		}, for: .touchUpInside)
 		return button
 	}()
+
 	private lazy var dateHStackView: UIStackView = {
 		todayButton.setContentHuggingPriority(.required, for: .horizontal)
 		pickDateButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
@@ -74,11 +76,14 @@ final class NewGameOrTourneyDateCell: UITableViewCell {
 		stackView.spacing = Constants.stackViewSpacing
 		return stackView
 	}()
+
 	private lazy var calendarComponent: CalendarComponentProtocol = CalendarComponent(delegate: self)
+
 	private lazy var calendarView: UIView = {
 		let calendarVC = calendarComponent.createCalendarViewController()
 		return calendarVC.view
 	}()
+
 	private lazy var dateVStackView: UIStackView = {
 		let stackView = UIStackView(arrangedSubviews: [
 			dateHStackView,
@@ -94,11 +99,13 @@ final class NewGameOrTourneyDateCell: UITableViewCell {
 		label.font = AppFont.Hero.bold(size: Constants.textFontSize)
 		return label
 	}()
+
 	private lazy var fromTimeLabel: CustomLabel = {
 		let label = CustomLabel(text: String(localized: "newGameOrTourney.from"))
 		label.font = AppFont.Hero.regular(size: Constants.textFontSize)
 		return label
 	}()
+
 	private lazy var fromTimeButton: TimePickerButton = {
 		let button = TimePickerButton()
 		button.onTimeChange = { [weak self] time in
@@ -113,6 +120,7 @@ final class NewGameOrTourneyDateCell: UITableViewCell {
 		label.font = AppFont.Hero.regular(size: Constants.textFontSize)
 		return label
 	}()
+
 	private lazy var toTimeButton: TimePickerButton = {
 		let button = TimePickerButton()
 		button.onTimeChange = { [weak self] time in
@@ -219,7 +227,7 @@ private extension NewGameOrTourneyDateCell {
 
 			dateVStackView.topAnchor.constraint(
 				equalTo: titleLabel.bottomAnchor,
-				constant: Constants.insetMidle
+				constant: Constants.insetMiddle
 			),
 			dateVStackView.leadingAnchor.constraint(
 				equalTo: contentView.leadingAnchor,
@@ -232,7 +240,7 @@ private extension NewGameOrTourneyDateCell {
 
 			gameDurationLabel.topAnchor.constraint(
 				equalTo: dateVStackView.bottomAnchor,
-				constant: Constants.insetLitle
+				constant: Constants.insetLittle
 			),
 			gameDurationLabel.leadingAnchor.constraint(
 				equalTo: contentView.leadingAnchor,
@@ -241,7 +249,7 @@ private extension NewGameOrTourneyDateCell {
 
 			timeStackView.topAnchor.constraint(
 				equalTo: gameDurationLabel.bottomAnchor,
-				constant: Constants.insetLitle
+				constant: Constants.insetLittle
 			),
 			timeStackView.leadingAnchor.constraint(
 				equalTo: contentView.leadingAnchor,

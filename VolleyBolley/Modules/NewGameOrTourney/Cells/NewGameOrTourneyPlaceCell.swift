@@ -21,7 +21,7 @@ final class NewGameOrTourneyPlaceCell: UITableViewCell {
 		static let maxMessageLength: Int = 160
 
 		static let inset: CGFloat = 16
-		static let insetLitle: CGFloat = 8
+		static let insetLittle: CGFloat = 8
 		static let insetLarge: CGFloat = 20
 
 		static let mainStackViewSpacing: CGFloat = 8
@@ -109,7 +109,7 @@ private extension NewGameOrTourneyPlaceCell {
 
 			mainStackView.topAnchor.constraint(
 				equalTo: titleLabel.bottomAnchor,
-				constant: Constants.insetLitle
+				constant: Constants.insetLittle
 			),
 			mainStackView.leadingAnchor.constraint(
 				equalTo: contentView.leadingAnchor,

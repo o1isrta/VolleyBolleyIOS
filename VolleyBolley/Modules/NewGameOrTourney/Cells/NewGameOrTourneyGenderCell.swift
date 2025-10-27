@@ -19,7 +19,7 @@ final class NewGameOrTourneyGenderCell: UITableViewCell {
 
 	private enum Constants {
 		static let inset: CGFloat = 16
-		static let insetMidle: CGFloat = 12
+		static let insetMiddle: CGFloat = 12
 		static let insetLarge: CGFloat = 20
 
 		static let stackViewSpacing: CGFloat = 8
@@ -32,6 +32,7 @@ final class NewGameOrTourneyGenderCell: UITableViewCell {
 		label.font = AppFont.ActayWide.bold(size: Constants.titleFontSize)
 		return label
 	}()
+
 	private lazy var mixButton: GreenButton = {
 		let button = GreenButton()
 		button.setTitle(String(localized: "gender.mix"), for: .normal)
@@ -41,6 +42,7 @@ final class NewGameOrTourneyGenderCell: UITableViewCell {
 		}, for: .touchUpInside)
 		return button
 	}()
+
 	private lazy var menButton: GreenButton = {
 		let button = GreenButton()
 		button.setTitle(String(localized: "gender.men"), for: .normal)
@@ -49,6 +51,7 @@ final class NewGameOrTourneyGenderCell: UITableViewCell {
 		}, for: .touchUpInside)
 		return button
 	}()
+
 	private lazy var womenButton: GreenButton = {
 		let button = GreenButton()
 		button.setTitle(String(localized: "gender.women"), for: .normal)
@@ -57,6 +60,7 @@ final class NewGameOrTourneyGenderCell: UITableViewCell {
 		}, for: .touchUpInside)
 		return button
 	}()
+
 	private lazy var stackView: UIStackView = {
 		mixButton.setContentCompressionResistancePriority(.required, for: .horizontal)
 		menButton.setContentCompressionResistancePriority(.required, for: .horizontal)
@@ -124,7 +128,7 @@ private extension NewGameOrTourneyGenderCell {
 
 			stackView.topAnchor.constraint(
 				equalTo: titleLabel.bottomAnchor,
-				constant: Constants.insetMidle
+				constant: Constants.insetMiddle
 			),
 			stackView.leadingAnchor.constraint(
 				equalTo: contentView.leadingAnchor,
