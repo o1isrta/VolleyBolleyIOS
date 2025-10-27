@@ -11,6 +11,7 @@ import Foundation
 protocol MapPresenterProtocol: AnyObject {
 	func viewDidLoad(userLocation: CLLocation?)
     func didTapBackButton()
+	func didTapSelectCourtButton(create: GameType, court: CourtModel)
 }
 
 protocol MapViewProtocol: AnyObject {
@@ -63,5 +64,9 @@ final class MapPresenter: MapPresenterProtocol {
 
     func didTapBackButton() {
         router.goBackToHome()
+    }
+
+	func didTapSelectCourtButton(create: GameType, court: CourtModel) {
+		router.goToCreateGameOrTourney(type: create, court: court)
     }
 }

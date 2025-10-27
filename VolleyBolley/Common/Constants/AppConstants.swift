@@ -26,6 +26,14 @@ enum AppConstants {
 		static let checkInterval: TimeInterval = 300
 	}
 
+	enum Game {
+		static let minimumDurationHours: Double = 1.0
+		static let maximumDurationHours: Double = 4.0
+		static let minPlayers = 4
+		static let minTeams = 3
+		static let maxTeamsAndPlayersValue = 24
+	}
+
 	enum Contacts {
 		static let email: String = "volleybolley.app@gmail.com"
 		static let linktreeURL: String = "https://linktr.ee/volleybolley.app"

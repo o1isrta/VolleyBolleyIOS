@@ -10,6 +10,7 @@ import UIKit
 protocol MapRouterProtocol: AnyObject {
 	func showList(from view: MapViewController, courts: [CourtModel], selected: CourtModel?)
     func goBackToHome()
+	func goToCreateGameOrTourney(type: GameType, court: CourtModel)
 }
 
 final class MapRouter: MapRouterProtocol {
@@ -20,7 +21,17 @@ final class MapRouter: MapRouterProtocol {
 
 	// MARK: - Private Properties
 
+	private let newGameOrTourneyVC: () -> NewGameOrTourneyViewController?
+
 	private weak var listVC: CourtListViewController?
+
+	// MARK: - Initializers
+
+	init(
+		newGameOrTourneyVC: @escaping () -> NewGameOrTourneyViewController?
+	) {
+		self.newGameOrTourneyVC = newGameOrTourneyVC
+	}
 
 	// MARK: - Public Methods
 
@@ -46,4 +57,12 @@ final class MapRouter: MapRouterProtocol {
     func goBackToHome() {
         viewController?.navigationController?.popViewController(animated: true)
     }
+
+	func goToCreateGameOrTourney(type: GameType, court: CourtModel) {
+		guard let newGameOrTourneyVC = newGameOrTourneyVC() else {
+			fatalError("NewGameOrTourneyViewController could not be created")
+		}
+		newGameOrTourneyVC.presenter?.setupCreateGameWith(type: type, court: court)
+		viewController?.navigationController?.pushViewController(newGameOrTourneyVC, animated: true)
+	}
 }

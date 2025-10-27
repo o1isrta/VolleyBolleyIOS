@@ -150,7 +150,7 @@ final class GameDescriptionView: UIView {
 		])
 
 		genderLabel.setTextWithDifferentStyles([
-			(String(localized: "Gender") + ": ", AppFont.ActayWide.bold(size: 16)),
+			(String(localized: "gender.title") + ": ", AppFont.ActayWide.bold(size: 16)),
 			(model.gameGender, AppFont.Hero.regular(size: 16))
 		])
 

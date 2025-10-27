@@ -21,9 +21,9 @@ enum CounterType {
     var maxValue: Int { LimitConstants.maxValue }
 
     private enum LimitConstants {
-        static let minPlayers = 4
-        static let minTeams = 3
-        static let maxValue = 24
+		static let minPlayers = AppConstants.Game.minPlayers
+		static let minTeams = AppConstants.Game.minTeams
+		static let maxValue = AppConstants.Game.maxTeamsAndPlayersValue
     }
 }
 
