@@ -932,6 +932,40 @@
         }
       }
     },
+    "distance.kilometers" : {
+      "comment" : "Distance",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.1f km"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.1f км"
+          }
+        }
+      }
+    },
+    "distance.meters" : {
+      "comment" : "Distance",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.0f m"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.0f м"
+          }
+        }
+      }
+    },
     "Done" : {
       "comment" : "Done button",
       "localizations" : {
@@ -3008,7 +3042,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "The game duration cannot exceed %lld hour"
                 }
               },
@@ -3061,7 +3095,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "The game duration must be at least %lld hour"
                 }
               },

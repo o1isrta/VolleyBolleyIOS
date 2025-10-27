@@ -52,9 +52,7 @@ final class CourtTitleView: UIView {
 	}
 
 	@available(*, unavailable)
-	required init?(coder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
-	}
+	required init?(coder: NSCoder) { nil }
 
 	// MARK: - Public Methods
 
@@ -89,7 +87,11 @@ private extension CourtTitleView {
 }
 
 #if DEBUG
+
+// MARK: - Preview
+
 import SwiftUI
+
 @available(iOS 17.0, *)
 #Preview {
 	ZStack {

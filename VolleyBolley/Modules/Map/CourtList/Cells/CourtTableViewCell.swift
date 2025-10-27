@@ -45,9 +45,7 @@ final class CourtTableViewCell: UITableViewCell {
 	}
 
 	@available(*, unavailable)
-	required init?(coder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
-	}
+	required init?(coder: NSCoder) { nil }
 
 	// MARK: - Public Methods
 
@@ -76,8 +74,8 @@ final class CourtTableViewCell: UITableViewCell {
 		let distanceText: String
 		if distance >= 0 {
 			distanceText = distance < 1
-			? String(format: "%.0f m", distance * 1000)
-			: String(format: "%.1f km", distance)
+			? String(format: String(localized: "distance.meters"), distance * 1000)
+			: String(format: String(localized: "distance.kilometers"), distance)
 		} else {
 			distanceText = "—"
 		}
