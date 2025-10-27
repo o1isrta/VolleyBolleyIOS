@@ -28,15 +28,7 @@ final class NewGameOrTourneyAssembly: Assembly {
 
 	func assemble(container: Container) {
 		container.register(NewGameOrTourneyViewController.self) { _ in
-			let newGameOrTourneyVC = NewGameOrTourneyViewController()
-			let router = NewGameOrTourneyRouter(viewController: newGameOrTourneyVC)
-			let presenter = NewGameOrTourneyPresenter(
-				router: router
-			)
-			newGameOrTourneyVC.presenter = presenter
-			presenter.view = newGameOrTourneyVC
-
-			return newGameOrTourneyVC
+			NewGameOrTourneyAssembly.createModule(with: nil)
 		}
 	}
 }
