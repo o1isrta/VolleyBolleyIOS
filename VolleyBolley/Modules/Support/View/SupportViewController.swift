@@ -23,7 +23,7 @@ final class SupportViewController: BaseViewController {
 	private enum Constants {
 		static let buttonSize: CGFloat = 24
 		static let padding: CGFloat = 8
-		static let tableTopInset: CGFloat = 4
+		static let tableInset: CGFloat = 4
 		static let topInset: CGFloat = 20
 		static let titleFontSize: CGFloat = 24
 		static let initialTableHeight: CGFloat = 0
@@ -177,7 +177,8 @@ private extension SupportViewController {
 				constant: -Constants.padding
 			),
 			glassmorphismView.bottomAnchor.constraint(
-				equalTo: tableView.bottomAnchor
+				equalTo: tableView.bottomAnchor,
+				constant: Constants.tableInset
 			),
 
 			backButton.topAnchor.constraint(
@@ -196,7 +197,7 @@ private extension SupportViewController {
 
 			tableView.topAnchor.constraint(
 				equalTo: backButton.bottomAnchor,
-				constant: Constants.tableTopInset
+				constant: Constants.tableInset
 			),
 			tableView.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor),
 			tableView.trailingAnchor.constraint(equalTo: glassmorphismView.trailingAnchor)
