@@ -35,7 +35,7 @@ final class MapViewController: BaseViewController, MapViewProtocol {
     private lazy var backButton: UtilityButton = {
         let view = UtilityButton(style: .small)
         view.setImage(.chevronBackward, for: .normal)
-        view.tintColor = AppColor.Icon.inverted
+		view.tintColor = getTintColorBackButtonMap()
         view.addAction(UIAction { [weak self] _ in
             self?.presenter.didTapBackButton()
         }, for: .touchUpInside)
@@ -281,7 +281,7 @@ private extension MapViewController {
 
 	func segmentChanged() {
 		let showList = segmentedControl.selectedSegmentIndex == 1
-		backButton.tintColor = AppColor.Icon.inverted
+		backButton.tintColor = getTintColorBackButtonMap()
 		if showList {
 			backButton.tintColor = AppColor.Icon.primary
 			router?.showList(from: self, courts: courts, selected: nearestCourt)
@@ -290,6 +290,10 @@ private extension MapViewController {
 		listView?.isHidden = !showList
 		bottomView.isHidden = showList
 		popupView.isHidden = true
+	}
+
+	func getTintColorBackButtonMap() -> UIColor {
+		traitCollection.userInterfaceStyle == .dark ? AppColor.Icon.primary : AppColor.Icon.inverted
 	}
 
 	func isNearestCourt(_ court: CourtModel) -> Bool {
