@@ -23,7 +23,7 @@ final class AboutViewController: BaseViewController {
 	private enum Constants {
 		static let buttonSize: CGFloat = 24
 		static let padding: CGFloat = 8
-		static let tableTopInset: CGFloat = 4
+		static let tableInset: CGFloat = 4
 		static let topInset: CGFloat = 20
 		static let titleFontSize: CGFloat = 24
 
@@ -139,6 +139,10 @@ private extension AboutViewController {
 			tableView,
 			versionLabel
 		)
+		setupConstraints()
+	}
+
+	func setupConstraints() {
 		NSLayoutConstraint.activate([
 			glassmorphismView.topAnchor.constraint(
 				equalTo: navBar.bottomAnchor,
@@ -152,7 +156,10 @@ private extension AboutViewController {
 				equalTo: view.trailingAnchor,
 				constant: -Constants.padding
 			),
-			glassmorphismView.bottomAnchor.constraint(equalTo: tableView.bottomAnchor),
+			glassmorphismView.bottomAnchor.constraint(
+				equalTo: tableView.bottomAnchor,
+				constant: Constants.tableInset
+			),
 
 			backButton.topAnchor.constraint(
 				equalTo: glassmorphismView.topAnchor,
@@ -170,7 +177,7 @@ private extension AboutViewController {
 
 			tableView.topAnchor.constraint(
 				equalTo: backButton.bottomAnchor,
-				constant: Constants.tableTopInset
+				constant: Constants.tableInset
 			),
 			tableView.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor),
 			tableView.trailingAnchor.constraint(equalTo: glassmorphismView.trailingAnchor),
