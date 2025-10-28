@@ -617,8 +617,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Swinject/Swinject";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.9.1;
+				kind = exactVersion;
+				version = 2.10.0;
 			};
 		};
 		91F7CA372E10998000E1EA41 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */ = {

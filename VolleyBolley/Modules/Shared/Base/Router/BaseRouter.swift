@@ -1,0 +1,53 @@
+//
+//  BaseRouter.swift
+//  VolleyBolley
+//
+//  Created by Roman Romanov on 16.09.2025.
+//
+
+import UIKit
+
+protocol BaseRouterProtocol: AnyObject {
+	var viewController: UIViewController? { get set }
+
+	func showNotifications(with notifications: [NotificationCardViewModel])
+}
+
+final class BaseRouter: BaseRouterProtocol {
+
+	// MARK: - Public Properties
+
+	weak var viewController: UIViewController?
+
+	// MARK: - Public Methods
+
+	func showNotifications(with notifications: [NotificationCardViewModel]) {
+		guard let viewController else { return }
+		// Check if NotificationsViewController is already presented
+		if isNotificationsViewControllerPresented() {
+			return // Don't open another instance
+		}
+		// Create the notifications module using its assembly with provided data
+		let notificationsViewController = NotificationsAssembly.createModule(with: notifications)
+		// Navigate to notifications screen
+		if let navigationController = viewController.navigationController {
+			navigationController.pushViewController(notificationsViewController, animated: true)
+		} else {
+			// If there's no navigation controller, present modally
+			notificationsViewController.modalPresentationStyle = .fullScreen
+			viewController.present(notificationsViewController, animated: true)
+		}
+	}
+
+	// MARK: - Private Methods
+
+	private func isNotificationsViewControllerPresented() -> Bool {
+		guard let viewController else { return false }
+		// Check navigation stack
+		if let navigationController = viewController.navigationController {
+			return navigationController.viewControllers.contains { $0 is NotificationsViewController }
+		}
+		// Check if modally presented
+		return viewController.presentedViewController is NotificationsViewController
+	}
+}
