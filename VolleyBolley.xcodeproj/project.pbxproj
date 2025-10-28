@@ -601,16 +601,16 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Moya/Moya";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 15.0.3;
+				kind = exactVersion;
+				version = 15.0.3;
 			};
 		};
 		3CB112342E0B224800EF5EC4 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 8.3.3;
+				kind = exactVersion;
+				version = 8.6.1;
 			};
 		};
 		3CB112382E0B24BB00EF5EC4 /* XCRemoteSwiftPackageReference "Swinject" */ = {
@@ -626,7 +626,7 @@
 			repositoryURL = "https://github.com/SimplyDanny/SwiftLintPlugins";
 			requirement = {
 				kind = exactVersion;
-				version = 0.59.1;
+				version = 0.62.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
