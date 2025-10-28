@@ -25,7 +25,9 @@ final class PersonalDataFormView: UIStackView {
     // MARK: - Private Properties
 
 	private var onEditTapped: ((UIImage?) -> Void)?
+	/*
     private var onGenderChanged: ((String) -> Void)?
+	*/
     private var onBirthdayChanged: ((String) -> Void)?
     private var onCountrySelected: ((String) -> Void)?
     private var onCitySelected: ((String) -> Void)?
@@ -72,6 +74,7 @@ final class PersonalDataFormView: UIStackView {
 
     // Gender field
 
+	/*
     private lazy var genderLabel = CustomLabel(text: String(localized: "gender.title"), isBold: true)
     private lazy var maleButton: GreenButton = {
         let button = GreenButton()
@@ -108,6 +111,7 @@ final class PersonalDataFormView: UIStackView {
         return stack
     }()
     private lazy var genderSeparator = CustomSeparator()
+	*/
 
     // Birthday field
 
@@ -198,7 +202,9 @@ final class PersonalDataFormView: UIStackView {
         cityList.updateItems(cities)
 
         onEditTapped = actions.onEditTapped
+		/*
         onGenderChanged = actions.onGenderChanged
+		*/
         onBirthdayChanged = actions.onBirthdayChanged
         onCountrySelected = actions.onCountrySelected
         onCitySelected = actions.onCitySelected
@@ -209,8 +215,10 @@ final class PersonalDataFormView: UIStackView {
         birthdayTextField.delegate = self
 
         editButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
+		/*
         maleButton.addTarget(self, action: #selector(genderButtonTapped(_:)), for: .touchUpInside)
         femaleButton.addTarget(self, action: #selector(genderButtonTapped(_:)), for: .touchUpInside)
+		*/
         updateButton.addTarget(self, action: #selector(updateButtonTapped(_:)), for: .touchUpInside)
     }
 
@@ -244,6 +252,7 @@ extension PersonalDataFormView: UITextFieldDelegate {
 // MARK: - LocationPickerViewDelegate
 
 extension PersonalDataFormView: LocationPickerViewDelegate {
+
     func locationPickerView(_ pickerView: LocationPickerView, didSelectItem item: String) {
         if pickerView == countryList {
             onCountrySelected?(item)
@@ -272,8 +281,10 @@ private extension PersonalDataFormView {
             nameStackView,
             surnameStackView,
             surnameSeparator,
+			/*
             genderStackView,
             genderSeparator,
+			*/
             birthdayStackView,
             birthdaySeparator,
             countryStackView,
@@ -321,6 +332,7 @@ private extension PersonalDataFormView {
 		onEditTapped?(profileImageView.image ?? nil)
     }
 
+	/*
     @objc func genderButtonTapped(_ sender: UIButton) {
         [maleButton, femaleButton].forEach { $0.isSelected = false }
         sender.isSelected = true
@@ -328,6 +340,7 @@ private extension PersonalDataFormView {
             onGenderChanged?(title)
         }
     }
+	*/
 
     @objc func updateButtonTapped(_ sender: UIButton) {
         onUpdateTapped?()

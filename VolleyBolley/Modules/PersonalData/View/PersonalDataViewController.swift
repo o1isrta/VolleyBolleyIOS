@@ -29,7 +29,9 @@ final class PersonalDataViewController: BaseViewController {
     private lazy var glassmorphismView = GlassmorphismView()
     private lazy var formView = PersonalDataFormView()
 
+	/*
     private var selectedGender: String? = String(localized: "gender.male")
+	*/
     private var selectedCountry: String?
     private var selectedCity: String?
     private var selectedBirthday: String?
@@ -98,7 +100,9 @@ private extension PersonalDataViewController {
     func setupFormView() {
         let actions = UserFormActions(
             onEditTapped: handleEditTapped,
+			/*
             onGenderChanged: handleGenderChanged,
+			*/
             onBirthdayChanged: handleBirthdayChanged,
             onCountrySelected: handleCountrySelected,
             onCitySelected: handleCitySelected,
@@ -175,9 +179,11 @@ private extension PersonalDataViewController {
 		presenter.editProfilePhoto(image: image)
     }
 
+	/*
     func handleGenderChanged(_ gender: String) {
         selectedGender = gender
     }
+	*/
 
     func handleBirthdayChanged(_ birthday: String) {
         selectedBirthday = birthday
