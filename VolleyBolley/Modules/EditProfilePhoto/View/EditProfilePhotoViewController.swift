@@ -86,12 +86,7 @@ final class EditProfilePhotoViewController: BaseViewController {
 		return stack
 	}()
 
-	private let loadingIndicator: UIActivityIndicatorView = {
-		let indicator = UIActivityIndicatorView(style: .large)
-		indicator.hidesWhenStopped = true
-		indicator.color = AppColor.Background.primary
-		return indicator
-	}()
+	private let loadingIndicator = ProgressHub.shared
 
 	// MARK: - Public Methods
 
@@ -237,8 +232,8 @@ extension EditProfilePhotoViewController: EditProfilePhotoViewControllerProtocol
 	func isLoadingIndicatorVisible(_ isLoading: Bool) {
 		DispatchQueue.main.async {
 			isLoading
-				? self.loadingIndicator.startAnimating()
-				: self.loadingIndicator.stopAnimating()
+				? self.loadingIndicator.show(in: self.view, withBlur: true, ballSize: .big)
+				: self.loadingIndicator.hide()
 			self.view.isUserInteractionEnabled = !isLoading
 		}
 	}
