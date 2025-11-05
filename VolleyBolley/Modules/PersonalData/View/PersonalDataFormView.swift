@@ -25,6 +25,7 @@ final class PersonalDataFormView: UIStackView {
     // MARK: - Private Properties
 
 	private var onEditTapped: ((UIImage?) -> Void)?
+	// TODO: пока решили убрать возможность изменения пола через ЛК, возможно после запуска MVP вернуть придется
 	/*
     private var onGenderChanged: ((String) -> Void)?
 	*/
@@ -73,7 +74,7 @@ final class PersonalDataFormView: UIStackView {
     private lazy var surnameSeparator = CustomSeparator()
 
     // Gender field
-
+	// TODO: пока решили убрать возможность изменения пола через ЛК, возможно после запуска MVP вернуть придется
 	/*
     private lazy var genderLabel = CustomLabel(text: String(localized: "gender.title"), isBold: true)
     private lazy var maleButton: GreenButton = {
@@ -215,6 +216,7 @@ final class PersonalDataFormView: UIStackView {
         birthdayTextField.delegate = self
 
         editButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
+		// TODO: пока решили убрать возможность изменения пола через ЛК, возможно после запуска MVP вернуть придется
 		/*
         maleButton.addTarget(self, action: #selector(genderButtonTapped(_:)), for: .touchUpInside)
         femaleButton.addTarget(self, action: #selector(genderButtonTapped(_:)), for: .touchUpInside)
@@ -281,6 +283,7 @@ private extension PersonalDataFormView {
             nameStackView,
             surnameStackView,
             surnameSeparator,
+			// TODO: пока решили убрать возможность изменения пола через ЛК, возможно после запуска MVP вернуть придется
 			/*
             genderStackView,
             genderSeparator,
@@ -332,6 +335,7 @@ private extension PersonalDataFormView {
 		onEditTapped?(profileImageView.image ?? nil)
     }
 
+	// TODO: пока решили убрать возможность изменения пола через ЛК, возможно после запуска MVP вернуть придется
 	/*
     @objc func genderButtonTapped(_ sender: UIButton) {
         [maleButton, femaleButton].forEach { $0.isSelected = false }

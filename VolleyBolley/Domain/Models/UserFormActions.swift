@@ -9,6 +9,7 @@ import UIKit
 
 struct UserFormActions {
 	let onEditTapped: (UIImage?) -> Void
+	// TODO: пока решили убрать возможность изменения пола через ЛК, возможно после запуска MVP вернуть придется
 	/*
     let onGenderChanged: (String) -> Void
 	*/

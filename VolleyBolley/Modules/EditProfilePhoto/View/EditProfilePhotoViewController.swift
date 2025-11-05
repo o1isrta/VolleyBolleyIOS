@@ -34,6 +34,8 @@ final class EditProfilePhotoViewController: BaseViewController {
 		static let saveButtonHeight: CGFloat = 44
 	}
 
+	private let loadingIndicator = ProgressHub.shared
+
 	private lazy var glassmorphismView = GlassmorphismView()
 	private lazy var screenTitle = CustomTitle(
 		text: String(localized: "editProfilePhoto.title"),
@@ -86,16 +88,14 @@ final class EditProfilePhotoViewController: BaseViewController {
 		return stack
 	}()
 
-	private let loadingIndicator = ProgressHub.shared
+	private lazy var customAlertView: CustomAlertView = CustomAlertView()
 
-	// MARK: - Public Methods
+	// MARK: - Lifecycle
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		setupView()
 	}
-
-	private lazy var customAlertView: CustomAlertView = CustomAlertView()
 
 	override func viewDidLayoutSubviews() {
 		super.viewDidLayoutSubviews()

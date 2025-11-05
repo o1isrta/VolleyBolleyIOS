@@ -29,6 +29,7 @@ final class PersonalDataViewController: BaseViewController {
     private lazy var glassmorphismView = GlassmorphismView()
     private lazy var formView = PersonalDataFormView()
 
+	// TODO: пока решили убрать возможность изменения пола через ЛК, возможно после запуска MVP вернуть придется
 	/*
     private var selectedGender: String? = String(localized: "gender.male")
 	*/
@@ -100,6 +101,7 @@ private extension PersonalDataViewController {
     func setupFormView() {
         let actions = UserFormActions(
             onEditTapped: handleEditTapped,
+			// TODO: пока решили убрать возможность изменения пола через ЛК, возможно после запуска MVP вернуть придется
 			/*
             onGenderChanged: handleGenderChanged,
 			*/
@@ -179,6 +181,7 @@ private extension PersonalDataViewController {
 		presenter.editProfilePhoto(image: image)
     }
 
+	// TODO: пока решили убрать возможность изменения пола через ЛК, возможно после запуска MVP вернуть придется
 	/*
     func handleGenderChanged(_ gender: String) {
         selectedGender = gender
