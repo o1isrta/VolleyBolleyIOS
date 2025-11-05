@@ -36,7 +36,7 @@ final class CourtDetailsCell: UITableViewCell {
 		let model = CourtViewModel(
 			court: court,
 			doneButtonData: ButtonDataModel(
-				title: "CHOOSE THIS COURT",
+				title: String(localized: "CHOOSE THIS COURT"),
 				// TODO: - тут будет переход на создание экрана игры/турнира
 				/// guard let selectedCourt else { return }
 				/// presenter.didTapSelectCourtButton(create: .tourney, selectedCourt: selectedCourt)

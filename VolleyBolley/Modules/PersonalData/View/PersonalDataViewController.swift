@@ -29,7 +29,10 @@ final class PersonalDataViewController: BaseViewController {
     private lazy var glassmorphismView = GlassmorphismView()
     private lazy var formView = PersonalDataFormView()
 
+	// TODO: пока решили убрать возможность изменения пола через ЛК, возможно после запуска MVP вернуть придется
+	/*
     private var selectedGender: String? = String(localized: "gender.male")
+	*/
     private var selectedCountry: String?
     private var selectedCity: String?
     private var selectedBirthday: String?
@@ -69,9 +72,14 @@ final class PersonalDataViewController: BaseViewController {
 }
 
 extension PersonalDataViewController: PersonalDataViewProtocol {
+
     func updateCountries(_ countries: [String]) {
         formView.updateCountries(countries)
     }
+
+	func updateUserData(_ image: UIImage) {
+		formView.updateUserData(image)
+	}
 }
 
 // MARK: - Private methods
@@ -93,7 +101,10 @@ private extension PersonalDataViewController {
     func setupFormView() {
         let actions = UserFormActions(
             onEditTapped: handleEditTapped,
+			// TODO: пока решили убрать возможность изменения пола через ЛК, возможно после запуска MVP вернуть придется
+			/*
             onGenderChanged: handleGenderChanged,
+			*/
             onBirthdayChanged: handleBirthdayChanged,
             onCountrySelected: handleCountrySelected,
             onCitySelected: handleCitySelected,
@@ -101,7 +112,8 @@ private extension PersonalDataViewController {
         )
 
         formView.configure(
-            countries: presenter.countries,
+			userData: presenter.userData,
+			countries: presenter.countries,
             cities: presenter.cities,
             actions: actions
         )
@@ -165,13 +177,16 @@ private extension PersonalDataViewController {
 
     // Form callbacks
 
-    func handleEditTapped() {
-        editProfilePhoto()
+	func handleEditTapped(_ image: UIImage?) {
+		presenter.editProfilePhoto(image: image)
     }
 
+	// TODO: пока решили убрать возможность изменения пола через ЛК, возможно после запуска MVP вернуть придется
+	/*
     func handleGenderChanged(_ gender: String) {
         selectedGender = gender
     }
+	*/
 
     func handleBirthdayChanged(_ birthday: String) {
         selectedBirthday = birthday
@@ -189,12 +204,30 @@ private extension PersonalDataViewController {
         presenter.updateButtonTapped()
     }
 
-    func editProfilePhoto() {
-        // TODO: Редактирование фото профиля
-    }
-
     @objc
     func backButtonTapped() {
         presenter.backButtonTapped()
     }
 }
+
+#if DEBUG
+
+// MARK: - Preview
+
+import SwiftUI
+
+@available(iOS 17.0, *)
+#Preview {
+	let router = PersonalDataRouter(editProfilePhotoViewController: { nil })
+	let interactor = PersonalDataInteractor()
+	let presenter = PersonalDataPresenter(
+		interactor: interactor,
+		router: router
+	)
+	let view = PersonalDataViewController(presenter: presenter)
+	presenter.view = view
+	router.attachViewController(view)
+
+	return view
+}
+#endif

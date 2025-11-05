@@ -149,6 +149,23 @@
         }
       }
     },
+    "button.save" : {
+      "comment" : "Edit Profile Photo screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SAVE"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "СОХРАНИТЬ"
+          }
+        }
+      }
+    },
     "Cancel" : {
       "comment" : "Cancel button",
       "localizations" : {
@@ -156,6 +173,29 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Отмена"
+          }
+        }
+      }
+    },
+    "Change photo" : {
+      "comment" : "Profile",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Изменить фото"
+          }
+        }
+      }
+    },
+    "Choose from Gallery" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выбрать из фотогалереи"
           }
         }
       }
@@ -846,6 +886,17 @@
         }
       }
     },
+    "Delete photo" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удалить фото"
+          }
+        }
+      }
+    },
     "Designed by" : {
       "comment" : "DesignedByLabelAboutView",
       "extractionState" : "manual",
@@ -877,6 +928,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Разработка"
+          }
+        }
+      }
+    },
+    "distance.kilometers" : {
+      "comment" : "Distance",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.1f km"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.1f км"
+          }
+        }
+      }
+    },
+    "distance.meters" : {
+      "comment" : "Distance",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.0f m"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.0f м"
           }
         }
       }
@@ -1035,6 +1120,74 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Заработайте 10 очков от игроков более высокого уровня за последние 60 дней. Чем выше уровень оценщика, тем больший вес имеет его рейтинг."
+          }
+        }
+      }
+    },
+    "editProfilePhoto.action.chooseFromGallery" : {
+      "comment" : "Edit Profile Photo screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose from Gallery"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выбрать из галереи"
+          }
+        }
+      }
+    },
+    "editProfilePhoto.action.deletePhoto" : {
+      "comment" : "Edit Profile Photo screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete photo"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удалить фото"
+          }
+        }
+      }
+    },
+    "editProfilePhoto.action.takePhoto" : {
+      "comment" : "Edit Profile Photo screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Take photo"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сделать фото"
+          }
+        }
+      }
+    },
+    "editProfilePhoto.title" : {
+      "comment" : "Edit Profile Photo screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Change photo"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Изменить фото"
           }
         }
       }
@@ -2447,6 +2600,57 @@
         }
       }
     },
+    "photoPicker.cameraUnavailable" : {
+      "comment" : "LibraryPhotoPickerService / UIImagePicker errors",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Camera is not available on this device"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Камера недоступна на этом устройстве"
+          }
+        }
+      }
+    },
+    "photoPicker.failedCameraLoadImage" : {
+      "comment" : "LibraryPhotoPickerService / UIImagePicker errors",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to get image from camera"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось получить изображение с камеры"
+          }
+        }
+      }
+    },
+    "photoPicker.failedLibraryLoadImage" : {
+      "comment" : "LibraryPhotoPickerService / UIImagePicker errors",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to load image from photo library"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось загрузить изображение из фотобиблиотеки"
+          }
+        }
+      }
+    },
     "Players" : {
       "comment" : "Profile",
       "localizations" : {
@@ -2838,7 +3042,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "The game duration cannot exceed %lld hour"
                 }
               },
@@ -2891,7 +3095,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "The game duration must be at least %lld hour"
                 }
               },

@@ -26,6 +26,7 @@ enum FeatureAssemblies {
             PaywallAssembly(),
             CreationSuccessAssembly(),
             PersonalDataAssembly(),
+			EditProfilePhotoAssembly(),
 			SupportAssembly(),
 			FAQAssembly(),
             AboutAssembly()

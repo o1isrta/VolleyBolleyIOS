@@ -24,21 +24,18 @@ final class PersonalDataFormView: UIStackView {
 
     // MARK: - Private Properties
 
-    private var onEditTapped: (() -> Void)?
+	private var onEditTapped: ((UIImage?) -> Void)?
+	// TODO: пока решили убрать возможность изменения пола через ЛК, возможно после запуска MVP вернуть придется
+	/*
     private var onGenderChanged: ((String) -> Void)?
+	*/
     private var onBirthdayChanged: ((String) -> Void)?
     private var onCountrySelected: ((String) -> Void)?
     private var onCitySelected: ((String) -> Void)?
     private var onUpdateTapped: (() -> Void)?
 
     private lazy var profileContainerView = UIView()
-    private lazy var profileImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage.Icon.profile
-        imageView.contentMode = .scaleAspectFit
-        imageView.clipsToBounds = true
-        return imageView
-    }()
+	private lazy var profileImageView = AvatarImageView()
     private lazy var editButton: UIButton = {
         let button = UIButton(type: .system)
         let pencilImage = UIImage.Icon.pencil.withRenderingMode(.alwaysOriginal)
@@ -77,7 +74,8 @@ final class PersonalDataFormView: UIStackView {
     private lazy var surnameSeparator = CustomSeparator()
 
     // Gender field
-
+	// TODO: пока решили убрать возможность изменения пола через ЛК, возможно после запуска MVP вернуть придется
+	/*
     private lazy var genderLabel = CustomLabel(text: String(localized: "gender.title"), isBold: true)
     private lazy var maleButton: GreenButton = {
         let button = GreenButton()
@@ -114,6 +112,7 @@ final class PersonalDataFormView: UIStackView {
         return stack
     }()
     private lazy var genderSeparator = CustomSeparator()
+	*/
 
     // Birthday field
 
@@ -191,16 +190,23 @@ final class PersonalDataFormView: UIStackView {
 
     // MARK: - Public Methods
 
-    func configure(
-        countries: [String],
-        cities: [String],
-        actions: UserFormActions
-    ) {
+	func configure(
+		userData: UIImage?,
+		countries: [String],
+		cities: [String],
+		actions: UserFormActions
+	) {
+		if let userData {
+			profileImageView.image = userData
+		}
         countryList.updateItems(countries)
         cityList.updateItems(cities)
 
         onEditTapped = actions.onEditTapped
+		// TODO: пока решили убрать возможность изменения пола через ЛК, возможно после запуска MVP вернуть придется
+		/*
         onGenderChanged = actions.onGenderChanged
+		*/
         onBirthdayChanged = actions.onBirthdayChanged
         onCountrySelected = actions.onCountrySelected
         onCitySelected = actions.onCitySelected
@@ -211,17 +217,27 @@ final class PersonalDataFormView: UIStackView {
         birthdayTextField.delegate = self
 
         editButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
+		// TODO: пока решили убрать возможность изменения пола через ЛК, возможно после запуска MVP вернуть придется
+		/*
         maleButton.addTarget(self, action: #selector(genderButtonTapped(_:)), for: .touchUpInside)
         femaleButton.addTarget(self, action: #selector(genderButtonTapped(_:)), for: .touchUpInside)
+		*/
         updateButton.addTarget(self, action: #selector(updateButtonTapped(_:)), for: .touchUpInside)
     }
 
     func updateCountries(_ countries: [String]) {
         countryList.updateItems(countries)
     }
+
+	func updateUserData(_ image: UIImage) {
+		profileImageView.image = image
+    }
 }
 
+// MARK: - UITextFieldDelegate
+
 extension PersonalDataFormView: UITextFieldDelegate {
+
     func textField(
         _ textField: UITextField,
         shouldChangeCharactersIn range: NSRange,
@@ -236,7 +252,10 @@ extension PersonalDataFormView: UITextFieldDelegate {
     }
 }
 
+// MARK: - LocationPickerViewDelegate
+
 extension PersonalDataFormView: LocationPickerViewDelegate {
+
     func locationPickerView(_ pickerView: LocationPickerView, didSelectItem item: String) {
         if pickerView == countryList {
             onCountrySelected?(item)
@@ -265,8 +284,11 @@ private extension PersonalDataFormView {
             nameStackView,
             surnameStackView,
             surnameSeparator,
+			// TODO: пока решили убрать возможность изменения пола через ЛК, возможно после запуска MVP вернуть придется
+			/*
             genderStackView,
             genderSeparator,
+			*/
             birthdayStackView,
             birthdaySeparator,
             countryStackView,
@@ -311,9 +333,11 @@ private extension PersonalDataFormView {
     }
 
     @objc func editButtonTapped() {
-        onEditTapped?()
+		onEditTapped?(profileImageView.image ?? nil)
     }
 
+	// TODO: пока решили убрать возможность изменения пола через ЛК, возможно после запуска MVP вернуть придется
+	/*
     @objc func genderButtonTapped(_ sender: UIButton) {
         [maleButton, femaleButton].forEach { $0.isSelected = false }
         sender.isSelected = true
@@ -321,8 +345,31 @@ private extension PersonalDataFormView {
             onGenderChanged?(title)
         }
     }
+	*/
 
     @objc func updateButtonTapped(_ sender: UIButton) {
         onUpdateTapped?()
     }
 }
+
+#if DEBUG
+
+// MARK: - Preview
+
+import SwiftUI
+
+@available(iOS 17.0, *)
+#Preview {
+	let router = PersonalDataRouter(editProfilePhotoViewController: { nil })
+	let interactor = PersonalDataInteractor()
+	let presenter = PersonalDataPresenter(
+		interactor: interactor,
+		router: router
+	)
+	let view = PersonalDataViewController(presenter: presenter)
+	presenter.view = view
+	router.attachViewController(view)
+
+	return view
+}
+#endif

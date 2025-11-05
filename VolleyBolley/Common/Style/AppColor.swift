@@ -85,6 +85,10 @@ enum AppColor {
 		static let greenLightEnd = mint
 	}
 
+	enum Table {
+		static let cellWhiteSelected = gray
+	}
+
     enum Glassmorphism {
         static let border = white
         static let tintColor = white
