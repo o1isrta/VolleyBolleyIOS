@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol FAQViewControllerProtocol: AnyObject {
+protocol FAQViewProtocol: AnyObject where Self: UIViewController {
 	func reloadTableView()
 }
 
@@ -66,7 +66,7 @@ final class FAQViewController: BaseViewController {
 
 // MARK: - FAQViewControllerProtocol
 
-extension FAQViewController: FAQViewControllerProtocol {
+extension FAQViewController: FAQViewProtocol {
 
 	func reloadTableView() {
 		tableView.reloadData()
@@ -144,18 +144,3 @@ extension FAQViewController: UITableViewDataSource {
 		return cell
 	}
 }
-
-// MARK: - Preview
-
-#if DEBUG
-@available(iOS 17.0, *)
-#Preview {
-	let router = FAQRouter()
-	let interactor = FAQInteractor()
-	let presenter = FAQPresenter(interactor: interactor, router: router)
-	let view = FAQViewController(presenter: presenter)
-	router.attachViewController(view)
-	presenter.view = view
-	return view
-}
-#endif

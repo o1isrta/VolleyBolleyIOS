@@ -12,8 +12,12 @@ final class MainAssembly: Assembly {
     // MARK: - Public Methods
 
     func assemble(container: Container) {
-        container.register(MainAppRouterProtocol.self) { resolver in
-            MainAppRouter(resolver: resolver)
+        container.register(MainRouterProtocol.self) { resolver in
+            MainRouter(
+                homeRouter: resolver.safeResolve(HomeRouterProtocol.self),
+                myGamesRouter: resolver.safeResolve(MyGamesRouterProtocol.self),
+                profileRouter: resolver.safeResolve(ProfileRouterProtocol.self)
+            )
         }
         .inObjectScope(.container)
     }

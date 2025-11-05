@@ -7,15 +7,13 @@
 
 import UIKit
 
-protocol OnboardingViewProtocol: AnyObject {}
+protocol OnboardingViewProtocol: AnyObject where Self: UIViewController {}
 
 final class OnboardingViewController: UIViewController, OnboardingViewProtocol {
 
-	// MARK: - Public Properties
+    // MARK: - Private Properties
 
-	var presenter: OnboardingPresenterProtocol?
-
-	// MARK: - Private Properties
+    private let presenter: OnboardingPresenterProtocol
 
 	private lazy var titleLabel: UILabel = {
 		let label = UILabel()
@@ -50,15 +48,15 @@ final class OnboardingViewController: UIViewController, OnboardingViewProtocol {
 		return label
 	}()
 
-	private lazy var getStartedButton: YellowButton = {
-		let button = YellowButton()
-		button.isSelected = true
-		button.setTitle(String(localized: "button.getStarted"), for: .normal)
-		button.addAction(UIAction { [weak self] _ in
-			self?.presenter?.getStartedButtonTapped()
-		}, for: .touchUpInside)
-		return button
-	}()
+    private lazy var getStartedButton: YellowButton = {
+        let view = YellowButton()
+        view.isSelected = true
+        view.setTitle(String(localized: "GET STARTED"), for: .normal)
+        view.addAction(UIAction { [weak self] _ in
+            self?.presenter.didTapGetStarted()
+        }, for: .touchUpInside)
+        return view
+    }()
 
 	private lazy var backgroundImageView: UIImageView = {
 		let imageView = UIImageView(image: UIImage.Image.launch)
@@ -67,13 +65,23 @@ final class OnboardingViewController: UIViewController, OnboardingViewProtocol {
 		return imageView
 	}()
 
-	// MARK: - Public Methods
+    // MARK: - Initializers
 
-	override func viewDidLoad() {
-		super.viewDidLoad()
-		setupUI()
-		setupConstraints()
-	}
+    init(presenter: OnboardingPresenterProtocol) {
+        self.presenter = presenter
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) { nil }
+
+    // MARK: - Lifecycle
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupUI()
+        setupConstraints()
+    }
 }
 
 // MARK: - Private Methods
@@ -120,13 +128,3 @@ private extension OnboardingViewController {
 		])
 	}
 }
-
-#if DEBUG
-
-// MARK: - Preview
-
-@available(iOS 17.0, *)
-#Preview {
-	OnboardingViewController()
-}
-#endif

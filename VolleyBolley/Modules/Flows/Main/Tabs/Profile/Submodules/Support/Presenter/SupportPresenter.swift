@@ -20,7 +20,7 @@ final class SupportPresenter: SupportPresenterProtocol {
 
 	// MARK: - Public Properties
 
-    weak var view: SupportViewControllerProtocol?
+    weak var view: SupportViewProtocol?
 
 	// MARK: - Private Properties
 

@@ -8,7 +8,7 @@
 import UIKit
 
 protocol ProfileRouterProtocol: AnyObject {
-    func attachViewController(_ view: UIViewController)
+    func start() -> UIViewController
     func showPersonalData()
     func showSupport()
     func showFAQ()
@@ -17,56 +17,54 @@ protocol ProfileRouterProtocol: AnyObject {
 
 final class ProfileRouter: ProfileRouterProtocol {
 
-	// MARK: - Public Properties
+    // MARK: - Private Properties
 
-    weak var viewController: UIViewController?
+    private let viewControllerFactory: () -> UIViewController
+    private let personalDataFactory: () -> UIViewController
+    private let supportFactory: () -> UIViewController
+    private let faqFactory: () -> UIViewController
+    private let aboutFactory: () -> UIViewController
 
-	// MARK: - Private Properties
+    private weak var navigationController: UINavigationController?
 
-	private let personalDataViewController: () -> PersonalDataViewController?
-	private let supportViewController: () -> SupportViewController?
-	private let faqViewController: () -> FAQViewController?
-	private let aboutViewController: () -> AboutViewController?
+    // MARK: - Initializers
 
-	// MARK: - Initializers
+    init(
+        viewControllerFactory: @escaping () -> UIViewController,
+        personalDataFactory: @escaping () -> UIViewController,
+        supportFactory: @escaping () -> UIViewController,
+        faqFactory: @escaping () -> UIViewController,
+        aboutFactory: @escaping () -> UIViewController
+    ) {
+        self.viewControllerFactory = viewControllerFactory
+        self.personalDataFactory = personalDataFactory
+        self.supportFactory = supportFactory
+        self.faqFactory = faqFactory
+        self.aboutFactory = aboutFactory
+    }
 
-	init(
-		personalDataViewController: @escaping () -> PersonalDataViewController?,
-		supportViewController: @escaping () -> SupportViewController?,
-		aboutViewController: @escaping () -> AboutViewController?,
-		faqViewController: @escaping () -> FAQViewController?
-	) {
-		self.personalDataViewController = personalDataViewController
-		self.supportViewController = supportViewController
-		self.aboutViewController = aboutViewController
-		self.faqViewController = faqViewController
-	}
+    // MARK: - Public Methods
 
-	// MARK: - Public Methods
-
-    func attachViewController(_ view: UIViewController) {
-        viewController = view
+    func start() -> UIViewController {
+        let rootVC = viewControllerFactory()
+        let nav = UINavigationController(rootViewController: rootVC)
+        navigationController = nav
+        return nav
     }
 
     func showPersonalData() {
-		guard let personalDataVC = personalDataViewController() else {
-			fatalError("PersonalDataViewController could not be created")
-		}
-        viewController?.navigationController?.pushViewController(personalDataVC, animated: true)
+        navigationController?.pushViewController(personalDataFactory(), animated: true)
     }
 
-	func showSupport() {
-		guard let supportVC = supportViewController() else { fatalError("SupportViewController could not be created") }
-		viewController?.navigationController?.pushViewController(supportVC, animated: true)
+    func showSupport() {
+        navigationController?.pushViewController(supportFactory(), animated: true)
     }
 
-	func showAbout() {
-		guard let aboutVC = aboutViewController() else { fatalError("AboutViewController could not be created") }
-		viewController?.navigationController?.pushViewController(aboutVC, animated: true)
-	}
+    func showAbout() {
+        navigationController?.pushViewController(aboutFactory(), animated: true)
+    }
 
     func showFAQ() {
-		guard let faqVC = faqViewController() else { fatalError("FAQViewController could not be created") }
-        viewController?.navigationController?.pushViewController(faqVC, animated: true)
+        navigationController?.pushViewController(faqFactory(), animated: true)
     }
 }

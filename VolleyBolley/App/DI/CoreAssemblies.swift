@@ -12,14 +12,15 @@ enum CoreAssemblies {
     static func all(window: UIWindow) -> [Assembly] {
         return [
             WindowAssembly(window: window),
-            RouterAssembly(),
+            AppRouterAssembly(),
             EnvironmentAssembly(),
-            SettingsStorageAssembly(),
+            SettingsAssembly(),
             TokenStorageAssembly(),
-            UserSessionAssembly(),
             NetworkModulesAssembly(),
             MediaServicesAssembly(),
-            LocationAssembly()
+            LocationAssembly(),
+            GoogleAuthAssembly(),
+            FirebaseAuthAssembly()
         ]
     }
 }

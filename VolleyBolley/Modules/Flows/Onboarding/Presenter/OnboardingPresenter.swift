@@ -5,39 +5,35 @@
 //  Created by Олег Козырев on 12.07.2025.
 //
 
-import Foundation
-
 protocol OnboardingPresenterProtocol: AnyObject {
-	func getStartedButtonTapped()
+    func didTapGetStarted()
 }
 
 final class OnboardingPresenter: OnboardingPresenterProtocol {
 
-	// MARK: - Public Properties
+    // MARK: - Public Properties
 
-	weak var view: OnboardingViewProtocol?
+    weak var view: OnboardingViewProtocol?
 
-	// MARK: - Private Properties
+    // MARK: - Private Properties
 
-	private let interactor: OnboardingInteractorProtocol
-	private let router: OnboardingRouterProtocol
+    private let interactor: OnboardingInteractorProtocol
+    private let finishOnboardingFlow: () -> Void
 
-	// MARK: - Initializers
+    // MARK: - Initializers
 
-	init(
-		view: OnboardingViewProtocol,
-		interactor: OnboardingInteractorProtocol,
-		router: OnboardingRouterProtocol
-	) {
-		self.view = view
-		self.interactor = interactor
-		self.router = router
-	}
+    init(
+        interactor: OnboardingInteractorProtocol,
+        finishOnboardingFlow: @escaping () -> Void
+    ) {
+        self.interactor = interactor
+        self.finishOnboardingFlow = finishOnboardingFlow
+    }
 
-	// MARK: - Public Methods
+    // MARK: - Public methods
 
-	func getStartedButtonTapped() {
-		interactor.markOnboardingAsCompleted()
-		router.navigateToAuthorizationScreen()
-	}
+    func didTapGetStarted() {
+        interactor.markOnboardingAsCompleted()
+        finishOnboardingFlow()
+    }
 }

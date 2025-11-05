@@ -9,7 +9,7 @@ import UIKit
 
 // MARK: - AboutViewProtocol
 
-protocol AboutViewProtocol: AnyObject {
+protocol AboutViewProtocol: AnyObject where Self: UIViewController {
 	func setupAppInfo(with appVersion: String)
 	func reloadData()
 }

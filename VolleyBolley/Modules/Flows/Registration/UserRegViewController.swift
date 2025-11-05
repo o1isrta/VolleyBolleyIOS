@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol UserRegViewProtocol: AnyObject where Self: UIViewController {
+    func updateCountries(_ countries: [String])
+}
+
 final class UserRegViewController: UIViewController, UITextFieldDelegate {
 
 	var presenter: UserRegPresenterProtocol?

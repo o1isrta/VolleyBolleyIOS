@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol PersonalDataViewProtocol: AnyObject {
+protocol PersonalDataViewProtocol: AnyObject where Self: UIViewController {
     func updateCountries(_ countries: [String])
 }
 

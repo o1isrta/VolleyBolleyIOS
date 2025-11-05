@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol ProfileViewProtocol: AnyObject {
+protocol ProfileViewProtocol: AnyObject where Self: UIViewController {
     func displayError(message: String)
 }
 

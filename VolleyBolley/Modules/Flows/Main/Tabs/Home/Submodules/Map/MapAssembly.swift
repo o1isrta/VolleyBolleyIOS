@@ -11,11 +11,7 @@ final class MapAssembly: Assembly {
 
 	func assemble(container: Container) {
 		container.register(MapViewController.self) { resolver in
-            guard
-                let networkService = resolver.resolve(NetworkServiceProtocol.self)
-            else {
-                fatalError("Error: Failed to register NetworkService")
-            }
+            let networkService = resolver.safeResolve(NetworkServiceProtocol.self)
 
 			let newGameOrTourneyVC = { resolver.resolve(NewGameOrTourneyViewController.self) }
 			let router = MapRouter(
@@ -34,10 +30,5 @@ final class MapAssembly: Assembly {
 
 			return view
 		}
-
-        container.register(MapModuleFactoryProtocol.self) { resolver in
-            MapModuleFactory(resolver: resolver)
-        }
-        .inObjectScope(.container)
 	}
 }

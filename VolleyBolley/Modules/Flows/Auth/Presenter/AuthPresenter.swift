@@ -8,35 +8,55 @@
 import Foundation
 
 protocol AuthPresenterProtocol: AnyObject {
-    func phoneButtonTapped()
-    func googleButtonTapped()
+    func didTapContinueWithGoogle()
 }
 
-final class AuthorizationPresenter: AuthPresenterProtocol {
+// TODO: - show loading state
+
+final class AuthPresenter: AuthPresenterProtocol {
+
+    // MARK: - Public properties
 
     weak var view: AuthViewProtocol?
+
+    // MARK: - Private properties
+
     private let interactor: AuthInteractorProtocol
     private let router: AuthRouterProtocol
 
-    init(view: AuthViewProtocol,
-         interactor: AuthInteractorProtocol,
-         router: AuthRouterProtocol) {
-        self.view = view
+    // MARK: - Initializers
+
+    init(
+        interactor: AuthInteractorProtocol,
+        router: AuthRouterProtocol,
+    ) {
         self.interactor = interactor
         self.router = router
     }
 
-    func phoneButtonTapped() {
-        router.showPhoneAuth()
-    }
+    // MARK: - Public methods
 
-    func googleButtonTapped() {
-        interactor.authWithGoogle()
+    func didTapContinueWithGoogle() {
+        interactor.loginWithGoogle()
     }
 }
 
-extension AuthorizationPresenter: AuthInteractorOutputProtocol {
-    func didAuthWithGoogleSuccess() {
-        router.showUserRegScreen()
+// MARK: - AuthInteractorOutput
+
+extension AuthPresenter: AuthInteractorOutput {
+
+    func didLoginSuccessfully() {
+        DispatchQueue.main.async { [weak self] in
+            self?.router.finishAuth()
+        }
+    }
+
+    func didFailToLogin(error: Error) {
+        print("❌ AuthPresenter - didFailToLogin: \(error)")
+        // TODO: Show alert
+        //        DispatchQueue.main.async { [weak self] in
+        //            self?.view?.showError(error.localizedDescription)
+        //        }
     }
 }
+

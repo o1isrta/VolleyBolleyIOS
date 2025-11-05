@@ -4,7 +4,17 @@
 //
 //  Created by Олег Кор on 03.08.2025.
 //
+
 import Foundation
+
+protocol UserRegPresenterProtocol: AnyObject {
+    var countries: [String] { get }
+    var cities: [String] { get }
+
+    func viewDidLoad()
+    func didTapLevelInfo()
+    func didTapGetStarted(name: String, surname: String, gender: String)
+}
 
 final class UserRegPresenter: UserRegPresenterProtocol {
 

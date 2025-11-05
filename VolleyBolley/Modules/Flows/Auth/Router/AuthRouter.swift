@@ -5,29 +5,75 @@
 //  Created by Олег Козырев
 //
 
-import Swinject
+import AuthenticationServices
 import UIKit
 
-protocol AuthRouterProtocol: AnyObject {
-    func showPhoneAuth()
-    func showUserRegScreen()
+protocol AuthRouterProtocol: AnyObject, PresentationContextProvider {
+    var delegate: AuthRouterDelegate? { get set }
+    var presentingViewController: UIViewController { get }
+    func start() -> UIViewController
+    func finishAuth()
 }
 
-final class AuthRouter: AuthRouterProtocol {
+protocol AuthRouterDelegate: AnyObject {
+    func authDidFinish()
+}
 
-    weak var viewController: UIViewController?
-    weak var router: AppRouter?
+final class AuthRouter: NSObject, AuthRouterProtocol, ASWebAuthenticationPresentationContextProviding {
 
-    init(viewController: UIViewController, coordinator: AppRouter?) {
-        self.viewController = viewController
-        self.router = coordinator
+    // MARK: - Public Properties
+
+    weak var delegate: AuthRouterDelegate?
+
+    var presentingViewController: UIViewController {
+        guard
+            let nav = window.rootViewController as? UINavigationController,
+            let topVC = nav.topViewController
+        else {
+            fatalError("❌ Не удалось найти presentingViewController для GoogleAuth")
+        }
+
+        return topVC
     }
 
-    func showPhoneAuth() {
-        router?.pushPhoneAuth()
+    // MARK: - Private Properties
+
+    private let window: UIWindow
+    private let viewControllerFactory: () -> UIViewController
+
+    private let userRegFactory: () -> UIViewController
+
+    private weak var navigationController: UINavigationController?
+
+    // MARK: - Initializers
+
+    init(
+        window: UIWindow,
+        viewControllerFactory: @escaping () -> UIViewController,
+        userRegFactory: @escaping () -> UIViewController
+    ) {
+        self.window = window
+        self.viewControllerFactory = viewControllerFactory
+        self.userRegFactory = userRegFactory
     }
 
-    func showUserRegScreen() {
-        router?.pushUserReg()
+    // MARK: - Public Methods
+
+    func start() -> UIViewController {
+        let rootVC = viewControllerFactory()
+        let nav = UINavigationController(rootViewController: rootVC)
+        navigationController = nav
+        return nav
+    }
+
+    func finishAuth() {
+        delegate?.authDidFinish()
+    }
+
+    // MARK: - ASWebAuthenticationPresentationContextProviding
+
+    func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
+        return window
     }
 }
+

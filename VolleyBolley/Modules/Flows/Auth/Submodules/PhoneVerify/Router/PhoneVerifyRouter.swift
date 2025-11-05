@@ -10,7 +10,6 @@ import UIKit
 
 protocol PhoneVerifyRouterProtocol: AnyObject {
     func navigateBack()
-    func navigateToMainScreen()
 }
 
 final class PhoneVerifyRouter: PhoneVerifyRouterProtocol {
@@ -25,9 +24,5 @@ final class PhoneVerifyRouter: PhoneVerifyRouterProtocol {
 
     func navigateBack() {
         viewController?.navigationController?.popViewController(animated: true)
-    }
-
-    func navigateToMainScreen() {
-        coordinator?.pushUserReg()
     }
 }
