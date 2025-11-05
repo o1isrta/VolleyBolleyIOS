@@ -72,9 +72,7 @@ final class PhoneVerifyPresenter: PhoneVerifyPresenterProtocol, PhoneVerifyInter
         view?.enableVerifyButton(lastEnteredCode.count == Self.verificationCodeLength)
     }
 
-    func verificationSucceeded() {
-        router.navigateToMainScreen()
-    }
+    func verificationSucceeded() {}
 
     func verificationFailed(with error: Error) {
         view?.enableVerifyButton(false)

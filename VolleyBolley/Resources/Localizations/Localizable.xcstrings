@@ -1718,6 +1718,9 @@
         }
       }
     },
+    "GET STARTED" : {
+
+    },
     "homeCreateNewGame" : {
       "comment" : "Home screen CreateNewGame button title",
       "extractionState" : "manual",

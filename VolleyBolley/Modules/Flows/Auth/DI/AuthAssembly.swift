@@ -6,35 +6,49 @@
 //
 
 import Swinject
+import UIKit
 
 final class AuthAssembly: Assembly {
 
     func assemble(container: Container) {
-        container.register(AuthViewController.self) { resolver in
-            let authVC = AuthViewController()
-            let interactor = AuthorizationInteractor()
-
-            let appRouter = resolver.resolve(AppRouter.self)
-
-            let router = AuthRouter(
-                viewController: authVC,
-                coordinator: appRouter
+        container.register(AuthRouterProtocol.self) { resolver in
+            AuthRouter(
+                window: resolver.safeResolve(UIWindow.self),
+                viewControllerFactory: {
+                    resolver.safeResolve(AuthViewProtocol.self)
+                },
+                userRegFactory: {
+                    resolver.safeResolve(UserRegViewProtocol.self)
+                }
             )
+        }
+        .inObjectScope(.container)
 
-            let presenter = AuthorizationPresenter(
-                view: authVC,
-                interactor: interactor,
+        container.register(AuthViewProtocol.self) { resolver in
+            let googleAuthService = resolver.safeResolve(GoogleAuthServiceProtocol.self)
+            let firebaseAuthService = resolver.safeResolve(FirebaseAuthServiceProtocol.self)
+            let authRepository = resolver.safeResolve(AuthRepositoryProtocol.self)
+
+            let router = resolver.safeResolve(AuthRouterProtocol.self)
+            let interactor = AuthInteractor(
+                googleAuthService: googleAuthService,
+                firebaseAuthService: firebaseAuthService,
+                authRepository: authRepository,
                 router: router
             )
+            let presenter = AuthPresenter(
+                interactor: interactor,
+                router: router,
+                //                finishAuthFlow: { [weak router] in
+                //                    router?.finishAuth()
+                //                }
+            )
+            let view = AuthViewController(presenter: presenter)
 
             interactor.presenter = presenter
-            authVC.presenter = presenter
+            presenter.view = view
 
-            return authVC
-        }
-
-        container.register(AuthInteractorProtocol.self) { _ in
-            AuthorizationInteractor()
+            return view
         }
     }
 }

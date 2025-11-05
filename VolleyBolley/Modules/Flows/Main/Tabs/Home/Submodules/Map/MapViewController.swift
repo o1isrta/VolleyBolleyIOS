@@ -9,6 +9,10 @@ import CoreLocation
 import MapKit
 import UIKit
 
+protocol MapViewProtocol: AnyObject where Self: UIViewController {
+    func showCourts(_ courts: [CourtModel], nearest: CourtModel?)
+}
+
 final class MapViewController: BaseViewController, MapViewProtocol {
 
 	// MARK: - Public Properties

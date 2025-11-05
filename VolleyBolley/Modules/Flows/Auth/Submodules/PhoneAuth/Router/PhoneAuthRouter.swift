@@ -10,7 +10,6 @@ import UIKit
 
 protocol PhoneAuthRouterProtocol: AnyObject {
     func navigateBack()
-    func navigateToVerification(with phoneNumber: String)
     func hideNavigationBar()
 }
 
@@ -28,10 +27,6 @@ final class PhoneAuthRouter: PhoneAuthRouterProtocol {
 
     func navigateBack() {
         viewController?.navigationController?.popViewController(animated: true)
-    }
-
-    func navigateToVerification(with phoneNumber: String) {
-        coordinator?.pushPhoneVerify(phoneNumber: phoneNumber)
     }
 
     func hideNavigationBar() {

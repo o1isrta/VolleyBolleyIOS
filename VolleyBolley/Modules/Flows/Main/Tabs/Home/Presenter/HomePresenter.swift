@@ -47,15 +47,15 @@ final class HomePresenter: HomePresenterProtocol {
     }
 
     func didTapCreateNewGame() {
-        router.showMapForCreateNewGame()
+        router.showMap(for: .courts)
     }
 
     func didTapFindGame() {
-        router.showMapForFindGame()
+        router.showMap(for: .games)
     }
 
     func didTapCreateTourney() {
-        router.showMapForCreateTourney()
+        router.showMap(for: .tournaments)
     }
 
     func didTapDonate() {
@@ -95,3 +95,7 @@ final class HomePresenter: HomePresenterProtocol {
         view?.displayFindGameButton(gamesCount: nearbyGamesCount)
     }
 }
+
+// MARK: - HomeInteractorOutput
+
+extension HomePresenter: HomeInteractorOutput {}

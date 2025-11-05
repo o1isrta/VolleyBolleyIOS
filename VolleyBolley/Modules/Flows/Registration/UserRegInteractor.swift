@@ -4,7 +4,21 @@
 //
 //  Created by Олег Кор on 03.08.2025.
 //
+
 import Foundation
+
+protocol UserRegInteractorProtocol: AnyObject {
+    var presenter: UserRegInteractorOutputProtocol? { get set }
+
+    func fetchCountries()
+    func registerUser(name: String, surname: String, gender: String)
+}
+
+protocol UserRegInteractorOutputProtocol: AnyObject {
+    func didFetchCountries(_ countries: [String])
+    func registrationDidSucceed()
+    func registrationDidFail(error: Error)
+}
 
 final class UserRegInteractor: UserRegInteractorProtocol {
 

@@ -9,27 +9,30 @@ import Swinject
 
 final class OnboardingAssembly: Assembly {
 
-	func assemble(container: Container) {
-		container.register(OnboardingViewController.self) { resolver in
-			guard
-				let userSessionService = resolver.resolve(UserSessionServiceProtocol.self),
-				let appRouter = resolver.resolve(AppRouter.self)
-			else {
-				fatalError("Error: Failed to resolve dependencies for OnboardingViewController")
-			}
-			let onboardingVC = OnboardingViewController()
-			let interactor = OnboardingInteractor(userSessionService: userSessionService)
-			let router = OnboardingRouter(
-				viewController: onboardingVC,
-				router: appRouter
-			)
-			let presenter = OnboardingPresenter(
-				view: onboardingVC,
-				interactor: interactor,
-				router: router
-			)
-			onboardingVC.presenter = presenter
-			return onboardingVC
-		}
-	}
+    func assemble(container: Container) {
+        container.register(OnboardingRouterProtocol.self) { resolver in
+            OnboardingRouter(viewControllerFactory: {
+                resolver.safeResolve(OnboardingViewProtocol.self)
+            })
+        }
+        .inObjectScope(.container)
+
+        container.register(OnboardingViewProtocol.self) { resolver in
+            let onboardingRepository = resolver.resolve(OnboardingRepositoryProtocol.self)!
+            let router = resolver.resolve(OnboardingRouterProtocol.self)!
+
+            let interactor = OnboardingInteractor(onboardingRepository: onboardingRepository)
+            let presenter = OnboardingPresenter(
+                interactor: interactor,
+                finishOnboardingFlow: { [weak router] in
+                    router?.finishOnboarding()
+                }
+            )
+
+            let view = OnboardingViewController(presenter: presenter)
+            presenter.view = view
+
+            return view
+        }
+    }
 }

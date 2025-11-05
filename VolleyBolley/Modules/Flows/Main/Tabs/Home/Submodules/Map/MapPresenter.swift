@@ -14,10 +14,6 @@ protocol MapPresenterProtocol: AnyObject {
 	func didTapSelectCourtButton(create: GameType, court: CourtModel)
 }
 
-protocol MapViewProtocol: AnyObject {
-	func showCourts(_ courts: [CourtModel], nearest: CourtModel?)
-}
-
 final class MapPresenter: MapPresenterProtocol {
 
 	// MARK: - Public Properties

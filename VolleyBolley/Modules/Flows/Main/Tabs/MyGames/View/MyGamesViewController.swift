@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol MyGamesViewProtocol: AnyObject {
+protocol MyGamesViewProtocol: AnyObject where Self: UIViewController {
 	@MainActor
 	func reloadData()
 }
@@ -157,21 +157,3 @@ extension MyGamesViewController: UITableViewDelegate {
 		presenter.didSelectMenuItem(at: indexPath.row)
 	}
 }
-
-#if DEBUG
-
-// MARK: - Preview
-
-import SwiftUI
-
-@available(iOS 17.0, *)
-#Preview {
-	let presenter = MyGamesPresenter(
-		interactor: MyGamesInteractor(),
-		router: MyGamesRouter()
-	)
-	let view = MyGamesViewController(presenter: presenter)
-
-	return view
-}
-#endif

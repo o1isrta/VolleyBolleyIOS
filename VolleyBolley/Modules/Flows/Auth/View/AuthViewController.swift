@@ -7,12 +7,11 @@
 
 import UIKit
 
-protocol AuthViewProtocol: AnyObject {}
+protocol AuthViewProtocol: AnyObject where Self: UIViewController {}
 
-/// Экран авторизации через телефон, google, facebook
 final class AuthViewController: UIViewController, AuthViewProtocol {
 
-    var presenter: AuthPresenterProtocol?
+    private let presenter: AuthPresenterProtocol
 
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
@@ -86,10 +85,21 @@ final class AuthViewController: UIViewController, AuthViewProtocol {
         return imageView
     }()
 
+    // MARK: - Initializers
+
+    init(presenter: AuthPresenterProtocol) {
+        self.presenter = presenter
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) { nil }
+
+    // MARK: - Lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        setupActions()
     }
 
     private func setupUI() {
@@ -123,24 +133,4 @@ final class AuthViewController: UIViewController, AuthViewProtocol {
             buttonsStack.trailingAnchor.constraint(equalTo: bottomView.trailingAnchor, constant: -24)
         ])
     }
-
-    private func setupActions() {
-        phoneAuthButton.addTarget(self, action: #selector(phoneTapped), for: .touchUpInside)
-        googleAuthButton.addTarget(self, action: #selector(googleTapped), for: .touchUpInside)
-    }
-
-    @objc private func phoneTapped() {
-        presenter?.phoneButtonTapped()
-    }
-
-    @objc private func googleTapped() {
-        presenter?.googleButtonTapped()
-    }
 }
-
-#if DEBUG
-@available(iOS 17.0, *)
-#Preview {
-    AuthViewController()
-}
-#endif

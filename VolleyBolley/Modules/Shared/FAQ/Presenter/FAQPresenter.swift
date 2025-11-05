@@ -18,7 +18,7 @@ final class FAQPresenter: FAQPresenterProtocol {
 
     // MARK: - Public Properties
 
-    weak var view: FAQViewControllerProtocol?
+    weak var view: FAQViewProtocol?
 
 	var numberOfItems: Int { faqItems.count }
 

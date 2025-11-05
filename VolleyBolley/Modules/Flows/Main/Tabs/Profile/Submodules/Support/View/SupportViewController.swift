@@ -10,7 +10,7 @@ import UIKit
 
 // MARK: - SupportViewControllerProtocol
 
-protocol SupportViewControllerProtocol: AnyObject {
+protocol SupportViewProtocol: AnyObject where Self: UIViewController {
 	func sendEmail()
 }
 
@@ -95,7 +95,7 @@ final class SupportViewController: BaseViewController {
 
 // MARK: - SupportViewControllerProtocol
 
-extension SupportViewController: SupportViewControllerProtocol {
+extension SupportViewController: SupportViewProtocol {
 
 	func sendEmail() {
 		guard MFMailComposeViewController.canSendMail() else {
@@ -276,7 +276,7 @@ import SwiftUI
 struct SupportViewControllerPreview: UIViewControllerRepresentable {
 
 	class StubPresenter: SupportPresenterProtocol {
-		weak var view: SupportViewControllerProtocol?
+		weak var view: SupportViewProtocol?
 		func viewDidLoad() {}
 		func backButtonTapped() {}
 		func didSelectSupportItem(_ item: SupportItem) {}

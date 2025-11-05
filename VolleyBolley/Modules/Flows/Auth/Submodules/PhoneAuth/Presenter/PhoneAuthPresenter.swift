@@ -53,10 +53,6 @@ final class PhoneAuthPresenter: PhoneAuthPresenterProtocol {
 extension PhoneAuthPresenter: PhoneAuthInteractorOutputProtocol {
     func didValidatePhoneNumber(isValid: Bool) {
         view?.setNextButtonActive(isValid)
-
-        if isValid && isNextButtonTapped {
-            router?.navigateToVerification(with: currentPhoneNumber)
-        }
     }
 
     func didReceiveFormattedNumber(_ number: String) {

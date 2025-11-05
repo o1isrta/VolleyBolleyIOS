@@ -8,26 +8,38 @@
 import UIKit
 
 protocol OnboardingRouterProtocol: AnyObject {
-	func navigateToAuthorizationScreen()
+    func start() -> UIViewController
+    func finishOnboarding()
+    var delegate: OnboardingRouterDelegate? { get set }
+}
+
+protocol OnboardingRouterDelegate: AnyObject {
+    func onboardingDidFinish()
 }
 
 final class OnboardingRouter: OnboardingRouterProtocol {
 
-	// MARK: - Public Properties
+    // MARK: - Public Properties
 
-	weak var viewController: UIViewController?
-	weak var router: AppRouter?
+    weak var delegate: OnboardingRouterDelegate?
 
-	// MARK: - Initializers
+    // MARK: - Private Properties
 
-	init(viewController: UIViewController, router: AppRouter?) {
-		self.viewController = viewController
-		self.router = router
-	}
+    private let viewControllerFactory: () -> UIViewController
 
-	// MARK: - Public Methods
+    // MARK: - Initializers
 
-	func navigateToAuthorizationScreen() {
-		router?.start()
-	}
+    init(viewControllerFactory: @escaping () -> UIViewController) {
+        self.viewControllerFactory = viewControllerFactory
+    }
+
+    // MARK: - Public Methods
+
+    func start() -> UIViewController {
+        viewControllerFactory()
+    }
+
+    func finishOnboarding() {
+        delegate?.onboardingDidFinish()
+    }
 }

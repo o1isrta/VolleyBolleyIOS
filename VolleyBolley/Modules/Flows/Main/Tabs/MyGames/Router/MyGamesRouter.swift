@@ -8,7 +8,7 @@
 import UIKit
 
 protocol MyGamesRouterProtocol: AnyObject {
-    func attachViewController(_ view: UIViewController)
+    func start() -> UIViewController
 	func showMyGames()
 	func showUpcomingGames()
 	func showGameInvites()
@@ -17,14 +17,31 @@ protocol MyGamesRouterProtocol: AnyObject {
 
 final class MyGamesRouter: MyGamesRouterProtocol {
 
-	// MARK: - Public Properties
+    // MARK: - Public Properties
 
     weak var viewController: UIViewController?
 
-	// MARK: - Public Methods
+    // MARK: - Private Properties
 
-    func attachViewController(_ view: UIViewController) {
-        viewController = view
+    private let viewControllerFactory: () -> UIViewController
+
+    private weak var navigationController: UINavigationController?
+
+    // MARK: - Initializers
+
+    init(
+        viewControllerFactory: @escaping () -> UIViewController,
+    ) {
+        self.viewControllerFactory = viewControllerFactory
+    }
+
+    // MARK: - Public Methods
+
+    func start() -> UIViewController {
+        let rootVC = viewControllerFactory()
+        let nav = UINavigationController(rootViewController: rootVC)
+        navigationController = nav
+        return nav
     }
 
 	func showMyGames() {

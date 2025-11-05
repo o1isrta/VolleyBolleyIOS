@@ -4,7 +4,13 @@
 //
 //  Created by Олег Кор on 03.08.2025.
 //
+
 import UIKit
+
+protocol UserRegRouterProtocol: AnyObject {
+    func showLevelInfoScreen()
+    func navigateToNextScreen()
+}
 
 final class UserRegRouter: UserRegRouterProtocol {
 
