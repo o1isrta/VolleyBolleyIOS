@@ -13,11 +13,7 @@ final class NetworkModulesAssembly: Assembly {
     func assemble(container: Container) {
 
         container.register(MoyaProvider<DataAPI>.self) { resolver in
-            guard
-                let environment = resolver.resolve(AppEnvironment.self)
-            else {
-                fatalError("Error: Failed to resolve AppEnvironment")
-            }
+            let environment = resolver.resolve(AppEnvironment.self)!
 
             return MoyaProvider<DataAPI>(
                 endpointClosure: self.makeEndpointClosure(environment: environment),
@@ -28,15 +24,17 @@ final class NetworkModulesAssembly: Assembly {
         .inObjectScope(.container)
 
         container.register(NetworkServiceProtocol.self) { resolver in
-            guard
-                let provider = resolver.resolve(MoyaProvider<DataAPI>.self),
-                let tokenStorage = resolver.resolve(TokenStorageProtocol.self)
-            else {
-                fatalError("Error: Failed to resolve TokenStorageProtocol")
-            }
+            let provider = resolver.resolve(MoyaProvider<DataAPI>.self)!
 
-            return NetworkService(provider: provider) { tokenStorage.accessToken }
-        }.inObjectScope(.container)
+            return NetworkService(provider: provider)
+        }
+        .inObjectScope(.container)
+
+        container.register(AuthRepositoryProtocol.self) { resolver in
+            let networkService = resolver.resolve(NetworkServiceProtocol.self)!
+
+            return AuthRepository(service: networkService)
+        }
     }
 
     // MARK: - Private methods

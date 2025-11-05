@@ -8,15 +8,15 @@
 import Foundation
 
 enum NetworkError: Error {
-	case missingAccessToken
-	case invalidStatusCode(Int)
-
-	var description: String {
-		switch self {
-		case .missingAccessToken:
-			return "Access token not found"
-		case .invalidStatusCode(let code):
-			return "The server returned a failed status: \(code)"
-		}
-	}
+    case unauthorized
+    case clientError(Int, String?)
+    case serverError(Int)
+    case invalidStatusCode(Int)
+    case decodingFailed
+    case noInternet
+    case timeout
+    case serverUnreachable
+    case cancelled
+    case network(Error)
+    case unknown
 }
