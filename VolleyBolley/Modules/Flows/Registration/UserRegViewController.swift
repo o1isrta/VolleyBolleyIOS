@@ -13,7 +13,9 @@ protocol UserRegViewProtocol: AnyObject where Self: UIViewController {
 
 final class UserRegViewController: UIViewController, UITextFieldDelegate {
 
-	var presenter: UserRegPresenterProtocol?
+    // MARK: - Private properties
+
+    private let presenter: UserRegPresenterProtocol
 
 	private lazy var scrollView: UIScrollView = {
 		let scrollView = UIScrollView()
@@ -143,32 +145,43 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
 	private var selectedCountry: String?
 	private var selectedCity: String?
 
+    // MARK: - Initializers
+
+    init(presenter: UserRegPresenterProtocol) {
+        self.presenter = presenter
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - Lifecycle
+
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		navigationController?.setNavigationBarHidden(true, animated: false)
 	}
 
-	override func viewDidLoad() {
-		super.viewDidLoad()
+    override func viewDidLoad() {
+        super.viewDidLoad()
 
-		let countries = presenter?.countries ?? []
-		countryList = LocationPickerView(items: countries, placeholder: String(localized: "Choose your country"))
-		countryList?.delegate = self
+        let countries = presenter.countries
+        countryList = LocationPickerView(items: countries, placeholder: String(localized: "Choose your country"))
+        countryList?.delegate = self
 
-		let cities = presenter?.cities ?? []
-		cityList = LocationPickerView(items: cities, placeholder: String(localized: "Choose your city"))
-		cityList?.delegate = self
+        let cities = presenter.cities
+        cityList = LocationPickerView(items: cities, placeholder: String(localized: "Choose your city"))
+        cityList?.delegate = self
 
-		setupScrollView()
-		setupSubviews()
-		setupConstraints()
-		setupActions()
-		hideKeyboardWhenTappedAround()
+        setupScrollView()
+        setupSubviews()
+        setupConstraints()
 
-		presenter?.viewDidLoad()
-		updateGetStartedButtonState()
-		view.layoutIfNeeded()
-	}
+        updateGetStartedButtonState()
+        view.layoutIfNeeded()
+    }
 
 	private func setupScrollView() {
 		view.addSubviews(scrollView)
@@ -317,7 +330,7 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
 	}
 
 	@objc private func levelInfoButtonTapped() {
-		presenter?.didTapLevelInfo()
+		presenter.didTapLevelInfo()
 	}
 
 	@objc private func levelButtonTapped(_ sender: PickButton) {
@@ -335,7 +348,7 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
 		let name = nameTextField.text ?? ""
 		let surname = surnameTextField.text ?? ""
 		let gender = selectedGender ?? ""
-		presenter?.didTapGetStarted(name: name, surname: surname, gender: gender)
+		presenter.didTapGetStarted(name: name, surname: surname, gender: gender)
 	}
 
 	@objc private func nameTextFieldDidChange() {
@@ -376,12 +389,3 @@ extension UserRegViewController: LocationPickerViewDelegate {
 		}
 	}
 }
-
-// MARK: - Preview
-
-#if DEBUG
-@available(iOS 17.0, *)
-#Preview {
-	UserRegViewController()
-}
-#endif

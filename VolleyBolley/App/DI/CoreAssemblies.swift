@@ -15,10 +15,10 @@ enum CoreAssemblies {
             AppRouterAssembly(),
             EnvironmentAssembly(),
             SettingsAssembly(),
-            TokenStorageAssembly(),
             NetworkModulesAssembly(),
             MediaServicesAssembly(),
             LocationAssembly(),
+            SessionAssembly(),
             GoogleAuthAssembly(),
             FirebaseAuthAssembly()
         ]

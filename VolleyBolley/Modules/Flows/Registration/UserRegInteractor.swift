@@ -7,41 +7,16 @@
 
 import Foundation
 
-protocol UserRegInteractorProtocol: AnyObject {
-    var presenter: UserRegInteractorOutputProtocol? { get set }
-
-    func fetchCountries()
-    func registerUser(name: String, surname: String, gender: String)
-}
+protocol UserRegInteractorProtocol: AnyObject {}
 
 protocol UserRegInteractorOutputProtocol: AnyObject {
-    func didFetchCountries(_ countries: [String])
-    func registrationDidSucceed()
-    func registrationDidFail(error: Error)
+    func didRegisterSuccessfully(isRegistered: Bool)
+    func didFailToRegister(error: Error)
 }
 
 final class UserRegInteractor: UserRegInteractorProtocol {
 
+    // MARK: - Public Properties
+
     weak var presenter: UserRegInteractorOutputProtocol?
-
-    func fetchCountries() {
-            let mockCountries = ["Cyprus", "Thailand", "Poland", "Germany"]
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                self.presenter?.didFetchCountries(mockCountries)
-            }
-        }
-
-    func registerUser(name: String, surname: String, gender: String) {
-        if name.isEmpty || surname.isEmpty || gender.isEmpty {
-			presenter?.registrationDidFail(
-					error: NSError(
-						domain: "",
-						code: -1,
-						userInfo: [NSLocalizedDescriptionKey: "All fields required"]
-					)
-				)
-        } else {
-            presenter?.registrationDidSucceed()
-        }
-    }
 }

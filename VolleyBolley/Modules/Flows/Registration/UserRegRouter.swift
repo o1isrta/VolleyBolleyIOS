@@ -8,29 +8,57 @@
 import UIKit
 
 protocol UserRegRouterProtocol: AnyObject {
-    func showLevelInfoScreen()
-    func navigateToNextScreen()
+    var delegate: AuthRouterDelegate? { get set }
+    func start() -> UIViewController
+    func finishRegistration()
+    func showLevelInfo(onClose: @escaping () -> Void)
+    func closeLevelInfo()
+}
+
+protocol UserRegRouterDelegate: AnyObject {
+    func registrationDidFinish()
 }
 
 final class UserRegRouter: UserRegRouterProtocol {
 
-    weak var viewController: UIViewController?
-    weak var coordinator: AppRouter?
+    // MARK: - Public Properties
 
-    init(viewController: UIViewController, coordinator: AppRouter?) {
-        self.viewController = viewController
-        self.coordinator = coordinator
+    weak var delegate: AuthRouterDelegate?
+
+    // MARK: - Private Properties
+
+    private let viewControllerFactory: () -> UIViewController
+    private weak var navigationController: UINavigationController?
+
+    // MARK: - Initializers
+
+    init(
+        viewControllerFactory: @escaping () -> UIViewController
+    ) {
+        self.viewControllerFactory = viewControllerFactory
     }
 
-    func navigateToNextScreen() {
-        // TODO: Сделать переход на следующий экран
+    // MARK: - Public Methods
+
+    func start() -> UIViewController {
+        let rootVC = viewControllerFactory()
+        let nav = UINavigationController(rootViewController: rootVC)
+        navigationController = nav
+        return nav
     }
 
-    func showLevelInfoScreen() {
-        let levelVC = LevelInfoViewController()
-        levelVC.modalPresentationStyle = .overFullScreen
-        levelVC.modalTransitionStyle = .crossDissolve
+    func finishRegistration() {
+        print("✅ UserRegRouter - finishRegistration")
+        delegate?.authDidFinish()
+    }
 
-        viewController?.present(levelVC, animated: true)
+    func showLevelInfo(onClose: @escaping () -> Void) {
+        let viewController = LevelInfoViewController()
+        viewController.onClose = onClose
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+
+    func closeLevelInfo() {
+        navigationController?.popViewController(animated: true)
     }
 }

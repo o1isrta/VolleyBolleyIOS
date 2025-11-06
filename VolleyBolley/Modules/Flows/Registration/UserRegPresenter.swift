@@ -11,52 +11,65 @@ protocol UserRegPresenterProtocol: AnyObject {
     var countries: [String] { get }
     var cities: [String] { get }
 
-    func viewDidLoad()
     func didTapLevelInfo()
     func didTapGetStarted(name: String, surname: String, gender: String)
 }
 
 final class UserRegPresenter: UserRegPresenterProtocol {
 
-    var countries = ["Cyprus", "Thailand"]
+    // MARK: - Public properties
+
     let cities = ["Koh Phangan", "Koh Samui"]
 
     weak var view: UserRegViewProtocol?
-    var interactor: UserRegInteractorProtocol!
-    var router: UserRegRouterProtocol!
+    var countries = ["Cyprus", "Thailand"]
 
-    init(view: UserRegViewProtocol,
-         interactor: UserRegInteractorProtocol,
-         router: UserRegRouterProtocol) {
-        self.view = view
+    // MARK: - Private properties
+
+    private let interactor: UserRegInteractorProtocol
+    private let router: UserRegRouterProtocol
+    private let finishRegistrationFlow: () -> Void
+
+    // MARK: - Initializers
+
+    init(
+        interactor: UserRegInteractorProtocol,
+        router: UserRegRouterProtocol,
+        finishRegistrationFlow: @escaping () -> Void
+    ) {
         self.interactor = interactor
         self.router = router
-    }
-
-    func viewDidLoad() {
-        interactor.fetchCountries()
+        self.finishRegistrationFlow = finishRegistrationFlow
     }
 
     func didTapLevelInfo() {
-        router?.showLevelInfoScreen()
+        router.showLevelInfo { [weak self] in
+            self?.router.closeLevelInfo()
+        }
     }
 
     func didTapGetStarted(name: String, surname: String, gender: String) {
-        interactor.registerUser(name: name, surname: surname, gender: gender)
+        print("🕸️ UserRegPresenter - didTapGetStarted - name: \(name), surname: \(surname), gender: \(gender)")
+        //        interactor.registerUser(name: name, surname: surname, gender: gender)
     }
 }
 
+// MARK: - AuthInteractorOutput
+
 extension UserRegPresenter: UserRegInteractorOutputProtocol {
-    func didFetchCountries(_ countries: [String]) {
-        self.countries = countries
-        view?.updateCountries(countries)
+
+    func didRegisterSuccessfully(isRegistered: Bool) {
+        if isRegistered {
+            print("✅ UserRegPresenter - didRegisterSuccessfully - isRegistered: \(isRegistered)")
+            finishRegistrationFlow()
+        } else {
+            print("✅ UserRegPresenter - didRegisterSuccessfully - isRegistered: \(isRegistered)")
+            //            view?.showRegistrationScreen()
+        }
     }
 
-    func registrationDidSucceed() {
-        router.navigateToNextScreen()
-    }
-
-    func registrationDidFail(error: Error) {
-
+    func didFailToRegister(error: Error) {
+        //        view?.showError(error.localizedDescription)
+        print("❌ UserRegPresenter - didFailToRegister - error: \(error)")
     }
 }

@@ -15,6 +15,7 @@ final class AppRouterAssembly: Assembly {
             AppRouter(
                 window: resolver.safeResolve(UIWindow.self),
                 onboardingRepository: resolver.safeResolve(OnboardingRepositoryProtocol.self),
+                sessionRepository: resolver.safeResolve(SessionRepositoryProtocol.self),
                 onboardingRouter: resolver.safeResolve(OnboardingRouterProtocol.self),
                 authRouter: resolver.safeResolve(AuthRouterProtocol.self),
                 playerRegistrationRouter: resolver.safeResolve(UserRegRouterProtocol.self),

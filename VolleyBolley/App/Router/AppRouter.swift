@@ -14,6 +14,7 @@ final class AppRouter {
     private let window: UIWindow
 
     private let onboardingRepository: OnboardingRepositoryProtocol
+    private let sessionRepository: SessionRepositoryProtocol
 
     private let onboardingRouter: OnboardingRouterProtocol
     private let authRouter: AuthRouterProtocol
@@ -25,6 +26,7 @@ final class AppRouter {
     init(
         window: UIWindow,
         onboardingRepository: OnboardingRepositoryProtocol,
+        sessionRepository: SessionRepositoryProtocol,
         onboardingRouter: OnboardingRouterProtocol,
         authRouter: AuthRouterProtocol,
         playerRegistrationRouter: UserRegRouterProtocol,
@@ -32,6 +34,7 @@ final class AppRouter {
     ) {
         self.window = window
         self.onboardingRepository = onboardingRepository
+        self.sessionRepository = sessionRepository
         self.onboardingRouter = onboardingRouter
         self.authRouter = authRouter
         self.playerRegistrationRouter = playerRegistrationRouter
@@ -44,6 +47,17 @@ final class AppRouter {
         if !onboardingRepository.isOnboardingShown {
             showOnboarding()
             return
+        }
+
+        guard let session = sessionRepository.currentSession else {
+            showAuthorization()
+            return
+        }
+
+        if session.isRegistered {
+            showMainApp()
+        } else {
+            showPlayerRegistration()
         }
     }
 
@@ -65,6 +79,11 @@ final class AppRouter {
 
     private func showMainApp() {
         window.rootViewController = mainAppRouter.start()
+        window.makeKeyAndVisible()
+    }
+
+    private func showPlayerRegistration() {
+        window.rootViewController = playerRegistrationRouter.start()
         window.makeKeyAndVisible()
     }
 }
