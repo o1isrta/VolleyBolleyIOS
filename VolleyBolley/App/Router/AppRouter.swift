@@ -103,3 +103,11 @@ extension AppRouter: AuthRouterDelegate {
         start()
     }
 }
+
+// MARK: - UserRegRouterDelegate
+
+extension AppRouter: UserRegRouterDelegate {
+    func registrationDidFinish() {
+        showMainApp()
+    }
+}

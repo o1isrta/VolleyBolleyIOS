@@ -26,9 +26,11 @@ final class AppRouterAssembly: Assembly {
         .initCompleted { resolver, appRouter in
             let onboardingRouter = resolver.safeResolve(OnboardingRouterProtocol.self)
             let authRouter = resolver.safeResolve(AuthRouterProtocol.self)
+            let playerRegistrationRouter = resolver.safeResolve(UserRegRouterProtocol.self)
 
             onboardingRouter.delegate = appRouter
             authRouter.delegate = appRouter
+            playerRegistrationRouter.delegate = appRouter
         }
     }
 }

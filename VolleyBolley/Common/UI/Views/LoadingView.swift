@@ -1,22 +1,47 @@
 //
-//  ProgressHub.swift
+//  LoadingView.swift
 //  VolleyBolley
 //
 //  Created by Олег Козырев on 08.09.2025.
 //
+
 import UIKit
 
-/// Класс ProgressHub с анимированным волейбольным мячом
-/// Сделан в виде синглтона
-/// Имеет два метода:
-/// - show - показать анимацию
-/// - hide - скрыть анимацию
-/// Имеет следующие параметры:
-/// - withBlur - ставит блюр равным 0.6 если параметр true или 0 если параметр false
-/// - ballSize - ставит размер прогресс хаба равным 44 если значение big или 20 если значение small
-final class ProgressHub: UIView {
+/// A reusable, singleton-backed loading overlay view that displays a spinning,
+/// gradient-masked volleyball icon centered within its bounds.
+///
+/// LoadingView is designed to be added as a full-screen subview over any
+/// container view to indicate ongoing work. It supports:
+/// - Optional blurred background using a system material blur
+/// - Two preset icon sizes (big/small)
+/// - A continuous spin animation for the icon
+///
+/// Usage:
+/// - Call `LoadingView.shared.show(in:)` to present with default options.
+/// - Use the overloads to customize blur and ball size.
+/// - Call `LoadingView.shared.hide()` to dismiss.
+///
+/// Threading:
+/// - Presentation (`show`) is dispatched to the main queue and is safe to call
+///   from background threads.
+///
+/// Animation:
+/// - Applies a CABasicAnimation rotating the gradient-masked layer infinitely.
+///
+/// Visuals:
+/// - The volleyball icon is used as a mask over a vertical green gradient,
+///   creating a tinted, animated symbol.
+/// - When `withBlur` is enabled, a thin material dark blur is shown behind the icon.
+///
+/// Notes:
+/// - The view intercepts user interaction while visible (`isUserInteractionEnabled = true`)
+///   to prevent interaction with underlying content during loading.
+/// - The view animates its alpha when showing and hiding.
+/// - Constraints are applied to stretch the overlay to its superview, with the icon
+///   centered and sized according to `BallSize`.
+final class LoadingView: UIView {
 
-    static let shared = ProgressHub()
+    static let shared = LoadingView()
 
     enum BallSize {
         case big
@@ -222,14 +247,14 @@ final class ProgressHub: UIView {
 #if DEBUG
 @available(iOS 17.0, *)
 #Preview {
-    ProgressHubPreviewViewController()
+    LoadingViewPreviewViewController()
 }
 
-final class ProgressHubPreviewViewController: UIViewController {
+final class LoadingViewPreviewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        ProgressHub.shared.show(in: view, withBlur: true, ballSize: .big)
+        LoadingView.shared.show(in: view, withBlur: true, ballSize: .big)
     }
 }
 #endif

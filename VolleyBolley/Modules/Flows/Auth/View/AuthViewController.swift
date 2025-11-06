@@ -5,13 +5,29 @@
 //  Created by Олег Козырев
 //
 
+import Combine
 import UIKit
 
-protocol AuthViewProtocol: AnyObject where Self: UIViewController {}
+enum AuthViewState: Equatable {
+    case idle
+    case loading
+    case alertError(String)
+    case success
+}
 
-final class AuthViewController: UIViewController, AuthViewProtocol {
+@MainActor
+final class AuthViewController: UIViewController {
 
     private let presenter: AuthPresenterProtocol
+    private var cancellables: Set<AnyCancellable> = []
+
+    private let loadingView = LoadingView()
+
+    private lazy var alertView: CustomAlertView = {
+        let view = CustomAlertView()
+        view.isHidden = true
+        return view
+    }()
 
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
@@ -50,7 +66,7 @@ final class AuthViewController: UIViewController, AuthViewProtocol {
         button.layer.cornerRadius = 16
         button.clipsToBounds = true
         button.addAction(UIAction { [weak self] _ in
-//            self?.presenter.didTapContinuePhone()
+            self?.presenter.didTapContinuePhone()
         }, for: .touchUpInside)
         return button
     }()
@@ -109,29 +125,87 @@ final class AuthViewController: UIViewController, AuthViewProtocol {
         super.init(nibName: nil, bundle: nil)
     }
 
-    @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    deinit {
+        cancellables.removeAll()
     }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) { nil }
 
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        bindPresenter()
+    }
 
+    // MARK: - Private Methods
+
+    private func bindPresenter() {
+        presenter.statePublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] state in
+                self?.handleStateChange(state)
+            }
+            .store(in: &cancellables)
+    }
+
+    private func handleStateChange(_ state: AuthViewState) {
+        switch state {
+        case .idle:
+            loadingView.hide()
+        case .loading:
+            loadingView.show(in: view)
+        case .alertError(let message):
+            loadingView.hide()
+            showAlert(message: message)
+        case .success:
+            loadingView.hide()
+        }
+    }
+
+    private func showAlert(message: String) {
+        guard alertView.isHidden else { return }
+
+        let button = ButtonDataModel(
+            title: String(localized: "OK"),
+            action: { [weak self] in
+                self?.hideAlert()
+            }
+        )
+
+        let alertModel = CustomAlertModel(
+            title: String(localized: "Error"),
+            message: message,
+            primaryButton: button
+        )
+
+        alertView.configure(with: alertModel)
+        alertView.alpha = 0
+        alertView.isHidden = false
+        view.bringSubviewToFront(alertView)
+
+        UIView.animate(withDuration: 0.25) {
+            self.alertView.alpha = 1
+        }
+    }
+
+    private func hideAlert() {
+        UIView.animate(withDuration: 0.25, animations: {
+            self.alertView.alpha = 0
+        }, completion: { _ in
+            self.alertView.isHidden = true
+        })
     }
 
     private func setupUI() {
-        [backgroundImageView,
-         descriptionLabel,
-         bottomView].forEach {
-            view.addSubviews($0)
-        }
+        view.addSubviews(backgroundImageView, descriptionLabel, bottomView, alertView)
 
         bottomView.addSubview(buttonsStack)
 
         backgroundImageView.pinToSuperviewEdges()
+        alertView.pinToSuperviewEdges()
 
         NSLayoutConstraint.activate([
             descriptionLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),

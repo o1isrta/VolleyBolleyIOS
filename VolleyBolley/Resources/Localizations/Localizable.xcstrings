@@ -1532,6 +1532,9 @@
         }
       }
     },
+    "Error" : {
+
+    },
     "Fair Play Policy" : {
       "comment" : "FAQ",
       "localizations" : {
@@ -1719,6 +1722,9 @@
       }
     },
     "GET STARTED" : {
+
+    },
+    "Go to main App" : {
 
     },
     "homeCreateNewGame" : {
@@ -2325,6 +2331,9 @@
           }
         }
       }
+    },
+    "OK" : {
+
     },
     "onboarding.description" : {
       "comment" : "Onboarding",
@@ -3254,6 +3263,9 @@
           }
         }
       }
+    },
+    "Warning" : {
+
     },
     "We ensure a fair system:\n• Ratings are anonymous\n• Max 2 ratings from the same player in 60 days\n• Light has minimal impact on Hard and Pro levels\n• Pro levels are harder to reach\nPlay fair — your level will speak for itself." : {
       "comment" : "FAQ",

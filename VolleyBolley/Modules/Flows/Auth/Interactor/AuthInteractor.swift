@@ -5,22 +5,21 @@
 //  Created by Олег Козырев on 31.07.2025.
 //
 
+import Combine
 import UIKit
 
 protocol AuthInteractorProtocol: AnyObject {
+    var statePublisher: AnyPublisher<AuthViewState, Never> { get }
     func loginWithGoogle()
-}
-
-protocol AuthInteractorOutput: AnyObject {
-    func didLoginSuccessfully()
-    func didFailToLogin(error: Error)
 }
 
 final class AuthInteractor: AuthInteractorProtocol {
 
-    // MARK: - Public Properties
+    var statePublisher: AnyPublisher<AuthViewState, Never> {
+        stateSubject.eraseToAnyPublisher()
+    }
 
-    weak var presenter: AuthInteractorOutput?
+    private let stateSubject = PassthroughSubject<AuthViewState, Never>()
 
     // MARK: - Private Properties
 
@@ -48,22 +47,31 @@ final class AuthInteractor: AuthInteractorProtocol {
 
     // MARK: - Public Methods
 
+    // TODO: - remove debug print
     func loginWithGoogle() {
+        stateSubject.send(.loading)
         Task {
             do {
-                let googleIdToken = try await googleAuthService.signIn(using: router)
-                
+                let googleTokens = try await googleAuthService.signIn(using: router)
+                print("✅ AuthInteractor - Авторизация через Google - idToken: \(googleTokens.idToken)")
+
                 let firebaseIdToken = try await firebaseAuthService.signInWithGoogle(
-                    idToken: googleIdToken.idToken, accessToken: googleIdToken.accessToken
+                    idToken: googleTokens.idToken,
+                    accessToken: googleTokens.accessToken
                 )
+                print("✅ AuthInteractor - Авторизация через Firebase - idToken: \(firebaseIdToken)")
+
                 let result = try await authRepository.loginWithGoogle(idToken: firebaseIdToken)
+                print("✅ AuthInteractor - Авторизация на сервере - result: \(result)")
 
                 try sessionRepository.save(session: result.session)
+                print("✅ AuthInteractor - Сессия сохранена в Keychain")
+                print("✅ AuthInteractor - Сессия: \(sessionRepository.currentSession, default: "nil")")
 
-                presenter?.didLoginSuccessfully()
+                stateSubject.send(.success)
             } catch {
-                print("❌ Ошибка авторизации через Google: \(error)")
-                presenter?.didFailToLogin(error: error)
+                print("❌ AuthInteractor - error:", error)
+                stateSubject.send(.alertError(error.localizedDescription))
             }
         }
     }

@@ -10,9 +10,9 @@ import Foundation
 protocol UserRegPresenterProtocol: AnyObject {
     var countries: [String] { get }
     var cities: [String] { get }
-
     func didTapLevelInfo()
     func didTapGetStarted(name: String, surname: String, gender: String)
+    func didTapToMain()
 }
 
 final class UserRegPresenter: UserRegPresenterProtocol {
@@ -51,6 +51,10 @@ final class UserRegPresenter: UserRegPresenterProtocol {
     func didTapGetStarted(name: String, surname: String, gender: String) {
         print("🕸️ UserRegPresenter - didTapGetStarted - name: \(name), surname: \(surname), gender: \(gender)")
         //        interactor.registerUser(name: name, surname: surname, gender: gender)
+    }
+
+    func didTapToMain() {
+        router.finishRegistration()
     }
 }
 
