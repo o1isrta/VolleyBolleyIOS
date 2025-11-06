@@ -4,9 +4,12 @@
 //
 //  Created by Олег Козырев on 16.08.2025.
 //
+
 import UIKit
 
 final class LevelInfoViewController: UIViewController {
+
+    var onClose: (() -> Void)?
 
 	private lazy var backgroundView: UIView = {
 		let view = UIView()
