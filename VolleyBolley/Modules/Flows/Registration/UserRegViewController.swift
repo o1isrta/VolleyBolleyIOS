@@ -17,6 +17,12 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
 
     private let presenter: UserRegPresenterProtocol
 
+    private lazy var alertView: CustomAlertView = {
+        let view = CustomAlertView()
+        view.isHidden = true
+        return view
+    }()
+
 	private lazy var scrollView: UIScrollView = {
 		let scrollView = UIScrollView()
 		scrollView.backgroundColor = AppColor.Background.screen
@@ -181,11 +187,42 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
 
         updateGetStartedButtonState()
         view.layoutIfNeeded()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { [weak self] in
+            self?.showAlert()
+        }
+    }
+
+    private func showAlert() {
+        guard alertView.isHidden else { return }
+
+        let button = ButtonDataModel(
+            title: String(localized: "Go to main App"),
+            action: { [weak self] in
+                self?.presenter.didTapToMain()
+            }
+        )
+
+        let alertModel = CustomAlertModel(
+            title: String(localized: "Warning"),
+            message: "Not implemented yet",
+            primaryButton: button
+        )
+
+        alertView.configure(with: alertModel)
+        alertView.alpha = 0
+        alertView.isHidden = false
+        view.bringSubviewToFront(alertView)
+
+        UIView.animate(withDuration: 0.25) {
+            self.alertView.alpha = 1
+        }
     }
 
 	private func setupScrollView() {
-		view.addSubviews(scrollView)
+		view.addSubviews(scrollView, alertView)
 		scrollView.addSubviews(contentView)
+        alertView.pinToSuperviewEdges()
 
 		NSLayoutConstraint.activate([
 			scrollView.topAnchor.constraint(equalTo: view.topAnchor),

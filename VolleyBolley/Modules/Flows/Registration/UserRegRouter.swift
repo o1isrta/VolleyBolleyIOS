@@ -8,7 +8,7 @@
 import UIKit
 
 protocol UserRegRouterProtocol: AnyObject {
-    var delegate: AuthRouterDelegate? { get set }
+    var delegate: UserRegRouterDelegate? { get set }
     func start() -> UIViewController
     func finishRegistration()
     func showLevelInfo(onClose: @escaping () -> Void)
@@ -23,7 +23,7 @@ final class UserRegRouter: UserRegRouterProtocol {
 
     // MARK: - Public Properties
 
-    weak var delegate: AuthRouterDelegate?
+    weak var delegate: UserRegRouterDelegate?
 
     // MARK: - Private Properties
 
@@ -48,8 +48,7 @@ final class UserRegRouter: UserRegRouterProtocol {
     }
 
     func finishRegistration() {
-        print("✅ UserRegRouter - finishRegistration")
-        delegate?.authDidFinish()
+        delegate?.registrationDidFinish()
     }
 
     func showLevelInfo(onClose: @escaping () -> Void) {
