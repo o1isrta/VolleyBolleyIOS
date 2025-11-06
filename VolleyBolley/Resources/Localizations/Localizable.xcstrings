@@ -2,6 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "%@ %@" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -213,6 +214,7 @@
     },
     "CHOOSE THIS GAME" : {
       "comment" : "\"CHOOSE THIS GAME\" button",
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -615,6 +617,7 @@
     },
     "customAlertView.button.enable" : {
       "comment" : "Custom Alert",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -685,6 +688,7 @@
     },
     "customAlertView.button.skip" : {
       "comment" : "Custom Alert",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -774,6 +778,7 @@
     },
     "customAlertView.message.notification" : {
       "comment" : "Custom Alert",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -842,6 +847,7 @@
     },
     "customAlertView.title.notification" : {
       "comment" : "Custom Alert",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
