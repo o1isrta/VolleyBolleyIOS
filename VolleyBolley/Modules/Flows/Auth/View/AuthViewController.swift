@@ -36,34 +36,51 @@ final class AuthViewController: UIViewController, AuthViewProtocol {
 
     private lazy var phoneAuthButton: UIButton = {
         let button = UIButton()
-        button.setTitle(String(localized: "Continue with phone number"), for: .normal)
-        button.titleLabel?.font = AppFont.Hero.bold(size: 18)
-        button.setTitleColor(AppColor.Text.inverted, for: .normal)
-        button.backgroundColor = AppColor.Background.buttonYellowSelected
+        var config = UIButton.Configuration.filled()
+        var attributes = AttributeContainer()
+        attributes.font = AppFont.Hero.bold(size: 18)
+        attributes.foregroundColor = AppColor.Text.inverted
+        config.attributedTitle = AttributedString(
+            String(localized: "Continue with phone number"),
+            attributes: attributes
+        )
+        config.baseBackgroundColor = AppColor.Background.buttonYellowSelected
+        config.contentInsets = NSDirectionalEdgeInsets(top: 17, leading: 6, bottom: 17, trailing: 6)
+        button.configuration = config
         button.layer.cornerRadius = 16
         button.clipsToBounds = true
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.heightAnchor.constraint(equalToConstant: 54).isActive = true
+        button.addAction(UIAction { [weak self] _ in
+//            self?.presenter.didTapContinuePhone()
+        }, for: .touchUpInside)
         return button
     }()
 
     private lazy var googleAuthButton: UIButton = {
         let button = UIButton()
-        button.setTitle("  " + String(localized: "Continue with Google"), for: .normal)
-        button.titleLabel?.font = AppFont.Hero.bold(size: 18)
-        button.setTitleColor(AppColor.Text.inverted, for: .normal)
-        button.backgroundColor = AppColor.Background.primary
-		button.setImage(UIImage.Icon.google, for: .normal)
-
+        var config = UIButton.Configuration.filled()
+        var attributes = AttributeContainer()
+        attributes.font = AppFont.Hero.bold(size: 18)
+        attributes.foregroundColor = AppColor.Text.inverted
+        config.attributedTitle = AttributedString(
+            String(localized: "Continue with Google"),
+            attributes: attributes
+        )
+        config.image = UIImage.Icon.google
+        config.imagePlacement = .leading
+        config.imagePadding = 10
+        config.baseBackgroundColor = AppColor.Background.primary
+        config.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 6, bottom: 16, trailing: 6)
+        button.configuration = config
         button.layer.cornerRadius = 16
         button.clipsToBounds = true
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.heightAnchor.constraint(equalToConstant: 56).isActive = true
+        button.addAction(UIAction { [weak self] _ in
+            self?.presenter.didTapContinueWithGoogle()
+        }, for: .touchUpInside)
         return button
     }()
 
     private lazy var buttonsStack: UIStackView = {
-        let stack = UIStackView()
+        let stack = UIStackView(arrangedSubviews: [phoneAuthButton, googleAuthButton])
         stack.axis = .vertical
         stack.spacing = 8
         stack.translatesAutoresizingMaskIntoConstraints = false
@@ -93,13 +110,16 @@ final class AuthViewController: UIViewController, AuthViewProtocol {
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) { nil }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+
     }
 
     private func setupUI() {
@@ -111,15 +131,9 @@ final class AuthViewController: UIViewController, AuthViewProtocol {
 
         bottomView.addSubview(buttonsStack)
 
-        buttonsStack.addArrangedSubview(phoneAuthButton)
-        buttonsStack.addArrangedSubview(googleAuthButton)
+        backgroundImageView.pinToSuperviewEdges()
 
         NSLayoutConstraint.activate([
-            backgroundImageView.topAnchor.constraint(equalTo: view.topAnchor),
-            backgroundImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            backgroundImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            backgroundImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-
             descriptionLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             descriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 22),
 

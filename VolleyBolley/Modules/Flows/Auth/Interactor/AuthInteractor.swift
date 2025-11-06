@@ -27,6 +27,7 @@ final class AuthInteractor: AuthInteractorProtocol {
     private let googleAuthService: GoogleAuthServiceProtocol
     private let firebaseAuthService: FirebaseAuthServiceProtocol
     private let authRepository: AuthRepositoryProtocol
+    private let sessionRepository: SessionRepositoryProtocol
     private let router: AuthRouterProtocol
 
     // MARK: - Initializers
@@ -35,11 +36,13 @@ final class AuthInteractor: AuthInteractorProtocol {
         googleAuthService: GoogleAuthServiceProtocol,
         firebaseAuthService: FirebaseAuthServiceProtocol,
         authRepository: AuthRepositoryProtocol,
+        sessionRepository: SessionRepositoryProtocol,
         router: AuthRouterProtocol
     ) {
         self.googleAuthService = googleAuthService
         self.firebaseAuthService = firebaseAuthService
         self.authRepository = authRepository
+        self.sessionRepository = sessionRepository
         self.router = router
     }
 
@@ -49,12 +52,15 @@ final class AuthInteractor: AuthInteractorProtocol {
         Task {
             do {
                 let googleIdToken = try await googleAuthService.signIn(using: router)
+                
                 let firebaseIdToken = try await firebaseAuthService.signInWithGoogle(
                     idToken: googleIdToken.idToken, accessToken: googleIdToken.accessToken
                 )
                 let result = try await authRepository.loginWithGoogle(idToken: firebaseIdToken)
 
-                print("✅ Успешная авторизация через Google: \(result)")
+                try sessionRepository.save(session: result.session)
+
+                presenter?.didLoginSuccessfully()
             } catch {
                 print("❌ Ошибка авторизации через Google: \(error)")
                 presenter?.didFailToLogin(error: error)

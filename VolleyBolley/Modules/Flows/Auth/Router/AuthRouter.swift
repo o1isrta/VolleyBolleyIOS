@@ -76,4 +76,3 @@ final class AuthRouter: NSObject, AuthRouterProtocol, ASWebAuthenticationPresent
         return window
     }
 }
-
