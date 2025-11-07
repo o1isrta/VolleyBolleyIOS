@@ -66,7 +66,7 @@ final class AuthInteractor: AuthInteractorProtocol {
 
                 try sessionRepository.save(session: result.session)
                 print("✅ AuthInteractor - Сессия сохранена в Keychain")
-                print("✅ AuthInteractor - Сессия: \(sessionRepository.currentSession, default: "nil")")
+                print("✅ AuthInteractor - Сессия: \(String(describing: sessionRepository.currentSession))")
 
                 stateSubject.send(.success)
             } catch {
