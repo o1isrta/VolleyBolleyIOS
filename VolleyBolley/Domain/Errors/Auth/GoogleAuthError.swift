@@ -18,16 +18,17 @@ enum GoogleAuthError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .networkError:
-            return "Connection problem. Please check your internet."
+            return String(localized: .errorMessageNetwork)
         case .missingIDToken:
-            return "Failed to verify Google credentials."
+            return String(localized: .errorMessageMissingIDToken)
         case .signInCancelled:
-            return "Sign-in was cancelled."
+            return String(localized: .errorMessageSignInCancelled)
         case .signInFailed(let error):
-            return error
+            print("❌ GoogleAuth internal error: \(error)")
+            return String(localized: .errorMessageFallback)
         case .unknown(let error):
             print("❌ GoogleAuth internal error: \(error)")
-            return "Something went wrong. Please try again."
+            return String(localized: .errorMessageFallback)
         }
     }
 }

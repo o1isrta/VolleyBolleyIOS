@@ -18,16 +18,16 @@ enum FirebaseAuthError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .networkError:
-            return "Connection problem. Please check your internet."
+            return String(localized: .errorMessageNetwork)
         case .invalidCredentials:
-            return "Failed to verify Google credentials."
+            return String(localized: .errorMessageInvalidCredentials)
         case .userDisabled:
-            return "This account has been disabled."
+            return String(localized: .errorMessageUserDisabled)
         case .tooManyRequests:
-            return "Too many attempts. Please try again later."
+            return String(localized: .errorMessageTooManyRequests)
         case .unknown(let error):
             print("❌ FirebaseAuth internal error: \(error)")
-            return "Something went wrong. Please try again."
+            return String(localized: .errorMessageFallback)
         }
     }
 }

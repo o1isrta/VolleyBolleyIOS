@@ -50,7 +50,7 @@ final class AuthPresenter: AuthPresenterProtocol {
     }
 
     func didTapContinuePhone() {
-        state = .alertError("Not implemented yet.")
+        state = .alertError(String(localized: "Not implemented yet"))
     }
 
     private func bindInteractor() {

@@ -1538,8 +1538,143 @@
         }
       }
     },
-    "Error" : {
-
+    "errorMessageFallback" : {
+      "comment" : "Error message",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Something went wrong. Please try again."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Что-то пошло не так. Пожалуйста, попробуйте еще раз."
+          }
+        }
+      }
+    },
+    "errorMessageInvalidCredentials" : {
+      "comment" : "Firebase error message",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to verify Google credentials."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось проверить учетные данные Google."
+          }
+        }
+      }
+    },
+    "errorMessageMissingIDToken" : {
+      "comment" : "Google auth error message",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to verify Google credentials."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось проверить учетные данные Google."
+          }
+        }
+      }
+    },
+    "errorMessageNetwork" : {
+      "comment" : "Internet connection error message",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connection problem. Please check your internet."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Проблема с подключением. Пожалуйста, проверьте ваше интернет-соединение."
+          }
+        }
+      }
+    },
+    "errorMessageSignInCancelled" : {
+      "comment" : "Google auth error message",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign-in was cancelled."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вход в систему был отменен."
+          }
+        }
+      }
+    },
+    "errorMessageTooManyRequests" : {
+      "comment" : "Firebase error message",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Too many attempts. Please try again later."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Слишком много попыток. Пожалуйста, попробуйте позже."
+          }
+        }
+      }
+    },
+    "errorMessageUserDisabled" : {
+      "comment" : "Firebase error message",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This account has been disabled."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Эта учетная запись была заблокирована."
+          }
+        }
+      }
+    },
+    "errorTitleError" : {
+      "comment" : "Error title",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ошибка"
+          }
+        }
+      }
     },
     "Fair Play Policy" : {
       "comment" : "FAQ",
@@ -1731,7 +1866,14 @@
 
     },
     "Go to main App" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пропустить"
+          }
+        }
+      }
     },
     "homeCreateNewGame" : {
       "comment" : "Home screen CreateNewGame button title",
@@ -2304,6 +2446,16 @@
         }
       }
     },
+    "Not implemented yet" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пока не реализовано"
+          }
+        }
+      }
+    },
     "notifications.noNotifications" : {
       "comment" : "Notifications",
       "localizations" : {
@@ -2339,7 +2491,14 @@
       }
     },
     "OK" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ОК"
+          }
+        }
+      }
     },
     "onboarding.description" : {
       "comment" : "Onboarding",
@@ -3271,7 +3430,14 @@
       }
     },
     "Warning" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Предупреждение"
+          }
+        }
+      }
     },
     "We ensure a fair system:\n• Ratings are anonymous\n• Max 2 ratings from the same player in 60 days\n• Light has minimal impact on Hard and Pro levels\n• Pro levels are harder to reach\nPlay fair — your level will speak for itself." : {
       "comment" : "FAQ",

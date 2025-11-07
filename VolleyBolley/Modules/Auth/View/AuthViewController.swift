@@ -176,7 +176,7 @@ final class AuthViewController: UIViewController {
         )
 
         let alertModel = CustomAlertModel(
-            title: String(localized: "Error"),
+            title: String(localized: .errorTitleError),
             message: message,
             primaryButton: button
         )

@@ -205,7 +205,7 @@ final class UserRegViewController: UIViewController, UITextFieldDelegate {
 
         let alertModel = CustomAlertModel(
             title: String(localized: "Warning"),
-            message: "Not implemented yet",
+            message: String(localized: "Not implemented yet"),
             primaryButton: button
         )
 
