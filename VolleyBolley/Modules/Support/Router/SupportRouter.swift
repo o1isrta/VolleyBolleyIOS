@@ -25,11 +25,11 @@ final class SupportRouter: SupportRouterProtocol {
 
 	// MARK: - Private Properties
 
-	private let faqViewController: () -> FAQViewController?
+	private let faqViewController: () -> FAQViewProtocol?
 
 	// MARK: - Initializers
 
-	init(faqViewController: @escaping () -> FAQViewController?) {
+	init(faqViewController: @escaping () -> FAQViewProtocol?) {
 		self.faqViewController = faqViewController
 	}
 

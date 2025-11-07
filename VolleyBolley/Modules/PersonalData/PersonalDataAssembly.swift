@@ -10,7 +10,7 @@ import Swinject
 final class PersonalDataAssembly: Assembly {
 
     func assemble(container: Container) {
-        container.register(PersonalDataViewController.self) { resolver in
+        container.register(PersonalDataViewProtocol.self) { resolver in
 			let editProfilePhotoViewController = { resolver.resolve(EditProfilePhotoViewController.self) }
 			let router = PersonalDataRouter(
 				editProfilePhotoViewController: editProfilePhotoViewController

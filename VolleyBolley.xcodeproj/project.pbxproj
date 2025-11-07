@@ -196,7 +196,10 @@
 				INFOPLIST_FILE = VolleyBolley/App/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = VolleyBolley;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to take a profile picture";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "VolleyBolley uses your location to help you discover nearby courts.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We need access to save photos to your library";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to let you choose a profile picture";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -228,12 +231,15 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = NR5Q88774S;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VolleyBolley/App/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = VolleyBolley;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to take a profile picture";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "VolleyBolley uses your location to help you discover nearby courts.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We need access to save photos to your library";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to let you choose a profile picture";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -244,7 +250,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = VB.VolleyBolley;
+				PRODUCT_BUNDLE_IDENTIFIER = com.VBDevTeam.VolleyBolley;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -461,7 +467,10 @@
 				INFOPLIST_FILE = VolleyBolley/App/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = VolleyBolley;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to take a profile picture";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "VolleyBolley uses your location to help you discover nearby courts.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We need access to save photos to your library";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to let you choose a profile picture";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -564,7 +573,10 @@
 				INFOPLIST_FILE = VolleyBolley/App/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = VolleyBolley;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to take a profile picture";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "VolleyBolley uses your location to help you discover nearby courts.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We need access to save photos to your library";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to let you choose a profile picture";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;

@@ -34,7 +34,7 @@ final class EditProfilePhotoViewController: BaseViewController {
 		static let saveButtonHeight: CGFloat = 44
 	}
 
-	private let loadingIndicator = ProgressHub.shared
+	private let loadingIndicator = LoadingView.shared
 
 	private lazy var glassmorphismView = GlassmorphismView()
 	private lazy var screenTitle = CustomTitle(

@@ -11,7 +11,7 @@ final class SupportAssembly: Assembly {
 
     func assemble(container: Container) {
         container.register(SupportViewProtocol.self) { resolver in
-            let faqViewController = { resolver.resolve(FAQViewController.self) }
+            let faqViewController = { resolver.resolve(FAQViewProtocol.self) }
             let router = SupportRouter(faqViewController: faqViewController)
             let presenter = SupportPresenter(
                 router: router
