@@ -87,14 +87,12 @@ final class SketchButton: UIButton {
         view.textAlignment = .left
         view.numberOfLines = 2
         view.lineBreakMode = .byWordWrapping
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
     private lazy var actionImageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
@@ -203,8 +201,7 @@ final class SketchButton: UIButton {
     // MARK: - Layout
 
     private func setupActionLayout() {
-        addSubview(actionTitleLabel)
-        addSubview(actionImageView)
+        addSubviews(actionTitleLabel, actionImageView)
 
         setupConstraintsActionTitleLabel()
         setupConstraintsActionImageView()
