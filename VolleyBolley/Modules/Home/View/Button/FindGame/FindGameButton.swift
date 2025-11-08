@@ -16,15 +16,13 @@ final class FindGameButton: UIButton {
         static let subTitleFontSize: CGFloat = 16
         static let imageTop: CGFloat = 64
         static let imageLeading: CGFloat = 60
-        static let imageWidth: CGFloat = 122
-        static let imageHeight: CGFloat = 37
-        static let gamesAvailableTop: CGFloat = 8
-        static let gamesAvailableBottom: CGFloat = -8
-        static let gamesAvailableTrailing: CGFloat = -8
-        static let gamesAvailableWidth: CGFloat = 150
-        static let vStackTop: CGFloat = 18
-        static let vStackLeading: CGFloat = 18
-        static let vStackTrailing: CGFloat = 8
+        static let imageWidth: CGFloat = 122.scaledByScreenWidth
+        static let imageHeight: CGFloat = 37.scaledByScreenHeight
+        static let gamesAvailableInset: CGFloat = 8.scaledByScreenHeight
+        static let gamesAvailableWidth: CGFloat = 150.scaledByScreenWidth
+        static let vStackTop: CGFloat = 18.scaledByScreenHeight
+        static let vStackLeading: CGFloat = 18.scaledByScreenWidth
+        static let vStackTrailing: CGFloat = 8.scaledByScreenWidth
     }
 
     private var activeBackgroundEffect: UIView?
@@ -147,11 +145,11 @@ final class FindGameButton: UIButton {
 
     private func setupConstraintsGamesAvailableView() {
         NSLayoutConstraint.activate([
-            gamesAvailableView.topAnchor.constraint(equalTo: topAnchor, constant: Constants.gamesAvailableTop),
-            gamesAvailableView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: Constants.gamesAvailableBottom),
+            gamesAvailableView.topAnchor.constraint(equalTo: topAnchor, constant: Constants.gamesAvailableInset),
+            gamesAvailableView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -Constants.gamesAvailableInset),
             gamesAvailableView.trailingAnchor.constraint(
                 equalTo: trailingAnchor,
-                constant: Constants.gamesAvailableTrailing
+                constant: -Constants.gamesAvailableInset
             ),
             gamesAvailableView.widthAnchor.constraint(equalToConstant: Constants.gamesAvailableWidth)
         ])
