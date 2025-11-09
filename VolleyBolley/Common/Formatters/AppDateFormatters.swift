@@ -71,7 +71,16 @@ enum AppDateFormatters {
 	static let monthDay: DateFormatter = {
 		let formatter = DateFormatter()
 		formatter.locale = Locale.current
+		formatter.timeZone = .current
 		formatter.dateFormat = "MMMM, d"
+		return formatter
+	}()
+
+	static let dayMonth: DateFormatter = {
+		let formatter = DateFormatter()
+		formatter.locale = Locale.current
+		formatter.timeZone = .current
+		formatter.dateFormat = "d MMMM"
 		return formatter
 	}()
 }
