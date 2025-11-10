@@ -14,7 +14,7 @@ final class UserCardCell: UITableViewCell {
 	static let reuseIdentifier = "UserCardCell"
 
 	private enum Constants {
-		static let cellHeight: CGFloat = 87
+		static let cellHeight: CGFloat = 103
 
 		static let horizontalInset: CGFloat = 16
 		static let verticalInset: CGFloat = 8
@@ -23,13 +23,18 @@ final class UserCardCell: UITableViewCell {
 
 		static let locationStackHeight: CGFloat = 44
 		static let locationStackSpacing: CGFloat = 10
+		static let glassmorphismViewAlpha: CGFloat = 0.7
 	}
 
 	// MARK: - Private Properties
 
 	private var mapButtonCallback: (() -> Void)?
 
-	private lazy var glassmorphismView = GlassmorphismView(configuration: .message)
+	private lazy var glassmorphismView = {
+		let view = GlassmorphismView(configuration: .message)
+		view.alpha = Constants.glassmorphismViewAlpha
+		return view
+	}()
 
 	private lazy var dateLabel: CustomLabel = {
 		let label = CustomLabel(text: "", isBold: false)
@@ -90,14 +95,24 @@ private extension UserCardCell {
 			dateLabel,
 			locationStackView
 		)
+		setupConstraints()
+	}
+
+	func setupConstraints() {
 		NSLayoutConstraint.activate([
-			glassmorphismView.topAnchor.constraint(equalTo: contentView.topAnchor),
+			glassmorphismView.topAnchor.constraint(
+				equalTo: contentView.topAnchor,
+				constant: Constants.verticalInset
+			),
 			glassmorphismView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
 			glassmorphismView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-			glassmorphismView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+			glassmorphismView.bottomAnchor.constraint(
+				equalTo: contentView.bottomAnchor,
+				constant: -Constants.verticalInset
+			),
 
 			dateLabel.topAnchor.constraint(
-				equalTo: contentView.topAnchor,
+				equalTo: glassmorphismView.topAnchor,
 				constant: Constants.verticalInset
 			),
 			dateLabel.leadingAnchor.constraint(
@@ -122,7 +137,7 @@ private extension UserCardCell {
 				constant: -Constants.horizontalInset
 			),
 			locationStackView.bottomAnchor.constraint(
-				equalTo: contentView.bottomAnchor,
+				equalTo: glassmorphismView.bottomAnchor,
 				constant: -Constants.verticalInset
 			),
 			locationStackView.heightAnchor.constraint(
@@ -164,7 +179,7 @@ import SwiftUI
 			view.configure(with: model)
 			return view
 		}
-		.frame(width: 319, height: 87)
+		.frame(width: 336, height: 103)
 	}
 }
 

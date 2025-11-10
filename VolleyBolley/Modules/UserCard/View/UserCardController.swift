@@ -21,22 +21,28 @@ final class UserCardController: BaseViewController {
 		static let mediumIndent: CGFloat = 16
 		static let mainSpacing: CGFloat = 20
 		static let backButtonTopInset: CGFloat = 14
-		static let favoriteButtonTopInset: CGFloat = 12
+		static let mainStackTopInset: CGFloat = 59
+		static let screenTitleLeftInset: CGFloat = 42
 
 		static let profilePhotoSize: CGFloat = 100
 
-		static let glassmorphismViewHeight: CGFloat = 454 // TODO: -
+		static let tableEstimatedRowHeight: CGFloat = 87
+		static let tableHeight: CGFloat = 334 // TODO: dynamic height needed
 		static let favoriteButtonHeight: CGFloat = 44
+		static let backButtonSize: CGFloat = 24
+
+		static let fontSize: CGFloat = 16
 	}
 
 	private let loadingIndicator = ProgressHub.shared
 
 	private lazy var glassmorphismView = GlassmorphismView()
 
-	private lazy var screenTitle = CustomTitle(
-		text: "",
-		isLarge: true
-	)
+	private lazy var screenTitle: CustomTitle = {
+		let label = CustomTitle(text: "", isLarge: true)
+		label.numberOfLines = 1
+		return label
+	}()
 
 	private lazy var backButton: UtilityButton = {
 		let button = UtilityButton(style: .small)
@@ -52,9 +58,9 @@ final class UserCardController: BaseViewController {
 
 	private lazy var levelLabel: GradientLabel = {
 		let label = GradientLabel()
-		label.font = AppFont.Hero.bold(size: 16)
+		label.font = AppFont.Hero.bold(size: LayoutConstants.fontSize)
 		label.textColor = AppColor.Text.primary
-		label.numberOfLines = 0
+		label.text = "-"
 		return label
 	}()
 
@@ -62,6 +68,20 @@ final class UserCardController: BaseViewController {
 		text: String(localized: "userCard.tableCaption"),
 		isBold: true
 	)
+
+	private lazy var tableView: UITableView = {
+		let tableView = UITableView()
+		tableView.backgroundColor = AppColor.Background.clear
+		tableView.separatorStyle = .none
+		tableView.isScrollEnabled = false
+		tableView.dataSource = self
+		tableView.rowHeight = UITableView.automaticDimension
+		tableView.estimatedRowHeight = LayoutConstants.tableEstimatedRowHeight
+		tableView.register(
+			UserCardCell.self,
+			forCellReuseIdentifier: UserCardCell.reuseIdentifier)
+		return tableView
+	}()
 
 	private lazy var favoriteButton: YellowButton = {
 		let button = YellowButton(
@@ -98,11 +118,22 @@ final class UserCardController: BaseViewController {
 			profilePhotoView,
 			levelLabel,
 			tableCaptionLabel,
+			tableView,
+			buttonsStack
+		])
+		stack.axis = .vertical
+		stack.alignment = .center
+		stack.spacing = LayoutConstants.littleIndent
+		return stack
+	}()
+
+	private lazy var buttonsStack: UIStackView = {
+		let stack = UIStackView(arrangedSubviews: [
 			favoriteButton,
 			unfavoriteButton
 		])
 		stack.axis = .vertical
-		stack.alignment = .center
+		stack.alignment = .fill
 		stack.spacing = LayoutConstants.littleIndent
 		return stack
 	}()
@@ -112,8 +143,6 @@ final class UserCardController: BaseViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		setupView()
-		// TODO: -
-		configure()
 	}
 
 	func configure() {
@@ -136,17 +165,17 @@ private extension UserCardController {
 
 	func setupView() {
 		setupViews()
-		setupConstraints()
 		setupLoadingIndicator()
 	}
 
 	func setupViews() {
-		view.addSubviews(glassmorphismView)
-		glassmorphismView.addSubviews(
+		view.addSubviews(
+			glassmorphismView,
 			backButton,
 			screenTitle,
 			mainStack
 		)
+		setupConstraints()
 	}
 
 	func setupLoadingIndicator() {
@@ -158,6 +187,11 @@ private extension UserCardController {
 	}
 
 	func setupConstraints() {
+		setupMainViewsConstraints()
+		setupContentConstraints()
+	}
+
+	func setupMainViewsConstraints() {
 		NSLayoutConstraint.activate([
 			glassmorphismView.topAnchor.constraint(
 				equalTo: navBar.bottomAnchor,
@@ -168,27 +202,34 @@ private extension UserCardController {
 			glassmorphismView.trailingAnchor.constraint(
 				equalTo: view.trailingAnchor,
 				constant: -LayoutConstants.mainIndent),
-			glassmorphismView.heightAnchor.constraint(
-				equalToConstant: LayoutConstants.glassmorphismViewHeight),
+			glassmorphismView.bottomAnchor.constraint(
+				equalTo: buttonsStack.bottomAnchor,
+				constant: LayoutConstants.mainSpacing),
 
 			backButton.topAnchor.constraint(
 				equalTo: glassmorphismView.topAnchor,
-				constant: LayoutConstants.backButtonTopInset),
+				constant: LayoutConstants.mainSpacing
+			),
 			backButton.leadingAnchor.constraint(
 				equalTo: glassmorphismView.leadingAnchor,
-				constant: LayoutConstants.mainSpacing / 2),
+				constant: LayoutConstants.mainSpacing
+			),
+			backButton.heightAnchor.constraint(equalToConstant: LayoutConstants.backButtonSize),
+			backButton.widthAnchor.constraint(equalToConstant: LayoutConstants.backButtonSize),
 
 			screenTitle.centerXAnchor.constraint(equalTo: glassmorphismView.centerXAnchor),
-			screenTitle.topAnchor.constraint(
-				equalTo: glassmorphismView.topAnchor,
-				constant: LayoutConstants.mainSpacing),
+			screenTitle.centerYAnchor.constraint(equalTo: backButton.centerYAnchor),
 			screenTitle.leadingAnchor.constraint(
-				lessThanOrEqualTo: backButton.trailingAnchor,
-				constant: LayoutConstants.littleIndent),
+				greaterThanOrEqualTo: backButton.trailingAnchor,
+				constant: LayoutConstants.mainIndent),
 			screenTitle.trailingAnchor.constraint(
 				lessThanOrEqualTo: glassmorphismView.trailingAnchor,
-				constant: LayoutConstants.mainSpacing),
+				constant: -LayoutConstants.mainSpacing)
+		])
+	}
 
+	func setupContentConstraints() {
+		NSLayoutConstraint.activate([
 			profilePhotoView.widthAnchor.constraint(
 				equalToConstant: LayoutConstants.profilePhotoSize),
 			profilePhotoView.heightAnchor.constraint(
@@ -198,35 +239,78 @@ private extension UserCardController {
 				equalTo: levelLabel.bottomAnchor,
 				constant: LayoutConstants.mainIndent),
 			tableCaptionLabel.leadingAnchor.constraint(
-				equalTo: glassmorphismView.leadingAnchor,
-				constant: LayoutConstants.mainSpacing),
+				equalTo: mainStack.leadingAnchor),
 			tableCaptionLabel.trailingAnchor.constraint(
-				lessThanOrEqualTo: glassmorphismView.trailingAnchor,
-				constant: LayoutConstants.mainSpacing),
+				lessThanOrEqualTo: mainStack.trailingAnchor),
+
+			tableView.heightAnchor.constraint(
+				equalToConstant: LayoutConstants.tableHeight),
+			tableView.topAnchor.constraint(
+				equalTo: tableCaptionLabel.bottomAnchor,
+				constant: LayoutConstants.mainIndent),
+			tableView.leadingAnchor.constraint(
+				equalTo: mainStack.leadingAnchor),
+			tableView.trailingAnchor.constraint(
+				lessThanOrEqualTo: mainStack.trailingAnchor),
+
+			buttonsStack.topAnchor.constraint(
+				equalTo: tableView.bottomAnchor,
+				constant: -LayoutConstants.mainSpacing),
+			buttonsStack.leadingAnchor.constraint(equalTo: mainStack.leadingAnchor),
+			buttonsStack.trailingAnchor.constraint(equalTo: mainStack.trailingAnchor),
+			buttonsStack.heightAnchor.constraint(equalToConstant: LayoutConstants.favoriteButtonHeight),
 
 			mainStack.topAnchor.constraint(
-				equalTo: screenTitle.bottomAnchor,
-				constant: LayoutConstants.mediumIndent),
+				equalTo: glassmorphismView.topAnchor,
+				constant: LayoutConstants.mainStackTopInset),
 			mainStack.leadingAnchor.constraint(
 				equalTo: glassmorphismView.leadingAnchor,
 				constant: LayoutConstants.mainSpacing),
 			mainStack.trailingAnchor.constraint(
-				equalTo: glassmorphismView.trailingAnchor, constant: -LayoutConstants.mainSpacing),
-
-			favoriteButton.topAnchor.constraint(
-				equalTo: mainStack.bottomAnchor,
-				constant: LayoutConstants.favoriteButtonTopInset),
-			favoriteButton.leadingAnchor.constraint(equalTo: mainStack.leadingAnchor),
-			favoriteButton.trailingAnchor.constraint(equalTo: mainStack.trailingAnchor),
-			favoriteButton.heightAnchor.constraint(equalToConstant: LayoutConstants.favoriteButtonHeight),
-
-			unfavoriteButton.topAnchor.constraint(
-				equalTo: mainStack.bottomAnchor,
-				constant: LayoutConstants.favoriteButtonTopInset),
-			unfavoriteButton.leadingAnchor.constraint(equalTo: mainStack.leadingAnchor),
-			unfavoriteButton.trailingAnchor.constraint(equalTo: mainStack.trailingAnchor),
-			unfavoriteButton.heightAnchor.constraint(equalToConstant: LayoutConstants.favoriteButtonHeight)
+				equalTo: glassmorphismView.trailingAnchor,
+				constant: -LayoutConstants.mainSpacing)
 		])
+	}
+}
+
+// MARK: - UITableViewDataSource
+
+extension UserCardController: UITableViewDataSource {
+
+	func tableView(
+		_ tableView: UITableView,
+		numberOfRowsInSection section: Int
+	) -> Int {
+		3// TODO: -
+	}
+
+	func tableView(
+		_ tableView: UITableView,
+		cellForRowAt indexPath: IndexPath
+	) -> UITableViewCell {
+		guard let cell = tableView.dequeueReusableCell(
+			withIdentifier: UserCardCell.reuseIdentifier,
+			for: indexPath
+		) as? UserCardCell else {
+			return UITableViewCell()
+		}
+		// TODO: -
+//		let cellData = presenter?.getCellType(index: indexPath.row)
+		let court = CourtModel.mockData
+		let locationModel = LocationTitleViewModel(
+			title: court.location.courtName,
+			location: court.location.locationName
+		)
+		let model = UserCardCellViewModel(
+			date: Date(),
+			location: locationModel
+		) {
+			print("open map at location:", court.location.latitude, court.location.longitude)
+		}
+
+		cell.configure(with: model)
+
+		return cell
 	}
 }
 
@@ -239,6 +323,7 @@ import SwiftUI
 @available(iOS 17.0, *)
 #Preview {
 	let view = UserCardController()
+	view.configure()
 	return view
 }
 
