@@ -27,7 +27,7 @@ final class UserCardController: BaseViewController {
 		static let profilePhotoSize: CGFloat = 100
 
 		static let tableEstimatedRowHeight: CGFloat = 87
-		static let tableHeight: CGFloat = 334 // TODO: dynamic height needed
+		static let initialTableHeight: CGFloat = 0
 		static let favoriteButtonHeight: CGFloat = 44
 		static let backButtonSize: CGFloat = 24
 
@@ -69,11 +69,14 @@ final class UserCardController: BaseViewController {
 		isBold: true
 	)
 
+	private var tableViewHeightConstraint: NSLayoutConstraint?
+	private var tableViewContentSizeObserver: NSKeyValueObservation?
+
 	private lazy var tableView: UITableView = {
 		let tableView = UITableView()
 		tableView.backgroundColor = AppColor.Background.clear
 		tableView.separatorStyle = .none
-		tableView.isScrollEnabled = false
+		tableView.showsVerticalScrollIndicator = false
 		tableView.dataSource = self
 		tableView.rowHeight = UITableView.automaticDimension
 		tableView.estimatedRowHeight = LayoutConstants.tableEstimatedRowHeight
@@ -143,6 +146,7 @@ final class UserCardController: BaseViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		setupView()
+		setupTableViewContentSizeObserver()
 	}
 
 	func configure() {
@@ -156,6 +160,22 @@ final class UserCardController: BaseViewController {
 // MARK: - Private Methods
 
 private extension UserCardController {
+
+	func setupTableViewContentSizeObserver() {
+		tableViewContentSizeObserver = tableView.observe(
+			\.contentSize,
+			 options: [.new]
+		) { [weak self] _, change in
+			guard
+				let self,
+				let newSize = change.newValue
+			else { return }
+			// Limiting the max height to preserve scrolling
+			let maxHeight = UIScreen.main.bounds.height - 489
+			let newHeight = min(newSize.height, maxHeight)
+			self.tableViewHeightConstraint?.constant = newHeight
+		}
+	}
 
 	func isFavoriteHidden(_ favorite: Bool) {
 		favoriteButton.isHidden = favorite
@@ -243,8 +263,6 @@ private extension UserCardController {
 			tableCaptionLabel.trailingAnchor.constraint(
 				lessThanOrEqualTo: mainStack.trailingAnchor),
 
-			tableView.heightAnchor.constraint(
-				equalToConstant: LayoutConstants.tableHeight),
 			tableView.topAnchor.constraint(
 				equalTo: tableCaptionLabel.bottomAnchor,
 				constant: LayoutConstants.mainIndent),
@@ -255,9 +273,12 @@ private extension UserCardController {
 
 			buttonsStack.topAnchor.constraint(
 				equalTo: tableView.bottomAnchor,
-				constant: -LayoutConstants.mainSpacing),
+				constant: LayoutConstants.mainSpacing),
 			buttonsStack.leadingAnchor.constraint(equalTo: mainStack.leadingAnchor),
 			buttonsStack.trailingAnchor.constraint(equalTo: mainStack.trailingAnchor),
+			buttonsStack.bottomAnchor.constraint(
+				equalTo: mainStack.bottomAnchor,
+				constant: LayoutConstants.mainSpacing),
 			buttonsStack.heightAnchor.constraint(equalToConstant: LayoutConstants.favoriteButtonHeight),
 
 			mainStack.topAnchor.constraint(
@@ -270,6 +291,11 @@ private extension UserCardController {
 				equalTo: glassmorphismView.trailingAnchor,
 				constant: -LayoutConstants.mainSpacing)
 		])
+
+		tableViewHeightConstraint = tableView.heightAnchor.constraint(
+			equalToConstant: LayoutConstants.initialTableHeight
+		)
+		tableViewHeightConstraint?.isActive = true
 	}
 }
 

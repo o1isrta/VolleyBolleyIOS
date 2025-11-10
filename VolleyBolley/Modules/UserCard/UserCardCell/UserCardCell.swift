@@ -79,6 +79,7 @@ final class UserCardCell: UITableViewCell {
 	// MARK: - Public Methods
 
 	func configure(with model: UserCardCellViewModel) {
+		glassmorphismView.resetForReuse()
 		dateLabel.text = model.date
 		locationTitleView.configure(with: model.location)
 		mapButtonCallback = model.mapButtonCallback
