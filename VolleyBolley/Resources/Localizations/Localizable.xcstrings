@@ -3219,6 +3219,23 @@
         }
       }
     },
+    "userCard.noActivity" : {
+      "comment" : "User Card",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "There is no activity yet"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пока нет активности"
+          }
+        }
+      }
+    },
     "userCard.tableCaption" : {
       "comment" : "User Card",
       "localizations" : {

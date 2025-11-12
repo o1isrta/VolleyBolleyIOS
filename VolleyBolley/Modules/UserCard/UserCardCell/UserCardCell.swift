@@ -64,6 +64,15 @@ final class UserCardCell: UITableViewCell {
 		return stackView
 	}()
 
+	private lazy var noActivityLabel: UILabel = {
+		let label = UILabel()
+		label.font = AppFont.Hero.regular(size: 16)
+		label.textColor = AppColor.Text.primary
+		label.text = String(localized: "userCard.noActivity")
+		label.isHidden = true
+		return label
+	}()
+
 	// MARK: - Init
 
 	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -80,9 +89,15 @@ final class UserCardCell: UITableViewCell {
 
 	func configure(with model: UserCardCellViewModel) {
 		glassmorphismView.resetForReuse()
+		hasCourtData(true)
+
 		dateLabel.text = model.date
 		locationTitleView.configure(with: model.location)
 		mapButtonCallback = model.mapButtonCallback
+	}
+
+	func configureAsNoActivity() {
+		hasCourtData(false)
 	}
 }
 
@@ -90,17 +105,29 @@ final class UserCardCell: UITableViewCell {
 
 private extension UserCardCell {
 
+	func hasCourtData(_ isHidden: Bool) {
+		glassmorphismView.isHidden = !isHidden
+		dateLabel.isHidden = !isHidden
+		locationTitleView.isHidden = !isHidden
+		mapButton.isHidden = !isHidden
+		noActivityLabel.isHidden = isHidden
+	}
+
 	func setupView() {
 		contentView.addSubviews(
 			glassmorphismView,
 			dateLabel,
-			locationStackView
+			locationStackView,
+			noActivityLabel
 		)
 		setupConstraints()
 	}
 
 	func setupConstraints() {
 		NSLayoutConstraint.activate([
+			noActivityLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+			noActivityLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+
 			glassmorphismView.topAnchor.constraint(
 				equalTo: contentView.topAnchor,
 				constant: Constants.verticalInset
@@ -163,24 +190,34 @@ import SwiftUI
 	ZStack {
 		Color(uiColor: AppColor.Background.screen)
 			.ignoresSafeArea()
-		UIViewPreview {
-			let view = UserCardCell()
 
-			let court = CourtModel.mockData
-			let locationModel = LocationTitleViewModel(
-				title: court.location.courtName,
-				location: court.location.locationName
-			)
-			let model = UserCardCellViewModel(
-				date: Date(),
-				location: locationModel
-			) {
-				print("open map at location:", court.location.latitude, court.location.longitude)
+		VStack {
+			UIViewPreview {
+				let view = UserCardCell()
+
+				let court = CourtModel.mockData
+				let locationModel = LocationTitleViewModel(
+					title: court.location.courtName,
+					location: court.location.locationName
+				)
+				let model = UserCardCellViewModel(
+					date: Date(),
+					location: locationModel
+				) {
+					print("open map at location:", court.location.latitude, court.location.longitude)
+				}
+				view.configure(with: model)
+				return view
 			}
-			view.configure(with: model)
-			return view
+			.frame(width: 336, height: 103)
+
+			UIViewPreview {
+				let view = UserCardCell()
+				view.configureAsNoActivity()
+				return view
+			}
+			.frame(width: 336, height: 103)
 		}
-		.frame(width: 336, height: 103)
 	}
 }
 

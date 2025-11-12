@@ -307,7 +307,7 @@ extension UserCardController: UITableViewDataSource {
 		_ tableView: UITableView,
 		numberOfRowsInSection section: Int
 	) -> Int {
-		3// TODO: -
+		getRowsCount()// TODO: -
 	}
 
 	func tableView(
@@ -319,6 +319,11 @@ extension UserCardController: UITableViewDataSource {
 			for: indexPath
 		) as? UserCardCell else {
 			return UITableViewCell()
+		}
+		// TODO: -
+		if getRowsCount() == 1 {
+			cell.configureAsNoActivity()
+			return cell
 		}
 		// TODO: -
 //		let cellData = presenter?.getCellType(index: indexPath.row)
@@ -333,10 +338,14 @@ extension UserCardController: UITableViewDataSource {
 		) {
 			print("open map at location:", court.location.latitude, court.location.longitude)
 		}
-
 		cell.configure(with: model)
 
 		return cell
+	}
+
+	// TODO: -
+	func getRowsCount() -> Int {
+		return 3
 	}
 }
 
