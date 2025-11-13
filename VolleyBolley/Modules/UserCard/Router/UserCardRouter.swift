@@ -12,7 +12,7 @@ import UIKit
 protocol UserCardRouterProtocol: AnyObject {
 	func attachViewController(_ view: UIViewController)
 	func navigateBack()
-	func navigateToMap(coordinates: Coordinates)
+	func navigateToLocation(_ location: LocationModel)
 }
 
 // MARK: - UserCardRouter
@@ -33,8 +33,8 @@ final class UserCardRouter: UserCardRouterProtocol {
 		viewController?.navigationController?.popViewController(animated: true)
 	}
 
-	func navigateToMap(coordinates: Coordinates) {
+	func navigateToLocation(_ location: LocationModel) {
 		// TODO: - open map with coordinates
-		print("open map at location:", coordinates)
+		print("open map at location:", location)
 	}
 }

@@ -364,11 +364,7 @@ extension UserCardViewController: UITableViewDataSource {
 				location: activity.location.locationName
 			)
 		) {
-			let coordinates = Coordinates(
-				latitude: activity.location.latitude,
-				longitude: activity.location.longitude
-			)
-			self.presenter?.openMap(with: coordinates)
+			self.presenter?.openMapAt(activity.location)
 		}
 		cell.configure(with: userCardCellViewModel)
 

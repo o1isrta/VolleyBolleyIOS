@@ -15,7 +15,7 @@ protocol UserCardPresenterProtocol {
 	func viewDidLoad()
 	func backButtonTapped()
 	func setAsFavorite(_ isFavorite: Bool)
-	func openMap(with coordinates: Coordinates)
+	func openMapAt(_ location: LocationModel)
 }
 
 final class UserCardPresenter: UserCardPresenterProtocol {
@@ -65,8 +65,8 @@ final class UserCardPresenter: UserCardPresenterProtocol {
 		interactor?.setAsFavorite(isFavorite)
 	}
 
-	func openMap(with coordinates: Coordinates) {
-		router.navigateToMap(coordinates: coordinates)
+	func openMapAt(_ location: LocationModel) {
+		router.navigateToLocation(location)
 	}
 }
 
