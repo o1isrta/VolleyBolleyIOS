@@ -29,7 +29,8 @@ enum FeatureAssemblies {
 			EditProfilePhotoAssembly(),
 			SupportAssembly(),
 			FAQAssembly(),
-            AboutAssembly()
+            AboutAssembly(),
+			UserCardAssembly(),
         ]
     }
 }

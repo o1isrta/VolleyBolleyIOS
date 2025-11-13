@@ -1,5 +1,5 @@
 //
-//  UserCardController.swift
+//  UserCardViewController.swift
 //  VolleyBolley
 //
 //  Created by Roman Romanov on 06.11.2025.
@@ -7,11 +7,19 @@
 
 import UIKit
 
-final class UserCardController: BaseViewController {
+protocol UserCardViewControllerProtocol: AnyObject {
+	var presenter: UserCardPresenterProtocol? { get }
+	func reloadTableView()
+	func isLoadingIndicatorVisible(_ isLoading: Bool)
+	func setupUserData(with userData: UserCardViewModel)
+	func setupAvatar(_ avatar: UIImage)
+}
+
+final class UserCardViewController: BaseViewController {
 
 	// MARK: - Public Properties
 
-//	var presenter: UserCardControllerPresenterProtocol?
+	var presenter: UserCardPresenterProtocol?
 
 	// MARK: - Private Properties
 
@@ -20,9 +28,7 @@ final class UserCardController: BaseViewController {
 		static let mainIndent: CGFloat = 8
 		static let mediumIndent: CGFloat = 16
 		static let mainSpacing: CGFloat = 20
-		static let backButtonTopInset: CGFloat = 14
 		static let mainStackTopInset: CGFloat = 59
-		static let screenTitleLeftInset: CGFloat = 42
 
 		static let profilePhotoSize: CGFloat = 100
 
@@ -32,6 +38,7 @@ final class UserCardController: BaseViewController {
 		static let backButtonSize: CGFloat = 24
 
 		static let fontSize: CGFloat = 16
+		static let screenTitleNumberOfLines: Int = 1
 	}
 
 	private let loadingIndicator = ProgressHub.shared
@@ -40,7 +47,7 @@ final class UserCardController: BaseViewController {
 
 	private lazy var screenTitle: CustomTitle = {
 		let label = CustomTitle(text: "", isLarge: true)
-		label.numberOfLines = 1
+		label.numberOfLines = LayoutConstants.screenTitleNumberOfLines
 		return label
 	}()
 
@@ -49,7 +56,7 @@ final class UserCardController: BaseViewController {
 		button.setImage(.chevronBackward, for: .normal)
 		button.tintColor = AppColor.Icon.primary
 		button.addAction(UIAction { [weak self] _ in
-//			self?.presenter?.backButtonTapped()// TODO: -
+			self?.presenter?.backButtonTapped()
 		}, for: .touchUpInside)
 		return button
 	}()
@@ -147,19 +154,40 @@ final class UserCardController: BaseViewController {
 		super.viewDidLoad()
 		setupView()
 		setupTableViewContentSizeObserver()
+		presenter?.viewDidLoad()
+	}
+}
+
+// MARK: - UserCardViewControllerProtocol
+
+extension UserCardViewController: UserCardViewControllerProtocol {
+
+	func reloadTableView() {
+		tableView.reloadData()
 	}
 
-	func configure() {
-		// TODO: -
-		screenTitle.text = "Polina Vasilieva"
-		profilePhotoView.configure(with: .imgPerson)
-		levelLabel.text = "PRO"
+	func setupUserData(with userData: UserCardViewModel) {
+		screenTitle.text = userData.name
+		levelLabel.text = userData.level.title
+	}
+
+	func setupAvatar(_ avatar: UIImage) {
+		profilePhotoView.configure(with: avatar)
+	}
+
+	func isLoadingIndicatorVisible(_ isLoading: Bool) {
+		DispatchQueue.main.async {
+			isLoading
+				? self.loadingIndicator.show(in: self.view, withBlur: true, ballSize: .big)
+				: self.loadingIndicator.hide()
+			self.view.isUserInteractionEnabled = !isLoading
+		}
 	}
 }
 
 // MARK: - Private Methods
 
-private extension UserCardController {
+private extension UserCardViewController {
 
 	func setupTableViewContentSizeObserver() {
 		tableViewContentSizeObserver = tableView.observe(
@@ -180,7 +208,7 @@ private extension UserCardController {
 	func isFavoriteHidden(_ favorite: Bool) {
 		favoriteButton.isHidden = favorite
 		unfavoriteButton.isHidden = !favorite
-//		presenter?.setAsFavorite(favorite)// TODO: -
+		presenter?.setAsFavorite(favorite)
 	}
 
 	func setupView() {
@@ -257,7 +285,7 @@ private extension UserCardController {
 
 			tableCaptionLabel.topAnchor.constraint(
 				equalTo: levelLabel.bottomAnchor,
-				constant: LayoutConstants.mainIndent),
+				constant: LayoutConstants.mediumIndent),
 			tableCaptionLabel.leadingAnchor.constraint(
 				equalTo: mainStack.leadingAnchor),
 			tableCaptionLabel.trailingAnchor.constraint(
@@ -301,51 +329,50 @@ private extension UserCardController {
 
 // MARK: - UITableViewDataSource
 
-extension UserCardController: UITableViewDataSource {
+extension UserCardViewController: UITableViewDataSource {
 
 	func tableView(
 		_ tableView: UITableView,
 		numberOfRowsInSection section: Int
 	) -> Int {
-		getRowsCount()// TODO: -
+		let activityCount = presenter?.latestActivity.count ?? 0
+		return activityCount == 0 ? 1 : activityCount
 	}
 
 	func tableView(
 		_ tableView: UITableView,
 		cellForRowAt indexPath: IndexPath
 	) -> UITableViewCell {
-		guard let cell = tableView.dequeueReusableCell(
-			withIdentifier: UserCardCell.reuseIdentifier,
-			for: indexPath
-		) as? UserCardCell else {
+		guard
+			let latestActivity = presenter?.latestActivity,
+			let cell = tableView.dequeueReusableCell(
+				withIdentifier: UserCardCell.reuseIdentifier,
+				for: indexPath
+			) as? UserCardCell
+		else {
 			return UITableViewCell()
 		}
-		// TODO: -
-		if getRowsCount() == 1 {
+		if latestActivity.isEmpty {
 			cell.configureAsNoActivity()
 			return cell
 		}
-		// TODO: -
-//		let cellData = presenter?.getCellType(index: indexPath.row)
-		let court = CourtModel.mockData
-		let locationModel = LocationTitleViewModel(
-			title: court.location.courtName,
-			location: court.location.locationName
-		)
-		let model = UserCardCellViewModel(
-			date: Date(),
-			location: locationModel
+		let activity = latestActivity[indexPath.row]
+		let userCardCellViewModel = UserCardCellViewModel(
+			dateString: activity.dateString,
+			location: LocationTitleViewModel(
+				title: activity.location.courtName,
+				location: activity.location.locationName
+			)
 		) {
-			print("open map at location:", court.location.latitude, court.location.longitude)
+			let coordinates = Coordinates(
+				latitude: activity.location.latitude,
+				longitude: activity.location.longitude
+			)
+			self.presenter?.openMap(with: coordinates)
 		}
-		cell.configure(with: model)
+		cell.configure(with: userCardCellViewModel)
 
 		return cell
-	}
-
-	// TODO: -
-	func getRowsCount() -> Int {
-		return 3
 	}
 }
 
@@ -357,9 +384,15 @@ import SwiftUI
 
 @available(iOS 17.0, *)
 #Preview {
-	let view = UserCardController()
-	view.configure()
-	return view
+	let router = UserCardRouter()
+	let interactor = UserCardInteractor()
+	let presenter = UserCardPresenter(interactor: interactor, router: router)
+	let viewController = UserCardViewController()
+	viewController.presenter = presenter
+	router.attachViewController(viewController)
+	presenter.view = viewController
+
+	return viewController
 }
 
 #endif

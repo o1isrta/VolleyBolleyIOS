@@ -13,11 +13,16 @@ struct UserCardCellViewModel {
 	let mapButtonCallback: (() -> Void)?
 
 	init(
-		date: Date,
+		dateString: String,
 		location: LocationTitleViewModel,
 		mapButtonCallback: (() -> Void)?
 	) {
-		self.date = AppDateFormatters.dayMonth.string(from: date)
+		// "2025-07-12T14:23:45Z" -> "12 July"
+		if let date = AppDateFormatters.iso8601.date(from: dateString) {
+			self.date = AppDateFormatters.dayMonth.string(from: date)
+		} else {
+			self.date = "-"
+		}
 		self.location = location
 		self.mapButtonCallback = mapButtonCallback
 	}

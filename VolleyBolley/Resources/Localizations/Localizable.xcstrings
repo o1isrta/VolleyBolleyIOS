@@ -3225,13 +3225,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "There is no activity yet"
+            "value" : "No activity found"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Пока нет активности"
+            "value" : "Активность не найдена"
           }
         }
       }

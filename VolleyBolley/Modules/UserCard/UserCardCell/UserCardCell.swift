@@ -201,7 +201,7 @@ import SwiftUI
 					location: court.location.locationName
 				)
 				let model = UserCardCellViewModel(
-					date: Date(),
+					dateString: AppDateFormatters.iso8601.string(from: Date()),
 					location: locationModel
 				) {
 					print("open map at location:", court.location.latitude, court.location.longitude)
