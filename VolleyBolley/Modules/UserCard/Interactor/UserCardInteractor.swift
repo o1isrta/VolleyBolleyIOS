@@ -5,10 +5,11 @@
 //  Created by Roman Romanov on 13.11.2025.
 //
 
-import Foundation
+import UIKit
 
 protocol UserCardInteractorProtocol {
 	func setAsFavorite(_ isFavorite: Bool)
+	func loadAvatar(by url: URL?) -> UIImage?
 }
 
 final class UserCardInteractor: UserCardInteractorProtocol {
@@ -18,5 +19,12 @@ final class UserCardInteractor: UserCardInteractorProtocol {
 	func setAsFavorite(_ isFavorite: Bool) {
 		// TODO: - шлем запрос
 		print("шлем запрос -> setAsFavorite", isFavorite)
+	}
+
+	func loadAvatar(by url: URL?) -> UIImage? {
+		// TODO: - тут грузим аватар
+		print("loadAvatar by", url)
+		return .imgPerson
+		guard let url else { return nil }
 	}
 }

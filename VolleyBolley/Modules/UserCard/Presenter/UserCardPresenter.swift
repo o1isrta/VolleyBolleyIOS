@@ -51,6 +51,17 @@ final class UserCardPresenter: UserCardPresenterProtocol {
 	}
 
 	func setAsFavorite(_ isFavorite: Bool) {
+		// TODO: - формируем данные для запроса
+		/*
+		 {
+			 "player_id": 0,
+			 "first_name": "Test",
+			 "last_name": "Test",
+			 "avatar": "url",
+			 "is_favorite": true,
+			 "level": "PRO"
+		 }
+		*/
 		interactor?.setAsFavorite(isFavorite)
 	}
 
@@ -65,7 +76,7 @@ private extension UserCardPresenter {
 
 	func setupUserCard() {
 		view?.isLoadingIndicatorVisible(true)
-		// TODO: - needed interactor request
+		// TODO: - получает данные с Get /players/{player_id} и распихиваем
 //		let playerData: Player = interactor?.fetchUserData()
 		let playerData: Player = Player.mockDefault
 		// TODO: - temporarily gag
@@ -85,10 +96,8 @@ private extension UserCardPresenter {
 	}
 
 	func setupAvatar(by url: URL?) {
-		// TODO: - needed interactor request
-//		guard let url else { return }
-//		let avatar = interactor?.loadAvatar()
-		let avatar: UIImage = .imgPerson
+		let avatar = interactor?.loadAvatar(by: url)
+		guard let avatar else { return }
 		view?.setupAvatar(avatar)
 	}
 
