@@ -363,8 +363,8 @@ extension UserCardViewController: UITableViewDataSource {
 				title: activity.location.courtName,
 				location: activity.location.locationName
 			)
-		) {
-			self.presenter?.openMapAt(activity.location)
+		) { [weak self] in
+			self?.presenter?.openMapAt(activity.location)
 		}
 		cell.configure(with: userCardCellViewModel)
 
