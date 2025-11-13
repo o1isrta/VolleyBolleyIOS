@@ -55,8 +55,7 @@ final class UserCardPresenter: UserCardPresenterProtocol {
 	}
 
 	func openMap(with coordinates: Coordinates) {
-		// TODO: - open map with coordinates
-		print("open map at location:", coordinates)
+		router.navigateToMap(coordinates: coordinates)
 	}
 }
 
@@ -80,7 +79,7 @@ private extension UserCardPresenter {
 			)
 			self.view?.setupUserData(with: userCardModel)
 
-			self.setupActivity()// TODO: - set activity from interactor?.fetchUserData()
+			self.setupActivity()// TODO: - set activity from playerData
 			self.setupAvatar(by: playerData.avatarURL)
 		}
 	}
