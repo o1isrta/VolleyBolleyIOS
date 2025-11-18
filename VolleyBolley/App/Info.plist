@@ -44,5 +44,13 @@
 			</array>
 		</dict>
 	</dict>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>VolleyBolley uses your location to help you discover nearby courts.</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>We need access to your photo library to let you choose a profile picture</string>
+    <key>NSCameraUsageDescription</key>
+    <string>We need access to your camera to take a profile picture</string>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>We need access to save photos to your library</string>
 </dict>
 </plist>
