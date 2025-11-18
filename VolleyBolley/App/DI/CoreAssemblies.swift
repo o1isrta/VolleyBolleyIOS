@@ -15,6 +15,7 @@ enum CoreAssemblies {
             AppRouterAssembly(),
             EnvironmentAssembly(),
             SettingsAssembly(),
+            TokenStorageAssembly(),
             NetworkModulesAssembly(),
             MediaServicesAssembly(),
             LocationAssembly(),

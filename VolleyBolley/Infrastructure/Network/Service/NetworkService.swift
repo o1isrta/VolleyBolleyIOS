@@ -8,10 +8,6 @@
 import Foundation
 import Moya
 
-protocol NetworkServiceProtocol {
-    func googleAuth(idToken: String) async throws -> PlayerSessionDTO
-}
-
 final class NetworkService: NetworkServiceProtocol {
 
     // MARK: - Private Properties

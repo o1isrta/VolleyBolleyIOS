@@ -21,7 +21,7 @@ final class AuthViewController: UIViewController {
     private let presenter: AuthPresenterProtocol
     private var cancellables: Set<AnyCancellable> = []
 
-    private let loadingView = LoadingView()
+    private let loadingView = ProgressHub()
 
     private lazy var alertView: CustomAlertView = {
         let view = CustomAlertView()

@@ -1,5 +1,5 @@
 //
-//  LoadingView.swift
+//  ProgressHub.swift
 //  VolleyBolley
 //
 //  Created by Олег Козырев on 08.09.2025.
@@ -10,16 +10,16 @@ import UIKit
 /// A reusable, singleton-backed loading overlay view that displays a spinning,
 /// gradient-masked volleyball icon centered within its bounds.
 ///
-/// LoadingView is designed to be added as a full-screen subview over any
+/// ProgressHub is designed to be added as a full-screen subview over any
 /// container view to indicate ongoing work. It supports:
 /// - Optional blurred background using a system material blur
 /// - Two preset icon sizes (big/small)
 /// - A continuous spin animation for the icon
 ///
 /// Usage:
-/// - Call `LoadingView.shared.show(in:)` to present with default options.
+/// - Call `ProgressHub.shared.show(in:)` to present with default options.
 /// - Use the overloads to customize blur and ball size.
-/// - Call `LoadingView.shared.hide()` to dismiss.
+/// - Call `ProgressHub.shared.hide()` to dismiss.
 ///
 /// Threading:
 /// - Presentation (`show`) is dispatched to the main queue and is safe to call
@@ -39,9 +39,9 @@ import UIKit
 /// - The view animates its alpha when showing and hiding.
 /// - Constraints are applied to stretch the overlay to its superview, with the icon
 ///   centered and sized according to `BallSize`.
-final class LoadingView: UIView {
+final class ProgressHub: UIView {
 
-    static let shared = LoadingView()
+    static let shared = ProgressHub()
 
     enum BallSize {
         case big
@@ -254,7 +254,7 @@ final class LoadingViewPreviewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        LoadingView.shared.show(in: view, withBlur: true, ballSize: .big)
+        ProgressHub.shared.show(in: view, withBlur: true, ballSize: .big)
     }
 }
 #endif
