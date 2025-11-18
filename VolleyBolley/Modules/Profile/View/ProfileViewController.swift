@@ -50,9 +50,9 @@ final class ProfileViewController: BaseViewController {
     // MARK: - Private Properties
 
     private let presenter: ProfilePresenterProtocol
-    private lazy var menuItems = ProfileMenuItem.allCases
+    private let menuItems = ProfileMenuItem.allCases
 
-    private lazy var tableBackground = GlassmorphismView()
+    private let glassView = GlassView()
 
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -110,7 +110,7 @@ private extension ProfileViewController {
     func setupUI() {
 		view.addSubviews(
 			deleteButton,
-			tableBackground,
+            glassView,
 			tableView
 		)
     }
@@ -119,10 +119,10 @@ private extension ProfileViewController {
         setupUI()
 
         NSLayoutConstraint.activate([
-			tableBackground.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 8),
-            tableBackground.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
-            tableBackground.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
-            tableBackground.heightAnchor.constraint(equalToConstant: 400),
+            glassView.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 8),
+            glassView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
+            glassView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
+            glassView.heightAnchor.constraint(equalToConstant: 400),
 
             tableView.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 12),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),

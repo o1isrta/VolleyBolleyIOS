@@ -60,31 +60,31 @@ struct GameDetailsViewModel {
 /// Custom View to show information with location title for two variants
 /// - with court details
 /// - with game details (host, game details)
-class CourtDetailsView: GlassmorphismView {
+class CourtDetailsView: UIView {
 
 	// MARK: - Private Properties
+
+    private let glassView = GlassView(config: .court)
 
 	private lazy var courtTitleView: CourtTitleView = CourtTitleView(type: .icon)
 
 	private lazy var courtAndGameView: CourtAndGameView = CourtAndGameView()
 
 	private lazy var mainStack: UIStackView = {
-		let stackView = UIStackView()
+        let stackView = UIStackView(arrangedSubviews: [courtTitleView, courtAndGameView])
 		stackView.axis = .vertical
 		stackView.distribution = .fill
 		stackView.spacing = 16
 		return stackView
 	}()
 
-	override init(frame: CGRect) {
-		super.init(frame: frame)
+	init() {
+        super.init(frame: .zero)
 		setupUI()
 	}
 
 	@available(*, unavailable)
-	required init?(coder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
-	}
+	required init?(coder: NSCoder) { nil }
 
 	// MARK: - Public Methods
 
@@ -126,18 +126,10 @@ class CourtDetailsView: GlassmorphismView {
 private extension CourtDetailsView {
 
 	private func setupUI() {
-		backgroundColor = AppColor.Background.screen
-		layer.cornerRadius = 32
-		layer.masksToBounds = true
-		// main stack
-		[
-			courtTitleView,
-			courtAndGameView
-		].forEach {
-			mainStack.addArrangedSubview($0)
-		}
+        addSubviews(glassView, mainStack)
 
-		addSubviews(mainStack)
+        glassView.pinToSuperviewEdges()
+
 		NSLayoutConstraint.activate([
 			mainStack.topAnchor.constraint(equalTo: topAnchor, constant: 20),
 			mainStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),

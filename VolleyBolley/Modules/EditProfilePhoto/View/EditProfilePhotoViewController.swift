@@ -36,7 +36,7 @@ final class EditProfilePhotoViewController: BaseViewController {
 
 	private let loadingIndicator = ProgressHub.shared
 
-	private lazy var glassmorphismView = GlassmorphismView()
+	private lazy var glassView = GlassView()
 	private lazy var screenTitle = CustomTitle(
 		text: String(localized: "editProfilePhoto.title"),
 		isLarge: true
@@ -115,10 +115,10 @@ private extension EditProfilePhotoViewController {
 
 	func setupViews() {
 		view.addSubviews(
-			glassmorphismView,
+            glassView,
 			customAlertView
 		)
-		glassmorphismView.addSubviews(
+        glassView.addSubviews(
 			backButton,
 			screenTitle,
 			mainStack
@@ -128,28 +128,28 @@ private extension EditProfilePhotoViewController {
 	func setupConstraints() {
 		customAlertView.pinToSuperviewEdges()
 		NSLayoutConstraint.activate([
-			glassmorphismView.topAnchor.constraint(
+            glassView.topAnchor.constraint(
 				equalTo: navBar.bottomAnchor,
 				constant: LayoutConstants.mainIndent),
-			glassmorphismView.leadingAnchor.constraint(
+            glassView.leadingAnchor.constraint(
 				equalTo: view.leadingAnchor,
 				constant: LayoutConstants.mainIndent),
-			glassmorphismView.trailingAnchor.constraint(
+            glassView.trailingAnchor.constraint(
 				equalTo: view.trailingAnchor,
 				constant: -LayoutConstants.mainIndent),
-			glassmorphismView.heightAnchor.constraint(
+            glassView.heightAnchor.constraint(
 				equalToConstant: LayoutConstants.glassmorphismViewHeight),
 
 			backButton.topAnchor.constraint(
-				equalTo: glassmorphismView.topAnchor,
+				equalTo: glassView.topAnchor,
 				constant: LayoutConstants.backButtonTopInset),
 			backButton.leadingAnchor.constraint(
-				equalTo: glassmorphismView.leadingAnchor,
+				equalTo: glassView.leadingAnchor,
 				constant: LayoutConstants.mainSpacing / 2),
 
-			screenTitle.centerXAnchor.constraint(equalTo: glassmorphismView.centerXAnchor),
+			screenTitle.centerXAnchor.constraint(equalTo: glassView.centerXAnchor),
 			screenTitle.topAnchor.constraint(
-				equalTo: glassmorphismView.topAnchor,
+				equalTo: glassView.topAnchor,
 				constant: LayoutConstants.mainSpacing),
 
 			profilePhotoView.widthAnchor.constraint(
@@ -161,10 +161,10 @@ private extension EditProfilePhotoViewController {
 				equalTo: screenTitle.bottomAnchor,
 				constant: LayoutConstants.mediumIndent),
 			mainStack.leadingAnchor.constraint(
-				equalTo: glassmorphismView.leadingAnchor,
+				equalTo: glassView.leadingAnchor,
 				constant: LayoutConstants.mainSpacing),
 			mainStack.trailingAnchor.constraint(
-				equalTo: glassmorphismView.trailingAnchor, constant: -LayoutConstants.mainSpacing),
+				equalTo: glassView.trailingAnchor, constant: -LayoutConstants.mainSpacing),
 
 			photoActionTableView.heightAnchor.constraint(
 				equalToConstant: LayoutConstants.photoActionTableViewHeight),

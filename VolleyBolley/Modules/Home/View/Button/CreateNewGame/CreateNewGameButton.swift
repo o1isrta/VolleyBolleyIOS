@@ -17,8 +17,6 @@ final class CreateNewGameButton: UIButton {
 
     // MARK: - Private Properties
 
-    private var activeBackgroundEffect: UIView?
-
     private enum Constants {
         static let stackSpacing: CGFloat = 18.scaledByScreenHeight
         static let contentInsets = UIEdgeInsets(
@@ -29,6 +27,8 @@ final class CreateNewGameButton: UIButton {
         )
         static let backgroundSubviewIndex: Int = 0
     }
+
+    private let glassView = GlassView(config: .sketch)
 
     private lazy var vStackView: UIStackView = {
         let view = UIStackView(arrangedSubviews: [buttonTitleLabel, hStackView])
@@ -65,7 +65,14 @@ final class CreateNewGameButton: UIButton {
     init() {
         super.init(frame: .zero)
         setupLayout()
-        self.configuration = UIButton.Configuration.plain()
+
+        clipsToBounds = true
+
+        self.configuration = UIButton.Configuration.filled()
+        self.configurationUpdateHandler = { [weak self] button in
+            guard let self else { return }
+            button.configuration = self.configuration(for: button.state)
+        }
     }
 
     @available(*, unavailable)
@@ -92,25 +99,6 @@ final class CreateNewGameButton: UIButton {
         }
     }
 
-    // MARK: - Layout & Style
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        let style = resolveStyle(for: state)
-        if let newEffect = style.backgroundEffectProvider?() as? GlassmorphismView {
-            newEffect.frame = bounds
-            newEffect.cornerRadius = style.cornerRadius
-            if activeBackgroundEffect !== newEffect {
-                activeBackgroundEffect?.removeFromSuperview()
-                insertSubview(newEffect, at: Constants.backgroundSubviewIndex)
-                activeBackgroundEffect = newEffect
-            }
-        } else {
-            activeBackgroundEffect?.removeFromSuperview()
-            activeBackgroundEffect = nil
-        }
-    }
-
     // MARK: - Private Methods
 
     private func configuration(for state: UIControl.State) -> UIButton.Configuration {
@@ -118,6 +106,9 @@ final class CreateNewGameButton: UIButton {
         var config = UIButton.Configuration.filled()
         config.background.backgroundColor = style.backgroundColor
         config.background.cornerRadius = style.cornerRadius
+
+        glassView.alpha = style.glassAlpha
+
         return config
     }
 
@@ -131,8 +122,10 @@ final class CreateNewGameButton: UIButton {
     }
 
     private func setupLayout() {
-        addSubviews(vStackView)
+        addSubviews(glassView, vStackView)
+        glassView.isUserInteractionEnabled = false
 
+        glassView.pinToSuperviewEdges()
         vStackView.pinToSuperviewEdges(insets: Constants.contentInsets)
     }
 }

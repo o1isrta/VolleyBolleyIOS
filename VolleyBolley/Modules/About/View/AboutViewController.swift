@@ -39,7 +39,7 @@ final class AboutViewController: BaseViewController {
 
 	private let presenter: AboutPresenterProtocol
 
-	private lazy var glassmorphismView = GlassmorphismView()
+	private lazy var glassView = GlassView()
 
 	private lazy var titleLabel: CustomLabel = {
 		let label = CustomLabel(text: String(localized: "About"), isBold: true)
@@ -133,7 +133,7 @@ private extension AboutViewController {
 
 	func setupView() {
 		view.addSubviews(
-			glassmorphismView,
+			glassView,
 			backButton,
 			titleLabel,
 			tableView,
@@ -144,43 +144,43 @@ private extension AboutViewController {
 
 	func setupConstraints() {
 		NSLayoutConstraint.activate([
-			glassmorphismView.topAnchor.constraint(
+            glassView.topAnchor.constraint(
 				equalTo: navBar.bottomAnchor,
 				constant: Constants.padding
 			),
-			glassmorphismView.leadingAnchor.constraint(
+            glassView.leadingAnchor.constraint(
 				equalTo: view.leadingAnchor,
 				constant: Constants.padding
 			),
-			glassmorphismView.trailingAnchor.constraint(
+            glassView.trailingAnchor.constraint(
 				equalTo: view.trailingAnchor,
 				constant: -Constants.padding
 			),
-			glassmorphismView.bottomAnchor.constraint(
+            glassView.bottomAnchor.constraint(
 				equalTo: tableView.bottomAnchor,
 				constant: Constants.tableInset
 			),
 
 			backButton.topAnchor.constraint(
-				equalTo: glassmorphismView.topAnchor,
+				equalTo: glassView.topAnchor,
 				constant: Constants.topInset
 			),
 			backButton.leadingAnchor.constraint(
-				equalTo: glassmorphismView.leadingAnchor,
+				equalTo: glassView.leadingAnchor,
 				constant: Constants.topInset
 			),
 			backButton.heightAnchor.constraint(equalToConstant: Constants.buttonSize),
 			backButton.widthAnchor.constraint(equalToConstant: Constants.buttonSize),
 
-			titleLabel.centerXAnchor.constraint(equalTo: glassmorphismView.centerXAnchor),
+			titleLabel.centerXAnchor.constraint(equalTo: glassView.centerXAnchor),
 			titleLabel.centerYAnchor.constraint(equalTo: backButton.centerYAnchor),
 
 			tableView.topAnchor.constraint(
 				equalTo: backButton.bottomAnchor,
 				constant: Constants.tableInset
 			),
-			tableView.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor),
-			tableView.trailingAnchor.constraint(equalTo: glassmorphismView.trailingAnchor),
+			tableView.leadingAnchor.constraint(equalTo: glassView.leadingAnchor),
+			tableView.trailingAnchor.constraint(equalTo: glassView.trailingAnchor),
 
 			versionLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 			versionLabel.bottomAnchor.constraint(

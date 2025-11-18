@@ -7,21 +7,19 @@
 
 import UIKit
 
-/// Инкапсуляция уникальных цветов проекта: фирменные акценты, состояния и фоны
-/// Только для однородных цветов (solid colors)
+/// Encapsulation of the project's unique colors: brand accents, states, and backgrounds
+/// For solid colors only
 enum AppColor {
 
-	enum Background {
-		// main
-		static let screen = darkTeal
-		static let navBar = teal
-		static let tabBar = midnightTeal
-		static let modal = teal
-		static let primary = white
+    enum Background {
+        static let screen = darkTeal
+        static let navBar = teal
+        static let tabBar = midnightTeal
+        static let modal = teal
+        static let primary = white
         static let blur = blurColor
         static let clear = clearColor
 
-        // button
         static let buttonYellowSelected = yellow
         static let buttonYellowDisabled = mistGray
         static let buttonAuthGoogle = white
@@ -30,31 +28,28 @@ enum AppColor {
         static let buttonSketchSelected = yellow
         static let fbButton = facebookBlue
 
-        // badge
         static let badgeDefault = steelBlue
         static let badgeSelected = mutedTeal
-		static let badgeHighlighted = orange
+        static let badgeHighlighted = orange
         static let levelBadgeLight = blue
         static let levelBadgeMedium = green
         static let levelBadgeHard = orange
         static let levelBadgePro = yellow
 
-		// pin
-		static let pinDefault = mutedTeal
-		static let pinSelected = orange
+        static let pinDefault = mutedTeal
+        static let pinSelected = orange
 
         static let searField = white
         static let calendar = white
 
-        // alert
         static let alert = gray
     }
 
-	enum Text {
-		static let primary = white
-		static let inverted = ashBrown
-		static let placeHolder = gray
-	}
+    enum Text {
+        static let primary = white
+        static let inverted = ashBrown
+        static let placeHolder = gray
+    }
 
     enum Border {
         static let buttonAction = yellow
@@ -64,32 +59,32 @@ enum AppColor {
         static let error = red
     }
 
-	enum Icon {
-		static let primary = white
-		static let inverted = ashBrown
-		static let location = orange
-		static let star = orange
-		static let searField = darkGray
-		static let avatar = tealBlue
+    enum Icon {
+        static let primary = white
+        static let inverted = ashBrown
+        static let location = orange
+        static let star = orange
+        static let searField = darkGray
+        static let avatar = tealBlue
         static let bellBadge = orange
-	}
+    }
 
-	enum Calendar {
-		static let primary = darkCharcoal
-		static let secondary = lightGray
-		static let disabled = mistGray
-	}
+    enum Calendar {
+        static let primary = darkCharcoal
+        static let secondary = lightGray
+        static let disabled = mistGray
+    }
 
-	enum Gradient {
-		static let greenLightStart = butterYellow
-		static let greenLightEnd = mint
-	}
+    enum Gradient {
+        static let greenLightStart = butterYellow
+        static let greenLightEnd = mint
+    }
 
-	enum Table {
-		static let cellWhiteSelected = gray
-	}
+    enum Table {
+        static let cellWhiteSelected = gray
+    }
 
-    enum Glassmorphism {
+    enum Glass {
         static let border = white
         static let tintColor = white
         static let innerShadowColor = white
@@ -97,8 +92,8 @@ enum AppColor {
     }
 }
 
-/// Цвета по названиям
-/// Только для переиспользования в AppColor
+/// Colors by name
+/// For reuse only in AppColor
 private extension AppColor {
 
     static let clearColor = UIColor.clear
@@ -124,6 +119,6 @@ private extension AppColor {
     static let red = UIColor(hex: "#BA0000")
     static let butterYellow = UIColor(hex: "#F4E998")
     static let mint = UIColor(hex: "#5CF08D")
-	static let darkCharcoal = UIColor(hex: "#333333")
-    static let blurColor = UIColor(hex: "#AAC8E0", alpha: 0.19)
+    static let darkCharcoal = UIColor(hex: "#333333")
+    static let blurColor = UIColor(hex: "#AAC8E0")
 }
