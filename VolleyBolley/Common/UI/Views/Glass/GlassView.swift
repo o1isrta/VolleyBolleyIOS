@@ -2,11 +2,64 @@
 //  GlassView.swift
 //  VolleyBolley
 //
-//  Created by Nikolai Eremenko on 16.11.2025.
+//  Created by Егор Партенко on 5. 8. 2025..
 //
 
 import UIKit
 
+/// A customizable glass-style background view for UIKit.
+///
+/// ⚠️ Important:
+/// This view is a **fork** and heavily modified version of
+/// https://github.com/Chaehui-Seo/CHGlassmorphismView
+/// adapted for more flexible configuration and improved behavior
+/// in dynamic UIKit layouts.
+///
+/// 🚫 Not intended as a container:
+/// GlassView should be used **only as a visual background**, not as a container
+/// for interactive subviews. Add buttons, labels, and other UI elements
+/// *on top of it*, not inside it. Internally, GlassView manages layers,
+/// blur effects, shadows, and masking; placing interactive elements inside
+/// may interfere with clipping, hit-testing, or rendering.
+///
+/// GlassView renders a translucent, frosted-glass effect using a
+/// `UIVisualEffectView` combined with optional inner and outer shadows,
+/// rounded corners, and a configurable border. It is designed to be placed
+/// behind content where you want a modern glass aesthetic that adapts to
+/// size changes and app lifecycle transitions.
+///
+/// Features:
+/// - Adjustable blur density (intensity)
+/// - Smooth, configurable corner radius with dynamic layout handling
+/// - Inner shadow (inset) and outer shadow (drop shadow)
+/// - Optional border with color and thickness
+/// - Safe reapplication of blur/intensity on app background/foreground events
+///
+/// Usage:
+/// - Initialize with an optional `GlassConfig`, or rely on `.standard`.
+/// - Call `makeGlassEffect(density:cornerRadius:distance:)` to apply or update the look.
+/// - Adjust individual components via:
+///   - `setBlurDensity(with:)`
+///   - `setCornerRadius(_:)`
+///   - `setDistance(_:)`
+///   - `setBorder(width:color:)`
+///
+/// Performance:
+/// - Uses `UIViewPropertyAnimator` for smooth blur transitions.
+/// - Avoids unnecessary redraws by updating layers only when needed.
+///
+/// Lifecycle:
+/// - Listens for foreground/background transitions to preserve blur appearance.
+/// - Reapplies configuration in `didMoveToWindow()` when the view is reattached.
+///
+/// Interaction:
+/// - Overrides `hitTest` so touches pass through the glass surface and are handled
+///   only by actual interactive subviews placed on top.
+/// - The view is fully non-interactive by design.
+///
+/// Note:
+/// - The view's backgroundColor is forced to `.clear` and should not be changed.
+///   Use `GlassConfig` parameters to customize appearance instead.
 final class GlassView: UIView {
 
     override var backgroundColor: UIColor? {
