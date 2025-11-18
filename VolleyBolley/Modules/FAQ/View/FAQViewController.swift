@@ -32,7 +32,7 @@ final class FAQViewController: BaseViewController {
 		isLarge: true
 	)
 
-	private lazy var background = GlassmorphismView()
+	private lazy var background = GlassView()
 
 	private lazy var tableView: UITableView = {
 		let tableView = UITableView()

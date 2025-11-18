@@ -25,7 +25,7 @@ final class FindGameButton: UIButton {
         static let vStackTrailing: CGFloat = 8.scaledByScreenWidth
     }
 
-    private var activeBackgroundEffect: UIView?
+    private let glassView = GlassView(config: .sketch)
 
     private lazy var vStackView: UIStackView = {
         let view = UIStackView(arrangedSubviews: [buttonTitleLabel, buttonSubTitleLabel])
@@ -66,30 +66,20 @@ final class FindGameButton: UIButton {
 
     init() {
         super.init(frame: .zero)
+
         setupLayout()
-        self.configuration = UIButton.Configuration.plain()
+        clipsToBounds = true
+
+        self.configuration = UIButton.Configuration.filled()
+        self.configurationUpdateHandler = { [weak self] button in
+            guard let self else { return }
+            button.configuration = self.configuration(for: button.state)
+        }
     }
 
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        let style = resolveStyle(for: state)
-        if let newEffect = style.backgroundEffectProvider?() as? GlassmorphismView {
-            newEffect.frame = bounds
-            newEffect.cornerRadius = style.cornerRadius
-            if activeBackgroundEffect !== newEffect {
-                activeBackgroundEffect?.removeFromSuperview()
-                insertSubview(newEffect, at: 0)
-                activeBackgroundEffect = newEffect
-            }
-        } else {
-            activeBackgroundEffect?.removeFromSuperview()
-            activeBackgroundEffect = nil
-        }
     }
 
     // MARK: - Public Methods
@@ -108,6 +98,8 @@ final class FindGameButton: UIButton {
         config.background.backgroundColor = style.backgroundColor
         config.background.cornerRadius = style.cornerRadius
 
+        glassView.alpha = style.glassAlpha
+
         return config
     }
 
@@ -122,11 +114,14 @@ final class FindGameButton: UIButton {
 
     private func setupLayout() {
         addSubviews(
+            glassView,
             buttonImageView,
             gamesAvailableView,
             vStackView
         )
 
+        glassView.isUserInteractionEnabled = false
+        glassView.pinToSuperviewEdges()
         setupConstraintsButtonImageView()
         setupConstraintsGamesAvailableView()
         setupConstraintsVStackView()

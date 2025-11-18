@@ -23,7 +23,7 @@ final class NotificationsViewController: BaseViewController {
 
 	private var notifications: [NotificationCardViewModel] = []
 
-	private lazy var glassmorphismView = GlassmorphismView()
+	private let glassView = GlassView()
 	private lazy var screenTitle = CustomTitle(text: String(localized: "notifications.screenTitle"), isLarge: true)
 	private lazy var backButton: UtilityButton = {
 		let button = UtilityButton(style: .small)
@@ -88,7 +88,7 @@ private extension NotificationsViewController {
 
 	func setupUI() {
 		view.addSubviews(
-			glassmorphismView,
+            glassView,
 			backButton,
 			screenTitle,
 			tableView
@@ -98,20 +98,20 @@ private extension NotificationsViewController {
 		let mainSpacing: CGFloat = 20
 
 		NSLayoutConstraint.activate([
-			glassmorphismView.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: mainIndent),
-			glassmorphismView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: mainIndent),
-			glassmorphismView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -mainIndent),
-			glassmorphismView.bottomAnchor.constraint(equalTo: tableView.bottomAnchor, constant: mainIndent),
+            glassView.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: mainIndent),
+            glassView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: mainIndent),
+            glassView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -mainIndent),
+            glassView.bottomAnchor.constraint(equalTo: tableView.bottomAnchor, constant: mainIndent),
 
-			backButton.topAnchor.constraint(equalTo: glassmorphismView.topAnchor, constant: 14),
-			backButton.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor, constant: mainSpacing / 2),
+			backButton.topAnchor.constraint(equalTo: glassView.topAnchor, constant: 14),
+			backButton.leadingAnchor.constraint(equalTo: glassView.leadingAnchor, constant: mainSpacing / 2),
 
-			screenTitle.centerXAnchor.constraint(equalTo: glassmorphismView.centerXAnchor),
-			screenTitle.topAnchor.constraint(equalTo: glassmorphismView.topAnchor, constant: mainSpacing),
+			screenTitle.centerXAnchor.constraint(equalTo: glassView.centerXAnchor),
+			screenTitle.topAnchor.constraint(equalTo: glassView.topAnchor, constant: mainSpacing),
 
 			tableView.topAnchor.constraint(equalTo: screenTitle.bottomAnchor, constant: 12),
-			tableView.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor, constant: mainSpacing),
-			tableView.trailingAnchor.constraint(equalTo: glassmorphismView.trailingAnchor, constant: -mainSpacing)
+			tableView.leadingAnchor.constraint(equalTo: glassView.leadingAnchor, constant: mainSpacing),
+			tableView.trailingAnchor.constraint(equalTo: glassView.trailingAnchor, constant: -mainSpacing)
 		])
 
 		tableViewHeightConstraint = tableView.heightAnchor.constraint(equalToConstant: 0)
@@ -127,7 +127,6 @@ private extension NotificationsViewController {
 				let self,
 				let newSize = change.newValue
 			else { return }
-			// Limiting the max height to preserve scrolling
 			let maxHeight = UIScreen.main.bounds.height - 268
 			let newHeight = min(newSize.height, maxHeight)
 			self.tableViewHeightConstraint?.constant = newHeight
