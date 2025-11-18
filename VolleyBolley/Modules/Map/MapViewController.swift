@@ -242,8 +242,8 @@ private extension MapViewController {
 			mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
 			mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
 
-			bottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-			bottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+			bottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
+			bottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
 			bottomView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: popupBottonInset),
 			bottomView.heightAnchor.constraint(equalToConstant: 136)
 		])
@@ -258,8 +258,8 @@ private extension MapViewController {
 			NSLayoutConstraint.activate([popupBottomConstraint])
 		}
 		NSLayoutConstraint.activate([
-			popupView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-			popupView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+			popupView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
+			popupView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
 			popupView.heightAnchor.constraint(equalToConstant: 472)
 		])
 	}
