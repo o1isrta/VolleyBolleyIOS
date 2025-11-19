@@ -53,7 +53,7 @@ final class OnboardingViewController: UIViewController, OnboardingViewProtocol {
     private lazy var getStartedButton: YellowButton = {
         let view = YellowButton()
         view.isSelected = true
-        view.setTitle(String(localized: "GET STARTED"), for: .normal)
+        view.setTitle(String(localized: "button.getStarted"), for: .normal)
         view.addAction(UIAction { [weak self] _ in
             self?.presenter.didTapGetStarted()
         }, for: .touchUpInside)

@@ -1862,9 +1862,6 @@
         }
       }
     },
-    "GET STARTED" : {
-
-    },
     "Go to main App" : {
       "localizations" : {
         "ru" : {
@@ -2486,16 +2483,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Уведомления"
-          }
-        }
-      }
-    },
-    "OK" : {
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ОК"
           }
         }
       }

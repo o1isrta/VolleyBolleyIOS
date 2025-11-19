@@ -169,7 +169,7 @@ final class AuthViewController: UIViewController {
         guard alertView.isHidden else { return }
 
         let button = ButtonDataModel(
-            title: String(localized: "OK"),
+            title: String(localized: "customAlertView.button.ok"),
             action: { [weak self] in
                 self?.hideAlert()
             }
