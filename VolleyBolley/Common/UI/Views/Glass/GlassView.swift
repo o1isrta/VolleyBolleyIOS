@@ -292,8 +292,7 @@ final class GlassView: UIView {
 
     // MARK: - Actions
 
-    @objc
-    private func handleViewVisible() {
+    @objc private func handleViewVisible() {
         if isViewBecameInvisible {
             DispatchQueue.main.async {
                 self.makeGlassEffect(
@@ -305,8 +304,7 @@ final class GlassView: UIView {
         }
     }
 
-    @objc
-    private func handleViewInvisible() {
+    @objc private func handleViewInvisible() {
         isViewBecameInvisible = true
     }
 }
