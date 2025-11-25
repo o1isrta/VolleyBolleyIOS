@@ -132,6 +132,11 @@ final class UserCardViewController: BaseViewController {
 		setupTableViewContentSizeObserver()
 		presenter?.viewDidLoad()
 	}
+
+	override func viewDidLayoutSubviews() {
+		super.viewDidLayoutSubviews()
+		view.bringSubviewToFront(loadingIndicator)
+	}
 }
 
 // MARK: - UserCardViewControllerProtocol
@@ -185,15 +190,15 @@ private extension UserCardViewController {
 	func isFavoriteUser(_ favorite: Bool) {
 		favoriteButton.setTitle(String(localized:
 			favorite
-				? "button.favorite"
-				: "button.unfavorite"
+			   ? "button.favorite"
+			   : "button.unfavorite"
 		), for: .normal)
 		presenter?.setAsFavorite(favorite)
 	}
 
 	func setupView() {
 		setupViews()
-		setupLoadingIndicator()
+		setupTableViewContentSizeObserver()
 	}
 
 	func setupViews() {
@@ -204,14 +209,6 @@ private extension UserCardViewController {
 			mainStack
 		)
 		setupConstraints()
-	}
-
-	func setupLoadingIndicator() {
-		view.addSubviews(loadingIndicator)
-		NSLayoutConstraint.activate([
-			loadingIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-			loadingIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-		])
 	}
 
 	func setupConstraints() {
@@ -323,10 +320,9 @@ extension UserCardViewController: UITableViewDataSource {
 		cellForRowAt indexPath: IndexPath
 	) -> UITableViewCell {
 		guard let cell = tableView.dequeueReusableCell(
-				withIdentifier: UserCardCell.reuseIdentifier,
-				for: indexPath
-			) as? UserCardCell
-		else {
+			withIdentifier: UserCardCell.reuseIdentifier,
+			for: indexPath
+		) as? UserCardCell else {
 			return UITableViewCell()
 		}
 
