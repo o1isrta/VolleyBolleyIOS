@@ -86,7 +86,8 @@ private extension UserCardPresenter {
 			let userCardModel = UserCardViewModel(
 				firstName: playerData.firstName,
 				lastName: playerData.lastName,
-				level: playerData.level
+				level: playerData.level,
+				isFavorite: true // TODO: need to get this from API
 			)
 			self.view?.setupUserData(with: userCardModel)
 

@@ -10,13 +10,16 @@ import Foundation
 struct UserCardViewModel {
 	let name: String
 	let level: PlayerLevel
+	let isFavorite: Bool
 
 	init(
 		firstName: String,
 		lastName: String,
-		level: PlayerLevel
+		level: PlayerLevel,
+		isFavorite: Bool
 	) {
 		self.name = "\(firstName) \(lastName)"
 		self.level = level
+		self.isFavorite = isFavorite
 	}
 }

@@ -98,23 +98,10 @@ final class UserCardViewController: BaseViewController {
 			title: String(localized: "button.favorite"),
 			isSelected: true
 		)
-		button.isHidden = false
 		button.addAction(UIAction { [weak self] _ in
 			guard let self else { return }
-			self.isFavoriteHidden(true)
-		}, for: .touchUpInside)
-		return button
-	}()
-
-	private lazy var unfavoriteButton: YellowButton = {
-		let button = YellowButton(
-			title: String(localized: "button.unfavorite"),
-			isSelected: false
-		)
-		button.isHidden = true
-		button.addAction(UIAction { [weak self] _ in
-			guard let self else { return }
-			self.isFavoriteHidden(false)
+			self.favoriteButton.isSelected.toggle()
+			self.isFavoriteUser(self.favoriteButton.isSelected)
 		}, for: .touchUpInside)
 		return button
 	}()
@@ -129,21 +116,10 @@ final class UserCardViewController: BaseViewController {
 			levelLabel,
 			tableCaptionLabel,
 			tableView,
-			buttonsStack
+			favoriteButton
 		])
 		stack.axis = .vertical
 		stack.alignment = .center
-		stack.spacing = LayoutConstants.littleIndent
-		return stack
-	}()
-
-	private lazy var buttonsStack: UIStackView = {
-		let stack = UIStackView(arrangedSubviews: [
-			favoriteButton,
-			unfavoriteButton
-		])
-		stack.axis = .vertical
-		stack.alignment = .fill
 		stack.spacing = LayoutConstants.littleIndent
 		return stack
 	}()
@@ -167,6 +143,7 @@ extension UserCardViewController: UserCardViewControllerProtocol {
 	}
 
 	func setupUserData(with userData: UserCardViewModel) {
+		isFavoriteUser(userData.isFavorite)
 		screenTitle.text = userData.name
 		levelLabel.text = userData.level.title
 	}
@@ -205,9 +182,12 @@ private extension UserCardViewController {
 		}
 	}
 
-	func isFavoriteHidden(_ favorite: Bool) {
-		favoriteButton.isHidden = favorite
-		unfavoriteButton.isHidden = !favorite
+	func isFavoriteUser(_ favorite: Bool) {
+		favoriteButton.setTitle(String(localized:
+			favorite
+				? "button.favorite"
+				: "button.unfavorite"
+		), for: .normal)
 		presenter?.setAsFavorite(favorite)
 	}
 
@@ -251,7 +231,7 @@ private extension UserCardViewController {
 				equalTo: view.trailingAnchor,
 				constant: -LayoutConstants.mainIndent),
 			glassmorphismView.bottomAnchor.constraint(
-				equalTo: buttonsStack.bottomAnchor,
+				equalTo: favoriteButton.bottomAnchor,
 				constant: LayoutConstants.mainSpacing),
 
 			backButton.topAnchor.constraint(
@@ -299,15 +279,15 @@ private extension UserCardViewController {
 			tableView.trailingAnchor.constraint(
 				lessThanOrEqualTo: mainStack.trailingAnchor),
 
-			buttonsStack.topAnchor.constraint(
+			favoriteButton.topAnchor.constraint(
 				equalTo: tableView.bottomAnchor,
 				constant: LayoutConstants.mainSpacing),
-			buttonsStack.leadingAnchor.constraint(equalTo: mainStack.leadingAnchor),
-			buttonsStack.trailingAnchor.constraint(equalTo: mainStack.trailingAnchor),
-			buttonsStack.bottomAnchor.constraint(
+			favoriteButton.leadingAnchor.constraint(equalTo: mainStack.leadingAnchor),
+			favoriteButton.trailingAnchor.constraint(equalTo: mainStack.trailingAnchor),
+			favoriteButton.bottomAnchor.constraint(
 				equalTo: mainStack.bottomAnchor,
 				constant: LayoutConstants.mainSpacing),
-			buttonsStack.heightAnchor.constraint(equalToConstant: LayoutConstants.favoriteButtonHeight),
+			favoriteButton.heightAnchor.constraint(equalToConstant: LayoutConstants.favoriteButtonHeight),
 
 			mainStack.topAnchor.constraint(
 				equalTo: glassmorphismView.topAnchor,
