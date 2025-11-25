@@ -315,38 +315,26 @@ extension UserCardViewController: UITableViewDataSource {
 		_ tableView: UITableView,
 		numberOfRowsInSection section: Int
 	) -> Int {
-		let activityCount = presenter?.latestActivity.count ?? 0
-		return activityCount == 0 ? 1 : activityCount
+		presenter?.getNumberOfActivityItem() ?? 0
 	}
 
 	func tableView(
 		_ tableView: UITableView,
 		cellForRowAt indexPath: IndexPath
 	) -> UITableViewCell {
-		guard
-			let latestActivity = presenter?.latestActivity,
-			let cell = tableView.dequeueReusableCell(
+		guard let cell = tableView.dequeueReusableCell(
 				withIdentifier: UserCardCell.reuseIdentifier,
 				for: indexPath
 			) as? UserCardCell
 		else {
 			return UITableViewCell()
 		}
-		if latestActivity.isEmpty {
+
+		if let item = presenter?.getUserCardItem(at: indexPath.row) {
+			cell.configure(with: item)
+		} else {
 			cell.configureAsNoActivity()
-			return cell
 		}
-		let activity = latestActivity[indexPath.row]
-		let userCardCellViewModel = UserCardCellViewModel(
-			dateString: activity.dateString,
-			location: LocationTitleViewModel(
-				title: activity.location.courtName,
-				location: activity.location.locationName
-			)
-		) { [weak self] in
-			self?.presenter?.openMapAt(activity.location)
-		}
-		cell.configure(with: userCardCellViewModel)
 
 		return cell
 	}

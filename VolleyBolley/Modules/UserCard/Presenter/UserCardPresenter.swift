@@ -11,10 +11,11 @@ protocol UserCardPresenterProtocol {
 	var view: UserCardViewControllerProtocol? { get set }
 	var interactor: UserCardInteractorProtocol? { get set }
 	var router: UserCardRouterProtocol { get set }
-	var latestActivity: [UserActivityModel] { get }
 	func viewDidLoad()
 	func backButtonTapped()
 	func setAsFavorite(_ isFavorite: Bool)
+	func getNumberOfActivityItem() -> Int
+	func getUserCardItem(at index: Int) -> UserCardCellViewModel?
 	func openMapAt(_ location: LocationModel)
 }
 
@@ -28,7 +29,7 @@ final class UserCardPresenter: UserCardPresenterProtocol {
 
 	// MARK: - Private Properties
 
-	private(set) var latestActivity: [UserActivityModel] = []
+	private var latestActivity: [UserActivityModel] = []
 
 	// MARK: - Initializers
 
@@ -67,6 +68,25 @@ final class UserCardPresenter: UserCardPresenterProtocol {
 
 	func openMapAt(_ location: LocationModel) {
 		router.navigateToLocation(location)
+	}
+
+	func getNumberOfActivityItem() -> Int {
+		let activityCount = latestActivity.count
+		return activityCount == 0 ? 1 : activityCount
+	}
+
+	func getUserCardItem(at index: Int) -> UserCardCellViewModel? {
+		guard index < latestActivity.count else { return nil }
+		let activity = latestActivity[index]
+		return UserCardCellViewModel(
+			dateString: activity.dateString,
+			location: LocationTitleViewModel(
+				title: activity.location.courtName,
+				location: activity.location.locationName
+			)
+		) { [weak self] in
+			self?.openMapAt(activity.location)
+		}
 	}
 }
 

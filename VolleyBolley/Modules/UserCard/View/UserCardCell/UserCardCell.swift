@@ -106,11 +106,16 @@ final class UserCardCell: UITableViewCell {
 private extension UserCardCell {
 
 	func hasCourtData(_ isHidden: Bool) {
-		glassmorphismView.isHidden = !isHidden
-		dateLabel.isHidden = !isHidden
-		locationTitleView.isHidden = !isHidden
-		mapButton.isHidden = !isHidden
-		noActivityLabel.isHidden = isHidden
+		let shownViews = [
+			glassmorphismView,
+			dateLabel,
+			locationTitleView,
+			mapButton
+		]
+		let hiddenViews = [noActivityLabel]
+
+		shownViews.forEach { $0.isHidden = !isHidden }
+		hiddenViews.forEach { $0.isHidden = isHidden }
 	}
 
 	func setupView() {
