@@ -87,7 +87,7 @@ enum AppDateFormatters {
 		let formatter = DateFormatter()
 		formatter.locale = Locale.current
 		formatter.timeZone = .current
-		formatter.dateFormat = "d MMMM"
+		formatter.setLocalizedDateFormatFromTemplate("dMMMM")
 		return formatter
 	}()
 }
