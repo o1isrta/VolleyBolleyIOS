@@ -198,7 +198,6 @@ private extension UserCardViewController {
 
 	func setupView() {
 		setupViews()
-		setupTableViewContentSizeObserver()
 	}
 
 	func setupViews() {
