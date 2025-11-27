@@ -2662,6 +2662,23 @@
         }
       }
     },
+    "playersList.title" : {
+      "comment" : "Players List",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Players"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Игроки"
+          }
+        }
+      }
+    },
     "Post-Game Ratings" : {
       "comment" : "FAQ",
       "localizations" : {
