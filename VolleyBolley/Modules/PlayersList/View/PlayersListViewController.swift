@@ -24,7 +24,6 @@ final class PlayersListViewController: BaseViewController {
 		static let mediumIndent: CGFloat = 16
 		static let mainSpacing: CGFloat = 20
 
-		static let tableEstimatedRowHeight: CGFloat = 52
 		static let initialTableHeight: CGFloat = 0
 		static let backButtonSize: CGFloat = 24
 
@@ -78,11 +77,8 @@ final class PlayersListViewController: BaseViewController {
 		tableView.separatorStyle = .none
 		tableView.showsVerticalScrollIndicator = false
 		tableView.dataSource = self
-		tableView.rowHeight = LayoutConstants.tableEstimatedRowHeight
-//		tableView.rowHeight = UITableView.automaticDimension
-//		tableView.estimatedRowHeight = LayoutConstants.tableEstimatedRowHeight
-		tableView.register(
-			PlayersListViewCell.self,
+		tableView.rowHeight = UITableView.automaticDimension
+		tableView.register(PlayersListViewCell.self,
 			forCellReuseIdentifier: PlayersListViewCell.reuseIdentifier)
 		return tableView
 	}()
@@ -201,7 +197,7 @@ extension PlayersListViewController: UITableViewDataSource {
 		_ tableView: UITableView,
 		numberOfRowsInSection section: Int
 	) -> Int {
-		return playersMock.count// TODO: -
+		return playersMock.count == 0 ? 1 : playersMock.count// TODO: -
 	}
 
 	func tableView(
@@ -212,6 +208,10 @@ extension PlayersListViewController: UITableViewDataSource {
 			withIdentifier: PlayersListViewCell.reuseIdentifier,
 			for: indexPath) as? PlayersListViewCell else {
 			return UITableViewCell()
+		}
+		if playersMock.count == 0 {// TODO: -
+			cell.configureAsNoPlayers()
+			return cell
 		}
 		// TODO: -
 		let model = PlayerListCellViewModel(

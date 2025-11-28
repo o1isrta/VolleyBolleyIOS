@@ -37,7 +37,7 @@ final class PlayersListViewCell: UITableViewCell {
 
 	private enum Constants {
 		static let stackSpacing: CGFloat = 8
-		static let mainStackBottomInset: CGFloat = -16
+		static let inset: CGFloat = -16
 
 		static let avatarSize: CGFloat = 40
 		static let badgeWidth: CGFloat = 30
@@ -105,6 +105,15 @@ final class PlayersListViewCell: UITableViewCell {
         return stack
     }()
 
+	private lazy var noPlayersLabel: UILabel = {
+		let label = UILabel()
+		label.font = AppFont.Hero.regular(size: 16)
+		label.textColor = AppColor.Text.primary
+		label.text = String(localized: "playersList.noPlayers")
+		label.isHidden = true
+		return label
+	}()
+
     // MARK: - Initializers
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -120,6 +129,8 @@ final class PlayersListViewCell: UITableViewCell {
     // MARK: - Public Method
 
     func configure(with model: PlayerListCellViewModel) {
+		noPlayersLabel.isHidden = true
+		mainStack.isHidden = false
 		avatarImageView.image = model.avatar
         nameLabel.text = model.name
         isFavorite = model.isFavorite
@@ -127,6 +138,11 @@ final class PlayersListViewCell: UITableViewCell {
 		onFavoriteToggle = model.onFavoriteToggle
         updateUI()
     }
+
+	func configureAsNoPlayers() {
+		noPlayersLabel.isHidden = false
+		mainStack.isHidden = true
+	}
 }
 
 // MARK: - Private methods
@@ -147,7 +163,7 @@ private extension PlayersListViewCell {
 	}
 
     func setupUI() {
-		contentView.addSubviews(mainStack)
+		contentView.addSubviews(mainStack, noPlayersLabel)
         setupConstraints()
     }
 
@@ -161,13 +177,17 @@ private extension PlayersListViewCell {
 			avatarImageView.heightAnchor.constraint(
 				equalToConstant: Constants.avatarSize),
 
+			noPlayersLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Constants.inset),
+			noPlayersLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+			noPlayersLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+
 			badgeView.widthAnchor.constraint(equalToConstant: Constants.badgeWidth),
 			badgeView.heightAnchor.constraint(equalToConstant: Constants.badgeHeight),
 
 			mainStack.topAnchor.constraint(equalTo: contentView.topAnchor),
 			mainStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             mainStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-			mainStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: Constants.mainStackBottomInset)
+			mainStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: Constants.inset)
         ])
     }
 }

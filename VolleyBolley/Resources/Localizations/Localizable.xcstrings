@@ -185,6 +185,7 @@
     },
     "button.unfavorite" : {
       "comment" : "User Card",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2658,6 +2659,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Игроки"
+          }
+        }
+      }
+    },
+    "playersList.noPlayers" : {
+      "comment" : "Players List",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No players found"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Игроки не найдены"
           }
         }
       }
