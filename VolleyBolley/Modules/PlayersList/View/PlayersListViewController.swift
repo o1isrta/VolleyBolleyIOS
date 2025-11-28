@@ -209,7 +209,7 @@ extension PlayersListViewController: UITableViewDataSource {
 			for: indexPath) as? PlayersListViewCell else {
 			return UITableViewCell()
 		}
-		if playersMock.count == 0 {// TODO: -
+		if playersMock.isEmpty {// TODO: -
 			cell.configureAsNoPlayers()
 			return cell
 		}
