@@ -195,12 +195,40 @@ private extension PlayersListViewCell {
 // MARK: - Preview
 
 #if DEBUG
+
+import SwiftUI
+
 @available(iOS 17.0, *)
 #Preview {
-	let presenter = PlayersListPresenter(
-		interactor: PlayersListInteractor(),
-		router: PlayersListRouter()
-	)
-	PlayersListViewController(presenter: presenter)
+	ZStack {
+		Color(AppColor.Background.badgeSelected)
+			.ignoresSafeArea()
+
+		VStack {
+			UIViewPreview {
+				let view = PlayersListViewCell()
+				view.configureAsNoPlayers()
+				return view
+			}
+			.background(Color(uiColor: AppColor.Background.screen))
+			.frame(width: 319, height: 40)
+
+			UIViewPreview {
+				let view = PlayersListViewCell()
+				let model = PlayerListCellViewModel(
+					avatar: UIImage.imgPerson,
+					name: Player.mockDefault.firstName + " " + Player.mockDefault.lastName,
+					isFavorite: false,
+					level: PlayerLevel.pro.title
+				) {
+					print("change isFavorite")
+				}
+				view.configure(with: model)
+				return view
+			}
+			.background(Color(uiColor: AppColor.Background.screen))
+			.frame(width: 319, height: 52)
+		}
+	}
 }
 #endif
