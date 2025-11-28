@@ -197,6 +197,10 @@ private extension PlayersListViewCell {
 #if DEBUG
 @available(iOS 17.0, *)
 #Preview {
-	PlayersListViewController()
+	let presenter = PlayersListPresenter(
+		interactor: PlayersListInteractor(),
+		router: PlayersListRouter()
+	)
+	PlayersListViewController(presenter: presenter)
 }
 #endif

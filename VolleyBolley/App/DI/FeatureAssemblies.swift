@@ -31,6 +31,7 @@ enum FeatureAssemblies {
 			FAQAssembly(),
             AboutAssembly(),
 			UserCardAssembly(),
+			PlayersListAssembly()
         ]
     }
 }

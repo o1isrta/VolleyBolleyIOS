@@ -7,6 +7,8 @@
 
 import UIKit
 
+protocol PlayersListViewControllerProtocol: AnyObject {}
+
 final class PlayersListViewController: BaseViewController {
 
 	// MARK: - Private Properties
@@ -18,6 +20,8 @@ final class PlayersListViewController: BaseViewController {
 		"Anton Ivanov",
 		"Aleksandr Abramov"
 	]
+
+	private let presenter: PlayersListPresenterProtocol
 
 	private enum LayoutConstants {
 		static let mainIndent: CGFloat = 8
@@ -45,7 +49,7 @@ final class PlayersListViewController: BaseViewController {
 		button.setImage(.chevronBackward, for: .normal)
 		button.tintColor = AppColor.Icon.primary
 		button.addAction(UIAction { [weak self] _ in
-//			self?.presenter?.backButtonTapped()
+			self?.presenter.backButtonTapped()
 		}, for: .touchUpInside)
 		return button
 	}()
@@ -85,13 +89,13 @@ final class PlayersListViewController: BaseViewController {
 
 	// MARK: - Initializers
 
-//	init(presenter: ) {
-//		self.presenter = presenter
-//		super.init(nibName: nil, bundle: nil)
-//	}
-//
-//	@available(*, unavailable)
-//	required init?(coder: NSCoder) { nil }
+	init(presenter: PlayersListPresenterProtocol) {
+		self.presenter = presenter
+		super.init(nibName: nil, bundle: nil)
+	}
+
+	@available(*, unavailable)
+	required init?(coder: NSCoder) { nil }
 
 	// MARK: - Lifecycle
 
@@ -100,8 +104,13 @@ final class PlayersListViewController: BaseViewController {
 		setupUI()
 		hideKeyboardWhenTappedAround()
 		setupTableViewContentSizeObserver()
+		presenter.viewDidLoad()
 	}
 }
+
+// MARK: - PlayersListViewControllerProtocol
+
+extension PlayersListViewController: PlayersListViewControllerProtocol {}
 
 // MARK: - Private methods
 
@@ -209,6 +218,9 @@ extension PlayersListViewController: UITableViewDataSource {
 			for: indexPath) as? PlayersListViewCell else {
 			return UITableViewCell()
 		}
+		// TODO: -
+		print(PlayersListType(rawValue: segmentedControl.selectedSegmentIndex))
+
 		if playersMock.isEmpty {// TODO: -
 			cell.configureAsNoPlayers()
 			return cell
@@ -232,6 +244,10 @@ extension PlayersListViewController: UITableViewDataSource {
 #if DEBUG
 @available(iOS 17.0, *)
 #Preview {
-	PlayersListViewController()
+	let presenter = PlayersListPresenter(
+		interactor: PlayersListInteractor(),
+		router: PlayersListRouter()
+	)
+	PlayersListViewController(presenter: presenter)
 }
 #endif
