@@ -197,7 +197,7 @@ extension PlayersListViewController: UITableViewDataSource {
 		_ tableView: UITableView,
 		numberOfRowsInSection section: Int
 	) -> Int {
-		return playersMock.count == 0 ? 1 : playersMock.count// TODO: -
+		return playersMock.isEmpty ? 1 : playersMock.count// TODO: -
 	}
 
 	func tableView(
