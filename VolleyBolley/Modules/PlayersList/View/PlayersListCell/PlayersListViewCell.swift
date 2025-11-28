@@ -8,17 +8,20 @@
 import UIKit
 
 struct PlayerListCellViewModel {
+	let avatar: UIImage
     let name: String
     let isFavorite: Bool
 	let level: String
 	let onFavoriteToggle: (() -> Void)?
 
 	init(
+		avatar: UIImage,
 		name: String,
 		isFavorite: Bool,
 		level: String,
 		onFavoriteToggle: (() -> Void)?
 	) {
+		self.avatar = avatar
 		self.name = name
 		self.isFavorite = isFavorite
 		self.level = String(level.prefix(1).uppercased())
@@ -33,8 +36,10 @@ final class PlayersListViewCell: UITableViewCell {
     static let reuseIdentifier = "PlayersListViewCell"
 
 	private enum Constants {
-		static let horizontalInset: CGFloat = 8
+		static let stackSpacing: CGFloat = 8
+		static let mainStackBottomInset: CGFloat = -16
 
+		static let avatarSize: CGFloat = 40
 		static let badgeWidth: CGFloat = 30
 		static let badgeHeight: CGFloat = 23
 
@@ -55,6 +60,8 @@ final class PlayersListViewCell: UITableViewCell {
         return button
     }()
 
+	private lazy var avatarImageView = AvatarImageView()
+
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.textColor = AppColor.Text.primary
@@ -63,10 +70,13 @@ final class PlayersListViewCell: UITableViewCell {
     }()
 
     private lazy var leftStack: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [nameLabel])
+		let stack = UIStackView(arrangedSubviews: [
+			avatarImageView,
+			nameLabel
+		])
         stack.axis = .horizontal
         stack.alignment = .center
-		stack.spacing = Constants.horizontalInset
+		stack.spacing = Constants.stackSpacing
         return stack
     }()
 
@@ -79,7 +89,7 @@ final class PlayersListViewCell: UITableViewCell {
 		])
         stack.axis = .horizontal
         stack.alignment = .center
-        stack.spacing = Constants.horizontalInset
+        stack.spacing = Constants.stackSpacing
         return stack
     }()
 
@@ -91,7 +101,7 @@ final class PlayersListViewCell: UITableViewCell {
         stack.axis = .horizontal
         stack.alignment = .center
         stack.distribution = .equalSpacing
-		stack.spacing = Constants.horizontalInset
+		stack.spacing = Constants.stackSpacing
         return stack
     }()
 
@@ -110,6 +120,7 @@ final class PlayersListViewCell: UITableViewCell {
     // MARK: - Public Method
 
     func configure(with model: PlayerListCellViewModel) {
+		avatarImageView.image = model.avatar
         nameLabel.text = model.name
         isFavorite = model.isFavorite
 		badgeView.configure(distance: model.level)
@@ -145,13 +156,18 @@ private extension PlayersListViewCell {
         rightStack.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
         NSLayoutConstraint.activate([
+			avatarImageView.widthAnchor.constraint(
+				equalToConstant: Constants.avatarSize),
+			avatarImageView.heightAnchor.constraint(
+				equalToConstant: Constants.avatarSize),
+
 			badgeView.widthAnchor.constraint(equalToConstant: Constants.badgeWidth),
 			badgeView.heightAnchor.constraint(equalToConstant: Constants.badgeHeight),
 
-            mainStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+			mainStack.topAnchor.constraint(equalTo: contentView.topAnchor),
+			mainStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             mainStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            mainStack.topAnchor.constraint(equalTo: contentView.topAnchor),
-            mainStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+			mainStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: Constants.mainStackBottomInset)
         ])
     }
 }

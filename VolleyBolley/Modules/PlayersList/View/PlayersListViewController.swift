@@ -24,7 +24,7 @@ final class PlayersListViewController: BaseViewController {
 		static let mediumIndent: CGFloat = 16
 		static let mainSpacing: CGFloat = 20
 
-		static let tableEstimatedRowHeight: CGFloat = 40
+		static let tableEstimatedRowHeight: CGFloat = 52
 		static let initialTableHeight: CGFloat = 0
 		static let backButtonSize: CGFloat = 24
 
@@ -150,7 +150,7 @@ private extension PlayersListViewController {
 				constant: -LayoutConstants.mainIndent),
 			glassmorphismView.bottomAnchor.constraint(
 				equalTo: tableView.bottomAnchor,
-				constant: LayoutConstants.mainSpacing),
+				constant: LayoutConstants.mainIndent / 2),
 
 			backButton.topAnchor.constraint(
 				equalTo: glassmorphismView.topAnchor,
@@ -215,6 +215,7 @@ extension PlayersListViewController: UITableViewDataSource {
 		}
 		// TODO: -
 		let model = PlayerListCellViewModel(
+			avatar: UIImage.imgPerson,
 			name: playersMock[indexPath.row],
 			isFavorite: false,
 			level: PlayerLevel.pro.title
