@@ -99,8 +99,8 @@ final class EditProfilePhotoViewController: BaseViewController {
 
 	override func viewDidLayoutSubviews() {
 		super.viewDidLayoutSubviews()
-		// ALWAYS raise the customAlertView above all other subviews
 		view.bringSubviewToFront(customAlertView)
+		view.bringSubviewToFront(loadingIndicator)
 	}
 }
 
@@ -111,7 +111,6 @@ private extension EditProfilePhotoViewController {
 	func setupView() {
 		setupViews()
 		setupConstraints()
-		setupLoadingIndicator()
 	}
 
 	func setupViews() {
@@ -124,14 +123,6 @@ private extension EditProfilePhotoViewController {
 			screenTitle,
 			mainStack
 		)
-	}
-
-	func setupLoadingIndicator() {
-		view.addSubviews(loadingIndicator)
-		NSLayoutConstraint.activate([
-			loadingIndicator.centerXAnchor.constraint(equalTo: profilePhotoView.centerXAnchor),
-			loadingIndicator.centerYAnchor.constraint(equalTo: profilePhotoView.centerYAnchor)
-		])
 	}
 
 	func setupConstraints() {
