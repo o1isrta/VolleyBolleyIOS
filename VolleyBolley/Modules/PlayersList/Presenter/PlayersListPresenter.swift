@@ -77,9 +77,9 @@ final class PlayersListPresenter: PlayersListPresenterProtocol {
 			lastName: player.lastName,
 			isFavorite: player.isFavorite,
 			level: PlayerLevel.medium.title
-		) { [weak self] in
+		) { [weak self] isFavorite in
 			guard let self else { return }
-			let newPlayer = toggleIsFavoriteFor(player: player)
+			let newPlayer = updateIsFavorite(for: player, to: isFavorite)
 			self.updateAllPlayersList(with: newPlayer)
 			self.updateFavoriteList(with: newPlayer)
 		}
@@ -92,8 +92,8 @@ final class PlayersListPresenter: PlayersListPresenterProtocol {
 
 private extension PlayersListPresenter {
 
-	func toggleIsFavoriteFor(player: PlayerInfoModel) -> PlayerInfoModel {
-		let newPlayer = player.copy(isFavorite: !player.isFavorite)
+	func updateIsFavorite(for player: PlayerInfoModel, to isFavorite: Bool) -> PlayerInfoModel {
+		let newPlayer = player.copy(isFavorite: isFavorite)
 		interactor?.toggleIsFavoriteFor(player: newPlayer)
 		return newPlayer
 	}

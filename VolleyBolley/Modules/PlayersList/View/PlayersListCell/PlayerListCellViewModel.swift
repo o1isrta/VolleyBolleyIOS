@@ -12,7 +12,7 @@ struct PlayerListCellViewModel {
 	let name: String
 	let isFavorite: Bool
 	let level: String
-	let onFavoriteToggle: (() -> Void)?
+	let onFavoriteToggle: ((Bool) -> Void)?
 
 	init(
 		avatar: UIImage?,
@@ -20,7 +20,7 @@ struct PlayerListCellViewModel {
 		lastName: String,
 		isFavorite: Bool,
 		level: String,
-		onFavoriteToggle: (() -> Void)?
+		onFavoriteToggle: ((Bool) -> Void)?
 	) {
 		self.init(
 			avatar: avatar,
@@ -36,7 +36,7 @@ struct PlayerListCellViewModel {
 		name: String,
 		isFavorite: Bool,
 		level: String,
-		onFavoriteToggle: (() -> Void)?
+		onFavoriteToggle: ((Bool) -> Void)?
 	) {
 		self.avatar = avatar
 		self.name = name

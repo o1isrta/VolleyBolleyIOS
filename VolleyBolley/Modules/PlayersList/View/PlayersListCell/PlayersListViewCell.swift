@@ -27,7 +27,7 @@ final class PlayersListViewCell: UITableViewCell {
     // MARK: - Private Properties
 
     private var isFavorite: Bool = false
-	private var onFavoriteToggle: (() -> Void)?
+	private var onFavoriteToggle: ((Bool) -> Void)?
 
     private lazy var starButton: UIButton = {
         let button = UIButton()
@@ -130,7 +130,7 @@ private extension PlayersListViewCell {
 	func didTapStar() {
 		isFavorite.toggle()
 		updateUI()
-		onFavoriteToggle?()
+		onFavoriteToggle?(isFavorite)
 	}
 
 	func updateUI() {
@@ -195,11 +195,12 @@ import SwiftUI
 				let view = PlayersListViewCell()
 				let model = PlayerListCellViewModel(
 					avatar: UIImage.imgPerson,
-					name: Player.mockDefault.firstName + " " + Player.mockDefault.lastName,
+					firstName: Player.mockDefault.firstName,
+					lastName: Player.mockDefault.lastName,
 					isFavorite: false,
 					level: PlayerLevel.pro.title
-				) {
-					print("change isFavorite")
+				) { isFavorite in
+					print("change isFavorite", isFavorite)
 				}
 				view.configure(with: model)
 				return view
