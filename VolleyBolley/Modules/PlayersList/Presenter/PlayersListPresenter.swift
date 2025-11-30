@@ -12,8 +12,10 @@ import UIKit
 protocol PlayersListPresenterProtocol: AnyObject {
 	func viewDidLoad()
 	func backButtonTapped()
-	func getPlayersCount(list: PlayersListType) -> Int
-	func getPlayerFrom(list: PlayersListType, at index: Int) -> PlayerListCellViewModel
+	func setPlayersList(_ list: PlayersListType)
+	func getPlayersCount() -> Int
+	func getPlayer(at index: Int) -> PlayerListCellViewModel
+	func filterPlayers(by filterText: String)
 }
 
 // MARK: - PlayersListPresenter
@@ -31,6 +33,13 @@ final class PlayersListPresenter: PlayersListPresenterProtocol {
 	private var allPlayers: [PlayerInfoModel] = []
 	private var favoritePlayers: [PlayerInfoModel] = []
 
+	private var players: [PlayerInfoModel] = [] {
+		didSet {
+			filterPlayers(by: "")
+		}
+	}
+	private var filteredPlayers: [PlayerInfoModel] = []
+
 	// MARK: - Initializers
 
 	init(
@@ -46,30 +55,29 @@ final class PlayersListPresenter: PlayersListPresenterProtocol {
 	func viewDidLoad() {
 		allPlayers = interactor?.getPlayers() ?? []
 		favoritePlayers = allPlayers.filter{ $0.isFavorite == true }.sorted { $0.firstName < $1.firstName }
+		setPlayersList(.all)
 	}
 
 	func backButtonTapped() {
 		router.navigateBack()
 	}
 
-	func getPlayersCount(list: PlayersListType) -> Int {
+	func setPlayersList(_ list: PlayersListType) {
 		switch list {
 		case .all:
-			return allPlayers.count
+			players = allPlayers
 		case .favorite:
-			return favoritePlayers.count
+			players = favoritePlayers
 		}
 	}
 
-	func getPlayerFrom(list: PlayersListType, at index: Int) -> PlayerListCellViewModel {
-		let player: PlayerInfoModel
+	func getPlayersCount() -> Int {
+		filteredPlayers.count
+	}
+
+	func getPlayer(at index: Int) -> PlayerListCellViewModel {
+		let player = filteredPlayers[index]
 		let avatar = UIImage.imgPerson // TODO: - загрузить картинку для игрока
-		switch list {
-		case .all:
-			player = allPlayers[index]
-		case .favorite:
-			player = favoritePlayers[index]
-		}
 
 		let model = PlayerListCellViewModel(
 			avatar: UIImage.imgPerson,
@@ -85,6 +93,15 @@ final class PlayersListPresenter: PlayersListPresenterProtocol {
 		}
 
 		return model
+	}
+
+	func filterPlayers(by filterText: String) {
+		let filterText = filterText.lowercased()
+		filteredPlayers = players.filter { player in
+			return filterText.isEmpty
+				|| player.firstName.localizedCaseInsensitiveContains(filterText)
+				|| player.lastName.localizedCaseInsensitiveContains(filterText)
+		}
 	}
 }
 

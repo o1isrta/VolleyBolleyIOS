@@ -9,9 +9,9 @@ import UIKit
 
 final class PlayersListViewCell: UITableViewCell {
 
-    // MARK: - Public Properties
+	// MARK: - Public Properties
 
-    static let reuseIdentifier = "PlayersListViewCell"
+	static let reuseIdentifier = "PlayersListViewCell"
 
 	private enum Constants {
 		static let stackSpacing: CGFloat = 8
@@ -24,64 +24,64 @@ final class PlayersListViewCell: UITableViewCell {
 		static let fontSize: CGFloat = 16
 	}
 
-    // MARK: - Private Properties
+	// MARK: - Private Properties
 
-    private var isFavorite: Bool = false
+	private var isFavorite: Bool = false
 	private var onFavoriteToggle: ((Bool) -> Void)?
 
-    private lazy var starButton: UIButton = {
-        let button = UIButton()
+	private lazy var starButton: UIButton = {
+		let button = UIButton()
 		button.setImage(UIImage.Icon.noStar, for: .normal)
 		button.addAction(UIAction { [weak self] _ in
 			self?.didTapStar()
 		}, for: .touchUpInside)
-        return button
-    }()
+		return button
+	}()
 
 	private lazy var avatarImageView = AvatarImageView()
 
-    private lazy var nameLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = AppColor.Text.primary
+	private lazy var nameLabel: UILabel = {
+		let label = UILabel()
+		label.textColor = AppColor.Text.primary
 		label.font = AppFont.Hero.regular(size: Constants.fontSize)
-        return label
-    }()
+		return label
+	}()
 
-    private lazy var leftStack: UIStackView = {
+	private lazy var leftStack: UIStackView = {
 		let stack = UIStackView(arrangedSubviews: [
 			avatarImageView,
 			nameLabel
 		])
-        stack.axis = .horizontal
-        stack.alignment = .center
+		stack.axis = .horizontal
+		stack.alignment = .center
 		stack.spacing = Constants.stackSpacing
-        return stack
-    }()
+		return stack
+	}()
 
-    private lazy var badgeView = BadgeView()
+	private lazy var badgeView = BadgeView()
 
-    private lazy var rightStack: UIStackView = {
+	private lazy var rightStack: UIStackView = {
 		let stack = UIStackView(arrangedSubviews: [
 			starButton,
 			badgeView
 		])
-        stack.axis = .horizontal
-        stack.alignment = .center
-        stack.spacing = Constants.stackSpacing
-        return stack
-    }()
+		stack.axis = .horizontal
+		stack.alignment = .center
+		stack.spacing = Constants.stackSpacing
+		return stack
+	}()
 
-    private lazy var mainStack: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [
+	private lazy var mainStack: UIStackView = {
+		let stack = UIStackView(arrangedSubviews: [
 			leftStack,
 			rightStack
 		])
-        stack.axis = .horizontal
-        stack.alignment = .center
-        stack.distribution = .equalSpacing
+		stack.axis = .horizontal
+		stack.alignment = .center
+		stack.distribution = .equalSpacing
 		stack.spacing = Constants.stackSpacing
-        return stack
-    }()
+		return stack
+	}()
 
 	private lazy var noPlayersLabel: UILabel = {
 		let label = UILabel()
@@ -92,30 +92,30 @@ final class PlayersListViewCell: UITableViewCell {
 		return label
 	}()
 
-    // MARK: - Initializers
+	// MARK: - Initializers
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		backgroundColor = AppColor.Background.clear
-        selectionStyle = .none
+		selectionStyle = .none
 		setupUI()
-    }
+	}
 
 	@available(*, unavailable)
-    required init?(coder: NSCoder) { nil }
+	required init?(coder: NSCoder) { nil }
 
-    // MARK: - Public Method
+	// MARK: - Public Method
 
-    func configure(with model: PlayerListCellViewModel) {
+	func configure(with model: PlayerListCellViewModel) {
 		noPlayersLabel.isHidden = true
 		mainStack.isHidden = false
 		avatarImageView.image = model.avatar
-        nameLabel.text = model.name
-        isFavorite = model.isFavorite
+		nameLabel.text = model.name
+		isFavorite = model.isFavorite
 		badgeView.configure(distance: model.level)
 		onFavoriteToggle = model.onFavoriteToggle
-        updateUI()
-    }
+		updateUI()
+	}
 
 	func configureAsNoPlayers() {
 		noPlayersLabel.isHidden = false
@@ -140,16 +140,16 @@ private extension PlayersListViewCell {
 		for: .normal)
 	}
 
-    func setupUI() {
+	func setupUI() {
 		contentView.addSubviews(mainStack, noPlayersLabel)
-        setupConstraints()
-    }
+		setupConstraints()
+	}
 
-    func setupConstraints() {
-        leftStack.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        rightStack.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+	func setupConstraints() {
+		leftStack.setContentHuggingPriority(.defaultLow, for: .horizontal)
+		rightStack.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
-        NSLayoutConstraint.activate([
+		NSLayoutConstraint.activate([
 			avatarImageView.widthAnchor.constraint(
 				equalToConstant: Constants.avatarSize),
 			avatarImageView.heightAnchor.constraint(
@@ -164,10 +164,10 @@ private extension PlayersListViewCell {
 
 			mainStack.topAnchor.constraint(equalTo: contentView.topAnchor),
 			mainStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            mainStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+			mainStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
 			mainStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: Constants.inset)
-        ])
-    }
+		])
+	}
 }
 
 // MARK: - Preview

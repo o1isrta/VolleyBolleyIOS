@@ -10,23 +10,23 @@ import UIKit
 protocol PlayersListViewControllerProtocol: AnyObject {}
 
 final class PlayersListViewController: BaseViewController {
-
+	
 	// MARK: - Private Properties
-
+	
 	private let presenter: PlayersListPresenterProtocol
-
+	
 	private enum LayoutConstants {
 		static let mainIndent: CGFloat = 8
 		static let mediumIndent: CGFloat = 16
 		static let mainSpacing: CGFloat = 20
-
+		
 		static let initialTableHeight: CGFloat = 0
 		static let backButtonSize: CGFloat = 24
-
+		
 		static let fontSize: CGFloat = 16
 		static let screenTitleNumberOfLines: Int = 1
 	}
-
+	
 	private lazy var screenTitle: CustomTitle = {
 		let label = CustomTitle(
 			text: String(localized: "playersList.title"),
@@ -35,7 +35,7 @@ final class PlayersListViewController: BaseViewController {
 		label.numberOfLines = LayoutConstants.screenTitleNumberOfLines
 		return label
 	}()
-
+	
 	private lazy var backButton: UtilityButton = {
 		let button = UtilityButton(style: .small)
 		button.setImage(.chevronBackward, for: .normal)
@@ -45,10 +45,10 @@ final class PlayersListViewController: BaseViewController {
 		}, for: .touchUpInside)
 		return button
 	}()
-
+	
 	private lazy var searchBar = GradientSearchField(type: .search)
 	private lazy var segmentedControl = CustomSegmentedControl(type: .players)
-
+	
 	private lazy var mainStack: UIStackView = {
 		let stack = UIStackView(arrangedSubviews: [
 			searchBar,
@@ -61,12 +61,12 @@ final class PlayersListViewController: BaseViewController {
 		stack.distribution = .fill
 		return stack
 	}()
-
+	
 	private lazy var glassmorphismView = GlassmorphismView()
-
+	
 	private var tableViewHeightConstraint: NSLayoutConstraint?
 	private var tableViewContentSizeObserver: NSKeyValueObservation?
-
+	
 	private lazy var tableView: UITableView = {
 		let tableView = UITableView()
 		tableView.backgroundColor = AppColor.Background.clear
@@ -75,22 +75,22 @@ final class PlayersListViewController: BaseViewController {
 		tableView.dataSource = self
 		tableView.rowHeight = UITableView.automaticDimension
 		tableView.register(PlayersListViewCell.self,
-			forCellReuseIdentifier: PlayersListViewCell.reuseIdentifier)
+						   forCellReuseIdentifier: PlayersListViewCell.reuseIdentifier)
 		return tableView
 	}()
-
+	
 	// MARK: - Initializers
-
+	
 	init(presenter: PlayersListPresenterProtocol) {
 		self.presenter = presenter
 		super.init(nibName: nil, bundle: nil)
 	}
-
+	
 	@available(*, unavailable)
 	required init?(coder: NSCoder) { nil }
-
+	
 	// MARK: - Lifecycle
-
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		setupUI()
@@ -98,6 +98,7 @@ final class PlayersListViewController: BaseViewController {
 		setupTableViewContentSizeObserver()
 		presenter.viewDidLoad()
 		setupActions()
+		setupSearchTextField()
 	}
 }
 
@@ -109,14 +110,39 @@ extension PlayersListViewController: PlayersListViewControllerProtocol {
 // MARK: - Private methods
 
 private extension PlayersListViewController {
-
+	
+	func setupSearchTextField() {
+		searchBar.addTarget(
+			self,
+			action: #selector(searchTextChanged),
+			for: .editingChanged
+		)
+	}
+	
+	@objc func searchTextChanged() {
+		getFilteredPlayers()
+	}
+	
 	func setupActions() {
-		segmentedControl.segmentChanged = { [weak self] _ in
-			guard let self else { return }
-			self.tableView.reloadData()
+		segmentedControl.segmentChanged = { [weak self] index in
+			guard
+				let self,
+				let playersListType = PlayersListType(rawValue: index)
+			else { return }
+			self.presenter.setPlayersList(playersListType)
+			self.getFilteredPlayers()
 		}
 	}
-
+	
+	func getFilteredPlayers() {
+		let playersListType = PlayersListType(rawValue: segmentedControl.selectedSegmentIndex)
+		guard playersListType != nil else { return }
+		
+		let filterText = searchBar.text ?? ""
+		presenter.filterPlayers(by: filterText)
+		tableView.reloadData()
+	}
+	
 	func setupTableViewContentSizeObserver() {
 		tableViewContentSizeObserver = tableView.observe(
 			\.contentSize,
@@ -132,7 +158,7 @@ private extension PlayersListViewController {
 			self.tableViewHeightConstraint?.constant = newHeight
 		}
 	}
-
+	
 	func setupUI() {
 		view.addSubviews(
 			glassmorphismView,
@@ -142,7 +168,7 @@ private extension PlayersListViewController {
 		)
 		setupConstraints()
 	}
-
+	
 	func setupConstraints() {
 		NSLayoutConstraint.activate([
 			glassmorphismView.topAnchor.constraint(
@@ -157,7 +183,7 @@ private extension PlayersListViewController {
 			glassmorphismView.bottomAnchor.constraint(
 				equalTo: tableView.bottomAnchor,
 				constant: LayoutConstants.mainIndent / 2),
-
+			
 			backButton.topAnchor.constraint(
 				equalTo: glassmorphismView.topAnchor,
 				constant: LayoutConstants.mainSpacing
@@ -168,7 +194,7 @@ private extension PlayersListViewController {
 			),
 			backButton.heightAnchor.constraint(equalToConstant: LayoutConstants.backButtonSize),
 			backButton.widthAnchor.constraint(equalToConstant: LayoutConstants.backButtonSize),
-
+			
 			screenTitle.centerXAnchor.constraint(equalTo: glassmorphismView.centerXAnchor),
 			screenTitle.centerYAnchor.constraint(equalTo: backButton.centerYAnchor),
 			screenTitle.leadingAnchor.constraint(
@@ -177,7 +203,7 @@ private extension PlayersListViewController {
 			screenTitle.trailingAnchor.constraint(
 				lessThanOrEqualTo: glassmorphismView.trailingAnchor,
 				constant: -LayoutConstants.mainSpacing),
-
+			
 			mainStack.topAnchor.constraint(
 				equalTo: screenTitle.bottomAnchor,
 				constant: LayoutConstants.mediumIndent
@@ -191,7 +217,7 @@ private extension PlayersListViewController {
 				constant: -LayoutConstants.mainSpacing
 			)
 		])
-
+		
 		tableViewHeightConstraint = tableView.heightAnchor.constraint(
 			equalToConstant: LayoutConstants.initialTableHeight
 		)
@@ -202,42 +228,34 @@ private extension PlayersListViewController {
 // MARK: - UITableViewDataSource
 
 extension PlayersListViewController: UITableViewDataSource {
-
+	
 	func tableView(
 		_ tableView: UITableView,
 		numberOfRowsInSection section: Int
 	) -> Int {
-		guard
-			let playersListType = PlayersListType(rawValue: segmentedControl.selectedSegmentIndex)
-		else { return 1 }
-		let playersCount = presenter.getPlayersCount(list: playersListType)
+		let playersCount = presenter.getPlayersCount()
 		return playersCount == 0 ? 1 : playersCount
 	}
-
+	
 	func tableView(
 		_ tableView: UITableView,
 		cellForRowAt indexPath: IndexPath
 	) -> UITableViewCell {
-		guard
-			let playersListType = PlayersListType(rawValue: segmentedControl.selectedSegmentIndex),
-			let cell = tableView.dequeueReusableCell(
+		guard let cell = tableView.dequeueReusableCell(
 			withIdentifier: PlayersListViewCell.reuseIdentifier,
 			for: indexPath) as? PlayersListViewCell
 		else {
 			return UITableViewCell()
 		}
-		if presenter.getPlayersCount(list: playersListType) == 0 {
+		if presenter.getPlayersCount() == 0 {
 			cell.configureAsNoPlayers()
 			return cell
 		}
-		let playerModel = presenter.getPlayerFrom(
-			list: playersListType,
-			at: indexPath.row
-		)
+		let playerModel = presenter.getPlayer(at: indexPath.row)
 		cell.configure(with: playerModel)
 		return cell
 	}
-
+	
 	// TODO: need add tap by cell and load UserCard
 }
 
