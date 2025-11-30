@@ -13,14 +13,6 @@ final class PlayersListViewController: BaseViewController {
 
 	// MARK: - Private Properties
 
-	// TODO: - remove it in the future
-	private var playersMock: [String] = [
-		"Polina Vasilieva",
-		"Kristina Popova",
-		"Anton Ivanov",
-		"Aleksandr Abramov"
-	]
-
 	private let presenter: PlayersListPresenterProtocol
 
 	private enum LayoutConstants {
@@ -105,16 +97,25 @@ final class PlayersListViewController: BaseViewController {
 		hideKeyboardWhenTappedAround()
 		setupTableViewContentSizeObserver()
 		presenter.viewDidLoad()
+		setupActions()
 	}
 }
 
 // MARK: - PlayersListViewControllerProtocol
 
-extension PlayersListViewController: PlayersListViewControllerProtocol {}
+extension PlayersListViewController: PlayersListViewControllerProtocol {
+}
 
 // MARK: - Private methods
 
 private extension PlayersListViewController {
+
+	func setupActions() {
+		segmentedControl.segmentChanged = { [weak self] _ in
+			guard let self else { return }
+			self.tableView.reloadData()
+		}
+	}
 
 	func setupTableViewContentSizeObserver() {
 		tableViewContentSizeObserver = tableView.observe(
@@ -206,37 +207,38 @@ extension PlayersListViewController: UITableViewDataSource {
 		_ tableView: UITableView,
 		numberOfRowsInSection section: Int
 	) -> Int {
-		return playersMock.isEmpty ? 1 : playersMock.count// TODO: -
+		guard
+			let playersListType = PlayersListType(rawValue: segmentedControl.selectedSegmentIndex)
+		else { return 1 }
+		let playersCount = presenter.getPlayersCount(list: playersListType)
+		return playersCount == 0 ? 1 : playersCount
 	}
 
 	func tableView(
 		_ tableView: UITableView,
 		cellForRowAt indexPath: IndexPath
 	) -> UITableViewCell {
-		guard let cell = tableView.dequeueReusableCell(
+		guard
+			let playersListType = PlayersListType(rawValue: segmentedControl.selectedSegmentIndex),
+			let cell = tableView.dequeueReusableCell(
 			withIdentifier: PlayersListViewCell.reuseIdentifier,
-			for: indexPath) as? PlayersListViewCell else {
+			for: indexPath) as? PlayersListViewCell
+		else {
 			return UITableViewCell()
 		}
-		// TODO: -
-		print(PlayersListType(rawValue: segmentedControl.selectedSegmentIndex))
-
-		if playersMock.isEmpty {// TODO: -
+		if presenter.getPlayersCount(list: playersListType) == 0 {
 			cell.configureAsNoPlayers()
 			return cell
 		}
-		// TODO: -
-		let model = PlayerListCellViewModel(
-			avatar: UIImage.imgPerson,
-			name: playersMock[indexPath.row],
-			isFavorite: false,
-			level: PlayerLevel.pro.title
-		) {
-			print("change isFavorite")
-		}
-		cell.configure(with: model)
+		let playerModel = presenter.getPlayerFrom(
+			list: playersListType,
+			at: indexPath.row
+		)
+		cell.configure(with: playerModel)
 		return cell
 	}
+
+	// TODO: need add tap by cell and load UserCard
 }
 
 // MARK: - Preview

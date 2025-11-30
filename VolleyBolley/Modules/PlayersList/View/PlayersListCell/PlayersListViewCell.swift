@@ -7,28 +7,6 @@
 
 import UIKit
 
-struct PlayerListCellViewModel {
-	let avatar: UIImage
-    let name: String
-    let isFavorite: Bool
-	let level: String
-	let onFavoriteToggle: (() -> Void)?
-
-	init(
-		avatar: UIImage,
-		name: String,
-		isFavorite: Bool,
-		level: String,
-		onFavoriteToggle: (() -> Void)?
-	) {
-		self.avatar = avatar
-		self.name = name
-		self.isFavorite = isFavorite
-		self.level = String(level.prefix(1).uppercased())
-		self.onFavoriteToggle = onFavoriteToggle
-	}
-}
-
 final class PlayersListViewCell: UITableViewCell {
 
     // MARK: - Public Properties
