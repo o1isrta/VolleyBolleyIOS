@@ -21,19 +21,29 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
     private var createNewGameCourtId: Int?
 
     private enum Constants {
-        static let backgroundTop: CGFloat = 100
-        static let backgroundWidth: CGFloat = 302.scaledByScreenHeight
-        static let backgroundHeight: CGFloat = 285.scaledByScreenHeight
-        static let vStackSpacing: CGFloat = 8.scaledByScreenHeight
-        static let hStackSpacing: CGFloat = 8.scaledByScreenWidth
-        static let sideInset: CGFloat = 8.scaledByScreenWidth
-        static let topInset: CGFloat = 284.scaledByScreenHeight
-        static let sketchButtonHeight: CGFloat = 180.scaledByScreenHeight
-        static let createGameButtonHeight: CGFloat = 116.scaledByScreenHeight
-        static let findGameButtonHeight: CGFloat = 114.scaledByScreenHeight
+        static let backgroundImageViewTopInset: CGFloat = -6
+        static let backgroundImageViewWidth: CGFloat = 302
+        static let backgroundImageViewHeight: CGFloat = 245
+        static let spacing: CGFloat = 7
+        static let vStackTopInset: CGFloat = 190
     }
 
-    private let backgroundImageView = UIImageView(image: UIImage.Image.homeBackground)
+    private let scrollView: UIScrollView = {
+        let view = UIScrollView()
+        view.alwaysBounceVertical = true
+        return view
+    }()
+
+    private let contentView = UIView()
+
+    private lazy var backgroundImageView: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage.Image.homeBackground
+        view.contentMode = .topLeft
+        return view
+    }()
+
+    private let backgroundImageFadeMaskLayer = CAGradientLayer()
 
     private lazy var vStackView: UIStackView = {
         let view = UIStackView(arrangedSubviews: [
@@ -42,14 +52,14 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
             hStackView
         ])
         view.axis = .vertical
-        view.spacing = Constants.vStackSpacing
+        view.spacing = Constants.spacing
         return view
     }()
 
     private lazy var hStackView: UIStackView = {
         let view = UIStackView(arrangedSubviews: [createTourneyButton, donateButton])
         view.axis = .horizontal
-        view.spacing = Constants.hStackSpacing
+        view.spacing = Constants.spacing
         view.distribution = .fillEqually
         return view
     }()
@@ -105,6 +115,11 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
         presenter.viewDidLoad()
     }
 
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        applyBackgroundImageFadeMask()
+    }
+
     // MARK: - Public Methods
 
     func displayCreateNewGameButton(state: CreateNewGameButtonState) {
@@ -117,56 +132,102 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
 
     // MARK: - Private Methods
 
-    private func setupView() {
-        view.addSubviews(backgroundImageView, vStackView)
+    private func applyBackgroundImageFadeMask() {
+        let fadeHeight: CGFloat = 80
 
-        setupConstraintsMainStackView()
+        let imageHeight = backgroundImageView.bounds.height
+        guard imageHeight > 0 else { return }
+
+        backgroundImageFadeMaskLayer.frame = backgroundImageView.bounds
+
+        let startFadeLocation = max((imageHeight - fadeHeight) / imageHeight, 0)
+
+        backgroundImageFadeMaskLayer.colors = [
+            UIColor.white.cgColor,
+            UIColor.white.cgColor,
+            UIColor.clear.cgColor
+        ]
+
+        backgroundImageFadeMaskLayer.locations = [
+            0.0,
+            NSNumber(value: Float(startFadeLocation)),
+            1.0
+        ]
+
+        backgroundImageView.layer.mask = backgroundImageFadeMaskLayer
+    }
+
+    private func setupView() {
+        view.addSubviews(backgroundImageView, scrollView)
+        scrollView.addSubviews(contentView)
+        contentView.addSubviews(vStackView)
+
+        setupConstraintsScrollView()
+        setupConstraintsContentView()
+        setupConstraintsVStackView()
         setupConstraintsBackgroundImageView()
-        setupButtonHeights()
+        setupConstraintsSketchButtons()
     }
 
     // MARK: - Constraints
 
-    private func setupConstraintsMainStackView() {
+    private func setupConstraintsScrollView() {
         NSLayoutConstraint.activate([
-            vStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: Constants.topInset),
-            vStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.sideInset),
-            vStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constants.sideInset)
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 36)
         ])
     }
 
-    private func setupConstraintsBackgroundImageView() {
-        backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
-
-        guard let image = backgroundImageView.image else {
-            NSLayoutConstraint.activate([
-                backgroundImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: Constants.backgroundTop),
-                backgroundImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-                backgroundImageView.widthAnchor.constraint(equalToConstant: Constants.backgroundWidth),
-                backgroundImageView.heightAnchor.constraint(equalToConstant: Constants.backgroundHeight)
-            ])
-            return
-        }
-
-        let aspectRatio = image.size.height / image.size.width
-
+    private func setupConstraintsContentView() {
         NSLayoutConstraint.activate([
-            backgroundImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: Constants.backgroundTop),
-            backgroundImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            backgroundImageView.widthAnchor.constraint(equalToConstant: Constants.backgroundWidth),
-            backgroundImageView.heightAnchor.constraint(
-                equalTo: backgroundImageView.widthAnchor,
-                multiplier: aspectRatio
+            contentView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
+
+            contentView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor)
+        ])
+    }
+
+    private func setupConstraintsVStackView() {
+        NSLayoutConstraint.activate([
+            vStackView.topAnchor.constraint(
+                equalTo: contentView.topAnchor,
+                constant: Constants.vStackTopInset
+            ),
+            vStackView.leadingAnchor.constraint(
+                equalTo: contentView.leadingAnchor,
+                constant: Constants.spacing
+            ),
+            vStackView.trailingAnchor.constraint(
+                equalTo: contentView.trailingAnchor,
+                constant: -Constants.spacing
+            ),
+            vStackView.bottomAnchor.constraint(
+                equalTo: contentView.bottomAnchor,
+                constant: -16
             )
         ])
     }
 
-    private func setupButtonHeights() {
+    private func setupConstraintsBackgroundImageView() {
         NSLayoutConstraint.activate([
-            createNewGameButton.heightAnchor.constraint(equalToConstant: Constants.createGameButtonHeight),
-            findGameButton.heightAnchor.constraint(equalToConstant: Constants.findGameButtonHeight),
-            createTourneyButton.heightAnchor.constraint(equalToConstant: Constants.sketchButtonHeight),
-            donateButton.heightAnchor.constraint(equalToConstant: Constants.sketchButtonHeight)
+            backgroundImageView.topAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.topAnchor,
+                constant: Constants.backgroundImageViewTopInset
+            ),
+            backgroundImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            backgroundImageView.heightAnchor.constraint(equalToConstant: Constants.backgroundImageViewHeight),
+            backgroundImageView.widthAnchor.constraint(equalToConstant: Constants.backgroundImageViewWidth)
+        ])
+    }
+
+    private func setupConstraintsSketchButtons() {
+        NSLayoutConstraint.activate([
+            createTourneyButton.heightAnchor.constraint(equalTo: createTourneyButton.widthAnchor),
+            donateButton.heightAnchor.constraint(equalTo: donateButton.widthAnchor)
         ])
     }
 }

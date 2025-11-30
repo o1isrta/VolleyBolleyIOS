@@ -10,16 +10,11 @@ import UIKit
 final class WeatherView: UIView {
 
     private enum Constants {
-        static let stackSpacing: CGFloat = 8.scaledByScreenWidth
+        static let stackSpacing: CGFloat = 8
         static let iconPointSize: CGFloat = 24
         static let temperatureFontSize: CGFloat = 16
-        static let temperatureLabelHeight: CGFloat = 24.scaledByScreenHeight
-        static let contentInsets = UIEdgeInsets(
-            top: 18.scaledByScreenHeight,
-            left: 18.scaledByScreenWidth,
-            bottom: 18.scaledByScreenHeight,
-            right: 18.scaledByScreenWidth
-        )
+        static let temperatureLabelHeight: CGFloat = 24
+        static let contentInsets = UIEdgeInsets(top: 18, left: 18, bottom: 18, right: 18)
         static let backgroundSubviewIndex: Int = 0
     }
 

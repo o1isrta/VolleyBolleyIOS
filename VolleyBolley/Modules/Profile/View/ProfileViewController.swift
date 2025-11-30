@@ -119,12 +119,12 @@ private extension ProfileViewController {
         setupUI()
 
         NSLayoutConstraint.activate([
-            glassView.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 8),
+            glassView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
             glassView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
             glassView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
             glassView.heightAnchor.constraint(equalToConstant: 400),
 
-            tableView.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 12),
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 12),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
             tableView.heightAnchor.constraint(equalToConstant: 400),

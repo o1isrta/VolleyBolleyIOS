@@ -19,26 +19,28 @@ final class CustomNavBarView: UIView {
 	private weak var parentViewController: UIViewController?
 
 	private enum Constants {
-		static let viewHeight: CGFloat = 106
 		static let avatarSize: CGFloat = 46
-		static let avatarLeading: CGFloat = 8
-		static let avatarBottom: CGFloat = -8
-
-		static let nameLabelLeading: CGFloat = 8
-
-		static let notificationSize: CGFloat = 46
-		static let notificationTrailing: CGFloat = -2
-		static let notificationBottom: CGFloat = -8
-
-		static let navBarCornerRadius: CGFloat = 32
-		static let levelViewTrailing: CGFloat = -8
-		static let levelViewBottom: CGFloat = -8
 	}
 
-	private lazy var avatarImageView = AvatarImageView()
-	private lazy var levelView = LevelBadgeView()
-	private lazy var nameLabel = CustomTitle(text: "")
-	private lazy var notificationButtonView = NotificationButtonView()
+    private lazy var hStackView: UIStackView = {
+        let view = UIStackView(arrangedSubviews: [
+            avatarImageView,
+            nameLabel,
+            notificationButtonView,
+            levelView
+        ])
+        view.axis = .horizontal
+        view.distribution = .fill
+        view.alignment = .center
+        view.spacing = 14
+        view.setCustomSpacing(4, after: notificationButtonView)
+        return view
+    }()
+
+	private let avatarImageView = AvatarImageView()
+	private let levelView = LevelBadgeView()
+	private let nameLabel = CustomTitle(text: "")
+	private let notificationButtonView = NotificationButtonView()
 
 	// MARK: - Initializers
 
@@ -46,7 +48,6 @@ final class CustomNavBarView: UIView {
 		super.init(frame: .zero)
 		setupView()
 		setupLayout()
-		// Set delegate for notification button
 		notificationButtonView.delegate = self
 	}
 
@@ -77,7 +78,7 @@ private extension CustomNavBarView {
 
 	func setupVIPERIfNeeded() {
 		guard presenter == nil else { return }
-		// Auto-configure VIPER if not already set up
+
 		let navBarView = NavBarAssembly.createModule(with: parentViewController)
 		self.presenter = navBarView.presenter
 	}
@@ -91,69 +92,21 @@ private extension CustomNavBarView {
 	}
 
 	func setupView() {
-		backgroundColor = AppColor.Background.navBar
-		layer.cornerRadius = Constants.navBarCornerRadius
-		layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-		layer.masksToBounds = true
+		addSubview(hStackView)
 
-		addSubviews(
-			avatarImageView,
-			nameLabel,
-			notificationButtonView,
-			levelView
-		)
 	}
 
-	// MARK: - Layout Setup
+    func setupLayout() {
+        hStackView.pinToSuperviewEdges()
 
-	func setupLayout() {
-		heightAnchor.constraint(equalToConstant: Constants.viewHeight).isActive = true
-		setupConstraintsAvatarImageView()
-		setupConstraintsNameLabel()
-		setupConstraintsNotificationButtonView()
-		setupConstraintsLevelView()
-	}
-
-	// MARK: - Constraints
-
-	func setupConstraintsNotificationButtonView() {
-		NSLayoutConstraint.activate([
-			notificationButtonView.trailingAnchor
-				.constraint(
-					equalTo: levelView.leadingAnchor,
-					constant: Constants.notificationTrailing
-				),
-			notificationButtonView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: Constants.notificationBottom),
-			notificationButtonView.widthAnchor.constraint(equalToConstant: Constants.notificationSize),
-			notificationButtonView.heightAnchor.constraint(equalToConstant: Constants.notificationSize)
-		])
-	}
-
-	func setupConstraintsAvatarImageView() {
-		NSLayoutConstraint.activate([
-			avatarImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.avatarLeading),
-			avatarImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: Constants.avatarBottom),
-			avatarImageView.widthAnchor.constraint(equalToConstant: Constants.avatarSize),
-			avatarImageView.heightAnchor.constraint(equalToConstant: Constants.avatarSize)
-		])
-	}
-
-	func setupConstraintsNameLabel() {
-		NSLayoutConstraint.activate([
-			nameLabel.leadingAnchor.constraint(
-				equalTo: avatarImageView.trailingAnchor,
-				constant: Constants.nameLabelLeading
-			),
-			nameLabel.centerYAnchor.constraint(equalTo: avatarImageView.centerYAnchor)
-		])
-	}
-
-	func setupConstraintsLevelView() {
-		NSLayoutConstraint.activate([
-			levelView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: Constants.levelViewTrailing),
-			levelView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: Constants.levelViewBottom)
-		])
-	}
+        NSLayoutConstraint.activate([
+            hStackView.heightAnchor.constraint(equalTo: heightAnchor),
+            avatarImageView.widthAnchor.constraint(equalTo: hStackView.heightAnchor),
+            levelView.widthAnchor.constraint(equalTo: hStackView.heightAnchor),
+            notificationButtonView.heightAnchor.constraint(equalTo: hStackView.heightAnchor),
+            notificationButtonView.widthAnchor.constraint(equalTo: hStackView.heightAnchor)
+        ])
+    }
 }
 
 // MARK: - NavBarViewProtocol

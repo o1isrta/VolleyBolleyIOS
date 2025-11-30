@@ -74,7 +74,7 @@ private extension MyGamesViewController {
 		)
 		NSLayoutConstraint.activate([
 			backgroundView.topAnchor.constraint(
-				equalTo: navBar.bottomAnchor,
+				equalTo: view.safeAreaLayoutGuide.topAnchor,
 				constant: Constants.padding
 			),
 			backgroundView.leadingAnchor.constraint(

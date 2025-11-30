@@ -32,7 +32,7 @@ final class NewGameOrTourneyViewController: BaseViewController, NewGameOrTourney
 		static let backButtonTopInset: CGFloat = 20
 		static let backButtonSize: CGFloat = 24
 
-		static let bottomInset: CGFloat = 63
+		static let bottomInset: CGFloat = 16
 
 		static let titleFontSize: CGFloat = 24
 	}
@@ -151,7 +151,7 @@ private extension NewGameOrTourneyViewController {
 
 		NSLayoutConstraint.activate([
             glassView.topAnchor.constraint(
-				equalTo: navBar.bottomAnchor,
+				equalTo: view.safeAreaLayoutGuide.topAnchor,
 				constant: Constants.padding
 			),
             glassView.leadingAnchor.constraint(

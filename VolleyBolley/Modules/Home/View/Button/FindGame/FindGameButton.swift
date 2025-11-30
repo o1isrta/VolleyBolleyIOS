@@ -16,13 +16,13 @@ final class FindGameButton: UIButton {
         static let subTitleFontSize: CGFloat = 16
         static let imageTop: CGFloat = 64
         static let imageLeading: CGFloat = 60
-        static let imageWidth: CGFloat = 122.scaledByScreenWidth
-        static let imageHeight: CGFloat = 37.scaledByScreenHeight
-        static let gamesAvailableInset: CGFloat = 8.scaledByScreenHeight
-        static let gamesAvailableWidth: CGFloat = 150.scaledByScreenWidth
-        static let vStackTop: CGFloat = 18.scaledByScreenHeight
-        static let vStackLeading: CGFloat = 18.scaledByScreenWidth
-        static let vStackTrailing: CGFloat = 8.scaledByScreenWidth
+        static let imageWidth: CGFloat = 122
+        static let imageHeight: CGFloat = 37
+        static let gamesAvailableInset: CGFloat = 10
+        static let gamesAvailableWidth: CGFloat = 150
+        static let vStackTop: CGFloat = 20
+        static let vStackLeading: CGFloat = 18
+        static let vStackTrailing: CGFloat = 8
     }
 
     private let glassView = GlassView(config: .sketch)

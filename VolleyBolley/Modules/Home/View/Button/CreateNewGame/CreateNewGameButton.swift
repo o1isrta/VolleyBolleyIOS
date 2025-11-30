@@ -18,13 +18,8 @@ final class CreateNewGameButton: UIButton {
     // MARK: - Private Properties
 
     private enum Constants {
-        static let stackSpacing: CGFloat = 18.scaledByScreenHeight
-        static let contentInsets = UIEdgeInsets(
-            top: 18.scaledByScreenHeight,
-            left: 18.scaledByScreenWidth,
-            bottom: 18.scaledByScreenHeight,
-            right: 18.scaledByScreenWidth
-        )
+        static let stackSpacing: CGFloat = 18
+        static let contentInsets = UIEdgeInsets(top: 20, left: 18, bottom: 20, right: 18)
         static let backgroundSubviewIndex: Int = 0
     }
 
