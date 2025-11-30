@@ -8,7 +8,7 @@
 import UIKit
 
 struct PlayerListCellViewModel {
-	let avatar: UIImage?
+	let avatar: UIImage
 	let name: String
 	let isFavorite: Bool
 	let level: String
@@ -38,7 +38,7 @@ struct PlayerListCellViewModel {
 		level: String,
 		onFavoriteToggle: ((Bool) -> Void)?
 	) {
-		self.avatar = avatar
+		self.avatar = avatar ?? UIImage.Icon.profile
 		self.name = name
 		self.isFavorite = isFavorite
 		self.level = String(level.prefix(1).uppercased())
