@@ -60,7 +60,7 @@ struct GameDetailsViewModel {
 /// Custom View to show information with location title for two variants
 /// - with court details
 /// - with game details (host, game details)
-class CourtDetailsView: UIView {
+final class CourtDetailsView: UIView {
 
 	// MARK: - Private Properties
 

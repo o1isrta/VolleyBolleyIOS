@@ -164,7 +164,7 @@ private extension SupportViewController {
 
 		NSLayoutConstraint.activate([
             glassView.topAnchor.constraint(
-				equalTo: navBar.bottomAnchor,
+				equalTo: view.safeAreaLayoutGuide.topAnchor,
 				constant: Constants.padding
 			),
             glassView.leadingAnchor.constraint(

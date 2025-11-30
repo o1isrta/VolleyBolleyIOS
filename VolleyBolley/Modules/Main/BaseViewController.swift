@@ -22,7 +22,7 @@ class BaseViewController: UIViewController {
 
 	// MARK: - Public Properties
 
-	private(set) lazy var navBar: CustomNavBarView = {
+	private(set) lazy var customNavBar: CustomNavBarView = {
 		return NavBarAssembly.createModule(with: self)
 	}()
 
@@ -30,54 +30,98 @@ class BaseViewController: UIViewController {
 
 	private let notificationManager = NotificationManager.shared
 
+    private lazy var backgroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = AppColor.Background.navBar
+        view.layer.cornerRadius = 32
+        view.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        view.layer.masksToBounds = true
+        return view
+    }()
+
+    // MARK: - Initializers
+
+    deinit {
+        notificationManager.removeDelegate(self)
+    }
+
+    // MARK: - Lifecycle
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.backgroundColor = AppColor.Background.screen
-		setupCustomNavigationBar()
+        setupSystemNavBarAppearance()
 		setupNotificationManager()
 	}
 
-	// MARK: - Public Methods
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: false)
+    }
 
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-		navigationController?.setNavigationBarHidden(true, animated: false)
-	}
-
-	override func viewDidLayoutSubviews() {
-		super.viewDidLayoutSubviews()
-		// ALWAYS raise the navbar above all other subviews
-		view.bringSubviewToFront(navBar)
-	}
-
-	deinit {
-		// Remove self from notification manager when deallocated
-		notificationManager.removeDelegate(self)
-	}
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        embedViews()
+    }
 }
 
 // MARK: - Private Methods
 
 private extension BaseViewController {
 
-	func setupCustomNavigationBar() {
-		view.addSubviews(navBar)
-		NSLayoutConstraint.activate([
-			navBar.topAnchor.constraint(equalTo: view.topAnchor),
-			navBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-			navBar.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-		])
-	}
+    private func setupSystemNavBarAppearance() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithTransparentBackground()
+
+        appearance.backgroundColor = .clear
+        appearance.shadowColor = .clear
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.clear]
+
+        navigationItem.backButtonTitle = ""
+        navigationItem.title = ""
+
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        navigationController?.navigationBar.compactAppearance = appearance
+
+        navigationController?.navigationBar.tintColor = .clear
+    }
 
 	func setupNotificationManager() {
-		// Register this BaseViewController with the notification manager
 		notificationManager.addDelegate(self)
-		// Get actual notifications status
+
 		if !(self is NotificationsViewController) {
 			let hasNewNotifications = notificationManager.hasNewNotifications()
-			navBar.updateNotifications(hasNewNotifications)
+            customNavBar.updateNotifications(hasNewNotifications)
 		}
 	}
+
+    func embedViews() {
+        guard let navBar = navigationController?.navigationBar else { return }
+
+        navBar.addSubviews(backgroundView, customNavBar)
+
+        setupConstraintsBackgroundView(navBar: navBar)
+        setupConstraintsCustomNavBar(navBar: navBar)
+    }
+
+    func setupConstraintsBackgroundView(navBar: UINavigationBar) {
+        NSLayoutConstraint.activate([
+            backgroundView.topAnchor.constraint(equalTo: view.topAnchor),
+            backgroundView.leadingAnchor.constraint(equalTo: navBar.leadingAnchor),
+            backgroundView.trailingAnchor.constraint(equalTo: navBar.trailingAnchor),
+            backgroundView.bottomAnchor.constraint(equalTo: navBar.bottomAnchor)
+        ])
+    }
+
+    func setupConstraintsCustomNavBar(navBar: UINavigationBar) {
+        NSLayoutConstraint.activate([
+            customNavBar.leadingAnchor.constraint(equalTo: navBar.leadingAnchor, constant: 8),
+            customNavBar.trailingAnchor.constraint(equalTo: navBar.trailingAnchor, constant: -8),
+            customNavBar.topAnchor.constraint(equalTo: navBar.topAnchor),
+            customNavBar.bottomAnchor.constraint(equalTo: navBar.bottomAnchor, constant: -8)
+        ])
+    }
 }
 
 // MARK: - NotificationManagerDelegate
@@ -85,13 +129,11 @@ private extension BaseViewController {
 extension BaseViewController: NotificationManagerDelegate {
 
 	func notificationManager(_ manager: NotificationManager, didUpdateNotificationStatus hasNewNotifications: Bool) {
-		// Check if the current view controller is NotificationsViewController
-		// If it is, don't update navBar to avoid unnecessary UI changes
 		if self is NotificationsViewController {
 			return
 		}
-		// Update the navBar through the delegate method as requested
-		navBar.updateNotifications(hasNewNotifications)
+
+        customNavBar.updateNotifications(hasNewNotifications)
 	}
 }
 

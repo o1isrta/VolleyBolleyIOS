@@ -31,7 +31,7 @@ final class UserCardCell: UITableViewCell {
 	private var mapButtonCallback: (() -> Void)?
 
 	private lazy var glassmorphismView = {
-		let view = GlassmorphismView(configuration: .message)
+        let view = GlassView(config: .note)
 		view.alpha = Constants.glassmorphismViewAlpha
 		return view
 	}()
@@ -88,7 +88,6 @@ final class UserCardCell: UITableViewCell {
 	// MARK: - Public Methods
 
 	func configure(with model: UserCardCellViewModel) {
-		glassmorphismView.resetForReuse()
 		hasCourtData(true)
 
 		dateLabel.text = model.date

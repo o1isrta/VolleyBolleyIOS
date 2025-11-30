@@ -124,7 +124,7 @@ private extension PersonalDataViewController {
 
         NSLayoutConstraint.activate([
             glassView.topAnchor
-                .constraint(equalTo: navBar.bottomAnchor, constant: Constants.mainIndent),
+                .constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: Constants.mainIndent),
             glassView.leadingAnchor
                 .constraint(equalTo: view.leadingAnchor, constant: Constants.mainIndent),
             glassView.trailingAnchor

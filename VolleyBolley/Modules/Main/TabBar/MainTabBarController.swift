@@ -43,6 +43,12 @@ final class MainTabBarController: UIViewController {
 		setupNotificationService()
 	}
 
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        additionalSafeAreaInsets.bottom = 48
+    }
+
 	func setViewControllers(_ viewControllers: [TabBarItem: UIViewController]) {
 		for child in children {
 			child.willMove(toParent: nil)

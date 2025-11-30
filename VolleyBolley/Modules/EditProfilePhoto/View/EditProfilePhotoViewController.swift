@@ -129,7 +129,7 @@ private extension EditProfilePhotoViewController {
 		customAlertView.pinToSuperviewEdges()
 		NSLayoutConstraint.activate([
             glassView.topAnchor.constraint(
-				equalTo: navBar.bottomAnchor,
+				equalTo: view.safeAreaLayoutGuide.topAnchor,
 				constant: LayoutConstants.mainIndent),
             glassView.leadingAnchor.constraint(
 				equalTo: view.leadingAnchor,
