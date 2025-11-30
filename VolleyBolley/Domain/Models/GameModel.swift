@@ -73,6 +73,7 @@ struct GameModel: Codable {
 			playerId: 0,
 			firstName: "Test",
 			lastName: "Test",
+			avatar: nil,
 			level: "PRO"
 		)]
 	)
