@@ -259,30 +259,18 @@ private extension UserCardViewController {
 			profilePhotoView.heightAnchor.constraint(
 				equalToConstant: LayoutConstants.profilePhotoSize),
 
-			tableCaptionLabel.topAnchor.constraint(
-				equalTo: levelLabel.bottomAnchor,
-				constant: LayoutConstants.mediumIndent),
 			tableCaptionLabel.leadingAnchor.constraint(
 				equalTo: mainStack.leadingAnchor),
 			tableCaptionLabel.trailingAnchor.constraint(
 				lessThanOrEqualTo: mainStack.trailingAnchor),
 
-			tableView.topAnchor.constraint(
-				equalTo: tableCaptionLabel.bottomAnchor,
-				constant: LayoutConstants.mainIndent),
 			tableView.leadingAnchor.constraint(
 				equalTo: mainStack.leadingAnchor),
 			tableView.trailingAnchor.constraint(
 				lessThanOrEqualTo: mainStack.trailingAnchor),
 
-			favoriteButton.topAnchor.constraint(
-				equalTo: tableView.bottomAnchor,
-				constant: LayoutConstants.mainSpacing),
 			favoriteButton.leadingAnchor.constraint(equalTo: mainStack.leadingAnchor),
 			favoriteButton.trailingAnchor.constraint(equalTo: mainStack.trailingAnchor),
-			favoriteButton.bottomAnchor.constraint(
-				equalTo: mainStack.bottomAnchor,
-				constant: LayoutConstants.mainSpacing),
 			favoriteButton.heightAnchor.constraint(equalToConstant: LayoutConstants.favoriteButtonHeight),
 
 			mainStack.topAnchor.constraint(
