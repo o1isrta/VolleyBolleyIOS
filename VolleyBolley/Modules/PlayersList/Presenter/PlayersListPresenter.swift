@@ -31,11 +31,9 @@ final class PlayersListPresenter: PlayersListPresenterProtocol {
 	// MARK: - Private Properties
 
 	private var allPlayers: [PlayerInfoModel] = []
-	private var favoritePlayers: [PlayerInfoModel] = []
-
 	private var players: [PlayerInfoModel] = [] {
 		didSet {
-			filterPlayers(by: "")
+			filteredPlayers = players
 		}
 	}
 	private var filteredPlayers: [PlayerInfoModel] = []
@@ -54,7 +52,6 @@ final class PlayersListPresenter: PlayersListPresenterProtocol {
 
 	func viewDidLoad() {
 		allPlayers = interactor?.getPlayers() ?? []
-		favoritePlayers = allPlayers.filter{ $0.isFavorite == true }.sorted { $0.firstName < $1.firstName }
 		setPlayersList(.all)
 	}
 
@@ -67,7 +64,7 @@ final class PlayersListPresenter: PlayersListPresenterProtocol {
 		case .all:
 			players = allPlayers
 		case .favorite:
-			players = favoritePlayers
+			players = allPlayers.filter{ $0.isFavorite == true }.sorted { $0.firstName < $1.firstName }
 		}
 	}
 
@@ -87,9 +84,8 @@ final class PlayersListPresenter: PlayersListPresenterProtocol {
 			level: PlayerLevel.medium.title
 		) { [weak self] isFavorite in
 			guard let self else { return }
-			let newPlayer = updateIsFavorite(for: player, to: isFavorite)
-			self.updateAllPlayersList(with: newPlayer)
-			self.updateFavoriteList(with: newPlayer)
+			let newPlayer = self.updateIsFavorite(for: player, to: isFavorite)
+			self.updatePlayersList(with: newPlayer)
 		}
 
 		return model
@@ -115,21 +111,18 @@ private extension PlayersListPresenter {
 		return newPlayer
 	}
 
-	func updateAllPlayersList(with player: PlayerInfoModel) {
+	func updatePlayersList(with player: PlayerInfoModel) {
 		allPlayers = allPlayers.map { $0.playerId == player.playerId ? player : $0 }
-	}
+		players = players.map { $0.playerId == player.playerId ? player : $0 }
 
-	func updateFavoriteList(with player: PlayerInfoModel) {
-		favoritePlayers = favoritePlayers.map { $0.playerId == player.playerId ? player : $0 }
-
-		if let index = favoritePlayers.firstIndex(of: player) {
+		if let index = players.firstIndex(of: player) {
 			if player.isFavorite == false {
-				favoritePlayers.remove(at: index)
+				players.remove(at: index)
 			}
 		} else if player.isFavorite {
-			favoritePlayers.append(player)
+			players.append(player)
 		}
 
-		favoritePlayers = favoritePlayers.sorted { $0.firstName < $1.firstName }
+		players = players.sorted { $0.firstName < $1.firstName }
 	}
 }

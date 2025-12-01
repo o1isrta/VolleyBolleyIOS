@@ -75,7 +75,7 @@ final class PlayersListViewController: BaseViewController {
 		tableView.dataSource = self
 		tableView.rowHeight = UITableView.automaticDimension
 		tableView.register(PlayersListViewCell.self,
-						   forCellReuseIdentifier: PlayersListViewCell.reuseIdentifier)
+			forCellReuseIdentifier: PlayersListViewCell.reuseIdentifier)
 		return tableView
 	}()
 
@@ -120,7 +120,7 @@ private extension PlayersListViewController {
 	}
 
 	@objc func searchTextChanged() {
-		getFilteredPlayers()
+		filterPlayersList()
 	}
 
 	func setupActions() {
@@ -130,11 +130,11 @@ private extension PlayersListViewController {
 				let playersListType = PlayersListType(rawValue: index)
 			else { return }
 			self.presenter.setPlayersList(playersListType)
-			self.getFilteredPlayers()
+			self.filterPlayersList()
 		}
 	}
 
-	func getFilteredPlayers() {
+	func filterPlayersList() {
 		let playersListType = PlayersListType(rawValue: segmentedControl.selectedSegmentIndex)
 		guard playersListType != nil else { return }
 
