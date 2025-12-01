@@ -269,7 +269,11 @@ final class GlassView: UIView {
     private func updateInnerShadowPath() {
         innerShadowLayer.frame = bounds
 
-        let safeRadius = min(config.innerShadowRadius, bounds.height / 2, bounds.width / 2)
+        let safeRadius = min(
+            config.innerShadowRadius,
+            bounds.height / 2,
+            bounds.width / 2
+        )
         let offset = config.innerShadowOffset
         let outerRect = bounds.insetBy(dx: -safeRadius*1.5, dy: -safeRadius*1.5)
         let outerPath = UIBezierPath(
@@ -281,7 +285,7 @@ final class GlassView: UIView {
             roundedRect: bounds,
             cornerRadius: cornerRadiusValue
         ).reversing()
-        
+
         outerPath.append(innerPath)
         innerShadowLayer.path = outerPath.cgPath
         innerShadowLayer.fillRule = .evenOdd
