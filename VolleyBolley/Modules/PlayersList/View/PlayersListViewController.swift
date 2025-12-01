@@ -153,7 +153,7 @@ private extension PlayersListViewController {
 				let newSize = change.newValue
 			else { return }
 			// Limiting the max height to preserve scrolling
-			let maxHeight = UIScreen.main.bounds.height - 315
+			let maxHeight = UIScreen.main.bounds.height - 381
 			let newHeight = min(newSize.height, maxHeight)
 			self.tableViewHeightConstraint?.constant = newHeight
 		}

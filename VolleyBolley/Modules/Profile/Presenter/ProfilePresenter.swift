@@ -36,6 +36,8 @@ final class ProfilePresenter: ProfilePresenterProtocol {
 
 	func didSelectMenuItem(_ item: ProfileMenuItem) {
 		switch item {
+		case .players:
+			router.showPlayersList()
 		case .personal:
 			router.showPersonalData()
 		case .support:
