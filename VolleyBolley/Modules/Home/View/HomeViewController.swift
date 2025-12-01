@@ -38,7 +38,7 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
 
     private lazy var backgroundImageView: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage(named: "Image/homeBackground")
+        view.image = UIImage.Image.homeBackground
         view.contentMode = .topLeft
         return view
     }()
