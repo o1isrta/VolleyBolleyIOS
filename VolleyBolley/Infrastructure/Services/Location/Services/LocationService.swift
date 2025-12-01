@@ -7,11 +7,6 @@
 
 import CoreLocation
 
-protocol LocationServiceProtocol {
-    func requestLocation(forceUpdate: Bool, timeout: TimeInterval) async throws -> CLLocation
-    var lastKnownLocation: CLLocation? { get }
-}
-
 final class LocationService: NSObject, LocationServiceProtocol, CLLocationManagerDelegate {
 
     // MARK: - Private Properties

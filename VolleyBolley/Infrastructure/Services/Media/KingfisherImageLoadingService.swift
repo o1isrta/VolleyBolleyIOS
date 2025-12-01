@@ -8,10 +8,6 @@
 import Kingfisher
 import UIKit
 
-protocol ImageLoadingServiceProtocol {
-    func loadImage(from url: URL) async throws -> UIImage?
-}
-
 final class KingfisherImageLoadingService: ImageLoadingServiceProtocol {
 
     func loadImage(from url: URL) async throws -> UIImage? {

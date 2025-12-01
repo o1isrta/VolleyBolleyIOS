@@ -14,12 +14,12 @@ enum CoreAssemblies {
             WindowAssembly(window: window),
             AppRouterAssembly(),
             EnvironmentAssembly(),
-            SettingsAssembly(),
+            SettingsStorageAssembly(),
             TokenStorageAssembly(),
+            UserSessionAssembly(),
             NetworkModulesAssembly(),
             MediaServicesAssembly(),
             LocationAssembly(),
-            SessionAssembly(),
             GoogleAuthAssembly(),
             FirebaseAuthAssembly()
         ]

@@ -5,6 +5,8 @@
 //  Created by Олег Козырев on 12.07.2025.
 //
 
+import Foundation
+
 protocol OnboardingInteractorProtocol: AnyObject {
     func markOnboardingAsCompleted()
 }
@@ -13,19 +15,17 @@ final class OnboardingInteractor: OnboardingInteractorProtocol {
 
     // MARK: - Private Properties
 
-    private let onboardingRepository: OnboardingRepositoryProtocol
+    private let userSessionService: UserSessionServiceProtocol
 
     // MARK: - Initializers
 
-    init(
-        onboardingRepository: OnboardingRepositoryProtocol
-    ) {
-        self.onboardingRepository = onboardingRepository
+    init(userSessionService: UserSessionServiceProtocol) {
+        self.userSessionService = userSessionService
     }
 
-    // MARK: - Public methods
+    // MARK: - Public Methods
 
     func markOnboardingAsCompleted() {
-        onboardingRepository.markAsShown()
+        userSessionService.markOnboardingAsShown()
     }
 }
