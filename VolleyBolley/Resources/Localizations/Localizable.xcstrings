@@ -115,6 +115,23 @@
         }
       }
     },
+    "button.favorite" : {
+      "comment" : "User Card",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ADD TO FAVORITES"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ДОБАВИТЬ В ИЗБРАННОЕ"
+          }
+        }
+      }
+    },
     "button.getStarted" : {
       "comment" : "Registration / Onboarding",
       "localizations" : {
@@ -166,6 +183,23 @@
         }
       }
     },
+    "button.unfavorite" : {
+      "comment" : "User Card",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "UNFAVORITE"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "УДАЛИТЬ ИЗ ИЗБРАННОГО"
+          }
+        }
+      }
+    },
     "Cancel" : {
       "comment" : "Cancel button",
       "localizations" : {
@@ -173,29 +207,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Отмена"
-          }
-        }
-      }
-    },
-    "Change photo" : {
-      "comment" : "Profile",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Изменить фото"
-          }
-        }
-      }
-    },
-    "Choose from Gallery" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Выбрать из фотогалереи"
           }
         }
       }
@@ -882,17 +893,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "УДАЛИТЬ АККАУНТ"
-          }
-        }
-      }
-    },
-    "Delete photo" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Удалить фото"
           }
         }
       }
@@ -3379,6 +3379,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Обновить"
+          }
+        }
+      }
+    },
+    "userCard.noActivity" : {
+      "comment" : "User Card",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No activity found"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Активность не найдена"
+          }
+        }
+      }
+    },
+    "userCard.tableCaption" : {
+      "comment" : "User Card",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Latest activity"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Последняя активность"
           }
         }
       }

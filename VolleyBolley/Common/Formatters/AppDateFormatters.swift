@@ -9,6 +9,13 @@ import Foundation
 
 enum AppDateFormatters {
 
+	static let iso8601: ISO8601DateFormatter = {
+		let formatter = ISO8601DateFormatter()
+		formatter.formatOptions = [.withInternetDateTime]
+		formatter.timeZone = TimeZone(secondsFromGMT: 0)
+		return formatter
+	}()
+
 	static let serverDateOnly: DateFormatter = {
 		let formatter = DateFormatter()
 		formatter.dateFormat = "yyyy-MM-dd"
@@ -71,7 +78,16 @@ enum AppDateFormatters {
 	static let monthDay: DateFormatter = {
 		let formatter = DateFormatter()
 		formatter.locale = Locale.current
+		formatter.timeZone = .current
 		formatter.dateFormat = "MMMM, d"
+		return formatter
+	}()
+
+	static let dayMonth: DateFormatter = {
+		let formatter = DateFormatter()
+		formatter.locale = Locale.current
+		formatter.timeZone = .current
+		formatter.setLocalizedDateFormatFromTemplate("dMMMM")
 		return formatter
 	}()
 }

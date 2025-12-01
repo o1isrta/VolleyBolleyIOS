@@ -1,0 +1,141 @@
+//
+//  UserCardPresenter.swift
+//  VolleyBolley
+//
+//  Created by Roman Romanov on 13.11.2025.
+//
+
+import UIKit
+
+protocol UserCardPresenterProtocol {
+	var view: UserCardViewControllerProtocol? { get set }
+	var interactor: UserCardInteractorProtocol? { get set }
+	var router: UserCardRouterProtocol { get set }
+	func viewDidLoad()
+	func backButtonTapped()
+	func setAsFavorite(_ isFavorite: Bool)
+	func getNumberOfActivityItem() -> Int
+	func getUserCardItem(at index: Int) -> UserCardCellViewModel?
+	func openMapAt(_ location: LocationModel)
+}
+
+final class UserCardPresenter: UserCardPresenterProtocol {
+
+	// MARK: - Public Properties
+
+	weak var view: UserCardViewControllerProtocol?
+	var interactor: UserCardInteractorProtocol?
+	var router: UserCardRouterProtocol
+
+	// MARK: - Private Properties
+
+	private var latestActivity: [UserActivityModel] = []
+
+	// MARK: - Initializers
+
+	init(
+		interactor: UserCardInteractorProtocol,
+		router: UserCardRouterProtocol
+	) {
+		self.interactor = interactor
+		self.router = router
+	}
+
+	// MARK: - Public Methods
+
+	func viewDidLoad() {
+		setupUserCard()
+	}
+
+	func backButtonTapped() {
+		router.navigateBack()
+	}
+
+	func setAsFavorite(_ isFavorite: Bool) {
+		// TODO: - формируем данные для запроса
+		/*
+		 {
+			 "player_id": 0,
+			 "first_name": "Test",
+			 "last_name": "Test",
+			 "avatar": "url",
+			 "is_favorite": true,
+			 "level": "PRO"
+		 }
+		*/
+		interactor?.setAsFavorite(isFavorite)
+	}
+
+	func openMapAt(_ location: LocationModel) {
+		router.navigateToLocation(location)
+	}
+
+	func getNumberOfActivityItem() -> Int {
+		let activityCount = latestActivity.count
+		return activityCount == 0 ? 1 : activityCount
+	}
+
+	func getUserCardItem(at index: Int) -> UserCardCellViewModel? {
+		guard index < latestActivity.count else { return nil }
+		let activity = latestActivity[index]
+		return UserCardCellViewModel(
+			dateString: activity.dateString,
+			location: LocationTitleViewModel(
+				title: activity.location.courtName,
+				location: activity.location.locationName
+			)
+		) { [weak self] in
+			self?.openMapAt(activity.location)
+		}
+	}
+}
+
+// MARK: - Private Methods
+
+private extension UserCardPresenter {
+
+	func setupUserCard() {
+		view?.isLoadingIndicatorVisible(true)
+		// TODO: - получает данные с Get /players/{player_id} и распихиваем
+//		let playerData: Player = interactor?.fetchUserData()
+		let playerData: Player = Player.mockDefault
+		// TODO: - temporarily gag
+		DispatchQueue.main.asyncAfter(deadline: .now() + 5) { [weak self] in
+			guard let self else { return }
+			self.view?.isLoadingIndicatorVisible(false)
+			let userCardModel = UserCardViewModel(
+				firstName: playerData.firstName,
+				lastName: playerData.lastName,
+				level: playerData.level,
+				isFavorite: true // TODO: need to get this from API
+			)
+			self.view?.setupUserData(with: userCardModel)
+
+			self.setupActivity()// TODO: - set activity from playerData
+			self.setupAvatar(by: playerData.avatarURL)
+		}
+	}
+
+	func setupAvatar(by url: URL?) {
+		let avatar = interactor?.loadAvatar(by: url)
+		guard let avatar else { return }
+		view?.setupAvatar(avatar)
+	}
+
+	func setupActivity() {
+		// TODO: - set activity to table
+		let court = CourtModel.mockData
+		let locationModel = LocationModel(
+			latitude: court.location.latitude,
+			longitude: court.location.longitude,
+			courtName: court.location.courtName,
+			locationName: court.location.locationName
+		)
+		let activityModel = UserActivityModel(
+			dateString: AppDateFormatters.iso8601.string(from: Date()),
+			location: locationModel
+		)
+		latestActivity = Array(repeating: activityModel, count: 3)
+		view?.reloadTableView()
+	}
+}
