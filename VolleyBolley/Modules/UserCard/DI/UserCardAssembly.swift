@@ -10,12 +10,13 @@ import Swinject
 final class UserCardAssembly: Assembly {
 
 	func assemble(container: Container) {
-		container.register(UserCardViewController.self) { _ in
+		container.register(UserCardViewController.self) { (_: Resolver, player: PlayerInfoModel) in
 			let router = UserCardRouter()
 			let interactor = UserCardInteractor()
 			let presenter = UserCardPresenter(
 				interactor: interactor,
-				router: router
+				router: router,
+				player: player
 			)
 			let viewController = UserCardViewController()
 			viewController.presenter = presenter

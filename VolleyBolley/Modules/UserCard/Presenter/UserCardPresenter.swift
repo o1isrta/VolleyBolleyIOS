@@ -30,20 +30,24 @@ final class UserCardPresenter: UserCardPresenterProtocol {
 	// MARK: - Private Properties
 
 	private var latestActivity: [UserActivityModel] = []
+	private let defaultPlayerInfo: PlayerInfoModel
 
 	// MARK: - Initializers
 
 	init(
 		interactor: UserCardInteractorProtocol,
-		router: UserCardRouterProtocol
+		router: UserCardRouterProtocol,
+		player: PlayerInfoModel
 	) {
 		self.interactor = interactor
 		self.router = router
+		self.defaultPlayerInfo = player
 	}
 
 	// MARK: - Public Methods
 
 	func viewDidLoad() {
+		setupDefaultUserCard()
 		setupUserCard()
 	}
 
@@ -93,6 +97,18 @@ final class UserCardPresenter: UserCardPresenterProtocol {
 // MARK: - Private Methods
 
 private extension UserCardPresenter {
+
+	func setupDefaultUserCard() {
+		let userCardModel = UserCardViewModel(
+			firstName: defaultPlayerInfo.firstName,
+			lastName: defaultPlayerInfo.lastName,
+			level: PlayerLevel.init(fromServer: defaultPlayerInfo.level),
+			isFavorite: defaultPlayerInfo.isFavorite
+		)
+		view?.setupUserData(with: userCardModel)
+		// TODO: - setup defaultPlayerInfo Avatar
+//		setupAvatar(by: defaultPlayerInfo.avatarURL)
+	}
 
 	func setupUserCard() {
 		view?.isLoadingIndicatorVisible(true)

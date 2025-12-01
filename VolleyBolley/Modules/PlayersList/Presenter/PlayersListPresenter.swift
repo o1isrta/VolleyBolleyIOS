@@ -16,6 +16,7 @@ protocol PlayersListPresenterProtocol: AnyObject {
 	func getPlayersCount() -> Int
 	func getPlayer(at index: Int) -> PlayerListCellViewModel
 	func filterPlayers(by filterText: String)
+	func openPlayerCard(index: Int)
 }
 
 // MARK: - PlayersListPresenter
@@ -31,11 +32,7 @@ final class PlayersListPresenter: PlayersListPresenterProtocol {
 	// MARK: - Private Properties
 
 	private var allPlayers: [PlayerInfoModel] = []
-	private var players: [PlayerInfoModel] = [] {
-		didSet {
-			filteredPlayers = players
-		}
-	}
+	private var players: [PlayerInfoModel] = []
 	private var filteredPlayers: [PlayerInfoModel] = []
 
 	// MARK: - Initializers
@@ -66,6 +63,7 @@ final class PlayersListPresenter: PlayersListPresenterProtocol {
 		case .favorite:
 			players = allPlayers.filter{ $0.isFavorite == true }.sorted { $0.firstName < $1.firstName }
 		}
+		filteredPlayers = players
 	}
 
 	func getPlayersCount() -> Int {
@@ -99,6 +97,11 @@ final class PlayersListPresenter: PlayersListPresenterProtocol {
 				|| player.lastName.localizedCaseInsensitiveContains(filterText)
 		}
 	}
+
+	func openPlayerCard(index: Int) {
+		let player = filteredPlayers[index]
+		router.openUserCard(for: player)
+	}
 }
 
 // MARK: - Private Methods
@@ -114,15 +117,6 @@ private extension PlayersListPresenter {
 	func updatePlayersList(with player: PlayerInfoModel) {
 		allPlayers = allPlayers.map { $0.playerId == player.playerId ? player : $0 }
 		players = players.map { $0.playerId == player.playerId ? player : $0 }
-
-		if let index = players.firstIndex(of: player) {
-			if player.isFavorite == false {
-				players.remove(at: index)
-			}
-		} else if player.isFavorite {
-			players.append(player)
-		}
-
-		players = players.sorted { $0.firstName < $1.firstName }
+		filteredPlayers = filteredPlayers.map { $0.playerId == player.playerId ? player : $0 }
 	}
 }

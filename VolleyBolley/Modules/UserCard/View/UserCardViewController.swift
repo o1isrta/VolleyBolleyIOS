@@ -148,7 +148,7 @@ extension UserCardViewController: UserCardViewControllerProtocol {
 	}
 
 	func setupUserData(with userData: UserCardViewModel) {
-		isFavoriteUser(userData.isFavorite)
+		setupFavoriteButton(with: userData.isFavorite)
 		screenTitle.text = userData.name
 		levelLabel.text = userData.level.title
 	}
@@ -188,12 +188,16 @@ private extension UserCardViewController {
 	}
 
 	func isFavoriteUser(_ favorite: Bool) {
+		setupFavoriteButton(with: favorite)
+		presenter?.setAsFavorite(favorite)
+	}
+
+	func setupFavoriteButton(with isFavorite: Bool) {
 		favoriteButton.setTitle(String(localized:
-			favorite
+			isFavorite
 			   ? "button.favorite"
 			   : "button.unfavorite"
 		), for: .normal)
-		presenter?.setAsFavorite(favorite)
 	}
 
 	func setupView() {
@@ -333,7 +337,18 @@ import SwiftUI
 #Preview {
 	let router = UserCardRouter()
 	let interactor = UserCardInteractor()
-	let presenter = UserCardPresenter(interactor: interactor, router: router)
+	let presenter = UserCardPresenter(
+		interactor: interactor,
+		router: router,
+		player: PlayerInfoModel(
+			playerId: 0,
+			firstName: "1",
+			lastName: "2",
+			avatar: nil,
+			isFavorite: true,
+			level: "3"
+		)
+	)
 	let viewController = UserCardViewController()
 	viewController.presenter = presenter
 	router.attachViewController(viewController)

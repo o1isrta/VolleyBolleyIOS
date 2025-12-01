@@ -73,6 +73,7 @@ final class PlayersListViewController: BaseViewController {
 		tableView.separatorStyle = .none
 		tableView.showsVerticalScrollIndicator = false
 		tableView.dataSource = self
+		tableView.delegate = self
 		tableView.rowHeight = UITableView.automaticDimension
 		tableView.register(PlayersListViewCell.self,
 			forCellReuseIdentifier: PlayersListViewCell.reuseIdentifier)
@@ -225,6 +226,18 @@ private extension PlayersListViewController {
 	}
 }
 
+// MARK: - UITableViewDelegate
+
+extension PlayersListViewController: UITableViewDelegate {
+
+	func tableView(
+		_ tableView: UITableView,
+		didSelectRowAt indexPath: IndexPath
+	) {
+		presenter.openPlayerCard(index: indexPath.row)
+	}
+}
+
 // MARK: - UITableViewDataSource
 
 extension PlayersListViewController: UITableViewDataSource {
@@ -255,8 +268,6 @@ extension PlayersListViewController: UITableViewDataSource {
 		cell.configure(with: playerModel)
 		return cell
 	}
-
-	// TODO: need add tap by cell and load UserCard
 }
 
 // MARK: - Preview
@@ -266,7 +277,7 @@ extension PlayersListViewController: UITableViewDataSource {
 #Preview {
 	let presenter = PlayersListPresenter(
 		interactor: PlayersListInteractor(),
-		router: PlayersListRouter()
+		router: PlayersListRouter(userCardFactory: { _ in nil })
 	)
 	PlayersListViewController(presenter: presenter)
 }
