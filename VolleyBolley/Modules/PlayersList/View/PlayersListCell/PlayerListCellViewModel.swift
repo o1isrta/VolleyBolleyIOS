@@ -8,14 +8,14 @@
 import UIKit
 
 struct PlayerListCellViewModel {
-	let avatar: UIImage
+	let avatar: String?
 	let name: String
 	let isFavorite: Bool
 	let level: String
 	let onFavoriteToggle: ((Bool) -> Void)?
 
 	init(
-		avatar: UIImage?,
+		avatar: String?,
 		firstName: String,
 		lastName: String,
 		isFavorite: Bool,
@@ -32,13 +32,13 @@ struct PlayerListCellViewModel {
 	}
 
 	init(
-		avatar: UIImage?,
+		avatar: String?,
 		name: String,
 		isFavorite: Bool,
 		level: String,
 		onFavoriteToggle: ((Bool) -> Void)?
 	) {
-		self.avatar = avatar ?? UIImage.Icon.profile
+		self.avatar = avatar
 		self.name = name
 		self.isFavorite = isFavorite
 		self.level = String(level.prefix(1).uppercased())

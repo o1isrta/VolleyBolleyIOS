@@ -7,7 +7,9 @@
 
 import UIKit
 
-protocol PlayersListViewControllerProtocol: AnyObject {}
+protocol PlayersListViewControllerProtocol: AnyObject {
+	func setAvatar(_ image: UIImage?, for avatarURLString: String)
+}
 
 final class PlayersListViewController: BaseViewController {
 
@@ -106,6 +108,17 @@ final class PlayersListViewController: BaseViewController {
 // MARK: - PlayersListViewControllerProtocol
 
 extension PlayersListViewController: PlayersListViewControllerProtocol {
+
+	func setAvatar(_ image: UIImage?, for avatarURLString: String) {
+		for cell in tableView.visibleCells {
+			guard
+				let cell = cell as? PlayersListViewCell,
+				cell.currentAvatarURL == avatarURLString
+			else { continue }
+
+			cell.setAvatar(image)
+		}
+	}
 }
 
 // MARK: - Private methods
@@ -266,6 +279,7 @@ extension PlayersListViewController: UITableViewDataSource {
 		}
 		let playerModel = presenter.getPlayer(at: indexPath.row)
 		cell.configure(with: playerModel)
+		presenter.didRequestAvatar(avatarURLString: playerModel.avatar)
 		return cell
 	}
 }
@@ -276,7 +290,7 @@ extension PlayersListViewController: UITableViewDataSource {
 @available(iOS 17.0, *)
 #Preview {
 	let presenter = PlayersListPresenter(
-		interactor: PlayersListInteractor(),
+		interactor: PlayersListInteractor(imageLoader: KingfisherImageLoadingService()),
 		router: PlayersListRouter(userCardFactory: { _ in nil })
 	)
 	PlayersListViewController(presenter: presenter)

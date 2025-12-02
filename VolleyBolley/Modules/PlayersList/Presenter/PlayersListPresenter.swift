@@ -17,6 +17,7 @@ protocol PlayersListPresenterProtocol: AnyObject {
 	func getPlayer(at index: Int) -> PlayerListCellViewModel
 	func filterPlayers(by filterText: String)
 	func openPlayerCard(index: Int)
+	func didRequestAvatar(avatarURLString: String?)
 }
 
 // MARK: - PlayersListPresenter
@@ -34,6 +35,8 @@ final class PlayersListPresenter: PlayersListPresenterProtocol {
 	private var allPlayers: [PlayerInfoModel] = []
 	private var players: [PlayerInfoModel] = []
 	private var filteredPlayers: [PlayerInfoModel] = []
+
+	private var avatarTasks: [String: Task<Void, Never>] = [:]
 
 	// MARK: - Initializers
 
@@ -72,10 +75,8 @@ final class PlayersListPresenter: PlayersListPresenterProtocol {
 
 	func getPlayer(at index: Int) -> PlayerListCellViewModel {
 		let player = filteredPlayers[index]
-		let avatar = UIImage.imgPerson // TODO: - загрузить картинку для игрока
-
 		let model = PlayerListCellViewModel(
-			avatar: UIImage.imgPerson,
+			avatar: player.avatar,
 			firstName: player.firstName,
 			lastName: player.lastName,
 			isFavorite: player.isFavorite,
@@ -96,6 +97,27 @@ final class PlayersListPresenter: PlayersListPresenterProtocol {
 				|| player.firstName.localizedCaseInsensitiveContains(filterText)
 				|| player.lastName.localizedCaseInsensitiveContains(filterText)
 		}
+	}
+
+	func didRequestAvatar(avatarURLString: String?) {
+		guard
+			let avatarURLString,
+			let url = URL(string: avatarURLString)
+		else {
+			return
+		}
+		avatarTasks[avatarURLString]?.cancel()
+
+		let task = Task { [weak self] in
+			guard let self else { return }
+			let image = try? await interactor?.loadAvatar(for: url)
+			guard !Task.isCancelled else { return }
+			await MainActor.run {
+				self.view?.setAvatar(image, for: avatarURLString)
+			}
+		}
+
+		avatarTasks[avatarURLString] = task
 	}
 
 	func openPlayerCard(index: Int) {

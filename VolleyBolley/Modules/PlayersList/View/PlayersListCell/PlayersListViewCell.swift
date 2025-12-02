@@ -29,6 +29,8 @@ final class PlayersListViewCell: UITableViewCell {
 	private var isFavorite: Bool = false
 	private var onFavoriteToggle: ((Bool) -> Void)?
 
+	private(set) var currentAvatarURL: String?
+
 	private lazy var starButton: UIButton = {
 		let button = UIButton()
 		button.setImage(UIImage.Icon.noStar, for: .normal)
@@ -109,7 +111,10 @@ final class PlayersListViewCell: UITableViewCell {
 	func configure(with model: PlayerListCellViewModel) {
 		noPlayersLabel.isHidden = true
 		mainStack.isHidden = false
-		avatarImageView.image = model.avatar
+
+		currentAvatarURL = model.avatar
+		avatarImageView.image = UIImage.Icon.profile
+
 		nameLabel.text = model.name
 		isFavorite = model.isFavorite
 		badgeView.configure(distance: model.level)
@@ -120,6 +125,11 @@ final class PlayersListViewCell: UITableViewCell {
 	func configureAsNoPlayers() {
 		noPlayersLabel.isHidden = false
 		mainStack.isHidden = true
+	}
+
+	func setAvatar(_ image: UIImage?) {
+		guard let image else { return }
+		avatarImageView.image = image
 	}
 }
 
@@ -194,7 +204,7 @@ import SwiftUI
 			UIViewPreview {
 				let view = PlayersListViewCell()
 				let model = PlayerListCellViewModel(
-					avatar: UIImage.imgPerson,
+					avatar: nil,
 					firstName: Player.mockDefault.firstName,
 					lastName: Player.mockDefault.lastName,
 					isFavorite: false,

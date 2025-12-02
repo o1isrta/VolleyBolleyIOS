@@ -116,7 +116,7 @@ private extension UserCardPresenter {
 //		let playerData: Player = interactor?.fetchUserData()
 		let playerData: Player = Player.mockDefault
 		// TODO: - temporarily gag
-		DispatchQueue.main.asyncAfter(deadline: .now() + 5) { [weak self] in
+		DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
 			guard let self else { return }
 			self.view?.isLoadingIndicatorVisible(false)
 			let userCardModel = UserCardViewModel(

@@ -12,21 +12,27 @@ import UIKit
 protocol PlayersListInteractorProtocol: AnyObject {
 	func getPlayers() -> [PlayerInfoModel]
 	func toggleIsFavoriteFor(player: PlayerInfoModel)
+	func loadAvatar(for url: URL) async throws -> UIImage?
 }
 
 // MARK: - PlayersListInteractor
 
 final class PlayersListInteractor: PlayersListInteractorProtocol {
 
-	// MARK: - Public Properties
+	// MARK: - Private Properties
 
 //	private let networkService: NetworkServiceProtocol
+	private let imageLoader: ImageLoadingServiceProtocol
 
 	// MARK: - Initializers
 
-//	init(networkService: NetworkServiceProtocol) {
+	init(
+//		networkService: NetworkServiceProtocol,
+		imageLoader: ImageLoadingServiceProtocol
+	) {
 //		self.networkService = networkService
-//	}
+		self.imageLoader = imageLoader
+	}
 
 	// MARK: - Public Methods
 
@@ -37,7 +43,7 @@ final class PlayersListInteractor: PlayersListInteractorProtocol {
 				playerId: 0,
 				firstName: "Aleksandr",
 				lastName: "Abramov",
-				avatar: nil,
+				avatar: "https://www.leningrad.ru",
 				isFavorite: false,
 				level: PlayerLevel.pro.title
 			),
@@ -53,7 +59,7 @@ final class PlayersListInteractor: PlayersListInteractorProtocol {
 				playerId: 2,
 				firstName: "Kristina",
 				lastName: "Popova",
-				avatar: nil,
+				avatar: "https://www.leningrad.ru",
 				isFavorite: true,
 				level: PlayerLevel.medium.title
 			),
@@ -69,7 +75,7 @@ final class PlayersListInteractor: PlayersListInteractorProtocol {
 				playerId: 4,
 				firstName: "Aleksandr",
 				lastName: "Vavilov",
-				avatar: nil,
+				avatar: "https://www.leningrad.ru",
 				isFavorite: true,
 				level: PlayerLevel.pro.title
 			)
@@ -84,5 +90,12 @@ final class PlayersListInteractor: PlayersListInteractorProtocol {
 		} else {
 			// remove - DELETE /player/{player_id}/favorite
 		}
+	}
+
+	func loadAvatar(for url: URL) async throws -> UIImage? {
+		// TODO: - remove gag
+		try await Task.sleep(for: .seconds(2))
+		return UIImage.imgPerson
+//		try await imageLoader.loadImage(from: url)
 	}
 }

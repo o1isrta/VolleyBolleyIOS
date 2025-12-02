@@ -16,7 +16,11 @@ final class PlayersListAssembly: Assembly {
 			}
 			let router = PlayersListRouter(userCardFactory: userCardFactory)
 
-			let interactor = PlayersListInteractor()
+			guard let imageLoader = resolver.resolve(ImageLoadingServiceProtocol.self) else {
+				fatalError("Error: Failed to register ImageLoadingServiceProtocol")
+			}
+			let interactor = PlayersListInteractor(imageLoader: imageLoader)
+
 			let presenter = PlayersListPresenter(
 				interactor: interactor,
 				router: router
