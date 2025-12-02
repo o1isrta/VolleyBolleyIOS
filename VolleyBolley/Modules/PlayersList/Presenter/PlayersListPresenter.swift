@@ -51,8 +51,17 @@ final class PlayersListPresenter: PlayersListPresenterProtocol {
 	// MARK: - Public Methods
 
 	func viewDidLoad() {
-		allPlayers = interactor?.getPlayers() ?? []
-		setPlayersList(.all)
+		view?.isLoadingIndicatorVisible(true)
+		Task {
+			try await Task.sleep(for: .seconds(2))
+			allPlayers = interactor?.getPlayers() ?? []
+			setPlayersList(.all)
+
+			await MainActor.run {
+				view?.isLoadingIndicatorVisible(false)
+				self.view?.reloadData()
+			}
+		}
 	}
 
 	func backButtonTapped() {

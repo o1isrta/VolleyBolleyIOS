@@ -8,7 +8,9 @@
 import UIKit
 
 protocol PlayersListViewControllerProtocol: AnyObject {
+	func reloadData()
 	func setAvatar(_ image: UIImage?, for avatarURLString: String)
+	func isLoadingIndicatorVisible(_ isLoading: Bool)
 }
 
 final class PlayersListViewController: BaseViewController {
@@ -16,6 +18,8 @@ final class PlayersListViewController: BaseViewController {
 	// MARK: - Private Properties
 
 	private let presenter: PlayersListPresenterProtocol
+
+	private let loadingIndicator = ProgressHub.shared
 
 	private enum LayoutConstants {
 		static let mainIndent: CGFloat = 8
@@ -103,11 +107,20 @@ final class PlayersListViewController: BaseViewController {
 		setupActions()
 		setupSearchTextField()
 	}
+
+	override func viewDidLayoutSubviews() {
+		super.viewDidLayoutSubviews()
+		view.bringSubviewToFront(loadingIndicator)
+	}
 }
 
 // MARK: - PlayersListViewControllerProtocol
 
 extension PlayersListViewController: PlayersListViewControllerProtocol {
+
+	func reloadData() {
+		tableView.reloadData()
+	}
 
 	func setAvatar(_ image: UIImage?, for avatarURLString: String) {
 		for cell in tableView.visibleCells {
@@ -117,6 +130,15 @@ extension PlayersListViewController: PlayersListViewControllerProtocol {
 			else { continue }
 
 			cell.setAvatar(image)
+		}
+	}
+
+	func isLoadingIndicatorVisible(_ isLoading: Bool) {
+		DispatchQueue.main.async {
+			isLoading
+				? self.loadingIndicator.show(in: self.view, withBlur: true, ballSize: .big)
+				: self.loadingIndicator.hide()
+			self.view.isUserInteractionEnabled = !isLoading
 		}
 	}
 }
@@ -154,7 +176,7 @@ private extension PlayersListViewController {
 
 		let filterText = searchBar.text ?? ""
 		presenter.filterPlayers(by: filterText)
-		tableView.reloadData()
+		reloadData()
 	}
 
 	func setupTableViewContentSizeObserver() {
