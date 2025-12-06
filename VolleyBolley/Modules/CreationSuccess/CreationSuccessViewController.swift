@@ -17,6 +17,7 @@ final class CreationSuccessViewController: BaseViewController, CreationSuccessVi
     // MARK: - Constants
 
     private enum Constants {
+        static let cornerRadius: CGFloat = 32
         static let rowHeight: CGFloat = 52
         static let containerHeight: CGFloat = 332
         static let containerInsets: CGFloat = 8
@@ -81,7 +82,11 @@ final class CreationSuccessViewController: BaseViewController, CreationSuccessVi
         return stack
     }()
 
-    private let glassContainer = GlassView()
+    private lazy var glassContainer: GlassmorphismView = {
+        let view = GlassmorphismView()
+        view.cornerRadius = Constants.cornerRadius
+        return view
+    }()
 
     private var tableHeightConstraint: NSLayoutConstraint?
 
@@ -139,7 +144,7 @@ final class CreationSuccessViewController: BaseViewController, CreationSuccessVi
                     constant: -Constants.containerInsets
                 ),
                 glassContainer.topAnchor.constraint(
-					equalTo: view.safeAreaLayoutGuide.topAnchor,
+					equalTo: navBar.bottomAnchor,
                     constant: Constants.containerInsets
                 ),
                 glassContainer.heightAnchor.constraint(

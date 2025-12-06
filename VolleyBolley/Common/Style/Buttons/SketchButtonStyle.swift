@@ -13,7 +13,7 @@ struct SketchButtonStyle {
 	var font: UIFont = AppFont.ActayWide.bold(size: 24)
 	var cornerRadius: CGFloat = 32
 	var tintColor: UIColor = AppColor.Icon.primary
-    var glassAlpha: CGFloat = 0
+	var backgroundEffectProvider: (() -> UIView?)?
 }
 
 enum SketchButtonStateStyle {
@@ -23,14 +23,18 @@ enum SketchButtonStateStyle {
 	var style: SketchButtonStyle {
 		switch self {
 		case .normal:
-            return SketchButtonStyle(glassAlpha: 1)
+			return SketchButtonStyle {
+				AppEffect.glass()
+			}
 		case .selected:
 			return SketchButtonStyle(
 				backgroundColor: AppColor.Background.buttonYellowSelected,
 				titleColor: AppColor.Text.inverted
 			)
 		case .highlightedNormal:
-            return SketchButtonStyle(glassAlpha: 0.7)
+			return SketchButtonStyle(backgroundColor: AppColor.Background.buttonSketchSelected) {
+				AppEffect.glassHightLighted()
+			}
 		case .highlightedSelected:
 			return SketchButtonStyle(
 				backgroundColor: AppColor.Background.buttonYellowSelected.withAlphaComponent(0.7),

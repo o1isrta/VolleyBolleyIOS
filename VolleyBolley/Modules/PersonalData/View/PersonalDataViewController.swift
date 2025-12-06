@@ -26,7 +26,7 @@ final class PersonalDataViewController: BaseViewController {
 
     private let scrollView = UIScrollView()
     private let contentView = UIView()
-    private let glassView = GlassView()
+    private lazy var glassmorphismView = GlassmorphismView()
     private lazy var formView = PersonalDataFormView()
 
 	// TODO: пока решили убрать возможность изменения пола через ЛК, возможно после запуска MVP вернуть придется
@@ -92,8 +92,8 @@ private extension PersonalDataViewController {
     }
 
     func setupSubviews() {
-        view.addSubviews(glassView)
-        glassView.addSubviews(backButton, screenTitle, scrollView)
+        view.addSubviews(glassmorphismView)
+        glassmorphismView.addSubviews(backButton, screenTitle, scrollView)
         scrollView.addSubviews(contentView)
         contentView.addSubviews(formView)
     }
@@ -123,33 +123,33 @@ private extension PersonalDataViewController {
         let bottomIndent = Constants.tabBarHeight + Constants.mainIndent
 
         NSLayoutConstraint.activate([
-            glassView.topAnchor
-                .constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: Constants.mainIndent),
-            glassView.leadingAnchor
+            glassmorphismView.topAnchor
+                .constraint(equalTo: navBar.bottomAnchor, constant: Constants.mainIndent),
+            glassmorphismView.leadingAnchor
                 .constraint(equalTo: view.leadingAnchor, constant: Constants.mainIndent),
-            glassView.trailingAnchor
+            glassmorphismView.trailingAnchor
                 .constraint(equalTo: view.trailingAnchor, constant: -Constants.mainIndent),
-            glassView.bottomAnchor
+            glassmorphismView.bottomAnchor
                 .constraint(lessThanOrEqualTo: view.bottomAnchor, constant: -bottomIndent),
 
             backButton.topAnchor
-                .constraint(equalTo: glassView.topAnchor, constant: Constants.backButtonTopInset),
+                .constraint(equalTo: glassmorphismView.topAnchor, constant: Constants.backButtonTopInset),
             backButton.leadingAnchor
-                .constraint(equalTo: glassView.leadingAnchor, constant: Constants.mediumIndent),
+                .constraint(equalTo: glassmorphismView.leadingAnchor, constant: Constants.mediumIndent),
 
             screenTitle.centerXAnchor
-                .constraint(equalTo: glassView.centerXAnchor),
+                .constraint(equalTo: glassmorphismView.centerXAnchor),
             screenTitle.topAnchor
-                .constraint(equalTo: glassView.topAnchor, constant: Constants.mainSpacing),
+                .constraint(equalTo: glassmorphismView.topAnchor, constant: Constants.mainSpacing),
 
             scrollView.topAnchor
                 .constraint(equalTo: screenTitle.bottomAnchor, constant: Constants.mediumSpacing),
             scrollView.leadingAnchor
-                .constraint(equalTo: glassView.leadingAnchor),
+                .constraint(equalTo: glassmorphismView.leadingAnchor),
             scrollView.trailingAnchor
-                .constraint(equalTo: glassView.trailingAnchor),
+                .constraint(equalTo: glassmorphismView.trailingAnchor),
             scrollView.bottomAnchor
-                .constraint(equalTo: glassView.bottomAnchor),
+                .constraint(equalTo: glassmorphismView.bottomAnchor),
 
             contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
             contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
@@ -167,7 +167,7 @@ private extension PersonalDataViewController {
                 .constraint(equalTo: contentView.bottomAnchor, constant: -Constants.mainSpacing)
         ])
 
-        let minHeight = glassView.heightAnchor.constraint(
+        let minHeight = glassmorphismView.heightAnchor.constraint(
             greaterThanOrEqualTo: scrollView.contentLayoutGuide.heightAnchor,
             constant: screenTitle.intrinsicContentSize.height + (Constants.mainSpacing * 2)
         )

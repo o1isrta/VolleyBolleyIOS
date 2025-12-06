@@ -11,61 +11,61 @@ enum DiagnosticsManager {
 
 	// MARK: - Public Properties
 
-    static func generateEmailBody(with userMessage: String = "") -> String {
-        let deviceInfoItems = collectDeviceInfo()
-        var emailBody = """
-  <html>
-  <head>
-   <style>
-    body { font-family: Arial, sans-serif; margin: 20px; }
-    .header { color: #333; border-bottom: 2px solid #007AFF; padding-bottom: 10px; }
-    .section { margin: 20px 0; }
-    .section-title { color: #007AFF; font-weight: bold; margin-bottom: 10px; }
-    .info-table { width: 100%; border-collapse: collapse; }
-    .info-table td { padding: 8px 12px; border-bottom: 1px solid #eee; }
-    .info-table tr:nth-child(even) { background-color: #f9f9f9; }
-    .user-message { background-color: #f0f8ff; padding: 15px; border-radius: 5px; border-left: 4px solid #007AFF; }
-   </style>
-  </head>
-  <body>
-   <div class="header">
-    <h2>📱 Diagnostic report</h2>
-   </div>
-  """
-        // User message
-        if !userMessage.isEmpty {
-            emailBody += """
-   <div class="section">
-    <div class="section-title">✍️ User message:</div>
-    <div class="user-message">\(userMessage)</div>
-   </div>
-   """
-        }
-        // Device Information
-        emailBody += """
-   <div class="section">
-    <div class="section-title">📊 Device Information:</div>
-    <table class="info-table">
-  """
+	static func generateEmailBody(with userMessage: String = "") -> String {
+		let deviceInfoItems = collectDeviceInfo()
+		var emailBody = """
+		<html>
+		<head>
+			<style>
+				body { font-family: Arial, sans-serif; margin: 20px; }
+				.header { color: #333; border-bottom: 2px solid #007AFF; padding-bottom: 10px; }
+				.section { margin: 20px 0; }
+				.section-title { color: #007AFF; font-weight: bold; margin-bottom: 10px; }
+				.info-table { width: 100%; border-collapse: collapse; }
+				.info-table td { padding: 8px 12px; border-bottom: 1px solid #eee; }
+				.info-table tr:nth-child(even) { background-color: #f9f9f9; }
+				.user-message { background-color: #f0f8ff; padding: 15px; border-radius: 5px; border-left: 4px solid #007AFF; }
+			</style>
+		</head>
+		<body>
+			<div class="header">
+				<h2>📱 Diagnostic report</h2>
+			</div>
+		"""
+		// User message
+		if !userMessage.isEmpty {
+			emailBody += """
+			<div class="section">
+				<div class="section-title">✍️ User message:</div>
+				<div class="user-message">\(userMessage)</div>
+			</div>
+			"""
+		}
+		// Device Information
+		emailBody += """
+			<div class="section">
+				<div class="section-title">📊 Device Information:</div>
+				<table class="info-table">
+		"""
 
-        for item in deviceInfoItems {
-            emailBody += """
-     <tr>
-      <td><strong>\(item.displayName):</strong></td>
-      <td>\(item.value)</td>
-     </tr>
-   """
-        }
+		for item in deviceInfoItems {
+			emailBody += """
+					<tr>
+						<td><strong>\(item.displayName):</strong></td>
+						<td>\(item.value)</td>
+					</tr>
+			"""
+		}
 
-        emailBody += """
-    </table>
-   </div>
-   </body>
-   </html>
-  """
+		emailBody += """
+				</table>
+			</div>
+			</body>
+			</html>
+		"""
 
-        return emailBody
-    }
+		return emailBody
+	}
 
 	static func generatePlainTextBody(with userMessage: String = "") -> String {
 		let deviceInfoItems = collectDeviceInfo()

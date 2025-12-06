@@ -107,10 +107,10 @@ private extension LocationTitleView {
 			iconImageView.heightAnchor.constraint(equalToConstant: 15),
 			iconImageView.widthAnchor.constraint(equalToConstant: 15),
 
+			mainStackView.heightAnchor.constraint(equalToConstant: 36),
 			mainStackView.topAnchor.constraint(equalTo: topAnchor),
 			mainStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-			mainStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            mainStackView.bottomAnchor.constraint(equalTo: bottomAnchor)
+			mainStackView.trailingAnchor.constraint(equalTo: trailingAnchor)
 		])
 	}
 }

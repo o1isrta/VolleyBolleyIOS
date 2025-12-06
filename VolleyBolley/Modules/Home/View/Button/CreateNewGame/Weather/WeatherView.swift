@@ -10,7 +10,7 @@ import UIKit
 final class WeatherView: UIView {
 
     private enum Constants {
-        static let stackSpacing: CGFloat = 8
+        static let stackSpacing: CGFloat = 2
         static let iconPointSize: CGFloat = 24
         static let temperatureFontSize: CGFloat = 16
         static let temperatureLabelHeight: CGFloat = 24
@@ -19,23 +19,25 @@ final class WeatherView: UIView {
     }
 
     private lazy var hStackView: UIStackView = {
-        let view = UIStackView(arrangedSubviews: [
-            iconImageView,
-            temperatureLabel
-        ])
-        view.axis = .horizontal
-        view.alignment = .bottom
-        view.spacing = Constants.stackSpacing
-        return view
+        let stackView = UIStackView(arrangedSubviews: [iconImageView, temperatureLabel])
+        stackView.axis = .horizontal
+        stackView.alignment = .bottom
+        stackView.spacing = Constants.stackSpacing
+        return stackView
     }()
 
-    private let iconImageView = UIImageView()
+    private lazy var iconImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.tintColor = AppColor.Icon.primary
+        return imageView
+    }()
 
     private let temperatureLabel: UILabel = {
-        let view = UILabel()
-        view.font = AppFont.ActayWide.bold(size: Constants.temperatureFontSize)
-        view.textColor = AppColor.Text.primary
-        return view
+        let label = UILabel()
+        label.font = AppFont.ActayWide.bold(size: Constants.temperatureFontSize)
+        label.textColor = AppColor.Text.primary
+        return label
     }()
 
     // MARK: - Initializers
@@ -53,34 +55,14 @@ final class WeatherView: UIView {
     func configure(with viewModel: WeatherViewModel) {
         let configuration = UIImage.SymbolConfiguration(pointSize: Constants.iconPointSize, weight: .semibold)
         iconImageView.image = viewModel.icon?.applyingSymbolConfiguration(configuration)
-        iconImageView.tintColor = AppColor.Icon.primary
         temperatureLabel.text = viewModel.temperatureText
     }
 
     private func setupUI() {
         addSubview(hStackView)
         hStackView.pinToSuperviewEdges()
+        temperatureLabel.heightAnchor.constraint(
+            equalToConstant: Constants.temperatureLabelHeight
+        ).isActive = true
     }
 }
-
-// MARK: - Preview
-
-#if DEBUG
-
-@available(iOS 17.0, *)
-#Preview() {
-    let screenView = UIView()
-    screenView.backgroundColor = AppColor.Background.screen
-
-    let view = WeatherView()
-    let appWeather = AppWeather(temperature: 26.0, condition: .partlyCloudy)
-    let viewModel = WeatherViewModel(weather: appWeather)
-    screenView.addSubviews(view)
-    view.centerXAnchor.constraint(equalTo: screenView.centerXAnchor).isActive = true
-    view.centerYAnchor.constraint(equalTo: screenView.centerYAnchor).isActive = true
-
-    view.configure(with: viewModel)
-
-    return screenView
-}
-#endif

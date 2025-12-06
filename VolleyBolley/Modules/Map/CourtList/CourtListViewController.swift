@@ -43,8 +43,8 @@ final class CourtListViewController: UIViewController {
 		return tableView
 	}()
 
-	private let searchField = GradientSearchField(type: .search)
-	private let glassView = GlassView()
+	private lazy var searchField = GradientSearchField(type: .search)
+	private lazy var glassmorphismView = GlassmorphismView()
 
 	// MARK: - Initializers
 
@@ -53,6 +53,7 @@ final class CourtListViewController: UIViewController {
 		super.init(nibName: nil, bundle: nil)
 		self.selectedCourt = selected
 		self.initialCourts = courts
+		// Store initial courts but don't set distances yet
 		self.courtList = courts.map { ($0, -1) }
 	}
 
@@ -245,23 +246,23 @@ private extension CourtListViewController {
 
 	func setupUI() {
 		view.backgroundColor = AppColor.Background.clear
-		view.addSubviews(glassView, searchField, tableView)
+		view.addSubviews(glassmorphismView, searchField, tableView)
 
 		let mainIndent: CGFloat = 20
 
 		NSLayoutConstraint.activate([
-            glassView.topAnchor.constraint(equalTo: view.topAnchor, constant: 8),
-            glassView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
-            glassView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
-            glassView.bottomAnchor.constraint(equalTo: tableView.bottomAnchor),
+			glassmorphismView.topAnchor.constraint(equalTo: view.topAnchor, constant: 8),
+			glassmorphismView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
+			glassmorphismView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
+			glassmorphismView.bottomAnchor.constraint(equalTo: tableView.bottomAnchor),
 
-			searchField.topAnchor.constraint(equalTo: glassView.topAnchor, constant: mainIndent),
-			searchField.leadingAnchor.constraint(equalTo: glassView.leadingAnchor, constant: mainIndent),
-			searchField.trailingAnchor.constraint(equalTo: glassView.trailingAnchor, constant: -mainIndent),
+			searchField.topAnchor.constraint(equalTo: glassmorphismView.topAnchor, constant: mainIndent),
+			searchField.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor, constant: mainIndent),
+			searchField.trailingAnchor.constraint(equalTo: glassmorphismView.trailingAnchor, constant: -mainIndent),
 
 			tableView.topAnchor.constraint(equalTo: searchField.bottomAnchor, constant: 4),
-			tableView.leadingAnchor.constraint(equalTo: glassView.leadingAnchor, constant: mainIndent),
-			tableView.trailingAnchor.constraint(equalTo: glassView.trailingAnchor, constant: -mainIndent)
+			tableView.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor, constant: mainIndent),
+			tableView.trailingAnchor.constraint(equalTo: glassmorphismView.trailingAnchor, constant: -mainIndent)
 		])
 
 		tableViewHeightConstraint = tableView.heightAnchor.constraint(equalToConstant: 0)

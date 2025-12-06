@@ -245,7 +245,7 @@ struct PopupBannerViewControllerRepresentable: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIViewController {
 		let viewController = BaseViewController()
 		// Configure navbar with mock data
-		viewController.customNavBar.configure(with: NavBarViewModel.mockDefault)
+		viewController.navBar.configure(with: NavBarViewModel.mockDefault)
 
         let button = UIButton(type: .system)
         button.setTitle("Show Banner", for: .normal)
@@ -254,7 +254,7 @@ struct PopupBannerViewControllerRepresentable: UIViewControllerRepresentable {
             banner.onTap = {
                 print("tap")
             }
-            banner.show(in: viewController.view, under: viewController.customNavBar)
+            banner.show(in: viewController.view, under: viewController.navBar)
         }, for: .touchUpInside)
 
         viewController.view.addSubviews(button)
