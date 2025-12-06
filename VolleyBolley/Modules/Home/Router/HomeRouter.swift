@@ -17,7 +17,12 @@ protocol HomeRouterProtocol: AnyObject {
 
 final class HomeRouter: HomeRouterProtocol {
 
+    // MARK: - Public Properties
+
     weak var viewController: UIViewController?
+
+    // MARK: - Private Properties
+
     private let mapFactory: MapModuleFactoryProtocol
 
     // MARK: - Initializers
@@ -25,6 +30,8 @@ final class HomeRouter: HomeRouterProtocol {
     init(mapFactory: MapModuleFactoryProtocol) {
         self.mapFactory = mapFactory
     }
+
+    // MARK: - Public Methods
 
     func attachViewController(_ view: UIViewController) {
         viewController = view
@@ -46,6 +53,13 @@ final class HomeRouter: HomeRouterProtocol {
     }
 
     func showDonate() {
-        print("HomeRouter - Show Donate")
+        openURL(AppConstants.Contacts.linktreeURL)
+    }
+
+    // MARK: - Private Methods
+
+    private func openURL(_ url: String) {
+        guard let url = URL(string: url) else { return }
+        UIApplication.shared.open(url)
     }
 }

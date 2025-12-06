@@ -227,23 +227,23 @@ private extension MapViewController {
             bottomView,
             backButton
 		)
-		let popupBottonInset: CGFloat = -55
+		let popupBottonInset: CGFloat = -8
 
 		NSLayoutConstraint.activate([
-			segmentedControl.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 8),
+			segmentedControl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
 			segmentedControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 			segmentedControl.widthAnchor.constraint(equalToConstant: 200),
 
-			backButton.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 8),
+			backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
             backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
 
-			mapView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+			mapView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: -32),
 			mapView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
 			mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-			mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            mapView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 36),
 
-			bottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-			bottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+			bottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
+			bottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
 			bottomView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: popupBottonInset),
 			bottomView.heightAnchor.constraint(equalToConstant: 136)
 		])
@@ -258,8 +258,8 @@ private extension MapViewController {
 			NSLayoutConstraint.activate([popupBottomConstraint])
 		}
 		NSLayoutConstraint.activate([
-			popupView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-			popupView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+			popupView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
+			popupView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
 			popupView.heightAnchor.constraint(equalToConstant: 472)
 		])
 	}

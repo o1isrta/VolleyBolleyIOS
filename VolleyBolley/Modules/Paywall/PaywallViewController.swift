@@ -29,7 +29,7 @@ final class PaywallViewController: BaseViewController {
 	private let mainSpacing: CGFloat = 20
 	private let internalSpacing: CGFloat = 12
 
-	private let glassmorphismView = GlassmorphismView()
+	private let glassView = GlassView()
 
 	private lazy var screenTitle = CustomTitle(text: String(localized: "paywall.screenTitle"), isLarge: true)
 	private lazy var backButton: UtilityButton = {
@@ -215,20 +215,20 @@ private extension PaywallViewController {
 
 	func setupUI() {
 		view.addSubviews(
-			glassmorphismView,
+            glassView,
 			screenTitle,
 			backButton
 		)
-		glassmorphismView.addSubviews(mainStackView)
+        glassView.addSubviews(mainStackView)
 
 		NSLayoutConstraint.activate([
 			separator.heightAnchor.constraint(equalToConstant: 1),
 
-			backButton.topAnchor.constraint(equalTo: glassmorphismView.topAnchor, constant: 14),
-			backButton.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor, constant: mainSpacing / 2),
+			backButton.topAnchor.constraint(equalTo: glassView.topAnchor, constant: 14),
+			backButton.leadingAnchor.constraint(equalTo: glassView.leadingAnchor, constant: mainSpacing / 2),
 
 			screenTitle.centerXAnchor.constraint(equalTo: mainStackView.centerXAnchor),
-			screenTitle.topAnchor.constraint(equalTo: glassmorphismView.topAnchor, constant: mainSpacing),
+			screenTitle.topAnchor.constraint(equalTo: glassView.topAnchor, constant: mainSpacing),
 
 			playersCounter.heightAnchor.constraint(equalToConstant: 39),
 
@@ -241,14 +241,14 @@ private extension PaywallViewController {
 
 			saveGameButton.heightAnchor.constraint(equalToConstant: 44),
 
-			glassmorphismView.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 8),
-			glassmorphismView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 8),
-			glassmorphismView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -8),
-			glassmorphismView.bottomAnchor.constraint(equalTo: mainStackView.bottomAnchor, constant: mainSpacing),
+            glassView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
+            glassView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 8),
+            glassView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -8),
+            glassView.bottomAnchor.constraint(equalTo: mainStackView.bottomAnchor, constant: mainSpacing),
 
 			mainStackView.topAnchor.constraint(equalTo: screenTitle.bottomAnchor, constant: mainSpacing),
-			mainStackView.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor, constant: mainSpacing),
-			mainStackView.trailingAnchor.constraint(equalTo: glassmorphismView.trailingAnchor, constant: -mainSpacing)
+			mainStackView.leadingAnchor.constraint(equalTo: glassView.leadingAnchor, constant: mainSpacing),
+			mainStackView.trailingAnchor.constraint(equalTo: glassView.trailingAnchor, constant: -mainSpacing)
 		])
 	}
 

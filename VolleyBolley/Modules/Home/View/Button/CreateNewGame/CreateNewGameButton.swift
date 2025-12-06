@@ -17,13 +17,13 @@ final class CreateNewGameButton: UIButton {
 
     // MARK: - Private Properties
 
-    private var activeBackgroundEffect: UIView?
-
     private enum Constants {
         static let stackSpacing: CGFloat = 18
-        static let contentInsets = UIEdgeInsets(top: 18, left: 18, bottom: 18, right: 18)
+        static let contentInsets = UIEdgeInsets(top: 20, left: 18, bottom: 20, right: 18)
         static let backgroundSubviewIndex: Int = 0
     }
+
+    private let glassView = GlassView(config: .sketch)
 
     private lazy var vStackView: UIStackView = {
         let view = UIStackView(arrangedSubviews: [buttonTitleLabel, hStackView])
@@ -34,32 +34,40 @@ final class CreateNewGameButton: UIButton {
     }()
 
     private lazy var hStackView: UIStackView = {
-        let view = UIStackView(arrangedSubviews: [locationTitleView, weatherView])
+        let spacer = UIView()
+        spacer.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        spacer.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+
+        let view = UIStackView(arrangedSubviews: [
+            locationTitleView, spacer, weatherView
+        ])
         view.axis = .horizontal
-        view.distribution = .fillProportionally
-        view.spacing = Constants.stackSpacing
+        view.alignment = .bottom
+        view.distribution = .fill
         return view
     }()
 
-    private lazy var buttonTitleLabel: CustomTitle = CustomTitle(
+    private let buttonTitleLabel = CustomTitle(
         text: String(localized: "homeCreateNewGame"),
         isLarge: true
     )
 
-    private lazy var locationTitleView: LocationTitleView = {
-        let view = LocationTitleView(type: .icon)
-        view.isHidden = true
-        return view
-    }()
-
-    private lazy var weatherView = WeatherView()
+    private let locationTitleView = LocationTitleView(type: .icon)
+    private let weatherView = WeatherView()
 
     // MARK: - Initializers
 
     init() {
         super.init(frame: .zero)
         setupLayout()
-        self.configuration = UIButton.Configuration.plain()
+
+        clipsToBounds = true
+
+        self.configuration = UIButton.Configuration.filled()
+        self.configurationUpdateHandler = { [weak self] button in
+            guard let self else { return }
+            button.configuration = self.configuration(for: button.state)
+        }
     }
 
     @available(*, unavailable)
@@ -86,38 +94,16 @@ final class CreateNewGameButton: UIButton {
         }
     }
 
-    // MARK: - Layout & Style
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        let style = resolveStyle(for: state)
-        if let newEffect = style.backgroundEffectProvider?() as? GlassmorphismView {
-            newEffect.frame = bounds
-            newEffect.cornerRadius = style.cornerRadius
-            if activeBackgroundEffect !== newEffect {
-                activeBackgroundEffect?.removeFromSuperview()
-                insertSubview(newEffect, at: Constants.backgroundSubviewIndex)
-                activeBackgroundEffect = newEffect
-            }
-        } else {
-            activeBackgroundEffect?.removeFromSuperview()
-            activeBackgroundEffect = nil
-        }
-    }
-
     // MARK: - Private Methods
-
-    private func setupLayout() {
-        addSubview(vStackView)
-
-        vStackView.pinToSuperviewEdges(insets: Constants.contentInsets)
-    }
 
     private func configuration(for state: UIControl.State) -> UIButton.Configuration {
         let style = resolveStyle(for: state)
         var config = UIButton.Configuration.filled()
         config.background.backgroundColor = style.backgroundColor
         config.background.cornerRadius = style.cornerRadius
+
+        glassView.alpha = style.glassAlpha
+
         return config
     }
 
@@ -128,6 +114,14 @@ final class CreateNewGameButton: UIButton {
         case (false, true): return SketchButtonStateStyle.highlightedNormal.style
         default: return SketchButtonStateStyle.normal.style
         }
+    }
+
+    private func setupLayout() {
+        addSubviews(glassView, vStackView)
+        glassView.isUserInteractionEnabled = false
+
+        glassView.pinToSuperviewEdges()
+        vStackView.pinToSuperviewEdges(insets: Constants.contentInsets)
     }
 }
 
@@ -168,7 +162,6 @@ final class CreateNewGameButton: UIButton {
 
     for state in previewStates {
         let button = CreateNewGameButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
         button.heightAnchor.constraint(equalToConstant: 116).isActive = true
         button.widthAnchor.constraint(equalToConstant: 361).isActive = true
         button.configure(state: state)

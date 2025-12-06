@@ -45,7 +45,13 @@ final class NotificationCardView: UIView {
 
 	// MARK: - Private Properties
 
-	private lazy var backgroundView = GlassmorphismView(configuration: .notification)
+    private lazy var backgroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = AppColor.Background.blur.withAlphaComponent(0.19)
+        view.layer.cornerRadius = 16
+        return view
+    }()
+
 	private lazy var titleLabel: GradientLabel = {
 		let label = GradientLabel()
 		label.font = AppFont.Hero.bold(size: 16)
@@ -103,7 +109,6 @@ final class NotificationCardView: UIView {
 	// MARK: - Public Methods
 
 	func configure(with model: NotificationCardViewModel) {
-		backgroundView.resetForReuse()
 		titleLabel.text = model.title
 		messageLabel.text = model.message
 		dateLabel.text = model.date

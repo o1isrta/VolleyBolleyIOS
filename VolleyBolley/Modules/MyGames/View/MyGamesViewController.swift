@@ -26,7 +26,7 @@ final class MyGamesViewController: BaseViewController {
 		static let initialTableHeight: CGFloat = 237
 	}
 
-	private lazy var backgroundView: GlassmorphismView = GlassmorphismView()
+	private let backgroundView = GlassView()
 
 	private lazy var tableView: UITableView = {
 		let tableView = UITableView()
@@ -74,7 +74,7 @@ private extension MyGamesViewController {
 		)
 		NSLayoutConstraint.activate([
 			backgroundView.topAnchor.constraint(
-				equalTo: navBar.bottomAnchor,
+				equalTo: view.safeAreaLayoutGuide.topAnchor,
 				constant: Constants.padding
 			),
 			backgroundView.leadingAnchor.constraint(

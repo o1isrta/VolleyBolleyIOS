@@ -43,7 +43,7 @@ final class UserCardViewController: BaseViewController {
 
 	private let loadingIndicator = ProgressHub.shared
 
-	private lazy var glassmorphismView = GlassmorphismView()
+	private lazy var glassView = GlassView()
 
 	private lazy var screenTitle: CustomTitle = {
 		let label = CustomTitle(text: "", isLarge: true)
@@ -203,7 +203,7 @@ private extension UserCardViewController {
 
 	func setupViews() {
 		view.addSubviews(
-			glassmorphismView,
+            glassView,
 			backButton,
 			screenTitle,
 			mainStack
@@ -218,37 +218,37 @@ private extension UserCardViewController {
 
 	func setupMainViewsConstraints() {
 		NSLayoutConstraint.activate([
-			glassmorphismView.topAnchor.constraint(
-				equalTo: navBar.bottomAnchor,
+            glassView.topAnchor.constraint(
+				equalTo: view.safeAreaLayoutGuide.topAnchor,
 				constant: LayoutConstants.mainIndent),
-			glassmorphismView.leadingAnchor.constraint(
+            glassView.leadingAnchor.constraint(
 				equalTo: view.leadingAnchor,
 				constant: LayoutConstants.mainIndent),
-			glassmorphismView.trailingAnchor.constraint(
+            glassView.trailingAnchor.constraint(
 				equalTo: view.trailingAnchor,
 				constant: -LayoutConstants.mainIndent),
-			glassmorphismView.bottomAnchor.constraint(
+            glassView.bottomAnchor.constraint(
 				equalTo: favoriteButton.bottomAnchor,
 				constant: LayoutConstants.mainSpacing),
 
 			backButton.topAnchor.constraint(
-				equalTo: glassmorphismView.topAnchor,
+				equalTo: glassView.topAnchor,
 				constant: LayoutConstants.mainSpacing
 			),
 			backButton.leadingAnchor.constraint(
-				equalTo: glassmorphismView.leadingAnchor,
+				equalTo: glassView.leadingAnchor,
 				constant: LayoutConstants.mainSpacing
 			),
 			backButton.heightAnchor.constraint(equalToConstant: LayoutConstants.backButtonSize),
 			backButton.widthAnchor.constraint(equalToConstant: LayoutConstants.backButtonSize),
 
-			screenTitle.centerXAnchor.constraint(equalTo: glassmorphismView.centerXAnchor),
+			screenTitle.centerXAnchor.constraint(equalTo: glassView.centerXAnchor),
 			screenTitle.centerYAnchor.constraint(equalTo: backButton.centerYAnchor),
 			screenTitle.leadingAnchor.constraint(
 				greaterThanOrEqualTo: backButton.trailingAnchor,
 				constant: LayoutConstants.mainIndent),
 			screenTitle.trailingAnchor.constraint(
-				lessThanOrEqualTo: glassmorphismView.trailingAnchor,
+				lessThanOrEqualTo: glassView.trailingAnchor,
 				constant: -LayoutConstants.mainSpacing)
 		])
 	}
@@ -287,13 +287,13 @@ private extension UserCardViewController {
 			favoriteButton.heightAnchor.constraint(equalToConstant: LayoutConstants.favoriteButtonHeight),
 
 			mainStack.topAnchor.constraint(
-				equalTo: glassmorphismView.topAnchor,
+				equalTo: glassView.topAnchor,
 				constant: LayoutConstants.mainStackTopInset),
 			mainStack.leadingAnchor.constraint(
-				equalTo: glassmorphismView.leadingAnchor,
+				equalTo: glassView.leadingAnchor,
 				constant: LayoutConstants.mainSpacing),
 			mainStack.trailingAnchor.constraint(
-				equalTo: glassmorphismView.trailingAnchor,
+				equalTo: glassView.trailingAnchor,
 				constant: -LayoutConstants.mainSpacing)
 		])
 

@@ -18,16 +18,14 @@ final class FindGameButton: UIButton {
         static let imageLeading: CGFloat = 60
         static let imageWidth: CGFloat = 122
         static let imageHeight: CGFloat = 37
-        static let gamesAvailableTop: CGFloat = 8
-        static let gamesAvailableBottom: CGFloat = -8
-        static let gamesAvailableTrailing: CGFloat = -8
+        static let gamesAvailableInset: CGFloat = 10
         static let gamesAvailableWidth: CGFloat = 150
-        static let vStackTop: CGFloat = 18
+        static let vStackTop: CGFloat = 20
         static let vStackLeading: CGFloat = 18
         static let vStackTrailing: CGFloat = 8
     }
 
-    private var activeBackgroundEffect: UIView?
+    private let glassView = GlassView(config: .sketch)
 
     private lazy var vStackView: UIStackView = {
         let view = UIStackView(arrangedSubviews: [buttonTitleLabel, buttonSubTitleLabel])
@@ -68,30 +66,20 @@ final class FindGameButton: UIButton {
 
     init() {
         super.init(frame: .zero)
+
         setupLayout()
-        self.configuration = UIButton.Configuration.plain()
+        clipsToBounds = true
+
+        self.configuration = UIButton.Configuration.filled()
+        self.configurationUpdateHandler = { [weak self] button in
+            guard let self else { return }
+            button.configuration = self.configuration(for: button.state)
+        }
     }
 
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        let style = resolveStyle(for: state)
-        if let newEffect = style.backgroundEffectProvider?() as? GlassmorphismView {
-            newEffect.frame = bounds
-            newEffect.cornerRadius = style.cornerRadius
-            if activeBackgroundEffect !== newEffect {
-                activeBackgroundEffect?.removeFromSuperview()
-                insertSubview(newEffect, at: 0)
-                activeBackgroundEffect = newEffect
-            }
-        } else {
-            activeBackgroundEffect?.removeFromSuperview()
-            activeBackgroundEffect = nil
-        }
     }
 
     // MARK: - Public Methods
@@ -110,6 +98,8 @@ final class FindGameButton: UIButton {
         config.background.backgroundColor = style.backgroundColor
         config.background.cornerRadius = style.cornerRadius
 
+        glassView.alpha = style.glassAlpha
+
         return config
     }
 
@@ -124,11 +114,14 @@ final class FindGameButton: UIButton {
 
     private func setupLayout() {
         addSubviews(
+            glassView,
             buttonImageView,
             gamesAvailableView,
             vStackView
         )
 
+        glassView.isUserInteractionEnabled = false
+        glassView.pinToSuperviewEdges()
         setupConstraintsButtonImageView()
         setupConstraintsGamesAvailableView()
         setupConstraintsVStackView()
@@ -147,11 +140,11 @@ final class FindGameButton: UIButton {
 
     private func setupConstraintsGamesAvailableView() {
         NSLayoutConstraint.activate([
-            gamesAvailableView.topAnchor.constraint(equalTo: topAnchor, constant: Constants.gamesAvailableTop),
-            gamesAvailableView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: Constants.gamesAvailableBottom),
+            gamesAvailableView.topAnchor.constraint(equalTo: topAnchor, constant: Constants.gamesAvailableInset),
+            gamesAvailableView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -Constants.gamesAvailableInset),
             gamesAvailableView.trailingAnchor.constraint(
                 equalTo: trailingAnchor,
-                constant: Constants.gamesAvailableTrailing
+                constant: -Constants.gamesAvailableInset
             ),
             gamesAvailableView.widthAnchor.constraint(equalToConstant: Constants.gamesAvailableWidth)
         ])
