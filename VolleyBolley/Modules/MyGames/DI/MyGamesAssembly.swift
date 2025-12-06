@@ -10,7 +10,7 @@ import Swinject
 final class MyGamesAssembly: Assembly {
 
     func assemble(container: Container) {
-        container.register(MyGamesViewController.self) { _ in
+        container.register(MyGamesViewController.self) { resolver in
 			let router = MyGamesRouter()
 			let interactor = MyGamesInteractor()
             let presenter = MyGamesPresenter(

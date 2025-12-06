@@ -33,7 +33,7 @@ final class SupportViewController: BaseViewController {
 
 	private let presenter: SupportPresenterProtocol
 
-	private let glassView = GlassView()
+	private lazy var glassmorphismView = GlassmorphismView()
 
 	private lazy var titleLabel: CustomLabel = {
 		let label = CustomLabel(text: String(localized: "Support"), isBold: true)
@@ -88,6 +88,7 @@ final class SupportViewController: BaseViewController {
 
 	override func viewDidLayoutSubviews() {
 		super.viewDidLayoutSubviews()
+		// ALWAYS raise the customAlertView above all other subviews
 		view.bringSubviewToFront(customAlertView)
 	}
 }
@@ -153,7 +154,7 @@ private extension SupportViewController {
 
 	func setupView() {
 		view.addSubviews(
-            glassView,
+			glassmorphismView,
 			tableView,
 			titleLabel,
 			backButton,
@@ -163,43 +164,43 @@ private extension SupportViewController {
 		customAlertView.pinToSuperviewEdges()
 
 		NSLayoutConstraint.activate([
-            glassView.topAnchor.constraint(
-				equalTo: view.safeAreaLayoutGuide.topAnchor,
+			glassmorphismView.topAnchor.constraint(
+				equalTo: navBar.bottomAnchor,
 				constant: Constants.padding
 			),
-            glassView.leadingAnchor.constraint(
+			glassmorphismView.leadingAnchor.constraint(
 				equalTo: view.leadingAnchor,
 				constant: Constants.padding
 			),
-            glassView.trailingAnchor.constraint(
+			glassmorphismView.trailingAnchor.constraint(
 				equalTo: view.trailingAnchor,
 				constant: -Constants.padding
 			),
-            glassView.bottomAnchor.constraint(
+			glassmorphismView.bottomAnchor.constraint(
 				equalTo: tableView.bottomAnchor,
 				constant: Constants.tableInset
 			),
 
 			backButton.topAnchor.constraint(
-				equalTo: glassView.topAnchor,
+				equalTo: glassmorphismView.topAnchor,
 				constant: Constants.topInset
 			),
 			backButton.leadingAnchor.constraint(
-				equalTo: glassView.leadingAnchor,
+				equalTo: glassmorphismView.leadingAnchor,
 				constant: Constants.topInset
 			),
 			backButton.heightAnchor.constraint(equalToConstant: Constants.buttonSize),
 			backButton.widthAnchor.constraint(equalToConstant: Constants.buttonSize),
 
-			titleLabel.centerXAnchor.constraint(equalTo: glassView.centerXAnchor),
+			titleLabel.centerXAnchor.constraint(equalTo: glassmorphismView.centerXAnchor),
 			titleLabel.centerYAnchor.constraint(equalTo: backButton.centerYAnchor),
 
 			tableView.topAnchor.constraint(
 				equalTo: backButton.bottomAnchor,
 				constant: Constants.tableInset
 			),
-			tableView.leadingAnchor.constraint(equalTo: glassView.leadingAnchor),
-			tableView.trailingAnchor.constraint(equalTo: glassView.trailingAnchor)
+			tableView.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor),
+			tableView.trailingAnchor.constraint(equalTo: glassmorphismView.trailingAnchor)
 		])
 
 		tableViewHeightConstraint = tableView.heightAnchor.constraint(

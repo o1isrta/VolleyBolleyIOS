@@ -185,7 +185,6 @@
     },
     "button.unfavorite" : {
       "comment" : "User Card",
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

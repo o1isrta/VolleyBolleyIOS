@@ -9,30 +9,75 @@ import UIKit
 
 /// A custom-styled `UIButton` subclass that presents a skewed label and an image,
 /// supporting a stylized "sketch" appearance with dynamic backgrounds and visual effects.
-///
+/// 
 /// `SketchButton` manages its own title and image subviews, handling their layout,
 /// transformation, and constraints. The button supports different visual states including
 /// normal, selected, highlighted, and their combinations, each with configurable styling
 /// via associated style objects.
-///
+/// 
 /// The background effect (such as glassmorphism) and visual appearance is dynamically
 /// applied depending on the button state. The button also customizes its intrinsic
 /// content size to support a unique design.
-///
+/// 
 /// - Features:
 ///   - Skewed (rotated) multiline title label.
 ///   - Image view anchored to the bottom-right.
-///   - Glass background effect support.
+///   - Glassmorphism background effect support.
 ///   - State-based styling (colors, fonts, backgrounds, etc.).
+///   - Fully programmatic layout (no storyboards).
 ///   - Not available via Interface Builder.
+/// 
+/// Usage:
+/// ```swift
+/// let button = SketchButton(title: "My Button", image: UIImage(named: "icon"))
+/// button.isSelected = true
+/// ```
 ///
 /// - Note: This button is designed for a fixed size and may require adaptation for
 ///   accessibility or dynamic layout requirements.
+///
+
+enum SketchButtonType: CaseIterable {
+    case createTourney
+    case donate
+    case invitePlayers
+    case shareLink
+    case sendInvites
+    case saveGame
+
+    var title: String {
+        switch self {
+        case .createTourney: return String(localized: "sketchButton.createTourney")
+        case .donate: return String(localized: "sketchButton.donate")
+        case .invitePlayers: return String(localized: "sketchButton.invitePlayers")
+        case .shareLink: return String(localized: "sketchButton.shareLink")
+        case .sendInvites: return String(localized: "sketchButton.sendInvites")
+        case .saveGame: return String(localized: "sketchButton.saveGame")
+        }
+    }
+
+    var image: UIImage? {
+        switch self {
+        case .createTourney: return UIImage.Icon.createTourney
+        case .donate: return UIImage.Icon.donate
+        case .invitePlayers: return UIImage.Icon.invitePlayers
+        case .shareLink: return UIImage.Icon.share
+        case .sendInvites: return UIImage.Icon.sendInvites
+        case .saveGame: return UIImage.Icon.saveGame
+        }
+    }
+}
+
+private struct ImageLayout {
+    let widthMultiplier: CGFloat
+    let heightMultiplier: CGFloat
+    let trailingOffset: CGFloat
+    let bottomOffset: CGFloat
+}
+
 final class SketchButton: UIButton {
 
     // MARK: - Private Properties
-
-    private let type: SketchButtonType
 
     private lazy var actionTitleLabel: UILabel = {
         let view = UILabel()
@@ -42,16 +87,19 @@ final class SketchButton: UIButton {
         view.textAlignment = .left
         view.numberOfLines = 2
         view.lineBreakMode = .byWordWrapping
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
     private lazy var actionImageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
-    private let glassView = GlassView(config: .sketch)
+    private var activeBackgroundEffect: UIView?
+    private let type: SketchButtonType
 
     // MARK: - Initializers
 
@@ -61,7 +109,7 @@ final class SketchButton: UIButton {
 
         clipsToBounds = true
 
-        setupLayout()
+        setupActionLayout()
 
         setTitle(type.title, for: .normal)
         setImage(type.image, for: .normal)
@@ -78,6 +126,28 @@ final class SketchButton: UIButton {
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        let style = resolveStyle(for: state)
+
+        if let newEffect = resolveStyle(for: state).backgroundEffectProvider?() as? GlassmorphismView {
+            newEffect.frame = bounds
+            newEffect.cornerRadius = style.cornerRadius
+
+            if activeBackgroundEffect !== newEffect {
+                activeBackgroundEffect?.removeFromSuperview()
+                insertSubview(newEffect, at: 0)
+                activeBackgroundEffect = newEffect
+            }
+        } else {
+            if let existing = activeBackgroundEffect {
+                existing.removeFromSuperview()
+                activeBackgroundEffect = nil
+            }
+        }
     }
 
     override func setTitle(_ title: String?, for state: UIControl.State) {
@@ -106,7 +176,6 @@ final class SketchButton: UIButton {
         actionTitleLabel.font = style.font
         actionTitleLabel.textColor = style.titleColor
         actionImageView.tintColor = style.tintColor
-        glassView.alpha = style.glassAlpha
 
         return config
     }
@@ -124,24 +193,19 @@ final class SketchButton: UIButton {
 
     private func resolveStyle(for state: UIControl.State) -> SketchButtonStyle {
         switch (state.contains(.selected), state.contains(.highlighted)) {
-        case (true, true):
-            return SketchButtonStateStyle.highlightedSelected.style
-        case (true, false):
-            return SketchButtonStateStyle.selected.style
-        case (false, true):
-            return SketchButtonStateStyle.highlightedNormal.style
-        default:
-            return SketchButtonStateStyle.normal.style
+        case (true, true): return SketchButtonStateStyle.highlightedSelected.style
+        case (true, false): return SketchButtonStateStyle.selected.style
+        case (false, true): return SketchButtonStateStyle.highlightedNormal.style
+        default: return SketchButtonStateStyle.normal.style
         }
     }
 
     // MARK: - Layout
 
-    private func setupLayout() {
-        addSubviews(glassView, actionTitleLabel, actionImageView)
-        glassView.isUserInteractionEnabled = false
+    private func setupActionLayout() {
+        addSubview(actionTitleLabel)
+        addSubview(actionImageView)
 
-        glassView.pinToSuperviewEdges()
         setupConstraintsActionTitleLabel()
         setupConstraintsActionImageView()
     }
@@ -166,13 +230,6 @@ final class SketchButton: UIButton {
             actionImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: layout.bottomOffset)
         ])
     }
-}
-
-private struct ImageLayout {
-    let widthMultiplier: CGFloat
-    let heightMultiplier: CGFloat
-    let trailingOffset: CGFloat
-    let bottomOffset: CGFloat
 }
 
 private extension SketchButtonType {

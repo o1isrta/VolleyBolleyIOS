@@ -72,7 +72,7 @@ final class CustomNoteView: UIView {
 		static let counterFontSize: CGFloat = 14
 	}
 
-	private let messageContainerView = GlassView(config: .note)
+	private lazy var messageContainerView: GlassmorphismView = GlassmorphismView(configuration: .message)
 
 	private lazy var messageTextField: UITextView = {
 		let textView = UITextView()
@@ -114,6 +114,11 @@ final class CustomNoteView: UIView {
 
 	@available(*, unavailable)
 	required init?(coder: NSCoder) { nil }
+
+	override func layoutSubviews() {
+		messageContainerView.resetForReuse()
+		super.layoutSubviews()
+	}
 }
 
 // MARK: - Private Properties

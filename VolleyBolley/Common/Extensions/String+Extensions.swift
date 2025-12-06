@@ -56,11 +56,11 @@ extension String {
 	// MARK: - Private Methods
 
 	/// Проверяет, что день в диапазоне 1...31
-    private func isValidDay(_ digits: String) -> Bool {
-        guard digits.count >= 2,
-              let dayInt = Int(digits.prefix(2)) else { return true }
-        return (1...31).contains(dayInt)
-    }
+	private func isValidDay(_ digits: String) -> Bool {
+		guard digits.count >= 2,
+			  let dayInt = Int(digits.prefix(2)) else { return true }
+		return (1...31).contains(dayInt)
+	}
 
 	/// Проверяет, что месяц в диапазоне 1...12
 	private func isValidMonth(_ digits: String) -> Bool {

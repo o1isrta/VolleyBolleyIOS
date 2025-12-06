@@ -34,23 +34,24 @@ struct CourtBottomViewModel {
 // MARK: - CourtBottomView
 
 /// Custom bottom view to display information with location name and custom number of buttons
-final class CourtBottomView: UIView {
+final class CourtBottomView: GlassmorphismView {
 
 	// MARK: - Private Properties
 
-    private let glassView = GlassView(config: .court)
-	private let courtTitleView: CourtTitleView = CourtTitleView(type: .icon)
-	private let courtButtonsView = CourtButtonsView()
+	private lazy var courtTitleView: CourtTitleView = CourtTitleView(type: .icon)
+	private lazy var courtButtonsView = CourtButtonsView()
 
 	// MARK: - Initializers
 
-    init() {
-        super.init(frame: .zero)
-        setupUI()
-    }
+	override init(frame: CGRect) {
+		super.init(frame: frame)
+		setupUI()
+	}
 
 	@available(*, unavailable)
-	required init?(coder: NSCoder) { nil }
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
 
 	// MARK: - Public Methods
 
@@ -75,13 +76,14 @@ final class CourtBottomView: UIView {
 private extension CourtBottomView {
 
 	func setupUI() {
+		backgroundColor = AppColor.Background.screen
+		layer.cornerRadius = 32
+		layer.masksToBounds = true
+
 		addSubviews(
-            glassView,
 			courtTitleView,
 			courtButtonsView
 		)
-
-        glassView.pinToSuperviewEdges()
 
 		NSLayoutConstraint.activate([
 			courtTitleView.heightAnchor.constraint(equalToConstant: 36),
@@ -96,8 +98,6 @@ private extension CourtBottomView {
 		])
 	}
 }
-
-// MARK: - Preview
 
 #if DEBUG
 import SwiftUI

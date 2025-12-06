@@ -30,7 +30,7 @@ enum FeatureAssemblies {
 			SupportAssembly(),
 			FAQAssembly(),
             AboutAssembly(),
-			UserCardAssembly()
+			UserCardAssembly(),
         ]
     }
 }

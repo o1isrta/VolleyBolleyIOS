@@ -38,7 +38,13 @@ final class PriceView: UIView {
 		return maskLayer
 	}()
 
-    private let containerView = GlassView(config: .price)
+	private lazy var containerView: GlassmorphismView = {
+		let view = GlassmorphismView()
+		view.blurIntensity = 0.1
+		view.innerShadowOpacity = 0.2
+		view.cornerRadius = cornerRadius
+		return view
+	}()
 
 	private lazy var textField: UITextField = {
 		let textField = UITextField()
@@ -181,11 +187,13 @@ extension PriceView: UITextFieldDelegate {
 			height: containerView.bounds.height
 		)
 		gradientBorderLayer.frame = borderBounds
+		// Create path for border
 		let borderPath = UIBezierPath(
 			roundedRect: borderBounds.insetBy(dx: borderWidth/2, dy: borderWidth/2),
 			byRoundingCorners: .allCorners,
 			cornerRadii: CGSize(width: cornerRadius, height: cornerRadius)
 		)
+		// Create mask for gradient
 		maskLayer.path = borderPath.cgPath
 		gradientBorderLayer.mask = maskLayer
 		layer.insertSublayer(gradientBorderLayer, at: 3)

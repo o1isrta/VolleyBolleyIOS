@@ -14,6 +14,7 @@ final class TimePickerButton: UIButton {
 	// MARK: - Constants
 
 	private enum Constants {
+		static let cornerRadius: CGFloat = 16
 		static let stackSpacing: CGFloat = 4
 	}
 
@@ -21,7 +22,7 @@ final class TimePickerButton: UIButton {
 
 	/// The intrinsic content size of the button for automatic layout.
 	override var intrinsicContentSize: CGSize {
-		return CGSize(width: 89, height: 49)
+		return CGSize(width: 89, height: 45)
 	}
 
 	/// A closure that is called whenever the selected time changes.
@@ -58,7 +59,13 @@ final class TimePickerButton: UIButton {
 	}()
 
 	/// A background view with a glassmorphism effect.
-    private let glassView = GlassView(config: .timePicker)
+	private lazy var glassView: GlassmorphismView = {
+		let view = GlassmorphismView()
+		view.cornerRadius = Constants.cornerRadius
+		view.innerShadowRadius = 0
+		view.isUserInteractionEnabled = false
+		return view
+	}()
 
 	/// The currently selected time.
 	///
@@ -93,10 +100,11 @@ private extension TimePickerButton {
 
 	/// Configures the view hierarchy and constraints.
 	func setup() {
+		layer.cornerRadius = Constants.cornerRadius
+		clipsToBounds = true
+
 		addSubviews(glassView, labelStack)
 		sendSubviewToBack(glassView)
-
-        glassView.isUserInteractionEnabled = false
 
 		NSLayoutConstraint.activate([
 			glassView.topAnchor.constraint(equalTo: topAnchor),
@@ -209,7 +217,7 @@ import SwiftUI
 		UIViewPreview {
 			TimePickerButton()
 		}
-		.frame(width: 89, height: 49)
+		.frame(width: 89, height: 45)
 	}
 }
 #endif
