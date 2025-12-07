@@ -141,7 +141,6 @@ final class ErrorPolicyEngine: ErrorPolicyEngineProtocol {
             return AlertDescriptor(
                 title: L10n.Titles.warning,
                 message: L10n.Errors.notImplemented,
-                messageAlignment: .left,
                 actions: [
                     .dismiss(title: L10n.Buttons.okay, isPrimary: false, maxWidthFraction: 0.3),
                     .openMainApp(title: L10n.Buttons.mainApp, isPrimary: true)
@@ -156,6 +155,7 @@ final class ErrorPolicyEngine: ErrorPolicyEngineProtocol {
                     L10n.Errors.StayInLoop.item2,
                     L10n.Errors.StayInLoop.item3
                 ],
+                messageAlignment: .left,
                 actions: [
                     .dismiss(title: L10n.Buttons.skip.uppercased(), isPrimary: false, maxWidthFraction: 0.3),
                     .openSettings(title: L10n.Buttons.enable.uppercased(), isPrimary: true)
