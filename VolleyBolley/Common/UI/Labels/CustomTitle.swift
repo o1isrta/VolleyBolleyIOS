@@ -5,7 +5,7 @@ import UIKit
 /// isLarge - выбор величины заголовка (24 или 20 шрифт)
 class CustomTitle: UILabel {
 
-    init(text: String, isLarge: Bool = false) {
+    init(text: String? = nil, isLarge: Bool = false) {
         super.init(frame: .zero)
 
         let fontSize: CGFloat = isLarge ? 24 : 20

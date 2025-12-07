@@ -18,7 +18,7 @@ final class AuthAssembly: Assembly {
                     resolver.safeResolve(AuthViewController.self)
                 },
                 userRegFactory: {
-                    resolver.safeResolve(UserRegViewProtocol.self)
+                    resolver.safeResolve(UserRegViewController.self)
                 }
             )
         }
@@ -26,21 +26,20 @@ final class AuthAssembly: Assembly {
 
         container.register(AuthViewController.self) { resolver in
             MainActor.assumeIsolated {
-                let googleAuthService = resolver.resolve(GoogleAuthServiceProtocol.self)!
-                let firebaseAuthService = resolver.resolve(FirebaseAuthServiceProtocol.self)!
-                let authRepository = resolver.resolve(AuthRepositoryProtocol.self)!
-                let sessionRepository = resolver.resolve(SessionRepositoryProtocol.self)!
-                let router = resolver.resolve(AuthRouterProtocol.self)!
+                let googleAuthService = resolver.safeResolve(GoogleOAuthServiceProtocol.self)
+                let firebaseAuthService = resolver.safeResolve(FirebaseAuthServiceProtocol.self)
+                let authRepository = resolver.safeResolve(AuthRepositoryProtocol.self)
+                let router = resolver.safeResolve(AuthRouterProtocol.self)
                 let interactor = AuthInteractor(
                     googleAuthService: googleAuthService,
                     firebaseAuthService: firebaseAuthService,
                     authRepository: authRepository,
-                    sessionRepository: sessionRepository,
                     router: router
                 )
                 let presenter = AuthPresenter(
                     interactor: interactor,
-                    router: router
+                    router: router,
+                    uiShell: resolver.safeResolve(UIShellProtocol.self)
                 )
                 let view = AuthViewController(presenter: presenter)
 

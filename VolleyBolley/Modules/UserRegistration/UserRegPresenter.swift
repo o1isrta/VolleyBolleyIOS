@@ -4,76 +4,49 @@
 //
 //  Created by Олег Кор on 03.08.2025.
 //
-
 import Foundation
-
-protocol UserRegPresenterProtocol: AnyObject {
-    var countries: [String] { get }
-    var cities: [String] { get }
-    func didTapLevelInfo()
-    func didTapGetStarted(name: String, surname: String, gender: String)
-    func didTapToMain()
-}
 
 final class UserRegPresenter: UserRegPresenterProtocol {
 
-    // MARK: - Public properties
-
+    var countries = ["Cyprus", "Thailand"]
     let cities = ["Koh Phangan", "Koh Samui"]
 
     weak var view: UserRegViewProtocol?
-    var countries = ["Cyprus", "Thailand"]
+    var interactor: UserRegInteractorProtocol!
+    var router: UserRegRouterProtocol!
 
-    // MARK: - Private properties
-
-    private let interactor: UserRegInteractorProtocol
-    private let router: UserRegRouterProtocol
-    private let finishRegistrationFlow: () -> Void
-
-    // MARK: - Initializers
-
-    init(
-        interactor: UserRegInteractorProtocol,
-        router: UserRegRouterProtocol,
-        finishRegistrationFlow: @escaping () -> Void
-    ) {
+    init(view: UserRegViewProtocol,
+         interactor: UserRegInteractorProtocol,
+         router: UserRegRouterProtocol) {
+        self.view = view
         self.interactor = interactor
         self.router = router
-        self.finishRegistrationFlow = finishRegistrationFlow
+    }
+
+    func viewDidLoad() {
+        interactor.fetchCountries()
     }
 
     func didTapLevelInfo() {
-        router.showLevelInfo { [weak self] in
-            self?.router.closeLevelInfo()
-        }
+        router?.showLevelInfoScreen()
     }
 
     func didTapGetStarted(name: String, surname: String, gender: String) {
-        print("🕸️ UserRegPresenter - didTapGetStarted - name: \(name), surname: \(surname), gender: \(gender)")
-        //        interactor.registerUser(name: name, surname: surname, gender: gender)
-    }
-
-    func didTapToMain() {
-        router.finishRegistration()
+        interactor.registerUser(name: name, surname: surname, gender: gender)
     }
 }
 
-// MARK: - AuthInteractorOutput
-
 extension UserRegPresenter: UserRegInteractorOutputProtocol {
-
-    func didRegisterSuccessfully(isRegistered: Bool) {
-        if isRegistered {
-            print("✅ UserRegPresenter - didRegisterSuccessfully - isRegistered: \(isRegistered)")
-            finishRegistrationFlow()
-        } else {
-            print("✅ UserRegPresenter - didRegisterSuccessfully - isRegistered: \(isRegistered)")
-            //            view?.showRegistrationScreen()
-        }
+    func didFetchCountries(_ countries: [String]) {
+        self.countries = countries
+        view?.updateCountries(countries)
     }
 
-    func didFailToRegister(error: Error) {
-        //        view?.showError(error.localizedDescription)
-        print("❌ UserRegPresenter - didFailToRegister - error: \(error)")
+    func registrationDidSucceed() {
+        router.navigateToNextScreen()
+    }
+
+    func registrationDidFail(error: Error) {
+
     }
 }

@@ -9,14 +9,12 @@ import Foundation
 
 enum NetworkError: Error {
     case unauthorized
-    case clientError(Int, String?)
-    case serverError(Int)
-    case invalidStatusCode(Int)
+    case network
+    case tooManyRequests
     case decodingFailed
-    case noInternet
-    case timeout
-    case serverUnreachable
-    case cancelled
-    case network(Error)
+    case cannotFindHost
+    case networkConnectionLost
+    case client
+    case server
     case unknown
 }

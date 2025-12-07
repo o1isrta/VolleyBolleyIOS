@@ -10,8 +10,8 @@ import Swinject
 final class GoogleAuthAssembly: Assembly {
 
     func assemble(container: Container) {
-        container.register(GoogleAuthServiceProtocol.self) { _ in
-            GoogleAuthService()
+        container.register(GoogleOAuthServiceProtocol.self) { _ in
+            GoogleOAuthService()
         }
     }
 }

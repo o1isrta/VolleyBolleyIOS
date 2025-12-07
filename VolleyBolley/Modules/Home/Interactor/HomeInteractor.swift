@@ -12,13 +12,7 @@ protocol HomeInteractorProtocol: AnyObject {
     func loadTotalCountOfUpcomingGamesAndTournaments() -> Int
 }
 
-protocol HomeInteractorOutput: AnyObject {}
-
 final class HomeInteractor: HomeInteractorProtocol {
-
-    // MARK: - Public Properties
-
-    weak var presenter: HomeInteractorOutput?
 
     // MARK: - Private Properties
 
@@ -31,8 +25,6 @@ final class HomeInteractor: HomeInteractorProtocol {
     ) {
         self.locationRepository = locationRepository
     }
-
-    // MARK: - Public methods
 
     func loadNearestCourtWithWeather() async throws -> NearestCourtWithWeather {
         // TODO: - remove mock data

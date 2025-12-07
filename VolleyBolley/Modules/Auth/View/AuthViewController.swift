@@ -8,10 +8,10 @@
 import Combine
 import UIKit
 
-enum AuthViewState: Equatable {
+enum AuthViewState {
     case idle
     case loading
-    case alertError(String)
+//    case alertError(CustomAlertModel)
     case success
 }
 
@@ -23,11 +23,11 @@ final class AuthViewController: UIViewController {
 
     private let loadingView = ProgressHub()
 
-    private lazy var alertView: CustomAlertView = {
-        let view = CustomAlertView()
-        view.isHidden = true
-        return view
-    }()
+//    private lazy var alertView: CustomAlertView = {
+//        let view = CustomAlertView()
+//        view.isHidden = true
+//        return view
+//    }()
 
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
@@ -154,58 +154,60 @@ final class AuthViewController: UIViewController {
     private func handleStateChange(_ state: AuthViewState) {
         switch state {
         case .idle:
-            loadingView.hide()
+            hideLoading()
         case .loading:
-            loadingView.show(in: view)
-        case .alertError(let message):
-            loadingView.hide()
-            showAlert(message: message)
+            showLoading()
+//        case .alertError(let alertModel):
+//            showAlert(model: alertModel)
         case .success:
-            loadingView.hide()
+            hideLoading()
         }
     }
 
-    private func showAlert(message: String) {
-        guard alertView.isHidden else { return }
-
-        let button = ButtonDataModel(
-            title: String(localized: "customAlertView.button.ok"),
-            action: { [weak self] in
-                self?.hideAlert()
-            }
-        )
-
-        let alertModel = CustomAlertModel(
-            title: String(localized: "errorTitleError"),
-            message: message,
-            primaryButton: button
-        )
-
-        alertView.configure(with: alertModel)
-        alertView.alpha = 0
-        alertView.isHidden = false
-        view.bringSubviewToFront(alertView)
-
-        UIView.animate(withDuration: 0.25) {
-            self.alertView.alpha = 1
-        }
+    private func hideLoading() {
+        loadingView.hide()
     }
 
-    private func hideAlert() {
-        UIView.animate(withDuration: 0.25, animations: {
-            self.alertView.alpha = 0
-        }, completion: { _ in
-            self.alertView.isHidden = true
-        })
+    private func showLoading() {
+        loadingView.show(in: view)
     }
+
+//    private func showAlert(model: CustomAlertModel) {
+//        guard alertView.isHidden else { return }
+//
+//        alertView.configure(
+//            with: model,
+//            primaryAction: { [weak self] in
+//                self?.hideAlert()
+//                self?.hideLoading()
+//            }
+//        )
+//
+//        alertView.alpha = 0
+//        alertView.isHidden = false
+//        view.bringSubviewToFront(alertView)
+//
+//        UIView.animate(withDuration: 0.25) {
+//            self.alertView.alpha = 1
+//        }
+//    }
+
+//    private func hideAlert() {
+//        UIView.animate(withDuration: 0.25, animations: {
+//            self.alertView.alpha = 0
+//        }, completion: { _ in
+//            self.alertView.isHidden = true
+//            self.alertView.resetActions()
+//        })
+//    }
 
     private func setupUI() {
-        view.addSubviews(backgroundImageView, descriptionLabel, bottomView, alertView)
+        view.addSubviews(backgroundImageView, descriptionLabel, bottomView/*, alertView*/)
 
         bottomView.addSubview(buttonsStack)
 
         backgroundImageView.pinToSuperviewEdges()
-        alertView.pinToSuperviewEdges()
+//        alertView.pinToSuperviewEdges()
 
         NSLayoutConstraint.activate([
             descriptionLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),

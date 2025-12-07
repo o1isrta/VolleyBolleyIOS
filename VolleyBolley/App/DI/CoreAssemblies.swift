@@ -12,7 +12,8 @@ enum CoreAssemblies {
     static func all(window: UIWindow) -> [Assembly] {
         return [
             WindowAssembly(window: window),
-            AppRouterAssembly(),
+            RootViewControllerProviderAssembly(),
+            RouterAssembly(),
             EnvironmentAssembly(),
             SettingsStorageAssembly(),
             TokenStorageAssembly(),
@@ -21,7 +22,8 @@ enum CoreAssemblies {
             MediaServicesAssembly(),
             LocationAssembly(),
             GoogleAuthAssembly(),
-            FirebaseAuthAssembly()
+            FirebaseAuthAssembly(),
+            UIShellAssembly()
         ]
     }
 }

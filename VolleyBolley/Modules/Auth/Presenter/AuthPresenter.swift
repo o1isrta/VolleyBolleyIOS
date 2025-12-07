@@ -28,6 +28,7 @@ final class AuthPresenter: AuthPresenterProtocol {
 
     private let interactor: AuthInteractorProtocol
     private let router: AuthRouterProtocol
+    private let uiShell: UIShellProtocol
 
     private var cancellables: Set<AnyCancellable> = []
 
@@ -36,38 +37,33 @@ final class AuthPresenter: AuthPresenterProtocol {
     init(
         interactor: AuthInteractorProtocol,
         router: AuthRouterProtocol,
+        uiShell: UIShellProtocol
     ) {
         self.interactor = interactor
         self.router = router
-        bindInteractor()
+        self.uiShell = uiShell
     }
 
     // MARK: - Public methods
 
     func didTapContinueWithGoogle() {
-        state = .loading
-        interactor.loginWithGoogle()
+        Task {
+
+            state = .loading
+            do {
+                try await interactor.loginWithGoogle()
+                router.finishAuth()
+            } catch let error as DomainError {
+                uiShell.showAlert(error, retry: { [weak self] in
+                    self?.didTapContinueWithGoogle()
+                })
+            } catch {
+                uiShell.showAlert(.unknown)
+            }
+        }
     }
 
     func didTapContinuePhone() {
-        state = .alertError(String(localized: "Not implemented yet"))
-    }
-
-    private func bindInteractor() {
-        interactor.statePublisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] state in
-                switch state {
-                case .loading:
-                    self?.state = .loading
-                case .success:
-                    self?.router.finishAuth()
-                case .alertError(let message):
-                    self?.state = .alertError(message)
-                default:
-                    break
-                }
-            }
-            .store(in: &cancellables)
+        uiShell.showAlert(.common(.notImplemented))
     }
 }

@@ -10,24 +10,15 @@ import Swinject
 final class MyGamesAssembly: Assembly {
 
     func assemble(container: Container) {
-        container.register(MyGamesRouterProtocol.self) { resolver in
-            MyGamesRouter(
-                viewControllerFactory: {
-                    resolver.safeResolve(MyGamesViewProtocol.self)
-                }
-            )
-        }
-        .inObjectScope(.container)
-
-        container.register(MyGamesViewProtocol.self) { resolver in
-            let router = resolver.resolve(MyGamesRouterProtocol.self)!
+        container.register(MyGamesViewController.self) { resolver in
+            let router = MyGamesRouter()
             let interactor = MyGamesInteractor()
             let presenter = MyGamesPresenter(
                 interactor: interactor,
                 router: router
             )
             let view = MyGamesViewController(presenter: presenter)
-
+            router.attachViewController(view)
             presenter.view = view
 
             return view

@@ -13,7 +13,7 @@ final class NetworkModulesAssembly: Assembly {
     func assemble(container: Container) {
 
         container.register(MoyaProvider<DataAPI>.self) { resolver in
-            let environment = resolver.resolve(AppEnvironment.self)!
+            let environment = resolver.safeResolve(AppEnvironment.self)
 
             return MoyaProvider<DataAPI>(
                 endpointClosure: self.makeEndpointClosure(environment: environment),
@@ -24,9 +24,10 @@ final class NetworkModulesAssembly: Assembly {
         .inObjectScope(.container)
 
         container.register(NetworkServiceProtocol.self) { resolver in
-            let provider = resolver.resolve(MoyaProvider<DataAPI>.self)!
+            let provider = resolver.safeResolve(MoyaProvider<DataAPI>.self)
+            let tokenStorage = resolver.safeResolve(TokenStorageProtocol.self)
 
-            return NetworkService(provider: provider)
+            return NetworkService(provider: provider) { tokenStorage.accessToken }
         }
         .inObjectScope(.container)
 

@@ -9,27 +9,35 @@ import Swinject
 
 final class MapAssembly: Assembly {
 
-	func assemble(container: Container) {
-		container.register(MapViewProtocol.self) { (resolver, contentType: MapContentType)  in
-            let networkService = resolver.safeResolve(NetworkServiceProtocol.self)
+    func assemble(container: Container) {
+        container.register(MapViewController.self) { resolver in
+            guard
+                let networkService = resolver.resolve(NetworkServiceProtocol.self)
+            else {
+                fatalError("Error: Failed to register NetworkService")
+            }
 
-			let newGameOrTourneyVC = { resolver.resolve(NewGameOrTourneyViewController.self) }
-			let router = MapRouter(
-				newGameOrTourneyVC: newGameOrTourneyVC
-			)
-			let interactor = MapInteractor(networkService: networkService)
+            let newGameOrTourneyVC = { resolver.resolve(NewGameOrTourneyViewController.self) }
+            let router = MapRouter(
+                newGameOrTourneyVC: newGameOrTourneyVC
+            )
+            let interactor = MapInteractor(networkService: networkService)
 
-			let presenter = MapPresenter(
-				interactor: interactor,
-				router: router,
-                contentType: contentType
-			)
+            let presenter = MapPresenter(
+                interactor: interactor,
+                router: router
+            )
 
-			let view = MapViewController(presenter: presenter)
-			router.attachViewController(view)
-			presenter.view = view
+            let view = MapViewController(presenter: presenter)
+            router.attachViewController(view)
+            presenter.view = view
 
-			return view
-		}
-	}
+            return view
+        }
+
+        container.register(MapModuleFactoryProtocol.self) { resolver in
+            MapModuleFactory(resolver: resolver)
+        }
+        .inObjectScope(.container)
+    }
 }

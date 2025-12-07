@@ -10,19 +10,19 @@ import UIKit
 // MARK: - SupportPresenterProtocol
 
 protocol SupportPresenterProtocol: AnyObject {
-	func backButtonTapped()
-	func didSelectSupportItem(_ item: SupportItem)
+    func backButtonTapped()
+    func didSelectSupportItem(_ item: SupportItem)
 }
 
 // MARK: - SupportPresenter
 
 final class SupportPresenter: SupportPresenterProtocol {
 
-	// MARK: - Public Properties
+    // MARK: - Public Properties
 
-    weak var view: SupportViewProtocol?
+    weak var view: SupportViewControllerProtocol?
 
-	// MARK: - Private Properties
+    // MARK: - Private Properties
 
     private let router: SupportRouterProtocol
 
@@ -32,29 +32,29 @@ final class SupportPresenter: SupportPresenterProtocol {
         self.router = router
     }
 
-	// MARK: - Public Methods
+    // MARK: - Public Methods
 
-	func backButtonTapped() {
-		router.navigateBack()
-	}
+    func backButtonTapped() {
+        router.navigateBack()
+    }
 
-	func didSelectSupportItem(_ item: SupportItem) {
-		switch item {
-		case .faq:
-			router.showFAQ()
-		case .linktree:
-			openURL(AppConstants.Contacts.linktreeURL)
-		case .contactUs:
-			view?.sendEmail()
-		case .whatsApp:
-			openURL(AppConstants.Contacts.whatsAppURL)
-		}
-	}
+    func didSelectSupportItem(_ item: SupportItem) {
+        switch item {
+        case .faq:
+            router.showFAQ()
+        case .linktree:
+            openURL(AppConstants.Contacts.linktreeURL)
+        case .contactUs:
+            view?.sendEmail()
+        case .whatsApp:
+            openURL(AppConstants.Contacts.whatsAppURL)
+        }
+    }
 
-	// MARK: - Private Methods
+    // MARK: - Private Methods
 
-	private func openURL(_ url: String) {
-		guard let url = URL(string: url) else { return }
-		UIApplication.shared.open(url)
-	}
+    private func openURL(_ url: String) {
+        guard let url = URL(string: url) else { return }
+        UIApplication.shared.open(url)
+    }
 }

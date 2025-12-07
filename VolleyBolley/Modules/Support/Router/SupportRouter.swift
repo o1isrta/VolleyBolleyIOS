@@ -11,8 +11,8 @@ import UIKit
 
 protocol SupportRouterProtocol: AnyObject {
     func attachViewController(_ view: UIViewController)
-	func navigateBack()
-	func showFAQ()
+    func navigateBack()
+    func showFAQ()
 }
 
 // MARK: - SupportRouter
@@ -23,28 +23,28 @@ final class SupportRouter: SupportRouterProtocol {
 
     weak var viewController: UIViewController?
 
-	// MARK: - Private Properties
+    // MARK: - Private Properties
 
-	private let faqViewController: () -> FAQViewProtocol?
+    private let faqViewController: () -> FAQViewController?
 
-	// MARK: - Initializers
+    // MARK: - Initializers
 
-	init(faqViewController: @escaping () -> FAQViewProtocol?) {
-		self.faqViewController = faqViewController
-	}
+    init(faqViewController: @escaping () -> FAQViewController?) {
+        self.faqViewController = faqViewController
+    }
 
-	// MARK: - Public Methods
+    // MARK: - Public Methods
 
     func attachViewController(_ view: UIViewController) {
         viewController = view
     }
 
-	func navigateBack() {
-		viewController?.navigationController?.popViewController(animated: true)
-	}
+    func navigateBack() {
+        viewController?.navigationController?.popViewController(animated: true)
+    }
 
-	func showFAQ() {
-		guard let faqVC = faqViewController() else { fatalError("FAQViewController could not be created") }
-		viewController?.navigationController?.pushViewController(faqVC, animated: true)
-	}
+    func showFAQ() {
+        guard let faqVC = faqViewController() else { fatalError("FAQViewController could not be created") }
+        viewController?.navigationController?.pushViewController(faqVC, animated: true)
+    }
 }

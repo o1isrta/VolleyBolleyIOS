@@ -47,7 +47,7 @@ enum AppColor {
         static let calendar = white
 
         // alert
-        static let alert = gray
+        static let alert = grayBackground
     }
 
 	enum Text {

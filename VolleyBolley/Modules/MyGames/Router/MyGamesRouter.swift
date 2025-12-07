@@ -8,11 +8,11 @@
 import UIKit
 
 protocol MyGamesRouterProtocol: AnyObject {
-    func start() -> UIViewController
-	func showMyGames()
-	func showUpcomingGames()
-	func showGameInvites()
-	func showArchive()
+    func attachViewController(_ view: UIViewController)
+    func showMyGames()
+    func showUpcomingGames()
+    func showGameInvites()
+    func showArchive()
 }
 
 final class MyGamesRouter: MyGamesRouterProtocol {
@@ -21,42 +21,25 @@ final class MyGamesRouter: MyGamesRouterProtocol {
 
     weak var viewController: UIViewController?
 
-    // MARK: - Private Properties
-
-    private let viewControllerFactory: () -> UIViewController
-
-    private weak var navigationController: UINavigationController?
-
-    // MARK: - Initializers
-
-    init(
-        viewControllerFactory: @escaping () -> UIViewController,
-    ) {
-        self.viewControllerFactory = viewControllerFactory
-    }
-
     // MARK: - Public Methods
 
-    func start() -> UIViewController {
-        let rootVC = viewControllerFactory()
-        let nav = UINavigationController(rootViewController: rootVC)
-        navigationController = nav
-        return nav
+    func attachViewController(_ view: UIViewController) {
+        viewController = view
     }
 
-	func showMyGames() {
-		print("open My Games")
-	}
+    func showMyGames() {
+        print("open My Games")
+    }
 
-	func showUpcomingGames() {
-		print("open Upcoming Games")
-	}
+    func showUpcomingGames() {
+        print("open Upcoming Games")
+    }
 
-	func showGameInvites() {
-		print("open Game Invites")
-	}
+    func showGameInvites() {
+        print("open Game Invites")
+    }
 
-	func showArchive() {
-		print("open Archive")
-	}
+    func showArchive() {
+        print("open Archive")
+    }
 }

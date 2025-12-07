@@ -8,7 +8,7 @@
 import UIKit
 
 @MainActor
-protocol HomeViewProtocol: AnyObject where Self: UIViewController {
+protocol HomeViewProtocol: AnyObject {
     func displayCreateNewGameButton(state: CreateNewGameButtonState)
     func displayFindGameButton(gamesCount: Int)
 }
@@ -18,7 +18,6 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
     // MARK: - Private Properties
 
     private let presenter: HomePresenterProtocol
-
     private var createNewGameCourtId: Int?
 
     private enum Constants {

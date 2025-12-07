@@ -7,7 +7,13 @@
 
 import FirebaseAuth
 
+protocol FirebaseAuthServiceProtocol {
+    func signInWithGoogle(idToken: String, accessToken: String) async throws -> String
+}
+
 final class FirebaseAuthService: FirebaseAuthServiceProtocol {
+
+    // MARK: - Public Methods
 
     func signInWithGoogle(idToken: String, accessToken: String) async throws -> String {
         let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: accessToken)
@@ -17,28 +23,32 @@ final class FirebaseAuthService: FirebaseAuthServiceProtocol {
             let idToken = try await authResult.user.getIDToken()
             return idToken
         } catch {
-            throw mapFirebaseError(error)
+            // TODO: - add logger
+            print("❌ FirebaseAuthService.signInWithGoogle - error:", error)
+            throw mapToDomain(error)
         }
     }
 
-    private func mapFirebaseError(_ error: Error) -> FirebaseAuthError {
+    // MARK: - Private Methods
+
+    private func mapToDomain(_ error: Error) -> DomainError {
         let nsError = error as NSError
 
         guard nsError.domain == AuthErrorDomain else {
-            return .unknown(error)
+            return DomainError.unknown
         }
 
         switch AuthErrorCode(rawValue: nsError.code) {
         case .invalidCredential:
-            return .invalidCredentials
+            return .auth(.invalidCredentials)
         case .userDisabled:
-            return .userDisabled
+            return .auth(.userDisabled)
         case .networkError:
-            return .networkError
+            return .auth(.networkError)
         case .tooManyRequests:
-            return .tooManyRequests
+            return .auth(.tooManyRequests)
         default:
-            return .unknown(error)
+            return DomainError.unknown
         }
     }
 }

@@ -5,7 +5,7 @@ import UIKit
 /// isBold - выбор толщины лейбла (16 или 14 шрифт)
 class CustomLabel: UILabel {
 
-    init(text: String, isBold: Bool = false) {
+    init(text: String? = nil, isBold: Bool = false) {
         super.init(frame: .zero)
 
         let fontSize: CGFloat = isBold ? 16 : 14

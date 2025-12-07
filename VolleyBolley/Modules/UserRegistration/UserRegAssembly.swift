@@ -4,37 +4,25 @@
 //
 //  Created by Олег Кор on 03.08.2025.
 //
-
 import Swinject
 
 final class UserRegAssembly: Assembly {
 
     func assemble(container: Container) {
-        container.register(UserRegRouterProtocol.self) { resolver in
-            UserRegRouter(
-                viewControllerFactory: {
-                    resolver.safeResolve(UserRegViewProtocol.self)
-                }
-            )
+        container.register(UserRegViewController.self) { resolver in
+            let userRegVC = UserRegViewController()
+
+            let interactor = resolver.resolve(UserRegInteractorProtocol.self)!
+            let appRouter = resolver.resolve(AppRouter.self)
+            let router = UserRegRouter(viewController: userRegVC, coordinator: appRouter)
+            let presenter = UserRegPresenter(view: userRegVC, interactor: interactor, router: router)
+
+            userRegVC.presenter = presenter
+            return userRegVC
         }
-        .inObjectScope(.container)
 
-        container.register(UserRegViewProtocol.self) { resolver in
-            let router = resolver.resolve(UserRegRouterProtocol.self)!
-            let interactor = UserRegInteractor()
-            let presenter = UserRegPresenter(
-                interactor: interactor,
-                router: router,
-                finishRegistrationFlow: { [weak router] in
-                    router?.finishRegistration()
-                }
-            )
-            let view = UserRegViewController(presenter: presenter)
-
-            interactor.presenter = presenter
-            presenter.view = view
-
-            return view
+        container.register(UserRegInteractorProtocol.self) { _ in
+            UserRegInteractor()
         }
     }
 }
