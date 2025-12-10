@@ -9,9 +9,7 @@ import UIKit
 
 /// Эффекты такие как эффект стекла, блюры и прочие
 enum AppEffect {
-    enum BackgroundAlert {
-        static let alert = semiTransparentGrayBackground
-    }
+    static let dimming = charcoalGray.withAlphaComponent(0.7)
 
 	enum Table {
 		static let cellWhiteSelected = tableCellWhiteSelected
@@ -32,7 +30,6 @@ enum AppEffect {
 }
 
 private extension AppEffect {
-    static let semiTransparentGray = AppColor.Background.alert.withAlphaComponent(0.3)
 	static let tableCellWhiteSelected = AppColor.Table.cellWhiteSelected.withAlphaComponent(0.3)
-    static let semiTransparentGrayBackground = AppColor.Background.alert.withAlphaComponent(0.7)
+    static let charcoalGray = UIColor(hex: "#555252")
 }

@@ -45,9 +45,6 @@ enum AppColor {
 
         static let searField = white
         static let calendar = white
-
-        // alert
-        static let alert = grayBackground
     }
 
 	enum Text {

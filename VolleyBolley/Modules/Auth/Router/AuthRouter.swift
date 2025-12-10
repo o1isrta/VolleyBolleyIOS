@@ -40,7 +40,6 @@ final class AuthRouter: NSObject, AuthRouterProtocol, ASWebAuthenticationPresent
 
     private let window: UIWindow
     private let viewControllerFactory: () -> UIViewController
-
     private let userRegFactory: () -> UIViewController
 
     private weak var navigationController: UINavigationController?

@@ -1,5 +1,5 @@
 //
-//  AlertModel.swift
+//  AlertViewModel.swift
 //  VolleyBolley
 //
 //  Created by Nikolai Eremenko on 04.12.2025.
@@ -7,19 +7,19 @@
 
 import UIKit
 
-struct AlertModel {
+struct AlertViewModel {
     let title: String?
     let message: String
     let bullets: [String]?
     let messageAlignment: NSTextAlignment
-    let actions: [AlertActionModel]
+    let actions: [AlertActionViewModel]
 
     init(
         title: String? = nil,
         message: String,
         bullets: [String]?,
         messageAlignment: NSTextAlignment,
-        actions: [AlertActionModel]
+        actions: [AlertActionViewModel]
     ) {
         self.title = title
         self.message = message

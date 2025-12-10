@@ -13,8 +13,6 @@ extension L10n {
         static var retry: String { Buttons.localized("retry") }
         static var skip: String { Buttons.localized("skip") }
         static var enable: String { Buttons.localized("enable") }
-
-        // TODO: - debug
         static var mainApp: String { Buttons.localized("mainApp") }
 
         private static let tableName = "Buttons"

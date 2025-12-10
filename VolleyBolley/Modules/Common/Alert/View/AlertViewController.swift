@@ -9,6 +9,9 @@ import UIKit
 
 final class AlertViewController: UIViewController {
 
+    var currentKind: AlertKind?
+    var onDismiss: (() -> Void)?
+
     private lazy var alertView: UIView = {
         let view = UIView()
         view.backgroundColor = AppColor.Background.modal
@@ -62,9 +65,14 @@ final class AlertViewController: UIViewController {
         setupLayout()
     }
 
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        onDismiss?()
+    }
+
     // MARK: - Public Methods
 
-    func configure(with model: AlertModel) {
+    func configure(with model: AlertViewModel) {
         titleLabel.isHidden = model.title == nil
         titleLabel.text = model.title
 
@@ -102,7 +110,7 @@ final class AlertViewController: UIViewController {
         }
     }
 
-    private func rebuildButtons(_ actions: [AlertActionModel]) {
+    private func rebuildButtons(_ actions: [AlertActionViewModel]) {
         buttonStackView.arrangedSubviews.forEach {
             buttonStackView.removeArrangedSubview($0)
             $0.removeFromSuperview()
@@ -164,7 +172,7 @@ final class AlertViewController: UIViewController {
         NSLayoutConstraint.activate(widthConstraints)
     }
 
-    private func makeButton(from model: AlertActionModel) -> UIButton {
+    private func makeButton(from model: AlertActionViewModel) -> UIButton {
         let button = YellowButton()
         button.setTitle(model.title, for: .normal)
         button.isSelected = model.isPrimary
@@ -173,7 +181,7 @@ final class AlertViewController: UIViewController {
     }
 
     private func setupViews() {
-        view.backgroundColor = AppEffect.BackgroundAlert.alert
+        view.backgroundColor = AppEffect.dimming
         view.addSubviews(alertView)
         alertView.addSubviews(mainStackView)
     }

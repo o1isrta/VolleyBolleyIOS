@@ -5,29 +5,13 @@
 //  Created by Олег Козырев
 //
 
-import Combine
 import UIKit
 
-enum AuthViewState {
-    case idle
-    case loading
-//    case alertError(CustomAlertModel)
-    case success
-}
-
-@MainActor
 final class AuthViewController: UIViewController {
 
+    // MARK: - Private Properties
+
     private let presenter: AuthPresenterProtocol
-    private var cancellables: Set<AnyCancellable> = []
-
-    private let loadingView = ProgressHub()
-
-//    private lazy var alertView: CustomAlertView = {
-//        let view = CustomAlertView()
-//        view.isHidden = true
-//        return view
-//    }()
 
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
@@ -125,10 +109,6 @@ final class AuthViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
-    deinit {
-        cancellables.removeAll()
-    }
-
     @available(*, unavailable)
     required init?(coder: NSCoder) { nil }
 
@@ -137,77 +117,15 @@ final class AuthViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        bindPresenter()
     }
 
     // MARK: - Private Methods
 
-    private func bindPresenter() {
-        presenter.statePublisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] state in
-                self?.handleStateChange(state)
-            }
-            .store(in: &cancellables)
-    }
-
-    private func handleStateChange(_ state: AuthViewState) {
-        switch state {
-        case .idle:
-            hideLoading()
-        case .loading:
-            showLoading()
-//        case .alertError(let alertModel):
-//            showAlert(model: alertModel)
-        case .success:
-            hideLoading()
-        }
-    }
-
-    private func hideLoading() {
-        loadingView.hide()
-    }
-
-    private func showLoading() {
-        loadingView.show(in: view)
-    }
-
-//    private func showAlert(model: CustomAlertModel) {
-//        guard alertView.isHidden else { return }
-//
-//        alertView.configure(
-//            with: model,
-//            primaryAction: { [weak self] in
-//                self?.hideAlert()
-//                self?.hideLoading()
-//            }
-//        )
-//
-//        alertView.alpha = 0
-//        alertView.isHidden = false
-//        view.bringSubviewToFront(alertView)
-//
-//        UIView.animate(withDuration: 0.25) {
-//            self.alertView.alpha = 1
-//        }
-//    }
-
-//    private func hideAlert() {
-//        UIView.animate(withDuration: 0.25, animations: {
-//            self.alertView.alpha = 0
-//        }, completion: { _ in
-//            self.alertView.isHidden = true
-//            self.alertView.resetActions()
-//        })
-//    }
-
     private func setupUI() {
-        view.addSubviews(backgroundImageView, descriptionLabel, bottomView/*, alertView*/)
-
-        bottomView.addSubview(buttonsStack)
+        view.addSubviews(backgroundImageView, descriptionLabel, bottomView)
+        bottomView.addSubviews(buttonsStack)
 
         backgroundImageView.pinToSuperviewEdges()
-//        alertView.pinToSuperviewEdges()
 
         NSLayoutConstraint.activate([
             descriptionLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -216,11 +134,12 @@ final class AuthViewController: UIViewController {
             bottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             bottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            bottomView.heightAnchor.constraint(equalToConstant: 170),
+            bottomView.heightAnchor.constraint(equalTo: buttonsStack.heightAnchor, constant: 61),
 
-            buttonsStack.topAnchor.constraint(equalTo: bottomView.topAnchor, constant: 24),
-            buttonsStack.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor, constant: 24),
-            buttonsStack.trailingAnchor.constraint(equalTo: bottomView.trailingAnchor, constant: -24)
+            buttonsStack.topAnchor.constraint(equalTo: bottomView.topAnchor, constant: 20),
+            buttonsStack.bottomAnchor.constraint(equalTo: bottomView.bottomAnchor, constant: -41),
+            buttonsStack.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor, constant: 20),
+            buttonsStack.trailingAnchor.constraint(equalTo: bottomView.trailingAnchor, constant: -20)
         ])
     }
 }

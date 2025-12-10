@@ -51,7 +51,7 @@ final class CustomAlertView: UIView {
 
 	private lazy var backgroundView: UIView = {
 		let view = UIView()
-		view.backgroundColor = AppEffect.BackgroundAlert.alert
+        view.backgroundColor = AppEffect.dimming
 		return view
 	}()
 

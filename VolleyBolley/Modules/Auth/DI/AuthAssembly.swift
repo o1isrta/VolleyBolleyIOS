@@ -25,26 +25,22 @@ final class AuthAssembly: Assembly {
         .inObjectScope(.container)
 
         container.register(AuthViewController.self) { resolver in
-            MainActor.assumeIsolated {
-                let googleAuthService = resolver.safeResolve(GoogleOAuthServiceProtocol.self)
-                let firebaseAuthService = resolver.safeResolve(FirebaseAuthServiceProtocol.self)
-                let authRepository = resolver.safeResolve(AuthRepositoryProtocol.self)
                 let router = resolver.safeResolve(AuthRouterProtocol.self)
+
                 let interactor = AuthInteractor(
-                    googleAuthService: googleAuthService,
-                    firebaseAuthService: firebaseAuthService,
-                    authRepository: authRepository,
+                    googleAuthService: resolver.safeResolve(GoogleOAuthServiceProtocol.self),
+                    firebaseAuthService: resolver.safeResolve(FirebaseAuthServiceProtocol.self),
+                    authRepository: resolver.safeResolve(AuthRepositoryProtocol.self),
                     router: router
                 )
+
                 let presenter = AuthPresenter(
                     interactor: interactor,
                     router: router,
                     uiShell: resolver.safeResolve(UIShellProtocol.self)
                 )
-                let view = AuthViewController(presenter: presenter)
 
-                return view
-            }
+                return AuthViewController(presenter: presenter)
         }
     }
 }
