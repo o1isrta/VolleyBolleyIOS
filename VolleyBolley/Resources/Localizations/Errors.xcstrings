@@ -127,6 +127,78 @@
         }
       }
     },
+    "notification_disabled" : {
+      "comment" : "Alert message for disabled notifications",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stay in the loop on games and invites!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Будьте в курсе игр и приглашений!"
+          }
+        }
+      }
+    },
+    "notification_disabled.item1" : {
+      "comment" : "Alert message for disabled notifications",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game invites"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Приглашения в игру"
+          }
+        }
+      }
+    },
+    "notification_disabled.item2" : {
+      "comment" : "Alert message for disabled notifications",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Match reminders"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Напоминания о матчах"
+          }
+        }
+      }
+    },
+    "notification_disabled.item3" : {
+      "comment" : "Alert message for disabled notifications",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Player ratings after games"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Рейтинги игроков после игр"
+          }
+        }
+      }
+    },
     "phone_number_too_short" : {
       "comment" : "Error message phone number  is too short",
       "extractionState" : "manual",
@@ -213,78 +285,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Не удалось войти через Google.Повторите попытку позже"
-          }
-        }
-      }
-    },
-    "stay_in_loop.item1" : {
-      "comment" : "Alert message for disabled notifications",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Game invites"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Приглашения в игру"
-          }
-        }
-      }
-    },
-    "stay_in_loop.item2" : {
-      "comment" : "Alert message for disabled notifications",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Match reminders"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Напоминания о матчах"
-          }
-        }
-      }
-    },
-    "stay_in_loop.item3" : {
-      "comment" : "Alert message for disabled notifications",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Player ratings after games"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Рейтинги игроков после игр"
-          }
-        }
-      }
-    },
-    "stay_in_loop.title" : {
-      "comment" : "Alert message for disabled notifications",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Stay in the loop on games and invites!"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Будьте в курсе игр и приглашений!"
           }
         }
       }

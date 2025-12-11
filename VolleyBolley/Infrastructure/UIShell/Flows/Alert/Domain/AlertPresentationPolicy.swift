@@ -2,7 +2,7 @@
 //  AlertPresentationPolicy.swift
 //  VolleyBolley
 //
-//  Created by Nikolai Eremenko on 08.12.2025.
+//  Created by Nikolai Eremenko on 10.12.2025.
 //
 
 enum AlertPresentationPolicy {

@@ -8,7 +8,7 @@
 import UIKit
 
 protocol AlertCoordinatorProtocol {
-    func show(_ descriptor: AlertDescriptor, retry: (() -> Void)?)
+    func show(_ decision: AlertDescriptor, retry: (() -> Void)?)
 }
 
 final class AlertCoordinator: AlertCoordinatorProtocol {
@@ -193,8 +193,6 @@ final class AlertCoordinator: AlertCoordinatorProtocol {
         case .custom(let id):
             return { [weak self] in
                 defer { self?.dismissCurrentAlert() }
-//                handler()
-//                self?.handleCustomAction(id)
                 self?.customActionHandlers[id]?()
             }
         }

@@ -17,4 +17,22 @@ enum L10n {
             comment: ""
         )
     }
+
+    static func localized(_ fullKey: String) -> String {
+        let parts = fullKey.split(separator: ".", maxSplits: 1)
+
+        guard parts.count == 2 else {
+            return NSLocalizedString(fullKey, comment: "")
+        }
+
+        let table = String(parts[0])
+        let key = String(parts[1])
+        return NSLocalizedString(
+            key,
+            tableName: table,
+            bundle: .main,
+            value: "",
+            comment: ""
+        )
+    }
 }

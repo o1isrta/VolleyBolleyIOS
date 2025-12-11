@@ -23,14 +23,10 @@ extension L10n {
         static var sessionExpired: String { Errors.localized("session_expired") }
         static var phoneNumberIsTooShort: String { Errors.localized("phone_number_too_short") }
         static var notImplemented: String { Errors.localized("not_implemented") }
-
-
-        enum StayInLoop {
-            static var title: String { Errors.localized("stay_in_loop.title") }
-            static var item1: String { Errors.localized("stay_in_loop.item1") }
-            static var item2: String { Errors.localized("stay_in_loop.item2") }
-            static var item3: String { Errors.localized("stay_in_loop.item3") }
-        }
+        static var notificationDisabled: String { Errors.localized("notification_disabled") }
+        static var notificationDisabledItem1: String { Errors.localized("notification_disabled.item1") }
+        static var notificationDisabledItem2: String { Errors.localized("notification_disabled.item2") }
+        static var notificationDisabledItem3: String { Errors.localized("notification_disabled.item3") }
 
         private static let tableName = "Errors"
 

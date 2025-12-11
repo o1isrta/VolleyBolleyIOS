@@ -12,7 +12,6 @@ enum CoreAssemblies {
     static func all(window: UIWindow) -> [Assembly] {
         return [
             WindowAssembly(window: window),
-            RootViewControllerProviderAssembly(),
             RouterAssembly(),
             EnvironmentAssembly(),
             SettingsStorageAssembly(),

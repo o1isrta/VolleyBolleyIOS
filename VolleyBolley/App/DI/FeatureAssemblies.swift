@@ -11,8 +11,6 @@ enum FeatureAssemblies {
 
     static var all: [Assembly] {
         return [
-            LoaderAssembly(),
-            AlertAssembly(),
             OnboardingAssembly(),
             AuthAssembly(),
             PhoneAuthAssembly(),

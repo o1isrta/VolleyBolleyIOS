@@ -7,11 +7,20 @@
 
 import Foundation
 
+protocol UIShellProtocol {
+    func showAlert(_ error: DomainError, retry: (() -> Void)?)
+    func showAlert(_ error: DomainError)
+
+    func showLoader()
+    func hideLoader()
+}
+
 final class UIShell: UIShellProtocol {
 
     // MARK: - Private properties
 
     private let policy: ErrorPolicyEngineProtocol
+    private let mapper: AlertMapperProtocol
     private let alertCoordinator: AlertCoordinatorProtocol
     private let loaderCoordinator: LoaderCoordinatorProtocol
 
@@ -19,10 +28,12 @@ final class UIShell: UIShellProtocol {
 
     init(
         policy: ErrorPolicyEngineProtocol,
+        mapper: AlertMapperProtocol,
         alertCoordinator: AlertCoordinatorProtocol,
         loaderCoordinator: LoaderCoordinatorProtocol
     ) {
         self.policy = policy
+        self.mapper = mapper
         self.alertCoordinator = alertCoordinator
         self.loaderCoordinator = loaderCoordinator
     }
@@ -53,7 +64,9 @@ final class UIShell: UIShellProtocol {
 
     @MainActor
     private func presentAlert(_ error: DomainError, retry: (() -> Void)?) {
-        guard let descriptor = policy.decision(from: error) else { return }
+        guard let decision = policy.decision(from: error) else { return }
+
+        let descriptor = mapper.map(decision)
 
         alertCoordinator.show(descriptor, retry: retry)
     }

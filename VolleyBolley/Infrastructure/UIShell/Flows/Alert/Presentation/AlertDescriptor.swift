@@ -35,14 +35,3 @@ struct AlertDescriptor {
         self.presentationPolicy = presentationPolicy
     }
 }
-
-struct AlertID: Hashable {
-    let rawValue: String
-}
-
-enum AlertKind {
-    case network
-    case auth
-    case common
-    case unknown
-}

@@ -13,7 +13,3 @@ enum AlertIntent {
     case openMainApp
     case custom(id: AlertCustomActionID)
 }
-
-struct AlertCustomActionID: Equatable, Hashable {
-    let rawValue: String
-}
