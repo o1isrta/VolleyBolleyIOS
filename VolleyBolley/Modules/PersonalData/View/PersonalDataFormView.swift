@@ -203,7 +203,8 @@ final class PersonalDataFormView: UIStackView {
         cityList.updateItems(cities)
 
         onEditTapped = actions.onEditTapped
-		// TODO: пока решили убрать возможность изменения пола через ЛК, возможно после запуска MVP вернуть придется
+		// TODO: пока решили убрать возможность изменения пола через ЛК,
+		// возможно после запуска MVP вернуть придется
 		/*
         onGenderChanged = actions.onGenderChanged
 		*/
