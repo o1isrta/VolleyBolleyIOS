@@ -8,26 +8,26 @@
 import UIKit
 
 protocol OnboardingRouterProtocol: AnyObject {
-    func navigateToAuthorizationScreen()
+	func navigateToAuthorizationScreen()
 }
 
 final class OnboardingRouter: OnboardingRouterProtocol {
 
-    // MARK: - Public Properties
+	// MARK: - Public Properties
 
-    weak var viewController: UIViewController?
-    weak var router: AppRouter?
+	weak var viewController: UIViewController?
+	weak var router: AppRouter?
 
-    // MARK: - Initializers
+	// MARK: - Initializers
 
-    init(viewController: UIViewController, router: AppRouter?) {
-        self.viewController = viewController
-        self.router = router
-    }
+	init(viewController: UIViewController, router: AppRouter?) {
+		self.viewController = viewController
+		self.router = router
+	}
 
-    // MARK: - Public Methods
+	// MARK: - Public Methods
 
-    func navigateToAuthorizationScreen() {
-        router?.start()
-    }
+	func navigateToAuthorizationScreen() {
+		router?.start()
+	}
 }

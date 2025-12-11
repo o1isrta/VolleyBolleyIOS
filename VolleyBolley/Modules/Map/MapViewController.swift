@@ -11,327 +11,327 @@ import UIKit
 
 final class MapViewController: BaseViewController, MapViewProtocol {
 
-    // MARK: - Public Properties
+	// MARK: - Public Properties
 
-    var router: MapRouterProtocol?
-    var listView: UIView?
+	var router: MapRouterProtocol?
+	var listView: UIView?
 
-    // MARK: - Private Properties
+	// MARK: - Private Properties
 
-    private let mapView = MKMapView()
-    private let segmentedControl = CustomSegmentedControl(type: .map)
-    private let bottomView = CourtBottomView()
-    private let popupView = CourtDetailsView()
-    private var popupBottomConstraint: NSLayoutConstraint?
+	private let mapView = MKMapView()
+	private let segmentedControl = CustomSegmentedControl(type: .map)
+	private let bottomView = CourtBottomView()
+	private let popupView = CourtDetailsView()
+	private var popupBottomConstraint: NSLayoutConstraint?
 
-    private let presenter: MapPresenterProtocol
+	private let presenter: MapPresenterProtocol
 
-    private let locationManager = CLLocationManager()
-    private var courts: [CourtModel] = []
-    private var nearestCourt: CourtModel?
-    private var selectedCourt: CourtModel?
-    private var listVC: CourtListViewController?
+	private let locationManager = CLLocationManager()
+	private var courts: [CourtModel] = []
+	private var nearestCourt: CourtModel?
+	private var selectedCourt: CourtModel?
+	private var listVC: CourtListViewController?
 
     private lazy var backButton: UtilityButton = {
         let view = UtilityButton(style: .small)
         view.setImage(.chevronBackward, for: .normal)
-        view.tintColor = getTintColorBackButtonMap()
+		view.tintColor = getTintColorBackButtonMap()
         view.addAction(UIAction { [weak self] _ in
             self?.presenter.didTapBackButton()
         }, for: .touchUpInside)
         return view
     }()
 
-    // MARK: - Initializers
+	// MARK: - Initializers
 
-    init(presenter: MapPresenterProtocol) {
-        self.presenter = presenter
-        super.init(nibName: nil, bundle: nil)
-    }
+	init(presenter: MapPresenterProtocol) {
+		self.presenter = presenter
+		super.init(nibName: nil, bundle: nil)
+	}
 
-    @available(*, unavailable)
-    required init?(coder: NSCoder) { nil }
+	@available(*, unavailable)
+	required init?(coder: NSCoder) { nil }
 
-    // MARK: - Public Methods
+	// MARK: - Public Methods
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupUI()
-        setupMap()
-        setupLocation()
-        setupActions()
-        hideKeyboardWhenTappedAround()
-    }
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		setupUI()
+		setupMap()
+		setupLocation()
+		setupActions()
+		hideKeyboardWhenTappedAround()
+	}
 
-    func showCourts(_ courts: [CourtModel], nearest: CourtModel?) {
-        self.courts = courts
-        nearestCourt = nearest
-        selectedCourt = nearest
-        // Update ListViewController with new courts
-        if let listVC = listVC {
-            // Recreate ListViewController with new courts
-            listVC.removeFromParent()
-            listVC.view.removeFromSuperview()
-        }
-        let newListVC = CourtListViewController(courts: courts, selected: nearest)
-        self.listVC = newListVC
-        addChild(newListVC)
-        view.addSubviews(newListVC.view)
-        NSLayoutConstraint.activate([
-            newListVC.view.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor),
-            newListVC.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            newListVC.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            newListVC.view.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-        ])
-        newListVC.didMove(toParent: self)
-        newListVC.view.isHidden = true
-        listView = newListVC.view
+	func showCourts(_ courts: [CourtModel], nearest: CourtModel?) {
+		self.courts = courts
+		nearestCourt = nearest
+		selectedCourt = nearest
+		// Update ListViewController with new courts
+		if let listVC = listVC {
+			// Recreate ListViewController with new courts
+			listVC.removeFromParent()
+			listVC.view.removeFromSuperview()
+		}
+		let newListVC = CourtListViewController(courts: courts, selected: nearest)
+		self.listVC = newListVC
+		addChild(newListVC)
+		view.addSubviews(newListVC.view)
+		NSLayoutConstraint.activate([
+			newListVC.view.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor),
+			newListVC.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+			newListVC.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+			newListVC.view.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+		])
+		newListVC.didMove(toParent: self)
+		newListVC.view.isHidden = true
+		listView = newListVC.view
 
-        updateAnnotations(for: courts)
+		updateAnnotations(for: courts)
 
-        if let nearest {
-            let region = MKCoordinateRegion(
-                center: CLLocationCoordinate2D(
-                    latitude: nearest.location.latitude,
-                    longitude: nearest.location.longitude
-                ),
-                latitudinalMeters: 2000,
-                longitudinalMeters: 2000
-            )
-            mapView.setRegion(region, animated: true)
-            setupBottomView(with: nearest, distance: String(localized: "Nearest"))
-        } else if let first = courts.first {
-            nearestCourt = first
-            selectedCourt = first
-            let region = MKCoordinateRegion(
-                center: CLLocationCoordinate2D(
-                    latitude: first.location.latitude,
-                    longitude: first.location.longitude
-                ),
-                latitudinalMeters: 2000,
-                longitudinalMeters: 2000
-            )
-            mapView.setRegion(region, animated: true)
-            setupBottomView(with: first, distance: "")
-        }
-    }
+		if let nearest {
+			let region = MKCoordinateRegion(
+				center: CLLocationCoordinate2D(
+					latitude: nearest.location.latitude,
+					longitude: nearest.location.longitude
+				),
+				latitudinalMeters: 2000,
+				longitudinalMeters: 2000
+			)
+			mapView.setRegion(region, animated: true)
+			setupBottomView(with: nearest, distance: String(localized: "Nearest"))
+		} else if let first = courts.first {
+			nearestCourt = first
+			selectedCourt = first
+			let region = MKCoordinateRegion(
+				center: CLLocationCoordinate2D(
+					latitude: first.location.latitude,
+					longitude: first.location.longitude
+				),
+				latitudinalMeters: 2000,
+				longitudinalMeters: 2000
+			)
+			mapView.setRegion(region, animated: true)
+			setupBottomView(with: first, distance: "")
+		}
+	}
 }
 
 // MARK: - CLLocationManagerDelegate
 
 extension MapViewController: CLLocationManagerDelegate {
 
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        presenter.viewDidLoad(userLocation: locations.first)
-    }
+	func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+		presenter.viewDidLoad(userLocation: locations.first)
+	}
 
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        presenter.viewDidLoad(userLocation: nil)
-    }
+	func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+		presenter.viewDidLoad(userLocation: nil)
+	}
 }
 
 // MARK: - MKMapViewDelegate
 
 extension MapViewController: MKMapViewDelegate {
 
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard !(annotation is MKUserLocation) else { return nil }
-        let identifier = "CourtAnnotation"
-        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? CustomMarkerAnnotationView
-        if annotationView == nil {
-            annotationView = CustomMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-            annotationView?.canShowCallout = false
-        } else {
-            annotationView?.annotation = annotation
-        }
+	func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+		guard !(annotation is MKUserLocation) else { return nil }
+		let identifier = "CourtAnnotation"
+		var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? CustomMarkerAnnotationView
+		if annotationView == nil {
+			annotationView = CustomMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+			annotationView?.canShowCallout = false
+		} else {
+			annotationView?.annotation = annotation
+		}
 
-        return annotationView
-    }
+		return annotationView
+	}
 
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        guard let annotation = view.annotation else { return }
+	func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+		guard let annotation = view.annotation else { return }
 
-        if let court = courts.first(where: {
-            $0.location.latitude == annotation.coordinate.latitude
-            && $0.location.longitude == annotation.coordinate.longitude
-        }) {
-            selectedCourt = court
-            let distanceMessage = getDistanceMessage(court: court)
-            self.setupBottomView(with: court, distance: distanceMessage)
-            self.setupPopupView(with: court, distance: distanceMessage)
-        }
-    }
+		if let court = courts.first(where: {
+			$0.location.latitude == annotation.coordinate.latitude
+			&& $0.location.longitude == annotation.coordinate.longitude
+		}) {
+			selectedCourt = court
+			let distanceMessage = getDistanceMessage(court: court)
+			self.setupBottomView(with: court, distance: distanceMessage)
+			self.setupPopupView(with: court, distance: distanceMessage)
+		}
+	}
 }
 
 // MARK: - Private Methods
 
 private extension MapViewController {
 
-    func setupBottomView(with court: CourtModel, distance: String) {
-        let model = CourtBottomViewModel(
-            courtName: court.location.courtName,
-            locationName: court.location.locationName,
-            distance: distance,
-            doneButtonData: ButtonDataModel(
-                title: String(localized: "CHOOSE THIS COURT"),
-                action: chooseCourtAction
-            ),
-            detailsButtonData: ButtonDataModel(
-                title: String(localized: "DETAILS"),
-                action: showDetailsAction
-            )
-        )
-        bottomView.configure(with: model)
-    }
+	func setupBottomView(with court: CourtModel, distance: String) {
+		let model = CourtBottomViewModel(
+			courtName: court.location.courtName,
+			locationName: court.location.locationName,
+			distance: distance,
+			doneButtonData: ButtonDataModel(
+				title: String(localized: "CHOOSE THIS COURT"),
+				action: chooseCourtAction
+			),
+			detailsButtonData: ButtonDataModel(
+				title: String(localized: "DETAILS"),
+				action: showDetailsAction
+			)
+		)
+		bottomView.configure(with: model)
+	}
 
-    func setupPopupView(with court: CourtModel, distance: String) {
-        let model = CourtDetailsViewModel(
-            court: court,
-            distance: distance,
-            doneButtonData: ButtonDataModel(
-                title: String(localized: "CHOOSE THIS COURT"),
-                action: chooseCourtAction
-            )
-        )
-        popupView.configure(with: model)
-    }
+	func setupPopupView(with court: CourtModel, distance: String) {
+		let model = CourtDetailsViewModel(
+			court: court,
+			distance: distance,
+			doneButtonData: ButtonDataModel(
+				title: String(localized: "CHOOSE THIS COURT"),
+				action: chooseCourtAction
+			)
+		)
+		popupView.configure(with: model)
+	}
 
-    func getDistanceMessage(court: CourtModel) -> String {
-        isNearestCourt(court) ? String(localized: "Nearest") : ""
-    }
+	func getDistanceMessage(court: CourtModel) -> String {
+		isNearestCourt(court) ? String(localized: "Nearest") : ""
+	}
 
-    func setupMap() {
-        mapView.delegate = self
-    }
+	func setupMap() {
+		mapView.delegate = self
+	}
 
-    func setupLocation() {
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.requestLocation()
-    }
+	func setupLocation() {
+		locationManager.delegate = self
+		locationManager.requestWhenInUseAuthorization()
+		locationManager.requestLocation()
+	}
 
-    func setupActions() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideDetailsPopup))
-        popupView.addGestureRecognizer(tapGesture)
+	func setupActions() {
+		let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideDetailsPopup))
+		popupView.addGestureRecognizer(tapGesture)
 
-        segmentedControl.segmentChanged = { [weak self] _ in
-            guard let self else { return }
-            self.segmentChanged()
-        }
-    }
+		segmentedControl.segmentChanged = { [weak self] _ in
+			guard let self else { return }
+			self.segmentChanged()
+		}
+	}
 
-    func setupUI() {
-        view.addSubviews(
-            mapView,
-            segmentedControl,
+	func setupUI() {
+		view.addSubviews(
+			mapView,
+			segmentedControl,
             bottomView,
             backButton
-        )
-        let popupBottonInset: CGFloat = -55
+		)
+		let popupBottonInset: CGFloat = -55
 
-        NSLayoutConstraint.activate([
-            segmentedControl.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 8),
-            segmentedControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            segmentedControl.widthAnchor.constraint(equalToConstant: 200),
+		NSLayoutConstraint.activate([
+			segmentedControl.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 8),
+			segmentedControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+			segmentedControl.widthAnchor.constraint(equalToConstant: 200),
 
-            backButton.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 8),
+			backButton.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 8),
             backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
 
-            mapView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            mapView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+			mapView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+			mapView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+			mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+			mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
 
-            bottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            bottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            bottomView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: popupBottonInset),
-            bottomView.heightAnchor.constraint(equalToConstant: 136)
-        ])
+			bottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+			bottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+			bottomView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: popupBottonInset),
+			bottomView.heightAnchor.constraint(equalToConstant: 136)
+		])
 
-        view.addSubviews(popupView)
-        popupView.isHidden = true
-        popupBottomConstraint = popupView.bottomAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.bottomAnchor,
-            constant: popupBottonInset
-        )
-        if let popupBottomConstraint {
-            NSLayoutConstraint.activate([popupBottomConstraint])
-        }
-        NSLayoutConstraint.activate([
-            popupView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            popupView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            popupView.heightAnchor.constraint(equalToConstant: 472)
-        ])
-    }
+		view.addSubviews(popupView)
+		popupView.isHidden = true
+		popupBottomConstraint = popupView.bottomAnchor.constraint(
+			equalTo: view.safeAreaLayoutGuide.bottomAnchor,
+			constant: popupBottonInset
+		)
+		if let popupBottomConstraint {
+			NSLayoutConstraint.activate([popupBottomConstraint])
+		}
+		NSLayoutConstraint.activate([
+			popupView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+			popupView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+			popupView.heightAnchor.constraint(equalToConstant: 472)
+		])
+	}
 
-    func updateAnnotations(for courts: [CourtModel]) {
-        mapView.removeAnnotations(mapView.annotations)
+	func updateAnnotations(for courts: [CourtModel]) {
+		mapView.removeAnnotations(mapView.annotations)
 
-        for court in courts {
-            let annotation = MKPointAnnotation()
-            annotation.title = court.location.courtName
-            annotation.subtitle = court.location.locationName
-            annotation.coordinate = CLLocationCoordinate2D(
-                latitude: court.location.latitude,
-                longitude: court.location.longitude
-            )
-            mapView.addAnnotation(annotation)
-        }
-    }
+		for court in courts {
+			let annotation = MKPointAnnotation()
+			annotation.title = court.location.courtName
+			annotation.subtitle = court.location.locationName
+			annotation.coordinate = CLLocationCoordinate2D(
+				latitude: court.location.latitude,
+				longitude: court.location.longitude
+			)
+			mapView.addAnnotation(annotation)
+		}
+	}
 
-    func segmentChanged() {
-        let showList = segmentedControl.selectedSegmentIndex == 1
-        backButton.tintColor = getTintColorBackButtonMap()
-        if showList {
-            backButton.tintColor = AppColor.Icon.primary
-            router?.showList(from: self, courts: courts, selected: nearestCourt)
-        }
-        mapView.isHidden = showList
-        listView?.isHidden = !showList
-        bottomView.isHidden = showList
-        popupView.isHidden = true
-    }
+	func segmentChanged() {
+		let showList = segmentedControl.selectedSegmentIndex == 1
+		backButton.tintColor = getTintColorBackButtonMap()
+		if showList {
+			backButton.tintColor = AppColor.Icon.primary
+			router?.showList(from: self, courts: courts, selected: nearestCourt)
+		}
+		mapView.isHidden = showList
+		listView?.isHidden = !showList
+		bottomView.isHidden = showList
+		popupView.isHidden = true
+	}
 
-    func getTintColorBackButtonMap() -> UIColor {
-        traitCollection.userInterfaceStyle == .dark ? AppColor.Icon.primary : AppColor.Icon.inverted
-    }
+	func getTintColorBackButtonMap() -> UIColor {
+		traitCollection.userInterfaceStyle == .dark ? AppColor.Icon.primary : AppColor.Icon.inverted
+	}
 
-    func isNearestCourt(_ court: CourtModel) -> Bool {
-        court == nearestCourt
-    }
+	func isNearestCourt(_ court: CourtModel) -> Bool {
+		court == nearestCourt
+	}
 
-    private func chooseCourtAction() {
-        // TODO: add action for court selection
-        print("Choose this Court")
-        guard let selectedCourt else { return }
-        presenter.didTapSelectCourtButton(create: .tourney, court: selectedCourt)
-    }
+	private func chooseCourtAction() {
+		// TODO: add action for court selection
+		print("Choose this Court")
+		guard let selectedCourt else { return }
+		presenter.didTapSelectCourtButton(create: .tourney, court: selectedCourt)
+	}
 
-    private func showDetailsAction() {
-        guard let court = selectedCourt else { return }
-        let distanceMessage = getDistanceMessage(court: court)
-        setupPopupView(with: court, distance: distanceMessage)
-        popupView.isHidden = false
+	private func showDetailsAction() {
+		guard let court = selectedCourt else { return }
+		let distanceMessage = getDistanceMessage(court: court)
+		setupPopupView(with: court, distance: distanceMessage)
+		popupView.isHidden = false
 
-        self.popupView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7) // начальное состояние
-        UIView.animate(withDuration: 1.0, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: []) {
-            self.popupView.transform = .identity
-            self.popupView.alpha = 1
-        }
-    }
+		self.popupView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7) // начальное состояние
+		UIView.animate(withDuration: 1.0, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: []) {
+			self.popupView.transform = .identity
+			self.popupView.alpha = 1
+		}
+	}
 
-    @objc func hideDetailsPopup() {
-        let originalCenter = popupView.center
+	@objc func hideDetailsPopup() {
+		let originalCenter = popupView.center
 
-        UIView.animate(withDuration: 1.0, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: []) {
-            self.popupView.center = CGPoint(x: self.view.bounds.midX, y: self.view.bounds.maxY + 100)
-            self.popupView.transform = CGAffineTransform(translationX: 0, y: 20)
-            self.popupView.alpha = 0
-        } completion: { _ in
-            self.popupView.isHidden = true
-            self.popupView.center = originalCenter
-            self.popupView.transform = .identity
-            self.popupView.alpha = 1
-        }
-    }
+		UIView.animate(withDuration: 1.0, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: []) {
+			self.popupView.center = CGPoint(x: self.view.bounds.midX, y: self.view.bounds.maxY + 100)
+			self.popupView.transform = CGAffineTransform(translationX: 0, y: 20)
+			self.popupView.alpha = 0
+		} completion: { _ in
+			self.popupView.isHidden = true
+			self.popupView.center = originalCenter
+			self.popupView.transform = .identity
+			self.popupView.alpha = 1
+		}
+	}
 }

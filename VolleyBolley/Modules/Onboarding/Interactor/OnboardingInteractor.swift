@@ -8,24 +8,24 @@
 import Foundation
 
 protocol OnboardingInteractorProtocol: AnyObject {
-    func markOnboardingAsCompleted()
+	func markOnboardingAsCompleted()
 }
 
 final class OnboardingInteractor: OnboardingInteractorProtocol {
 
-    // MARK: - Private Properties
+	// MARK: - Private Properties
 
-    private let userSessionService: UserSessionServiceProtocol
+	private let userSessionService: UserSessionServiceProtocol
 
-    // MARK: - Initializers
+	// MARK: - Initializers
 
-    init(userSessionService: UserSessionServiceProtocol) {
-        self.userSessionService = userSessionService
-    }
+	init(userSessionService: UserSessionServiceProtocol) {
+		self.userSessionService = userSessionService
+	}
 
-    // MARK: - Public Methods
+	// MARK: - Public Methods
 
-    func markOnboardingAsCompleted() {
-        userSessionService.markOnboardingAsShown()
-    }
+	func markOnboardingAsCompleted() {
+		userSessionService.markOnboardingAsShown()
+	}
 }

@@ -9,22 +9,22 @@ import Swinject
 
 final class FAQAssembly: Assembly {
 
-    func assemble(container: Container) {
-        container.register(FAQViewController.self) { _ in
-            let router = FAQRouter()
-            let interactor = FAQInteractor()
+	func assemble(container: Container) {
+		container.register(FAQViewController.self) { _ in
+			let router = FAQRouter()
+			let interactor = FAQInteractor()
 
-            let presenter = FAQPresenter(
-                interactor: interactor,
-                router: router
-            )
+			let presenter = FAQPresenter(
+				interactor: interactor,
+				router: router
+			)
 
-            let view = FAQViewController(presenter: presenter)
+			let view = FAQViewController(presenter: presenter)
 
-            router.attachViewController(view)
-            presenter.view = view
+			router.attachViewController(view)
+			presenter.view = view
 
-            return view
-        }
-    }
+			return view
+		}
+	}
 }

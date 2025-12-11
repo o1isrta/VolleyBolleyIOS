@@ -10,7 +10,6 @@ import Foundation
 extension PlayerSessionDTO {
 
     func toDomain() -> PlayerSession {
-
         return PlayerSession(
             accessToken: accessToken,
             refreshToken: refreshToken,

@@ -40,7 +40,9 @@ final class AuthPresenter: AuthPresenterProtocol {
             do {
                 try await interactor.loginWithGoogle()
                 uiShell.hideLoader()
-                router.finishAuth()
+                // TODO: - Finish auth
+                uiShell.showAlert(.common(.notImplemented), retry: nil)
+//                router.finishAuth()
             } catch let error as DomainError {
                 uiShell.hideLoader()
                 uiShell.showAlert(error, retry: { [weak self] in

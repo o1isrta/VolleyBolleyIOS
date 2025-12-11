@@ -11,8 +11,8 @@ final class MyGamesAssembly: Assembly {
 
     func assemble(container: Container) {
         container.register(MyGamesViewController.self) { resolver in
-            let router = MyGamesRouter()
-            let interactor = MyGamesInteractor()
+			let router = MyGamesRouter()
+			let interactor = MyGamesInteractor()
             let presenter = MyGamesPresenter(
                 interactor: interactor,
                 router: router

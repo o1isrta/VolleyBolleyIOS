@@ -11,10 +11,10 @@ final class PersonalDataAssembly: Assembly {
 
     func assemble(container: Container) {
         container.register(PersonalDataViewController.self) { resolver in
-            let editProfilePhotoViewController = { resolver.resolve(EditProfilePhotoViewController.self) }
-            let router = PersonalDataRouter(
-                editProfilePhotoViewController: editProfilePhotoViewController
-            )
+			let editProfilePhotoViewController = { resolver.resolve(EditProfilePhotoViewController.self) }
+			let router = PersonalDataRouter(
+				editProfilePhotoViewController: editProfilePhotoViewController
+			)
             let interactor = PersonalDataInteractor()
 
             let presenter = PersonalDataPresenter(
@@ -22,7 +22,7 @@ final class PersonalDataAssembly: Assembly {
                 router: router
             )
             let view = PersonalDataViewController(presenter: presenter)
-            interactor.presenter = presenter
+			interactor.presenter = presenter
             presenter.view = view
             router.attachViewController(view)
 

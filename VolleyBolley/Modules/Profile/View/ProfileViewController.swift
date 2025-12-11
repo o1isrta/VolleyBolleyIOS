@@ -20,17 +20,17 @@ enum ProfileMenuItem: CaseIterable {
     case about
     case logOut
 
-    var icon: UIImage {
-        switch self {
-        case .players: return UIImage.Icon.players
-        case .personal: return UIImage.Icon.personal
-        case .fluentPayment: return UIImage.Icon.fluentPayment
-        case .support: return UIImage.Icon.support
-        case .faq: return UIImage.Icon.tooltip
-        case .about: return UIImage.Icon.about
-        case .logOut: return UIImage.Icon.logOut
-        }
-    }
+	var icon: UIImage {
+		switch self {
+		case .players: return UIImage.Icon.players
+		case .personal: return UIImage.Icon.personal
+		case .fluentPayment: return UIImage.Icon.fluentPayment
+		case .support: return UIImage.Icon.support
+		case .faq: return UIImage.Icon.tooltip
+		case .about: return UIImage.Icon.about
+		case .logOut: return UIImage.Icon.logOut
+		}
+	}
 
     var title: String {
         switch self {
@@ -97,10 +97,10 @@ final class ProfileViewController: BaseViewController {
 
 extension ProfileViewController: ProfileViewProtocol {
 
-    func displayError(message: String) {
-        // TODO:
-        print(message)
-    }
+	func displayError(message: String) {
+		// TODO: 
+		print(message)
+	}
 }
 
 // MARK: - Private methods
@@ -108,18 +108,18 @@ extension ProfileViewController: ProfileViewProtocol {
 private extension ProfileViewController {
 
     func setupUI() {
-        view.addSubviews(
-            deleteButton,
-            tableBackground,
-            tableView
-        )
+		view.addSubviews(
+			deleteButton,
+			tableBackground,
+			tableView
+		)
     }
 
     func setupView() {
         setupUI()
 
         NSLayoutConstraint.activate([
-            tableBackground.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 8),
+			tableBackground.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 8),
             tableBackground.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
             tableBackground.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
             tableBackground.heightAnchor.constraint(equalToConstant: 400),
@@ -130,7 +130,7 @@ private extension ProfileViewController {
             tableView.heightAnchor.constraint(equalToConstant: 400),
 
             deleteButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 28),
-            deleteButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -60)
+			deleteButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -60)
         ])
     }
 }
@@ -151,11 +151,11 @@ extension ProfileViewController: UITableViewDataSource {
         }
         let item = menuItems[indexPath.row]
         let isLast = indexPath.row == menuItems.count - 1
-        cell.configure(
-            icon: item.icon,
-            title: item.title,
-            isLast: isLast
-        )
+		cell.configure(
+				icon: item.icon,
+				title: item.title,
+				isLast: isLast
+			)
         return cell
     }
 }
@@ -182,24 +182,24 @@ extension ProfileViewController: UITableViewDelegate {
 import SwiftUI
 
 struct ProfileViewControllerPreview: UIViewControllerRepresentable {
-    class StubPresenter: ProfilePresenterProtocol {
-        weak var view: ProfileViewProtocol?
-        func viewDidLoad() {}
-        func didSelectMenuItem(_ item: ProfileMenuItem) {}
-    }
+	class StubPresenter: ProfilePresenterProtocol {
+		weak var view: ProfileViewProtocol?
+		func viewDidLoad() {}
+		func didSelectMenuItem(_ item: ProfileMenuItem) {}
+	}
 
-    func makeUIViewController(context: Context) -> some UIViewController {
-        let presenter = StubPresenter()
-        return ProfileViewController(presenter: presenter)
-    }
+	func makeUIViewController(context: Context) -> some UIViewController {
+		let presenter = StubPresenter()
+		return ProfileViewController(presenter: presenter)
+	}
 
-    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {}
+	func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {}
 }
 
 struct ProfileViewController_Previews: PreviewProvider {
-    static var previews: some View {
-        ProfileViewControllerPreview()
-            .edgesIgnoringSafeArea(.all)
-    }
+	static var previews: some View {
+		ProfileViewControllerPreview()
+			.edgesIgnoringSafeArea(.all)
+	}
 }
 #endif

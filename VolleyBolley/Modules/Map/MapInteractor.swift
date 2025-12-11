@@ -8,7 +8,7 @@
 import Foundation
 
 protocol MapInteractorProtocol: AnyObject {
-    func fetchCourts(completion: @escaping ([CourtModel]) -> Void)
+	func fetchCourts(completion: @escaping ([CourtModel]) -> Void)
 }
 
 final class MapInteractor: MapInteractorProtocol {
@@ -34,14 +34,14 @@ final class MapInteractor: MapInteractorProtocol {
             }
         }
         // TODO: for tests
-        //        networkService.getCountryList { result in
-        //            switch result {
-        //            case .success(let response):
-        //                completion([])
-        //            case .failure(let error):
-        //                completion([])
-        //            }
-        //        }
+//        networkService.getCountryList { result in
+//            switch result {
+//            case .success(let response):
+//                completion([])
+//            case .failure(let error):
+//                completion([])
+//            }
+//        }
 
         let courts = CourtModel.mockDataArray
         completion(courts)

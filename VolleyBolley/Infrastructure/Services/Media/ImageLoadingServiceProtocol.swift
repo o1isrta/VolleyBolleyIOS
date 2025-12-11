@@ -2,7 +2,7 @@
 //  ImageLoadingServiceProtocol.swift
 //  VolleyBolley
 //
-//  Created by Nikolai Eremenko on 01.12.2025.
+//  Created by Nikolai Eremenko on 16.07.2025.
 //
 
 import UIKit

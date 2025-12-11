@@ -8,8 +8,8 @@
 import Foundation
 
 protocol FAQPresenterProtocol: AnyObject {
-    var numberOfItems: Int { get }
-    func item(at index: Int) -> FAQItem
+	var numberOfItems: Int { get }
+	func item(at index: Int) -> FAQItem
     func viewDidLoad()
     func didTapBackButton()
 }
@@ -20,7 +20,7 @@ final class FAQPresenter: FAQPresenterProtocol {
 
     weak var view: FAQViewControllerProtocol?
 
-    var numberOfItems: Int { faqItems.count }
+	var numberOfItems: Int { faqItems.count }
 
     // MARK: - Private Properties
 
@@ -40,13 +40,13 @@ final class FAQPresenter: FAQPresenterProtocol {
 
     // MARK: - Public Methods
 
-    func item(at index: Int) -> FAQItem {
-        return faqItems[index]
-    }
+	func item(at index: Int) -> FAQItem {
+		return faqItems[index]
+	}
 
     func viewDidLoad() {
         faqItems = interactor.fetchFAQItems()
-        view?.reloadTableView()
+		view?.reloadTableView()
     }
 
     func didTapBackButton() {
