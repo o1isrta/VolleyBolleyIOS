@@ -12,7 +12,7 @@ import UIKit
 protocol PlayersListRouterProtocol: AnyObject {
 	func attachViewController(_ view: UIViewController)
 	func navigateBack()
-	func openUserCard(for player: PlayerInfoModel)
+	func openUserCard(for player: UserInfoModel)
 }
 
 // MARK: - PlayersListRouter
@@ -23,12 +23,12 @@ final class PlayersListRouter: PlayersListRouterProtocol {
 
 	private weak var viewController: UIViewController?
 
-	private let userCardFactory: (PlayerInfoModel) -> UserCardViewController?
+	private let userCardFactory: (UserInfoModel) -> UserCardViewController?
 
 	// MARK: - Initializers
 
 	init(
-		userCardFactory: @escaping (PlayerInfoModel) -> UserCardViewController?
+		userCardFactory: @escaping (UserInfoModel) -> UserCardViewController?
 	) {
 		self.userCardFactory = userCardFactory
 	}
@@ -43,7 +43,7 @@ final class PlayersListRouter: PlayersListRouterProtocol {
 		viewController?.navigationController?.popViewController(animated: true)
 	}
 
-	func openUserCard(for player: PlayerInfoModel) {
+	func openUserCard(for player: UserInfoModel) {
 		guard let userCardVC = userCardFactory(player) else {
 			fatalError("UserCardViewController could not be created")
 		}

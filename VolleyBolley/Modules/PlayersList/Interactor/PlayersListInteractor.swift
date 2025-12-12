@@ -10,8 +10,8 @@ import UIKit
 // MARK: - PlayersListInteractorProtocol
 
 protocol PlayersListInteractorProtocol: AnyObject {
-	func getPlayers() -> [PlayerInfoModel]
-	func toggleIsFavoriteFor(player: PlayerInfoModel)
+	func getPlayers() -> [UserInfoModel]
+	func toggleIsFavoriteFor(user: UserInfoModel)
 	func loadAvatar(for url: URL) async throws -> UIImage?
 }
 
@@ -36,10 +36,10 @@ final class PlayersListInteractor: PlayersListInteractorProtocol {
 
 	// MARK: - Public Methods
 
-	func getPlayers() -> [PlayerInfoModel] {
+	func getPlayers() -> [UserInfoModel] {
 		// TODO: - get Data from network
 		[
-			PlayerInfoModel(
+			UserInfoModel(
 				playerId: 0,
 				firstName: "Aleksandr",
 				lastName: "Abramov",
@@ -47,7 +47,7 @@ final class PlayersListInteractor: PlayersListInteractorProtocol {
 				isFavorite: false,
 				level: PlayerLevel.pro.title
 			),
-			PlayerInfoModel(
+			UserInfoModel(
 				playerId: 1,
 				firstName: "Polina",
 				lastName: "Vasilieva",
@@ -55,7 +55,7 @@ final class PlayersListInteractor: PlayersListInteractorProtocol {
 				isFavorite: false,
 				level: PlayerLevel.pro.title
 			),
-			PlayerInfoModel(
+			UserInfoModel(
 				playerId: 2,
 				firstName: "Kristina",
 				lastName: "Popova",
@@ -63,7 +63,7 @@ final class PlayersListInteractor: PlayersListInteractorProtocol {
 				isFavorite: true,
 				level: PlayerLevel.medium.title
 			),
-			PlayerInfoModel(
+			UserInfoModel(
 				playerId: 3,
 				firstName: "Anton",
 				lastName: "Ivanov",
@@ -71,7 +71,7 @@ final class PlayersListInteractor: PlayersListInteractorProtocol {
 				isFavorite: true,
 				level: PlayerLevel.light.title
 			),
-			PlayerInfoModel(
+			UserInfoModel(
 				playerId: 4,
 				firstName: "Aleksandr",
 				lastName: "Vavilov",
@@ -82,10 +82,10 @@ final class PlayersListInteractor: PlayersListInteractorProtocol {
 		]
 	}
 
-	func toggleIsFavoriteFor(player: PlayerInfoModel) {
+	func toggleIsFavoriteFor(user: UserInfoModel) {
 		// TODO: - send data to server
-		print("toggleIsFavoriteFor", player.isFavorite)
-		if player.isFavorite {
+		print("toggleIsFavoriteFor", user.isFavorite)
+		if user.isFavorite {
 			// add - POST /players/{player_id}/favorite
 		} else {
 			// remove - DELETE /player/{player_id}/favorite

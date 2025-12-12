@@ -11,8 +11,8 @@ final class PlayersListAssembly: Assembly {
 
 	func assemble(container: Container) {
 		container.register(PlayersListViewController.self) { resolver in
-			let userCardFactory: (PlayerInfoModel) -> UserCardViewController? = { player in
-				resolver.resolve(UserCardViewController.self, argument: player)
+			let userCardFactory: (UserInfoModel) -> UserCardViewController? = { user in
+				resolver.resolve(UserCardViewController.self, argument: user)
 			}
 			let router = PlayersListRouter(userCardFactory: userCardFactory)
 

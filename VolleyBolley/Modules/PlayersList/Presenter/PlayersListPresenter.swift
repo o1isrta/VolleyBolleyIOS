@@ -32,9 +32,9 @@ final class PlayersListPresenter: PlayersListPresenterProtocol {
 
 	// MARK: - Private Properties
 
-	private var allPlayers: [PlayerInfoModel] = []
-	private var players: [PlayerInfoModel] = []
-	private var filteredPlayers: [PlayerInfoModel] = []
+	private var allPlayers: [UserInfoModel] = []
+	private var players: [UserInfoModel] = []
+	private var filteredPlayers: [UserInfoModel] = []
 
 	private var avatarTasks: [String: Task<Void, Never>] = [:]
 
@@ -139,15 +139,15 @@ final class PlayersListPresenter: PlayersListPresenterProtocol {
 
 private extension PlayersListPresenter {
 
-	func updateIsFavorite(for player: PlayerInfoModel, to isFavorite: Bool) -> PlayerInfoModel {
-		let newPlayer = player.copy(isFavorite: isFavorite)
-		interactor?.toggleIsFavoriteFor(player: newPlayer)
-		return newPlayer
+	func updateIsFavorite(for user: UserInfoModel, to isFavorite: Bool) -> UserInfoModel {
+		let newUser = user.copy(isFavorite: isFavorite)
+		interactor?.toggleIsFavoriteFor(user: newUser)
+		return newUser
 	}
 
-	func updatePlayersList(with player: PlayerInfoModel) {
-		allPlayers = allPlayers.map { $0.playerId == player.playerId ? player : $0 }
-		players = players.map { $0.playerId == player.playerId ? player : $0 }
-		filteredPlayers = filteredPlayers.map { $0.playerId == player.playerId ? player : $0 }
+	func updatePlayersList(with user: UserInfoModel) {
+		allPlayers = allPlayers.map { $0.playerId == user.playerId ? user : $0 }
+		players = players.map { $0.playerId == user.playerId ? user : $0 }
+		filteredPlayers = filteredPlayers.map { $0.playerId == user.playerId ? user : $0 }
 	}
 }

@@ -340,7 +340,7 @@ import SwiftUI
 	let presenter = UserCardPresenter(
 		interactor: interactor,
 		router: router,
-		player: PlayerInfoModel(
+		user: UserInfoModel(
 			playerId: 0,
 			firstName: "1",
 			lastName: "2",

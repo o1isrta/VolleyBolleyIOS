@@ -1,5 +1,5 @@
 //
-//  PlayerInfoModel.swift
+//  UserInfoModel.swift
 //  VolleyBolley
 //
 //  Created by Roman Romanov on 30.11.2025.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PlayerInfoModel: Codable, Equatable {
+struct UserInfoModel: Codable, Equatable {
 	let playerId: Int
 	let firstName: String
 	let lastName: String
@@ -25,7 +25,7 @@ struct PlayerInfoModel: Codable, Equatable {
 	}
 }
 
-extension PlayerInfoModel {
+extension UserInfoModel {
 	func copy(
 		playerId: Int? = nil,
 		firstName: String? = nil,
@@ -33,7 +33,7 @@ extension PlayerInfoModel {
 		avatar: String?? = nil,
 		isFavorite: Bool? = nil,
 		level: String? = nil
-	) -> PlayerInfoModel {
+	) -> UserInfoModel {
 		.init(
 			playerId: playerId ?? self.playerId,
 			firstName: firstName ?? self.firstName,
