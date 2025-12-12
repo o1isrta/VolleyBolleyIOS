@@ -1,0 +1,330 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "fallback.message" : {
+      "comment" : "fallback",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Something went wrong. Please try again"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Что-то пошло не так. Попробуйте ещё раз."
+          }
+        }
+      }
+    },
+    "invalid_code" : {
+      "comment" : "Invalid verification code",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invalid code"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Неверный код"
+          }
+        }
+      }
+    },
+    "invalid_credentials" : {
+      "comment" : "Firebase error message",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to verify Google credentials"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось проверить учетные данные Google"
+          }
+        }
+      }
+    },
+    "invalid_phone" : {
+      "comment" : "invalid phone number",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please enter a valid phone number"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пожалуйста, введите действительный номер телефона."
+          }
+        }
+      }
+    },
+    "missing_token" : {
+      "comment" : "Google auth error message",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to verify Google credentials"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось проверить учетные данные Google"
+          }
+        }
+      }
+    },
+    "network" : {
+      "comment" : "Internet connection error message",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You’re offline. Check your internet connection and try again."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы не в сети. Проверьте подключение к интернету и повторите попытку."
+          }
+        }
+      }
+    },
+    "not_implemented" : {
+      "comment" : "Not implemented (for development)",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not implemented yet"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пока не реализовано"
+          }
+        }
+      }
+    },
+    "notification_disabled" : {
+      "comment" : "Alert message for disabled notifications",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stay in the loop on games and invites!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Будьте в курсе игр и приглашений!"
+          }
+        }
+      }
+    },
+    "notification_disabled.item1" : {
+      "comment" : "Alert message for disabled notifications",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game invites"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Приглашения в игру"
+          }
+        }
+      }
+    },
+    "notification_disabled.item2" : {
+      "comment" : "Alert message for disabled notifications",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Match reminders"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Напоминания о матчах"
+          }
+        }
+      }
+    },
+    "notification_disabled.item3" : {
+      "comment" : "Alert message for disabled notifications",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Player ratings after games"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Рейтинги игроков после игр"
+          }
+        }
+      }
+    },
+    "phone_number_too_short" : {
+      "comment" : "Error message phone number  is too short",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Number is too short"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Номер слишком короткий"
+          }
+        }
+      }
+    },
+    "quota_exceeded" : {
+      "comment" : "The maximum number of verification attempts has been reached",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The maximum number of verification attempts has been reached. Please try again later."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Достигнуто максимальное количество попыток проверки. Повторите попытку позже."
+          }
+        }
+      }
+    },
+    "session_expired" : {
+      "comment" : "Code expired",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Code expired"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Код устарел"
+          }
+        }
+      }
+    },
+    "signIn_cancelled" : {
+      "comment" : "Google auth error message",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign-in was cancelled"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вход в систему был отменен"
+          }
+        }
+      }
+    },
+    "signIn_failed" : {
+      "comment" : "Google Sign-In failed",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Google Sign-In failed. Please try again"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось войти через Google.Повторите попытку позже"
+          }
+        }
+      }
+    },
+    "too_many_requests" : {
+      "comment" : "Firebase error message",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Too many attempts. Please try again later"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Слишком много попыток. Пожалуйста, попробуйте позже"
+          }
+        }
+      }
+    },
+    "user_disabled" : {
+      "comment" : "Firebase error message",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This account has been disabled"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Эта учетная запись была заблокирована"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

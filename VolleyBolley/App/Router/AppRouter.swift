@@ -51,6 +51,31 @@ final class AppRouter {
         }
     }
 
+    func showMainApp() {
+        guard let router = resolver.resolve(MainAppRouterProtocol.self) else {
+            print("Error: Failed to resolve MainAppRouterProtocol")
+            return
+        }
+
+        let root = router.start()
+
+        authRouter = nil
+        onboardingRouter = nil
+
+        window.rootViewController = root
+        window.makeKeyAndVisible()
+    }
+
+    func showAuthorization() {
+        guard let authVC = resolver.resolve(AuthViewController.self) else {
+            fatalError("AuthViewController не зарегистрирован")
+        }
+        let nav = UINavigationController(rootViewController: authVC)
+        navigationController = nav
+        window.rootViewController = nav
+        window.makeKeyAndVisible()
+    }
+
     // MARK: - Private Methods
 
     private func showOnboarding() {
@@ -58,16 +83,6 @@ final class AppRouter {
             fatalError("OnboardingViewController не зарегистрирован")
         }
         let nav = UINavigationController(rootViewController: onboardingVC)
-        navigationController = nav
-        window.rootViewController = nav
-        window.makeKeyAndVisible()
-    }
-
-    private func showAuthorization() {
-        guard let authVC = resolver.resolve(AuthViewController.self) else {
-            fatalError("AuthViewController не зарегистрирован")
-        }
-        let nav = UINavigationController(rootViewController: authVC)
         navigationController = nav
         window.rootViewController = nav
         window.makeKeyAndVisible()
@@ -94,20 +109,5 @@ final class AppRouter {
         guard let nav = navigationController,
               let userRegVC = resolver.resolve(UserRegViewController.self) else { return }
         nav.pushViewController(userRegVC, animated: true)
-    }
-
-    private func showMainApp() {
-        guard let router = resolver.resolve(MainAppRouterProtocol.self) else {
-            print("Error: Failed to resolve MainAppRouterProtocol")
-            return
-        }
-
-        let root = router.start()
-
-        authRouter = nil
-        onboardingRouter = nil
-
-        window.rootViewController = root
-        window.makeKeyAndVisible()
     }
 }

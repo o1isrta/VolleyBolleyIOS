@@ -1,0 +1,16 @@
+{
+    "player": {
+        "player_id": 2,
+        "avatar": null,
+        "first_name": "Admin",
+        "last_name": "Admin",
+        "gender": "MALE",
+        "date_of_birth": "2000-01-01",
+        "level": "LIGHT",
+        "country": null,
+        "city": null,
+        "is_registered": false
+    },
+    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzYyMjA0MTg1LCJpYXQiOjE3NjEzMDQxODUsImp0aSI6IjdlNzQ5Mzg5YWMzMDQ4OTU5NjkyNmQ0MGZhZTE2NmFkIiwidXNlcl9pZCI6MX0.Gq-EufqKu8FSECAWih2CIKZb073f4ST9AfDIg0cN7WA",
+    "refresh_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTgyMTc4NDE4NSwiaWF0IjoxNzYxMzA0MTg1LCJqdGkiOiJhYjUzMzUxZmNhZWU0OTQ0YjQ1Mzk2ZTJlNTQ4MDUxMyIsInVzZXJfaWQiOjF9._cLcTuJuYMSlA84f42s8wlqsDJ5mxgYvBQKAxoDlvIY"
+}

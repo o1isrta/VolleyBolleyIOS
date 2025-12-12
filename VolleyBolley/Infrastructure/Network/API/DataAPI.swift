@@ -9,7 +9,7 @@ import Foundation
 import Moya
 
 enum DataAPI {
-	case googleAuth(code: String)
+    case googleAuth(idToken: String)
 	case getCountryList
 	case getCurrentUser
 	case searchCourts(query: String)
@@ -29,7 +29,7 @@ extension DataAPI: TargetType {
 	var path: String {
 		switch self {
 		case .googleAuth:
-			return "/auth/google/login/"
+            return "/auth/google/login/v2/"
 		case .getCountryList:
 			return "/countries/"
 		case .getCurrentUser:
@@ -64,8 +64,9 @@ extension DataAPI: TargetType {
 
 	var task: Task {
 		switch self {
-		case .googleAuth(let code):
-			return .requestParameters(parameters: ["code": code], encoding: JSONEncoding.default)
+        case .googleAuth(let idToken):
+            let parameters = ["id_token": idToken]
+            return .requestParameters(parameters: parameters, encoding: JSONEncoding.default)
 		case .searchCourts(let query):
 			return .requestParameters(parameters: ["search": query], encoding: URLEncoding.queryString)
 		case .invitePlayers(_, let playerIDs):
@@ -82,18 +83,24 @@ extension DataAPI: TargetType {
 		}
 	}
 
-	var headers: [String: String]? {
-		var headers: [String: String] = [
-			"Content-Type": "application/json",
-			"Accept": "application/json"
-		]
+    var headers: [String: String]? {
+        switch self {
+        case .getCurrentUser, .searchCourts,
+                .invitePlayers, .updateAvatar, .updatePlayerProfile, .deletePlayer:
+            var headers: [String: String] = [
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            ]
 
-		if needsAuthorization, let token = DataAPI.tokenProvider?() {
-			headers["Authorization"] = "Bearer \(token)"
-		}
+            if needsAuthorization, let token = DataAPI.tokenProvider?() {
+                headers["Authorization"] = "Bearer \(token)"
+            }
 
-		return headers
-	}
+            return headers
+        case .googleAuth, .getCountryList:
+            return ["Content-Type": "application/json"]
+        }
+    }
 
 	// MARK: - Private Logic
 

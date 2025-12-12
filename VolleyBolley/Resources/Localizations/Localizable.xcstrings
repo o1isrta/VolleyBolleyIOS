@@ -2,6 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "%@ %@" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -225,6 +226,7 @@
     },
     "CHOOSE THIS GAME" : {
       "comment" : "\"CHOOSE THIS GAME\" button",
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -627,6 +629,7 @@
     },
     "customAlertView.button.enable" : {
       "comment" : "Custom Alert",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -697,6 +700,7 @@
     },
     "customAlertView.button.skip" : {
       "comment" : "Custom Alert",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -786,6 +790,7 @@
     },
     "customAlertView.message.notification" : {
       "comment" : "Custom Alert",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -854,6 +859,7 @@
     },
     "customAlertView.title.notification" : {
       "comment" : "Custom Alert",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1533,6 +1539,150 @@
         }
       }
     },
+    "errorMessageFallback" : {
+      "comment" : "Error message",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Something went wrong. Please try again."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Что-то пошло не так. Пожалуйста, попробуйте еще раз."
+          }
+        }
+      }
+    },
+    "errorMessageInvalidCredentials" : {
+      "comment" : "Firebase error message",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to verify Google credentials."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось проверить учетные данные Google."
+          }
+        }
+      }
+    },
+    "errorMessageMissingIDToken" : {
+      "comment" : "Google auth error message",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to verify Google credentials."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось проверить учетные данные Google."
+          }
+        }
+      }
+    },
+    "errorMessageNetwork" : {
+      "comment" : "Internet connection error message",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connection problem. Please check your internet."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Проблема с подключением. Пожалуйста, проверьте ваше интернет-соединение."
+          }
+        }
+      }
+    },
+    "errorMessageSignInCancelled" : {
+      "comment" : "Google auth error message",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign-in was cancelled."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вход в систему был отменен."
+          }
+        }
+      }
+    },
+    "errorMessageTooManyRequests" : {
+      "comment" : "Firebase error message",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Too many attempts. Please try again later."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Слишком много попыток. Пожалуйста, попробуйте позже."
+          }
+        }
+      }
+    },
+    "errorMessageUserDisabled" : {
+      "comment" : "Firebase error message",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This account has been disabled."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Эта учетная запись была заблокирована."
+          }
+        }
+      }
+    },
+    "errorTitleError" : {
+      "comment" : "Error title",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ошибка"
+          }
+        }
+      }
+    },
     "Fair Play Policy" : {
       "comment" : "FAQ",
       "localizations" : {
@@ -1715,6 +1865,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Получить новый код"
+          }
+        }
+      }
+    },
+    "Go to main App" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пропустить"
           }
         }
       }
@@ -2286,6 +2447,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Корты не найдены"
+          }
+        }
+      }
+    },
+    "Not implemented yet" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пока не реализовано"
           }
         }
       }
@@ -3283,6 +3455,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Хотите перейти в следующую категорию?"
+          }
+        }
+      }
+    },
+    "Warning" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Предупреждение"
           }
         }
       }

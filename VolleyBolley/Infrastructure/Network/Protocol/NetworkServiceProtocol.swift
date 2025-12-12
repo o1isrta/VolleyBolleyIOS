@@ -8,10 +8,7 @@
 import Foundation
 
 protocol NetworkServiceProtocol {
-    func googleAuth(
-        code: String,
-        completion: @escaping (Result<GoogleAuthResponse, Error>) -> Void
-    )
+    func googleAuth(idToken: String) async throws -> PlayerSessionDTO
     func getCountryList(completion: @escaping (Result<CountryListResponse, Error>) -> Void)
     func searchCourts(
         query: String,
