@@ -66,7 +66,7 @@ final class YellowButton: UIButton {
         config.background.strokeWidth = style.borderWidth
         config.contentInsets = style.contentInsets
         config.titleAlignment = .center
-		config.titleLineBreakMode = .byClipping
+		config.titleLineBreakMode = .byTruncatingTail
 
         return config
     }
