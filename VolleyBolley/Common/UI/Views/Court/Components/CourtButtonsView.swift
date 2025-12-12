@@ -26,29 +26,39 @@ final class CourtButtonsView: UIView {
 
 	// MARK: - Private Properties
 
+	private enum LayoutConstants {
+		static let spacing: CGFloat = 8
+		static let buttonHeight: CGFloat = 44
+	}
+
 	private var doneButtonCallback: (() -> Void)?
 	private var detailsButtonCallback: (() -> Void)?
-
-	private var doneButtonWidthConstraint: NSLayoutConstraint?
 
 	private lazy var doneButton: YellowButton = {
 		let button = YellowButton()
 		button.isSelected = true
-		button.addTarget(self, action: #selector(didTapChooseButton), for: .touchUpInside)
+		button.addAction(UIAction { [weak self] _ in
+			guard let self else { return }
+			self.doneButtonCallback?()
+		}, for: .touchUpInside)
 		return button
 	}()
+
 	private lazy var detailsButton: YellowButton = {
 		let button = YellowButton()
-		button.addTarget(self, action: #selector(didTapDetailsButton), for: .touchUpInside)
+		button.addAction(UIAction { [weak self] _ in
+			guard let self else { return }
+			self.detailsButtonCallback?()
+		}, for: .touchUpInside)
 		return button
 	}()
 
 	private lazy var buttonStackView: UIStackView = {
 		let stackView = UIStackView(arrangedSubviews: [doneButton, detailsButton])
 		stackView.axis = .horizontal
-		stackView.spacing = 8
+		stackView.spacing = LayoutConstants.spacing
 		stackView.alignment = .leading
-		stackView.distribution = .fill
+		stackView.distribution = .fillProportionally
 		return stackView
 	}()
 
@@ -60,25 +70,19 @@ final class CourtButtonsView: UIView {
 	}
 
 	@available(*, unavailable)
-	required init?(coder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
-	}
+	required init?(coder: NSCoder) { nil }
 
 	// MARK: - Public Methods
 
 	func configure(with model: CourtButtonsViewModel) {
 		doneButton.setTitle(model.doneButtonData.title, for: .normal)
 		doneButtonCallback = model.doneButtonData.action
-		doneButtonWidthConstraint?.isActive = false
 		detailsButton.isHidden = true
 
 		if let detailsButtonData = model.detailsButtonData {
 			detailsButton.isHidden = false
 			detailsButton.setTitle(detailsButtonData.title, for: .normal)
 			detailsButtonCallback = detailsButtonData.action
-
-			doneButtonWidthConstraint = doneButton.widthAnchor.constraint(equalTo: buttonStackView.widthAnchor, multiplier: 4/6)
-			doneButtonWidthConstraint?.isActive = true
 		}
 	}
 }
@@ -87,27 +91,14 @@ final class CourtButtonsView: UIView {
 
 private extension CourtButtonsView {
 
-	@objc func didTapChooseButton() {
-		doneButtonCallback?()
-	}
-
-	@objc func didTapDetailsButton() {
-		detailsButtonCallback?()
-	}
-
 	func setupUI() {
-		backgroundColor = .clear
-
+		backgroundColor = AppColor.Background.clear
 		addSubviews(buttonStackView)
 
+		buttonStackView.pinToSuperviewEdges()
 		NSLayoutConstraint.activate([
-			doneButton.heightAnchor.constraint(equalToConstant: 44),
-			detailsButton.heightAnchor.constraint(equalToConstant: 44),
-
-			buttonStackView.topAnchor.constraint(equalTo: topAnchor),
-			buttonStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-			buttonStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
-			buttonStackView.bottomAnchor.constraint(equalTo: bottomAnchor)
+			doneButton.heightAnchor.constraint(equalToConstant: LayoutConstants.buttonHeight),
+			detailsButton.heightAnchor.constraint(equalToConstant: LayoutConstants.buttonHeight)
 		])
 	}
 }
