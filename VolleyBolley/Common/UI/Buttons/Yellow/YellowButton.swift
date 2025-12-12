@@ -29,6 +29,10 @@ final class YellowButton: UIButton {
             guard let self else { return }
             button.configuration = self.configuration(for: button.state)
         }
+
+		titleLabel?.numberOfLines = 1
+		titleLabel?.adjustsFontSizeToFitWidth = true
+		titleLabel?.minimumScaleFactor = 0.7
     }
 
     convenience init(
@@ -42,9 +46,7 @@ final class YellowButton: UIButton {
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder: NSCoder) { nil }
 
     // MARK: - Private Methods
 
@@ -64,6 +66,7 @@ final class YellowButton: UIButton {
         config.background.strokeWidth = style.borderWidth
         config.contentInsets = style.contentInsets
         config.titleAlignment = .center
+		config.titleLineBreakMode = .byTruncatingTail
 
         return config
     }

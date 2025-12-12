@@ -57,26 +57,29 @@ final class GreenButtonPreviewVC: UIViewController {
     private func setupLevelRow(in stack: UIStackView) {
         let row = makeRow(distribution: .fillProportionally)
         stack.addArrangedSubview(row)
-        row.addArrangedSubview(makeButton(title: "Light", selected: true))
-        row.addArrangedSubview(makeButton(title: "Medium", selected: true))
-        row.addArrangedSubview(makeButton(title: "Hard", selected: true))
-        row.addArrangedSubview(makeButton(title: "Pro"))
+		row.addArrangedSubview(makeButton(title: String(localized: "common.light").capitalized, selected: true))
+        row.addArrangedSubview(makeButton(title: String(localized: "common.medium").capitalized, selected: true))
+		row.addArrangedSubview(makeButton(title: String(localized: "common.hard").capitalized, selected: true))
+		row.addArrangedSubview(makeButton(title: String(localized: "common.pro").capitalized))
     }
 
     private func setupGenderRow(in stack: UIStackView) {
         let row = makeRow(distribution: .fillProportionally)
         stack.addArrangedSubview(row)
-        row.addArrangedSubview(makeButton(title: "gender.mix", selected: true))
-        row.addArrangedSubview(makeButton(title: "gender.men"))
-        row.addArrangedSubview(makeButton(title: "gender.women"))
+        row.addArrangedSubview(makeButton(title: String(localized: "gender.mix"), selected: true))
+        row.addArrangedSubview(makeButton(title: String(localized: "gender.men")))
+        row.addArrangedSubview(makeButton(title: String(localized: "gender.women")))
     }
 
     private func setupDateRow(in stack: UIStackView) {
         let row = makeRow(distribution: .fillProportionally)
         stack.addArrangedSubview(row)
-        row.addArrangedSubview(makeButton(title: "Today", selected: true))
         row.addArrangedSubview(makeButton(
-            title: "Pick date",
+			title: String(localized: "newGameOrTourney.date.today"),
+			selected: true
+		))
+        row.addArrangedSubview(makeButton(
+            title: String(localized: "newGameOrTourney.date.pickDate"),
             image: .arrowForward,
             imagePlacement: .trailing
         ))
