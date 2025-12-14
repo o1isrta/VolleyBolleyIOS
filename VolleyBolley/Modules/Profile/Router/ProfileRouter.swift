@@ -9,6 +9,7 @@ import UIKit
 
 protocol ProfileRouterProtocol: AnyObject {
     func attachViewController(_ view: UIViewController)
+	func showPlayersList()
     func showPersonalData()
     func showSupport()
     func showFAQ()
@@ -23,6 +24,7 @@ final class ProfileRouter: ProfileRouterProtocol {
 
 	// MARK: - Private Properties
 
+	private let playersListViewController: () -> PlayersListViewController?
 	private let personalDataViewController: () -> PersonalDataViewController?
 	private let supportViewController: () -> SupportViewController?
 	private let faqViewController: () -> FAQViewController?
@@ -31,11 +33,13 @@ final class ProfileRouter: ProfileRouterProtocol {
 	// MARK: - Initializers
 
 	init(
+		playersListViewController: @escaping () -> PlayersListViewController?,
 		personalDataViewController: @escaping () -> PersonalDataViewController?,
 		supportViewController: @escaping () -> SupportViewController?,
 		aboutViewController: @escaping () -> AboutViewController?,
 		faqViewController: @escaping () -> FAQViewController?
 	) {
+		self.playersListViewController = playersListViewController
 		self.personalDataViewController = personalDataViewController
 		self.supportViewController = supportViewController
 		self.aboutViewController = aboutViewController
@@ -47,6 +51,11 @@ final class ProfileRouter: ProfileRouterProtocol {
     func attachViewController(_ view: UIViewController) {
         viewController = view
     }
+
+	func showPlayersList() {
+		guard let playersListVC = playersListViewController() else { fatalError("PlayersListViewController could not be created") }
+		viewController?.navigationController?.pushViewController(playersListVC, animated: true)
+	}
 
     func showPersonalData() {
 		guard let personalDataVC = personalDataViewController() else {

@@ -17,12 +17,14 @@ final class ProfileAssembly: Assembly {
                 fatalError("Error: Failed to register ProfileViewController")
             }
 
+			let playersListViewController = { resolver.resolve(PlayersListViewController.self) }
 			let personalDataViewController = { resolver.resolve(PersonalDataViewController.self) }
 			let supportViewController = { resolver.resolve(SupportViewController.self) }
 			let aboutViewController = { resolver.resolve(AboutViewController.self) }
 			let faqViewController = { resolver.resolve(FAQViewController.self) }
 
 			let router = ProfileRouter(
+				playersListViewController: playersListViewController,
 				personalDataViewController: personalDataViewController,
 				supportViewController: supportViewController,
 				aboutViewController: aboutViewController,

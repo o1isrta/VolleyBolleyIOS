@@ -30,20 +30,24 @@ final class UserCardPresenter: UserCardPresenterProtocol {
 	// MARK: - Private Properties
 
 	private var latestActivity: [UserActivityModel] = []
+	private let defaultUserInfo: UserInfoModel
 
 	// MARK: - Initializers
 
 	init(
 		interactor: UserCardInteractorProtocol,
-		router: UserCardRouterProtocol
+		router: UserCardRouterProtocol,
+		user: UserInfoModel
 	) {
 		self.interactor = interactor
 		self.router = router
+		self.defaultUserInfo = user
 	}
 
 	// MARK: - Public Methods
 
 	func viewDidLoad() {
+		setupDefaultUserCard()
 		setupUserCard()
 	}
 
@@ -94,13 +98,25 @@ final class UserCardPresenter: UserCardPresenterProtocol {
 
 private extension UserCardPresenter {
 
+	func setupDefaultUserCard() {
+		let userCardModel = UserCardViewModel(
+			firstName: defaultUserInfo.firstName,
+			lastName: defaultUserInfo.lastName,
+			level: PlayerLevel.init(fromServer: defaultUserInfo.level),
+			isFavorite: defaultUserInfo.isFavorite
+		)
+		view?.setupUserData(with: userCardModel)
+		// TODO: - setup defaultPlayerInfo Avatar
+//		setupAvatar(by: defaultPlayerInfo.avatarURL)
+	}
+
 	func setupUserCard() {
 		view?.isLoadingIndicatorVisible(true)
 		// TODO: - получает данные с Get /players/{player_id} и распихиваем
 //		let playerData: Player = interactor?.fetchUserData()
 		let playerData: Player = Player.mockDefault
 		// TODO: - temporarily gag
-		DispatchQueue.main.asyncAfter(deadline: .now() + 5) { [weak self] in
+		DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
 			guard let self else { return }
 			self.view?.isLoadingIndicatorVisible(false)
 			let userCardModel = UserCardViewModel(

@@ -148,7 +148,7 @@ extension UserCardViewController: UserCardViewControllerProtocol {
 	}
 
 	func setupUserData(with userData: UserCardViewModel) {
-		isFavoriteUser(userData.isFavorite)
+		setupFavoriteButton(with: userData.isFavorite)
 		screenTitle.text = userData.name
 		levelLabel.text = userData.level.title
 	}
@@ -188,17 +188,20 @@ private extension UserCardViewController {
 	}
 
 	func isFavoriteUser(_ favorite: Bool) {
+		setupFavoriteButton(with: favorite)
+		presenter?.setAsFavorite(favorite)
+	}
+
+	func setupFavoriteButton(with isFavorite: Bool) {
 		favoriteButton.setTitle(String(localized:
-			favorite
+			isFavorite
 			   ? "button.favorite"
 			   : "button.unfavorite"
 		), for: .normal)
-		presenter?.setAsFavorite(favorite)
 	}
 
 	func setupView() {
 		setupViews()
-		setupTableViewContentSizeObserver()
 	}
 
 	func setupViews() {
@@ -260,30 +263,18 @@ private extension UserCardViewController {
 			profilePhotoView.heightAnchor.constraint(
 				equalToConstant: LayoutConstants.profilePhotoSize),
 
-			tableCaptionLabel.topAnchor.constraint(
-				equalTo: levelLabel.bottomAnchor,
-				constant: LayoutConstants.mediumIndent),
 			tableCaptionLabel.leadingAnchor.constraint(
 				equalTo: mainStack.leadingAnchor),
 			tableCaptionLabel.trailingAnchor.constraint(
 				lessThanOrEqualTo: mainStack.trailingAnchor),
 
-			tableView.topAnchor.constraint(
-				equalTo: tableCaptionLabel.bottomAnchor,
-				constant: LayoutConstants.mainIndent),
 			tableView.leadingAnchor.constraint(
 				equalTo: mainStack.leadingAnchor),
 			tableView.trailingAnchor.constraint(
 				lessThanOrEqualTo: mainStack.trailingAnchor),
 
-			favoriteButton.topAnchor.constraint(
-				equalTo: tableView.bottomAnchor,
-				constant: LayoutConstants.mainSpacing),
 			favoriteButton.leadingAnchor.constraint(equalTo: mainStack.leadingAnchor),
 			favoriteButton.trailingAnchor.constraint(equalTo: mainStack.trailingAnchor),
-			favoriteButton.bottomAnchor.constraint(
-				equalTo: mainStack.bottomAnchor,
-				constant: LayoutConstants.mainSpacing),
 			favoriteButton.heightAnchor.constraint(equalToConstant: LayoutConstants.favoriteButtonHeight),
 
 			mainStack.topAnchor.constraint(
@@ -346,7 +337,18 @@ import SwiftUI
 #Preview {
 	let router = UserCardRouter()
 	let interactor = UserCardInteractor()
-	let presenter = UserCardPresenter(interactor: interactor, router: router)
+	let presenter = UserCardPresenter(
+		interactor: interactor,
+		router: router,
+		user: UserInfoModel(
+			playerId: 0,
+			firstName: "1",
+			lastName: "2",
+			avatar: nil,
+			isFavorite: true,
+			level: "3"
+		)
+	)
 	let viewController = UserCardViewController()
 	viewController.presenter = presenter
 	router.attachViewController(viewController)

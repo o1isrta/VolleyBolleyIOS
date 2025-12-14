@@ -2663,6 +2663,40 @@
         }
       }
     },
+    "playersList.noPlayers" : {
+      "comment" : "Players List",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No players found"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Игроки не найдены"
+          }
+        }
+      }
+    },
+    "playersList.title" : {
+      "comment" : "Players List",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Players"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Игроки"
+          }
+        }
+      }
+    },
     "Post-Game Ratings" : {
       "comment" : "FAQ",
       "localizations" : {
