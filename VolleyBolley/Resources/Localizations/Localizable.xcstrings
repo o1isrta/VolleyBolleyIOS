@@ -1802,6 +1802,40 @@
         }
       }
     },
+    "invitePlayers.addSelectedPlayers" : {
+      "comment" : "Invite players button / Invite players screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "INVITE PLAYERS"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ПРИГЛАСИТЬ ИГРОКОВ"
+          }
+        }
+      }
+    },
+    "invitePlayers.title" : {
+      "comment" : "Invite players screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invite players"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пригласить игроков"
+          }
+        }
+      }
+    },
     "Know rules, still learning" : {
       "comment" : "Registration / Level description popup",
       "localizations" : {
@@ -3377,5 +3411,5 @@
       }
     }
   },
-  "version" : "1.0"
+  "version" : "1.1"
 }
