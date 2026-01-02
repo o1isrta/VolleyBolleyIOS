@@ -16,25 +16,6 @@ struct InvitePlayersCellViewModel {
 	let onCheckmarkToggle: ((Bool) -> Void)?
 
 	init(
-		firstName: String,
-		lastName: String,
-		level: String,
-		isFavorite: Bool,
-		isSelected: Bool,
-		onFavoriteToggle: ((Bool) -> Void)?,
-		onCheckmarkToggle: ((Bool) -> Void)?
-	) {
-		self.init(
-			name: "\(firstName) \(lastName)",
-			level: level,
-			isFavorite: isFavorite,
-			isSelected: isSelected,
-			onFavoriteToggle: onFavoriteToggle,
-			onCheckmarkToggle: onCheckmarkToggle
-		)
-	}
-
-	init(
 		name: String,
 		level: String,
 		isFavorite: Bool,

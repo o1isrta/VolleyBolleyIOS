@@ -83,7 +83,7 @@ final class InvitePlayersViewController: BaseViewController {
 		tableView.dataSource = self
 		tableView.rowHeight = LayoutConstants.rowTableHeight
 		tableView.register(InvitePlayersViewCell.self,
-						   forCellReuseIdentifier: InvitePlayersViewCell.reuseIdentifier)
+			forCellReuseIdentifier: InvitePlayersViewCell.reuseIdentifier)
 		return tableView
 	}()
 
@@ -92,9 +92,7 @@ final class InvitePlayersViewController: BaseViewController {
 		button.isSelected = true
 		button.isEnabled = true
 		button.addAction(UIAction { [weak self] _ in
-			// TODO: Надо потом доработать логику кнопки
-			print("Добавить выбранных игроков и перейти дальше")
-			//			self?.presenter.
+			self?.presenter.didTapInviteButton()
 		}, for: .touchUpInside)
 		return button
 	}()
@@ -270,12 +268,17 @@ private extension InvitePlayersViewController {
 
 extension InvitePlayersViewController: UITableViewDataSource {
 
+	func numberOfSections(in tableView: UITableView) -> Int {
+		presenter.numberOfSections()
+	}
+
 	func tableView(
 		_ tableView: UITableView,
 		numberOfRowsInSection section: Int
 	) -> Int {
-		let playersCount = presenter.getPlayersCount()
-		return playersCount == 0 ? 1 : playersCount
+		let playersCount = presenter.getPlayersCount(in: section)
+		// TODO: -
+		return playersCount == 0 && section == 1 ? 1 : playersCount
 	}
 
 	func tableView(
@@ -288,11 +291,13 @@ extension InvitePlayersViewController: UITableViewDataSource {
 		else {
 			return UITableViewCell()
 		}
-		if presenter.getPlayersCount() == 0 {
+		// TODO: -
+		if indexPath.section == 1,
+		   presenter.getPlayersCount(in: indexPath.section) == 0 {
 			cell.configureAsNoPlayers()
 			return cell
 		}
-		let playerModel = presenter.getPlayer(at: indexPath.row)
+		let playerModel = presenter.getPlayer(at: indexPath)
 		cell.configure(with: playerModel)
 		return cell
 	}

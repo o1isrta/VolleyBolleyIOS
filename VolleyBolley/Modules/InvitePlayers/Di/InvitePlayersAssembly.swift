@@ -10,7 +10,7 @@ import Swinject
 final class InvitePlayersAssembly: Assembly {
 
 	func assemble(container: Container) {
-		container.register(InvitePlayersViewControllerProtocol.self) { _ in
+		container.register(InvitePlayersViewController.self) { _ in
 			let router = InvitePlayersRouter()
 			let interactor = InvitePlayersInteractor()
 			let presenter = InvitePlayersPresenter(

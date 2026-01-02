@@ -25,7 +25,7 @@ final class InvitePlayersViewCell: UITableViewCell {
 	// MARK: - Private Properties
 
 	private var isFavorite: Bool = false
-	private var isChecked: Bool = false
+	private var isPlayerSelected: Bool = false
 	private var onFavoriteToggle: ((Bool) -> Void)?
 	private var onCheckmarkToggle: ((Bool) -> Void)?
 
@@ -82,7 +82,7 @@ final class InvitePlayersViewCell: UITableViewCell {
 
 	private lazy var noPlayersLabel: UILabel = {
 		let label = UILabel()
-		label.font = AppFont.Hero.regular(size: 16)
+		label.font = AppFont.Hero.regular(size: Constants.fontSize)
 		label.textColor = AppColor.Text.primary
 		label.text = String(localized: "playersList.noPlayers")
 		label.isHidden = true
@@ -108,12 +108,15 @@ final class InvitePlayersViewCell: UITableViewCell {
 		mainStack.isHidden = false
 
 		nameLabel.text = model.name
+
 		isFavorite = model.isFavorite
-		isChecked = model.isSelected
+		setupStarButton()
+		isPlayerSelected = model.isSelected
+		setupCheckmarkButton()
+
 		badgeView.configure(distance: model.level)
 		onFavoriteToggle = model.onFavoriteToggle
 		onCheckmarkToggle = model.onCheckmarkToggle
-		updateUI()
 	}
 
 	func configureAsNoPlayers() {
@@ -126,21 +129,24 @@ final class InvitePlayersViewCell: UITableViewCell {
 
 private extension InvitePlayersViewCell {
 
-	func updateUI() {
-		starButton.setImage(isFavorite ? UIImage.Icon.star : UIImage.Icon.noStar, for: .normal)
-		checkmarkButton.setImage(isChecked ? UIImage.Icon.filled : UIImage.Icon.empty, for: .normal)
-	}
-
 	func didTapStar() {
 		isFavorite.toggle()
-		updateUI()
+		setupStarButton()
 		onFavoriteToggle?(isFavorite)
 	}
 
+	func setupStarButton() {
+		starButton.setImage(isFavorite ? UIImage.Icon.star : UIImage.Icon.noStar, for: .normal)
+	}
+
+	func setupCheckmarkButton() {
+		checkmarkButton.setImage(isPlayerSelected ? UIImage.Icon.filled : UIImage.Icon.empty, for: .normal)
+	}
+
 	func didTapCheckmark() {
-		isChecked.toggle()
-		updateUI()
-		onCheckmarkToggle?(isChecked)
+		isPlayerSelected.toggle()
+		setupCheckmarkButton()
+		onCheckmarkToggle?(isPlayerSelected)
 	}
 
 	func setupUI() {

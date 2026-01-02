@@ -13,9 +13,11 @@ protocol InvitePlayersPresenterProtocol: AnyObject {
 	func viewDidLoad()
 	func backButtonTapped()
 	func setPlayersList(_ list: PlayersListType)
-	func getPlayersCount() -> Int
-	func getPlayer(at index: Int) -> InvitePlayersCellViewModel
+	func numberOfSections() -> Int
+	func getPlayersCount(in section: Int) -> Int
+	func getPlayer(at indexPath: IndexPath) -> InvitePlayersCellViewModel
 	func filterPlayers(by filterText: String)
+	func didTapInviteButton()
 }
 
 // MARK: - InvitePlayersPresenter
@@ -30,9 +32,10 @@ final class InvitePlayersPresenter: InvitePlayersPresenterProtocol {
 
 	// MARK: - Private Properties
 
-	private var allPlayers: [UserInfoModel] = []
-	private var players: [UserInfoModel] = []
-	private var filteredPlayers: [UserInfoModel] = []
+	private var allPlayers: [InvitePlayerModel] = []
+	private var pinnedPlayers: [InvitePlayerModel] = []
+	private var players: [InvitePlayerModel] = []
+	private var filteredPlayers: [InvitePlayerModel] = []
 
 	// MARK: - Initializers
 
@@ -50,7 +53,7 @@ final class InvitePlayersPresenter: InvitePlayersPresenterProtocol {
 		view?.isLoadingIndicatorVisible(true)
 		Task {
 			try await Task.sleep(for: .seconds(2))
-			allPlayers = interactor?.getPlayers() ?? []
+			reloadPlayers()
 			setPlayersList(.all)
 
 			await MainActor.run {
@@ -69,32 +72,36 @@ final class InvitePlayersPresenter: InvitePlayersPresenterProtocol {
 		case .all:
 			players = allPlayers
 		case .favorite:
-			players = allPlayers.filter { $0.isFavorite == true }.sorted { $0.firstName < $1.firstName }
+			players = allPlayers.filter { $0.isFavorite == true }.sorted { $0.name < $1.name }
 		}
 		filteredPlayers = players
 	}
 
-	func getPlayersCount() -> Int {
-		filteredPlayers.count
+	func numberOfSections() -> Int { 2 }
+
+	func getPlayersCount(in section: Int) -> Int {
+		section == 0 ? pinnedPlayers.count : filteredPlayers.count
 	}
 
-	func getPlayer(at index: Int) -> InvitePlayersCellViewModel {
-		let player = filteredPlayers[index]
+	func getPlayer(at indexPath: IndexPath) -> InvitePlayersCellViewModel {
+		let player = indexPath.section == 0
+			? pinnedPlayers[indexPath.row]
+			: filteredPlayers[indexPath.row]
+
 		let model = InvitePlayersCellViewModel(
-			firstName: player.firstName,
-			lastName: player.lastName,
+			name: player.name,
 			level: PlayerLevel.medium.title,
 			isFavorite: player.isFavorite,
-			isSelected: false // TODO: -
+			isSelected: player.isSelected
 		) { [weak self] isFavorite in
 			guard let self else { return }
 			let newPlayer = self.updateIsFavorite(for: player, to: isFavorite)
 			self.updatePlayersList(with: newPlayer)
-//		} onCheckmarkToggle: { [weak self] isSelected in
-		} onCheckmarkToggle: { isSelected in
-//			guard let self else { return }
-			// TODO: -
-			print("onCheckmarkToggle что-то там делаем: \(isSelected)")
+		} onCheckmarkToggle: { [weak self] isSelected in
+			guard let self else { return }
+			guard indexPath.section == 1 else { return } // TODO: - pinned нельзя менять
+			let newPlayer = player.copy(isSelected: isSelected)
+			self.updatePlayersList(with: newPlayer)
 		}
 
 		return model
@@ -103,10 +110,19 @@ final class InvitePlayersPresenter: InvitePlayersPresenterProtocol {
 	func filterPlayers(by filterText: String) {
 		let filterText = filterText.lowercased()
 		filteredPlayers = players.filter { player in
-			return filterText.isEmpty
-			|| player.firstName.localizedCaseInsensitiveContains(filterText)
-			|| player.lastName.localizedCaseInsensitiveContains(filterText)
+			filterText.isEmpty
+			|| player.name.localizedCaseInsensitiveContains(filterText)
 		}
+	}
+
+	func didTapInviteButton() {
+		print("Добавить выбранных игроков и обновить таблицу")// TODO: -
+		pinnedPlayers = players.filter { $0.isSelected }
+		players = players.filter { !$0.isSelected }
+		filteredPlayers = filteredPlayers.filter { !$0.isSelected }
+		interactor?.pinSelectedPlayers(pinnedPlayers)
+		reloadPlayers()
+		view?.reloadData()
 	}
 }
 
@@ -114,15 +130,21 @@ final class InvitePlayersPresenter: InvitePlayersPresenterProtocol {
 
 private extension InvitePlayersPresenter {
 
-	func updateIsFavorite(for user: UserInfoModel, to isFavorite: Bool) -> UserInfoModel {
+	func reloadPlayers() {
+		allPlayers = interactor?.getRegularPlayers() ?? []
+		pinnedPlayers = interactor?.getPinnedPlayers() ?? []
+	}
+
+	func updateIsFavorite(for user: InvitePlayerModel, to isFavorite: Bool) -> InvitePlayerModel {
 		let newUser = user.copy(isFavorite: isFavorite)
 		interactor?.toggleIsFavoriteFor(user: newUser)
 		return newUser
 	}
 
-	func updatePlayersList(with user: UserInfoModel) {
-		allPlayers = allPlayers.map { $0.playerId == user.playerId ? user : $0 }
-		players = players.map { $0.playerId == user.playerId ? user : $0 }
-		filteredPlayers = filteredPlayers.map { $0.playerId == user.playerId ? user : $0 }
+	func updatePlayersList(with user: InvitePlayerModel) {
+		allPlayers = allPlayers.map { $0.id == user.id ? user : $0 }
+		players = players.map { $0.id == user.id ? user : $0 }
+		filteredPlayers = filteredPlayers.map { $0.id == user.id ? user : $0 }
+		pinnedPlayers = pinnedPlayers.map { $0.id == user.id ? user : $0 }
 	}
 }
