@@ -52,6 +52,7 @@ final class InvitePlayersPresenter: InvitePlayersPresenterProtocol {
 	func viewDidLoad() {
 		view?.isLoadingIndicatorVisible(true)
 		Task {
+			// TODO: - remove in the future
 			try await Task.sleep(for: .seconds(2))
 			reloadPlayers()
 			setPlayersList(.all)
