@@ -116,7 +116,6 @@ final class InvitePlayersPresenter: InvitePlayersPresenterProtocol {
 	}
 
 	func didTapInviteButton() {
-		print("Добавить выбранных игроков и обновить таблицу")// TODO: -
 		pinnedPlayers = players.filter { $0.isSelected }
 		players = players.filter { !$0.isSelected }
 		filteredPlayers = filteredPlayers.filter { !$0.isSelected }

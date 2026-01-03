@@ -1819,6 +1819,23 @@
         }
       }
     },
+    "invitePlayers.caption" : {
+      "comment" : "Invite players button / Invite players screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Already invited"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Уже приглашены"
+          }
+        }
+      }
+    },
     "invitePlayers.title" : {
       "comment" : "Invite players screen",
       "localizations" : {

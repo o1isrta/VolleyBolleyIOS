@@ -28,6 +28,10 @@ final class InvitePlayersViewController: BaseViewController {
 
 		static let initialTableHeight: CGFloat = 0
 		static let rowTableHeight: CGFloat = 45
+		static let footerTableHeight: CGFloat = 25
+		static let initialFooterTableHeight: CGFloat = 0
+		static let footerTableInset: CGFloat = 12
+
 		static let backButtonSize: CGFloat = 24
 
 		static let fontSize: CGFloat = 16
@@ -41,6 +45,18 @@ final class InvitePlayersViewController: BaseViewController {
 		)
 		label.numberOfLines = LayoutConstants.screenTitleNumberOfLines
 		return label
+	}()
+
+	private lazy var caption: UIView = {
+		let container = UIView()
+		let label = CustomTitle(text: String(localized: "invitePlayers.caption"))
+		container.addSubviews(label)
+		label.pinToSuperviewEdges(insets: .init(
+			top: LayoutConstants.mainIndent,
+			left: .zero, bottom: .zero, right: .zero
+		))
+		container.isHidden = true
+		return container
 	}()
 
 	private lazy var backButton: UtilityButton = {
@@ -60,6 +76,7 @@ final class InvitePlayersViewController: BaseViewController {
 		let stack = UIStackView(arrangedSubviews: [
 			searchBar,
 			segmentedControl,
+			caption,
 			tableView,
 			actionButton
 		])
@@ -81,6 +98,7 @@ final class InvitePlayersViewController: BaseViewController {
 		tableView.separatorStyle = .none
 		tableView.showsVerticalScrollIndicator = false
 		tableView.dataSource = self
+		tableView.delegate = self
 		tableView.rowHeight = LayoutConstants.rowTableHeight
 		tableView.register(InvitePlayersViewCell.self,
 			forCellReuseIdentifier: InvitePlayersViewCell.reuseIdentifier)
@@ -278,6 +296,7 @@ extension InvitePlayersViewController: UITableViewDataSource {
 	) -> Int {
 		let playersCount = presenter.getPlayersCount(in: section)
 		// TODO: -
+		caption.isHidden = playersCount == 0 && section == 0
 		return playersCount == 0 && section == 1 ? 1 : playersCount
 	}
 
@@ -300,6 +319,44 @@ extension InvitePlayersViewController: UITableViewDataSource {
 		let playerModel = presenter.getPlayer(at: indexPath)
 		cell.configure(with: playerModel)
 		return cell
+	}
+}
+
+// MARK: - UITableViewDataSource
+
+extension InvitePlayersViewController: UITableViewDelegate {
+
+	func tableView(
+		_ tableView: UITableView,
+		heightForFooterInSection section: Int
+	) -> CGFloat {
+		let playersCount = presenter.getPlayersCount(in: section)
+		// TODO: -
+		return section == 0 && playersCount > 0
+		? LayoutConstants.footerTableHeight
+		: LayoutConstants.initialFooterTableHeight
+	}
+
+	func tableView(
+		_ tableView: UITableView,
+		viewForFooterInSection section: Int
+	) -> UIView? {
+		// TODO: -
+		guard section != 1 else { return nil }
+
+		let container = UIView()
+		let separator = CustomSeparator()
+		container.addSubviews(separator)
+		separator.pinToSuperviewEdges(insets: .init(
+			top: LayoutConstants.footerTableInset,
+			left: .zero,
+			bottom: LayoutConstants.footerTableInset,
+			right: .zero
+		))
+		let playersCount = presenter.getPlayersCount(in: section)
+		container.isHidden = playersCount == 0 && section == 0
+
+		return container
 	}
 }
 
