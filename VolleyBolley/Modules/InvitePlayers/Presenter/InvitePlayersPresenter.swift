@@ -120,9 +120,21 @@ final class InvitePlayersPresenter: InvitePlayersPresenterProtocol {
 		pinnedPlayers = players.filter { $0.isSelected }
 		players = players.filter { !$0.isSelected }
 		filteredPlayers = filteredPlayers.filter { !$0.isSelected }
-		interactor?.pinSelectedPlayers(pinnedPlayers)
-		reloadPlayers()
-		view?.reloadData()
+
+		view?.isLoadingIndicatorVisible(true)
+		Task {
+			interactor?.pinSelectedPlayers(pinnedPlayers)
+
+			// TODO: - remove in the future
+			try await Task.sleep(for: .seconds(2))
+
+			await MainActor.run {
+				view?.isLoadingIndicatorVisible(false)
+				self.reloadPlayers()
+				self.view?.reloadData()
+				self.view?.showAlert(with: String(localized: "invitePlayers.invitationSuccessfullySent"))
+			}
+		}
 	}
 }
 

@@ -1820,7 +1820,7 @@
       }
     },
     "invitePlayers.caption" : {
-      "comment" : "Invite players button / Invite players screen",
+      "comment" : "Invited players caption / Invite players screen",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1836,8 +1836,25 @@
         }
       }
     },
+    "invitePlayers.invitationSuccessfullySent" : {
+      "comment" : "Invitation successfully message / Invite players screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invites have been successfully sent to players!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Приглашения успешно отправлены игрокам!"
+          }
+        }
+      }
+    },
     "invitePlayers.title" : {
-      "comment" : "Invite players screen",
+      "comment" : "Screen title / Invite players screen",
       "localizations" : {
         "en" : {
           "stringUnit" : {

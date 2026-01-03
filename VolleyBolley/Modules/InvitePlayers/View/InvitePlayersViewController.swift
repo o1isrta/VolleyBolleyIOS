@@ -10,6 +10,7 @@ import UIKit
 protocol InvitePlayersViewControllerProtocol: AnyObject {
 	func reloadData()
 	func isLoadingIndicatorVisible(_ isLoading: Bool)
+	func showAlert(with message: String)
 }
 
 final class InvitePlayersViewController: BaseViewController {
@@ -117,6 +118,8 @@ final class InvitePlayersViewController: BaseViewController {
 		return button
 	}()
 
+	private lazy var alertView: CustomAlertView = CustomAlertView()
+
 	// MARK: - Initializers
 
 	init(presenter: InvitePlayersPresenterProtocol) {
@@ -142,6 +145,7 @@ final class InvitePlayersViewController: BaseViewController {
 	override func viewDidLayoutSubviews() {
 		super.viewDidLayoutSubviews()
 		view.bringSubviewToFront(loadingIndicator)
+		view.bringSubviewToFront(alertView)
 	}
 }
 
@@ -160,6 +164,18 @@ extension InvitePlayersViewController: InvitePlayersViewControllerProtocol {
 			: self.loadingIndicator.hide()
 			self.view.isUserInteractionEnabled = !isLoading
 		}
+	}
+
+	func showAlert(with message: String) {
+		alertView.isHidden = false
+		let model = CustomAlertModel(
+			message: message,
+			primaryButton: ButtonDataModel(
+				title: String(localized: "customAlertView.button.done"),
+				action: { self.alertView.isHidden = true }
+			)
+		)
+		alertView.configure(with: model)
 	}
 }
 
@@ -231,12 +247,15 @@ private extension InvitePlayersViewController {
 			glassmorphismView,
 			backButton,
 			screenTitle,
-			mainStack
+			mainStack,
+			alertView
 		)
 		setupConstraints()
 	}
 
 	func setupConstraints() {
+		alertView.pinToSuperviewEdges()
+
 		NSLayoutConstraint.activate([
 			glassmorphismView.topAnchor.constraint(
 				equalTo: navBar.bottomAnchor,
@@ -253,12 +272,10 @@ private extension InvitePlayersViewController {
 
 			backButton.topAnchor.constraint(
 				equalTo: glassmorphismView.topAnchor,
-				constant: LayoutConstants.mainSpacing
-			),
+				constant: LayoutConstants.mainSpacing),
 			backButton.leadingAnchor.constraint(
 				equalTo: glassmorphismView.leadingAnchor,
-				constant: LayoutConstants.mainSpacing
-			),
+				constant: LayoutConstants.mainSpacing),
 			backButton.heightAnchor.constraint(equalToConstant: LayoutConstants.backButtonSize),
 			backButton.widthAnchor.constraint(equalToConstant: LayoutConstants.backButtonSize),
 
