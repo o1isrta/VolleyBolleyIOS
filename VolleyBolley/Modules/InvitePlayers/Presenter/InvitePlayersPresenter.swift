@@ -92,6 +92,7 @@ final class InvitePlayersPresenter: InvitePlayersPresenterProtocol {
 			name: player.name,
 			level: PlayerLevel.medium.title,
 			isFavorite: player.isFavorite,
+			isPinned: player.isPinned,
 			isSelected: player.isSelected
 		) { [weak self] isFavorite in
 			guard let self else { return }

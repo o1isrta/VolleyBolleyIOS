@@ -116,6 +116,8 @@ final class InvitePlayersViewCell: UITableViewCell {
 
 		badgeView.configure(distance: model.level)
 		onFavoriteToggle = model.onFavoriteToggle
+
+		checkmarkButton.isUserInteractionEnabled = !model.isPinned
 		onCheckmarkToggle = model.onCheckmarkToggle
 	}
 
