@@ -1448,7 +1448,7 @@
         }
       }
     },
-    "emailToSupport.succesfullySent" : {
+    "emailToSupport.successfullySent" : {
       "comment" : "Diagnostics info",
       "localizations" : {
         "en" : {
