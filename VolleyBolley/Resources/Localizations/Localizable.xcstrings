@@ -60,17 +60,6 @@
         }
       }
     },
-    "ADD SELECTED" : {
-      "comment" : "Game",
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ДОБАВИТЬ ВЫБРАННЫХ"
-          }
-        }
-      }
-    },
     "After each game, teammates can rate your level.\nOnce you receive 6 ratings, your level may change:\n  • 5+ positive ratings → promoted one step\n  • 5+ negative ratings → demoted one step\n  • Mixed feedback → level stays the same" : {
       "comment" : "FAQ",
       "localizations" : {
@@ -2806,17 +2795,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Рейтинги после игры"
-          }
-        }
-      }
-    },
-    "Private game" : {
-      "comment" : "Game",
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Частная игра"
           }
         }
       }
