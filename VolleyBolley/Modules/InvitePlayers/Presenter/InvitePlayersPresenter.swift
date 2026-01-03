@@ -77,14 +77,14 @@ final class InvitePlayersPresenter: InvitePlayersPresenterProtocol {
 		filteredPlayers = players
 	}
 
-	func numberOfSections() -> Int { 2 }
+	func numberOfSections() -> Int { InvitePlayerType.allCases.count }
 
 	func getPlayersCount(in section: Int) -> Int {
-		section == 0 ? pinnedPlayers.count : filteredPlayers.count
+		section == InvitePlayerType.invited.rawValue ? pinnedPlayers.count : filteredPlayers.count
 	}
 
 	func getPlayer(at indexPath: IndexPath) -> InvitePlayersCellViewModel {
-		let player = indexPath.section == 0
+		let player = indexPath.section == InvitePlayerType.invited.rawValue
 			? pinnedPlayers[indexPath.row]
 			: filteredPlayers[indexPath.row]
 
@@ -99,7 +99,7 @@ final class InvitePlayersPresenter: InvitePlayersPresenterProtocol {
 			self.updatePlayersList(with: newPlayer)
 		} onCheckmarkToggle: { [weak self] isSelected in
 			guard let self else { return }
-			guard indexPath.section == 1 else { return } // TODO: - pinned нельзя менять
+			guard indexPath.section == InvitePlayerType.regular.rawValue else { return }
 			let newPlayer = player.copy(isSelected: isSelected)
 			self.updatePlayersList(with: newPlayer)
 		}

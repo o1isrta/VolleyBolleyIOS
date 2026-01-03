@@ -207,7 +207,7 @@ private extension InvitePlayersViewController {
 				let newSize = change.newValue
 			else { return }
 			// Limiting the max height to preserve scrolling
-			let maxHeight = UIScreen.main.bounds.height - 381
+			let maxHeight = UIScreen.main.bounds.height - 429
 			let newHeight = min(newSize.height, maxHeight)
 			self.tableViewHeightConstraint?.constant = newHeight
 		}
@@ -295,9 +295,8 @@ extension InvitePlayersViewController: UITableViewDataSource {
 		numberOfRowsInSection section: Int
 	) -> Int {
 		let playersCount = presenter.getPlayersCount(in: section)
-		// TODO: -
-		caption.isHidden = playersCount == 0 && section == 0
-		return playersCount == 0 && section == 1 ? 1 : playersCount
+		caption.isHidden = playersCount == 0 && section == InvitePlayerType.invited.rawValue
+		return playersCount == 0 && section == InvitePlayerType.regular.rawValue ? 1 : playersCount
 	}
 
 	func tableView(
@@ -310,8 +309,7 @@ extension InvitePlayersViewController: UITableViewDataSource {
 		else {
 			return UITableViewCell()
 		}
-		// TODO: -
-		if indexPath.section == 1,
+		if indexPath.section == InvitePlayerType.regular.rawValue,
 		   presenter.getPlayersCount(in: indexPath.section) == 0 {
 			cell.configureAsNoPlayers()
 			return cell
@@ -331,8 +329,7 @@ extension InvitePlayersViewController: UITableViewDelegate {
 		heightForFooterInSection section: Int
 	) -> CGFloat {
 		let playersCount = presenter.getPlayersCount(in: section)
-		// TODO: -
-		return section == 0 && playersCount > 0
+		return section == InvitePlayerType.invited.rawValue && playersCount > 0
 		? LayoutConstants.footerTableHeight
 		: LayoutConstants.initialFooterTableHeight
 	}
@@ -341,8 +338,7 @@ extension InvitePlayersViewController: UITableViewDelegate {
 		_ tableView: UITableView,
 		viewForFooterInSection section: Int
 	) -> UIView? {
-		// TODO: -
-		guard section != 1 else { return nil }
+		guard section != InvitePlayerType.regular.rawValue else { return nil }
 
 		let container = UIView()
 		let separator = CustomSeparator()
@@ -354,7 +350,7 @@ extension InvitePlayersViewController: UITableViewDelegate {
 			right: .zero
 		))
 		let playersCount = presenter.getPlayersCount(in: section)
-		container.isHidden = playersCount == 0 && section == 0
+		container.isHidden = playersCount == 0 && section == InvitePlayerType.invited.rawValue
 
 		return container
 	}
@@ -372,3 +368,4 @@ extension InvitePlayersViewController: UITableViewDelegate {
 	InvitePlayersViewController(presenter: presenter)
 }
 #endif
+
