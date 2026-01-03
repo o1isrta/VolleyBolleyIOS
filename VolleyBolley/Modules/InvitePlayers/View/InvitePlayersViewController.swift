@@ -27,6 +27,8 @@ final class InvitePlayersViewController: BaseViewController {
 		static let actionButtonHeight: CGFloat = 44
 
 		static let initialTableHeight: CGFloat = 0
+		static let minCompensationTableHeight: CGFloat = 429
+		static let maxTableHeight: CGFloat = 408
 		static let rowTableHeight: CGFloat = 45
 		static let footerTableHeight: CGFloat = 25
 		static let initialFooterTableHeight: CGFloat = 0
@@ -207,7 +209,18 @@ private extension InvitePlayersViewController {
 				let newSize = change.newValue
 			else { return }
 			// Limiting the max height to preserve scrolling
-			let maxHeight = UIScreen.main.bounds.height - 429
+			let compensation: CGFloat = caption.isHidden
+			? LayoutConstants.minCompensationTableHeight
+			: (
+				LayoutConstants.minCompensationTableHeight
+				+ LayoutConstants.mainIndent / 2
+				+ caption.frame.height
+				+ LayoutConstants.footerTableHeight
+			)
+			let maxHeight = max(
+				UIScreen.main.bounds.height - compensation,
+				LayoutConstants.maxTableHeight
+			)
 			let newHeight = min(newSize.height, maxHeight)
 			self.tableViewHeightConstraint?.constant = newHeight
 		}

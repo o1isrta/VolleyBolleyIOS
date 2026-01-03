@@ -79,6 +79,54 @@ final class InvitePlayersInteractor: InvitePlayersInteractorProtocol {
 				isPinned: false,
 				isSelected: false,
 				level: PlayerLevel.pro.title
+			),
+			InvitePlayerModel(
+				id: 12,
+				name: "Kristina Popova",
+				isFavorite: true,
+				isPinned: false,
+				isSelected: false,
+				level: PlayerLevel.medium.title
+			),
+			InvitePlayerModel(
+				id: 13,
+				name: "Anton Ivanov",
+				isFavorite: true,
+				isPinned: false,
+				isSelected: false,
+				level: PlayerLevel.light.title
+			),
+			InvitePlayerModel(
+				id: 14,
+				name: "Aleksandr Vavilov",
+				isFavorite: true,
+				isPinned: false,
+				isSelected: false,
+				level: PlayerLevel.pro.title
+			),
+			InvitePlayerModel(
+				id: 22,
+				name: "Kristina Popova",
+				isFavorite: true,
+				isPinned: false,
+				isSelected: false,
+				level: PlayerLevel.medium.title
+			),
+			InvitePlayerModel(
+				id: 23,
+				name: "Anton Ivanov",
+				isFavorite: true,
+				isPinned: false,
+				isSelected: false,
+				level: PlayerLevel.light.title
+			),
+			InvitePlayerModel(
+				id: 24,
+				name: "Aleksandr Vavilov",
+				isFavorite: true,
+				isPinned: false,
+				isSelected: false,
+				level: PlayerLevel.pro.title
 			)
 		]
 	}
