@@ -518,7 +518,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "приватная игра"
+            "value" : "частная игра"
           }
         }
       }
@@ -1802,7 +1802,24 @@
         }
       }
     },
-    "invitePlayers.addSelectedPlayers" : {
+    "invitePlayers.action.addSelectedPlayers" : {
+      "comment" : "Add selected players button / Invite players screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ADD SELECTED"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ДОБАВИТЬ ВЫБРАННЫХ"
+          }
+        }
+      }
+    },
+    "invitePlayers.action.inviteSelectedPlayers" : {
       "comment" : "Invite players button / Invite players screen",
       "localizations" : {
         "en" : {
@@ -1853,7 +1870,24 @@
         }
       }
     },
-    "invitePlayers.title" : {
+    "invitePlayers.title.privateGame" : {
+      "comment" : "Private game screen title / Invite players screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Private game"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Частная игра"
+          }
+        }
+      }
+    },
+    "invitePlayers.title.regular" : {
       "comment" : "Screen title / Invite players screen",
       "localizations" : {
         "en" : {

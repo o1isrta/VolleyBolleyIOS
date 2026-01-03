@@ -18,6 +18,7 @@ final class InvitePlayersViewController: BaseViewController {
 	// MARK: - Private Properties
 
 	private let presenter: InvitePlayersPresenterProtocol
+	private let playersListType: InvitePlayersListType
 
 	private let loadingIndicator = ProgressHub.shared
 
@@ -42,10 +43,7 @@ final class InvitePlayersViewController: BaseViewController {
 	}
 
 	private lazy var screenTitle: CustomTitle = {
-		let label = CustomTitle(
-			text: String(localized: "invitePlayers.title"),
-			isLarge: true
-		)
+		let label = CustomTitle(text: playersListType.title, isLarge: true)
 		label.numberOfLines = LayoutConstants.screenTitleNumberOfLines
 		return label
 	}()
@@ -109,11 +107,17 @@ final class InvitePlayersViewController: BaseViewController {
 	}()
 
 	private lazy var actionButton: YellowButton = {
-		let button = YellowButton(title: String(localized: "invitePlayers.addSelectedPlayers"))
+		let button = YellowButton(title: playersListType.actionButtonTitle)
 		button.isSelected = true
 		button.isEnabled = true
 		button.addAction(UIAction { [weak self] _ in
-			self?.presenter.didTapInviteButton()
+			guard let self else { return }
+			switch playersListType {
+			case .privateGame:
+				self.presenter.didTapAddButton()
+			case .regular:
+				self.presenter.didTapInviteButton()
+			}
 		}, for: .touchUpInside)
 		return button
 	}()
@@ -122,8 +126,12 @@ final class InvitePlayersViewController: BaseViewController {
 
 	// MARK: - Initializers
 
-	init(presenter: InvitePlayersPresenterProtocol) {
+	init(
+		presenter: InvitePlayersPresenterProtocol,
+		playersListType: InvitePlayersListType
+	) {
 		self.presenter = presenter
+		self.playersListType = playersListType
 		super.init(nibName: nil, bundle: nil)
 	}
 
@@ -395,7 +403,6 @@ extension InvitePlayersViewController: UITableViewDelegate {
 		interactor: InvitePlayersInteractor(),
 		router: InvitePlayersRouter()
 	)
-	InvitePlayersViewController(presenter: presenter)
+	InvitePlayersViewController(presenter: presenter, playersListType: .regular)
 }
 #endif
-

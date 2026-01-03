@@ -18,6 +18,7 @@ protocol InvitePlayersPresenterProtocol: AnyObject {
 	func getPlayer(at indexPath: IndexPath) -> InvitePlayersCellViewModel
 	func filterPlayers(by filterText: String)
 	func didTapInviteButton()
+	func didTapAddButton()
 }
 
 // MARK: - InvitePlayersPresenter
@@ -136,6 +137,12 @@ final class InvitePlayersPresenter: InvitePlayersPresenterProtocol {
 				self.view?.showAlert(with: String(localized: "invitePlayers.invitationSuccessfullySent"))
 			}
 		}
+	}
+
+	func didTapAddButton() {
+		// TODO: - прокидываем выбранных игроков на экран создания игры
+		let selectedPlayers = players.filter { $0.isSelected }
+		print("selected players: \(selectedPlayers)")
 	}
 }
 
