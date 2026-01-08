@@ -38,13 +38,7 @@ final class PriceView: UIView {
 		return maskLayer
 	}()
 
-	private lazy var containerView: GlassmorphismView = {
-		let view = GlassmorphismView()
-		view.blurIntensity = 0.1
-		view.innerShadowOpacity = 0.2
-		view.cornerRadius = cornerRadius
-		return view
-	}()
+	private let containerView = GlassmorphismView(configuration: .price)
 
 	private lazy var textField: UITextField = {
 		let textField = UITextField()
