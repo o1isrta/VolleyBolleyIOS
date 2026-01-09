@@ -17,6 +17,12 @@ struct LocationTitleViewModel {
 /// Custom View to show information about court: title and location
 final class LocationTitleView: UIView {
 
+	// MARK: - Public Properties
+
+	override var intrinsicContentSize: CGSize {
+		CGSize(width: UIView.noIntrinsicMetric, height: 36)
+	}
+
 	// MARK: - Private Properties
 
 	private lazy var titleLabel: UILabel = {
@@ -107,7 +113,6 @@ private extension LocationTitleView {
 			iconImageView.heightAnchor.constraint(equalToConstant: 15),
 			iconImageView.widthAnchor.constraint(equalToConstant: 15),
 
-			mainStackView.heightAnchor.constraint(equalToConstant: 36),
 			mainStackView.topAnchor.constraint(equalTo: topAnchor),
 			mainStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
 			mainStackView.trailingAnchor.constraint(equalTo: trailingAnchor)

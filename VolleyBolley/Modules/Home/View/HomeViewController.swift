@@ -24,14 +24,13 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
         static let backgroundTop: CGFloat = 90
         static let verticalStackSpacing: CGFloat = 8
         static let horizontalStackSpacing: CGFloat = 8
-        static let contentInsets = UIEdgeInsets(top: 284, left: 8, bottom: 100, right: 8)
+        static let contentInsets = UIEdgeInsets(top: 324, left: 8, bottom: 100, right: 8)
     }
 
     private lazy var backgroundImageView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage.Image.homeBackground
         view.contentMode = .topLeft
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
@@ -39,7 +38,6 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
         let view = UIStackView(arrangedSubviews: [topStackView, bottomStackView])
         view.axis = .vertical
         view.spacing = Constants.verticalStackSpacing
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
@@ -48,7 +46,6 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
         view.axis = .vertical
         view.distribution = .fillEqually
         view.spacing = Constants.verticalStackSpacing
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
@@ -57,7 +54,6 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
         view.axis = .horizontal
         view.spacing = Constants.horizontalStackSpacing
         view.distribution = .fillEqually
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
@@ -125,9 +121,10 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
     // MARK: - Private Methods
 
     private func setupView() {
-        view.addSubview(backgroundImageView)
-        view.addSubview(mainStackView)
-
+        view.addSubviews(
+			backgroundImageView,
+			mainStackView
+		)
         mainStackView.pinToSuperviewEdges(insets: Constants.contentInsets)
         setupConstraintsBackgroundImageView()
     }

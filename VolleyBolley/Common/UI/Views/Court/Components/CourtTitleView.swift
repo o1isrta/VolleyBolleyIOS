@@ -75,14 +75,7 @@ private extension CourtTitleView {
 	func setupUI() {
 		backgroundColor = .clear
 		addSubviews(mainStackView)
-		NSLayoutConstraint.activate([
-			locationTitleView.heightAnchor.constraint(greaterThanOrEqualToConstant: 36),
-
-			mainStackView.topAnchor.constraint(equalTo: topAnchor),
-			mainStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-			mainStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
-			mainStackView.bottomAnchor.constraint(equalTo: bottomAnchor)
-		])
+		mainStackView.pinToSuperviewEdges()
 	}
 }
 

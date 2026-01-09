@@ -101,9 +101,6 @@ private extension CourtTableViewCell {
 			mainStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
 			mainStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
 
-			mainStackView.heightAnchor.constraint(greaterThanOrEqualToConstant: 36),
-			locationTitleView.heightAnchor.constraint(greaterThanOrEqualToConstant: 36),
-
 			noCourtsLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: -6),
 			noCourtsLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
 			noCourtsLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),

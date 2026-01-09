@@ -105,6 +105,9 @@ final class SketchButton: UIButton {
 		actionTitleLabel.textColor = style.titleColor
 		actionImageView.tintColor = style.tintColor
 
+		glassView.resetForReuse()
+		glassView.alpha = style.glassAlpha
+
 		return config
 	}
 
