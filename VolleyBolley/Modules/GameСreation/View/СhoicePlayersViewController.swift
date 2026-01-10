@@ -143,12 +143,12 @@ private extension СhoicePlayersViewController {
             label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
 
-			background.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 8),
+			background.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
             background.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
             background.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
             background.heightAnchor.constraint(equalToConstant: 412),
 
-			buttonBack.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 20),
+			buttonBack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             buttonBack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 28),
 
             titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),

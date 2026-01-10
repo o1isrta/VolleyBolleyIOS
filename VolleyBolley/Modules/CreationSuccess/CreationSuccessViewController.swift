@@ -144,7 +144,7 @@ final class CreationSuccessViewController: BaseViewController, CreationSuccessVi
                     constant: -Constants.containerInsets
                 ),
                 glassContainer.topAnchor.constraint(
-					equalTo: navBar.bottomAnchor,
+					equalTo: view.safeAreaLayoutGuide.topAnchor,
                     constant: Constants.containerInsets
                 ),
                 glassContainer.heightAnchor.constraint(

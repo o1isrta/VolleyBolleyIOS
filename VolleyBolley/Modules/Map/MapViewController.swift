@@ -230,14 +230,14 @@ private extension MapViewController {
 		let popupBottonInset: CGFloat = -55
 
 		NSLayoutConstraint.activate([
-			segmentedControl.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 8),
+			segmentedControl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
 			segmentedControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 			segmentedControl.widthAnchor.constraint(equalToConstant: 200),
 
-			backButton.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 8),
+			backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
             backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
 
-			mapView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+			mapView.topAnchor.constraint(equalTo: view.topAnchor),
 			mapView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
 			mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
 			mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor),

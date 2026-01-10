@@ -98,7 +98,7 @@ private extension NotificationsViewController {
 		let mainSpacing: CGFloat = 20
 
 		NSLayoutConstraint.activate([
-			glassmorphismView.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: mainIndent),
+			glassmorphismView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: mainIndent),
 			glassmorphismView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: mainIndent),
 			glassmorphismView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -mainIndent),
 			glassmorphismView.bottomAnchor.constraint(equalTo: tableView.bottomAnchor, constant: mainIndent),

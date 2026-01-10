@@ -96,9 +96,7 @@ final class PopupBannerView: UIView {
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder: NSCoder) { nil }
 
     // MARK: - Public Methods
 
@@ -119,14 +117,13 @@ final class PopupBannerView: UIView {
     ///   - visibleDuration: Время (в секундах), через которое баннер автоматически скроется.
     func show(
         in view: UIView,
-        under anchorView: UIView,
         horizontalInset: CGFloat = 8,
         offsetY: CGFloat = 8,
         showDuration: TimeInterval = 0.5,
         visibleDuration: TimeInterval = 2.0
     ) {
-        let anchorFrameInView = anchorView.convert(anchorView.bounds, to: view)
-        let targetY = anchorFrameInView.maxY + offsetY
+		let safeAreaFrame = view.safeAreaLayoutGuide.layoutFrame
+		let targetY = safeAreaFrame.minY + offsetY
 
         frame = CGRect(
             x: horizontalInset,
@@ -135,7 +132,7 @@ final class PopupBannerView: UIView {
             height: Constants.height
         )
 
-        view.insertSubview(self, belowSubview: anchorView)
+		view.addSubview(self)
 
         animateIn(to: targetY, duration: showDuration) {
             DispatchQueue.main.asyncAfter(deadline: .now() + visibleDuration) {
@@ -244,8 +241,6 @@ struct PopupBannerViewControllerRepresentable: UIViewControllerRepresentable {
 
     func makeUIViewController(context: Context) -> UIViewController {
 		let viewController = BaseViewController()
-		// Configure navbar with mock data
-		viewController.navBar.configure(with: NavBarViewModel.mockDefault)
 
         let button = UIButton(type: .system)
         button.setTitle("Show Banner", for: .normal)
@@ -254,7 +249,7 @@ struct PopupBannerViewControllerRepresentable: UIViewControllerRepresentable {
             banner.onTap = {
                 print("tap")
             }
-            banner.show(in: viewController.view, under: viewController.navBar)
+			banner.show(in: viewController.view)
         }, for: .touchUpInside)
 
         viewController.view.addSubviews(button)
