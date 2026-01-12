@@ -165,7 +165,7 @@ private extension SupportViewController {
 
 		NSLayoutConstraint.activate([
 			glassmorphismView.topAnchor.constraint(
-				equalTo: navBar.bottomAnchor,
+				equalTo: view.safeAreaLayoutGuide.topAnchor,
 				constant: Constants.padding
 			),
 			glassmorphismView.leadingAnchor.constraint(

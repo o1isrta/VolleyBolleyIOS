@@ -35,6 +35,63 @@ struct GlassmorphismConfiguration {
         )
     }
 
+	static var sketch: GlassmorphismConfiguration {
+		GlassmorphismConfiguration(
+			cornerRadius: 32,
+			borderColor: UIColor.clear,
+			borderWidth: 0,
+			tintedBackgroundColor: AppColor.Background.blur.withAlphaComponent(0.13),
+			blurIntensity: 0.1,
+			theme: .light,
+			outerShadowColor: UIColor.clear,
+			outerShadowOpacity: 0,
+			outerShadowOffset: .zero,
+			outerShadowRadius: 0,
+			innerShadowColor: AppColor.Glassmorphism.innerShadowColor,
+			innerShadowOpacity: 0.4,
+			innerShadowRadius: 8.0,
+			innerShadowOffset: CGSize(width: 0, height: -14)
+		)
+	}
+
+	static var timePicker: GlassmorphismConfiguration {
+		GlassmorphismConfiguration(
+			cornerRadius: 16,
+			borderColor: AppColor.Glassmorphism.border.withAlphaComponent(0.15),
+			borderWidth: 1.0,
+			tintedBackgroundColor: AppColor.Background.blur.withAlphaComponent(0.19),
+			blurIntensity: 0.2,
+			theme: .light,
+			outerShadowColor: AppColor.Glassmorphism.outerShadowColor,
+			outerShadowOpacity: 0.15,
+			outerShadowOffset: CGSize(width: 0, height: 8),
+			outerShadowRadius: 16,
+			innerShadowColor: AppColor.Glassmorphism.innerShadowColor,
+			innerShadowOpacity: 0.2,
+			innerShadowRadius: 6,
+			innerShadowOffset: CGSize(width: 0, height: -4)
+		)
+	}
+
+	static var price: GlassmorphismConfiguration {
+		GlassmorphismConfiguration(
+			cornerRadius: 16,
+			borderColor: AppColor.Glassmorphism.border.withAlphaComponent(0.15),
+			borderWidth: 1.0,
+			tintedBackgroundColor: AppColor.Background.blur.withAlphaComponent(0.19),
+			blurIntensity: 0.1,
+			theme: .light,
+			outerShadowColor: AppColor.Glassmorphism.outerShadowColor,
+			outerShadowOpacity: 0.15,
+			outerShadowOffset: CGSize(width: 0, height: 8),
+			outerShadowRadius: 16,
+			innerShadowColor: AppColor.Glassmorphism.innerShadowColor,
+			innerShadowOpacity: 0.2,
+			innerShadowRadius: 18.0,
+			innerShadowOffset: CGSize(width: 0, height: -16)
+		)
+	}
+
 	static var message: GlassmorphismConfiguration {
 		GlassmorphismConfiguration(
 			cornerRadius: 16,

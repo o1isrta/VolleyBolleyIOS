@@ -16,13 +16,14 @@ final class TimePickerButton: UIButton {
 	private enum Constants {
 		static let cornerRadius: CGFloat = 16
 		static let stackSpacing: CGFloat = 4
+		static let fontSize: CGFloat = 16
 	}
 
 	// MARK: - Public Properties
 
 	/// The intrinsic content size of the button for automatic layout.
 	override var intrinsicContentSize: CGSize {
-		return CGSize(width: 89, height: 45)
+		return CGSize(width: 89, height: 49)
 	}
 
 	/// A closure that is called whenever the selected time changes.
@@ -34,7 +35,7 @@ final class TimePickerButton: UIButton {
 	private lazy var timeLabel: UILabel = {
 		let label = UILabel()
 		label.textColor = AppColor.Text.primary
-		label.font = AppFont.Hero.regular(size: 16)
+		label.font = AppFont.Hero.regular(size: Constants.fontSize)
 		label.isUserInteractionEnabled = false
 		return label
 	}()
@@ -43,7 +44,7 @@ final class TimePickerButton: UIButton {
 	private lazy var periodLabel: UILabel = {
 		let label = UILabel()
 		label.textColor = AppColor.Text.primary
-		label.font = AppFont.Hero.regular(size: 14)
+		label.font = AppFont.Hero.regular(size: Constants.fontSize)
 		label.isUserInteractionEnabled = false
 		return label
 	}()
@@ -59,10 +60,8 @@ final class TimePickerButton: UIButton {
 	}()
 
 	/// A background view with a glassmorphism effect.
-	private lazy var glassView: GlassmorphismView = {
-		let view = GlassmorphismView()
-		view.cornerRadius = Constants.cornerRadius
-		view.innerShadowRadius = 0
+	private let glassView: GlassmorphismView = {
+		let view = GlassmorphismView(configuration: .timePicker)
 		view.isUserInteractionEnabled = false
 		return view
 	}()
@@ -217,7 +216,7 @@ import SwiftUI
 		UIViewPreview {
 			TimePickerButton()
 		}
-		.frame(width: 89, height: 45)
+		.frame(width: 89, height: 49)
 	}
 }
 #endif

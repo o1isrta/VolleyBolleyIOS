@@ -241,7 +241,7 @@ private extension PaywallViewController {
 
 			saveGameButton.heightAnchor.constraint(equalToConstant: 44),
 
-			glassmorphismView.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 8),
+			glassmorphismView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
 			glassmorphismView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 8),
 			glassmorphismView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -8),
 			glassmorphismView.bottomAnchor.constraint(equalTo: mainStackView.bottomAnchor, constant: mainSpacing),
