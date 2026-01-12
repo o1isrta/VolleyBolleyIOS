@@ -8,44 +8,52 @@
 import UIKit
 
 protocol HomeRouterProtocol: AnyObject {
-    func attachViewController(_ view: UIViewController)
-    func showMapForCreateNewGame()
-    func showMapForFindGame()
-    func showMapForCreateTourney()
-    func showDonate()
+	func attachViewController(_ view: UIViewController)
+	func showMapForCreateNewGame()
+	func showMapForFindGame()
+	func showMapForCreateTourney()
+	func showDonate()
 }
 
 final class HomeRouter: HomeRouterProtocol {
 
-    weak var viewController: UIViewController?
-    private let mapFactory: MapModuleFactoryProtocol
+	// MARK: - Public Properties
 
-    // MARK: - Initializers
+	weak var viewController: UIViewController?
 
-    init(mapFactory: MapModuleFactoryProtocol) {
-        self.mapFactory = mapFactory
-    }
+	// MARK: - Private Properties
 
-    func attachViewController(_ view: UIViewController) {
-        viewController = view
-    }
+	private let mapFactory: MapModuleFactoryProtocol
 
-    func showMapForCreateNewGame() {
-        let mapVC = mapFactory.makeMapForCreateGame()
-        viewController?.navigationController?.pushViewController(mapVC, animated: true)
-    }
+	// MARK: - Initializers
 
-    func showMapForFindGame() {
-        let mapVC = mapFactory.makeMapForFindGame()
-        viewController?.navigationController?.pushViewController(mapVC, animated: true)
-    }
+	init(mapFactory: MapModuleFactoryProtocol) {
+		self.mapFactory = mapFactory
+	}
 
-    func showMapForCreateTourney() {
-        let mapVC = mapFactory.makeMapForCreateTourney()
-        viewController?.navigationController?.pushViewController(mapVC, animated: true)
-    }
+	// MARK: - Public Methods
 
-    func showDonate() {
-        print("HomeRouter - Show Donate")
-    }
+	func attachViewController(_ view: UIViewController) {
+		viewController = view
+	}
+
+	func showMapForCreateNewGame() {
+		let mapVC = mapFactory.makeMapForCreateGame()
+		viewController?.navigationController?.pushViewController(mapVC, animated: true)
+	}
+
+	func showMapForFindGame() {
+		let mapVC = mapFactory.makeMapForFindGame()
+		viewController?.navigationController?.pushViewController(mapVC, animated: true)
+	}
+
+	func showMapForCreateTourney() {
+		let mapVC = mapFactory.makeMapForCreateTourney()
+		viewController?.navigationController?.pushViewController(mapVC, animated: true)
+	}
+
+	func showDonate() {
+		guard let url = URL(string: AppConstants.Contacts.linktreeURL) else { return }
+		UIApplication.shared.open(url)
+	}
 }

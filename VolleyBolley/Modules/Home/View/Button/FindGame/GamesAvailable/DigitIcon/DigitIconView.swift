@@ -50,7 +50,6 @@ final class DigitIconView: UIView {
         view.image = .plus
         view.tintColor = AppColor.Icon.inverted
         view.isHidden = true
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
@@ -59,12 +58,11 @@ final class DigitIconView: UIView {
     init() {
         super.init(frame: .zero)
         setupView()
+		configure(with: 0)
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder: NSCoder) { nil }
 
     // MARK: - Public API
 

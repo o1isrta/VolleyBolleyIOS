@@ -10,7 +10,7 @@ import UIKit
 final class WeatherView: UIView {
 
     private enum Constants {
-        static let stackSpacing: CGFloat = 2
+        static let stackSpacing: CGFloat = 5
         static let iconPointSize: CGFloat = 24
         static let temperatureFontSize: CGFloat = 16
         static let temperatureLabelHeight: CGFloat = 24
@@ -48,9 +48,7 @@ final class WeatherView: UIView {
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder: NSCoder) { nil }
 
     func configure(with viewModel: WeatherViewModel) {
         let configuration = UIImage.SymbolConfiguration(pointSize: Constants.iconPointSize, weight: .semibold)

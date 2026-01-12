@@ -16,19 +16,6 @@ enum AppEffect {
 	enum Table {
 		static let cellWhiteSelected = tableCellWhiteSelected
 	}
-
-    static func glass() -> GlassmorphismView {
-        let view = GlassmorphismView()
-        view.isUserInteractionEnabled = false
-        return view
-    }
-
-    static func glassHightLighted() -> GlassmorphismView {
-        let view = GlassmorphismView()
-        view.isUserInteractionEnabled = false
-        view.theme = .dark
-        return view
-    }
 }
 
 private extension AppEffect {

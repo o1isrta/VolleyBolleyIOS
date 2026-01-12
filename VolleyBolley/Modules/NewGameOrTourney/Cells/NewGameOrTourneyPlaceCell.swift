@@ -120,8 +120,6 @@ private extension NewGameOrTourneyPlaceCell {
 				constant: -Constants.insetLarge
 			),
 
-			locationTitleView.heightAnchor.constraint(equalToConstant: Constants.viewHeight),
-
 			separator.topAnchor.constraint(
 				equalTo: mainStackView.bottomAnchor,
 				constant: Constants.inset

@@ -23,7 +23,6 @@ final class GamesAvailableView: UIView {
         stackView.axis = .vertical
         stackView.alignment = .center
         stackView.spacing = Constants.stackSpacing
-        stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
 
@@ -45,9 +44,7 @@ final class GamesAvailableView: UIView {
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder: NSCoder) { nil }
 
     func configure(with gamesAvailable: Int) {
         digitIconView.configure(with: gamesAvailable)
@@ -57,7 +54,7 @@ final class GamesAvailableView: UIView {
         backgroundColor = AppColor.Background.primary
         layer.cornerRadius = Constants.cornerRadius
 
-        addSubview(vStackView)
+        addSubviews(vStackView)
         vStackView.pinToSuperviewEdges(insets: Constants.contentInsets)
     }
 }
