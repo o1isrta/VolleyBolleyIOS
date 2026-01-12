@@ -93,12 +93,12 @@ private extension FAQViewController {
 		let mainSpacing: CGFloat = 20
 
 		NSLayoutConstraint.activate([
-			background.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: contentInset),
+			background.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: contentInset),
 			background.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: contentInset),
 			background.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -contentInset),
 			background.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -55),
 
-			buttonBack.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: mainSpacing),
+			buttonBack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: mainSpacing),
 			buttonBack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: mainSpacing),
 
 			titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
