@@ -60,17 +60,6 @@
         }
       }
     },
-    "ADD SELECTED" : {
-      "comment" : "Game",
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ДОБАВИТЬ ВЫБРАННЫХ"
-          }
-        }
-      }
-    },
     "After each game, teammates can rate your level.\nOnce you receive 6 ratings, your level may change:\n  • 5+ positive ratings → promoted one step\n  • 5+ negative ratings → demoted one step\n  • Mixed feedback → level stays the same" : {
       "comment" : "FAQ",
       "localizations" : {
@@ -518,7 +507,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "приватная игра"
+            "value" : "частная игра"
           }
         }
       }
@@ -1448,7 +1437,7 @@
         }
       }
     },
-    "emailToSupport.succesfullySent" : {
+    "emailToSupport.successfullySent" : {
       "comment" : "Diagnostics info",
       "localizations" : {
         "en" : {
@@ -1798,6 +1787,108 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Неверный код"
+          }
+        }
+      }
+    },
+    "invitePlayers.action.addSelectedPlayers" : {
+      "comment" : "Add selected players button / Invite players screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ADD SELECTED"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ДОБАВИТЬ ВЫБРАННЫХ"
+          }
+        }
+      }
+    },
+    "invitePlayers.action.inviteSelectedPlayers" : {
+      "comment" : "Invite players button / Invite players screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "INVITE PLAYERS"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ПРИГЛАСИТЬ ИГРОКОВ"
+          }
+        }
+      }
+    },
+    "invitePlayers.caption" : {
+      "comment" : "Invited players caption / Invite players screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Already invited"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Уже приглашены"
+          }
+        }
+      }
+    },
+    "invitePlayers.invitationSuccessfullySent" : {
+      "comment" : "Invitation successfully message / Invite players screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invites have been successfully sent to players!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Приглашения успешно отправлены игрокам!"
+          }
+        }
+      }
+    },
+    "invitePlayers.title.privateGame" : {
+      "comment" : "Private game screen title / Invite players screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Private game"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Частная игра"
+          }
+        }
+      }
+    },
+    "invitePlayers.title.regular" : {
+      "comment" : "Screen title / Invite players screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invite players"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пригласить игроков"
           }
         }
       }
@@ -2708,17 +2799,6 @@
         }
       }
     },
-    "Private game" : {
-      "comment" : "Game",
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Частная игра"
-          }
-        }
-      }
-    },
     "Ratings (6 within 60 days, 5+ down = demotion)\nInactivity:\n• 90 days = minus 1 step\n• 180 days = reset to lowest level in current category" : {
       "comment" : "FAQ",
       "localizations" : {
@@ -3377,5 +3457,5 @@
       }
     }
   },
-  "version" : "1.0"
+  "version" : "1.1"
 }

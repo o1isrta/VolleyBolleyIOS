@@ -22,6 +22,7 @@ final class CreationSuccessInteractor: CreationSuccessInteractorProtocol {
     }
 
     func fetchInviteLink(completion: @escaping (String?) -> Void) {
+		// TODO: -
         completion("https://example.com/invite/123")
     }
 }
