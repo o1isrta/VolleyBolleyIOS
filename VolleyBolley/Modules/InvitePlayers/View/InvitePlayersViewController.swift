@@ -1,23 +1,24 @@
 //
-//  PlayersListViewController.swift
+//  InvitePlayersViewController.swift
 //  VolleyBolley
 //
-//  Created by Roman Romanov on 27.11.2025.
+//  Created by Roman Romanov on 01.01.2026.
 //
 
 import UIKit
 
-protocol PlayersListViewControllerProtocol: AnyObject {
+protocol InvitePlayersViewControllerProtocol: AnyObject {
 	func reloadData()
-	func setAvatar(_ image: UIImage?, for avatarURLString: String)
 	func isLoadingIndicatorVisible(_ isLoading: Bool)
+	func showAlert(with message: String)
 }
 
-final class PlayersListViewController: BaseViewController {
+final class InvitePlayersViewController: BaseViewController {
 
 	// MARK: - Private Properties
 
-	private let presenter: PlayersListPresenterProtocol
+	private let presenter: InvitePlayersPresenterProtocol
+	private let playersListType: InvitePlayersListType
 
 	private let loadingIndicator = ProgressHub.shared
 
@@ -25,8 +26,16 @@ final class PlayersListViewController: BaseViewController {
 		static let mainIndent: CGFloat = 8
 		static let mediumIndent: CGFloat = 16
 		static let mainSpacing: CGFloat = 20
+		static let actionButtonHeight: CGFloat = 44
 
 		static let initialTableHeight: CGFloat = 0
+		static let minCompensationTableHeight: CGFloat = 429
+		static let maxTableHeight: CGFloat = 408
+		static let rowTableHeight: CGFloat = 45
+		static let footerTableHeight: CGFloat = 25
+		static let initialFooterTableHeight: CGFloat = 0
+		static let footerTableInset: CGFloat = 12
+
 		static let backButtonSize: CGFloat = 24
 
 		static let fontSize: CGFloat = 16
@@ -34,12 +43,21 @@ final class PlayersListViewController: BaseViewController {
 	}
 
 	private lazy var screenTitle: CustomTitle = {
-		let label = CustomTitle(
-			text: String(localized: "playersList.title"),
-			isLarge: true
-		)
+		let label = CustomTitle(text: playersListType.title, isLarge: true)
 		label.numberOfLines = LayoutConstants.screenTitleNumberOfLines
 		return label
+	}()
+
+	private lazy var caption: UIView = {
+		let container = UIView()
+		let label = CustomTitle(text: String(localized: "invitePlayers.caption"))
+		container.addSubviews(label)
+		label.pinToSuperviewEdges(insets: .init(
+			top: LayoutConstants.mainIndent,
+			left: .zero, bottom: .zero, right: .zero
+		))
+		container.isHidden = true
+		return container
 	}()
 
 	private lazy var backButton: UtilityButton = {
@@ -59,10 +77,12 @@ final class PlayersListViewController: BaseViewController {
 		let stack = UIStackView(arrangedSubviews: [
 			searchBar,
 			segmentedControl,
-			tableView
+			caption,
+			tableView,
+			actionButton
 		])
 		stack.axis = .vertical
-		stack.spacing = LayoutConstants.mediumIndent
+		stack.spacing = LayoutConstants.mainIndent
 		stack.alignment = .fill
 		stack.distribution = .fill
 		return stack
@@ -80,16 +100,38 @@ final class PlayersListViewController: BaseViewController {
 		tableView.showsVerticalScrollIndicator = false
 		tableView.dataSource = self
 		tableView.delegate = self
-		tableView.rowHeight = UITableView.automaticDimension
-		tableView.register(PlayersListViewCell.self,
-			forCellReuseIdentifier: PlayersListViewCell.reuseIdentifier)
+		tableView.rowHeight = LayoutConstants.rowTableHeight
+		tableView.register(InvitePlayersViewCell.self,
+			forCellReuseIdentifier: InvitePlayersViewCell.reuseIdentifier)
 		return tableView
 	}()
 
+	private lazy var actionButton: YellowButton = {
+		let button = YellowButton(title: playersListType.actionButtonTitle)
+		button.isSelected = true
+		button.isEnabled = true
+		button.addAction(UIAction { [weak self] _ in
+			guard let self else { return }
+			switch playersListType {
+			case .privateGame:
+				self.presenter.didTapAddButton()
+			case .regular:
+				self.presenter.didTapInviteButton()
+			}
+		}, for: .touchUpInside)
+		return button
+	}()
+
+	private lazy var alertView: CustomAlertView = CustomAlertView()
+
 	// MARK: - Initializers
 
-	init(presenter: PlayersListPresenterProtocol) {
+	init(
+		presenter: InvitePlayersPresenterProtocol,
+		playersListType: InvitePlayersListType
+	) {
 		self.presenter = presenter
+		self.playersListType = playersListType
 		super.init(nibName: nil, bundle: nil)
 	}
 
@@ -111,41 +153,43 @@ final class PlayersListViewController: BaseViewController {
 	override func viewDidLayoutSubviews() {
 		super.viewDidLayoutSubviews()
 		view.bringSubviewToFront(loadingIndicator)
+		view.bringSubviewToFront(alertView)
 	}
 }
 
-// MARK: - PlayersListViewControllerProtocol
+// MARK: - InvitePlayersViewController
 
-extension PlayersListViewController: PlayersListViewControllerProtocol {
+extension InvitePlayersViewController: InvitePlayersViewControllerProtocol {
 
 	func reloadData() {
 		tableView.reloadData()
 	}
 
-	func setAvatar(_ image: UIImage?, for avatarURLString: String) {
-		for cell in tableView.visibleCells {
-			guard
-				let cell = cell as? PlayersListViewCell,
-				cell.currentAvatarURL == avatarURLString
-			else { continue }
-
-			cell.setAvatar(image)
-		}
-	}
-
 	func isLoadingIndicatorVisible(_ isLoading: Bool) {
 		DispatchQueue.main.async {
 			isLoading
-				? self.loadingIndicator.show(in: self.view, withBlur: true, ballSize: .big)
-				: self.loadingIndicator.hide()
+			? self.loadingIndicator.show(in: self.view, withBlur: true, ballSize: .big)
+			: self.loadingIndicator.hide()
 			self.view.isUserInteractionEnabled = !isLoading
 		}
+	}
+
+	func showAlert(with message: String) {
+		alertView.isHidden = false
+		let model = CustomAlertModel(
+			message: message,
+			primaryButton: ButtonDataModel(
+				title: String(localized: "customAlertView.button.done"),
+				action: { self.alertView.isHidden = true }
+			)
+		)
+		alertView.configure(with: model)
 	}
 }
 
 // MARK: - Private methods
 
-private extension PlayersListViewController {
+private extension InvitePlayersViewController {
 
 	func setupSearchTextField() {
 		searchBar.addTarget(
@@ -189,7 +233,18 @@ private extension PlayersListViewController {
 				let newSize = change.newValue
 			else { return }
 			// Limiting the max height to preserve scrolling
-			let maxHeight = UIScreen.main.bounds.height - 381
+			let compensation: CGFloat = caption.isHidden
+			? LayoutConstants.minCompensationTableHeight
+			: (
+				LayoutConstants.minCompensationTableHeight
+				+ LayoutConstants.mainIndent / 2
+				+ caption.frame.height
+				+ LayoutConstants.footerTableHeight
+			)
+			let maxHeight = max(
+				UIScreen.main.bounds.height - compensation,
+				LayoutConstants.maxTableHeight
+			)
 			let newHeight = min(newSize.height, maxHeight)
 			self.tableViewHeightConstraint?.constant = newHeight
 		}
@@ -200,12 +255,15 @@ private extension PlayersListViewController {
 			glassmorphismView,
 			backButton,
 			screenTitle,
-			mainStack
+			mainStack,
+			alertView
 		)
 		setupConstraints()
 	}
 
 	func setupConstraints() {
+		alertView.pinToSuperviewEdges()
+
 		NSLayoutConstraint.activate([
 			glassmorphismView.topAnchor.constraint(
 				equalTo: view.safeAreaLayoutGuide.topAnchor,
@@ -217,17 +275,15 @@ private extension PlayersListViewController {
 				equalTo: view.trailingAnchor,
 				constant: -LayoutConstants.mainIndent),
 			glassmorphismView.bottomAnchor.constraint(
-				equalTo: tableView.bottomAnchor,
-				constant: LayoutConstants.mainIndent / 2),
+				equalTo: actionButton.bottomAnchor,
+				constant: LayoutConstants.mediumIndent),
 
 			backButton.topAnchor.constraint(
 				equalTo: glassmorphismView.topAnchor,
-				constant: LayoutConstants.mainSpacing
-			),
+				constant: LayoutConstants.mainSpacing),
 			backButton.leadingAnchor.constraint(
 				equalTo: glassmorphismView.leadingAnchor,
-				constant: LayoutConstants.mainSpacing
-			),
+				constant: LayoutConstants.mainSpacing),
 			backButton.heightAnchor.constraint(equalToConstant: LayoutConstants.backButtonSize),
 			backButton.widthAnchor.constraint(equalToConstant: LayoutConstants.backButtonSize),
 
@@ -239,6 +295,9 @@ private extension PlayersListViewController {
 			screenTitle.trailingAnchor.constraint(
 				lessThanOrEqualTo: glassmorphismView.trailingAnchor,
 				constant: -LayoutConstants.mainSpacing),
+
+			actionButton.heightAnchor.constraint(
+				equalToConstant: LayoutConstants.actionButtonHeight),
 
 			mainStack.topAnchor.constraint(
 				equalTo: screenTitle.bottomAnchor,
@@ -261,28 +320,21 @@ private extension PlayersListViewController {
 	}
 }
 
-// MARK: - UITableViewDelegate
-
-extension PlayersListViewController: UITableViewDelegate {
-
-	func tableView(
-		_ tableView: UITableView,
-		didSelectRowAt indexPath: IndexPath
-	) {
-		presenter.openPlayerCard(index: indexPath.row)
-	}
-}
-
 // MARK: - UITableViewDataSource
 
-extension PlayersListViewController: UITableViewDataSource {
+extension InvitePlayersViewController: UITableViewDataSource {
+
+	func numberOfSections(in tableView: UITableView) -> Int {
+		presenter.numberOfSections()
+	}
 
 	func tableView(
 		_ tableView: UITableView,
 		numberOfRowsInSection section: Int
 	) -> Int {
-		let playersCount = presenter.getPlayersCount()
-		return playersCount == 0 ? 1 : playersCount
+		let playersCount = presenter.getPlayersCount(in: section)
+		caption.isHidden = playersCount == 0 && section == InvitePlayerType.invited.rawValue
+		return playersCount == 0 && section == InvitePlayerType.regular.rawValue ? 1 : playersCount
 	}
 
 	func tableView(
@@ -290,19 +342,55 @@ extension PlayersListViewController: UITableViewDataSource {
 		cellForRowAt indexPath: IndexPath
 	) -> UITableViewCell {
 		guard let cell = tableView.dequeueReusableCell(
-			withIdentifier: PlayersListViewCell.reuseIdentifier,
-			for: indexPath) as? PlayersListViewCell
+			withIdentifier: InvitePlayersViewCell.reuseIdentifier,
+			for: indexPath) as? InvitePlayersViewCell
 		else {
 			return UITableViewCell()
 		}
-		if presenter.getPlayersCount() == 0 {
+		if indexPath.section == InvitePlayerType.regular.rawValue,
+		   presenter.getPlayersCount(in: indexPath.section) == 0 {
 			cell.configureAsNoPlayers()
 			return cell
 		}
-		let playerModel = presenter.getPlayer(at: indexPath.row)
+		let playerModel = presenter.getPlayer(at: indexPath)
 		cell.configure(with: playerModel)
-		presenter.didRequestAvatar(avatarURLString: playerModel.avatar)
 		return cell
+	}
+}
+
+// MARK: - UITableViewDataSource
+
+extension InvitePlayersViewController: UITableViewDelegate {
+
+	func tableView(
+		_ tableView: UITableView,
+		heightForFooterInSection section: Int
+	) -> CGFloat {
+		let playersCount = presenter.getPlayersCount(in: section)
+		return section == InvitePlayerType.invited.rawValue && playersCount > 0
+		? LayoutConstants.footerTableHeight
+		: LayoutConstants.initialFooterTableHeight
+	}
+
+	func tableView(
+		_ tableView: UITableView,
+		viewForFooterInSection section: Int
+	) -> UIView? {
+		guard section != InvitePlayerType.regular.rawValue else { return nil }
+
+		let container = UIView()
+		let separator = CustomSeparator()
+		container.addSubviews(separator)
+		separator.pinToSuperviewEdges(insets: .init(
+			top: LayoutConstants.footerTableInset,
+			left: .zero,
+			bottom: LayoutConstants.footerTableInset,
+			right: .zero
+		))
+		let playersCount = presenter.getPlayersCount(in: section)
+		container.isHidden = playersCount == 0 && section == InvitePlayerType.invited.rawValue
+
+		return container
 	}
 }
 
@@ -311,10 +399,10 @@ extension PlayersListViewController: UITableViewDataSource {
 #if DEBUG
 @available(iOS 17.0, *)
 #Preview {
-	let presenter = PlayersListPresenter(
-		interactor: PlayersListInteractor(imageLoader: KingfisherImageLoadingService()),
-		router: PlayersListRouter(userCardFactory: { _ in nil })
+	let presenter = InvitePlayersPresenter(
+		interactor: InvitePlayersInteractor(),
+		router: InvitePlayersRouter()
 	)
-	PlayersListViewController(presenter: presenter)
+	InvitePlayersViewController(presenter: presenter, playersListType: .regular)
 }
 #endif

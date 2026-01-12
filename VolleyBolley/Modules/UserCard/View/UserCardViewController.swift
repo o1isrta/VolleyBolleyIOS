@@ -222,7 +222,7 @@ private extension UserCardViewController {
 	func setupMainViewsConstraints() {
 		NSLayoutConstraint.activate([
 			glassmorphismView.topAnchor.constraint(
-				equalTo: navBar.bottomAnchor,
+				equalTo: view.safeAreaLayoutGuide.topAnchor,
 				constant: LayoutConstants.mainIndent),
 			glassmorphismView.leadingAnchor.constraint(
 				equalTo: view.leadingAnchor,

@@ -100,9 +100,7 @@ final class CreationSuccessViewController: BaseViewController, CreationSuccessVi
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder: NSCoder) { nil }
 
     // MARK: - Lifecycle
 
@@ -120,6 +118,7 @@ final class CreationSuccessViewController: BaseViewController, CreationSuccessVi
     }
 
     func showError(_ error: Error) {
+		// TODO: -
         print(error)
     }
 
@@ -144,7 +143,7 @@ final class CreationSuccessViewController: BaseViewController, CreationSuccessVi
                     constant: -Constants.containerInsets
                 ),
                 glassContainer.topAnchor.constraint(
-					equalTo: navBar.bottomAnchor,
+					equalTo: view.safeAreaLayoutGuide.topAnchor,
                     constant: Constants.containerInsets
                 ),
                 glassContainer.heightAnchor.constraint(

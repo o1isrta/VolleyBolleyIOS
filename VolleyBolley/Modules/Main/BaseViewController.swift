@@ -22,7 +22,7 @@ class BaseViewController: UIViewController {
 
 	// MARK: - Public Properties
 
-	private(set) lazy var navBar: CustomNavBarView = {
+	private lazy var navBar: CustomNavBarView = {
 		return NavBarAssembly.createModule(with: self)
 	}()
 
@@ -46,7 +46,7 @@ class BaseViewController: UIViewController {
 
 	override func viewDidLayoutSubviews() {
 		super.viewDidLayoutSubviews()
-		// ALWAYS raise the navbar above all other subviews
+		additionalSafeAreaInsets.top = 44
 		view.bringSubviewToFront(navBar)
 	}
 

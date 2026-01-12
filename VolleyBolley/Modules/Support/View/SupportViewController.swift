@@ -165,7 +165,7 @@ private extension SupportViewController {
 
 		NSLayoutConstraint.activate([
 			glassmorphismView.topAnchor.constraint(
-				equalTo: navBar.bottomAnchor,
+				equalTo: view.safeAreaLayoutGuide.topAnchor,
 				constant: Constants.padding
 			),
 			glassmorphismView.leadingAnchor.constraint(
@@ -263,7 +263,7 @@ extension SupportViewController: MFMailComposeViewControllerDelegate {
 	) {
 		controller.dismiss(animated: true)
 		guard result == .sent else { return }
-		let message = String(localized: "emailToSupport.succesfullySent")
+		let message = String(localized: "emailToSupport.successfullySent")
 		showAlert(with: message)
 	}
 }
