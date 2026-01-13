@@ -46,7 +46,11 @@ class BaseViewController: UIViewController {
 
 	override func viewDidLayoutSubviews() {
 		super.viewDidLayoutSubviews()
-		additionalSafeAreaInsets.top = 44
+		// dynamic island fixes
+		let topInset = view.safeAreaInsets.top
+		let topInsets: CGFloat = topInset >= 106 ? 44 : 58
+		additionalSafeAreaInsets.top = topInsets
+
 		view.bringSubviewToFront(navBar)
 	}
 

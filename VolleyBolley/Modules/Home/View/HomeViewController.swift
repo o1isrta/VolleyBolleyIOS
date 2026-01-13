@@ -25,7 +25,7 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
 		static let backgroundImageViewWidth: CGFloat = 302
 		static let backgroundImageViewHeight: CGFloat = 245
 		static let spacing: CGFloat = 7
-		static let vStackTopInset: CGFloat = 224
+		static let vStackTopInset: CGFloat = 219
 	}
 
 	private let scrollView: UIScrollView = {
@@ -206,7 +206,7 @@ final class HomeViewController: BaseViewController, HomeViewProtocol {
 				constant: -Constants.spacing
 			),
 			vStackView.bottomAnchor.constraint(
-				equalTo: contentView.bottomAnchor,
+				lessThanOrEqualTo: contentView.bottomAnchor,
 				constant: -16
 			)
 		])
