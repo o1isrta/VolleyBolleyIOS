@@ -227,7 +227,6 @@ private extension MapViewController {
             bottomView,
             backButton
 		)
-		let popupBottonInset: CGFloat = -55
 		let mainInset: CGFloat = 8
 
 		NSLayoutConstraint.activate([
@@ -245,7 +244,7 @@ private extension MapViewController {
 
 			bottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: mainInset),
 			bottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -mainInset),
-			bottomView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: popupBottonInset),
+			bottomView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -mainInset),
 			bottomView.heightAnchor.constraint(equalToConstant: 136)
 		])
 
@@ -253,7 +252,7 @@ private extension MapViewController {
 		popupView.isHidden = true
 		popupBottomConstraint = popupView.bottomAnchor.constraint(
 			equalTo: view.safeAreaLayoutGuide.bottomAnchor,
-			constant: popupBottonInset
+			constant: -mainInset
 		)
 		if let popupBottomConstraint {
 			NSLayoutConstraint.activate([popupBottomConstraint])

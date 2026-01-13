@@ -130,7 +130,7 @@ private extension ProfileViewController {
             tableView.heightAnchor.constraint(equalToConstant: 400),
 
             deleteButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 28),
-			deleteButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -60)
+			deleteButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
         ])
     }
 }
