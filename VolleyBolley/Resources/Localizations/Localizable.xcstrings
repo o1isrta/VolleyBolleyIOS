@@ -2743,6 +2743,23 @@
         }
       }
     },
+    "playerElement.FreeSpot" : {
+      "comment" : "‘Free spot’ in Player List",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Free spot"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Свободное место"
+          }
+        }
+      }
+    },
     "Players" : {
       "comment" : "Profile",
       "localizations" : {
