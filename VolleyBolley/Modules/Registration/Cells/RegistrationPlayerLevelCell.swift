@@ -1,37 +1,57 @@
 //
-//  NewGameOrTourneyPlayerLevelCell.swift
+//  RegistrationPlayerLevelCell.swift
 //  VolleyBolley
 //
-//  Created by Roman Romanov on 18.10.2025.
+//  Created by Roman Romanov on 17.01.2026.
 //
 
 import UIKit
 
-final class NewGameOrTourneyPlayerLevelCell: UITableViewCell {
+final class RegistrationPlayerLevelCell: UITableViewCell {
 
 	// MARK: - Public Properties
 
-	static let reuseIdentifier = "NewGameOrTourneyPlayerLevelCell"
+	static let reuseIdentifier = "RegistrationPlayerLevelCell"
 
 	// MARK: - Private Properties
 
-	private var callback: (([PlayerLevel]) -> Void)?
-	private var playerLevels: [PlayerLevel] = []
+	private var playerLevel: PlayerLevel?
+	private var levelAction: (() -> Void) = {}
+	private var callback: ((PlayerLevel) -> Void)?
 
 	private enum Constants {
 		static let inset: CGFloat = 16
 		static let insetMiddle: CGFloat = 12
 		static let insetLarge: CGFloat = 20
 
-		static let stackViewSpacing: CGFloat = 8
+		static let levelInfoButtonSize: CGFloat = 18
 
-		static let titleFontSize: CGFloat = 20
+		static let stackViewSpacing: CGFloat = 8
 	}
 
-	private lazy var titleLabel: CustomLabel = {
-		let label = CustomLabel(text: String(localized: "newGameOrTourney.playerLevel.title"), isBold: true)
-		label.font = AppFont.ActayWide.bold(size: Constants.titleFontSize)
-		return label
+	private lazy var titleLabel = CustomLabel(text: String(localized: "Level"), isBold: true)
+
+	private lazy var levelInfoButton: UIButton = {
+		var config = UIButton.Configuration.plain()
+		config.image = UIImage(systemName: "questionmark.circle")
+		config.imagePlacement = .leading
+//		config.imagePadding = 0 // TODO: -
+		config.baseForegroundColor = AppColor.Background.screen
+		config.background.backgroundColor = AppColor.Background.primary
+//		config.background.cornerRadius = 12 // TODO: -
+		let button = UIButton(configuration: config)
+		return button
+	}()
+
+	private lazy var levelCaptionStackView: UIStackView = {
+		let stackView = UIStackView(arrangedSubviews: [
+			titleLabel,
+			levelInfoButton
+		])
+		stackView.axis = .horizontal
+		stackView.alignment = .center
+		stackView.spacing = Constants.stackViewSpacing
+		return stackView
 	}()
 
 	private lazy var lightButton: GreenButton = {
@@ -91,6 +111,8 @@ final class NewGameOrTourneyPlayerLevelCell: UITableViewCell {
 		return stackView
 	}()
 
+	private lazy var separator = CustomSeparator()
+
 	// MARK: - Initializers
 
 	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -103,14 +125,17 @@ final class NewGameOrTourneyPlayerLevelCell: UITableViewCell {
 
 	// MARK: - Public Methods
 
-	func configure(callback: (([PlayerLevel]) -> Void)?) {
+	func configure(
+		levelAction: @escaping (() -> Void),
+		callback: ((PlayerLevel) -> Void)?
+	) {
 		self.callback = callback
 	}
 }
 
 // MARK: - Private Methods
 
-private extension NewGameOrTourneyPlayerLevelCell {
+private extension RegistrationPlayerLevelCell {
 
 	func setupToggleButton(
 		_ button: UIButton,
@@ -118,14 +143,18 @@ private extension NewGameOrTourneyPlayerLevelCell {
 		action: @escaping (PlayerLevel) -> Void
 	) {
 		button.addAction(UIAction { [weak self] _ in
-			button.isSelected.toggle()
 			self?.didLevelsChanged(with: level)
 		}, for: .touchUpInside)
 	}
 
 	func didLevelsChanged(with type: PlayerLevel) {
-		playerLevels.toggle(type)
-		callback?(playerLevels)
+		playerLevel = type
+		lightButton.isSelected = type == .light
+		mediumButton.isSelected = type == .medium
+		hardButton.isSelected = type == .hard
+		proButton.isSelected = type == .pro
+		guard let playerLevel else { return }
+		callback?(playerLevel)
 	}
 
 	func setupUI() {
@@ -136,18 +165,22 @@ private extension NewGameOrTourneyPlayerLevelCell {
 
 	func setupViews() {
 		contentView.addSubviews(
-			titleLabel,
-			stackView
+			levelCaptionStackView,
+			stackView,
+			separator
 		)
 		NSLayoutConstraint.activate([
-			titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
-			titleLabel.leadingAnchor.constraint(
+			levelCaptionStackView.topAnchor.constraint(equalTo: contentView.topAnchor),
+			levelCaptionStackView.leadingAnchor.constraint(
 				equalTo: contentView.leadingAnchor,
 				constant: Constants.insetLarge
 			),
 
+			levelInfoButton.widthAnchor.constraint(equalToConstant: Constants.levelInfoButtonSize),
+			levelInfoButton.heightAnchor.constraint(equalToConstant: Constants.levelInfoButtonSize),
+
 			stackView.topAnchor.constraint(
-				equalTo: titleLabel.bottomAnchor,
+				equalTo: levelCaptionStackView.bottomAnchor,
 				constant: Constants.insetMiddle
 			),
 			stackView.leadingAnchor.constraint(
@@ -158,7 +191,20 @@ private extension NewGameOrTourneyPlayerLevelCell {
 				lessThanOrEqualTo: contentView.trailingAnchor,
 				constant: -Constants.insetLarge
 			),
-			stackView.bottomAnchor.constraint(
+
+			separator.topAnchor.constraint(
+				equalTo: stackView.bottomAnchor,
+				constant: Constants.inset
+			),
+			separator.leadingAnchor.constraint(
+				equalTo: contentView.leadingAnchor,
+				constant: Constants.insetLarge
+			),
+			separator.trailingAnchor.constraint(
+				equalTo: contentView.trailingAnchor,
+				constant: -Constants.insetLarge
+			),
+			separator.bottomAnchor.constraint(
 				equalTo: contentView.bottomAnchor,
 				constant: -Constants.inset
 			)
@@ -170,8 +216,17 @@ private extension NewGameOrTourneyPlayerLevelCell {
 
 // MARK: - Preview
 
+import SwiftUI
 @available(iOS 17.0, *)
 #Preview {
-	NewGameOrTourneyAssembly.createModule(with: nil)
+	VStack {
+		UIViewPreview {
+			let cell = RegistrationPlayerLevelCell(style: .default, reuseIdentifier: nil)
+			return cell
+		}
+		.frame(maxHeight: 110)
+	}
+	.padding(.vertical)
+	.background(Color(uiColor: AppColor.Background.screen))
 }
 #endif
