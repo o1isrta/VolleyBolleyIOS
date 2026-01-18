@@ -12,17 +12,14 @@ protocol RegistrationPresenterProtocol: AnyObject {
 	var router: RegistrationRouterProtocol { get }
 
 	func viewDidLoad()
-	func didTapLevelInfo()
 	func nextButtonTapped()
 	func getICellsCount() -> Int
 	func getCellType(index: Int) -> RegistrationCellType
-	func getLocation(type: RegistrationLocationType) -> [String]
-	func setupName(to name: String)
-	func setupSurname(to surname: String)
-	func setupGender(to gender: RegistrationGenderType)
-	func setupBirthday(to date: String)
-	func setupPlayerLevel(to playerLevels: PlayerLevel)
-	func setupLocation(type: RegistrationLocationType, to value: String)
+	func getPlayerNameViewModel(type: RegistrationNameCellType) -> RegistrationPlayerNameCellViewModel
+	func getPlayerLevelViewModel() -> RegistrationPlayerLevelCellViewModel
+	func getPlayerGenderViewModel() -> RegistrationPlayerGenderCellViewModel
+	func getPlayerBirthdayViewModel() -> RegistrationPlayerBirthdayCellViewModel
+	func getPlayerLocationViewModel(type: RegistrationLocationType) -> RegistrationPlayerLocationCellViewModel
 }
 
 final class RegistrationPresenter: RegistrationPresenterProtocol {
@@ -58,12 +55,8 @@ final class RegistrationPresenter: RegistrationPresenterProtocol {
 	// MARK: - Public Methods
 
 	func viewDidLoad() {
-		// TODO: -
+		// TODO: - сделать получение данных с сервера
 //		interactor.fetchCountries()
-	}
-
-	func didTapLevelInfo() {
-		router.showLevelInfoScreen()
 	}
 
 	func nextButtonTapped() {
@@ -71,12 +64,7 @@ final class RegistrationPresenter: RegistrationPresenterProtocol {
 			view?.allowNextStep(false)
 			return
 		}
-
-		guard validateGameDates() else {
-			view?.allowNextStep(false)
-			return
-		}
-		// TODO: - тут нужно собрать модель и отправить данные на следующий экран
+		// TODO: - тут нужно собрать модель и отправить данные на сервер
 		print("router.nextButtonTapped()")
 		print("name", name)
 		print("surname", surname)
@@ -95,15 +83,52 @@ final class RegistrationPresenter: RegistrationPresenterProtocol {
 		RegistrationCellType.allCases[index]
 	}
 
-	// TODO: -
-	func getLocation(type: RegistrationLocationType) -> [String] {
-		switch type {
-		case .country:
-			return ["Cyprus", "Thailand"]
-		case .city:
-			return ["Koh Phangan", "Koh Samui"]
+	func getPlayerNameViewModel(type: RegistrationNameCellType) -> RegistrationPlayerNameCellViewModel {
+		RegistrationPlayerNameCellViewModel(type: type) { [weak self] value in
+			switch type {
+			case .name:
+				self?.setupName(to: value)
+			case .surname:
+				self?.setupSurname(to: value)
+			}
 		}
 	}
+
+	func getPlayerGenderViewModel() -> RegistrationPlayerGenderCellViewModel {
+		RegistrationPlayerGenderCellViewModel { [weak self] gender in
+			self?.setupGender(to: gender)
+		}
+	}
+
+	func getPlayerBirthdayViewModel() -> RegistrationPlayerBirthdayCellViewModel {
+		RegistrationPlayerBirthdayCellViewModel { [weak self] date in
+			self?.setupBirthday(to: date)
+		}
+	}
+
+	func getPlayerLevelViewModel() -> RegistrationPlayerLevelCellViewModel {
+		RegistrationPlayerLevelCellViewModel { [weak self] in
+		   self?.didTapLevelInfo()
+		} callback: { [weak self] level in
+			self?.setupPlayerLevel(to: level)
+		}
+	}
+
+	func getPlayerLocationViewModel(type: RegistrationLocationType) ->
+	RegistrationPlayerLocationCellViewModel {
+		let model = RegistrationPlayerLocationCellViewModel(
+			type: .city,
+			items: getLocation(type: type)
+		) { [weak self] value in
+			self?.setupLocation(type: type, to: value)
+		}
+		return model
+	}
+}
+
+// MARK: - Private Methods
+
+private extension RegistrationPresenter {
 
 	func setupName(to name: String) {
 		self.name = name
@@ -125,6 +150,10 @@ final class RegistrationPresenter: RegistrationPresenterProtocol {
 		validateData()
 	}
 
+	func didTapLevelInfo() {
+		router.showLevelInfoScreen()
+	}
+
 	func setupPlayerLevel(to playerLevel: PlayerLevel) {
 		self.playerLevel = playerLevel
 		validateData()
@@ -134,16 +163,23 @@ final class RegistrationPresenter: RegistrationPresenterProtocol {
 		switch type {
 		case .country:
 			self.country = value
+			// TODO: - сделать получение данных с сервера
+//			interactor.fetchCities()
 		case .city:
 			self.country = value
 		}
 		validateData()
 	}
-}
 
-// MARK: - Private Methods
-
-private extension RegistrationPresenter {
+	// TODO: - сделать получение данных с сервера
+	func getLocation(type: RegistrationLocationType) -> [String] {
+		switch type {
+		case .country:
+			return ["Cyprus", "Thailand"]
+		case .city:
+			return ["Koh Phangan", "Koh Samui"]
+		}
+	}
 
 	func validateData() {
 		guard checkData() else {
@@ -154,12 +190,8 @@ private extension RegistrationPresenter {
 	}
 
 	func checkData() -> Bool {
-		checkGeneralRequirements()
-	}
-
-	func checkGeneralRequirements() -> Bool {
 		guard birthday.isEmpty, birthday.count == Constants.birthdayLength else { return false }
-		// TODO: -
+		// TODO: - делать валидацию данных
 		guard
 			name.isEmpty,
 			surname.isEmpty,
@@ -172,46 +204,12 @@ private extension RegistrationPresenter {
 
 		return true
 	}
-
-	func validateGameDates() -> Bool {
-		// TODO: -
-//		guard let dateRange else { return false }
-//
-//		do {
-//			try GameTimeValidator.validate(gameType: gameType, start: dateRange.startTime, end: dateRange.endTime)
-//			return true
-//		} catch {
-//			view?.showAlert(with: error.localizedDescription)
-//		}
-
-		return false
-	}
 }
 
 // TODO: -
 
 /*
-protocol RegistrationPresenterProtocol: AnyObject {
-	var countries: [String] { get }
-	var cities: [String] { get }
-
-	func viewDidLoad()
-	func didTapLevelInfo()
-	func didTapGetStarted(name: String, surname: String, gender: String)
-	func getICellsCount() -> Int
-	func getCellType(index: Int) -> GameCellType
-	func setupGender(to gender: GameGenderType)
-	func setupPlayerLevels(to playerLevels: [PlayerLevel])
-}
-
 final class RegistrationPresenter: RegistrationPresenterProtocol {
-
-	private var gameType: GameType = .game
-	private var gender: GameGenderType = .mix
-	private var playerLevels: [PlayerLevel] = []
-
-	var countries = ["Cyprus", "Thailand"]
-	let cities = ["Koh Phangan", "Koh Samui"]
 
 	weak var view: RegistrationViewControllerProtocol?
 	var interactor: RegistrationInteractorProtocol!
@@ -225,14 +223,6 @@ final class RegistrationPresenter: RegistrationPresenterProtocol {
 		self.view = view
 		self.interactor = interactor
 		self.router = router
-	}
-
-	func viewDidLoad() {
-		interactor.fetchCountries()
-	}
-
-	func didTapLevelInfo() {
-		router?.showLevelInfoScreen()
 	}
 
 	func didTapGetStarted(name: String, surname: String, gender: String) {

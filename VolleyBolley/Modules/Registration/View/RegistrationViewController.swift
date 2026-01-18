@@ -221,20 +221,54 @@ extension RegistrationViewController: UITableViewDataSource {
 		type: RegistrationNameCellType,
 		for indexPath: IndexPath
 	) -> UITableViewCell {
-		guard let cell = tableView.dequeueReusableCell(
+		guard
+			let model = presenter?.getPlayerNameViewModel(type: type),
+			let cell = tableView.dequeueReusableCell(
 			withIdentifier: RegistrationPlayerNameCell.reuseIdentifier,
 			for: indexPath
 		) as? RegistrationPlayerNameCell else {
 			return UITableViewCell()
 		}
-		cell.configure(type: type) { [weak self] value in
-			switch type {
-			case .name:
-				self?.presenter?.setupName(to: value)
-			case .surname:
-				self?.presenter?.setupSurname(to: value)
-			}
+		cell.configure(model: model)
+		return cell
+	}
+
+	func makeGenderCell(for indexPath: IndexPath) -> UITableViewCell {
+		guard
+			let model = presenter?.getPlayerGenderViewModel(),
+			let cell = tableView.dequeueReusableCell(
+			withIdentifier: RegistrationPlayerGenderCell.reuseIdentifier,
+			for: indexPath
+		) as? RegistrationPlayerGenderCell else {
+			return UITableViewCell()
 		}
+		cell.configure(model: model)
+		return cell
+	}
+
+	func makeBirthdayCell(for indexPath: IndexPath) -> UITableViewCell {
+		guard
+			let model = presenter?.getPlayerBirthdayViewModel(),
+			let cell = tableView.dequeueReusableCell(
+			withIdentifier: RegistrationPlayerBirthdayCell.reuseIdentifier,
+			for: indexPath
+		) as? RegistrationPlayerBirthdayCell else {
+			return UITableViewCell()
+		}
+		cell.configure(model: model)
+		return cell
+	}
+
+	func makePlayerLevelsCell(for indexPath: IndexPath) -> UITableViewCell {
+		guard
+			let model = presenter?.getPlayerLevelViewModel(),
+			let cell = tableView.dequeueReusableCell(
+			withIdentifier: RegistrationPlayerLevelCell.reuseIdentifier,
+			for: indexPath
+		) as? RegistrationPlayerLevelCell else {
+			return UITableViewCell()
+		}
+		cell.configure(model: model)
 		return cell
 	}
 
@@ -242,58 +276,15 @@ extension RegistrationViewController: UITableViewDataSource {
 		type: RegistrationLocationType,
 		for indexPath: IndexPath
 	) -> UITableViewCell {
-		guard let cell = tableView.dequeueReusableCell(
+		guard
+			let model = presenter?.getPlayerLocationViewModel(type: type),
+			let cell = tableView.dequeueReusableCell(
 			withIdentifier: RegistrationPlayerLocationCell.reuseIdentifier,
 			for: indexPath
 		) as? RegistrationPlayerLocationCell else {
 			return UITableViewCell()
 		}
-		let items = presenter?.getLocation(type: type) ?? []
-		cell.configure(type: type, items: items) { [weak self] value in
-			self?.presenter?.setupLocation(type: type, to: value)
-		}
-		return cell
-	}
-
-	func makeBirthdayCell(for indexPath: IndexPath) -> UITableViewCell {
-		guard let cell = tableView.dequeueReusableCell(
-			withIdentifier: RegistrationPlayerBirthdayCell.reuseIdentifier,
-			for: indexPath
-		) as? RegistrationPlayerBirthdayCell else {
-			return UITableViewCell()
-		}
-		cell.configure { [weak self] date in
-			self?.presenter?.setupBirthday(to: date)
-		}
-		return cell
-	}
-
-	func makeGenderCell(for indexPath: IndexPath) -> UITableViewCell {
-		guard let cell = tableView.dequeueReusableCell(
-			withIdentifier: RegistrationPlayerGenderCell.reuseIdentifier,
-			for: indexPath
-		) as? RegistrationPlayerGenderCell else {
-			return UITableViewCell()
-		}
-		cell.configure { [weak self] gender in
-			self?.presenter?.setupGender(to: gender)
-		}
-		return cell
-	}
-
-	func makePlayerLevelsCell(for indexPath: IndexPath) -> UITableViewCell {
-		guard let cell = tableView.dequeueReusableCell(
-			withIdentifier: RegistrationPlayerLevelCell.reuseIdentifier,
-			for: indexPath
-		) as? RegistrationPlayerLevelCell else {
-			return UITableViewCell()
-		}
-		let levelAction: () -> Void = { [weak self] in
-			self?.presenter?.didTapLevelInfo()
-		}
-		cell.configure(levelAction: levelAction) { [weak self] level in
-			self?.presenter?.setupPlayerLevel(to: level)
-		}
+		cell.configure(model: model)
 		return cell
 	}
 }

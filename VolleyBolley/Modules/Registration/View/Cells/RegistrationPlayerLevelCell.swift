@@ -7,6 +7,11 @@
 
 import UIKit
 
+struct RegistrationPlayerLevelCellViewModel {
+	let levelAction: (() -> Void)
+	let callback: ((PlayerLevel) -> Void)?
+}
+
 final class RegistrationPlayerLevelCell: UITableViewCell {
 
 	// MARK: - Public Properties
@@ -35,6 +40,9 @@ final class RegistrationPlayerLevelCell: UITableViewCell {
 		config.image = UIImage.Icon.tooltip
 		config.imagePlacement = .leading
 		let button = UIButton(configuration: config)
+		button.addAction(UIAction { [weak self] _ in
+			self?.levelAction()
+		}, for: .touchUpInside)
 		return button
 	}()
 
@@ -120,14 +128,9 @@ final class RegistrationPlayerLevelCell: UITableViewCell {
 
 	// MARK: - Public Methods
 
-	func configure(
-		levelAction: @escaping (() -> Void),
-		callback: ((PlayerLevel) -> Void)?
-	) {
-		levelInfoButton.addAction(UIAction { _ in
-			levelAction()
-		}, for: .touchUpInside)
-		self.callback = callback
+	func configure(model: RegistrationPlayerLevelCellViewModel) {
+		levelAction = model.levelAction
+		callback = model.callback
 	}
 }
 
@@ -221,9 +224,10 @@ import SwiftUI
 			let levelAction: () -> Void = {
 				print("levelAction: level btn tapped")
 			}
-			cell.configure(levelAction: levelAction) { level in
+			let model = RegistrationPlayerLevelCellViewModel(levelAction: levelAction) { level in
 				print("level: \(level)")
 			}
+			cell.configure(model: model)
 			return cell
 		}
 		.frame(maxHeight: 110)

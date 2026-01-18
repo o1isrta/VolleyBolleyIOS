@@ -7,6 +7,10 @@
 
 import UIKit
 
+struct RegistrationPlayerGenderCellViewModel {
+	let callback: ((RegistrationGenderType) -> Void)?
+}
+
 final class RegistrationPlayerGenderCell: UITableViewCell {
 
 	// MARK: - Public Properties
@@ -74,8 +78,8 @@ final class RegistrationPlayerGenderCell: UITableViewCell {
 
 	// MARK: - Public Methods
 
-	func configure(callback: ((RegistrationGenderType) -> Void)?) {
-		self.callback = callback
+	func configure(model: RegistrationPlayerGenderCellViewModel) {
+		callback = model.callback
 	}
 }
 

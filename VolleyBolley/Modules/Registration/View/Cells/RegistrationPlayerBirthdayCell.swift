@@ -7,6 +7,10 @@
 
 import UIKit
 
+struct RegistrationPlayerBirthdayCellViewModel {
+	let callback: ((String) -> Void)?
+}
+
 final class RegistrationPlayerBirthdayCell: UITableViewCell {
 
 	// MARK: - Public Properties
@@ -55,8 +59,8 @@ final class RegistrationPlayerBirthdayCell: UITableViewCell {
 
 	// MARK: - Public Methods
 
-	func configure(callback: ((String) -> Void)?) {
-		self.callback = callback
+	func configure(model: RegistrationPlayerBirthdayCellViewModel) {
+		callback = model.callback
 	}
 }
 
@@ -154,10 +158,11 @@ import SwiftUI
 	VStack {
 		UIViewPreview {
 			let cell = RegistrationPlayerBirthdayCell(style: .default, reuseIdentifier: nil)
-			cell.configure { date in
+			let model = RegistrationPlayerBirthdayCellViewModel { date in
 				print("date: \(date)")
 				print("date length: \(date.count)")
 			}
+			cell.configure(model: model)
 			return cell
 		}
 		.frame(maxHeight: 110)

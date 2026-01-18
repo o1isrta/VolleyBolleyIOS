@@ -7,6 +7,12 @@
 
 import UIKit
 
+struct RegistrationPlayerLocationCellViewModel {
+	let type: RegistrationLocationType
+	let items: [String]
+	let callback: ((String) -> Void)?
+}
+
 final class RegistrationPlayerLocationCell: UITableViewCell {
 
 	// MARK: - Public Properties
@@ -59,16 +65,12 @@ final class RegistrationPlayerLocationCell: UITableViewCell {
 
 	// MARK: - Public Methods
 
-	func configure(
-		type: RegistrationLocationType,
-		items: [String],
-		callback: ((String) -> Void)?
-	) {
-		titleLabel.text = type.title
-		locationPicker.placeholder = type.placeholder
-		locationPicker.updateItems(items)
-		separator.isHidden = type.isHasSeparator
-		self.callback = callback
+	func configure(model: RegistrationPlayerLocationCellViewModel) {
+		titleLabel.text = model.type.title
+		locationPicker.placeholder = model.type.placeholder
+		locationPicker.updateItems(model.items)
+		separator.isHidden = model.type.isHasSeparator
+		callback = model.callback
 	}
 
 	func invalidateCellHeight() {
@@ -140,10 +142,14 @@ import SwiftUI
 		UIViewPreview {
 			let cell = RegistrationPlayerLocationCell(style: .default, reuseIdentifier: nil)
 			let items = ["Cyprus", "Thailand"]
-			cell.configure(type: .country, items: items) { value in
+			let model = RegistrationPlayerLocationCellViewModel(
+				type: .country,
+				items: items
+			) { value in
 				print("country: \(value)")
 				print("country length: \(value.count)")
 			}
+			cell.configure(model: model)
 			return cell
 		}
 		.frame(maxHeight: 110)
@@ -151,10 +157,14 @@ import SwiftUI
 		UIViewPreview {
 			let cell = RegistrationPlayerLocationCell(style: .default, reuseIdentifier: nil)
 			let items = ["Koh Phangan", "Koh Samui"]
-			cell.configure(type: .city, items: items) { value in
+			let model = RegistrationPlayerLocationCellViewModel(
+				type: .city,
+				items: items
+			) { value in
 				print("city: \(value)")
 				print("city length: \(value.count)")
 			}
+			cell.configure(model: model)
 			return cell
 		}
 		.frame(maxHeight: 110)

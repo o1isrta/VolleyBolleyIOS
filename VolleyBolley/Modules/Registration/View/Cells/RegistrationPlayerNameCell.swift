@@ -26,6 +26,11 @@ enum RegistrationNameCellType {
 	}
 }
 
+struct RegistrationPlayerNameCellViewModel {
+	let type: RegistrationNameCellType
+	let callback: ((String) -> Void)?
+}
+
 final class RegistrationPlayerNameCell: UITableViewCell {
 
 	// MARK: - Public Properties
@@ -80,14 +85,11 @@ final class RegistrationPlayerNameCell: UITableViewCell {
 
 	// MARK: - Public Methods
 
-	func configure(
-		type: RegistrationNameCellType,
-		callback: ((String) -> Void)?
-	) {
-		titleLabel.text = type.title
-		textField.placeholder = type.title
-		separator.isHidden = type.isHasSeparator
-		self.callback = callback
+	func configure(model: RegistrationPlayerNameCellViewModel) {
+		titleLabel.text = model.type.title
+		textField.placeholder = model.type.title
+		separator.isHidden = model.type.isHasSeparator
+		callback = model.callback
 	}
 }
 
@@ -132,20 +134,22 @@ import SwiftUI
 	VStack {
 		UIViewPreview {
 			let cell = RegistrationPlayerNameCell(style: .default, reuseIdentifier: nil)
-			cell.configure(type: .name) { text in
+			let model = RegistrationPlayerNameCellViewModel(type: .name) { text in
 				print("name: \(text)")
 				print("name length: \(text.count)")
 			}
+			cell.configure(model: model)
 			return cell
 		}
 		.frame(maxHeight: 110)
 
 		UIViewPreview {
 			let cell = RegistrationPlayerNameCell(style: .default, reuseIdentifier: nil)
-			cell.configure(type: .surname) { text in
+			let model = RegistrationPlayerNameCellViewModel(type: .surname) { text in
 				print("surname: \(text)")
 				print("surname length: \(text.count)")
 			}
+			cell.configure(model: model)
 			return cell
 		}
 		.frame(maxHeight: 110)
