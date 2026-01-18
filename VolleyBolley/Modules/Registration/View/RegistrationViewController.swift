@@ -11,7 +11,6 @@ import UIKit
 
 protocol RegistrationViewControllerProtocol: AnyObject {
 	var presenter: RegistrationPresenterProtocol? { get set }
-//	func updateCountries(_ countries: [String])
 	func allowNextStep(_ allow: Bool)
 	func showAlert(with message: String)
 }

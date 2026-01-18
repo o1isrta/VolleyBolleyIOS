@@ -2743,6 +2743,23 @@
         }
       }
     },
+    "placeholder.date" : {
+      "comment" : "Date field placeholder",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DD / MM / YYYY"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ДД / ММ / ГГГГ"
+          }
+        }
+      }
+    },
     "Players" : {
       "comment" : "Profile",
       "localizations" : {
