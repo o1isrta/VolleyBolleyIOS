@@ -10,18 +10,19 @@ import Foundation
 protocol RegistrationPresenterProtocol: AnyObject {
 	var view: RegistrationViewControllerProtocol? { get set }
 	var router: RegistrationRouterProtocol { get }
-	var location: LocationTitleViewModel { get }
 
 	func viewDidLoad()
 	func didTapLevelInfo()
 	func nextButtonTapped()
 	func getICellsCount() -> Int
 	func getCellType(index: Int) -> RegistrationCellType
+	func getLocation(type: RegistrationLocationType) -> [String]
 	func setupName(to name: String)
 	func setupSurname(to surname: String)
 	func setupGender(to gender: RegistrationGenderType)
 	func setupBirthday(to date: String)
 	func setupPlayerLevel(to playerLevels: PlayerLevel)
+	func setupLocation(type: RegistrationLocationType, to value: String)
 }
 
 final class RegistrationPresenter: RegistrationPresenterProtocol {
@@ -34,21 +35,13 @@ final class RegistrationPresenter: RegistrationPresenterProtocol {
 
 	// MARK: - Private Properties
 
-	// TODO: -
-	#if DEBUG
-	private(set) var location: LocationTitleViewModel = LocationTitleViewModel(
-		title: "Karon Beach Club",
-		location: "Patak Rd, Mueang Phuket"
-	)
-	#else
-	private(set) var location: LocationTitleViewModel = .init(title: "", location: "")
-	#endif
-
 	private var name: String = ""
 	private var surname: String = ""
 	private var gender: RegistrationGenderType?
 	private var birthday: String = ""
 	private var playerLevel: PlayerLevel?
+	private var country: String = ""
+	private var city: String = ""
 
 	private enum Constants {
 		static let birthdayLength: Int = 14
@@ -90,6 +83,8 @@ final class RegistrationPresenter: RegistrationPresenterProtocol {
 		print("birthday", birthday)
 		print("gender", gender)
 		print("playerLevel", playerLevel)
+		print("country", country)
+		print("city", city)
 	}
 
 	func getICellsCount() -> Int {
@@ -98,6 +93,16 @@ final class RegistrationPresenter: RegistrationPresenterProtocol {
 
 	func getCellType(index: Int) -> RegistrationCellType {
 		RegistrationCellType.allCases[index]
+	}
+
+	// TODO: -
+	func getLocation(type: RegistrationLocationType) -> [String] {
+		switch type {
+		case .country:
+			return ["Cyprus", "Thailand"]
+		case .city:
+			return ["Koh Phangan", "Koh Samui"]
+		}
 	}
 
 	func setupName(to name: String) {
@@ -122,6 +127,16 @@ final class RegistrationPresenter: RegistrationPresenterProtocol {
 
 	func setupPlayerLevel(to playerLevel: PlayerLevel) {
 		self.playerLevel = playerLevel
+		validateData()
+	}
+
+	func setupLocation(type: RegistrationLocationType, to value: String) {
+		switch type {
+		case .country:
+			self.country = value
+		case .city:
+			self.country = value
+		}
 		validateData()
 	}
 }
@@ -149,8 +164,8 @@ private extension RegistrationPresenter {
 			name.isEmpty,
 			surname.isEmpty,
 			playerLevel == nil,
-			!location.title.isEmpty,
-			!location.location.isEmpty
+			country.isEmpty,
+			city.isEmpty
 		else {
 			return false
 		}

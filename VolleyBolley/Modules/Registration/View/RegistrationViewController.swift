@@ -59,6 +59,9 @@ final class RegistrationViewController: UIViewController, RegistrationViewContro
 		tableView.register(
 			RegistrationPlayerLevelCell.self,
 			forCellReuseIdentifier: RegistrationPlayerLevelCell.reuseIdentifier)
+		tableView.register(
+			RegistrationPlayerLocationCell.self,
+			forCellReuseIdentifier: RegistrationPlayerLocationCell.reuseIdentifier)
 		return tableView
 	}()
 
@@ -79,7 +82,9 @@ final class RegistrationViewController: UIViewController, RegistrationViewContro
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.backgroundColor = AppColor.Background.screen
+		presenter?.viewDidLoad()
 		setupView()
+		hideKeyboardWhenTappedAround()
 	}
 
 	override func viewDidLayoutSubviews() {
@@ -157,8 +162,8 @@ private extension RegistrationViewController {
 			tableView.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor),
 			tableView.trailingAnchor.constraint(equalTo: glassmorphismView.trailingAnchor),
 			tableView.bottomAnchor.constraint(
-				equalTo: glassmorphismView.bottomAnchor,
-				constant: -Constants.padding
+				equalTo: nextButton.topAnchor,
+				constant: -Constants.paddingDouble
 			),
 
 			nextButton.leadingAnchor.constraint(
@@ -204,10 +209,11 @@ extension RegistrationViewController: UITableViewDataSource {
 			return makeGenderCell(for: indexPath)
 		case .playerLevel:
 			return makePlayerLevelsCell(for: indexPath)
-//		case .location:
-//			return makeLocationCell(for: indexPath)
-//		case .none:
-		default:
+		case .country:
+			return makeLocationCell(type: .country, for: indexPath)
+		case .city:
+			return makeLocationCell(type: .city, for: indexPath)
+		case .none:
 			return UITableViewCell()
 		}
 	}
@@ -233,22 +239,25 @@ extension RegistrationViewController: UITableViewDataSource {
 		return cell
 	}
 
-//	func makeLocationCell(for indexPath: IndexPath) -> UITableViewCell {
-//		guard let cell = tableView.dequeueReusableCell(
-//			withIdentifier: NewGameOrTourneyPlaceCell.reuseIdentifier,
-//			for: indexPath
-//		) as? NewGameOrTourneyPlaceCell else {
-//			return UITableViewCell()
-//		}
-//
-//		if let location = presenter?.location {
-//			cell.configure(with: location) { [weak self] in
-//				self?.presenter?.backButtonTapped()
-//			}
-//		}
-//		return cell
-//	}
-//
+	func makeLocationCell(
+		type: RegistrationLocationType,
+		for indexPath: IndexPath
+	) -> UITableViewCell {
+		guard let cell = tableView.dequeueReusableCell(
+			withIdentifier: RegistrationPlayerLocationCell.reuseIdentifier,
+			for: indexPath
+		) as? RegistrationPlayerLocationCell else {
+			return UITableViewCell()
+		}
+		let items = presenter?.getLocation(type: type) ?? []
+		cell.configure(type: type, items: items) { [weak self] value in
+			self?.presenter?.setupLocation(type: type, to: value)
+		}
+		// TODO: -
+//		cell.invalidateIntrinsicContentSize()
+		return cell
+	}
+
 	func makeBirthdayCell(for indexPath: IndexPath) -> UITableViewCell {
 		guard let cell = tableView.dequeueReusableCell(
 			withIdentifier: RegistrationPlayerBirthdayCell.reuseIdentifier,
