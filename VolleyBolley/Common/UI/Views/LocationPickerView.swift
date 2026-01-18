@@ -126,12 +126,12 @@ class LocationPickerView: UIView, UITableViewDelegate, UITableViewDataSource {
             titleContainer.heightAnchor.constraint(equalToConstant: closedHeight),
 
             titleLabel.topAnchor.constraint(equalTo: titleContainer.topAnchor),
-            titleLabel.leadingAnchor.constraint(equalTo: titleContainer.leadingAnchor, constant: 12),
-            titleLabel.trailingAnchor.constraint(equalTo: arrowImageView.leadingAnchor, constant: -22),
+            titleLabel.leadingAnchor.constraint(equalTo: titleContainer.leadingAnchor, constant: 16),
+            titleLabel.trailingAnchor.constraint(equalTo: arrowImageView.leadingAnchor, constant: -16),
             titleLabel.bottomAnchor.constraint(equalTo: titleContainer.bottomAnchor),
 
             arrowImageView.centerYAnchor.constraint(equalTo: titleContainer.centerYAnchor),
-            arrowImageView.trailingAnchor.constraint(equalTo: titleContainer.trailingAnchor, constant: -22),
+            arrowImageView.trailingAnchor.constraint(equalTo: titleContainer.trailingAnchor, constant: -16),
             arrowImageView.widthAnchor.constraint(equalToConstant: 14),
             arrowImageView.heightAnchor.constraint(equalToConstant: 7),
 
