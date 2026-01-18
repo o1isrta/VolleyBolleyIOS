@@ -92,7 +92,7 @@ final class AppRouter {
 
     func pushUserReg() {
         guard let nav = navigationController,
-              let userRegVC = resolver.resolve(UserRegViewController.self) else { return }
+              let userRegVC = resolver.resolve(RegistrationViewController.self) else { return }
         nav.pushViewController(userRegVC, animated: true)
     }
 

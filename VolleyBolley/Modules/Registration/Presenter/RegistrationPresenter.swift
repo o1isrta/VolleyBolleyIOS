@@ -27,10 +27,13 @@ final class RegistrationPresenter: RegistrationPresenterProtocol {
 	// MARK: - Public Properties
 
 	weak var view: RegistrationViewControllerProtocol?
-
+	let interactor: RegistrationInteractorProtocol
 	let router: RegistrationRouterProtocol
 
 	// MARK: - Private Properties
+
+	private var countries: [String] = []
+	private var cities: [String] = []
 
 	private var name: String = ""
 	private var surname: String = ""
@@ -47,8 +50,12 @@ final class RegistrationPresenter: RegistrationPresenterProtocol {
 	// MARK: - Initializers
 
 	init(
+		view: RegistrationViewControllerProtocol,
+		interactor: RegistrationInteractorProtocol,
 		router: RegistrationRouterProtocol
 	) {
+		self.view = view
+		self.interactor = interactor
 		self.router = router
 	}
 
@@ -73,6 +80,7 @@ final class RegistrationPresenter: RegistrationPresenterProtocol {
 		print("playerLevel", playerLevel)
 		print("country", country)
 		print("city", city)
+//		interactor.registerUser(name: name, surname: surname, gender: gender)
 	}
 
 	func getICellsCount() -> Int {
@@ -84,33 +92,34 @@ final class RegistrationPresenter: RegistrationPresenterProtocol {
 	}
 
 	func getPlayerNameViewModel(type: RegistrationNameCellType) -> RegistrationPlayerNameCellViewModel {
-		RegistrationPlayerNameCellViewModel(type: type) { [weak self] value in
+		RegistrationPlayerNameCellViewModel(type: type) { value in
 			switch type {
 			case .name:
-				self?.setupName(to: value)
+				self.setupName(to: value)
 			case .surname:
-				self?.setupSurname(to: value)
+				self.setupSurname(to: value)
 			}
 		}
 	}
 
 	func getPlayerGenderViewModel() -> RegistrationPlayerGenderCellViewModel {
-		RegistrationPlayerGenderCellViewModel { [weak self] gender in
-			self?.setupGender(to: gender)
+		RegistrationPlayerGenderCellViewModel { gender in
+			print("gender", gender)
+			self.setupGender(to: gender)
 		}
 	}
 
 	func getPlayerBirthdayViewModel() -> RegistrationPlayerBirthdayCellViewModel {
-		RegistrationPlayerBirthdayCellViewModel { [weak self] date in
-			self?.setupBirthday(to: date)
+		RegistrationPlayerBirthdayCellViewModel { date in
+			self.setupBirthday(to: date)
 		}
 	}
 
 	func getPlayerLevelViewModel() -> RegistrationPlayerLevelCellViewModel {
-		RegistrationPlayerLevelCellViewModel { [weak self] in
-		   self?.didTapLevelInfo()
-		} callback: { [weak self] level in
-			self?.setupPlayerLevel(to: level)
+		RegistrationPlayerLevelCellViewModel {
+		   self.didTapLevelInfo()
+		} callback: { level in
+			self.setupPlayerLevel(to: level)
 		}
 	}
 
@@ -119,8 +128,8 @@ final class RegistrationPresenter: RegistrationPresenterProtocol {
 		let model = RegistrationPlayerLocationCellViewModel(
 			type: .city,
 			items: getLocation(type: type)
-		) { [weak self] value in
-			self?.setupLocation(type: type, to: value)
+		) { value in
+			self.setupLocation(type: type, to: value)
 		}
 		return model
 	}
@@ -162,11 +171,13 @@ private extension RegistrationPresenter {
 	func setupLocation(type: RegistrationLocationType, to value: String) {
 		switch type {
 		case .country:
-			self.country = value
+			country = value
 			// TODO: - сделать получение данных с сервера
-//			interactor.fetchCities()
+//			cities = interactor.fetchCities()
+			cities = ["Koh Phangan", "Koh Samui"]
+			view?.reloadTableView()
 		case .city:
-			self.country = value
+			city = value
 		}
 		validateData()
 	}
@@ -175,9 +186,10 @@ private extension RegistrationPresenter {
 	func getLocation(type: RegistrationLocationType) -> [String] {
 		switch type {
 		case .country:
-			return ["Cyprus", "Thailand"]
+			countries = ["Cyprus", "Thailand"]
+			return countries
 		case .city:
-			return ["Koh Phangan", "Koh Samui"]
+			return cities
 		}
 	}
 
@@ -190,14 +202,13 @@ private extension RegistrationPresenter {
 	}
 
 	func checkData() -> Bool {
-		guard birthday.isEmpty, birthday.count == Constants.birthdayLength else { return false }
-		// TODO: - делать валидацию данных
 		guard
-			name.isEmpty,
-			surname.isEmpty,
-			playerLevel == nil,
-			country.isEmpty,
-			city.isEmpty
+			birthday.count == Constants.birthdayLength,
+			!name.isEmpty,
+			!surname.isEmpty,
+			playerLevel != nil,
+			!country.isEmpty,
+			!city.isEmpty
 		else {
 			return false
 		}
@@ -206,35 +217,11 @@ private extension RegistrationPresenter {
 	}
 }
 
-// TODO: -
-
-/*
-final class RegistrationPresenter: RegistrationPresenterProtocol {
-
-	weak var view: RegistrationViewControllerProtocol?
-	var interactor: RegistrationInteractorProtocol!
-	var router: RegistrationRouterProtocol!
-
-	init(
-		view: RegistrationViewControllerProtocol,
-		interactor: RegistrationInteractorProtocol,
-		router: RegistrationRouterProtocol
-	) {
-		self.view = view
-		self.interactor = interactor
-		self.router = router
-	}
-
-	func didTapGetStarted(name: String, surname: String, gender: String) {
-		interactor.registerUser(name: name, surname: surname, gender: gender)
-	}
-}
-
 extension RegistrationPresenter: RegistrationInteractorOutputProtocol {
 
 	func didFetchCountries(_ countries: [String]) {
 		self.countries = countries
-		view?.updateCountries(countries)
+//		view?.updateCountries(countries)
 	}
 
 	func registrationDidSucceed() {
@@ -245,4 +232,3 @@ extension RegistrationPresenter: RegistrationInteractorOutputProtocol {
 
 	}
 }
-*/

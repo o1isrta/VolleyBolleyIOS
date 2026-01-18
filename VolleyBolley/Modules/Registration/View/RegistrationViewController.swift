@@ -13,11 +13,12 @@ protocol RegistrationViewControllerProtocol: AnyObject {
 	var presenter: RegistrationPresenterProtocol? { get set }
 	func allowNextStep(_ allow: Bool)
 	func showAlert(with message: String)
+	func reloadTableView()
 }
 
 // MARK: - RegistrationViewController
 
-final class RegistrationViewController: UIViewController, RegistrationViewControllerProtocol {
+final class RegistrationViewController: UIViewController {
 
 	// MARK: - Public Properties
 
@@ -90,6 +91,11 @@ final class RegistrationViewController: UIViewController, RegistrationViewContro
 		super.viewDidLayoutSubviews()
 		view.bringSubviewToFront(customAlertView)
 	}
+}
+
+// MARK: - Private Methods
+
+extension RegistrationViewController: RegistrationViewControllerProtocol {
 
 	func allowNextStep(_ allow: Bool) {
 		nextButton.isEnabled = allow
@@ -106,9 +112,11 @@ final class RegistrationViewController: UIViewController, RegistrationViewContro
 		)
 		customAlertView.configure(with: model)
 	}
-}
 
-// MARK: - Private Methods
+	func reloadTableView() {
+		tableView.reloadData()
+	}
+}
 
 private extension RegistrationViewController {
 
@@ -288,13 +296,3 @@ extension RegistrationViewController: UITableViewDataSource {
 		return cell
 	}
 }
-
-#if DEBUG
-
-// MARK: - Preview
-
-@available(iOS 17.0, *)
-#Preview {
-	RegistrationAssembly.createModule(with: nil)
-}
-#endif

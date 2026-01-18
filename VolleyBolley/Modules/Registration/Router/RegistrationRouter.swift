@@ -17,17 +17,16 @@ final class RegistrationRouter: RegistrationRouterProtocol {
 	// MARK: - Private Properties
 
 	private weak var viewController: UIViewController?
-	// TODO: - 
-//	private weak var router: AppRouter?
+	private weak var router: AppRouter?
 
 	// MARK: - Initializers
 
 	init(
-		viewController: UIViewController
-//		router: AppRouter?
+		viewController: UIViewController,
+		router: AppRouter?
 	) {
 		self.viewController = viewController
-//		self.router = router
+		self.router = router
 	}
 
 	// MARK: - Public Methods
