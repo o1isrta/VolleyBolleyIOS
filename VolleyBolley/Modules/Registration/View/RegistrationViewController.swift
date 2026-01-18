@@ -48,6 +48,9 @@ final class RegistrationViewController: UIViewController, RegistrationViewContro
 		tableView.rowHeight = UITableView.automaticDimension
 		tableView.estimatedRowHeight = Constants.tableEstimatedRowHeight
 		tableView.register(
+			RegistrationPlayerNameCell.self,
+			forCellReuseIdentifier: RegistrationPlayerNameCell.reuseIdentifier)
+		tableView.register(
 			RegistrationPlayerGenderCell.self,
 			forCellReuseIdentifier: RegistrationPlayerGenderCell.reuseIdentifier)
 		tableView.register(
@@ -191,18 +194,43 @@ extension RegistrationViewController: UITableViewDataSource {
 	) -> UITableViewCell {
 		let cellType = presenter?.getCellType(index: indexPath.row)
 		switch cellType {
-//		case .location:
-//			return makeLocationCell(for: indexPath)
+		case .name:
+			return makeNameCell(type: .name, for: indexPath)
+		case .surname:
+			return makeNameCell(type: .surname, for: indexPath)
 		case .birthday:
 			return makeBirthdayCell(for: indexPath)
 		case .gender:
 			return makeGenderCell(for: indexPath)
 		case .playerLevel:
 			return makePlayerLevelsCell(for: indexPath)
+//		case .location:
+//			return makeLocationCell(for: indexPath)
 //		case .none:
 		default:
 			return UITableViewCell()
 		}
+	}
+
+	func makeNameCell(
+		type: RegistrationNameCellType,
+		for indexPath: IndexPath
+	) -> UITableViewCell {
+		guard let cell = tableView.dequeueReusableCell(
+			withIdentifier: RegistrationPlayerNameCell.reuseIdentifier,
+			for: indexPath
+		) as? RegistrationPlayerNameCell else {
+			return UITableViewCell()
+		}
+		cell.configure(type: type) { [weak self] value in
+			switch type {
+			case .name:
+				self?.presenter?.setupName(to: value)
+			case .surname:
+				self?.presenter?.setupSurname(to: value)
+			}
+		}
+		return cell
 	}
 
 //	func makeLocationCell(for indexPath: IndexPath) -> UITableViewCell {

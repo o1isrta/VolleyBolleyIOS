@@ -17,6 +17,8 @@ protocol RegistrationPresenterProtocol: AnyObject {
 	func nextButtonTapped()
 	func getICellsCount() -> Int
 	func getCellType(index: Int) -> RegistrationCellType
+	func setupName(to name: String)
+	func setupSurname(to surname: String)
 	func setupGender(to gender: RegistrationGenderType)
 	func setupBirthday(to date: String)
 	func setupPlayerLevel(to playerLevels: PlayerLevel)
@@ -42,9 +44,15 @@ final class RegistrationPresenter: RegistrationPresenterProtocol {
 	private(set) var location: LocationTitleViewModel = .init(title: "", location: "")
 	#endif
 
+	private var name: String = ""
+	private var surname: String = ""
 	private var gender: RegistrationGenderType?
-	private var birthday: String?
+	private var birthday: String = ""
 	private var playerLevel: PlayerLevel?
+
+	private enum Constants {
+		static let birthdayLength: Int = 14
+	}
 
 	// MARK: - Initializers
 
@@ -77,6 +85,8 @@ final class RegistrationPresenter: RegistrationPresenterProtocol {
 		}
 		// TODO: - тут нужно собрать модель и отправить данные на следующий экран
 		print("router.nextButtonTapped()")
+		print("name", name)
+		print("surname", surname)
 		print("birthday", birthday)
 		print("gender", gender)
 		print("playerLevel", playerLevel)
@@ -88,6 +98,16 @@ final class RegistrationPresenter: RegistrationPresenterProtocol {
 
 	func getCellType(index: Int) -> RegistrationCellType {
 		RegistrationCellType.allCases[index]
+	}
+
+	func setupName(to name: String) {
+		self.name = name
+		validateData()
+	}
+
+	func setupSurname(to surname: String) {
+		self.surname = surname
+		validateData()
 	}
 
 	func setupGender(to gender: RegistrationGenderType) {
@@ -123,9 +143,11 @@ private extension RegistrationPresenter {
 	}
 
 	func checkGeneralRequirements() -> Bool {
+		guard birthday.isEmpty, birthday.count == Constants.birthdayLength else { return false }
 		// TODO: -
 		guard
-			let _ = birthday,
+			name.isEmpty,
+			surname.isEmpty,
 			playerLevel == nil,
 			!location.title.isEmpty,
 			!location.location.isEmpty

@@ -9,6 +9,7 @@ import Foundation
 
 enum RegistrationCellType: CaseIterable {
 	case name
+	case surname
 	case gender
 	case birthday
 	case playerLevel

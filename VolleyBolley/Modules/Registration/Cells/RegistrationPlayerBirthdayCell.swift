@@ -26,7 +26,6 @@ final class RegistrationPlayerBirthdayCell: UITableViewCell {
 
 		static let birthdayTextFieldLeftPadding: CGFloat = 0
 		static let birthdayTextFieldWidth: CGFloat = 120
-		static let birthdayTextFieldValidCount: Int = 14
 	}
 
 	private let titleLabel = CustomLabel(text: String(localized: "Date of birth"), isBold: true)
@@ -64,12 +63,6 @@ final class RegistrationPlayerBirthdayCell: UITableViewCell {
 // MARK: - Private Methods
 
 private extension RegistrationPlayerBirthdayCell {
-
-	func validateDate() {
-		guard birthdayTextField.text?.count == Constants.birthdayTextFieldValidCount
-		else { return }
-		callback?(birthdayTextField.text ?? "")
-	}
 
 	func setupUI() {
 		backgroundColor = AppColor.Background.clear
@@ -146,7 +139,7 @@ extension RegistrationPlayerBirthdayCell: UITextFieldDelegate {
 			replacementString: string,
 			formatter: { $0.formattedBirthdayOrNil() }
 		)
-		validateDate()
+		callback?(birthdayTextField.text ?? "")
 		return result
 	}
 }

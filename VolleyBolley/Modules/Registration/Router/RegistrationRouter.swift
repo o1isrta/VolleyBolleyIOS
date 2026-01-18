@@ -17,6 +17,7 @@ final class RegistrationRouter: RegistrationRouterProtocol {
 	// MARK: - Private Properties
 
 	private weak var viewController: UIViewController?
+	// TODO: - 
 //	private weak var router: AppRouter?
 
 	// MARK: - Initializers
@@ -32,7 +33,7 @@ final class RegistrationRouter: RegistrationRouterProtocol {
 	// MARK: - Public Methods
 
 	func navigateToNextScreen() {
-		// TODO: Сделать переход на следующий экран
+		// TODO: - Сделать переход на следующий экран
 	}
 
 	func showLevelInfoScreen() {
