@@ -33,10 +33,8 @@ final class RegistrationPlayerLevelCell: UITableViewCell {
 
 	private lazy var levelInfoButton: UIButton = {
 		var config = UIButton.Configuration.plain()
-		config.image = UIImage(systemName: "questionmark.circle")
+		config.image = UIImage.Icon.tooltip
 		config.imagePlacement = .leading
-		config.baseForegroundColor = AppColor.Background.screen
-		config.background.backgroundColor = AppColor.Background.primary
 		let button = UIButton(configuration: config)
 		return button
 	}()
