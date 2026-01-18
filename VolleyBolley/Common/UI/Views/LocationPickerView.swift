@@ -4,13 +4,19 @@
 //
 //  Created by Олег Козырев on 31.07.2025.
 //
+
 import UIKit
 
 protocol LocationPickerViewDelegate: AnyObject {
     func locationPickerView(_ pickerView: LocationPickerView, didSelectItem item: String)
+    func locationPickerViewDidToggle(_ pickerView: LocationPickerView)
 }
 
-/// Переиспользуемый кастомный раскрывающийся список
+extension LocationPickerViewDelegate {
+	func locationPickerViewDidToggle(_ pickerView: LocationPickerView) {}
+}
+
+/// Reusable custom dropdown list
 class LocationPickerView: UIView, UITableViewDelegate, UITableViewDataSource {
 
     weak var delegate: LocationPickerViewDelegate?
@@ -192,6 +198,9 @@ class LocationPickerView: UIView, UITableViewDelegate, UITableViewDataSource {
                 self.tableContainer.isHidden = true
             })
         }
+
+        // Notify delegate about toggle
+        delegate?.locationPickerViewDidToggle(self)
 
         if let scrollView = self.findSuperview(ofType: UIScrollView.self) {
             scrollView.setNeedsLayout()

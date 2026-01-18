@@ -33,21 +33,13 @@ final class RegistrationPlayerLocationCell: UITableViewCell {
 		return list
 	}()
 
-	private lazy var textField = {
-		let textField = CustomTextField()
-		textField.addAction(UIAction { [weak self] _ in
-			self?.callback?(textField.text ?? "")
-		}, for: .editingChanged)
-		return textField
-	}()
-
 	private lazy var mainStackView: UIStackView = {
 		let stack = UIStackView(arrangedSubviews: [
 			titleLabel,
 			locationPicker,
 			separator
 		])
-		stack.setCustomSpacing(Constants.inset, after: textField)
+		stack.setCustomSpacing(Constants.inset, after: locationPicker)
 		stack.axis = .vertical
 		stack.spacing = Constants.stackViewSpacing
 		return stack
@@ -77,6 +69,12 @@ final class RegistrationPlayerLocationCell: UITableViewCell {
 		locationPicker.updateItems(items)
 		separator.isHidden = type.isHasSeparator
 		self.callback = callback
+	}
+
+	func invalidateCellHeight() {
+		invalidateIntrinsicContentSize()
+		setNeedsLayout()
+		layoutIfNeeded()
 	}
 }
 
@@ -121,6 +119,12 @@ extension RegistrationPlayerLocationCell: LocationPickerViewDelegate {
 	) {
 		if pickerView == locationPicker {
 			callback?(item)
+		}
+	}
+
+	func locationPickerViewDidToggle(_ pickerView: LocationPickerView) {
+		if pickerView == locationPicker {
+			invalidateCellHeight()
 		}
 	}
 }

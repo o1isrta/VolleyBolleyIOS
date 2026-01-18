@@ -253,8 +253,6 @@ extension RegistrationViewController: UITableViewDataSource {
 		cell.configure(type: type, items: items) { [weak self] value in
 			self?.presenter?.setupLocation(type: type, to: value)
 		}
-		// TODO: -
-//		cell.invalidateIntrinsicContentSize()
 		return cell
 	}
 
