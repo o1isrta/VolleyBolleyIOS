@@ -15,7 +15,6 @@ final class RegistrationPlayerLevelCell: UITableViewCell {
 
 	// MARK: - Private Properties
 
-	private var playerLevel: PlayerLevel?
 	private var levelAction: (() -> Void) = {}
 	private var callback: ((PlayerLevel) -> Void)?
 
@@ -54,7 +53,7 @@ final class RegistrationPlayerLevelCell: UITableViewCell {
 		let button = GreenButton()
 		button.setTitle(String(localized: "common.light").capitalized, for: .normal)
 		setupToggleButton(button, level: .light) { [weak self] level in
-			self?.didLevelsChanged(with: level)
+			self?.didLevelsChanged(to: level)
 		}
 		return button
 	}()
@@ -63,7 +62,7 @@ final class RegistrationPlayerLevelCell: UITableViewCell {
 		let button = GreenButton()
 		button.setTitle(String(localized: "common.medium").capitalized, for: .normal)
 		setupToggleButton(button, level: .medium) { [weak self] level in
-			self?.didLevelsChanged(with: level)
+			self?.didLevelsChanged(to: level)
 		}
 		return button
 	}()
@@ -72,7 +71,7 @@ final class RegistrationPlayerLevelCell: UITableViewCell {
 		let button = GreenButton()
 		button.setTitle(String(localized: "common.hard").capitalized, for: .normal)
 		setupToggleButton(button, level: .hard) { [weak self] level in
-			self?.didLevelsChanged(with: level)
+			self?.didLevelsChanged(to: level)
 		}
 		return button
 	}()
@@ -81,7 +80,7 @@ final class RegistrationPlayerLevelCell: UITableViewCell {
 		let button = GreenButton()
 		button.setTitle(String(localized: "common.pro").capitalized, for: .normal)
 		setupToggleButton(button, level: .pro) { [weak self] level in
-			self?.didLevelsChanged(with: level)
+			self?.didLevelsChanged(to: level)
 		}
 		return button
 	}()
@@ -142,17 +141,15 @@ private extension RegistrationPlayerLevelCell {
 		action: @escaping (PlayerLevel) -> Void
 	) {
 		button.addAction(UIAction { [weak self] _ in
-			self?.didLevelsChanged(with: level)
+			self?.didLevelsChanged(to: level)
 		}, for: .touchUpInside)
 	}
 
-	func didLevelsChanged(with type: PlayerLevel) {
-		playerLevel = type
-		lightButton.isSelected = type == .light
-		mediumButton.isSelected = type == .medium
-		hardButton.isSelected = type == .hard
-		proButton.isSelected = type == .pro
-		guard let playerLevel else { return }
+	func didLevelsChanged(to playerLevel: PlayerLevel) {
+		lightButton.isSelected = playerLevel == .light
+		mediumButton.isSelected = playerLevel == .medium
+		hardButton.isSelected = playerLevel == .hard
+		proButton.isSelected = playerLevel == .pro
 		callback?(playerLevel)
 	}
 
