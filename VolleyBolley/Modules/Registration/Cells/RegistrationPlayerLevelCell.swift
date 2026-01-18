@@ -35,10 +35,8 @@ final class RegistrationPlayerLevelCell: UITableViewCell {
 		var config = UIButton.Configuration.plain()
 		config.image = UIImage(systemName: "questionmark.circle")
 		config.imagePlacement = .leading
-//		config.imagePadding = 0 // TODO: -
 		config.baseForegroundColor = AppColor.Background.screen
 		config.background.backgroundColor = AppColor.Background.primary
-//		config.background.cornerRadius = 12 // TODO: -
 		let button = UIButton(configuration: config)
 		return button
 	}()
@@ -129,6 +127,9 @@ final class RegistrationPlayerLevelCell: UITableViewCell {
 		levelAction: @escaping (() -> Void),
 		callback: ((PlayerLevel) -> Void)?
 	) {
+		levelInfoButton.addAction(UIAction { _ in
+			levelAction()
+		}, for: .touchUpInside)
 		self.callback = callback
 	}
 }
@@ -222,6 +223,12 @@ import SwiftUI
 	VStack {
 		UIViewPreview {
 			let cell = RegistrationPlayerLevelCell(style: .default, reuseIdentifier: nil)
+			let levelAction: () -> Void = {
+				print("levelAction: level btn tapped")
+			}
+			cell.configure(levelAction: levelAction) { level in
+				print("level: \(level)")
+			}
 			return cell
 		}
 		.frame(maxHeight: 110)
