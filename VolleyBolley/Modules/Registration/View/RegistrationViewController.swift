@@ -87,6 +87,11 @@ final class RegistrationViewController: UIViewController {
 		hideKeyboardWhenTappedAround()
 	}
 
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		navigationController?.setNavigationBarHidden(true, animated: false)
+	}
+
 	override func viewDidLayoutSubviews() {
 		super.viewDidLayoutSubviews()
 		view.bringSubviewToFront(customAlertView)
