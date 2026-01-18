@@ -15,7 +15,7 @@ class LocationPickerView: UIView, UITableViewDelegate, UITableViewDataSource {
 
     weak var delegate: LocationPickerViewDelegate?
 
-    private var placeholder: String {
+    var placeholder: String {
         didSet {
             if selectedItem == nil {
                 titleLabel.text = placeholder
@@ -51,13 +51,12 @@ class LocationPickerView: UIView, UITableViewDelegate, UITableViewDataSource {
         return titleLabel
     }()
 
-    private let arrowImageView: UIImageView = {
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: 7, weight: .regular)
-        let arrowImageView = UIImageView(image: UIImage(systemName: "chevron.down", withConfiguration: imageConfig))
-        arrowImageView.tintColor = AppColor.Icon.inverted
-        arrowImageView.contentMode = .scaleAspectFit
-        return arrowImageView
-    }()
+	private lazy var arrowImageView: UtilityButton = {
+		let button = UtilityButton(style: .small)
+		button.setImage(.chevronDown, for: .normal)
+		button.tintColor = AppColor.Icon.inverted
+		return button
+	}()
 
     private let tableContainer: UIView = {
         let tableContainer = UIView()
@@ -99,26 +98,20 @@ class LocationPickerView: UIView, UITableViewDelegate, UITableViewDataSource {
         setupTableView()
     }
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder: NSCoder) { nil }
 
     private func setup() {
-        translatesAutoresizingMaskIntoConstraints = false
-
         let tap = UITapGestureRecognizer(target: self, action: #selector(toggleTableView))
         titleContainer.addGestureRecognizer(tap)
 
-        addSubview(titleContainer)
-        addSubview(tableContainer)
-
-        [titleLabel,
-         arrowImageView].forEach {
-            titleContainer.addSubview($0)
-            $0.translatesAutoresizingMaskIntoConstraints = false
+        addSubviews(
+			titleContainer,
+			tableContainer
+		)
+        [titleLabel, arrowImageView].forEach {
+            titleContainer.addSubviews($0)
         }
-
-        tableContainer.addSubview(tableView)
+        tableContainer.addSubviews(tableView)
 
         NSLayoutConstraint.activate([
             titleContainer.topAnchor.constraint(equalTo: topAnchor),
@@ -128,11 +121,11 @@ class LocationPickerView: UIView, UITableViewDelegate, UITableViewDataSource {
 
             titleLabel.topAnchor.constraint(equalTo: titleContainer.topAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: titleContainer.leadingAnchor, constant: 12),
-            titleLabel.trailingAnchor.constraint(equalTo: arrowImageView.leadingAnchor, constant: -8),
+            titleLabel.trailingAnchor.constraint(equalTo: arrowImageView.leadingAnchor, constant: -22),
             titleLabel.bottomAnchor.constraint(equalTo: titleContainer.bottomAnchor),
 
             arrowImageView.centerYAnchor.constraint(equalTo: titleContainer.centerYAnchor),
-            arrowImageView.trailingAnchor.constraint(equalTo: titleContainer.trailingAnchor, constant: -12),
+            arrowImageView.trailingAnchor.constraint(equalTo: titleContainer.trailingAnchor, constant: -22),
             arrowImageView.widthAnchor.constraint(equalToConstant: 14),
             arrowImageView.heightAnchor.constraint(equalToConstant: 7),
 
