@@ -23,6 +23,6 @@ final class AuthRouter: AuthRouterProtocol {
     }
 
     func showUserRegScreen() {
-        router?.pushUserReg()
+        router?.pushRegistrationScreen()
     }
 }

@@ -22,6 +22,6 @@ final class PhoneVerifyRouter: PhoneVerifyRouterProtocol {
     }
 
     func navigateToMainScreen() {
-        coordinator?.pushUserReg()
+        coordinator?.pushRegistrationScreen()
     }
 }
