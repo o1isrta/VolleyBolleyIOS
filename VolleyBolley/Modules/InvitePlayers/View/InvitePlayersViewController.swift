@@ -205,9 +205,8 @@ private extension InvitePlayersViewController {
 
 	func setupActions() {
 		segmentedControl.segmentChanged = { [weak self] index in
-			guard
-				let self,
-				let playersListType = PlayersListType(rawValue: index)
+			guard let self,
+				  let playersListType = PlayersListType(rawValue: index)
 			else { return }
 			self.presenter.setPlayersList(playersListType)
 			self.filterPlayersList()
@@ -228,19 +227,16 @@ private extension InvitePlayersViewController {
 			\.contentSize,
 			 options: [.new]
 		) { [weak self] _, change in
-			guard
-				let self,
-				let newSize = change.newValue
+			guard let self,
+				  let newSize = change.newValue
 			else { return }
 			// Limiting the max height to preserve scrolling
 			let compensation: CGFloat = caption.isHidden
 			? LayoutConstants.minCompensationTableHeight
-			: (
-				LayoutConstants.minCompensationTableHeight
+			: (LayoutConstants.minCompensationTableHeight
 				+ LayoutConstants.mainIndent / 2
 				+ caption.frame.height
-				+ LayoutConstants.footerTableHeight
-			)
+				+ LayoutConstants.footerTableHeight)
 			let maxHeight = max(
 				UIScreen.main.bounds.height - compensation,
 				LayoutConstants.maxTableHeight
@@ -377,7 +373,6 @@ extension InvitePlayersViewController: UITableViewDelegate {
 		viewForFooterInSection section: Int
 	) -> UIView? {
 		guard section != InvitePlayerType.regular.rawValue else { return nil }
-
 		let container = UIView()
 		let separator = CustomSeparator()
 		container.addSubviews(separator)
@@ -399,10 +394,7 @@ extension InvitePlayersViewController: UITableViewDelegate {
 #if DEBUG
 @available(iOS 17.0, *)
 #Preview {
-	let presenter = InvitePlayersPresenter(
-		interactor: InvitePlayersInteractor(),
-		router: InvitePlayersRouter()
-	)
+	let presenter = InvitePlayersPresenter(interactor: InvitePlayersInteractor(), router: InvitePlayersRouter())
 	InvitePlayersViewController(presenter: presenter, playersListType: .regular)
 }
 #endif

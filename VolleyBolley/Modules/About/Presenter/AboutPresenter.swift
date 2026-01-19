@@ -78,8 +78,7 @@ private extension AboutPresenter {
 			"Egor Partenko",
 			"Nikolai Eremenko",
 			"Oleg Kozyrev",
-			"Roman Romanov",
-			"Vadim Mikheev"
+			"Roman Romanov"
 		]
 	}
 
