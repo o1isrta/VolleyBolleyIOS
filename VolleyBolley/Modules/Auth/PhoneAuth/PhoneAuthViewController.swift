@@ -10,19 +10,15 @@ final class PhoneAuthViewController: UIViewController {
 
     var presenter: PhoneAuthPresenterProtocol?
 
-    private lazy var containerView: UIView = {
-        let view = UIView()
-        view.backgroundColor = AppColor.Background.blur
-        view.layer.cornerRadius = 32
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+    private lazy var containerView = GlassmorphismView()
 
     private lazy var backButton: UtilityButton = {
         let button = UtilityButton(style: .small)
         button.setImage(.chevronBackward, for: .normal)
         button.tintColor = AppColor.Icon.primary
-        button.translatesAutoresizingMaskIntoConstraints = false
+		button.addAction(UIAction { [weak self] _ in
+			self?.backTapped()
+		}, for: .touchUpInside)
         return button
     }()
 
@@ -44,8 +40,9 @@ final class PhoneAuthViewController: UIViewController {
         textField.backgroundColor = .systemBackground
         textField.textColor = AppColor.Text.placeHolder
         textField.setLeftPaddingPoints(16)
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.addTarget(self, action: #selector(phoneNumberDidChange), for: .editingChanged)
+		textField.addAction(UIAction { [weak self] _ in
+			self?.phoneNumberDidChange()
+		}, for: .editingChanged)
         textField.accessibilityIdentifier = "phoneTextField"
         return textField
     }()
@@ -53,6 +50,9 @@ final class PhoneAuthViewController: UIViewController {
     private lazy var nextButton: YellowButton = {
         let button = YellowButton(title: String(localized: "SEND CODE"))
         button.isEnabled = false
+		button.addAction(UIAction { [weak self] _ in
+			self?.nextStepTapped()
+		}, for: .touchUpInside)
         return button
     }()
 
@@ -65,7 +65,6 @@ final class PhoneAuthViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = AppColor.Background.screen
         setupUI()
-        setupActions()
 		hideKeyboardWhenTappedAround()
     }
 
@@ -75,8 +74,14 @@ final class PhoneAuthViewController: UIViewController {
     }
 
     private func setupUI() {
-        view.addSubview(containerView)
-        containerView.addSubviews(backButton, titleLabel, phoneNumberLabel, phoneTextField, nextButton)
+        view.addSubviews(containerView)
+        containerView.addSubviews(
+			backButton,
+			titleLabel,
+			phoneNumberLabel,
+			phoneTextField,
+			nextButton
+		)
 
         NSLayoutConstraint.activate([
             containerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
@@ -106,21 +111,16 @@ final class PhoneAuthViewController: UIViewController {
         ])
     }
 
-    private func setupActions() {
-        backButton.addTarget(self, action: #selector(backTapped), for: .touchUpInside)
-        nextButton.addTarget(self, action: #selector(nextStepTapped), for: .touchUpInside)
-    }
-
-    @objc private func phoneNumberDidChange() {
+    private func phoneNumberDidChange() {
         let phoneNumber = phoneTextField.text ?? ""
         presenter?.phoneNumberDidChange(phoneNumber)
     }
 
-    @objc private func backTapped() {
+    private func backTapped() {
         presenter?.didTapBack()
     }
 
-    @objc private func nextStepTapped() {
+    private func nextStepTapped() {
         let phoneNumber = phoneTextField.text ?? ""
         presenter?.didTapNextStep(with: phoneNumber)
     }
