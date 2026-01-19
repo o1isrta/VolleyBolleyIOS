@@ -2358,17 +2358,6 @@
         }
       }
     },
-    "NEXT STEP" : {
-      "comment" : "Next button - удалить вместе с кнопкой",
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ДАЛЬШЕ"
-          }
-        }
-      }
-    },
     "No courts found" : {
       "comment" : "Court list",
       "localizations" : {
