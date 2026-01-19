@@ -757,7 +757,6 @@
     },
     "customAlertView.message.noInternet" : {
       "comment" : "Custom Alert",
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

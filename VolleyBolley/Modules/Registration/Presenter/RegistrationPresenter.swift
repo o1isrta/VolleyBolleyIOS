@@ -92,6 +92,9 @@ final class RegistrationPresenter: RegistrationPresenterProtocol {
 		print("country", country)
 		print("city", city)
 //		interactor.registerUser(name: name, surname: surname, gender: gender)
+
+		// TODO: - for tests
+		view?.showAlert(with: String(localized: "customAlertView.message.noInternet"))
 	}
 
 	func getICellsCount() -> Int {
@@ -234,6 +237,7 @@ private extension RegistrationPresenter {
 	}
 }
 
+// TODO: -
 extension RegistrationPresenter: RegistrationInteractorOutputProtocol {
 
 	func didFetchCountries(_ countries: [String]) {
