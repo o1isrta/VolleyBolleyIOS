@@ -14,6 +14,7 @@ protocol RegistrationViewControllerProtocol: AnyObject {
 	func allowNextStep(_ allow: Bool)
 	func showAlert(with message: String)
 	func reloadTableView()
+	func isLoadingIndicatorVisible(_ isLoading: Bool)
 }
 
 // MARK: - RegistrationViewController
@@ -36,6 +37,8 @@ final class RegistrationViewController: UIViewController {
 	}
 
 	private let glassmorphismView = GlassmorphismView()
+
+	private let loadingIndicator = ProgressHub.shared
 
 	private let titleLabel = CustomTitle(text: String(localized: "Registration"), isLarge: true)
 
@@ -95,6 +98,7 @@ final class RegistrationViewController: UIViewController {
 	override func viewDidLayoutSubviews() {
 		super.viewDidLayoutSubviews()
 		view.bringSubviewToFront(customAlertView)
+		view.bringSubviewToFront(loadingIndicator)
 	}
 }
 
@@ -120,6 +124,15 @@ extension RegistrationViewController: RegistrationViewControllerProtocol {
 
 	func reloadTableView() {
 		tableView.reloadData()
+	}
+
+	func isLoadingIndicatorVisible(_ isLoading: Bool) {
+		DispatchQueue.main.async {
+			isLoading
+			? self.loadingIndicator.show(in: self.view, withBlur: true, ballSize: .big)
+			: self.loadingIndicator.hide()
+			self.view.isUserInteractionEnabled = !isLoading
+		}
 	}
 }
 

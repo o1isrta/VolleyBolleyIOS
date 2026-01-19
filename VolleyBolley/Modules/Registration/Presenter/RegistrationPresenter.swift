@@ -63,7 +63,18 @@ final class RegistrationPresenter: RegistrationPresenterProtocol {
 
 	func viewDidLoad() {
 		// TODO: - сделать получение данных с сервера
-//		interactor.fetchCountries()
+		view?.isLoadingIndicatorVisible(true)
+		Task {
+			// TODO: - remove in the future
+			try await Task.sleep(for: .seconds(2))
+//			countries = interactor.fetchCountries()
+			countries = ["Cyprus", "Thailand"]
+
+			await MainActor.run {
+				view?.isLoadingIndicatorVisible(false)
+				view?.reloadTableView()
+			}
+		}
 	}
 
 	func nextButtonTapped() {
@@ -104,7 +115,6 @@ final class RegistrationPresenter: RegistrationPresenterProtocol {
 
 	func getPlayerGenderViewModel() -> RegistrationPlayerGenderCellViewModel {
 		RegistrationPlayerGenderCellViewModel { gender in
-			print("gender", gender)
 			self.setupGender(to: gender)
 		}
 	}
@@ -173,20 +183,27 @@ private extension RegistrationPresenter {
 		case .country:
 			country = value
 			// TODO: - сделать получение данных с сервера
-//			cities = interactor.fetchCities()
-			cities = ["Koh Phangan", "Koh Samui"]
-			view?.reloadTableView()
+			view?.isLoadingIndicatorVisible(true)
+			Task {
+				// TODO: - remove in the future
+				try await Task.sleep(for: .seconds(2))
+	//			countries = interactor.fetchCities()
+				cities = ["Koh Phangan", "Koh Samui"]
+
+				await MainActor.run {
+					view?.isLoadingIndicatorVisible(false)
+					view?.reloadTableView()
+				}
+			}
 		case .city:
 			city = value
 		}
 		validateData()
 	}
 
-	// TODO: - сделать получение данных с сервера
 	func getLocation(type: RegistrationLocationType) -> [String] {
 		switch type {
 		case .country:
-			countries = ["Cyprus", "Thailand"]
 			return countries
 		case .city:
 			return cities
