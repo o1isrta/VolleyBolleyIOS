@@ -15,18 +15,15 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
     private var timer: Timer?
     private var secondsRemaining = 30
 
-    private lazy var containerView: UIView = {
-        let view = UIView()
-        view.backgroundColor = AppColor.Background.blur
-        view.layer.cornerRadius = 32
-        view.clipsToBounds = true
-        return view
-    }()
+    private let containerView = GlassmorphismView()
 
     private lazy var backButton: UtilityButton = {
         let button = UtilityButton(style: .small)
         button.setImage(.chevronBackward, for: .normal)
         button.tintColor = AppColor.Icon.primary
+		button.addAction(UIAction { [weak self] _ in
+			self?.backTapped()
+		}, for: .touchUpInside)
         return button
     }()
 
@@ -46,7 +43,9 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
         textField.layer.borderColor = AppColor.Border.primary.cgColor
         textField.backgroundColor = .systemBackground
         textField.textColor = AppColor.Text.placeHolder
-        textField.addTarget(self, action: #selector(codeDidChange), for: .editingChanged)
+		textField.addAction(UIAction { [weak self] _ in
+			self?.codeDidChange()
+		}, for: .editingChanged)
 
         let attributed = NSAttributedString(
             string: placeholderText,
@@ -71,12 +70,18 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
         button.setTitle(String(localized: "Get new code"), for: .normal)
         button.titleLabel?.font = AppFont.Hero.regular(size: 14)
         button.isHidden = true
+		button.addAction(UIAction { [weak self] _ in
+			self?.getNewCodeTapped()
+		}, for: .touchUpInside)
         return button
     }()
 
     private lazy var verifyButton: YellowButton = {
         let button = YellowButton(title: String(localized: "VERIFY"))
         button.isEnabled = false
+		button.addAction(UIAction { [weak self] _ in
+			self?.verifyTapped()
+		}, for: .touchUpInside)
         return button
     }()
 
@@ -97,7 +102,6 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
         super.viewDidLoad()
         view.backgroundColor = AppColor.Background.screen
         setupUI()
-        setupActions()
         startResendTimer()
 		hideKeyboardWhenTappedAround()
         presenter?.viewDidLoad()
@@ -162,12 +166,6 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
         ])
     }
 
-    private func setupActions() {
-        backButton.addTarget(self, action: #selector(backTapped), for: .touchUpInside)
-        getNewCodeButton.addTarget(self, action: #selector(getNewCodeTapped), for: .touchUpInside)
-        verifyButton.addTarget(self, action: #selector(verifyTapped), for: .touchUpInside)
-    }
-
     private func startResendTimer() {
         resendLabel.isHidden = false
         getNewCodeButton.isHidden = true
@@ -193,12 +191,12 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
            resendLabel.text = "Resend in 00:\(secondsRemaining < 10 ? "0\(secondsRemaining)" : "\(secondsRemaining)")"
        }
 
-    @objc private func getNewCodeTapped() {
+    private func getNewCodeTapped() {
         startResendTimer()
         presenter?.didTapResendCode()
     }
 
-    @objc private func codeDidChange() {
+    private func codeDidChange() {
         guard let text = codeTextField.text else { return }
 
         let attributed = NSAttributedString(
@@ -210,11 +208,11 @@ final class PhoneVerifyViewController: UIViewController, PhoneVerifyViewProtocol
         presenter?.codeDidChange(codeTextField.text ?? "")
     }
 
-    @objc private func backTapped() {
+    private func backTapped() {
         presenter?.didTapBack()
     }
 
-    @objc private func verifyTapped() {
+    private func verifyTapped() {
         presenter?.didTapVerify(with: codeTextField.text ?? "")
     }
 
