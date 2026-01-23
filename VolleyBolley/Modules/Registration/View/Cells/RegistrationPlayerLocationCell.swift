@@ -29,6 +29,8 @@ final class RegistrationPlayerLocationCell: UITableViewCell {
 		static let insetLarge: CGFloat = 20
 
 		static let stackViewSpacing: CGFloat = 8
+
+		static let mainStackBottomConstraintPriority: Float = 999
 	}
 
 	private let titleLabel = CustomLabel(text: "", isBold: true)
@@ -109,7 +111,7 @@ private extension RegistrationPlayerLocationCell {
 			equalTo: contentView.bottomAnchor,
 			constant: -Constants.inset
 		)
-		bottomConstraint.priority = .init(999)
+		bottomConstraint.priority = .init(Constants.mainStackBottomConstraintPriority)
 		bottomConstraint.isActive = true
 	}
 }
