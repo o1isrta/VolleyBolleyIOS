@@ -32,8 +32,6 @@ final class NewGameOrTourneyViewController: BaseViewController, NewGameOrTourney
 		static let backButtonTopInset: CGFloat = 20
 		static let backButtonSize: CGFloat = 24
 
-		static let bottomInset: CGFloat = 63
-
 		static let titleFontSize: CGFloat = 24
 	}
 
@@ -106,7 +104,6 @@ final class NewGameOrTourneyViewController: BaseViewController, NewGameOrTourney
 
 	override func viewDidLayoutSubviews() {
 		super.viewDidLayoutSubviews()
-		// ALWAYS raise the customAlertView above all other subviews
 		view.bringSubviewToFront(customAlertView)
 	}
 
@@ -198,7 +195,7 @@ private extension NewGameOrTourneyViewController {
 			),
 			nextButton.bottomAnchor.constraint(
 				equalTo: view.safeAreaLayoutGuide.bottomAnchor,
-				constant: -Constants.bottomInset
+				constant: -Constants.padding
 			)
 		])
 	}

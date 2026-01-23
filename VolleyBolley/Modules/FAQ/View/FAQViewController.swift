@@ -96,7 +96,7 @@ private extension FAQViewController {
 			background.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: contentInset),
 			background.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: contentInset),
 			background.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -contentInset),
-			background.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -55),
+			background.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -contentInset),
 
 			buttonBack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: mainSpacing),
 			buttonBack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: mainSpacing),
