@@ -58,9 +58,7 @@ final class GreenButton: UIButton {
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder: NSCoder) { nil }
 
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -108,6 +106,8 @@ final class GreenButton: UIButton {
         attributes.font = font
         attributes.foregroundColor = style.titleColor
         config.attributedTitle = AttributedString(title(for: state) ?? "", attributes: attributes)
+		config.titleLineBreakMode = .byTruncatingTail
+		titleLabel?.numberOfLines = 1
     }
 
     func configureImage(style: GreenButtonStyle, state: UIControl.State, config: inout UIButton.Configuration) {

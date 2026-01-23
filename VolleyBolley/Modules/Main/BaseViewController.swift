@@ -26,6 +26,8 @@ class BaseViewController: UIViewController {
 		return NavBarAssembly.createModule(with: self)
 	}()
 
+	private var safeAreaTopInset: CGFloat = .zero
+
 	// MARK: - Private Properties
 
 	private let notificationManager = NotificationManager.shared
@@ -46,7 +48,7 @@ class BaseViewController: UIViewController {
 
 	override func viewDidLayoutSubviews() {
 		super.viewDidLayoutSubviews()
-		additionalSafeAreaInsets.top = 44
+		setupAdditionalSafeAreaInset()
 		view.bringSubviewToFront(navBar)
 	}
 
@@ -59,6 +61,15 @@ class BaseViewController: UIViewController {
 // MARK: - Private Methods
 
 private extension BaseViewController {
+
+	/// custom navBar + dynamic island workaround
+	func setupAdditionalSafeAreaInset() {
+		let navBarFrameInView = navBar.convert(navBar.bounds, to: view)
+		let safeTop = view.safeAreaInsets.top
+		let extraTopInset = max(0, navBarFrameInView.maxY - safeTop)
+		safeAreaTopInset = max(safeAreaTopInset, extraTopInset)
+		additionalSafeAreaInsets.top = safeAreaTopInset
+	}
 
 	func setupCustomNavigationBar() {
 		view.addSubviews(navBar)

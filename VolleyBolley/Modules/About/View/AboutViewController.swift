@@ -32,7 +32,7 @@ final class AboutViewController: BaseViewController {
 		static let tableEstimatedRowHeight: CGFloat = 44
 
 		static let versionFontSize: CGFloat = 14
-		static let versionBottomInset: CGFloat = -60
+		static let versionBottomInset: CGFloat = -12
 	}
 
 	// MARK: - Private Properties
