@@ -102,12 +102,15 @@ private extension RegistrationPlayerLocationCell {
 			mainStackView.trailingAnchor.constraint(
 				equalTo: contentView.trailingAnchor,
 				constant: -Constants.insetLarge
-			),
-			mainStackView.bottomAnchor.constraint(
-				equalTo: contentView.bottomAnchor,
-				constant: -Constants.inset
 			)
 		])
+
+		let bottomConstraint = mainStackView.bottomAnchor.constraint(
+			equalTo: contentView.bottomAnchor,
+			constant: -Constants.inset
+		)
+		bottomConstraint.priority = .init(999)
+		bottomConstraint.isActive = true
 	}
 }
 
