@@ -26,8 +26,28 @@ final class PaywallViewController: BaseViewController {
 
 	// MARK: - Private Properties
 
-	private let mainSpacing: CGFloat = 20
-	private let internalSpacing: CGFloat = 12
+	private	enum Constants {
+		static let padding: CGFloat = 8
+
+		static let backButtonTopInset: CGFloat = 14
+
+		static let playersCounterHeight: CGFloat = 39
+
+		static let priceViewHeight: CGFloat = 30
+		static let priceViewWidth: CGFloat = 75
+
+		static let saveGameButtonHeight: CGFloat = 44
+
+		static let amountStackHeight: CGFloat = 52
+
+		static let mainSpacing: CGFloat = 20
+		static let stackInternalSpacing: CGFloat = 12
+		static let stackZeroSpacing: CGFloat = 0
+		static let paymentStackSpacing: CGFloat = 9
+		static let privacyButtonsStackSpacing: CGFloat = 10
+
+		static let fontSize: CGFloat = 16
+	}
 
 	private let glassmorphismView = GlassmorphismView()
 
@@ -36,7 +56,9 @@ final class PaywallViewController: BaseViewController {
 		let button = UtilityButton(style: .small)
 		button.setImage(.chevronBackward, for: .normal)
 		button.tintColor = AppColor.Icon.primary
-		button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+		button.addAction(UIAction { [weak self] _ in
+			self?.presenter?.backButtonTapped()
+		}, for: .touchUpInside)
 		return button
 	}()
 
@@ -50,7 +72,7 @@ final class PaywallViewController: BaseViewController {
 		stack.axis = .vertical
 		stack.distribution = .fill
 		stack.alignment = .leading
-		stack.spacing = internalSpacing
+		stack.spacing = Constants.stackInternalSpacing
 		stack.isHidden = true
 		return stack
 	}()
@@ -61,14 +83,18 @@ final class PaywallViewController: BaseViewController {
 	private lazy var privacyPublicButton: GreenButton = {
 		let button = GreenButton()
 		button.setTitle(String(localized: "paywall.publicButton"), for: .normal)
-		button.addTarget(self, action: #selector(privacyPublicButtonTapped), for: .touchUpInside)
+		button.addAction(UIAction { [weak self] _ in
+			self?.presenter?.privacyPublicButtonTapped()
+		}, for: .touchUpInside)
 		return button
 	}()
 	private lazy var privacyPrivateButton: GreenButton = {
 		let button = GreenButton(imagePlacement: .trailing)
 		button.setTitle(String(localized: "paywall.privateButton"), for: .normal)
 		button.setImage(.arrowForward, for: .normal)
-		button.addTarget(self, action: #selector(privacyPrivateButtonTapped), for: .touchUpInside)
+		button.addAction(UIAction { [weak self] _ in
+			self?.presenter?.privacyPrivateButtonTapped()
+		}, for: .touchUpInside)
 		return button
 	}()
 
@@ -83,8 +109,13 @@ final class PaywallViewController: BaseViewController {
 		stack.axis = .horizontal
 		stack.distribution = .fill
 		stack.alignment = .leading
-		stack.spacing = 10
-		stack.layoutMargins = UIEdgeInsets(top: internalSpacing, left: 0, bottom: 0, right: 0)
+		stack.spacing = Constants.privacyButtonsStackSpacing
+		stack.layoutMargins = UIEdgeInsets(
+			top: Constants.stackInternalSpacing,
+			left: Constants.stackZeroSpacing,
+			bottom: Constants.stackZeroSpacing,
+			right: Constants.stackZeroSpacing
+		)
 		stack.isLayoutMarginsRelativeArrangement = true
 		return stack
 	}()
@@ -123,8 +154,13 @@ final class PaywallViewController: BaseViewController {
 		stack.axis = .horizontal
 		stack.distribution = .fill
 		stack.alignment = .center
-		stack.spacing = 9
-		stack.layoutMargins = UIEdgeInsets(top: internalSpacing, left: 0, bottom: 0, right: 0)
+		stack.spacing = Constants.paymentStackSpacing
+		stack.layoutMargins = UIEdgeInsets(
+			top: Constants.stackInternalSpacing,
+			left: Constants.stackZeroSpacing,
+			bottom: Constants.stackZeroSpacing,
+			right: Constants.stackZeroSpacing
+		)
 		stack.isLayoutMarginsRelativeArrangement = true
 		return stack
 	}()
@@ -132,13 +168,13 @@ final class PaywallViewController: BaseViewController {
 	private lazy var currentAccountLabel: UILabel = {
 		let label = UILabel()
 		label.text = String(localized: "paywall.currentAccountLabel")
-		label.font = AppFont.Hero.regular(size: 16)
+		label.font = AppFont.Hero.regular(size: Constants.fontSize)
 		label.textColor = AppColor.Text.primary
 		return label
 	}()
 	private lazy var accountLabel: UILabel = {
 		let label = UILabel()
-		label.font = AppFont.Hero.regular(size: 16)
+		label.font = AppFont.Hero.regular(size: Constants.fontSize)
 		label.textColor = AppColor.Text.primary
 		label.isHidden = true
 		return label
@@ -147,7 +183,9 @@ final class PaywallViewController: BaseViewController {
 		let button = GreenButton()
 		button.isSelected = false
 		button.setTitle(String(localized: "paywall.addPaymentButton"), for: .normal)
-		button.addTarget(self, action: #selector(addPaymentButtonTapped), for: .touchUpInside)
+		button.addAction(UIAction { [weak self] _ in
+			self?.presenter?.addPaymentButtonTapped()
+		}, for: .touchUpInside)
 		return button
 	}()
 	private lazy var amountStackView: UIStackView = {
@@ -159,7 +197,12 @@ final class PaywallViewController: BaseViewController {
 		stack.axis = .horizontal
 		stack.distribution = .equalSpacing
 		stack.alignment = .center
-		stack.layoutMargins = UIEdgeInsets(top: internalSpacing, left: 0, bottom: 0, right: 0)
+		stack.layoutMargins = UIEdgeInsets(
+			top: Constants.stackInternalSpacing,
+			left: Constants.stackZeroSpacing,
+			bottom: Constants.stackZeroSpacing,
+			right: Constants.stackZeroSpacing
+		)
 		stack.isLayoutMarginsRelativeArrangement = true
 		return stack
 	}()
@@ -182,7 +225,11 @@ final class PaywallViewController: BaseViewController {
 		button.isEnabled = false
 		button.isSelected = true
 		button.setTitle(String(localized: "paywall.saveGameButton"), for: .normal)
-		button.addTarget(self, action: #selector(saveGameButtonTapped), for: .touchUpInside)
+		button.addAction(UIAction { [weak self] _ in
+			guard let self else { return }
+			self.presenter?.updatePlayersCount(to: self.playersCounter.value)
+			self.presenter?.saveGameButtonTapped()
+		}, for: .touchUpInside)
 		return button
 	}()
 
@@ -195,7 +242,7 @@ final class PaywallViewController: BaseViewController {
 			saveGameButton
 		])
 		stack.axis = .vertical
-		stack.spacing = mainSpacing
+		stack.spacing = Constants.mainSpacing
 		return stack
 	}()
 
@@ -222,55 +269,36 @@ private extension PaywallViewController {
 		glassmorphismView.addSubviews(mainStackView)
 
 		NSLayoutConstraint.activate([
-			separator.heightAnchor.constraint(equalToConstant: 1),
-
-			backButton.topAnchor.constraint(equalTo: glassmorphismView.topAnchor, constant: 14),
-			backButton.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor, constant: mainSpacing / 2),
+			backButton.topAnchor.constraint(equalTo: glassmorphismView.topAnchor, constant: Constants.backButtonTopInset),
+			backButton.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor, constant: Constants.mainSpacing / 2),
 
 			screenTitle.centerXAnchor.constraint(equalTo: mainStackView.centerXAnchor),
-			screenTitle.topAnchor.constraint(equalTo: glassmorphismView.topAnchor, constant: mainSpacing),
+			screenTitle.topAnchor.constraint(equalTo: glassmorphismView.topAnchor, constant: Constants.mainSpacing),
 
-			playersCounter.heightAnchor.constraint(equalToConstant: 39),
+			playersCounter.heightAnchor.constraint(equalToConstant: Constants.playersCounterHeight),
 
 			amountStackView.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor),
 			amountStackView.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor),
-			amountStackView.heightAnchor.constraint(equalToConstant: 52),
+			amountStackView.heightAnchor.constraint(equalToConstant: Constants.amountStackHeight),
 
-			priceView.heightAnchor.constraint(equalToConstant: 30),
-			priceView.widthAnchor.constraint(equalToConstant: 75),
+			priceView.heightAnchor.constraint(equalToConstant: Constants.priceViewHeight),
+			priceView.widthAnchor.constraint(equalToConstant: Constants.priceViewWidth),
 
-			saveGameButton.heightAnchor.constraint(equalToConstant: 44),
+			saveGameButton.heightAnchor.constraint(equalToConstant: Constants.saveGameButtonHeight),
 
-			glassmorphismView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
-			glassmorphismView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 8),
-			glassmorphismView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -8),
-			glassmorphismView.bottomAnchor.constraint(equalTo: mainStackView.bottomAnchor, constant: mainSpacing),
+			glassmorphismView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: Constants.padding),
+			glassmorphismView.leadingAnchor.constraint(
+				equalTo: view.safeAreaLayoutGuide.leadingAnchor,
+				constant: Constants.padding),
+			glassmorphismView.trailingAnchor.constraint(
+				equalTo: view.safeAreaLayoutGuide.trailingAnchor,
+				constant: -Constants.padding),
+			glassmorphismView.bottomAnchor.constraint(equalTo: mainStackView.bottomAnchor, constant: Constants.mainSpacing),
 
-			mainStackView.topAnchor.constraint(equalTo: screenTitle.bottomAnchor, constant: mainSpacing),
-			mainStackView.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor, constant: mainSpacing),
-			mainStackView.trailingAnchor.constraint(equalTo: glassmorphismView.trailingAnchor, constant: -mainSpacing)
+			mainStackView.topAnchor.constraint(equalTo: screenTitle.bottomAnchor, constant: Constants.mainSpacing),
+			mainStackView.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor, constant: Constants.mainSpacing),
+			mainStackView.trailingAnchor.constraint(equalTo: glassmorphismView.trailingAnchor, constant: -Constants.mainSpacing)
 		])
-	}
-
-	@objc func backButtonTapped() {
-		presenter?.backButtonTapped()
-	}
-
-	@objc func privacyPublicButtonTapped() {
-		presenter?.privacyPublicButtonTapped()
-	}
-
-	@objc func privacyPrivateButtonTapped() {
-		presenter?.privacyPrivateButtonTapped()
-	}
-
-	@objc func saveGameButtonTapped() {
-		presenter?.updatePlayersCount(to: playersCounter.value)
-		presenter?.saveGameButtonTapped()
-	}
-
-	@objc func addPaymentButtonTapped() {
-		presenter?.addPaymentButtonTapped()
 	}
 }
 
@@ -312,6 +340,6 @@ extension PaywallViewController: PaywallViewProtocol {
 #if DEBUG
 @available(iOS 17.0, *)
 #Preview {
-	PaywallViewController()
+	PaywallAssembly.createModule(with: nil)
 }
 #endif
