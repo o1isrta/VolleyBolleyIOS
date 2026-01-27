@@ -42,7 +42,12 @@ final class PaywallViewController: BaseViewController {
 
 		static let mainSpacing: CGFloat = 20
 		static let stackInternalSpacing: CGFloat = 12
-		static let stackZeroSpacing: CGFloat = 0
+		static let stackLayoutMargins: UIEdgeInsets =  .init(
+			top: Constants.stackInternalSpacing,
+			left: 0,
+			bottom: 0,
+			right: 0
+		)
 		static let paymentStackSpacing: CGFloat = 9
 		static let privacyButtonsStackSpacing: CGFloat = 10
 
@@ -60,7 +65,7 @@ final class PaywallViewController: BaseViewController {
 
 	private let glassmorphismView = GlassmorphismView()
 
-	private lazy var screenTitle = CustomTitle(text: String(localized: "paywall.screenTitle"), isLarge: true)
+	private let screenTitle = CustomTitle(text: String(localized: "paywall.screenTitle"), isLarge: true)
 	private lazy var backButton: UtilityButton = {
 		let button = UtilityButton(style: .small)
 		button.setImage(.chevronBackward, for: .normal)
@@ -86,8 +91,8 @@ final class PaywallViewController: BaseViewController {
 		return stack
 	}()
 
-	private lazy var privacyTitle = CustomTitle(text: String(localized: "paywall.privacyTitle"), isLarge: true)
-	private lazy var privacyDescription = CustomLabel(text: String(localized: "paywall.privacyDescription"))
+	private let privacyTitle = CustomTitle(text: String(localized: "paywall.privacyTitle"), isLarge: true)
+	private let privacyDescription = CustomLabel(text: String(localized: "paywall.privacyDescription"))
 
 	private lazy var privacyPublicButton: GreenButton = {
 		let button = GreenButton()
@@ -119,12 +124,7 @@ final class PaywallViewController: BaseViewController {
 		stack.distribution = .fill
 		stack.alignment = .leading
 		stack.spacing = Constants.privacyButtonsStackSpacing
-		stack.layoutMargins = UIEdgeInsets(
-			top: Constants.stackInternalSpacing,
-			left: Constants.stackZeroSpacing,
-			bottom: Constants.stackZeroSpacing,
-			right: Constants.stackZeroSpacing
-		)
+		stack.layoutMargins = Constants.stackLayoutMargins
 		stack.isLayoutMarginsRelativeArrangement = true
 		return stack
 	}()
@@ -141,11 +141,11 @@ final class PaywallViewController: BaseViewController {
 		return stack
 	}()
 
-	private lazy var separator = CustomSeparator()
+	private let separator = CustomSeparator()
 
-	private lazy var paymentTitle = CustomTitle(text: String(localized: "paywall.paymentTitle"), isLarge: true)
-	private lazy var paymentDescription = CustomLabel(text: String(localized: "paywall.paymentDescription"))
-	private lazy var paymentPerPerson = CustomLabel(text: String(localized: "paywall.paymentPerPerson"), isBold: true)
+	private let paymentTitle = CustomTitle(text: String(localized: "paywall.paymentTitle"), isLarge: true)
+	private let paymentDescription = CustomLabel(text: String(localized: "paywall.paymentDescription"))
+	private let paymentPerPerson = CustomLabel(text: String(localized: "paywall.paymentPerPerson"), isBold: true)
 	private lazy var priceView: PriceView = {
 		let priceView = PriceView()
 		priceView.text = "5"
@@ -164,17 +164,12 @@ final class PaywallViewController: BaseViewController {
 		stack.distribution = .fill
 		stack.alignment = .center
 		stack.spacing = Constants.paymentStackSpacing
-		stack.layoutMargins = UIEdgeInsets(
-			top: Constants.stackInternalSpacing,
-			left: Constants.stackZeroSpacing,
-			bottom: Constants.stackZeroSpacing,
-			right: Constants.stackZeroSpacing
-		)
+		stack.layoutMargins = Constants.stackLayoutMargins
 		stack.isLayoutMarginsRelativeArrangement = true
 		return stack
 	}()
 
-	private lazy var currentAccountLabel: UILabel = {
+	private let currentAccountLabel: UILabel = {
 		let label = UILabel()
 		label.text = String(localized: "paywall.currentAccountLabel")
 		label.font = AppFont.Hero.regular(size: Constants.fontSize)
@@ -206,12 +201,7 @@ final class PaywallViewController: BaseViewController {
 		stack.axis = .horizontal
 		stack.distribution = .equalSpacing
 		stack.alignment = .center
-		stack.layoutMargins = UIEdgeInsets(
-			top: Constants.stackInternalSpacing,
-			left: Constants.stackZeroSpacing,
-			bottom: Constants.stackZeroSpacing,
-			right: Constants.stackZeroSpacing
-		)
+		stack.layoutMargins = Constants.stackLayoutMargins
 		stack.isLayoutMarginsRelativeArrangement = true
 		return stack
 	}()
@@ -368,7 +358,9 @@ private extension PaywallViewController {
 		])
 
 		// Table view inside stack view needs an explicit height.
-		playersTableViewHeightConstraint = playersTableView.heightAnchor.constraint(equalToConstant: Constants.playersTableInitialHeight)
+		playersTableViewHeightConstraint = playersTableView.heightAnchor.constraint(
+			equalToConstant: Constants.playersTableInitialHeight
+		)
 		playersTableViewHeightConstraint?.isActive = true
 	}
 
@@ -428,7 +420,7 @@ extension PaywallViewController: UITableViewDataSource {
 		numberOfRowsInSection section: Int
 	) -> Int {
 		// TODO: -
-		return 5
+		return 6
 	}
 
 	func tableView(
