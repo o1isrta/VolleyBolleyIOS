@@ -15,4 +15,13 @@ struct PlayerElementListViewCellModel {
 		self.name = name
 		self.level = level.prefix(1).uppercased()
 	}
+
+	init(
+		firstName: String,
+		lastName: String,
+		level: String
+	) {
+		self.name = "\(firstName) \(lastName)"
+		self.level = level.prefix(1).uppercased()
+	}
 }

@@ -13,12 +13,21 @@ final class PlayerElementListViewCell: UITableViewCell {
 
 	static let reuseIdentifier = "PlayerElementListViewCell"
 
-	var onDelete: (() -> Void)?
+	private var onDelete: (() -> Void)?
+
+	private var mainStackUIEdgeInset: UIEdgeInsets = Constants.mainStackUIEdgeInset
 
 	// MARK: - Private Properties
 
 	private enum Constants {
 		static let stackSpacing: CGFloat = 8
+
+		static let mainStackUIEdgeInset: UIEdgeInsets = .init(
+			top: 0,
+			left: 0,
+			bottom: 8,
+			right: 0
+		)
 
 		static let badgeWidth: CGFloat = 30
 		static let badgeHeight: CGFloat = 23
@@ -82,9 +91,12 @@ final class PlayerElementListViewCell: UITableViewCell {
 
 	func configure(
 		state: PlayerElementRowState,
-		index: Int?
+		index: Int?,
+		uiEdgeInsets: UIEdgeInsets = Constants.mainStackUIEdgeInset
 	) {
 		reset()
+
+		mainStackUIEdgeInset = uiEdgeInsets
 
 		switch state {
 		case .numbered(let player):
@@ -119,6 +131,7 @@ private extension PlayerElementListViewCell {
 		levelView.isHidden = true
 		deleteButton.isHidden = true
 		onDelete = nil
+		mainStackUIEdgeInset = Constants.mainStackUIEdgeInset
 	}
 
 	func showPlayer(
@@ -129,6 +142,7 @@ private extension PlayerElementListViewCell {
 		levelView.isHidden = false
 		nameLabel.text = prefixNumber + model.name
 		levelView.configure(distance: model.level)
+		mainStack.pinToSuperviewEdges(insets: mainStackUIEdgeInset)
 	}
 
 	func showFreeSpot(prefixNumber: String = "") {
@@ -143,8 +157,6 @@ private extension PlayerElementListViewCell {
 	func setupView() {
 		setupUI()
 
-		mainStack.pinToSuperviewEdges()
-
 		NSLayoutConstraint.activate([
 			levelView.widthAnchor.constraint(equalToConstant: Constants.badgeWidth),
 			levelView.heightAnchor.constraint(equalToConstant: Constants.badgeHeight)
@@ -156,6 +168,8 @@ private extension PlayerElementListViewCell {
 import SwiftUI
 @available(iOS 17.0, *)
 #Preview {
+	let maxHeight: CGFloat = 30
+
 	VStack {
 		UIViewPreview {
 			let cell = PlayerElementListViewCell(style: .default, reuseIdentifier: nil)
@@ -170,7 +184,7 @@ import SwiftUI
 			cell.configure(state: state, index: 1)
 			return cell
 		}
-		.frame(maxHeight: 30)
+		.frame(maxHeight: maxHeight)
 
 		UIViewPreview {
 			let cell = PlayerElementListViewCell(style: .default, reuseIdentifier: nil)
@@ -183,7 +197,7 @@ import SwiftUI
 			cell.configure(state: state, index: 2)
 			return cell
 		}
-		.frame(maxHeight: 30)
+		.frame(maxHeight: maxHeight)
 
 		UIViewPreview {
 			let cell = PlayerElementListViewCell(style: .default, reuseIdentifier: nil)
@@ -196,7 +210,7 @@ import SwiftUI
 			cell.configure(state: state, index: 3)
 			return cell
 		}
-		.frame(maxHeight: 30)
+		.frame(maxHeight: maxHeight)
 
 		Divider()
 			.background(Color(.systemGray4))
@@ -214,7 +228,7 @@ import SwiftUI
 			cell.configure(state: state, index: nil)
 			return cell
 		}
-		.frame(maxHeight: 30)
+		.frame(maxHeight: maxHeight)
 
 		UIViewPreview {
 			let cell = PlayerElementListViewCell(style: .default, reuseIdentifier: nil)
@@ -227,7 +241,7 @@ import SwiftUI
 			cell.configure(state: state, index: nil)
 			return cell
 		}
-		.frame(maxHeight: 30)
+		.frame(maxHeight: maxHeight)
 
 		UIViewPreview {
 			let cell = PlayerElementListViewCell(style: .default, reuseIdentifier: nil)
@@ -240,7 +254,7 @@ import SwiftUI
 			cell.configure(state: state, index: nil)
 			return cell
 		}
-		.frame(maxHeight: 30)
+		.frame(maxHeight: maxHeight)
 
 		Spacer()
 	}
