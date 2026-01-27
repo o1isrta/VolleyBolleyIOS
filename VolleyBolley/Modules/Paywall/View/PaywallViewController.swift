@@ -79,6 +79,8 @@ final class PaywallViewController: BaseViewController {
 	private lazy var playersTitle = CustomTitle(text: String(localized: "paywall.playersTitle"), isLarge: true)
 	private lazy var playersCounter = CounterView(type: .players)
 	private lazy var playersStackView: UIStackView = {
+		playersTitle.setContentCompressionResistancePriority(.required, for: .vertical)
+		playersTitle.setContentHuggingPriority(.required, for: .vertical)
 		let stack = UIStackView(arrangedSubviews: [
 			playersTitle,
 			playersCounter
@@ -130,6 +132,10 @@ final class PaywallViewController: BaseViewController {
 	}()
 
 	private lazy var privacyStackView: UIStackView = {
+		privacyTitle.setContentCompressionResistancePriority(.required, for: .vertical)
+		privacyTitle.setContentHuggingPriority(.required, for: .vertical)
+		privacyDescription.setContentCompressionResistancePriority(.required, for: .vertical)
+		privacyDescription.setContentHuggingPriority(.required, for: .vertical)
 		let stack = UIStackView(arrangedSubviews: [
 			privacyTitle,
 			privacyDescription,
@@ -226,14 +232,21 @@ final class PaywallViewController: BaseViewController {
 		button.addAction(UIAction { [weak self] _ in
 			self?.presenter?.managePlayersButtonTapped()
 		}, for: .touchUpInside)
+		button.setContentCompressionResistancePriority(.required, for: .vertical)
+		button.setContentHuggingPriority(.required, for: .vertical)
 		return button
 	}()
 	private lazy var playersTableStackView: UIStackView = {
-		managePlayersButton.setContentHuggingPriority(.sceneSizeStayPut, for: .horizontal)
-		managePlayersButton.setContentCompressionResistancePriority(.required, for: .horizontal)
+		let view = UIView()
+		view.addSubviews(managePlayersButton)
+		NSLayoutConstraint.activate([
+			managePlayersButton.leftAnchor.constraint(equalTo: view.leftAnchor),
+			managePlayersButton.topAnchor.constraint(equalTo: view.topAnchor),
+			managePlayersButton.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+		])
 		let stack = UIStackView(arrangedSubviews: [
 			playersTableView,
-			managePlayersButton
+			view
 		])
 		stack.axis = .vertical
 		stack.distribution = .fill
@@ -242,6 +255,10 @@ final class PaywallViewController: BaseViewController {
 	}()
 
 	private lazy var paymentStackView: UIStackView = {
+		paymentTitle.setContentCompressionResistancePriority(.required, for: .vertical)
+		paymentTitle.setContentHuggingPriority(.required, for: .vertical)
+		paymentDescription.setContentCompressionResistancePriority(.required, for: .vertical)
+		paymentDescription.setContentHuggingPriority(.required, for: .vertical)
 		let stack = UIStackView(arrangedSubviews: [
 			paymentTitle,
 			paymentDescription,
@@ -267,11 +284,12 @@ final class PaywallViewController: BaseViewController {
 		return button
 	}()
 
-	private lazy var scrollView: UIScrollView = {
+	private let scrollView: UIScrollView = {
 		let scrollView = UIScrollView()
 		scrollView.showsVerticalScrollIndicator = false
 		return scrollView
 	}()
+	private let contentView = UIView()
 
 	private lazy var mainStackView: UIStackView = {
 		let stack = UIStackView(arrangedSubviews: [
@@ -304,21 +322,23 @@ final class PaywallViewController: BaseViewController {
 private extension PaywallViewController {
 
 	func setupUI() {
-		scrollView.backgroundColor = .launchScreen// TODO: -
+		screenTitle.setContentCompressionResistancePriority(.required, for: .vertical)
+		screenTitle.setContentHuggingPriority(.required, for: .vertical)
 
-		view.addSubviews(
-			glassmorphismView,
+		view.addSubviews(glassmorphismView)
+		glassmorphismView.addSubviews(
 			screenTitle,
-			backButton
+			backButton,
+			scrollView
 		)
-		glassmorphismView.addSubviews(scrollView)
-		scrollView.addSubviews(mainStackView)
+		scrollView.addSubviews(contentView)
+		contentView.addSubviews(mainStackView)
 
 		NSLayoutConstraint.activate([
 			backButton.topAnchor.constraint(equalTo: glassmorphismView.topAnchor, constant: Constants.backButtonTopInset),
 			backButton.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor, constant: Constants.mainSpacing / 2),
 
-			screenTitle.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+			screenTitle.centerXAnchor.constraint(equalTo: glassmorphismView.centerXAnchor),
 			screenTitle.topAnchor.constraint(equalTo: glassmorphismView.topAnchor, constant: Constants.mainSpacing),
 
 			playersCounter.heightAnchor.constraint(equalToConstant: Constants.playersCounterHeight),
@@ -332,32 +352,62 @@ private extension PaywallViewController {
 
 			saveGameButton.heightAnchor.constraint(equalToConstant: Constants.saveGameButtonHeight),
 
-			managePlayersButton.widthAnchor.constraint(equalToConstant: 156),
-
-			glassmorphismView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: Constants.padding),
+			glassmorphismView.topAnchor.constraint(
+				equalTo: view.safeAreaLayoutGuide.topAnchor,
+				constant: Constants.padding
+			),
 			glassmorphismView.leadingAnchor.constraint(
 				equalTo: view.safeAreaLayoutGuide.leadingAnchor,
-				constant: Constants.padding),
+				constant: Constants.padding
+			),
 			glassmorphismView.trailingAnchor.constraint(
 				equalTo: view.safeAreaLayoutGuide.trailingAnchor,
-				constant: -Constants.padding),
-			glassmorphismView.bottomAnchor.constraint(
-				greaterThanOrEqualTo: saveGameButton.bottomAnchor,
-				constant: Constants.mainSpacing),
+				constant: -Constants.padding
+			),
 
-			scrollView.topAnchor.constraint(equalTo: screenTitle.bottomAnchor, constant: Constants.mainSpacing),
-			scrollView.leadingAnchor.constraint(equalTo: glassmorphismView.leadingAnchor, constant: Constants.mainSpacing),
-			scrollView.trailingAnchor.constraint(equalTo: glassmorphismView.trailingAnchor, constant: -Constants.mainSpacing),
-			scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -Constants.mainSpacing),
+			scrollView.topAnchor.constraint(
+				equalTo: screenTitle.bottomAnchor,
+				constant: Constants.mainSpacing
+			),
+			scrollView.leadingAnchor.constraint(
+				equalTo: glassmorphismView.leadingAnchor,
+				constant: Constants.mainSpacing
+			),
+			scrollView.trailingAnchor.constraint(
+				equalTo: glassmorphismView.trailingAnchor,
+				constant: -Constants.mainSpacing
+			),
+			scrollView.bottomAnchor.constraint(
+				equalTo: glassmorphismView.bottomAnchor,
+				constant: -Constants.mainSpacing
+			),
 
-			mainStackView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
-			mainStackView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
-			mainStackView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
-			mainStackView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
-			mainStackView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor)
+			contentView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
+			contentView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
+			contentView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
+			contentView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
+			contentView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor),
+
+			mainStackView.topAnchor.constraint(equalTo: contentView.topAnchor),
+			mainStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+			mainStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+			mainStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
 		])
+		// glassmorphismView.bottom = min(safeArea.bottom - padding, saveGameButton.bottom + mainSpacing)
+		let bottomToContent = glassmorphismView.bottomAnchor.constraint(
+			greaterThanOrEqualTo: saveGameButton.bottomAnchor,
+			constant: Constants.mainSpacing
+		)
+		bottomToContent.priority = .defaultHigh
+		bottomToContent.isActive = true
 
-		// Table view inside stack view needs an explicit height.
+		let bottomToSafeArea = glassmorphismView.bottomAnchor.constraint(
+			lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor,
+			constant: -Constants.padding
+		)
+		bottomToSafeArea.priority = .required
+		bottomToSafeArea.isActive = true
+		// Table view inside stack view needs an explicit height
 		playersTableViewHeightConstraint = playersTableView.heightAnchor.constraint(
 			equalToConstant: Constants.playersTableInitialHeight
 		)
@@ -420,7 +470,7 @@ extension PaywallViewController: UITableViewDataSource {
 		numberOfRowsInSection section: Int
 	) -> Int {
 		// TODO: -
-		return 6
+		return 7
 	}
 
 	func tableView(
@@ -464,3 +514,4 @@ extension PaywallViewController: UITableViewDataSource {
 	PaywallAssembly.createModule(with: nil)
 }
 #endif
+
