@@ -16,6 +16,7 @@ protocol PaywallPresenterProtocol: AnyObject {
 	func backButtonTapped()
 	func privacyPublicButtonTapped()
 	func privacyPrivateButtonTapped()
+	func managePlayersButtonTapped()
 	func addPaymentButtonTapped()
 	func saveGameButtonTapped()
 	func priceTextChanged(text: String?)
@@ -66,6 +67,11 @@ final class PaywallPresenter: PaywallPresenterProtocol {
 	func privacyPrivateButtonTapped() {
 		isPublicGameSelected = false
 		view?.updatePrivacyState(isPublic: isPublicGameSelected)
+	}
+
+	func managePlayersButtonTapped() {
+		// TODO: -
+		print("Открыть экран управления игроками")
 	}
 
 	func addPaymentButtonTapped() {

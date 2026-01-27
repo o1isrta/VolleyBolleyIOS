@@ -2494,6 +2494,23 @@
         }
       }
     },
+    "paywall.managePlayersButton" : {
+      "comment" : "Paywall screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Manage players"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Управление игроками"
+          }
+        }
+      }
+    },
     "paywall.paymentDescription" : {
       "comment" : "Paywall screen",
       "localizations" : {
