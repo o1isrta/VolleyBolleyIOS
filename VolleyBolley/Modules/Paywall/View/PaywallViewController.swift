@@ -487,7 +487,8 @@ extension PaywallViewController: UITableViewDataSource {
 		let player = PlayerElementListViewCellModel(
 			firstName: Player.mockDefault.firstName,
 			lastName: Player.mockDefault.lastName,
-			level: Player.mockDefault.level.title
+			level: Player.mockDefault.level.title,
+			index: nil
 		)
 		cell.configure(
 			state: .plainWithAction(
@@ -499,7 +500,6 @@ extension PaywallViewController: UITableViewDataSource {
 		//			self.playersMock.remove(at: indexPath.item)
 //					self.playersTableView.deleteSections([indexPath.item], with: .automatic)
 			}),
-			index: nil,
 			uiEdgeInsets: Constants.playersTableCellUIEdgeInset
 		)
 		return cell

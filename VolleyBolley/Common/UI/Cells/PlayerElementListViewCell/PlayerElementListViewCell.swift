@@ -91,7 +91,6 @@ final class PlayerElementListViewCell: UITableViewCell {
 
 	func configure(
 		state: PlayerElementRowState,
-		index: Int?,
 		uiEdgeInsets: UIEdgeInsets = Constants.mainStackUIEdgeInset
 	) {
 		reset()
@@ -100,15 +99,15 @@ final class PlayerElementListViewCell: UITableViewCell {
 
 		switch state {
 		case .numbered(let player):
-			let prefix = "\(index ?? 0). "
+			let prefix = "\(player.index ?? 0). "
 			showPlayer(player, prefixNumber: prefix)
 		case .numberedWithAction(let player, let deleteAction):
-			let prefix = "\(index ?? 0). "
+			let prefix = "\(player.index ?? 0). "
 			showPlayer(player, prefixNumber: prefix)
 			deleteButton.isHidden = false
 			onDelete = deleteAction
-		case .numberedFreeSpot:
-			let prefix = "\(index ?? 0). "
+		case .numberedFreeSpot(let index):
+			let prefix = "\(index). "
 			showFreeSpot(prefixNumber: prefix)
 		case .plain(let player):
 			showPlayer(player)
@@ -175,13 +174,15 @@ import SwiftUI
 			let cell = PlayerElementListViewCell(style: .default, reuseIdentifier: nil)
 			let mockPlayer = Player.mockDefault
 			let playerModel = PlayerElementListViewCellModel(
-				name: "\(mockPlayer.firstName) \(mockPlayer.lastName)",
-				level: mockPlayer.level.title
+				firstName: mockPlayer.firstName,
+				lastName: mockPlayer.lastName,
+				level: mockPlayer.level.title,
+				index: 1
 			)
 			let state = PlayerElementRowState.numberedWithAction(player: playerModel) {
 				print("deleteAction called")
 			}
-			cell.configure(state: state, index: 1)
+			cell.configure(state: state)
 			return cell
 		}
 		.frame(maxHeight: maxHeight)
@@ -190,24 +191,21 @@ import SwiftUI
 			let cell = PlayerElementListViewCell(style: .default, reuseIdentifier: nil)
 			let mockPlayer = Player.mockDefault
 			let playerModel = PlayerElementListViewCellModel(
-				name: "\(mockPlayer.firstName) \(mockPlayer.lastName)",
-				level: mockPlayer.level.title
+				firstName: mockPlayer.firstName,
+				lastName: mockPlayer.lastName,
+				level: mockPlayer.level.title,
+				index: 2
 			)
 			let state = PlayerElementRowState.numbered(player: playerModel)
-			cell.configure(state: state, index: 2)
+			cell.configure(state: state)
 			return cell
 		}
 		.frame(maxHeight: maxHeight)
 
 		UIViewPreview {
 			let cell = PlayerElementListViewCell(style: .default, reuseIdentifier: nil)
-			let mockPlayer = Player.mockDefault
-			let playerModel = PlayerElementListViewCellModel(
-				name: "\(mockPlayer.firstName) \(mockPlayer.lastName)",
-				level: mockPlayer.level.title
-			)
-			let state = PlayerElementRowState.numberedFreeSpot
-			cell.configure(state: state, index: 3)
+			let state = PlayerElementRowState.numberedFreeSpot(index: 3)
+			cell.configure(state: state)
 			return cell
 		}
 		.frame(maxHeight: maxHeight)
@@ -220,12 +218,13 @@ import SwiftUI
 			let mockPlayer = Player.mockDefault
 			let playerModel = PlayerElementListViewCellModel(
 				name: "\(mockPlayer.firstName) \(mockPlayer.lastName)",
-				level: mockPlayer.level.title
+				level: mockPlayer.level.title,
+				index: nil
 			)
 			let state = PlayerElementRowState.plainWithAction(player: playerModel) {
 				print("deleteAction called")
 			}
-			cell.configure(state: state, index: nil)
+			cell.configure(state: state)
 			return cell
 		}
 		.frame(maxHeight: maxHeight)
@@ -235,23 +234,19 @@ import SwiftUI
 			let mockPlayer = Player.mockDefault
 			let playerModel = PlayerElementListViewCellModel(
 				name: "\(mockPlayer.firstName) \(mockPlayer.lastName)",
-				level: mockPlayer.level.title
+				level: mockPlayer.level.title,
+				index: nil
 			)
 			let state = PlayerElementRowState.plain(player: playerModel)
-			cell.configure(state: state, index: nil)
+			cell.configure(state: state)
 			return cell
 		}
 		.frame(maxHeight: maxHeight)
 
 		UIViewPreview {
 			let cell = PlayerElementListViewCell(style: .default, reuseIdentifier: nil)
-			let mockPlayer = Player.mockDefault
-			let playerModel = PlayerElementListViewCellModel(
-				name: "\(mockPlayer.firstName) \(mockPlayer.lastName)",
-				level: mockPlayer.level.title
-			)
 			let state = PlayerElementRowState.plainFreeSpot
-			cell.configure(state: state, index: nil)
+			cell.configure(state: state)
 			return cell
 		}
 		.frame(maxHeight: maxHeight)
