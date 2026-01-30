@@ -58,6 +58,7 @@ final class PaywallViewController: BaseViewController {
 		)
 
 		static let fontSize: CGFloat = 16
+		static let descriptionFontSize: CGFloat = 14
 	}
 
 	private let glassmorphismView = GlassmorphismView()
@@ -76,7 +77,11 @@ final class PaywallViewController: BaseViewController {
 	private let playersCounter: CounterWithTitleView = .init(type: .players)
 
 	private let privacyTitle = CustomTitle(text: String(localized: "paywall.privacyTitle"), isLarge: true)
-	private let privacyDescription = CustomLabel(text: String(localized: "paywall.privacyDescription"))
+	private let privacyDescription = {
+		let label = CustomLabel(text: String(localized: "paywall.privacyDescription"))
+		label.font = AppFont.Hero.light(size: Constants.descriptionFontSize)
+		return label
+	}()
 
 	private lazy var privacyPublicButton: GreenButton = {
 		let button = GreenButton()
@@ -132,7 +137,11 @@ final class PaywallViewController: BaseViewController {
 	private let separator = CustomSeparator()
 
 	private let paymentTitle = CustomTitle(text: String(localized: "paywall.paymentTitle"), isLarge: true)
-	private let paymentDescription = CustomLabel(text: String(localized: "paywall.paymentDescription"))
+	private let paymentDescription = {
+		let label = CustomLabel(text: String(localized: "paywall.paymentDescription"))
+		label.font = AppFont.Hero.light(size: Constants.descriptionFontSize)
+		return label
+	}()
 	private let paymentPerPerson = CustomLabel(text: String(localized: "paywall.paymentPerPerson"), isBold: true)
 	private lazy var priceView: PriceView = {
 		let priceView = PriceView()
