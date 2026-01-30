@@ -2613,24 +2613,6 @@
         }
       }
     },
-    "paywall.playersTitle" : {
-      "comment" : "Paywall screen",
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Maximum players"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Максимум игроков"
-          }
-        }
-      }
-    },
     "paywall.privacyDescription" : {
       "comment" : "Paywall screen",
       "localizations" : {
