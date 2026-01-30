@@ -7,28 +7,6 @@
 
 import UIKit
 
-enum CounterType {
-    case players
-    case teams
-
-    var minValue: Int {
-        switch self {
-        case .players: return LimitConstants.minPlayers
-        case .teams: return LimitConstants.minTeams
-        }
-    }
-
-    var maxValue: Int { LimitConstants.maxValue }
-
-    private enum LimitConstants {
-		static let minPlayers = AppConstants.Game.minPlayers
-		static let minTeams = AppConstants.Game.minTeams
-		static let maxValue = AppConstants.Game.maxTeamsAndPlayersValue
-    }
-}
-
-// MARK: - CounterView
-
 final class CounterView: UIView {
 
     // MARK: - Constants
