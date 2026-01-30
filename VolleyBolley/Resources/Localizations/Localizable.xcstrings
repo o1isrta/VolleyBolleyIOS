@@ -433,6 +433,40 @@
         }
       }
     },
+    "counter.playersTitle" : {
+      "comment" : "Counter title for players",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maximum players"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Максимум игроков"
+          }
+        }
+      }
+    },
+    "counter.teamsTitle" : {
+      "comment" : "Counter title for teams",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maximum teams"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Максимум команд"
+          }
+        }
+      }
+    },
     "Court pricing: " : {
       "comment" : "Court Details",
       "localizations" : {
