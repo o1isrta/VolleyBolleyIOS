@@ -791,7 +791,6 @@
     },
     "customAlertView.message.noInternet" : {
       "comment" : "Custom Alert",
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2393,17 +2392,6 @@
         }
       }
     },
-    "NEXT STEP" : {
-      "comment" : "Next button - удалить вместе с кнопкой",
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ДАЛЬШЕ"
-          }
-        }
-      }
-    },
     "No courts found" : {
       "comment" : "Court list",
       "localizations" : {
@@ -2773,6 +2761,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Не удалось загрузить изображение из фотобиблиотеки"
+          }
+        }
+      }
+    },
+    "placeholder.date" : {
+      "comment" : "Date field placeholder",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DD / MM / YYYY"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ДД / ММ / ГГГГ"
           }
         }
       }

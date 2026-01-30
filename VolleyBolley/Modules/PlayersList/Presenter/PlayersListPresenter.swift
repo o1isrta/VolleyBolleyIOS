@@ -73,7 +73,7 @@ final class PlayersListPresenter: PlayersListPresenterProtocol {
 		case .all:
 			players = allPlayers
 		case .favorite:
-			players = allPlayers.filter{ $0.isFavorite == true }.sorted { $0.firstName < $1.firstName }
+			players = allPlayers.filter { $0.isFavorite == true }.sorted { $0.firstName < $1.firstName }
 		}
 		filteredPlayers = players
 	}
