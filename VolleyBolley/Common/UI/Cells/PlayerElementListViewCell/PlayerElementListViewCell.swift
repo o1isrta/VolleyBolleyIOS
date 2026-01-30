@@ -13,12 +13,21 @@ final class PlayerElementListViewCell: UITableViewCell {
 
 	static let reuseIdentifier = "PlayerElementListViewCell"
 
-	var onDelete: (() -> Void)?
+	private var onDelete: (() -> Void)?
+
+	private var mainStackUIEdgeInset: UIEdgeInsets = Constants.mainStackUIEdgeInset
 
 	// MARK: - Private Properties
 
 	private enum Constants {
 		static let stackSpacing: CGFloat = 8
+
+		static let mainStackUIEdgeInset: UIEdgeInsets = .init(
+			top: 0,
+			left: 0,
+			bottom: 8,
+			right: 0
+		)
 
 		static let badgeWidth: CGFloat = 30
 		static let badgeHeight: CGFloat = 23
@@ -82,21 +91,23 @@ final class PlayerElementListViewCell: UITableViewCell {
 
 	func configure(
 		state: PlayerElementRowState,
-		index: Int?
+		uiEdgeInsets: UIEdgeInsets = Constants.mainStackUIEdgeInset
 	) {
 		reset()
 
+		mainStackUIEdgeInset = uiEdgeInsets
+
 		switch state {
 		case .numbered(let player):
-			let prefix = "\(index ?? 0). "
+			let prefix = "\(player.index ?? 0). "
 			showPlayer(player, prefixNumber: prefix)
 		case .numberedWithAction(let player, let deleteAction):
-			let prefix = "\(index ?? 0). "
+			let prefix = "\(player.index ?? 0). "
 			showPlayer(player, prefixNumber: prefix)
 			deleteButton.isHidden = false
 			onDelete = deleteAction
-		case .numberedFreeSpot:
-			let prefix = "\(index ?? 0). "
+		case .numberedFreeSpot(let index):
+			let prefix = "\(index). "
 			showFreeSpot(prefixNumber: prefix)
 		case .plain(let player):
 			showPlayer(player)
@@ -119,6 +130,7 @@ private extension PlayerElementListViewCell {
 		levelView.isHidden = true
 		deleteButton.isHidden = true
 		onDelete = nil
+		mainStackUIEdgeInset = Constants.mainStackUIEdgeInset
 	}
 
 	func showPlayer(
@@ -129,6 +141,7 @@ private extension PlayerElementListViewCell {
 		levelView.isHidden = false
 		nameLabel.text = prefixNumber + model.name
 		levelView.configure(distance: model.level)
+		mainStack.pinToSuperviewEdges(insets: mainStackUIEdgeInset)
 	}
 
 	func showFreeSpot(prefixNumber: String = "") {
@@ -143,8 +156,6 @@ private extension PlayerElementListViewCell {
 	func setupView() {
 		setupUI()
 
-		mainStack.pinToSuperviewEdges()
-
 		NSLayoutConstraint.activate([
 			levelView.widthAnchor.constraint(equalToConstant: Constants.badgeWidth),
 			levelView.heightAnchor.constraint(equalToConstant: Constants.badgeHeight)
@@ -156,47 +167,48 @@ private extension PlayerElementListViewCell {
 import SwiftUI
 @available(iOS 17.0, *)
 #Preview {
+	let maxHeight: CGFloat = 30
+
 	VStack {
 		UIViewPreview {
 			let cell = PlayerElementListViewCell(style: .default, reuseIdentifier: nil)
 			let mockPlayer = Player.mockDefault
 			let playerModel = PlayerElementListViewCellModel(
-				name: "\(mockPlayer.firstName) \(mockPlayer.lastName)",
-				level: mockPlayer.level.title
+				firstName: mockPlayer.firstName,
+				lastName: mockPlayer.lastName,
+				level: mockPlayer.level.title,
+				index: 1
 			)
 			let state = PlayerElementRowState.numberedWithAction(player: playerModel) {
 				print("deleteAction called")
 			}
-			cell.configure(state: state, index: 1)
+			cell.configure(state: state)
 			return cell
 		}
-		.frame(maxHeight: 30)
+		.frame(maxHeight: maxHeight)
 
 		UIViewPreview {
 			let cell = PlayerElementListViewCell(style: .default, reuseIdentifier: nil)
 			let mockPlayer = Player.mockDefault
 			let playerModel = PlayerElementListViewCellModel(
-				name: "\(mockPlayer.firstName) \(mockPlayer.lastName)",
-				level: mockPlayer.level.title
+				firstName: mockPlayer.firstName,
+				lastName: mockPlayer.lastName,
+				level: mockPlayer.level.title,
+				index: 2
 			)
 			let state = PlayerElementRowState.numbered(player: playerModel)
-			cell.configure(state: state, index: 2)
+			cell.configure(state: state)
 			return cell
 		}
-		.frame(maxHeight: 30)
+		.frame(maxHeight: maxHeight)
 
 		UIViewPreview {
 			let cell = PlayerElementListViewCell(style: .default, reuseIdentifier: nil)
-			let mockPlayer = Player.mockDefault
-			let playerModel = PlayerElementListViewCellModel(
-				name: "\(mockPlayer.firstName) \(mockPlayer.lastName)",
-				level: mockPlayer.level.title
-			)
-			let state = PlayerElementRowState.numberedFreeSpot
-			cell.configure(state: state, index: 3)
+			let state = PlayerElementRowState.numberedFreeSpot(index: 3)
+			cell.configure(state: state)
 			return cell
 		}
-		.frame(maxHeight: 30)
+		.frame(maxHeight: maxHeight)
 
 		Divider()
 			.background(Color(.systemGray4))
@@ -206,41 +218,38 @@ import SwiftUI
 			let mockPlayer = Player.mockDefault
 			let playerModel = PlayerElementListViewCellModel(
 				name: "\(mockPlayer.firstName) \(mockPlayer.lastName)",
-				level: mockPlayer.level.title
+				level: mockPlayer.level.title,
+				index: nil
 			)
 			let state = PlayerElementRowState.plainWithAction(player: playerModel) {
 				print("deleteAction called")
 			}
-			cell.configure(state: state, index: nil)
+			cell.configure(state: state)
 			return cell
 		}
-		.frame(maxHeight: 30)
+		.frame(maxHeight: maxHeight)
 
 		UIViewPreview {
 			let cell = PlayerElementListViewCell(style: .default, reuseIdentifier: nil)
 			let mockPlayer = Player.mockDefault
 			let playerModel = PlayerElementListViewCellModel(
 				name: "\(mockPlayer.firstName) \(mockPlayer.lastName)",
-				level: mockPlayer.level.title
+				level: mockPlayer.level.title,
+				index: nil
 			)
 			let state = PlayerElementRowState.plain(player: playerModel)
-			cell.configure(state: state, index: nil)
+			cell.configure(state: state)
 			return cell
 		}
-		.frame(maxHeight: 30)
+		.frame(maxHeight: maxHeight)
 
 		UIViewPreview {
 			let cell = PlayerElementListViewCell(style: .default, reuseIdentifier: nil)
-			let mockPlayer = Player.mockDefault
-			let playerModel = PlayerElementListViewCellModel(
-				name: "\(mockPlayer.firstName) \(mockPlayer.lastName)",
-				level: mockPlayer.level.title
-			)
 			let state = PlayerElementRowState.plainFreeSpot
-			cell.configure(state: state, index: nil)
+			cell.configure(state: state)
 			return cell
 		}
-		.frame(maxHeight: 30)
+		.frame(maxHeight: maxHeight)
 
 		Spacer()
 	}

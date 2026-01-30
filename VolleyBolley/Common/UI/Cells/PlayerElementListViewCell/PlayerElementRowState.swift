@@ -10,7 +10,7 @@ import Foundation
 enum PlayerElementRowState {
 	case numbered(player: PlayerElementListViewCellModel)
 	case numberedWithAction(player: PlayerElementListViewCellModel, deleteAction: (() -> Void))
-	case numberedFreeSpot
+	case numberedFreeSpot(index: Int)
 	case plain(player: PlayerElementListViewCellModel)
 	case plainWithAction(player: PlayerElementListViewCellModel, deleteAction: (() -> Void))
 	case plainFreeSpot
