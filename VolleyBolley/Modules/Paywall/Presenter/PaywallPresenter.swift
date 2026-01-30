@@ -83,7 +83,6 @@ final class PaywallPresenter: PaywallPresenterProtocol {
 
 		isPaymentSelected = true
 		view?.updatePaymentSelection(isSelected: isPaymentSelected)
-		view?.updatePlayersVisibility(isVisible: isPaymentSelected)
 		view?.updateAccountInfo(accountNumber: accountNumber)
 		view?.updatePaymentDescription(text: String(localized: "paywall.paymentRequirementDescription"))
 

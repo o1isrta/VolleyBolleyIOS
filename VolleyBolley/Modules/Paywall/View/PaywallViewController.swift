@@ -13,7 +13,6 @@ protocol PaywallViewProtocol: AnyObject {
 	func updateSaveButtonState(isEnabled: Bool)
 	func updatePaymentSelection(isSelected: Bool)
 	func updatePrivacyState(isPublic: Bool)
-	func updatePlayersVisibility(isVisible: Bool)
 	func updateAccountInfo(accountNumber: String)
 	func updatePaymentDescription(text: String)
 }
@@ -89,7 +88,6 @@ final class PaywallViewController: BaseViewController {
 		stack.distribution = .fill
 		stack.alignment = .leading
 		stack.spacing = Constants.stackInternalSpacing
-		stack.isHidden = true
 		return stack
 	}()
 
@@ -446,10 +444,6 @@ extension PaywallViewController: PaywallViewProtocol {
 	func updatePrivacyState(isPublic: Bool) {
 		privacyPublicButton.isSelected = isPublic
 		privacyPrivateButton.isSelected = !isPublic
-	}
-
-	func updatePlayersVisibility(isVisible: Bool) {
-		playersStackView.isHidden = !isVisible
 	}
 
 	func updateAccountInfo(accountNumber: String) {
