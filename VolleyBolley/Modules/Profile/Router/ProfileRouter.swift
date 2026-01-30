@@ -53,7 +53,9 @@ final class ProfileRouter: ProfileRouterProtocol {
     }
 
 	func showPlayersList() {
-		guard let playersListVC = playersListViewController() else { fatalError("PlayersListViewController could not be created") }
+		guard let playersListVC = playersListViewController() else {
+			fatalError("PlayersListViewController could not be created")
+		}
 		viewController?.navigationController?.pushViewController(playersListVC, animated: true)
 	}
 

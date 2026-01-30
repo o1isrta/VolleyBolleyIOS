@@ -15,7 +15,7 @@ enum FeatureAssemblies {
             AuthAssembly(),
             PhoneAuthAssembly(),
             PhoneVerifyAssembly(),
-            UserRegAssembly(),
+			RegistrationAssembly(),
             MainAssembly(),
             HomeAssembly(),
             MapAssembly(),
@@ -32,7 +32,7 @@ enum FeatureAssemblies {
             AboutAssembly(),
 			UserCardAssembly(),
 			PlayersListAssembly(),
-			InvitePlayersAssembly(),
+			InvitePlayersAssembly()
         ]
     }
 }

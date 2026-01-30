@@ -9,8 +9,9 @@ import UIKit
 
 /// Эффекты такие как эффект стекла, блюры и прочие
 enum AppEffect {
-    enum BackgroundAlert {
+    enum Background {
         static let alert = semiTransparentGray
+		static let popup = transparentGray
     }
 
 	enum Table {
@@ -20,5 +21,6 @@ enum AppEffect {
 
 private extension AppEffect {
     static let semiTransparentGray = AppColor.Background.alert.withAlphaComponent(0.3)
+    static let transparentGray = AppColor.Background.alert.withAlphaComponent(0.7)
 	static let tableCellWhiteSelected = AppColor.Table.cellWhiteSelected.withAlphaComponent(0.3)
 }

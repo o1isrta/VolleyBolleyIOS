@@ -19,7 +19,7 @@ final class PersonalDataFormView: UIStackView {
         static let birthdayTextFieldLeftPadding: CGFloat = 0
         static let editButtonSize: CGFloat = 24
         static let buttonHeight: CGFloat = 51
-        static let birthdayTextFieldWidth: CGFloat = 120
+        static let birthdayTextFieldWidth: CGFloat = 125
     }
 
     // MARK: - Private Properties
@@ -119,7 +119,7 @@ final class PersonalDataFormView: UIStackView {
     private lazy var birthdayLabel = CustomLabel(text: String(localized: "Date of birth"), isBold: true)
     private lazy var birthdayTextField: CustomTextField = {
         let field = CustomTextField(
-            placeholder: "__ / __ / ____",
+            placeholder: String(localized: "placeholder.date"),
             alignment: .center,
             keyboardType: .numberPad,
             leftPadding: Constants.birthdayTextFieldLeftPadding
