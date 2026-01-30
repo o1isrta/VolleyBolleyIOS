@@ -2581,6 +2581,7 @@
     },
     "paywall.playersTitle" : {
       "comment" : "Paywall screen",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

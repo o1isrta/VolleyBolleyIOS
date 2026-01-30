@@ -30,8 +30,6 @@ final class PaywallViewController: BaseViewController {
 
 		static let backButtonTopInset: CGFloat = 14
 
-		static let playersCounterHeight: CGFloat = 39
-
 		static let priceViewHeight: CGFloat = 30
 		static let priceViewWidth: CGFloat = 75
 
@@ -75,21 +73,7 @@ final class PaywallViewController: BaseViewController {
 		return button
 	}()
 
-	private lazy var playersTitle = CustomTitle(text: String(localized: "paywall.playersTitle"), isLarge: true)
-	private lazy var playersCounter = CounterView(type: .players)
-	private lazy var playersStackView: UIStackView = {
-		playersTitle.setContentCompressionResistancePriority(.required, for: .vertical)
-		playersTitle.setContentHuggingPriority(.required, for: .vertical)
-		let stack = UIStackView(arrangedSubviews: [
-			playersTitle,
-			playersCounter
-		])
-		stack.axis = .vertical
-		stack.distribution = .fill
-		stack.alignment = .leading
-		stack.spacing = Constants.stackInternalSpacing
-		return stack
-	}()
+	private let playersCounter: CounterWithTitleView = .init(type: .players)
 
 	private let privacyTitle = CustomTitle(text: String(localized: "paywall.privacyTitle"), isLarge: true)
 	private let privacyDescription = CustomLabel(text: String(localized: "paywall.privacyDescription"))
@@ -291,7 +275,7 @@ final class PaywallViewController: BaseViewController {
 
 	private lazy var mainStackView: UIStackView = {
 		let stack = UIStackView(arrangedSubviews: [
-			playersStackView,
+			playersCounter,
 			privacyStackView,
 			playersTableStackView,
 			separator,
@@ -338,8 +322,6 @@ private extension PaywallViewController {
 
 			screenTitle.centerXAnchor.constraint(equalTo: glassmorphismView.centerXAnchor),
 			screenTitle.topAnchor.constraint(equalTo: glassmorphismView.topAnchor, constant: Constants.mainSpacing),
-
-			playersCounter.heightAnchor.constraint(equalToConstant: Constants.playersCounterHeight),
 
 			amountStackView.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor),
 			amountStackView.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor),
