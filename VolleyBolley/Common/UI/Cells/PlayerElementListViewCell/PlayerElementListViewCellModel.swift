@@ -28,8 +28,10 @@ struct PlayerElementListViewCellModel {
 		level: String,
 		index: Int?
 	) {
-		self.name = "\(firstName) \(lastName)"
-		self.level = level.prefix(1).uppercased()
-		self.index = index
+		self.init(
+			name: "\(firstName) \(lastName)",
+			level: level,
+			index: index
+		)
 	}
 }
