@@ -86,10 +86,6 @@ final class GamePrivacyView: UIView {
 	}()
 
 	private lazy var privacyStackView: UIStackView = {
-		privacyTitle.setContentCompressionResistancePriority(.required, for: .vertical)
-		privacyTitle.setContentHuggingPriority(.required, for: .vertical)
-		privacyDescription.setContentCompressionResistancePriority(.required, for: .vertical)
-		privacyDescription.setContentHuggingPriority(.required, for: .vertical)
 		let stack = UIStackView(arrangedSubviews: [
 			privacyTitle,
 			privacyDescription,
