@@ -433,40 +433,40 @@
         }
       }
     },
-	"counter.playersTitle" : {
-	  "comment" : "Counter title for players",
-	  "localizations" : {
-		"en" : {
-		  "stringUnit" : {
-			"state" : "translated",
-			"value" : "Maximum players"
-		  }
-		},
-		"ru" : {
-		  "stringUnit" : {
-			"state" : "translated",
-			"value" : "Максимум игроков"
-		  }
-		}
-	  }
-	},
-	"counter.teamsTitle" : {
-	  "comment" : "Counter title for teams",
-	  "localizations" : {
-		"en" : {
-		  "stringUnit" : {
-			"state" : "translated",
-			"value" : "Maximum teams"
-		  }
-		},
-		"ru" : {
-		  "stringUnit" : {
-			"state" : "translated",
-			"value" : "Максимум команд"
-		  }
-		}
-	  }
-	},
+    "counter.playersTitle" : {
+      "comment" : "Counter title for players",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maximum players"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Максимум игроков"
+          }
+        }
+      }
+    },
+    "counter.teamsTitle" : {
+      "comment" : "Counter title for teams",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maximum teams"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Максимум команд"
+          }
+        }
+      }
+    },
     "Court pricing: " : {
       "comment" : "Court Details",
       "localizations" : {
@@ -1628,6 +1628,74 @@
         }
       }
     },
+    "gamePrivacy.description" : {
+      "comment" : "Game Privacy / Game Creation screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Set privacy if you want to play with particular players"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Установите режим конфиденциальности, если хотите играть с определенными игроками"
+          }
+        }
+      }
+    },
+    "gamePrivacy.privateButton" : {
+      "comment" : "Game Privacy / Game Creation screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Private"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Частная"
+          }
+        }
+      }
+    },
+    "gamePrivacy.publicButton" : {
+      "comment" : "Game Privacy / Game Creation screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Public"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Публичная"
+          }
+        }
+      }
+    },
+    "gamePrivacy.title" : {
+      "comment" : "Game Privacy / Game Creation screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Privacy"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Конфиденциальность"
+          }
+        }
+      }
+    },
     "gender.female" : {
       "comment" : "Gender",
       "localizations" : {
@@ -2597,74 +2665,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Оплата"
-          }
-        }
-      }
-    },
-    "paywall.privacyDescription" : {
-      "comment" : "Paywall screen",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Set privacy if you want to play with particular players"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Установите режим конфиденциальности, если хотите играть с определенными игроками"
-          }
-        }
-      }
-    },
-    "paywall.privacyTitle" : {
-      "comment" : "Paywall screen",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Privacy"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Конфиденциальность"
-          }
-        }
-      }
-    },
-    "paywall.privateButton" : {
-      "comment" : "Paywall screen",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Private"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Частная"
-          }
-        }
-      }
-    },
-    "paywall.publicButton" : {
-      "comment" : "Paywall screen",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Public"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Публичкая"
           }
         }
       }

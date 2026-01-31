@@ -14,8 +14,7 @@ protocol PaywallPresenterProtocol: AnyObject {
 
 	func viewDidLoad()
 	func backButtonTapped()
-	func privacyPublicButtonTapped()
-	func privacyPrivateButtonTapped()
+	func updateGamePrivacyState(isPublic: Bool)
 	func managePlayersButtonTapped()
 	func addPaymentButtonTapped()
 	func saveGameButtonTapped()
@@ -33,7 +32,7 @@ final class PaywallPresenter: PaywallPresenterProtocol {
 
 	// MARK: - Private Properties
 
-	private var isPublicGameSelected: Bool = true
+	private var isPublicGameSelected: Bool?
 	private var isPaymentSelected: Bool = false
 	private var priceText: String?
 	private var playersCount: Int = CounterType.players.minValue
@@ -52,21 +51,15 @@ final class PaywallPresenter: PaywallPresenterProtocol {
 
 	func viewDidLoad() {
 		updateSaveButtonState()
-		view?.updatePrivacyState(isPublic: isPublicGameSelected)
 	}
 
 	func backButtonTapped() {
 		router.navigateBack()
 	}
 
-	func privacyPublicButtonTapped() {
-		isPublicGameSelected = true
-		view?.updatePrivacyState(isPublic: isPublicGameSelected)
-	}
-
-	func privacyPrivateButtonTapped() {
-		isPublicGameSelected = false
-		view?.updatePrivacyState(isPublic: isPublicGameSelected)
+	func updateGamePrivacyState(isPublic: Bool) {
+		isPublicGameSelected = isPublic
+		updateSaveButtonState()
 	}
 
 	func managePlayersButtonTapped() {
@@ -93,6 +86,7 @@ final class PaywallPresenter: PaywallPresenterProtocol {
 		guard
 			let priceText = priceText,
 			!priceText.isEmpty,
+			let isPublicGameSelected,
 			let price = Double(priceText),
 			let accountNumber = interactor.getAccountNumber()
 		else { return }
@@ -113,18 +107,27 @@ final class PaywallPresenter: PaywallPresenterProtocol {
 	func updatePlayersCount(to count: Int) {
 		playersCount = count
 	}
+}
 
-	// MARK: - Private Methods
+// MARK: - Private Methods
 
-	private func updateSaveButtonState() {
+private extension PaywallPresenter {
+
+	func updateSaveButtonState() {
+		guard
+			isPublicGameSelected != nil,
+			isPaymentSelected
+		else { return }
+
 		let hasText = !(priceText?.isEmpty ?? true)
-		view?.updateSaveButtonState(isEnabled: isPaymentSelected && hasText)
+		view?.updateSaveButtonState(isEnabled: hasText)
 	}
 }
 
 // MARK: - PaywallInteractorOutputProtocol
 
 extension PaywallPresenter: PaywallInteractorOutputProtocol {
+
 	func gameSaved(success: Bool) {
 		if success {
 			print("Game Saved")

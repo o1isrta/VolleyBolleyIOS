@@ -12,7 +12,6 @@ protocol PaywallViewProtocol: AnyObject {
 
 	func updateSaveButtonState(isEnabled: Bool)
 	func updatePaymentSelection(isSelected: Bool)
-	func updatePrivacyState(isPublic: Bool)
 	func updateAccountInfo(accountNumber: String)
 	func updatePaymentDescription(text: String)
 }
@@ -46,7 +45,6 @@ final class PaywallViewController: BaseViewController {
 			right: 0
 		)
 		static let paymentStackSpacing: CGFloat = 9
-		static let privacyButtonsStackSpacing: CGFloat = 10
 
 		static let playersTableEstimatedRowHeight: CGFloat = 44
 		static let playersTableInitialHeight: CGFloat = 0
@@ -78,53 +76,45 @@ final class PaywallViewController: BaseViewController {
 		print(value)
 	}
 
-	private let privacyTitle = CustomTitle(text: String(localized: "paywall.privacyTitle"), isLarge: true)
-	private let privacyDescription = CustomLabel(text: String(localized: "paywall.privacyDescription"))
+	private lazy var privacyView = GamePrivacyView { [weak self] isPublic in
+		self?.presenter?.updateGamePrivacyState(isPublic: isPublic)
+	}
 
-	private lazy var privacyPublicButton: GreenButton = {
+	private var playersTableViewHeightConstraint: NSLayoutConstraint?
+	private var playersTableViewContentSizeObserver: NSKeyValueObservation?
+	private lazy var playersTableView: UITableView = {
+		let tableView = UITableView()
+		tableView.backgroundColor = AppColor.Background.clear
+		tableView.separatorStyle = .none
+		tableView.isScrollEnabled = false
+		tableView.dataSource = self
+		tableView.estimatedRowHeight = Constants.playersTableEstimatedRowHeight
+		tableView.register(PlayerElementListViewCell.self,
+			forCellReuseIdentifier: PlayerElementListViewCell.reuseIdentifier)
+		return tableView
+	}()
+
+	private lazy var managePlayersButton: GreenButton = {
 		let button = GreenButton()
-		button.setTitle(String(localized: "paywall.publicButton"), for: .normal)
+		button.setTitle(String(localized: "paywall.managePlayersButton"), for: .normal)
 		button.addAction(UIAction { [weak self] _ in
-			self?.presenter?.privacyPublicButtonTapped()
+			self?.presenter?.managePlayersButtonTapped()
 		}, for: .touchUpInside)
+		button.setContentCompressionResistancePriority(.required, for: .vertical)
+		button.setContentHuggingPriority(.required, for: .vertical)
 		return button
 	}()
-	private lazy var privacyPrivateButton: GreenButton = {
-		let button = GreenButton(imagePlacement: .trailing)
-		button.setTitle(String(localized: "paywall.privateButton"), for: .normal)
-		button.setImage(.arrowForward, for: .normal)
-		button.addAction(UIAction { [weak self] _ in
-			self?.presenter?.privacyPrivateButtonTapped()
-		}, for: .touchUpInside)
-		return button
-	}()
-
-	private lazy var privacyButtonsStackView: UIStackView = {
+	private lazy var playersTableStackView: UIStackView = {
 		let view = UIView()
-		view.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-		let stack = UIStackView(arrangedSubviews: [
-			privacyPublicButton,
-			privacyPrivateButton,
-			view
+		view.addSubviews(managePlayersButton)
+		NSLayoutConstraint.activate([
+			managePlayersButton.leftAnchor.constraint(equalTo: view.leftAnchor),
+			managePlayersButton.topAnchor.constraint(equalTo: view.topAnchor),
+			managePlayersButton.bottomAnchor.constraint(equalTo: view.bottomAnchor)
 		])
-		stack.axis = .horizontal
-		stack.distribution = .fill
-		stack.alignment = .leading
-		stack.spacing = Constants.privacyButtonsStackSpacing
-		stack.layoutMargins = Constants.stackLayoutMargins
-		stack.isLayoutMarginsRelativeArrangement = true
-		return stack
-	}()
-
-	private lazy var privacyStackView: UIStackView = {
-		privacyTitle.setContentCompressionResistancePriority(.required, for: .vertical)
-		privacyTitle.setContentHuggingPriority(.required, for: .vertical)
-		privacyDescription.setContentCompressionResistancePriority(.required, for: .vertical)
-		privacyDescription.setContentHuggingPriority(.required, for: .vertical)
 		let stack = UIStackView(arrangedSubviews: [
-			privacyTitle,
-			privacyDescription,
-			privacyButtonsStackView
+			playersTableView,
+			view
 		])
 		stack.axis = .vertical
 		stack.distribution = .fill
@@ -197,48 +187,6 @@ final class PaywallViewController: BaseViewController {
 		return stack
 	}()
 
-	private lazy var playersTableView: UITableView = {
-		let tableView = UITableView()
-		tableView.backgroundColor = AppColor.Background.clear
-		tableView.separatorStyle = .none
-		tableView.isScrollEnabled = false
-		tableView.dataSource = self
-		tableView.estimatedRowHeight = Constants.playersTableEstimatedRowHeight
-		tableView.register(PlayerElementListViewCell.self,
-			forCellReuseIdentifier: PlayerElementListViewCell.reuseIdentifier)
-		return tableView
-	}()
-
-	private var playersTableViewHeightConstraint: NSLayoutConstraint?
-	private var playersTableViewContentSizeObserver: NSKeyValueObservation?
-	private lazy var managePlayersButton: GreenButton = {
-		let button = GreenButton()
-		button.setTitle(String(localized: "paywall.managePlayersButton"), for: .normal)
-		button.addAction(UIAction { [weak self] _ in
-			self?.presenter?.managePlayersButtonTapped()
-		}, for: .touchUpInside)
-		button.setContentCompressionResistancePriority(.required, for: .vertical)
-		button.setContentHuggingPriority(.required, for: .vertical)
-		return button
-	}()
-	private lazy var playersTableStackView: UIStackView = {
-		let view = UIView()
-		view.addSubviews(managePlayersButton)
-		NSLayoutConstraint.activate([
-			managePlayersButton.leftAnchor.constraint(equalTo: view.leftAnchor),
-			managePlayersButton.topAnchor.constraint(equalTo: view.topAnchor),
-			managePlayersButton.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-		])
-		let stack = UIStackView(arrangedSubviews: [
-			playersTableView,
-			view
-		])
-		stack.axis = .vertical
-		stack.distribution = .fill
-		stack.alignment = .fill
-		return stack
-	}()
-
 	private lazy var paymentStackView: UIStackView = {
 		paymentTitle.setContentCompressionResistancePriority(.required, for: .vertical)
 		paymentTitle.setContentHuggingPriority(.required, for: .vertical)
@@ -279,7 +227,7 @@ final class PaywallViewController: BaseViewController {
 	private lazy var mainStackView: UIStackView = {
 		let stack = UIStackView(arrangedSubviews: [
 			playersCounter,
-			privacyStackView,
+			privacyView,
 			playersTableStackView,
 			separator,
 			paymentStackView,
@@ -424,11 +372,6 @@ extension PaywallViewController: PaywallViewProtocol {
 		accountLabel.isHidden = !isSelected
 		priceView.isUserInteractionEnabled = isSelected
 		priceView.becomeActive()
-	}
-
-	func updatePrivacyState(isPublic: Bool) {
-		privacyPublicButton.isSelected = isPublic
-		privacyPrivateButton.isSelected = !isPublic
 	}
 
 	func updateAccountInfo(accountNumber: String) {
