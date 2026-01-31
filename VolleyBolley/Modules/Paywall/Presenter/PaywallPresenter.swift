@@ -59,6 +59,7 @@ final class PaywallPresenter: PaywallPresenterProtocol {
 
 	func updateGamePrivacyState(isPublic: Bool) {
 		isPublicGameSelected = isPublic
+		view?.isPlayersListHidden(isPublic)
 		updateSaveButtonState()
 	}
 

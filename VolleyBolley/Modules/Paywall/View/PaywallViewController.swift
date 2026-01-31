@@ -10,6 +10,7 @@ import UIKit
 protocol PaywallViewProtocol: AnyObject {
 	var presenter: PaywallPresenterProtocol? { get set }
 
+	func isPlayersListHidden(_ isHidden: Bool)
 	func updateSaveButtonState(isEnabled: Bool)
 	func updatePaymentSelection(isSelected: Bool)
 	func updateAccountInfo(accountNumber: String)
@@ -60,7 +61,19 @@ final class PaywallViewController: BaseViewController {
 
 	private let glassmorphismView = GlassmorphismView()
 
-	private let screenTitle = CustomTitle(text: String(localized: "paywall.screenTitle"), isLarge: true)
+	private let scrollView: UIScrollView = {
+		let scrollView = UIScrollView()
+		scrollView.showsVerticalScrollIndicator = false
+		return scrollView
+	}()
+
+	private let contentView = UIView()
+
+	private let screenTitle = CustomTitle(
+		text: String(localized: "paywall.screenTitle"),
+		isLarge: true
+	)
+
 	private lazy var backButton: UtilityButton = {
 		let button = UtilityButton(style: .small)
 		button.setImage(.chevronBackward, for: .normal)
@@ -119,6 +132,7 @@ final class PaywallViewController: BaseViewController {
 		stack.axis = .vertical
 		stack.distribution = .fill
 		stack.alignment = .fill
+		stack.isHidden = true
 		return stack
 	}()
 
@@ -216,13 +230,6 @@ final class PaywallViewController: BaseViewController {
 		}, for: .touchUpInside)
 		return button
 	}()
-
-	private let scrollView: UIScrollView = {
-		let scrollView = UIScrollView()
-		scrollView.showsVerticalScrollIndicator = false
-		return scrollView
-	}()
-	private let contentView = UIView()
 
 	private lazy var mainStackView: UIStackView = {
 		let stack = UIStackView(arrangedSubviews: [
@@ -362,6 +369,10 @@ private extension PaywallViewController {
 // MARK: - PaywallViewProtocol
 
 extension PaywallViewController: PaywallViewProtocol {
+
+	func isPlayersListHidden(_ isHidden: Bool) {
+		playersTableStackView.isHidden = isHidden
+	}
 
 	func updateSaveButtonState(isEnabled: Bool) {
 		saveGameButton.isEnabled = isEnabled
