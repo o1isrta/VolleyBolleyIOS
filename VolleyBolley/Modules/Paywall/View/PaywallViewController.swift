@@ -73,7 +73,10 @@ final class PaywallViewController: BaseViewController {
 		return button
 	}()
 
-	private let playersCounter: CounterWithTitleView = .init(type: .players)
+	private lazy var playersCounter: CounterWithTitleView = .init(type: .players) { [weak self] value in
+		// TODO: -
+		print(value)
+	}
 
 	private let privacyTitle = CustomTitle(text: String(localized: "paywall.privacyTitle"), isLarge: true)
 	private let privacyDescription = CustomLabel(text: String(localized: "paywall.privacyDescription"))
