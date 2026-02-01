@@ -18,7 +18,7 @@ protocol PaywallPresenterProtocol: AnyObject {
 	func managePlayersButtonTapped()
 	func addPaymentButtonTapped()
 	func saveGameButtonTapped()
-	func priceTextChanged(text: String?)
+	func priceChangedTo(value: String?)
 	func updatePlayersCount(to count: Int)
 }
 
@@ -33,7 +33,6 @@ final class PaywallPresenter: PaywallPresenterProtocol {
 	// MARK: - Private Properties
 
 	private var isPublicGameSelected: Bool?
-	private var isPaymentSelected: Bool = false
 	private var priceText: String?
 	private var playersCount: Int = CounterType.players.minValue
 
@@ -75,10 +74,7 @@ final class PaywallPresenter: PaywallPresenterProtocol {
 			return
 		}
 
-		isPaymentSelected = true
-		view?.updatePaymentSelection(isSelected: isPaymentSelected)
 		view?.updateAccountInfo(accountNumber: accountNumber)
-		view?.updatePaymentDescription(text: String(localized: "paywall.paymentRequirementDescription"))
 
 		updateSaveButtonState()
 	}
@@ -100,8 +96,8 @@ final class PaywallPresenter: PaywallPresenterProtocol {
 		)
 	}
 
-	func priceTextChanged(text: String?) {
-		priceText = text
+	func priceChangedTo(value: String?) {
+		priceText = value
 		updateSaveButtonState()
 	}
 
@@ -117,7 +113,7 @@ private extension PaywallPresenter {
 	func updateSaveButtonState() {
 		guard
 			isPublicGameSelected != nil,
-			isPaymentSelected
+			let accountNumber = interactor.getAccountNumber()
 		else { return }
 
 		let hasText = !(priceText?.isEmpty ?? true)

@@ -12,9 +12,7 @@ protocol PaywallViewProtocol: AnyObject {
 
 	func isPlayersListHidden(_ isHidden: Bool)
 	func updateSaveButtonState(isEnabled: Bool)
-	func updatePaymentSelection(isSelected: Bool)
 	func updateAccountInfo(accountNumber: String)
-	func updatePaymentDescription(text: String)
 }
 
 final class PaywallViewController: BaseViewController {
@@ -27,25 +25,10 @@ final class PaywallViewController: BaseViewController {
 
 	private	enum Constants {
 		static let padding: CGFloat = 8
+		static let mainSpacing: CGFloat = 20
 
 		static let backButtonTopInset: CGFloat = 14
-
-		static let priceViewHeight: CGFloat = 30
-		static let priceViewWidth: CGFloat = 75
-
 		static let saveGameButtonHeight: CGFloat = 44
-
-		static let amountStackHeight: CGFloat = 52
-
-		static let mainSpacing: CGFloat = 20
-		static let stackInternalSpacing: CGFloat = 12
-		static let stackLayoutMargins: UIEdgeInsets =  .init(
-			top: Constants.stackInternalSpacing,
-			left: 0,
-			bottom: 0,
-			right: 0
-		)
-		static let paymentStackSpacing: CGFloat = 9
 
 		static let playersTableEstimatedRowHeight: CGFloat = 44
 		static let playersTableInitialHeight: CGFloat = 0
@@ -55,8 +38,6 @@ final class PaywallViewController: BaseViewController {
 			bottom: 24,
 			right: 0
 		)
-
-		static let fontSize: CGFloat = 16
 	}
 
 	private let glassView = GlassmorphismView()
@@ -138,85 +119,18 @@ final class PaywallViewController: BaseViewController {
 
 	private let separator = CustomSeparator()
 
-	private let paymentTitle = CustomTitle(text: String(localized: "paywall.paymentTitle"), isLarge: true)
-	private let paymentDescription = CustomLabel(text: String(localized: "paywall.paymentDescription"))
-	private let paymentPerPerson = CustomLabel(text: String(localized: "paywall.paymentPerPerson"), isBold: true)
-	private lazy var priceView: PriceView = {
-		let priceView = PriceView()
-//		priceView.text = "5" // TODO: -
-		priceView.isUserInteractionEnabled = false
-		priceView.onTextChanged = { [weak self] text in
-			self?.presenter?.priceTextChanged(text: text)
-		}
-		return priceView
-	}()
-	private lazy var paymentPerPersonStackView: UIStackView = {
-		let stack = UIStackView(arrangedSubviews: [
-			paymentPerPerson,
-			priceView
-		])
-		stack.axis = .horizontal
-		stack.distribution = .fill
-		stack.alignment = .center
-		stack.spacing = Constants.paymentStackSpacing
-		stack.layoutMargins = Constants.stackLayoutMargins
-		stack.isLayoutMarginsRelativeArrangement = true
-		return stack
-	}()
-
-	private let currentAccountLabel: UILabel = {
-		let label = UILabel()
-		label.text = String(localized: "paywall.currentAccountLabel")
-		label.font = AppFont.Hero.regular(size: Constants.fontSize)
-		label.textColor = AppColor.Text.primary
-		return label
-	}()
-	private lazy var accountLabel: UILabel = {
-		let label = UILabel()
-		label.font = AppFont.Hero.regular(size: Constants.fontSize)
-		label.textColor = AppColor.Text.primary
-		label.isHidden = true
-		return label
-	}()
-	private lazy var addPaymentButton: GreenButton = {
-		let button = GreenButton()
-		button.isSelected = false
-		button.setTitle(String(localized: "paywall.addPaymentButton"), for: .normal)
-		button.addAction(UIAction { [weak self] _ in
+	private lazy var paymentView = PaymentView(
+		priceChanged: { [weak self] price in
+			// TODO: -
+			print(price)
+			self?.presenter?.priceChangedTo(value: price)
+		},
+		addPaymentButtonAction: { [weak self] in
+			// TODO: -
+			print("addPaymentButtonTapped")
 			self?.presenter?.addPaymentButtonTapped()
-		}, for: .touchUpInside)
-		return button
-	}()
-	private lazy var amountStackView: UIStackView = {
-		let stack = UIStackView(arrangedSubviews: [
-			currentAccountLabel,
-			accountLabel,
-			addPaymentButton
-		])
-		stack.axis = .horizontal
-		stack.distribution = .equalSpacing
-		stack.alignment = .center
-		stack.layoutMargins = Constants.stackLayoutMargins
-		stack.isLayoutMarginsRelativeArrangement = true
-		return stack
-	}()
-
-	private lazy var paymentStackView: UIStackView = {
-		paymentTitle.setContentCompressionResistancePriority(.required, for: .vertical)
-		paymentTitle.setContentHuggingPriority(.required, for: .vertical)
-		paymentDescription.setContentCompressionResistancePriority(.required, for: .vertical)
-		paymentDescription.setContentHuggingPriority(.required, for: .vertical)
-		let stack = UIStackView(arrangedSubviews: [
-			paymentTitle,
-			paymentDescription,
-			paymentPerPersonStackView,
-			amountStackView
-		])
-		stack.axis = .vertical
-		stack.distribution = .fill
-		stack.alignment = .leading
-		return stack
-	}()
+		}
+	)
 
 	private lazy var saveGameButton: YellowButton = {
 		let button = YellowButton()
@@ -237,7 +151,7 @@ final class PaywallViewController: BaseViewController {
 			privacyView,
 			playersTableStackView,
 			separator,
-			paymentStackView,
+			paymentView,
 			saveGameButton
 		])
 		stack.axis = .vertical
@@ -277,13 +191,6 @@ private extension PaywallViewController {
 
 	func setupSubViewConstraints() {
 		NSLayoutConstraint.activate([
-			amountStackView.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor),
-			amountStackView.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor),
-			amountStackView.heightAnchor.constraint(equalToConstant: Constants.amountStackHeight),
-
-			priceView.heightAnchor.constraint(equalToConstant: Constants.priceViewHeight),
-			priceView.widthAnchor.constraint(equalToConstant: Constants.priceViewWidth),
-
 			saveGameButton.heightAnchor.constraint(equalToConstant: Constants.saveGameButtonHeight)
 		])
 	}
@@ -375,19 +282,8 @@ extension PaywallViewController: PaywallViewProtocol {
 		saveGameButton.isEnabled = isEnabled
 	}
 
-	func updatePaymentSelection(isSelected: Bool) {
-		addPaymentButton.isHidden = isSelected
-		accountLabel.isHidden = !isSelected
-		priceView.isUserInteractionEnabled = isSelected
-		priceView.becomeActive()
-	}
-
 	func updateAccountInfo(accountNumber: String) {
-		accountLabel.text = accountNumber
-	}
-
-	func updatePaymentDescription(text: String) {
-		paymentDescription.text = text
+		paymentView.setAccountNumber(to: accountNumber)
 	}
 }
 
@@ -444,4 +340,3 @@ extension PaywallViewController: UITableViewDataSource {
 	PaywallAssembly.createModule(with: nil)
 }
 #endif
-
