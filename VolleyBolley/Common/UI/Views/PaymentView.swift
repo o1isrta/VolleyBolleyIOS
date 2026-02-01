@@ -32,7 +32,7 @@ final class PaymentView: UIView {
 		static let amountStackHeight: CGFloat = 52
 
 		static let stackSpacing: CGFloat = 9
-		static let stackLayoutMargins: UIEdgeInsets =  .init(
+		static let stackLayoutMargins: UIEdgeInsets = .init(
 			top: 12,
 			left: 0,
 			bottom: 0,
