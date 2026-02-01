@@ -478,6 +478,57 @@
         }
       }
     },
+    "createGame.managePlayersButton" : {
+      "comment" : "Create game screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Manage players"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Управлять игроками"
+          }
+        }
+      }
+    },
+    "createGame.saveGameButton" : {
+      "comment" : "Create game screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SAVE GAME"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "СОХРАНИТЬ ИГРУ"
+          }
+        }
+      }
+    },
+    "createGame.title" : {
+      "comment" : "Create game screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create a game"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Создать игру"
+          }
+        }
+      }
+    },
     "creation.level" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2546,159 +2597,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Платежи"
-          }
-        }
-      }
-    },
-    "paywall.addPaymentButton" : {
-      "comment" : "Paywall screen",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Add payment"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Добавить платеж"
-          }
-        }
-      }
-    },
-    "paywall.currentAccountLabel" : {
-      "comment" : "Paywall screen",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Current account"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Текущий счет"
-          }
-        }
-      }
-    },
-    "paywall.managePlayersButton" : {
-      "comment" : "Paywall screen",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Manage players"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Управление игроками"
-          }
-        }
-      }
-    },
-    "paywall.paymentDescription" : {
-      "comment" : "Paywall screen",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Share payment among players"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Распределение выплат между игроками"
-          }
-        }
-      }
-    },
-    "paywall.paymentPerPerson" : {
-      "comment" : "Paywall screen",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Per person:"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "На человека:"
-          }
-        }
-      }
-    },
-    "paywall.paymentRequirementDescription" : {
-      "comment" : "Paywall screen",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Enter the participation fee per person"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Введите стоимость участия на человека"
-          }
-        }
-      }
-    },
-    "paywall.paymentTitle" : {
-      "comment" : "Paywall screen",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Payment"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Оплата"
-          }
-        }
-      }
-    },
-    "paywall.saveGameButton" : {
-      "comment" : "Paywall screen",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SAVE GAME"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "СОХРАНИТЬ ИГРУ"
-          }
-        }
-      }
-    },
-    "paywall.screenTitle" : {
-      "comment" : "Paywall screen",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Create a game"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Создать игру"
           }
         }
       }

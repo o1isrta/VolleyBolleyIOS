@@ -51,7 +51,7 @@ final class PaywallViewController: BaseViewController {
 	private let contentView = UIView()
 
 	private let screenTitle = CustomTitle(
-		text: String(localized: "paywall.screenTitle"),
+		text: String(localized: "createGame.title"),
 		isLarge: true
 	)
 
@@ -90,7 +90,7 @@ final class PaywallViewController: BaseViewController {
 
 	private lazy var managePlayersButton: GreenButton = {
 		let button = GreenButton()
-		button.setTitle(String(localized: "paywall.managePlayersButton"), for: .normal)
+		button.setTitle(String(localized: "createGame.managePlayersButton"), for: .normal)
 		button.addAction(UIAction { [weak self] _ in
 			self?.presenter?.managePlayersButtonTapped()
 		}, for: .touchUpInside)
@@ -136,7 +136,7 @@ final class PaywallViewController: BaseViewController {
 		let button = YellowButton()
 		button.isEnabled = false
 		button.isSelected = true
-		button.setTitle(String(localized: "paywall.saveGameButton"), for: .normal)
+		button.setTitle(String(localized: "createGame.saveGameButton"), for: .normal)
 		button.addAction(UIAction { [weak self] _ in
 			guard let self else { return }
 			self.presenter?.updatePlayersCount(to: self.playersCounter.value)
