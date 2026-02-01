@@ -1,5 +1,5 @@
 //
-//  PaywallController.swift
+//  CreateGameController.swift
 //  VolleyBolley
 //
 //  Created by Roman Romanov on 22.08.2025.
@@ -7,19 +7,19 @@
 
 import UIKit
 
-protocol PaywallViewProtocol: AnyObject {
-	var presenter: PaywallPresenterProtocol? { get set }
+protocol CreateGameViewProtocol: AnyObject {
+	var presenter: CreateGamePresenterProtocol? { get set }
 
 	func isPlayersListHidden(_ isHidden: Bool)
 	func updateSaveButtonState(isEnabled: Bool)
 	func updateAccountInfo(accountNumber: String)
 }
 
-final class PaywallViewController: BaseViewController {
+final class CreateGameViewController: BaseViewController {
 
 	// MARK: - Public Properties
 
-	var presenter: PaywallPresenterProtocol?
+	var presenter: CreateGamePresenterProtocol?
 
 	// MARK: - Private Properties
 
@@ -173,7 +173,7 @@ final class PaywallViewController: BaseViewController {
 
 // MARK: - Private Methods
 
-private extension PaywallViewController {
+private extension CreateGameViewController {
 
 	func setupUI() {
 		view.addSubviews(glassView)
@@ -272,7 +272,7 @@ private extension PaywallViewController {
 
 // MARK: - PaywallViewProtocol
 
-extension PaywallViewController: PaywallViewProtocol {
+extension CreateGameViewController: CreateGameViewProtocol {
 
 	func isPlayersListHidden(_ isHidden: Bool) {
 		playersTableStackView.isHidden = isHidden
@@ -289,7 +289,7 @@ extension PaywallViewController: PaywallViewProtocol {
 
 // MARK: - UITableViewDataSource
 
-extension PaywallViewController: UITableViewDataSource {
+extension CreateGameViewController: UITableViewDataSource {
 
 	func tableView(
 		_ tableView: UITableView,
@@ -337,6 +337,6 @@ extension PaywallViewController: UITableViewDataSource {
 #if DEBUG
 @available(iOS 17.0, *)
 #Preview {
-	PaywallAssembly.createModule(with: nil)
+	CreateGameAssembly.createModule(with: nil)
 }
 #endif

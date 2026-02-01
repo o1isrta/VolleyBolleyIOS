@@ -1,5 +1,5 @@
 //
-//  PaywallInteractor.swift
+//  CreateGameInteractor.swift
 //  VolleyBolley
 //
 //  Created by Roman Romanov on 29.08.2025.
@@ -7,23 +7,23 @@
 
 import Foundation
 
-protocol PaywallInteractorProtocol: AnyObject {
-	var presenter: PaywallInteractorOutputProtocol? { get set }
+protocol CreateGameInteractorProtocol: AnyObject {
+	var presenter: CreateGameInteractorOutputProtocol? { get set }
 
 	func saveGame(price: Double, isPublic: Bool, playersCount: Int, accountNumber: String)
 	func getAccountNumber() -> String?
 }
 
-protocol PaywallInteractorOutputProtocol: AnyObject {
+protocol CreateGameInteractorOutputProtocol: AnyObject {
 	func gameSaved(success: Bool)
 	func accountNumberReceived(_ accountNumber: String)
 }
 
-final class PaywallInteractor: PaywallInteractorProtocol {
+final class CreateGameInteractor: CreateGameInteractorProtocol {
 
 	// MARK: - Public Properties
 
-	weak var presenter: PaywallInteractorOutputProtocol?
+	weak var presenter: CreateGameInteractorOutputProtocol?
 
 	// MARK: - Public Methods
 

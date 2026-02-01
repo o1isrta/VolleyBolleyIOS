@@ -1,5 +1,5 @@
 //
-//  PaywallRouter.swift
+//  CreateGameRouter.swift
 //  VolleyBolley
 //
 //  Created by Roman Romanov on 29.08.2025.
@@ -7,11 +7,11 @@
 
 import UIKit
 
-protocol PaywallRouterProtocol: AnyObject {
+protocol CreateGameRouterProtocol: AnyObject {
 	func navigateBack()
 }
 
-final class PaywallRouter: PaywallRouterProtocol {
+final class CreateGameRouter: CreateGameRouterProtocol {
 
 	// MARK: - Private Properties
 

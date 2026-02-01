@@ -1,5 +1,5 @@
 //
-//  PaywallPresenter.swift
+//  CreateGamePresenter.swift
 //  VolleyBolley
 //
 //  Created by Roman Romanov on 29.08.2025.
@@ -7,10 +7,10 @@
 
 import UIKit
 
-protocol PaywallPresenterProtocol: AnyObject {
-	var view: PaywallViewProtocol? { get set }
-	var interactor: PaywallInteractorProtocol { get }
-	var router: PaywallRouterProtocol { get }
+protocol CreateGamePresenterProtocol: AnyObject {
+	var view: CreateGameViewProtocol? { get set }
+	var interactor: CreateGameInteractorProtocol { get }
+	var router: CreateGameRouterProtocol { get }
 
 	func viewDidLoad()
 	func backButtonTapped()
@@ -22,13 +22,13 @@ protocol PaywallPresenterProtocol: AnyObject {
 	func updatePlayersCount(to count: Int)
 }
 
-final class PaywallPresenter: PaywallPresenterProtocol {
+final class CreateGamePresenter: CreateGamePresenterProtocol {
 
 	// MARK: - Public Properties
 
-	weak var view: PaywallViewProtocol?
-	let interactor: PaywallInteractorProtocol
-	let router: PaywallRouterProtocol
+	weak var view: CreateGameViewProtocol?
+	let interactor: CreateGameInteractorProtocol
+	let router: CreateGameRouterProtocol
 
 	// MARK: - Private Properties
 
@@ -39,8 +39,8 @@ final class PaywallPresenter: PaywallPresenterProtocol {
 	// MARK: - Initializers
 
 	init(
-		interactor: PaywallInteractorProtocol,
-		router: PaywallRouterProtocol
+		interactor: CreateGameInteractorProtocol,
+		router: CreateGameRouterProtocol
 	) {
 		self.interactor = interactor
 		self.router = router
@@ -108,7 +108,7 @@ final class PaywallPresenter: PaywallPresenterProtocol {
 
 // MARK: - Private Methods
 
-private extension PaywallPresenter {
+private extension CreateGamePresenter {
 
 	func updateSaveButtonState() {
 		guard
@@ -121,9 +121,9 @@ private extension PaywallPresenter {
 	}
 }
 
-// MARK: - PaywallInteractorOutputProtocol
+// MARK: - CreateGameInteractorOutputProtocol
 
-extension PaywallPresenter: PaywallInteractorOutputProtocol {
+extension CreateGamePresenter: CreateGameInteractorOutputProtocol {
 
 	func gameSaved(success: Bool) {
 		if success {
