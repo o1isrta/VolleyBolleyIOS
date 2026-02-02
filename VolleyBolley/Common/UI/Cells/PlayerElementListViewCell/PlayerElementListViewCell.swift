@@ -96,7 +96,8 @@ final class PlayerElementListViewCell: UITableViewCell {
 		uiEdgeInsets: UIEdgeInsets = Constants.mainStackUIEdgeInset
 	) {
 		reset()
-		mainStack.pinToSuperviewEdges(insets: uiEdgeInsets)
+
+		setupMainStack(insets: uiEdgeInsets)
 
 		switch state {
 		case .numbered(let player):
@@ -131,7 +132,6 @@ private extension PlayerElementListViewCell {
 		levelView.isHidden = true
 		deleteButton.isHidden = true
 		onDelete = nil
-		mainStack.pinToSuperviewEdges(insets: Constants.mainStackUIEdgeInset)
 	}
 
 	func showPlayer(
@@ -151,6 +151,18 @@ private extension PlayerElementListViewCell {
 
 	func setupUI() {
 		contentView.addSubviews(mainStack)
+	}
+
+	func setupMainStack(insets: UIEdgeInsets) {
+		let bottomConstraint = mainStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -insets.bottom)
+		bottomConstraint.priority = .defaultHigh
+
+		NSLayoutConstraint.activate([
+			mainStack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: insets.top),
+			mainStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: insets.left),
+			mainStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -insets.right),
+			bottomConstraint
+		])
 	}
 
 	func setupView() {
