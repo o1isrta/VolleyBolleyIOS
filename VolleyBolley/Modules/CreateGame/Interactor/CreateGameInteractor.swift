@@ -10,7 +10,13 @@ import Foundation
 protocol CreateGameInteractorProtocol: AnyObject {
 	var presenter: CreateGameInteractorOutputProtocol? { get set }
 
-	func saveGame(price: Double, isPublic: Bool, playersCount: Int, accountNumber: String)
+	func saveGame(
+		price: Double,
+		isPublic: Bool,
+		playersCount: Int,
+		accountNumber: String,
+		playersInvited: [InvitePlayerModel]
+	)
 	func getAccountNumber() -> String?
 }
 
@@ -27,12 +33,19 @@ final class CreateGameInteractor: CreateGameInteractorProtocol {
 
 	// MARK: - Public Methods
 
-	func saveGame(price: Double, isPublic: Bool, playersCount: Int, accountNumber: String) {
+	func saveGame(
+		price: Double,
+		isPublic: Bool,
+		playersCount: Int,
+		accountNumber: String,
+		playersInvited: [InvitePlayerModel]
+	) {
 		print("Save Game Button clicked")
 		print("Price Double: \(String(describing: price))")
 		print("Account: \(accountNumber)")
 		print("Public game: \(isPublic)")
 		print("Players counter: \(playersCount)")
+		print("Players invited: \(playersInvited)")
 		// TODO: There should be some logic for saving the game here.
 		presenter?.gameSaved(success: true)
 	}

@@ -46,10 +46,12 @@ final class InvitePlayersPresenter: InvitePlayersPresenterProtocol {
 
 	init(
 		interactor: InvitePlayersInteractorProtocol,
-		router: InvitePlayersRouterProtocol
+		router: InvitePlayersRouterProtocol,
+		invitedPlayers: [InvitePlayerModel]
 	) {
 		self.interactor = interactor
 		self.router = router
+		self.interactor?.pinSelectedPlayers(invitedPlayers)
 	}
 
 	// MARK: - Public Methods

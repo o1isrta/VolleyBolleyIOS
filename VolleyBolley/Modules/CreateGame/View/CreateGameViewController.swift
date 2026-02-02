@@ -339,6 +339,6 @@ extension CreateGameViewController: UITableViewDataSource {
 #if DEBUG
 @available(iOS 17.0, *)
 #Preview {
-	CreateGameAssembly.createModule(invitePlayersFactory: { _ in nil })
+	CreateGameAssembly.createModule(invitePlayersFactory: { _, _  in nil })
 }
 #endif

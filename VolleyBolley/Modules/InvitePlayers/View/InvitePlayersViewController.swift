@@ -384,7 +384,6 @@ extension InvitePlayersViewController: UITableViewDelegate {
 		))
 		let playersCount = presenter.getPlayersCount(in: section)
 		container.isHidden = playersCount == 0 && section == InvitePlayerType.invited.rawValue
-
 		return container
 	}
 }
@@ -394,7 +393,8 @@ extension InvitePlayersViewController: UITableViewDelegate {
 #if DEBUG
 @available(iOS 17.0, *)
 #Preview {
-	let presenter = InvitePlayersPresenter(interactor: InvitePlayersInteractor(), router: InvitePlayersRouter())
+	let presenter = InvitePlayersPresenter(interactor: InvitePlayersInteractor(),
+		router: InvitePlayersRouter(), invitedPlayers: [])
 	InvitePlayersViewController(presenter: presenter, playersListType: .regular)
 }
 #endif

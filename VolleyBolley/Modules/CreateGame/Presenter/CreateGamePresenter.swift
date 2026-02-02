@@ -68,7 +68,7 @@ final class CreateGamePresenter: CreateGamePresenterProtocol {
 	}
 
 	func managePlayersButtonTapped() {
-		router.openInvitePlayersScreen()
+		router.openInvitePlayersScreen(playersInvited: playersInvited)
 	}
 
 	func addPaymentButtonTapped() {
@@ -96,7 +96,8 @@ final class CreateGamePresenter: CreateGamePresenterProtocol {
 			price: price,
 			isPublic: isPublicGameSelected,
 			playersCount: playersCount,
-			accountNumber: accountNumber
+			accountNumber: accountNumber,
+			playersInvited: isPublicGameSelected ? [] : playersInvited
 		)
 	}
 
@@ -160,4 +161,3 @@ extension CreateGamePresenter: CreateGameInteractorOutputProtocol {
 		view?.updateAccountInfo(accountNumber: accountNumber)
 	}
 }
-
