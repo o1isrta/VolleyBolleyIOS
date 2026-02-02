@@ -63,8 +63,7 @@ final class CreateGamePresenter: CreateGamePresenterProtocol {
 	}
 
 	func managePlayersButtonTapped() {
-		// TODO: -
-		print("Открыть экран управления игроками")
+		router.openInvitePlayersScreen()
 	}
 
 	func addPaymentButtonTapped() {
@@ -113,7 +112,7 @@ private extension CreateGamePresenter {
 	func updateSaveButtonState() {
 		guard
 			isPublicGameSelected != nil,
-			let accountNumber = interactor.getAccountNumber()
+			interactor.getAccountNumber() != nil
 		else { return }
 
 		let hasText = !(priceText?.isEmpty ?? true)
