@@ -110,7 +110,8 @@ final class CreateGamePresenter: CreateGamePresenterProtocol {
 	}
 
 	func didSelectPlayers(_ players: [InvitePlayerModel]) {
-		playersInvited = players
+		let playersInvitedSet = Set(playersInvited)
+		playersInvited += players.filter { !playersInvitedSet.contains($0) }
 		view?.reloadPlayersTableData()
 	}
 
@@ -159,3 +160,4 @@ extension CreateGamePresenter: CreateGameInteractorOutputProtocol {
 		view?.updateAccountInfo(accountNumber: accountNumber)
 	}
 }
+
