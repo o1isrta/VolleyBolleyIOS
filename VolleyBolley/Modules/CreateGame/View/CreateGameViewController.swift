@@ -322,6 +322,9 @@ extension CreateGameViewController: UITableViewDataSource {
 					self.presenter?.removePlayerBy(index: index)
 				})
 		}
+
+		cell.configure(
+			state: state,
 			uiEdgeInsets: Constants.playersTableCellUIEdgeInset
 		)
 
