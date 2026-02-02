@@ -15,8 +15,6 @@ final class PlayerElementListViewCell: UITableViewCell {
 
 	private var onDelete: (() -> Void)?
 
-	private var mainStackUIEdgeInset: UIEdgeInsets = Constants.mainStackUIEdgeInset
-
 	// MARK: - Private Properties
 
 	private enum Constants {
@@ -87,6 +85,10 @@ final class PlayerElementListViewCell: UITableViewCell {
 	@available(*, unavailable)
 	required init?(coder: NSCoder) { nil }
 
+	override func prepareForReuse() {
+		reset()
+	}
+
 	// MARK: - Public Method
 
 	func configure(
@@ -94,8 +96,7 @@ final class PlayerElementListViewCell: UITableViewCell {
 		uiEdgeInsets: UIEdgeInsets = Constants.mainStackUIEdgeInset
 	) {
 		reset()
-
-		mainStackUIEdgeInset = uiEdgeInsets
+		mainStack.pinToSuperviewEdges(insets: uiEdgeInsets)
 
 		switch state {
 		case .numbered(let player):
@@ -130,7 +131,7 @@ private extension PlayerElementListViewCell {
 		levelView.isHidden = true
 		deleteButton.isHidden = true
 		onDelete = nil
-		mainStackUIEdgeInset = Constants.mainStackUIEdgeInset
+		mainStack.pinToSuperviewEdges(insets: Constants.mainStackUIEdgeInset)
 	}
 
 	func showPlayer(
@@ -141,7 +142,6 @@ private extension PlayerElementListViewCell {
 		levelView.isHidden = false
 		nameLabel.text = prefixNumber + model.name
 		levelView.configure(distance: model.level)
-		mainStack.pinToSuperviewEdges(insets: mainStackUIEdgeInset)
 	}
 
 	func showFreeSpot(prefixNumber: String = "") {
