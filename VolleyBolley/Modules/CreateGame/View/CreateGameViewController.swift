@@ -67,8 +67,7 @@ final class CreateGameViewController: BaseViewController {
 	}()
 
 	private lazy var playersCounter: CounterWithTitleView = .init(type: .players) { [weak self] value in
-		// TODO: -
-		print(value)
+		self?.presenter?.updatePlayersCount(to: value)
 	}
 
 	private lazy var privacyView = GamePrivacyView { [weak self] isPublic in
@@ -140,7 +139,6 @@ final class CreateGameViewController: BaseViewController {
 		button.setTitle(String(localized: "createGame.saveGameButton"), for: .normal)
 		button.addAction(UIAction { [weak self] _ in
 			guard let self else { return }
-			self.presenter?.updatePlayersCount(to: self.playersCounter.value)
 			self.presenter?.saveGameButtonTapped()
 		}, for: .touchUpInside)
 		return button
@@ -307,29 +305,26 @@ extension CreateGameViewController: UITableViewDataSource {
 		_ tableView: UITableView,
 		cellForRowAt indexPath: IndexPath
 	) -> UITableViewCell {
-		guard
-			let playerModel = presenter?.getPlayerBy(index: indexPath.item),
-			let cell = tableView.dequeueReusableCell(
+		guard let cell = tableView.dequeueReusableCell(
 			withIdentifier: PlayerElementListViewCell.reuseIdentifier,
 			for: indexPath) as? PlayerElementListViewCell
 		else {
 			return UITableViewCell()
 		}
-		let player = PlayerElementListViewCellModel(
-			name: playerModel.name,
-			level: playerModel.level,
-			index: nil
-		)
-		cell.configure(
-			state: .plainWithAction(
-				player: player,
+		var state: PlayerElementRowState = .plainFreeSpot
+
+		if let playerModel = presenter?.getPlayerBy(index: indexPath.item) {
+			state = .plainWithAction(
+				player: playerModel,
 				deleteAction: { [weak self] in
 					guard let self else { return }
 					let index = indexPath.item
 					self.presenter?.removePlayerBy(index: index)
-			}),
+				})
+		}
 			uiEdgeInsets: Constants.playersTableCellUIEdgeInset
 		)
+
 		return cell
 	}
 }

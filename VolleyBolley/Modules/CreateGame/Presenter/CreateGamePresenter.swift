@@ -22,7 +22,7 @@ protocol CreateGamePresenterProtocol: AnyObject {
 	func updatePlayersCount(to count: Int)
 	func didSelectPlayers(_ players: [InvitePlayerModel])
 	func getPlayersCount() -> Int
-	func getPlayerBy(index: Int) -> InvitePlayerModel
+	func getPlayerBy(index: Int) -> PlayerElementListViewCellModel?
 	func removePlayerBy(index: Int)
 }
 
@@ -97,7 +97,7 @@ final class CreateGamePresenter: CreateGamePresenterProtocol {
 			isPublic: isPublicGameSelected,
 			playersCount: playersCount,
 			accountNumber: accountNumber,
-			playersInvited: isPublicGameSelected ? [] : playersInvited
+			playersInvited: isPublicGameSelected ? [] : Array(playersInvited.prefix(playersCount))
 		)
 	}
 
@@ -108,6 +108,7 @@ final class CreateGamePresenter: CreateGamePresenterProtocol {
 
 	func updatePlayersCount(to count: Int) {
 		playersCount = count
+		view?.reloadPlayersTableData()
 	}
 
 	func didSelectPlayers(_ players: [InvitePlayerModel]) {
@@ -117,11 +118,18 @@ final class CreateGamePresenter: CreateGamePresenterProtocol {
 	}
 
 	func getPlayersCount() -> Int {
-		playersInvited.count
+		playersCount
 	}
 
-	func getPlayerBy(index: Int) -> InvitePlayerModel {
-		playersInvited[index]
+	func getPlayerBy(index: Int) -> PlayerElementListViewCellModel? {
+		guard playersInvited.indices.contains(index) else { return nil }
+		let player = playersInvited[index]
+		let playerModel = PlayerElementListViewCellModel(
+			name: player.name,
+			level: player.level,
+			index: nil
+		)
+		return playerModel
 	}
 
 	func removePlayerBy(index: Int) {
