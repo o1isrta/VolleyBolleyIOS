@@ -15,6 +15,13 @@ protocol InvitePlayersViewControllerProtocol: AnyObject {
 
 final class InvitePlayersViewController: BaseViewController {
 
+	// MARK: - Public Properties
+
+	var onPlayersSelected: (([InvitePlayerModel]) -> Void)? {
+		get { presenter.onPlayersSelected }
+		set { presenter.onPlayersSelected = newValue }
+	}
+
 	// MARK: - Private Properties
 
 	private let presenter: InvitePlayersPresenterProtocol
@@ -192,11 +199,7 @@ extension InvitePlayersViewController: InvitePlayersViewControllerProtocol {
 private extension InvitePlayersViewController {
 
 	func setupSearchTextField() {
-		searchBar.addTarget(
-			self,
-			action: #selector(searchTextChanged),
-			for: .editingChanged
-		)
+		searchBar.addTarget(self, action: #selector(searchTextChanged), for: .editingChanged)
 	}
 
 	@objc func searchTextChanged() {
@@ -297,16 +300,13 @@ private extension InvitePlayersViewController {
 
 			mainStack.topAnchor.constraint(
 				equalTo: screenTitle.bottomAnchor,
-				constant: LayoutConstants.mediumIndent
-			),
+				constant: LayoutConstants.mediumIndent),
 			mainStack.leadingAnchor.constraint(
 				equalTo: glassmorphismView.leadingAnchor,
-				constant: LayoutConstants.mainSpacing
-			),
+				constant: LayoutConstants.mainSpacing),
 			mainStack.trailingAnchor.constraint(
 				equalTo: glassmorphismView.trailingAnchor,
-				constant: -LayoutConstants.mainSpacing
-			)
+				constant: -LayoutConstants.mainSpacing)
 		])
 
 		tableViewHeightConstraint = tableView.heightAnchor.constraint(

@@ -39,6 +39,11 @@ final class CreateGameRouter: CreateGameRouterProtocol {
 		guard let invitePlayersVC = invitePlayersFactory(.privateGame) else {
 			fatalError("InvitePlayersViewController could not be created")
 		}
+
+		invitePlayersVC.onPlayersSelected = { [weak self] players in
+			(self?.viewController as? CreateGameViewController)?.presenter?.didSelectPlayers(players)
+		}
+
 		viewController?.navigationController?.pushViewController(invitePlayersVC, animated: true)
 	}
 }

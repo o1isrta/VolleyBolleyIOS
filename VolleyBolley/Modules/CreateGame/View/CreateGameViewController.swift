@@ -11,6 +11,7 @@ protocol CreateGameViewProtocol: AnyObject {
 	var presenter: CreateGamePresenterProtocol? { get set }
 
 	func isPlayersListHidden(_ isHidden: Bool)
+	func reloadPlayersTableData()
 	func updateSaveButtonState(isEnabled: Bool)
 	func updateAccountInfo(accountNumber: String)
 }
@@ -278,6 +279,10 @@ extension CreateGameViewController: CreateGameViewProtocol {
 		playersTableStackView.isHidden = isHidden
 	}
 
+	func reloadPlayersTableData() {
+		playersTableView.reloadData()
+	}
+
 	func updateSaveButtonState(isEnabled: Bool) {
 		saveGameButton.isEnabled = isEnabled
 	}
@@ -295,36 +300,33 @@ extension CreateGameViewController: UITableViewDataSource {
 		_ tableView: UITableView,
 		numberOfRowsInSection section: Int
 	) -> Int {
-		// TODO: -
-		return 7
+		return presenter?.getPlayersCount() ?? 0
 	}
 
 	func tableView(
 		_ tableView: UITableView,
 		cellForRowAt indexPath: IndexPath
 	) -> UITableViewCell {
-		guard let cell = tableView.dequeueReusableCell(
+		guard
+			let playerModel = presenter?.getPlayerBy(index: indexPath.item),
+			let cell = tableView.dequeueReusableCell(
 			withIdentifier: PlayerElementListViewCell.reuseIdentifier,
 			for: indexPath) as? PlayerElementListViewCell
 		else {
 			return UITableViewCell()
 		}
-		// TODO: -
 		let player = PlayerElementListViewCellModel(
-			firstName: Player.mockDefault.firstName,
-			lastName: Player.mockDefault.lastName,
-			level: Player.mockDefault.level.title,
+			name: playerModel.name,
+			level: playerModel.level,
 			index: nil
 		)
 		cell.configure(
 			state: .plainWithAction(
 				player: player,
 				deleteAction: { [weak self] in
-					guard let self = self else { return }
-					// TODO: -
-					print("remove:", indexPath.item)
-		//			self.playersMock.remove(at: indexPath.item)
-//					self.playersTableView.deleteSections([indexPath.item], with: .automatic)
+					guard let self else { return }
+					let index = indexPath.item
+					self.presenter?.removePlayerBy(index: index)
 			}),
 			uiEdgeInsets: Constants.playersTableCellUIEdgeInset
 		)

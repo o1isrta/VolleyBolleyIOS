@@ -20,6 +20,10 @@ protocol CreateGamePresenterProtocol: AnyObject {
 	func saveGameButtonTapped()
 	func priceChangedTo(value: String?)
 	func updatePlayersCount(to count: Int)
+	func didSelectPlayers(_ players: [InvitePlayerModel])
+	func getPlayersCount() -> Int
+	func getPlayerBy(index: Int) -> InvitePlayerModel
+	func removePlayerBy(index: Int)
 }
 
 final class CreateGamePresenter: CreateGamePresenterProtocol {
@@ -35,6 +39,7 @@ final class CreateGamePresenter: CreateGamePresenterProtocol {
 	private var isPublicGameSelected: Bool?
 	private var priceText: String?
 	private var playersCount: Int = CounterType.players.minValue
+	private var playersInvited: [InvitePlayerModel] = []
 
 	// MARK: - Initializers
 
@@ -102,6 +107,24 @@ final class CreateGamePresenter: CreateGamePresenterProtocol {
 
 	func updatePlayersCount(to count: Int) {
 		playersCount = count
+	}
+
+	func didSelectPlayers(_ players: [InvitePlayerModel]) {
+		playersInvited = players
+		view?.reloadPlayersTableData()
+	}
+
+	func getPlayersCount() -> Int {
+		playersInvited.count
+	}
+
+	func getPlayerBy(index: Int) -> InvitePlayerModel {
+		playersInvited[index]
+	}
+
+	func removePlayerBy(index: Int) {
+		playersInvited.remove(at: index)
+		view?.reloadPlayersTableData()
 	}
 }
 

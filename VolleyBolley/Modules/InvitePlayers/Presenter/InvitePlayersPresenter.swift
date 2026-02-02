@@ -10,6 +10,8 @@ import UIKit
 // MARK: - InvitePlayersPresenterProtocol
 
 protocol InvitePlayersPresenterProtocol: AnyObject {
+	var onPlayersSelected: (([InvitePlayerModel]) -> Void)? { get set }
+
 	func viewDidLoad()
 	func backButtonTapped()
 	func setPlayersList(_ list: PlayersListType)
@@ -26,6 +28,8 @@ protocol InvitePlayersPresenterProtocol: AnyObject {
 final class InvitePlayersPresenter: InvitePlayersPresenterProtocol {
 
 	// MARK: - Public Properties
+
+	var onPlayersSelected: (([InvitePlayerModel]) -> Void)?
 
 	weak var view: InvitePlayersViewControllerProtocol?
 	var interactor: InvitePlayersInteractorProtocol?
@@ -92,7 +96,7 @@ final class InvitePlayersPresenter: InvitePlayersPresenterProtocol {
 
 		let model = InvitePlayersCellViewModel(
 			name: player.name,
-			level: PlayerLevel.medium.title,
+			level: player.level,
 			isFavorite: player.isFavorite,
 			isPinned: player.isPinned,
 			isSelected: player.isSelected
@@ -140,9 +144,9 @@ final class InvitePlayersPresenter: InvitePlayersPresenterProtocol {
 	}
 
 	func didTapAddButton() {
-		// TODO: - прокидываем выбранных игроков на экран создания игры
 		let selectedPlayers = players.filter { $0.isSelected }
-		print("selected players: \(selectedPlayers)")
+		onPlayersSelected?(selectedPlayers)
+		router.navigateBack()
 	}
 }
 
