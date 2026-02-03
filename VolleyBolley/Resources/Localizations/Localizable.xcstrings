@@ -2590,6 +2590,23 @@
         }
       }
     },
+    "payment.cash" : {
+      "comment" : "Create game / tourney payment block",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cash"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Наличные"
+          }
+        }
+      }
+    },
     "Payments" : {
       "comment" : "Profile",
       "localizations" : {

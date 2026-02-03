@@ -51,7 +51,7 @@ final class CreateGameInteractor: CreateGameInteractorProtocol {
 	}
 
 	func getAccountNumber() -> String? {
-		// TODO: remove in in the future
-		return "988 016 7890"
+		// TODO: replace it to choice of payment method in the future
+		return String(localized: "payment.cash")
 	}
 }
