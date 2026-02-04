@@ -144,7 +144,7 @@ private extension InvitePlayersViewCell {
 	func setupCheckmarkButton() {
 		let emptyImage = !isPlayerSelected && checkmarkButton.isUserInteractionEnabled
 		? UIImage.Icon.empty
-		: UIImage.Icon.empty.withTintColor(.systemGray3)
+		: UIImage.Icon.empty.withTintColor(.systemGray3.resolvedColor(with: UITraitCollection(userInterfaceStyle: .light)))
 		checkmarkButton.setImage(isPlayerSelected ? UIImage.Icon.filled : emptyImage, for: .normal)
 	}
 
