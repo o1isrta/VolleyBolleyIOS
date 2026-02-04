@@ -121,13 +121,9 @@ final class CreateGameViewController: BaseViewController {
 
 	private lazy var paymentView = PaymentView(
 		priceChanged: { [weak self] price in
-			// TODO: -
-			print(price)
 			self?.presenter?.priceChangedTo(value: price)
 		},
 		addPaymentButtonAction: { [weak self] in
-			// TODO: -
-			print("addPaymentButtonTapped")
 			self?.presenter?.addPaymentButtonTapped()
 		}
 	)

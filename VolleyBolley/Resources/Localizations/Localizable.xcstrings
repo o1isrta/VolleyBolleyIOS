@@ -2590,6 +2590,108 @@
         }
       }
     },
+    "payment.addPaymentButton" : {
+      "comment" : "Create game / tourney payment block",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add payment"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добавить оплату"
+          }
+        }
+      }
+    },
+    "payment.currentAccountTitle" : {
+      "comment" : "Create game / tourney payment block",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Current account"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Текущий счет"
+          }
+        }
+      }
+    },
+    "payment.description" : {
+      "comment" : "Create game / tourney payment block",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Share payment among players"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Разделите оплату между игроками"
+          }
+        }
+      }
+    },
+    "payment.perPerson" : {
+      "comment" : "Create game / tourney payment block",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Per person"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "На человека"
+          }
+        }
+      }
+    },
+    "payment.requirementDescription" : {
+      "comment" : "Create game / tourney payment block",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter the participation fee per person"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Введите плату за участие с человека"
+          }
+        }
+      }
+    },
+    "payment.title" : {
+      "comment" : "Create game / tourney payment block",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Payment"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Оплата"
+          }
+        }
+      }
+    },
     "payment.cash" : {
       "comment" : "Create game / tourney payment block",
       "localizations" : {
