@@ -37,6 +37,8 @@ final class InvitePlayersPresenter: InvitePlayersPresenterProtocol {
 
 	// MARK: - Private Properties
 
+	private let maxPlayers: Int?
+
 	private var allPlayers: [InvitePlayerModel] = []
 	private var pinnedPlayers: [InvitePlayerModel] = []
 	private var players: [InvitePlayerModel] = []
@@ -47,11 +49,13 @@ final class InvitePlayersPresenter: InvitePlayersPresenterProtocol {
 	init(
 		interactor: InvitePlayersInteractorProtocol,
 		router: InvitePlayersRouterProtocol,
-		invitedPlayers: [InvitePlayerModel]
+		invitedPlayers: [InvitePlayerModel],
+		maxPlayers: Int?
 	) {
 		self.interactor = interactor
 		self.router = router
 		self.interactor?.pinSelectedPlayers(invitedPlayers)
+		self.maxPlayers = maxPlayers
 	}
 
 	// MARK: - Public Methods
@@ -100,8 +104,8 @@ final class InvitePlayersPresenter: InvitePlayersPresenterProtocol {
 			name: player.name,
 			level: player.level,
 			isFavorite: player.isFavorite,
-			isPinned: player.isPinned,
-			isSelected: player.isSelected
+			isSelected: player.isSelected,
+			isUserInteractionEnabled: getPlayerUserInteractionCondition(player: player)
 		) { [weak self] isFavorite in
 			guard let self else { return }
 			let newPlayer = self.updateIsFavorite(for: player, to: isFavorite)
@@ -111,6 +115,7 @@ final class InvitePlayersPresenter: InvitePlayersPresenterProtocol {
 			guard indexPath.section == InvitePlayerType.regular.rawValue else { return }
 			let newPlayer = player.copy(isSelected: isSelected)
 			self.updatePlayersList(with: newPlayer)
+			self.view?.reloadData()
 		}
 
 		return model
@@ -172,5 +177,14 @@ private extension InvitePlayersPresenter {
 		players = players.map { $0.id == user.id ? user : $0 }
 		filteredPlayers = filteredPlayers.map { $0.id == user.id ? user : $0 }
 		pinnedPlayers = pinnedPlayers.map { $0.id == user.id ? user : $0 }
+	}
+
+	func getPlayerUserInteractionCondition(player: InvitePlayerModel) -> Bool {
+		let selectedPlayers = players.filter { $0.isSelected }
+		let maxSelectedPlayers = selectedPlayers.count + pinnedPlayers.count
+		let maxPlayers = maxPlayers ?? 0
+		let isSelectedUserInteractionEnabled = player.isSelected || maxPlayers > 0 && maxSelectedPlayers < maxPlayers
+
+		return !player.isPinned && isSelectedUserInteractionEnabled
 	}
 }

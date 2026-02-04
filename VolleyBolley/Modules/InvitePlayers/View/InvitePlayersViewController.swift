@@ -394,7 +394,7 @@ extension InvitePlayersViewController: UITableViewDelegate {
 @available(iOS 17.0, *)
 #Preview {
 	let presenter = InvitePlayersPresenter(interactor: InvitePlayersInteractor(),
-		router: InvitePlayersRouter(), invitedPlayers: [])
+		router: InvitePlayersRouter(), invitedPlayers: [], maxPlayers: nil)
 	InvitePlayersViewController(presenter: presenter, playersListType: .regular)
 }
 #endif

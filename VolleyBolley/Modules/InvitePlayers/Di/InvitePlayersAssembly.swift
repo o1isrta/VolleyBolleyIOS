@@ -12,13 +12,14 @@ final class InvitePlayersAssembly: Assembly {
 	func assemble(container: Container) {
 		container.register(
 			InvitePlayersViewController.self
-		) { ( _, playersListType: InvitePlayersListType, invitedPlayers: [InvitePlayerModel]) in
+		) { ( _, playersListType: InvitePlayersListType, maxPlayers: Int, invitedPlayers: [InvitePlayerModel]) in
 			let router = InvitePlayersRouter()
 			let interactor = InvitePlayersInteractor()
 			let presenter = InvitePlayersPresenter(
 				interactor: interactor,
 				router: router,
-				invitedPlayers: invitedPlayers
+				invitedPlayers: invitedPlayers,
+				maxPlayers: maxPlayers
 			)
 
 			let viewController = InvitePlayersViewController(presenter: presenter, playersListType: playersListType)

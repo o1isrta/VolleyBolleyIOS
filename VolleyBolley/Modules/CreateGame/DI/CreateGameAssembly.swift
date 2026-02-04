@@ -13,7 +13,7 @@ final class CreateGameAssembly: Assembly {
 	// MARK: - Factory Method
 
 	static func createModule(
-		invitePlayersFactory: @escaping (InvitePlayersListType, [InvitePlayerModel]) -> InvitePlayersViewController?
+		invitePlayersFactory: @escaping (InvitePlayersListType, Int, [InvitePlayerModel]) -> InvitePlayersViewController?
 	) -> CreateGameViewController {
 		let createGameVC = CreateGameViewController()
 		let interactor = CreateGameInteractor()
@@ -39,9 +39,10 @@ final class CreateGameAssembly: Assembly {
 		container.register(CreateGameViewController.self) { resolver in
 			let invitePlayersFactory: (
 				InvitePlayersListType,
+				Int,
 				[InvitePlayerModel]
-			) -> InvitePlayersViewController? = { type, invitePlayers in
-				resolver.resolve(InvitePlayersViewController.self, arguments: type, invitePlayers)
+			) -> InvitePlayersViewController? = { type, maxPlayers, invitePlayers in
+				resolver.resolve(InvitePlayersViewController.self, arguments: type, maxPlayers, invitePlayers)
 			}
 			return CreateGameAssembly.createModule(invitePlayersFactory: invitePlayersFactory)
 		}

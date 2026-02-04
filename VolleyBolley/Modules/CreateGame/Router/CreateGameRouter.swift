@@ -9,7 +9,7 @@ import UIKit
 
 protocol CreateGameRouterProtocol: AnyObject {
 	func navigateBack()
-	func openInvitePlayersScreen(playersInvited: [InvitePlayerModel])
+	func openInvitePlayersScreen(maxPlayers: Int, playersInvited: [InvitePlayerModel])
 }
 
 final class CreateGameRouter: CreateGameRouterProtocol {
@@ -17,13 +17,13 @@ final class CreateGameRouter: CreateGameRouterProtocol {
 	// MARK: - Private Properties
 
 	private weak var viewController: UIViewController?
-	private let invitePlayersFactory: (InvitePlayersListType, [InvitePlayerModel]) -> InvitePlayersViewController?
+	private let invitePlayersFactory: (InvitePlayersListType, Int, [InvitePlayerModel]) -> InvitePlayersViewController?
 
 	// MARK: - Initializers
 
 	init(
 		viewController: UIViewController,
-		invitePlayersFactory: @escaping (InvitePlayersListType, [InvitePlayerModel]) -> InvitePlayersViewController?
+		invitePlayersFactory: @escaping (InvitePlayersListType, Int, [InvitePlayerModel]) -> InvitePlayersViewController?
 	) {
 		self.viewController = viewController
 		self.invitePlayersFactory = invitePlayersFactory
@@ -35,8 +35,8 @@ final class CreateGameRouter: CreateGameRouterProtocol {
 		viewController?.navigationController?.popViewController(animated: true)
 	}
 
-	func openInvitePlayersScreen(playersInvited: [InvitePlayerModel]) {
-		guard let invitePlayersVC = invitePlayersFactory(.privateGame, playersInvited) else {
+	func openInvitePlayersScreen(maxPlayers: Int, playersInvited: [InvitePlayerModel]) {
+		guard let invitePlayersVC = invitePlayersFactory(.privateGame, maxPlayers, playersInvited) else {
 			fatalError("InvitePlayersViewController could not be created")
 		}
 

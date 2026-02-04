@@ -68,7 +68,7 @@ final class CreateGamePresenter: CreateGamePresenterProtocol {
 	}
 
 	func managePlayersButtonTapped() {
-		router.openInvitePlayersScreen(playersInvited: playersInvited)
+		router.openInvitePlayersScreen(maxPlayers: playersCount, playersInvited: playersInvited)
 	}
 
 	func addPaymentButtonTapped() {
