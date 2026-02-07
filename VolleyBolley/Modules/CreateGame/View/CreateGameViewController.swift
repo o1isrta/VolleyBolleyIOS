@@ -265,7 +265,7 @@ private extension CreateGameViewController {
 	}
 }
 
-// MARK: - PaywallViewProtocol
+// MARK: - CreateGameViewProtocol
 
 extension CreateGameViewController: CreateGameViewProtocol {
 
