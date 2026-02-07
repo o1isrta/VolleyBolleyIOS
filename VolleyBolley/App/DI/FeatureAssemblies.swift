@@ -24,6 +24,7 @@ enum FeatureAssemblies {
             ProfileAssembly(),
             NotificationsAssembly(),
             PaywallAssembly(),
+			CreateTourneyAssembly(),
             CreationSuccessAssembly(),
             PersonalDataAssembly(),
 			EditProfilePhotoAssembly(),

@@ -52,10 +52,11 @@ final class CounterWithTitleView: UIView {
 
 	// MARK: - Initializers
 
-	init(type: CounterType) {
+	init(type: CounterType, valueChanged: ((Int) -> Void)? = nil) {
 		self.type = type
 		super.init(frame: .zero)
 		setupUI()
+		counter.valueChanged = valueChanged
 	}
 
 	@available(*, unavailable)
