@@ -155,6 +155,8 @@ final class CreateGameViewController: BaseViewController {
 		return stack
 	}()
 
+	private lazy var customAlertView: CustomAlertView = CustomAlertView()
+
 	// MARK: - Public Methods
 
 	override func viewDidLoad() {
@@ -164,6 +166,11 @@ final class CreateGameViewController: BaseViewController {
 		setupPlayersTableViewSizing()
 		hideKeyboardWhenTappedAround()
 	}
+
+	override func viewDidLayoutSubviews() {
+		super.viewDidLayoutSubviews()
+		view.bringSubviewToFront(customAlertView)
+	}
 }
 
 // MARK: - Private Methods
@@ -171,7 +178,10 @@ final class CreateGameViewController: BaseViewController {
 private extension CreateGameViewController {
 
 	func setupUI() {
-		view.addSubviews(glassView)
+		view.addSubviews(
+			glassView,
+			customAlertView
+		)
 		glassView.addSubviews(
 			screenTitle,
 			backButton,
@@ -185,6 +195,7 @@ private extension CreateGameViewController {
 	}
 
 	func setupSubViewConstraints() {
+		customAlertView.pinToSuperviewEdges()
 		NSLayoutConstraint.activate([
 			saveGameButton.heightAnchor.constraint(equalToConstant: Constants.saveGameButtonHeight)
 		])
@@ -263,6 +274,25 @@ private extension CreateGameViewController {
 			self.playersTableViewHeightConstraint?.constant = max(Constants.playersTableInitialHeight, newSize.height)
 		}
 	}
+
+	func removePlayerBy(index: Int) {
+		customAlertView.isHidden = false
+		let model = CustomAlertModel(
+			message: String(localized: "customAlertView.message.removePlayer"),
+			primaryButton: ButtonDataModel(
+				title: String(localized: "customAlertView.button.yes"),
+				action: {
+					self.customAlertView.isHidden = true
+					self.presenter?.removePlayerBy(index: index)
+				}
+			),
+			secondaryButton: ButtonDataModel(
+				title: String(localized: "customAlertView.button.no"),
+				action: { self.customAlertView.isHidden = true }
+			)
+		)
+		customAlertView.configure(with: model)
+	}
 }
 
 // MARK: - CreateGameViewProtocol
@@ -315,7 +345,7 @@ extension CreateGameViewController: UITableViewDataSource {
 				deleteAction: { [weak self] in
 					guard let self else { return }
 					let index = indexPath.item
-					self.presenter?.removePlayerBy(index: index)
+					self.removePlayerBy(index: index)
 				})
 		}
 
