@@ -14,11 +14,10 @@ protocol CreateTourneyPresenterProtocol: AnyObject {
 
 	func viewDidLoad()
 	func backButtonTapped()
-	func updateGamePrivacyState(isPublic: Bool)
 	func addPaymentButtonTapped()
 	func saveTourneyButtonTapped()
 	func priceChangedTo(value: String?)
-	func updatePlayersCount(to count: Int)
+	func updateCounter(to count: Int)
 }
 
 final class CreateTourneyPresenter: CreateTourneyPresenterProtocol {
@@ -31,10 +30,8 @@ final class CreateTourneyPresenter: CreateTourneyPresenterProtocol {
 
 	// MARK: - Private Properties
 
-	private var isPublicGameSelected: Bool?
 	private var priceText: String?
-	private var playersCount: Int = CounterType.players.minValue
-	private var playersInvited: [InvitePlayerModel] = []
+	private var playersOrTeamsCount: Int?
 
 	// MARK: - Initializers
 
@@ -50,15 +47,11 @@ final class CreateTourneyPresenter: CreateTourneyPresenterProtocol {
 
 	func viewDidLoad() {
 		updateSaveButtonState()
+		view?.setCounterValue()
 	}
 
 	func backButtonTapped() {
 		router.navigateBack()
-	}
-
-	func updateGamePrivacyState(isPublic: Bool) {
-		isPublicGameSelected = isPublic
-		updateSaveButtonState()
 	}
 
 	func addPaymentButtonTapped() {
@@ -69,7 +62,6 @@ final class CreateTourneyPresenter: CreateTourneyPresenterProtocol {
 		}
 
 		view?.updateAccountInfo(accountNumber: accountNumber)
-
 		updateSaveButtonState()
 	}
 
@@ -77,14 +69,14 @@ final class CreateTourneyPresenter: CreateTourneyPresenterProtocol {
 		guard
 			let priceText = priceText,
 			!priceText.isEmpty,
-			let isPublicGameSelected,
+			let playersOrTeamsCount,
 			let price = Double(priceText),
 			let accountNumber = interactor.getAccountNumber()
 		else { return }
 
 		interactor.saveTourney(
 			price: price,
-			isPublic: isPublicGameSelected,
+			playersOrTeamsCount: playersOrTeamsCount,
 			accountNumber: accountNumber
 		)
 	}
@@ -94,8 +86,8 @@ final class CreateTourneyPresenter: CreateTourneyPresenterProtocol {
 		updateSaveButtonState()
 	}
 
-	func updatePlayersCount(to count: Int) {
-		playersCount = count
+	func updateCounter(to count: Int) {
+		playersOrTeamsCount = count
 	}
 }
 
@@ -105,7 +97,7 @@ private extension CreateTourneyPresenter {
 
 	func updateSaveButtonState() {
 		guard
-			isPublicGameSelected != nil,
+			playersOrTeamsCount != nil,
 			interactor.getAccountNumber() != nil
 		else { return }
 
@@ -122,7 +114,6 @@ extension CreateTourneyPresenter: CreateTourneyInteractorOutputProtocol {
 		if success {
 			print("Tourney Saved")
 			// TODO: redirect to ...
-			router.navigateBack()
 		}
 	}
 

@@ -12,6 +12,7 @@ protocol CreateTourneyViewProtocol: AnyObject {
 
 	func updateSaveButtonState(isEnabled: Bool)
 	func updateAccountInfo(accountNumber: String)
+	func setCounterValue()
 }
 
 final class CreateTourneyViewController: BaseViewController {
@@ -58,7 +59,7 @@ final class CreateTourneyViewController: BaseViewController {
 	}()
 
 	private lazy var tourneyCounter: CounterWithTitleView = .init(type: tourneyType.counterType) { [weak self] value in
-		self?.presenter?.updatePlayersCount(to: value)
+		self?.presenter?.updateCounter(to: value)
 	}
 
 	private let separator = CustomSeparator()
@@ -207,6 +208,10 @@ extension CreateTourneyViewController: CreateTourneyViewProtocol {
 
 	func updateAccountInfo(accountNumber: String) {
 		paymentView.setAccountNumber(to: accountNumber)
+	}
+
+	func setCounterValue() {
+		presenter?.updateCounter(to: tourneyCounter.value)
 	}
 }
 
