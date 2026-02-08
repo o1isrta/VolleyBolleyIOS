@@ -20,7 +20,6 @@ protocol CreateGamePresenterProtocol: AnyObject {
 	func saveGameButtonTapped()
 	func priceChangedTo(value: String?)
 	func updatePlayersCount(to count: Int)
-	func didSelectPlayers(_ players: [InvitePlayerModel])
 	func getPlayersCount() -> Int
 	func getPlayerBy(index: Int) -> PlayerElementListViewCellModel?
 	func removePlayerBy(index: Int)
@@ -113,12 +112,6 @@ final class CreateGamePresenter: CreateGamePresenterProtocol {
 		view?.reloadPlayersTableData()
 	}
 
-	func didSelectPlayers(_ players: [InvitePlayerModel]) {
-		let playersInvitedSet = Set(playersInvited)
-		playersInvited += players.filter { !playersInvitedSet.contains($0) }
-		view?.reloadPlayersTableData()
-	}
-
 	func getPlayersCount() -> Int {
 		playersCount
 	}
@@ -143,6 +136,12 @@ final class CreateGamePresenter: CreateGamePresenterProtocol {
 // MARK: - Private Methods
 
 private extension CreateGamePresenter {
+
+	func didSelectPlayers(_ players: [InvitePlayerModel]) {
+		let playersInvitedSet = Set(playersInvited)
+		playersInvited += players.filter { !playersInvitedSet.contains($0) }
+		view?.reloadPlayersTableData()
+	}
 
 	func updateSaveButtonState() {
 		guard
