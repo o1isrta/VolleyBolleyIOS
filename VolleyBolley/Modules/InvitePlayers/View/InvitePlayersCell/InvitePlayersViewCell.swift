@@ -112,12 +112,12 @@ final class InvitePlayersViewCell: UITableViewCell {
 		isFavorite = model.isFavorite
 		setupStarButton()
 		isPlayerSelected = model.isSelected
-		setupCheckmarkButton()
 
 		badgeView.configure(distance: model.level)
 		onFavoriteToggle = model.onFavoriteToggle
 
-		checkmarkButton.isUserInteractionEnabled = !model.isPinned
+		checkmarkButton.isUserInteractionEnabled = model.isUserInteractionEnabled
+		setupCheckmarkButton()
 		onCheckmarkToggle = model.onCheckmarkToggle
 	}
 
@@ -142,7 +142,10 @@ private extension InvitePlayersViewCell {
 	}
 
 	func setupCheckmarkButton() {
-		checkmarkButton.setImage(isPlayerSelected ? UIImage.Icon.filled : UIImage.Icon.empty, for: .normal)
+		let emptyImage = !isPlayerSelected && checkmarkButton.isUserInteractionEnabled
+		? UIImage.Icon.empty
+		: UIImage.Icon.empty.withTintColor(.systemGray3.resolvedColor(with: UITraitCollection(userInterfaceStyle: .light)))
+		checkmarkButton.setImage(isPlayerSelected ? UIImage.Icon.filled : emptyImage, for: .normal)
 	}
 
 	func didTapCheckmark() {

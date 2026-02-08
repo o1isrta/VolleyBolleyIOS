@@ -11,8 +11,8 @@ struct InvitePlayersCellViewModel {
 	let name: String
 	let level: String
 	let isFavorite: Bool
-	let isPinned: Bool
 	let isSelected: Bool
+	let isUserInteractionEnabled: Bool
 	let onFavoriteToggle: ((Bool) -> Void)?
 	let onCheckmarkToggle: ((Bool) -> Void)?
 
@@ -20,16 +20,16 @@ struct InvitePlayersCellViewModel {
 		name: String,
 		level: String,
 		isFavorite: Bool,
-		isPinned: Bool,
 		isSelected: Bool,
+		isUserInteractionEnabled: Bool,
 		onFavoriteToggle: ((Bool) -> Void)?,
 		onCheckmarkToggle: ((Bool) -> Void)?
 	) {
 		self.name = name
 		self.level = String(level.prefix(1).uppercased())
 		self.isFavorite = isFavorite
-		self.isPinned = isPinned
 		self.isSelected = isSelected
+		self.isUserInteractionEnabled = isUserInteractionEnabled
 		self.onFavoriteToggle = onFavoriteToggle
 		self.onCheckmarkToggle = onCheckmarkToggle
 	}

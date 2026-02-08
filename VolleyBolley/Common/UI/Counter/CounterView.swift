@@ -22,13 +22,15 @@ final class CounterView: UIView {
 
     // MARK: - Public Properties
 
-    var type: CounterType
     var valueChanged: ((Int) -> Void)?
-    public var value: Int {
+
+    var value: Int {
         didSet { updateValue(animated: true) }
     }
 
     // MARK: - Private Properties
+
+	private let type: CounterType
 
     private let minusButton: UtilityButton = {
         let button = UtilityButton(style: .small)

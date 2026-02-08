@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct InvitePlayerModel: Equatable {
+struct InvitePlayerModel: Equatable, Hashable {
 	let id: Int
 	let name: String
 	let isFavorite: Bool

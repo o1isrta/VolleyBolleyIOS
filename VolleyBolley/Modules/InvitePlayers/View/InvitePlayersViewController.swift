@@ -192,11 +192,7 @@ extension InvitePlayersViewController: InvitePlayersViewControllerProtocol {
 private extension InvitePlayersViewController {
 
 	func setupSearchTextField() {
-		searchBar.addTarget(
-			self,
-			action: #selector(searchTextChanged),
-			for: .editingChanged
-		)
+		searchBar.addTarget(self, action: #selector(searchTextChanged), for: .editingChanged)
 	}
 
 	@objc func searchTextChanged() {
@@ -297,16 +293,13 @@ private extension InvitePlayersViewController {
 
 			mainStack.topAnchor.constraint(
 				equalTo: screenTitle.bottomAnchor,
-				constant: LayoutConstants.mediumIndent
-			),
+				constant: LayoutConstants.mediumIndent),
 			mainStack.leadingAnchor.constraint(
 				equalTo: glassmorphismView.leadingAnchor,
-				constant: LayoutConstants.mainSpacing
-			),
+				constant: LayoutConstants.mainSpacing),
 			mainStack.trailingAnchor.constraint(
 				equalTo: glassmorphismView.trailingAnchor,
-				constant: -LayoutConstants.mainSpacing
-			)
+				constant: -LayoutConstants.mainSpacing)
 		])
 
 		tableViewHeightConstraint = tableView.heightAnchor.constraint(
@@ -384,7 +377,6 @@ extension InvitePlayersViewController: UITableViewDelegate {
 		))
 		let playersCount = presenter.getPlayersCount(in: section)
 		container.isHidden = playersCount == 0 && section == InvitePlayerType.invited.rawValue
-
 		return container
 	}
 }
@@ -394,7 +386,13 @@ extension InvitePlayersViewController: UITableViewDelegate {
 #if DEBUG
 @available(iOS 17.0, *)
 #Preview {
-	let presenter = InvitePlayersPresenter(interactor: InvitePlayersInteractor(), router: InvitePlayersRouter())
-	InvitePlayersViewController(presenter: presenter, playersListType: .regular)
+	let presenter = InvitePlayersPresenter(
+		interactor: InvitePlayersInteractor(),
+		router: InvitePlayersRouter(),
+		invitedPlayers: [],
+		maxPlayers: nil,
+		onPlayersSelected: { _ in }
+	)
+	return InvitePlayersViewController(presenter: presenter, playersListType: .regular)
 }
 #endif
