@@ -15,13 +15,6 @@ protocol InvitePlayersViewControllerProtocol: AnyObject {
 
 final class InvitePlayersViewController: BaseViewController {
 
-	// MARK: - Public Properties
-
-	var onPlayersSelected: (([InvitePlayerModel]) -> Void)? {
-		get { presenter.onPlayersSelected }
-		set { presenter.onPlayersSelected = newValue }
-	}
-
 	// MARK: - Private Properties
 
 	private let presenter: InvitePlayersPresenterProtocol
@@ -393,8 +386,13 @@ extension InvitePlayersViewController: UITableViewDelegate {
 #if DEBUG
 @available(iOS 17.0, *)
 #Preview {
-	let presenter = InvitePlayersPresenter(interactor: InvitePlayersInteractor(),
-		router: InvitePlayersRouter(), invitedPlayers: [], maxPlayers: nil)
-	InvitePlayersViewController(presenter: presenter, playersListType: .regular)
+	let presenter = InvitePlayersPresenter(
+		interactor: InvitePlayersInteractor(),
+		router: InvitePlayersRouter(),
+		invitedPlayers: [],
+		maxPlayers: nil,
+		onPlayersSelected: { _ in }
+	)
+	return InvitePlayersViewController(presenter: presenter, playersListType: .regular)
 }
 #endif

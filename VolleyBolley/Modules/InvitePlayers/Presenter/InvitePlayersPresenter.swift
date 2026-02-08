@@ -10,8 +10,6 @@ import UIKit
 // MARK: - InvitePlayersPresenterProtocol
 
 protocol InvitePlayersPresenterProtocol: AnyObject {
-	var onPlayersSelected: (([InvitePlayerModel]) -> Void)? { get set }
-
 	func viewDidLoad()
 	func backButtonTapped()
 	func setPlayersList(_ list: PlayersListType)
@@ -29,14 +27,13 @@ final class InvitePlayersPresenter: InvitePlayersPresenterProtocol {
 
 	// MARK: - Public Properties
 
-	var onPlayersSelected: (([InvitePlayerModel]) -> Void)?
-
 	weak var view: InvitePlayersViewControllerProtocol?
 	var interactor: InvitePlayersInteractorProtocol?
 	var router: InvitePlayersRouterProtocol
 
 	// MARK: - Private Properties
 
+	private let onPlayersSelected: ([InvitePlayerModel]) -> Void
 	private let maxPlayers: Int?
 
 	private var allPlayers: [InvitePlayerModel] = []
@@ -50,12 +47,14 @@ final class InvitePlayersPresenter: InvitePlayersPresenterProtocol {
 		interactor: InvitePlayersInteractorProtocol,
 		router: InvitePlayersRouterProtocol,
 		invitedPlayers: [InvitePlayerModel],
-		maxPlayers: Int?
+		maxPlayers: Int?,
+		onPlayersSelected: @escaping ([InvitePlayerModel]) -> Void
 	) {
 		self.interactor = interactor
 		self.router = router
 		self.interactor?.pinSelectedPlayers(invitedPlayers)
 		self.maxPlayers = maxPlayers
+		self.onPlayersSelected = onPlayersSelected
 	}
 
 	// MARK: - Public Methods
@@ -152,7 +151,7 @@ final class InvitePlayersPresenter: InvitePlayersPresenterProtocol {
 
 	func didTapAddButton() {
 		let selectedPlayers = players.filter { $0.isSelected }
-		onPlayersSelected?(selectedPlayers)
+		onPlayersSelected(selectedPlayers)
 		router.navigateBack()
 	}
 }
