@@ -9,13 +9,25 @@ import Swinject
 
 final class InvitePlayersAssembly: Assembly {
 
+	// swiftlint:disable closure_parameter_position
 	func assemble(container: Container) {
-		container.register(InvitePlayersViewController.self) { (_, playersListType: InvitePlayersListType) in
+		container.register(
+			InvitePlayersViewController.self
+		) { (
+			_,
+			playersListType: InvitePlayersListType,
+			maxPlayers: Int,
+			invitedPlayers: [InvitePlayerModel],
+			onPlayersSelected: @escaping ([InvitePlayerModel]) -> Void
+		) in
 			let router = InvitePlayersRouter()
 			let interactor = InvitePlayersInteractor()
 			let presenter = InvitePlayersPresenter(
 				interactor: interactor,
-				router: router
+				router: router,
+				invitedPlayers: invitedPlayers,
+				maxPlayers: maxPlayers,
+				onPlayersSelected: onPlayersSelected
 			)
 
 			let viewController = InvitePlayersViewController(presenter: presenter, playersListType: playersListType)
@@ -25,4 +37,5 @@ final class InvitePlayersAssembly: Assembly {
 			return viewController
 		}
 	}
+	// swiftlint:enable closure_parameter_position
 }

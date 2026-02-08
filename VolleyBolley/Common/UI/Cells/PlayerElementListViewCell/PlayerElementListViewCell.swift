@@ -15,8 +15,6 @@ final class PlayerElementListViewCell: UITableViewCell {
 
 	private var onDelete: (() -> Void)?
 
-	private var mainStackUIEdgeInset: UIEdgeInsets = Constants.mainStackUIEdgeInset
-
 	// MARK: - Private Properties
 
 	private enum Constants {
@@ -87,6 +85,10 @@ final class PlayerElementListViewCell: UITableViewCell {
 	@available(*, unavailable)
 	required init?(coder: NSCoder) { nil }
 
+	override func prepareForReuse() {
+		reset()
+	}
+
 	// MARK: - Public Method
 
 	func configure(
@@ -95,7 +97,7 @@ final class PlayerElementListViewCell: UITableViewCell {
 	) {
 		reset()
 
-		mainStackUIEdgeInset = uiEdgeInsets
+		setupMainStack(insets: uiEdgeInsets)
 
 		switch state {
 		case .numbered(let player):
@@ -130,7 +132,6 @@ private extension PlayerElementListViewCell {
 		levelView.isHidden = true
 		deleteButton.isHidden = true
 		onDelete = nil
-		mainStackUIEdgeInset = Constants.mainStackUIEdgeInset
 	}
 
 	func showPlayer(
@@ -141,7 +142,6 @@ private extension PlayerElementListViewCell {
 		levelView.isHidden = false
 		nameLabel.text = prefixNumber + model.name
 		levelView.configure(distance: model.level)
-		mainStack.pinToSuperviewEdges(insets: mainStackUIEdgeInset)
 	}
 
 	func showFreeSpot(prefixNumber: String = "") {
@@ -151,6 +151,18 @@ private extension PlayerElementListViewCell {
 
 	func setupUI() {
 		contentView.addSubviews(mainStack)
+	}
+
+	func setupMainStack(insets: UIEdgeInsets) {
+		let bottomConstraint = mainStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -insets.bottom)
+		bottomConstraint.priority = .defaultHigh
+
+		NSLayoutConstraint.activate([
+			mainStack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: insets.top),
+			mainStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: insets.left),
+			mainStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -insets.right),
+			bottomConstraint
+		])
 	}
 
 	func setupView() {

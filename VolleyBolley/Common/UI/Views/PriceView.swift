@@ -83,6 +83,11 @@ final class PriceView: UIView {
 	@available(*, unavailable)
 	required init?(coder: NSCoder) { nil }
 
+	override func layoutSubviews() {
+		super.layoutSubviews()
+		containerView.resetForReuse()
+	}
+
 	// MARK: - Public Methods
 
 	func becomeActive() {

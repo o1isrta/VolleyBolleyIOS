@@ -23,7 +23,7 @@ enum FeatureAssemblies {
             MyGamesAssembly(),
             ProfileAssembly(),
             NotificationsAssembly(),
-            PaywallAssembly(),
+			CreateGameAssembly(),
 			CreateTourneyAssembly(),
             CreationSuccessAssembly(),
             PersonalDataAssembly(),

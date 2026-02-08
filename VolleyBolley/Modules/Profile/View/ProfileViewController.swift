@@ -14,7 +14,7 @@ protocol ProfileViewProtocol: AnyObject {
 enum ProfileMenuItem: CaseIterable {
     case players
     case personal
-    case fluentPayment
+//    case fluentPayment // TODO: add payments after release MVP
     case support
     case faq
     case about
@@ -24,7 +24,7 @@ enum ProfileMenuItem: CaseIterable {
 		switch self {
 		case .players: return UIImage.Icon.players
 		case .personal: return UIImage.Icon.personal
-		case .fluentPayment: return UIImage.Icon.fluentPayment
+//		case .fluentPayment: return UIImage.Icon.fluentPayment
 		case .support: return UIImage.Icon.support
 		case .faq: return UIImage.Icon.tooltip
 		case .about: return UIImage.Icon.about
@@ -36,7 +36,7 @@ enum ProfileMenuItem: CaseIterable {
         switch self {
         case .players: return String(localized: "Players")
         case .personal: return String(localized: "Personal data")
-        case .fluentPayment: return String(localized: "Payments")
+//        case .fluentPayment: return String(localized: "Payments")
         case .support: return String(localized: "Support")
         case .faq: return String(localized: "FAQ")
         case .about: return String(localized: "About")
@@ -117,17 +117,20 @@ private extension ProfileViewController {
 
     func setupView() {
         setupUI()
+		// height with "Payment"
+//		let tableHeight: CGFloat = 400
+		let tableHeight: CGFloat = 345
 
         NSLayoutConstraint.activate([
 			tableBackground.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
             tableBackground.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
             tableBackground.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
-            tableBackground.heightAnchor.constraint(equalToConstant: 400),
+            tableBackground.heightAnchor.constraint(equalToConstant: tableHeight),
 
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 12),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
-            tableView.heightAnchor.constraint(equalToConstant: 400),
+            tableView.heightAnchor.constraint(equalToConstant: tableHeight),
 
             deleteButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 28),
 			deleteButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
