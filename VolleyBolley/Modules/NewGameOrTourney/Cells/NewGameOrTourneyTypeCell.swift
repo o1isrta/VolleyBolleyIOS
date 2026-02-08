@@ -15,7 +15,7 @@ final class NewGameOrTourneyTypeCell: UITableViewCell {
 
 	// MARK: - Private Properties
 
-	private var callback: ((GameTourneyType) -> Void)?
+	private var callback: ((TourneyType) -> Void)?
 
 	private enum Constants {
 		static let inset: CGFloat = 16
@@ -60,6 +60,7 @@ final class NewGameOrTourneyTypeCell: UITableViewCell {
 		])
 		stackView.axis = .horizontal
 		stackView.alignment = .center
+		stackView.distribution = .fillEqually
 		stackView.spacing = Constants.stackViewSpacing
 		return stackView
 	}()
@@ -78,7 +79,7 @@ final class NewGameOrTourneyTypeCell: UITableViewCell {
 
 	// MARK: - Public Methods
 
-	func configure(callback: ((GameTourneyType) -> Void)?) {
+	func configure(callback: ((TourneyType) -> Void)?) {
 		self.callback = callback
 	}
 }
@@ -87,7 +88,7 @@ final class NewGameOrTourneyTypeCell: UITableViewCell {
 
 private extension NewGameOrTourneyTypeCell {
 
-	func didTourneyTypeChanged(to type: GameTourneyType) {
+	func didTourneyTypeChanged(to type: TourneyType) {
 		individualButton.isSelected = type == .individual
 		teamButton.isSelected = type == .team
 		callback?(type)
