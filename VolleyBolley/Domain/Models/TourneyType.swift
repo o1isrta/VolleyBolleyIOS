@@ -11,3 +11,14 @@ enum TourneyType {
 	case individual
 	case team
 }
+
+extension TourneyType {
+	var counterType: CounterType {
+		switch self {
+		case .individual:
+			return .players
+		case .team:
+			return .teams
+		}
+	}
+}
