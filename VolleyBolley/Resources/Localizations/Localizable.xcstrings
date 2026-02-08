@@ -2726,6 +2726,7 @@
     },
     "Payments" : {
       "comment" : "Profile",
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
