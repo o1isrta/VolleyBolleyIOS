@@ -12,8 +12,8 @@ final class CreateTourneyAssembly: Assembly {
 
 	// MARK: - Factory Method
 
-	static func createModule() -> CreateTourneyViewController {
-		let createTourneyVC = CreateTourneyViewController()
+	static func createModule(tourneyType: TourneyType) -> CreateTourneyViewController {
+		let createTourneyVC = CreateTourneyViewController(tourneyType: tourneyType)
 		let interactor = CreateTourneyInteractor()
 		let router = CreateTourneyRouter(viewController: createTourneyVC)
 		let presenter = CreateTourneyPresenter(
@@ -31,8 +31,8 @@ final class CreateTourneyAssembly: Assembly {
 	// MARK: - Swinject Assembly
 
 	func assemble(container: Container) {
-		container.register(CreateTourneyViewController.self) { _ in
-			CreateTourneyAssembly.createModule()
+		container.register(CreateTourneyViewController.self) { (_, tourneyType: TourneyType) in
+			CreateTourneyAssembly.createModule(tourneyType: tourneyType)
 		}
 	}
 }

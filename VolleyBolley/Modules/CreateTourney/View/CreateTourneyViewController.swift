@@ -30,6 +30,8 @@ final class CreateTourneyViewController: BaseViewController {
 		static let saveTourneyButtonHeight: CGFloat = 44
 	}
 
+	private let tourneyType: TourneyType
+
 	private let glassView = GlassmorphismView()
 
 	private let scrollView: UIScrollView = {
@@ -55,7 +57,7 @@ final class CreateTourneyViewController: BaseViewController {
 		return button
 	}()
 
-	private lazy var tourneyCounter: CounterWithTitleView = .init(type: .players) { [weak self] value in
+	private lazy var tourneyCounter: CounterWithTitleView = .init(type: tourneyType.counterType) { [weak self] value in
 		self?.presenter?.updatePlayersCount(to: value)
 	}
 
@@ -94,6 +96,16 @@ final class CreateTourneyViewController: BaseViewController {
 		stack.spacing = Constants.mainSpacing
 		return stack
 	}()
+
+	// MARK: - Initializers
+
+	init(tourneyType: TourneyType) {
+		self.tourneyType = tourneyType
+		super.init(nibName: nil, bundle: nil)
+	}
+
+	@available(*, unavailable)
+	required init?(coder: NSCoder) { nil }
 
 	// MARK: - Public Methods
 
@@ -202,7 +214,11 @@ extension CreateTourneyViewController: CreateTourneyViewProtocol {
 
 #if DEBUG
 @available(iOS 17.0, *)
-#Preview {
-	CreateTourneyAssembly.createModule()
+#Preview("Team Tourney") {
+	CreateTourneyAssembly.createModule(tourneyType: .team)
+}
+@available(iOS 17.0, *)
+#Preview("Individual Tourney") {
+	CreateTourneyAssembly.createModule(tourneyType: .individual)
 }
 #endif
