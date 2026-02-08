@@ -98,6 +98,7 @@ final class CreateGameViewController: BaseViewController {
 		button.setContentHuggingPriority(.required, for: .vertical)
 		return button
 	}()
+
 	private lazy var playersTableStackView: UIStackView = {
 		let view = UIView()
 		view.addSubviews(managePlayersButton)
