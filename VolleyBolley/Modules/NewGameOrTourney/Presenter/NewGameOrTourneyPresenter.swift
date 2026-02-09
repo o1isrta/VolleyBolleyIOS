@@ -20,7 +20,7 @@ protocol NewGameOrTourneyPresenterProtocol: AnyObject {
 	func getCellType(index: Int) -> GameCellType
 	func setupMessage(_ message: String)
 	func setupDateRange(_ dateRange: GameDateRange)
-	func setupTourneyType(to tourneyType: GameTourneyType)
+	func setupTourneyType(to tourneyType: TourneyType)
 	func setupGender(to gender: GameGenderType)
 	func setupPlayerLevels(to playerLevels: [PlayerLevel])
 }
@@ -47,7 +47,7 @@ final class NewGameOrTourneyPresenter: NewGameOrTourneyPresenterProtocol {
 
 	private var message: String?
 	private var dateRange: GameDateRange?
-	private var tourneyType: GameTourneyType?
+	private var tourneyType: TourneyType?
 	private var gender: GameGenderType = .mix
 	private var playerLevels: [PlayerLevel] = []
 
@@ -114,7 +114,7 @@ final class NewGameOrTourneyPresenter: NewGameOrTourneyPresenterProtocol {
 		validateData()
 	}
 
-	func setupTourneyType(to tourneyType: GameTourneyType) {
+	func setupTourneyType(to tourneyType: TourneyType) {
 		self.tourneyType = tourneyType
 		validateData()
 	}

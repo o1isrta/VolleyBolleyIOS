@@ -529,6 +529,40 @@
         }
       }
     },
+    "createTourney.saveTourneyButton" : {
+      "comment" : "Create tourney screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SAVE TOURNEY"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "СОХРАНИТЬ ТУРНИР"
+          }
+        }
+      }
+    },
+    "createTourney.title" : {
+      "comment" : "Create tourney screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create a tourney"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Создать турнир"
+          }
+        }
+      }
+    },
     "creation.level" : {
       "extractionState" : "manual",
       "localizations" : {
