@@ -4,6 +4,19 @@
 <dict>
 	<key>APP_ENV</key>
 	<string>$(APP_ENV)</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.volleybolley.google</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.20383666755-ghs9dpf5h6njnvq5b663qk80do1m3uij</string>
+			</array>
+		</dict>
+	</array>
 	<key>UIAppFonts</key>
 	<array>
 		<string>ActayWide-Bold.otf</string>
