@@ -4,17 +4,18 @@
 //
 //  Created by Олег Кор on 18.08.2025.
 //
+
 import Swinject
 import UIKit
 
 final class PhoneVerifyRouter: PhoneVerifyRouterProtocol {
 
-    weak var viewController: UIViewController?
-    weak var coordinator: AppRouter?
+    private weak var viewController: UIViewController?
+    private weak var router: AppRouter?
 
-    init(viewController: UIViewController, coordinator: AppRouter?) {
+    init(viewController: UIViewController, router: AppRouter?) {
         self.viewController = viewController
-        self.coordinator = coordinator
+        self.router = router
     }
 
     func navigateBack() {
@@ -22,6 +23,6 @@ final class PhoneVerifyRouter: PhoneVerifyRouterProtocol {
     }
 
     func navigateToMainScreen() {
-        coordinator?.pushRegistration()
+		router?.pushRegistrationScreen()
     }
 }

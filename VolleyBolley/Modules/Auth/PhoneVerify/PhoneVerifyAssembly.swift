@@ -20,7 +20,7 @@ final class PhoneVerifyAssembly: Assembly {
 
             let router = PhoneVerifyRouter(
                 viewController: phoneVerifyVC,
-                coordinator: appRouter
+				router: appRouter
             )
 
             let presenter = PhoneVerifyPresenter(

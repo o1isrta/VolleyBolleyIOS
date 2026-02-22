@@ -96,9 +96,9 @@ final class AppRouter {
 		nav.pushViewController(phoneVerifyVC, animated: true)
 	}
 
-	func pushRegistration() {
+	func pushRegistrationScreen() {
 		guard let nav = navigationController else { return }
-		let userRegVC = resolver.safeResolve(RegistrationViewController.self)
-		nav.pushViewController(userRegVC, animated: true)
+		let registrationVC = resolver.safeResolve(RegistrationViewController.self)
+		nav.pushViewController(registrationVC, animated: true)
 	}
 }
