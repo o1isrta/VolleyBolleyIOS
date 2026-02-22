@@ -17,7 +17,7 @@ final class AuthAssembly: Assembly {
 				viewControllerFactory: {
 					resolver.safeResolve(AuthViewController.self)
 				},
-				userRegFactory: {
+				registrationFactory: {
 					resolver.safeResolve(RegistrationViewController.self)
 				}
 			)

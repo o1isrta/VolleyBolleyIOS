@@ -40,7 +40,7 @@ final class AuthRouter: NSObject, AuthRouterProtocol {
 
 	private let window: UIWindow
 	private let viewControllerFactory: () -> UIViewController
-	private let userRegFactory: () -> UIViewController
+	private let registrationFactory: () -> UIViewController
 
 	private weak var navigationController: UINavigationController?
 
@@ -49,11 +49,11 @@ final class AuthRouter: NSObject, AuthRouterProtocol {
 	init(
 		window: UIWindow,
 		viewControllerFactory: @escaping () -> UIViewController,
-		userRegFactory: @escaping () -> UIViewController
+		registrationFactory: @escaping () -> UIViewController
 	) {
 		self.window = window
 		self.viewControllerFactory = viewControllerFactory
-		self.userRegFactory = userRegFactory
+		self.registrationFactory = registrationFactory
 	}
 
 	// MARK: - Public Methods
