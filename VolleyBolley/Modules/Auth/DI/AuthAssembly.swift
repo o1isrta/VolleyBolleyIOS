@@ -35,14 +35,14 @@ final class AuthAssembly: Assembly {
 			)
 
 			let presenter = AuthPresenter(
-				view: AuthDummyView(), // TODO: - сделать показ/обработку ошибок, убрать заглушку
 				interactor: interactor,
 				router: router
 			)
 
-			return AuthViewController(presenter: presenter)
+			let authVC = AuthViewController(presenter: presenter)
+			presenter.view = authVC
+
+			return authVC
 		}
 	}
 }
-
-private final class AuthDummyView: AuthViewProtocol {} // TODO: - сделать показ/обработку ошибок, убрать заглушку

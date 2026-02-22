@@ -19,11 +19,9 @@ final class AuthPresenter: AuthPresenterProtocol {
 	private let router: AuthRouterProtocol
 
 	init(
-		view: AuthViewProtocol,
 		interactor: AuthInteractorProtocol,
 		router: AuthRouterProtocol
 	) {
-		self.view = view
 		self.interactor = interactor
 		self.router = router
 	}
