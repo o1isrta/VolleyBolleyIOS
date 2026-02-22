@@ -11,7 +11,7 @@ enum AppJSONDecoders {
     /// Декодер для работы с API (snake_case + ISO8601 даты)
     static let server: JSONDecoder = {
         let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        decoder.keyDecodingStrategy = .convertFromSnakeCase// TODO: - сделать показ/обработку ошибок, убрать это
         decoder.dateDecodingStrategy = .formatted(AppDateFormatters.serverDateOnly)
         return decoder
     }()

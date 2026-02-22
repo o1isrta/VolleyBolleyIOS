@@ -35,11 +35,12 @@ final class NetworkService: NetworkServiceProtocol {
 	// MARK: - Public Methods
 
 	/// Google Auth (POST, without auth)
-	func googleAuth(
-		code: String,
-		completion: @escaping (Result<GoogleAuthResponse, Error>) -> Void
-	) {
-		request(.googleAuth(code: code), completion: completion)
+	func googleAuth(idToken: String) async throws -> PlayerSessionDTO {
+		try await performRequest(
+			.googleAuth(idToken: idToken),
+			type: PlayerSessionDTO.self,
+			decoder: AppJSONDecoders.server
+		)
 	}
 
 	/// Get  Country List (GET, without auth)
@@ -92,7 +93,11 @@ final class NetworkService: NetworkServiceProtocol {
 							completion(.success(()))
 						}
 					} else {
-						let error = NetworkError.invalidStatusCode(response.statusCode)
+						guard let self else {
+							completion(.failure(DomainError.unknown))
+							return
+						}
+						let error = self.mapStatusCode(response.statusCode)
 						DispatchQueue.main.async {
 							completion(.failure(error))
 						}
@@ -117,7 +122,11 @@ final class NetworkService: NetworkServiceProtocol {
 							completion(.success(()))
 						}
 					} else {
-						let error = NetworkError.invalidStatusCode(response.statusCode)
+						guard let self else {
+							completion(.failure(DomainError.unknown))
+							return
+						}
+						let error = self.mapStatusCode(response.statusCode)
 						DispatchQueue.main.async {
 							completion(.failure(error))
 						}
@@ -146,6 +155,7 @@ private extension NetworkService {
 		execute()
 	}
 
+	@available(*, deprecated, message: "use performRequest instead")
 	private func request<T: Decodable>(
 		_ target: DataAPI,
 		completion: @escaping (Result<T, Error>) -> Void
@@ -171,5 +181,66 @@ private extension NetworkService {
 				}
 			}
 		}
+	}
+
+	// TODO: - add logger
+	private func performRequest<T>(
+		_ request: DataAPI,
+		type: T.Type,
+		decoder: JSONDecoder
+	) async throws -> T where T: Decodable {
+		do {
+			return try await provider.asyncRequestDecodable(request, type: type, decoder: decoder)
+		} catch let moyaError as MoyaError {
+			print("❌ NetworkService.performRequest MoyaError: \(moyaError)")
+			throw mapMoyaToDomain(moyaError)
+		} catch {
+			print("❌ NetworkService.performRequest error: \(error)")
+			throw DomainError.unknown
+		}
+	}
+
+	private func mapMoyaToDomain(_ error: MoyaError) -> DomainError {
+		switch error {
+		case .statusCode(let response):
+			return mapStatusCode(response.statusCode)
+		case .underlying(let urlError, _):
+			return mapUnderlying(urlError)
+		case .objectMapping:
+			return .network(.decodingFailed)
+		default:
+			return .network(.unknown)
+		}
+	}
+
+	private func mapStatusCode(_ statusCode: Int) -> DomainError {
+		switch statusCode {
+		case 401:
+			return .network(.unauthorized)
+		case 429:
+			return .network(.tooManyRequests)
+		case 400..<500:
+			return .network(.client)
+		case 500..<600:
+			return .network(.server)
+		default:
+			return .network(.network)
+		}
+	}
+
+	private func mapUnderlying(_ error: Error) -> DomainError {
+		if let urlError = error as? URLError {
+			switch urlError.code {
+			case .timedOut, .notConnectedToInternet:
+				return .network(.network)
+			case .cannotFindHost:
+				return .network(.cannotFindHost)
+			case .networkConnectionLost:
+				return .network(.networkConnectionLost)
+			default:
+				return .network(.unknown)
+			}
+		}
+		return .network(.unknown)
 	}
 }
