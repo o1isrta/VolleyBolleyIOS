@@ -14,7 +14,7 @@ protocol AuthPresenterProtocol: AnyObject {
 
 final class AuthPresenter: AuthPresenterProtocol {
 
-	weak var view: AuthViewProtocol?
+	weak var view: AuthViewControllerProtocol?
 	private let interactor: AuthInteractorProtocol
 	private let router: AuthRouterProtocol
 
@@ -32,21 +32,26 @@ final class AuthPresenter: AuthPresenterProtocol {
 
 	func googleButtonTapped() {
 		Task {
-//			showLoader()
+			// TODO: - loader
+			view?.isLoadingIndicatorVisible(true)
 			do {
 				try await interactor.loginWithGoogle()
-//				hideLoader()
+				view?.isLoadingIndicatorVisible(false)
 				// TODO: - Finish auth
 //				showAlert(.common(.notImplemented), retry: nil)
 	//                router.finishAuth()
+				// TODO: - SUCCESS
+				print(">>>>> SUCCESS")
 //			} catch let error as DomainError {
-//				hideLoader()
 //				showAlert(error, retry: { [weak self] in
 //					self?.didTapContinueWithGoogle()
 //				})
-				print(">>>>> SUCCESS")
+//				print(">>>>> SOME ERROR")
+//				view?.isLoadingIndicatorVisible(false)
 			} catch {
-				print(">>>>> catch Error")
+				print(">>>>> catch Error", DomainError.unknown)
+				view?.isLoadingIndicatorVisible(false)
+				// TODO: - ERRORS
 //				hideLoader()
 //				showAlert(.unknown, retry: nil)
 			}

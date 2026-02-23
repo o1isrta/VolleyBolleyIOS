@@ -7,7 +7,9 @@
 
 import UIKit
 
-protocol AuthViewProtocol: AnyObject {}
+protocol AuthViewControllerProtocol: AnyObject {
+	func isLoadingIndicatorVisible(_ isLoading: Bool)
+}
 
 final class AuthViewController: UIViewController {
 
@@ -15,7 +17,7 @@ final class AuthViewController: UIViewController {
 
 	private let presenter: AuthPresenterProtocol
 
-	private lazy var descriptionLabel: UILabel = {
+	private let descriptionLabel: UILabel = {
 		let label = UILabel()
 		let text = String(localized: "Sign up\nwith\na social\nmedia")
 		let attributedString = NSMutableAttributedString(string: text)
@@ -88,7 +90,7 @@ final class AuthViewController: UIViewController {
 		return stack
 	}()
 
-	private lazy var bottomView: UIView = {
+	private let bottomView: UIView = {
 		let view = UIView()
 		view.backgroundColor = AppColor.Background.tabBar
 		view.layer.cornerRadius = 32
@@ -97,11 +99,13 @@ final class AuthViewController: UIViewController {
 		return view
 	}()
 
-	private lazy var backgroundImageView: UIImageView = {
+	private let backgroundImageView: UIImageView = {
 		let imageView = UIImageView(image: UIImage.Image.auth)
 		imageView.contentMode = .scaleAspectFill
 		return imageView
 	}()
+
+	private lazy var loadingIndicator = ProgressHub.shared
 
 	// MARK: - Initializers
 
@@ -120,9 +124,31 @@ final class AuthViewController: UIViewController {
 		setupUI()
 	}
 
-	// MARK: - Private Methods
+	override func viewDidLayoutSubviews() {
+		super.viewDidLayoutSubviews()
+		view.bringSubviewToFront(loadingIndicator)
+	}
+}
 
-	private func setupUI() {
+// MARK: - AuthViewControllerProtocol
+
+extension AuthViewController: AuthViewControllerProtocol {
+
+	func isLoadingIndicatorVisible(_ isLoading: Bool) {
+		DispatchQueue.main.async {
+			isLoading
+				? self.loadingIndicator.show(in: self.view, withBlur: true, ballSize: .big)
+				: self.loadingIndicator.hide()
+			self.view.isUserInteractionEnabled = !isLoading
+		}
+	}
+}
+
+// MARK: - Private Methods
+
+private extension AuthViewController {
+
+	func setupUI() {
 		view.addSubviews(backgroundImageView, descriptionLabel, bottomView)
 		bottomView.addSubviews(buttonsStack)
 
@@ -145,11 +171,8 @@ final class AuthViewController: UIViewController {
 	}
 }
 
-// MARK: - AuthViewProtocol
-
-extension AuthViewController: AuthViewProtocol {}
-
 #if DEBUG
+// TODO: -
 //@available(iOS 17.0, *)
 //#Preview {
 //    AuthViewController()

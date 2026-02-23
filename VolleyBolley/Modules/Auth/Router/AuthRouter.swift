@@ -19,7 +19,7 @@ protocol AuthRouterDelegate: AnyObject {
 	func authDidFinish()
 }
 
-final class AuthRouter: NSObject, AuthRouterProtocol {
+final class AuthRouter: AuthRouterProtocol {
 
 	// MARK: - Public Properties
 
