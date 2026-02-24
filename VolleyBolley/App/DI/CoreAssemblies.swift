@@ -19,7 +19,9 @@ enum CoreAssemblies {
             UserSessionAssembly(),
             NetworkModulesAssembly(),
             MediaServicesAssembly(),
-            LocationAssembly()
+            LocationAssembly(),
+			GoogleAuthAssembly(),
+			FirebaseAuthAssembly()
         ]
     }
 }

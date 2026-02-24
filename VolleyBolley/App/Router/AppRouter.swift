@@ -10,104 +10,95 @@ import UIKit
 
 final class AppRouter {
 
-    // MARK: - Private Properties
+	// MARK: - Private Properties
 
-    private let window: UIWindow
-    private let userSessionService: UserSessionServiceProtocol
-    private let resolver: Resolver
+	private let window: UIWindow
+	private let userSessionService: UserSessionServiceProtocol
+	private let resolver: Resolver
 
-    private var navigationController: UINavigationController?
+	private var navigationController: UINavigationController?
 
-    private var onboardingRouter: OnboardingRouterProtocol?
-    private var authRouter: AuthRouterProtocol?
+	private var onboardingRouter: OnboardingRouterProtocol?
+	private var authRouter: AuthRouterProtocol?
 
-    // MARK: - Initializers
+	// MARK: - Initializers
 
-    init(
-        window: UIWindow,
-        userSessionService: UserSessionServiceProtocol,
-        resolver: Resolver
-    ) {
-        self.window = window
-        self.userSessionService = userSessionService
-        self.resolver = resolver
-    }
+	init(
+		window: UIWindow,
+		userSessionService: UserSessionServiceProtocol,
+		resolver: Resolver
+	) {
+		self.window = window
+		self.userSessionService = userSessionService
+		self.resolver = resolver
+	}
 
-    // MARK: - Public Methods
+	// MARK: - Public Methods
 
-    func start() {
-        guard let environment = resolver.resolve(AppEnvironment.self) else {
-            fatalError("Error: Failed to resolve AppEnvironment")
-        }
+	func start() {
+		let environment = resolver.safeResolve(AppEnvironment.self)
 
-        if userSessionService.isOnboardingShown {
-            switch environment {
-                // TODO: - change to showAuthorization() when user registration is ready
-            case .staging, .mock: showMainApp()
-            case .production: showAuthorization()
-            }
-        } else {
-            showOnboarding()
-        }
-    }
+		if !userSessionService.isOnboardingShown {
+			showOnboarding()
+			return
+		}
 
-    // MARK: - Private Methods
+		switch environment {
+		// TODO: - change to showAuthorization() when user registration is ready
+		case .staging, .mock: showMainApp()
+		case .production: showAuthorization()
+		}
+	}
 
-    private func showOnboarding() {
-        guard let onboardingVC = resolver.resolve(OnboardingViewController.self) else {
-            fatalError("OnboardingViewController не зарегистрирован")
-        }
-        let nav = UINavigationController(rootViewController: onboardingVC)
-        navigationController = nav
-        window.rootViewController = nav
-        window.makeKeyAndVisible()
-    }
+	func showMainApp() {
+		let router = resolver.safeResolve(MainAppRouterProtocol.self)
+		let root = router.start()
 
-    private func showAuthorization() {
-        guard let authVC = resolver.resolve(AuthViewController.self) else {
-            fatalError("AuthViewController не зарегистрирован")
-        }
-        let nav = UINavigationController(rootViewController: authVC)
-        navigationController = nav
-        window.rootViewController = nav
-        window.makeKeyAndVisible()
-    }
+		authRouter = nil
+		onboardingRouter = nil
 
-    func pushPhoneAuth() {
-        guard let nav = navigationController,
-              let phoneAuthVC = resolver.resolve(PhoneAuthViewController.self) else { return }
-        nav.pushViewController(phoneAuthVC, animated: true)
-    }
+		window.rootViewController = root
+		window.makeKeyAndVisible()
+	}
 
-    func pushPhoneVerify(phoneNumber: String) {
-        guard let nav = navigationController,
-              let phoneVerifyVC = resolver.resolve(
-                PhoneVerifyViewController.self,
-                argument: phoneNumber
-              ) else {
-            return
-        }
-        nav.pushViewController(phoneVerifyVC, animated: true)
-    }
+	func showAuthorization() {
+		let authVC = resolver.safeResolve(AuthViewController.self)
+		let nav = UINavigationController(rootViewController: authVC)
+		navigationController = nav
+		window.rootViewController = nav
+		window.makeKeyAndVisible()
+	}
 
-    func pushRegistrationScreen() {
-        guard let nav = navigationController,
-              let registrationVC = resolver.resolve(RegistrationViewController.self) else { return }
-        nav.pushViewController(registrationVC, animated: true)
-    }
+	// MARK: - Private Methods
 
-    private func showMainApp() {
-        guard let router = resolver.resolve(MainAppRouterProtocol.self) else {
-            print("Error: Failed to resolve MainAppRouterProtocol")
-            return
-        }
+	private func showOnboarding() {
+		let onboardingVC = resolver.safeResolve(OnboardingViewController.self)
+		let nav = UINavigationController(rootViewController: onboardingVC)
+		navigationController = nav
+		window.rootViewController = nav
+		window.makeKeyAndVisible()
+	}
 
-        let root = router.start()
+	func pushPhoneAuth() {
+		guard let nav = navigationController else { return }
+		let phoneAuthVC = resolver.safeResolve(PhoneAuthViewController.self)
+		nav.pushViewController(phoneAuthVC, animated: true)
+	}
 
-        authRouter = nil
-        onboardingRouter = nil
+	func pushPhoneVerify(phoneNumber: String) {
+		guard let nav = navigationController,
+			  let phoneVerifyVC = resolver.resolve(
+				PhoneVerifyViewController.self,
+				argument: phoneNumber
+			  ) else {
+			return
+		}
+		nav.pushViewController(phoneVerifyVC, animated: true)
+	}
 
-        window.rootViewController = root
-        window.makeKeyAndVisible()
-    }
+	func pushRegistrationScreen() {
+		guard let nav = navigationController else { return }
+		let registrationVC = resolver.safeResolve(RegistrationViewController.self)
+		nav.pushViewController(registrationVC, animated: true)
+	}
 }

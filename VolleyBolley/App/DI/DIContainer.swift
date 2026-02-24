@@ -10,39 +10,20 @@ import UIKit
 
 final class DIContainer {
 
-    // MARK: - Public Properties
+	// MARK: - Public Properties
 
-    let assembler: Assembler
-    var resolver: Resolver { assembler.resolver }
+	let assembler: Assembler
 
-    static var shared: DIContainer {
-        guard let instance = _shared else {
-            fatalError(
-                "DIContainer.shared accessed before being initialized. Call DIContainer.initialize(window:) first."
-            )
-        }
-        return instance
-    }
+	var resolver: Resolver { assembler.resolver }
 
-    // MARK: - Private Properties
+	// MARK: - Initializers
 
-    private static var _shared: DIContainer?
-
-    // MARK: - Initializers
-
-    init(window: UIWindow) {
-        assembler = Assembler(
-            [
-                CoreAssemblies.all(window: window),
-                FeatureAssemblies.all
-            ].flatMap { $0 }
-        )
-    }
-
-    // MARK: - Public Methods
-
-    static func initialize(window: UIWindow) {
-        precondition(_shared == nil, "DIContainer already initialized")
-        _shared = DIContainer(window: window)
-    }
+	init(window: UIWindow) {
+		assembler = Assembler(
+			[
+				CoreAssemblies.all(window: window),
+				FeatureAssemblies.all
+			].flatMap { $0 }
+		)
+	}
 }
