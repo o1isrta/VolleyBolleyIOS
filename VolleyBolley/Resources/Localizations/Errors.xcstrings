@@ -1,0 +1,313 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "authError.emm" : {
+      "comment" : "Error message for the EMM (Enterprise Mobility Management) user",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Google authentication error. Try signing out and signing back in, or check your app settings."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ошибка аутентификации с Google. Попробуйте выйти и войти снова или проверьте настройки приложения."
+          }
+        }
+      }
+    },
+    "authError.invalidCredentials" : {
+      "comment" : "Invalid Google credentials",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to verify Google credentials"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось проверить учетные данные Google"
+          }
+        }
+      }
+    },
+    "authError.invalidPhoneNumber" : {
+      "comment" : "Invalid phone number",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please enter a valid phone number"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пожалуйста, введите действительный номер телефона"
+          }
+        }
+      }
+    },
+    "authError.invalidVerificationCode" : {
+      "comment" : "Invalid verification code",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invalid verification code"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Неверный код подтверждения"
+          }
+        }
+      }
+    },
+    "authError.keychainError" : {
+      "comment" : "Keychain error saving data",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "There was an error saving data. Please try again."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Произошла ошибка при сохранении данных. Пожалуйста, попробуйте снова."
+          }
+        }
+      }
+    },
+    "authError.mismatchWithCurrentUser" : {
+      "comment" : "The account does not match the current user",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Authentication error: The account does not match the current user. Please log out and try again."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ошибка аутентификации: учетная запись не совпадает с текущим пользователем. Пожалуйста, выполните выход и повторите попытку"
+          }
+        }
+      }
+    },
+    "authError.missingIDToken" : {
+      "comment" : "Google auth error message",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error connecting to Google. Missing authentication token. Please try again."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ошибка при подключении к Google. Отсутствует токен аутентификации. Пожалуйста, повторите попытку."
+          }
+        }
+      }
+    },
+    "authError.missingPhoneNumber" : {
+      "comment" : "A phone number is required to complete login",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A phone number is required to complete login. Please enter it and try again."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Для завершения входа требуется номер телефона. Пожалуйста, введите его и повторите попытку."
+          }
+        }
+      }
+    },
+    "authError.networkError" : {
+      "comment" : "Internet connection error message",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You’re offline. Check your internet connection and try again."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы не в сети. Проверьте подключение к интернету и повторите попытку."
+          }
+        }
+      }
+    },
+    "authError.noAuthInKeychain" : {
+      "comment" : "Your authentication data was not found",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your authentication data was not found. Please sign in again."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ваши данные аутентификации не найдены. Пожалуйста, выполните вход заново."
+          }
+        }
+      }
+    },
+    "authError.scopesAlreadyGranted" : {
+      "comment" : "Permissions have already been granted",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Permissions have already been granted for this app."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Разрешения уже предоставлены для этого приложения."
+          }
+        }
+      }
+    },
+    "authError.sessionExpired" : {
+      "comment" : "Session has expired",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your session has expired. Please sign in again to continue."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ваша сессия устарела. Чтобы продолжить, выполните повторный вход."
+          }
+        }
+      }
+    },
+    "authError.signInCancelled" : {
+      "comment" : "Google auth error message",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign-in was cancelled"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вход в систему был отменен"
+          }
+        }
+      }
+    },
+    "authError.signInFailed" : {
+      "comment" : "Google Sign-In failed",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Google Sign-In failed. Please try again."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось войти через Google. Повторите попытку позже"
+          }
+        }
+      }
+    },
+    "authError.tooManyRequests" : {
+      "comment" : "Too many attempts",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Too many attempts. Please try again later."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Слишком много попыток. Пожалуйста, попробуйте позже."
+          }
+        }
+      }
+    },
+    "authError.unknown" : {
+      "comment" : "Description of an unknown error",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Something went wrong. Please try again."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Что-то пошло не так. Попробуйте ещё раз."
+          }
+        }
+      }
+    },
+    "authError.userDisabled" : {
+      "comment" : "This account has been disabled",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This account has been disabled."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Эта учетная запись была отключена."
+          }
+        }
+      }
+    },
+    "authError.verificationFailed" : {
+      "comment" : "Localized description for the `verificationFailed` case of the `AuthError` enum.",
+      "isCommentAutoGenerated" : true,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "An error occurred during authentication. Please check the information you entered and try again."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ошибка в процессе аутентификации. Пожалуйста, проверьте введённые данные и повторите попытку."
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.1"
+}
