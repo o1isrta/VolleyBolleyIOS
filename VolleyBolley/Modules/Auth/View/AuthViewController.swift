@@ -194,9 +194,16 @@ private extension AuthViewController {
 }
 
 #if DEBUG
-// TODO: -
-//@available(iOS 17.0, *)
-//#Preview {
-//    AuthViewController()
-//}
+// MARK: - Preview
+
+@available(iOS 17.0, *)
+#Preview {
+	class MockAuthPresenter: AuthPresenterProtocol {
+		func phoneButtonTapped() { print("Phone button tapped") }
+		func googleButtonTapped() { print("Google button tapped") }
+	}
+	let mockPresenter = MockAuthPresenter()
+	let authVC = AuthViewController(presenter: mockPresenter)
+	return authVC
+}
 #endif
