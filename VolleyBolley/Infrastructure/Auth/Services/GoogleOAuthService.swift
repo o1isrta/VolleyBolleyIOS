@@ -34,10 +34,9 @@ final class GoogleOAuthService: GoogleOAuthServiceProtocol {
 		} catch let error as NSError {
 			print("❌ GoogleOAuthService.signIn error: \(error)")
 			throw mapToDomain(error)
-
 		} catch {
-			print("❌ GoogleOAuthService.signIn error: \(error)")
-			throw DomainError.unknown
+			print("❌ GoogleOAuthService.signIn unknown error: \(error)")
+			throw DomainError.auth(.unknown)
 		}
 	}
 
@@ -45,7 +44,7 @@ final class GoogleOAuthService: GoogleOAuthServiceProtocol {
 
 	private func mapToDomain(_ error: NSError) -> DomainError {
 		guard let code = GIDSignInError.Code(rawValue: error.code) else {
-			return DomainError.unknown
+			return .auth(.unknown)
 		}
 
 		switch code {
@@ -64,9 +63,9 @@ final class GoogleOAuthService: GoogleOAuthServiceProtocol {
 		case .unknown:
 			return .auth(.signInFailed)
 		case .ambiguousClaims, .jsonSerializationFailure:
-			return .unknown
+			return .auth(.unknown)
 		@unknown default:
-			return .unknown
+			return .auth(.unknown)
 		}
 	}
 }

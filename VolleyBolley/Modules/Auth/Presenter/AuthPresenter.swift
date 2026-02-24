@@ -32,28 +32,23 @@ final class AuthPresenter: AuthPresenterProtocol {
 
 	func googleButtonTapped() {
 		Task {
-			// TODO: - loader
 			view?.isLoadingIndicatorVisible(true)
 			do {
 				try await interactor.loginWithGoogle()
 				view?.isLoadingIndicatorVisible(false)
-				// TODO: - Finish auth
-//				showAlert(.common(.notImplemented), retry: nil)
-	//                router.finishAuth()
 				// TODO: - SUCCESS
+//                router.finishAuth()
 				print(">>>>> SUCCESS")
-//			} catch let error as DomainError {
-//				showAlert(error, retry: { [weak self] in
-//					self?.didTapContinueWithGoogle()
-//				})
-//				print(">>>>> SOME ERROR")
-//				view?.isLoadingIndicatorVisible(false)
-			} catch {
-				print(">>>>> catch Error", DomainError.unknown)
+			} catch let error as DomainError {
 				view?.isLoadingIndicatorVisible(false)
-				// TODO: - ERRORS
-//				hideLoader()
-//				showAlert(.unknown, retry: nil)
+				await MainActor.run {
+					view?.showAlert(with: error.localizedDescription)
+				}
+			} catch {
+				view?.isLoadingIndicatorVisible(false)
+				await MainActor.run {
+					view?.showAlert(with: AuthError.signInFailed.localizedDescription)
+				}
 			}
 		}
 	}
@@ -64,6 +59,7 @@ final class AuthPresenter: AuthPresenterProtocol {
 extension AuthPresenter: AuthRouterDelegate {
 
 	func authDidFinish() {
+		// TODO: - authDidFinish
 		print(">>>>> authDidFinish")
 		router.finishAuth()
 	}

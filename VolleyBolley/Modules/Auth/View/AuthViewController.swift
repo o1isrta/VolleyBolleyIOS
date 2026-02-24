@@ -9,6 +9,7 @@ import UIKit
 
 protocol AuthViewControllerProtocol: AnyObject {
 	func isLoadingIndicatorVisible(_ isLoading: Bool)
+	func showAlert(with message: String)
 }
 
 final class AuthViewController: UIViewController {
@@ -107,6 +108,8 @@ final class AuthViewController: UIViewController {
 
 	private lazy var loadingIndicator = ProgressHub.shared
 
+	private lazy var customAlertView: CustomAlertView = CustomAlertView()
+
 	// MARK: - Initializers
 
 	init(presenter: AuthPresenterProtocol) {
@@ -126,6 +129,7 @@ final class AuthViewController: UIViewController {
 
 	override func viewDidLayoutSubviews() {
 		super.viewDidLayoutSubviews()
+		view.bringSubviewToFront(customAlertView)
 		view.bringSubviewToFront(loadingIndicator)
 	}
 }
@@ -142,6 +146,18 @@ extension AuthViewController: AuthViewControllerProtocol {
 			self.view.isUserInteractionEnabled = !isLoading
 		}
 	}
+
+	func showAlert(with message: String) {
+		customAlertView.isHidden = false
+		let model = CustomAlertModel(
+			message: message,
+			primaryButton: ButtonDataModel(
+				title: String(localized: "customAlertView.button.ok"),
+				action: { self.customAlertView.isHidden = true }
+			)
+		)
+		customAlertView.configure(with: model)
+	}
 }
 
 // MARK: - Private Methods
@@ -149,10 +165,16 @@ extension AuthViewController: AuthViewControllerProtocol {
 private extension AuthViewController {
 
 	func setupUI() {
-		view.addSubviews(backgroundImageView, descriptionLabel, bottomView)
+		view.addSubviews(
+			backgroundImageView,
+			descriptionLabel,
+			bottomView,
+			customAlertView
+		)
 		bottomView.addSubviews(buttonsStack)
 
 		backgroundImageView.pinToSuperviewEdges()
+		customAlertView.pinToSuperviewEdges()
 
 		NSLayoutConstraint.activate([
 			descriptionLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
